@@ -4,6 +4,7 @@
 - {{c1::环境变量`Path`:添加`"%M2_HOME%\bin"`}}
 - {{c1::管理员运行命令行检查安装情况：`mvn -v`}}
 ### .m2文件夹的作用 [	](maven_20200331123149426)
+
 - 位置：{{c1::~/.m2}}
 - .m2/repository ：{{c1::本地仓库}}
 - .m2/settings.xml：{{c1::本地Maven配置文件}}
@@ -22,7 +23,7 @@
 |  ----  | ----  |
 |`<modelVersion>`元素 | {{c1::当前POM模型的版本}}|
 |`<groupId>`元素 | {{c1::定义项目属于哪个组，通常与公司域名关联，建立一个myapp组为|`com.google.myapp.`}}|
-|`<artifactId>`元素 | {{c1:: 当前项目在组中的唯一ID }}|
+|`<artifactId>`元素 | {{c1:: 当前项目在组中的唯一ID,通常与模块文件夹名称一致 }}|
 |`<version>`元素 | {{c1:: 定义项目版本,1.0.SHNAPSHOT,其中SHNAPSHOT代表快照版本 }}|
 |`<name>`元素|{{c1::可选的，声明一个对用户友好的项目名称。}}|
 |`<packaging>`元素|{{c1::可选的，打包方式默认为jar。}}|
@@ -133,20 +134,20 @@
 ```
 }}
 
-### mvn dependency插件
+### mvn dependency插件 [	](maven_20200410012359789)
 + 查看当前项目已解析依赖：{{c1:: mvn dependency:list }}
 + 查看当前项目的依赖树：{{c1:: mvn dependency:tree }}
 + 查看当前项目分析当前项目依赖：{{c1:: mvn dependency:analyze }}
 
 
 
-## Maven仓库
+## Maven仓库 [	](maven_20200410012359790)
 
-### 仓库路径与坐标的对应关系为：
+### 仓库路径与坐标的对应关系为： [	](maven_20200410012359792)
 
 {{c1:: groupId/artifactId/version/artifactId-version.packagine }}
 
-### 自定义本地仓库目录地址
+### 自定义本地仓库目录地址 [	](maven_20200410012359793)
 {{c1::
 将以下配置加入settings.xml文件
 ```xml
@@ -156,17 +157,17 @@
 ```
 }}
 
-### 将本地项目的构建安装到Maven仓库中
+### 将本地项目的构建安装到Maven仓库中 [	](maven_20200410012359794)
 {{c1:: 命令：{{c1:: mvn clean install }}
 
-### Maven仓库的分类
+### Maven仓库的分类 [	](maven_20200410012359796)
 + {{c1:: 本地仓库 }}
 + {{c1:: 远程仓库 }}
     + {{c1:: 中央仓库 }}
     + {{c1:: 私服 }}
     + {{c1:: 其他公共库 }}
 
-### 远程仓库认证的配置
+### 远程仓库认证的配置 [	](maven_20200410012359797)
 {{c1::
 在settings.xml文件中配置
 ```xml 
@@ -181,7 +182,7 @@
 ```
 }}
 
-### 部署远程仓库的配置
+### 远程依赖部署仓库的配置 [	](maven_20200410012359798)
 ```xml
 <distributionManagement>
     <repository>
@@ -202,9 +203,10 @@
 + 以上配置到POM中后，配置正确的认证信息到settings.xml中
 + 运行`mvn clean deploy`命令部署。
 
-### 远程仓库的配置
+### 远程依赖仓库以及远程插件仓库的配置 [	](maven_20200410012359800)
 
 ```xml
+<!-- 远程依赖仓库 -->
 <repositories>
         <repository>
             <id>maven-ali</id>
@@ -225,7 +227,18 @@
 + `<updatePolicy>`: {{c1:: 配置Maven检查更新的频率。}}
 + `<checksumPolicy>`: {{c1:: 配置Maven检查检验和文件的策略。}}
 
-### 配置中央仓库镜像
+```xml
+<!-- 远程插件仓库 -->
+<!-- {{c1:: -->
+<pluginRepositories>
+        <pluginRepository>
+            <!-- ...与远程依赖仓库一致 -->
+        </pluginRepository>
+</pluginRepositories>
+<!-- }} -->
+```
+
+### 配置中央仓库镜像 [	](maven_20200410012359801)
 
 {{c1::
 
@@ -247,7 +260,11 @@
 
 {{c1::![image-20200401164331881](maven.assets/image-20200401164331881.png)}}
 
-### Maven的快照版本机制
+### 中央仓库的概念 [	](maven_20200410012359802)
++ 中央仓库是Maven配置文件中默认的仓库地址，如果用户没有修改仓库配置，那么Maven默认会从中央仓库下载依赖。
++ 其在超级POM文件中的默认配置了`<repository>`元素
+
+### Maven的快照版本机制 [	](maven_20200410012359804)
 {{c1::
 + 将当前项目坐标中`<version>`改为类似2.1-SNAPSHOT的值
 + 然后发布到私服中，发布过程中，maven自动为构件打上时间戳。
@@ -255,15 +272,15 @@
 }}
 + 强制更新命令：{{c1:: `mvn clean install-U`}}
 
-### Maven生命周期
+### Maven生命周期 [	](maven_20200410012359805)
 
-### clean生命周期阶段与插件目标的绑定关系
+### clean生命周期阶段与插件目标的绑定关系 [	](maven_20200410012359806)
 
 ![image-20200401180528655](maven.assets/image-20200401180528655.png)
 
 {{c1::![image-20200401164755027](maven.assets/image-20200401164755027.png)}}
 
-### site生命周期阶段与插件目标的绑定关系
+### site生命周期阶段与插件目标的绑定关系 [	](maven_20200410012359808)
 
 ![image-20200401180710199](maven.assets/image-20200401180710199.png)
 
@@ -271,7 +288,7 @@
 
  }}
 
-### default生命周期与内置插件绑定关系及具体任务(打包类型: jar)
+### default生命周期与内置插件绑定关系及具体任务(打包类型: jar) [	](maven_20200410012359809)
 
 | 生命周期阶段           |               插件目标                | 执行任务                               |
 | ---------------------- | :-----------------------------------: | -------------------------------------- |
@@ -283,3 +300,113 @@
 | package                |         maven-jar-plugin:jar          | {{c1::创建项目jar包}}                  |
 | install                |     maven-install-plugin:install      | {{c1::将项目输出构件安装到本地仓库}}   |
 | deploy                 |      maven-deploy-plugin:deploy       | {{c1::将项目输出构件部署到远程仓库}}   |
+
+### 将`maven-source-plugin`插件的`jar-no-fork`绑定到default生命周期的verify阶段 [	](maven_20200410012359811)
+
+```xml
+<!-- {{c1:: -->
+    <plugin>
+        <groupId>org.apache.maven.plugins</groupId>
+        <artifactId>maven-source-plugin</artifactId>
+        <version>2.1.1</version>
+        <executions>
+            <execution>
+                <id>attach-sources</id>
+                <phase>verify</phase>
+                <goals>
+                    <goal>jar-no-fork</goal>
+                </goals>
+            </execution>
+        </executions>
+    </plugin>
+    <!-- 当执行 verify生命周期阶段的时候，maven-Source-plugin:jar-no-fork会得以执行，它会创建一个以 ources. Jar结尾的源码文件包。}} -->
+```
+
+### maven中插件的配置 [	](maven_20200410012359813)
+
++ 命令行配置：{{c1:: `mvn install-Dmaven.test.skip=true`跳过安装配置 }}
++ 插件配置：{{c1:: 在POM中`<plugin>`的子元素`<configuration>`中配置}}
++ 插件任务配置：{{c1:: `<configuration>`下`<tasks>`还可配置插件任务}}
+
+## 聚合与继承 [	](maven_20200410012359814)
+
+### maven聚合的概念 [	](maven_20200410012359816)
+
++ 作用：{{c1:: 使用一条命令就可以构建多个项目，本质上上是maven提供的工具。}}
++ 必要：{{c1:: 聚合模块的打包方式为`pom`}}
++ 父子目录形式的聚合
+    ```xml
+    <!-- 通常使用该形式 -->
+    <!-- {{c1:: -->
+    	<modules>
+            <module>account-email</module>
+            <module>account-persist</module>
+	    </modules>
+    <!-- }} -->
+    ```
++ 平行目录形式的聚合
+    ```xml
+    <!-- {{c1:: -->
+    	<modules>
+            <module>../account-email</module>
+            <module>../account-persist</module>
+	    </modules>
+    <!-- }} -->
+    ```
+
+### maven继承的概念 [	](maven_20200410012359817)
+
++ 作用：{{c1:: 消除重复配置 }}
++ 必要：{{c1:: 与聚合一样，继承模块打包方式也为pom }}
++ 继承父模块语法
+    ```xml
+        <!-- {{c1:: -->
+        <parent>
+            <artifactId>com.juvenxu.mvnbook.account</artifactId>
+            <groupId>account-parent</groupId>
+            <version>1.0-SNAPSHOT</version>
+            <!-- 平行目录形式，指定父模块的pom文件 -->
+            <relativePath>../account-parent/pom.xml</relativePath>
+        </parent>   
+        <!-- }} -->
+    ```
++ `<relativePath>`的默认值：{{c1:: `../pom.xml` (即父目录的pom.xml)}}
+
+### 同一模块中，聚合与继承的区别 [	](maven_20200410012359819)
+
+|              | 聚合                        | 继承                        |
+| :----------- | --------------------------- | --------------------------- |
+| **作用**     | {{c1::方便构建项目}}                | {{c1::消除重复配置}}                |
+| **语法**     | {{c1::父模块中配置`<modules>`}}     | {{c1::子模块中配置`<parent>`}}      |
+| **打包方式** | {{c1::`<packaging>pom<packaging>`}} | {{c1::`<packaging>pom<packaging>`}} |
+
+### 父模块中 `<dependencyManagement> <pluginManagement>` 与 `<dependencies> <plugins>` 区别 [	](maven_20200410012359821)
+
++  `<dependencies> <plugins>`即使在子项目中不写该依赖项，那么子项目仍然会从父项目中继承该依赖项（全部继承）。
++ `<dependencyManagement> <pluginManagement>`里只是声明依赖，并不实现引入，因此子项目需要显示的声明需要用的依赖,无需版本号。
+
+### `<dependency>`中的`<scope>import</scope>` [	](maven_20200410012359823)
+
++ 作用：{{c1:: 将目标POM中`<dependencyManagement`的配置导入并合并到当前POM的`<dependencyManagement`中 }}
++ 必要：{{c1:: import依赖范围通常都是指向打包类型为pom的模块 }}
++ 具体语法：
+    ```xml
+        <!-- {{c1:: -->
+         <dependencyManagement>
+            <dependencies>
+                <dependency>
+                    <groupId>org.springframework.boot</groupId>
+                    <artifactId>spring-boot-dependencies</artifactId>
+                    <version>2.0.1.BUILD-SNAPSHOT</version>
+                    <!-- import依赖范围通常都是指向打包类型为pom的模块 -->
+                    <type>pom</type>
+                    <scope>import</scope>
+                </dependency>
+            </dependencies>
+        </dependencyManagement>
+        <!-- }} -->
+    ```
+### 超级POM概念 [	](maven_20200410012359825)
+
++ 作用：{{c1:: 任何一个Maven项目都隐式的继承自该POM }}
++ 位置：{{c1:: lib下maven-model-builder-3.6.3.jar包中 }}
