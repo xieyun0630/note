@@ -158,7 +158,7 @@
 }}
 
 ### 将本地项目的构建安装到Maven仓库中 [	](maven_20200410012359794)
-{{c1:: 命令：{{c1:: mvn clean install }}
+命令：{{c1:: mvn clean install }}
 
 ### Maven仓库的分类 [	](maven_20200410012359796)
 + {{c1:: 本地仓库 }}
@@ -184,6 +184,7 @@
 
 ### 远程依赖部署仓库的配置 [	](maven_20200410012359798)
 ```xml
+<!-- {{c1:: -->
 <distributionManagement>
     <repository>
         <!-- 唯一标识符 -->
@@ -199,6 +200,7 @@
         <url>http://192.168.1.100/content/repository/proj-snapshots</url>
     </snapshotRepository>
 </distributionManagement>
+<!-- }} -->
 ```
 + 以上配置到POM中后，配置正确的认证信息到settings.xml中
 + 运行`mvn clean deploy`命令部署。
@@ -382,8 +384,8 @@
 
 ### 父模块中 `<dependencyManagement> <pluginManagement>` 与 `<dependencies> <plugins>` 区别 [	](maven_20200410012359821)
 
-+  `<dependencies> <plugins>`即使在子项目中不写该依赖项，那么子项目仍然会从父项目中继承该依赖项（全部继承）。
-+ `<dependencyManagement> <pluginManagement>`里只是声明依赖，并不实现引入，因此子项目需要显示的声明需要用的依赖,无需版本号。
++  {{c1::`<dependencies> <plugins>`}} 即使在子项目中不写该依赖项，那么子项目仍然会从父项目中继承该依赖项（全部继承）。
++ {{c1::`<dependencyManagement> <pluginManagement>`}} 里只是声明依赖，并不实现引入，因此子项目需要显示的声明需要用的依赖,无需版本号。
 
 ### `<dependency>`中的`<scope>import</scope>` [	](maven_20200410012359823)
 
@@ -412,8 +414,8 @@
 + 位置：{{c1:: lib下maven-model-builder-3.6.3.jar包中 }}
 
 ### maven的`Reactor Build Order`概念 [	](maven_20200412024742027)
-+ Maven按顺序读取POM，读取当前模块时，会检查是否有POM依赖链，如果有会从链顶端开始构建模块。
-+ Reactor Build Order是POM的构建顺序。
++ {{c1::Maven按顺序读取POM，读取当前模块时，会检查是否有POM依赖链，如果有会从链顶端开始构建模块。}}
++ {{c1::Reactor Build Order是POM的构建顺序。}}
 
 ### 裁剪反应堆 [	](maven_20200412024742032)
 + 作用：构建完整反应堆中的某些个模块。
@@ -440,9 +442,9 @@
 
 默认安装有以下这几个仓库，在控制台也可以修改远程仓库的地址，第三方仓库等。
 
-| 仓库名               | 作用                                                         |
-| -------------------- | ------------------------------------------------------------ |
-| hosted（宿主仓库库） | 地仓库，通常我们会部署自己的构件到这一类型的仓库。比如公司的第二方库 |
-| proxy（代理仓库）    | 代理仓库，它们被用来代理远程的公共仓库，如maven中央仓库。    |
-| group（组仓库）      | 仓库组，用来合并多个hosted/proxy仓库，当你的项目希望在多个repository使用资源时就不需要多次引用了，只需要引用一个group即可。 |
-| virtual (虚拟仓库)   | 基本用不到，重点关注上面三个仓库的使用                       |
+| 仓库类型 | 作用                                                         |
+| -------- | :----------------------------------------------------------- |
+| hosted   | {{c1::本地仓库，通常我们会部署自己的构件到这一类型的仓库。比如公司的第二方库}} |
+| proxy    | {{c1::代理仓库，它们被用来代理远程的公共仓库，如maven中央仓库。}} |
+| group    | {{c1::仓库组，用来合并多个hosted/proxy仓库，当你的项目希望在多个repository使用资源时就不需要多次引用了，只需要引用一个group即可。}} |
+| virtual  | {{c1::基本用不到，重点关注上面三个仓库的使用}}               |
