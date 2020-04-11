@@ -19,14 +19,14 @@
 
 ### pom.xml文件中概要 [	](maven_20200331123149430)
 
-|  元素  | 意义  |
-|  ----  | ----  |
-|`<modelVersion>`元素 | {{c1::当前POM模型的版本}}|
-|`<groupId>`元素 | {{c1::定义项目属于哪个组，通常与公司域名关联，建立一个myapp组为|`com.google.myapp.`}}|
-|`<artifactId>`元素 | {{c1:: 当前项目在组中的唯一ID,通常与模块文件夹名称一致 }}|
-|`<version>`元素 | {{c1:: 定义项目版本,1.0.SHNAPSHOT,其中SHNAPSHOT代表快照版本 }}|
-|`<name>`元素|{{c1::可选的，声明一个对用户友好的项目名称。}}|
-|`<packaging>`元素|{{c1::可选的，打包方式默认为jar。}}|
+| 元素                 | 意义                                                            |
+| -------------------- | --------------------------------------------------------------- |
+| `<modelVersion>`元素 | {{c1::当前POM模型的版本}}                                       |
+| `<groupId>`元素      | {{c1::定义项目属于哪个组，通常与公司域名关联，建立一个myapp组为 | `com.google.myapp.`}} |
+| `<artifactId>`元素   | {{c1:: 当前项目在组中的唯一ID,通常与模块文件夹名称一致 }}       |
+| `<version>`元素      | {{c1:: 定义项目版本,1.0.SHNAPSHOT,其中SHNAPSHOT代表快照版本 }}  |
+| `<name>`元素         | {{c1::可选的，声明一个对用户友好的项目名称。}}                  |
+| `<packaging>`元素    | {{c1::可选的，打包方式默认为jar。}}                             |
 
 ### maven项目主要骨架 [	](maven_20200331123149431)
 
@@ -272,7 +272,7 @@
 }}
 + 强制更新命令：{{c1:: `mvn clean install-U`}}
 
-### Maven生命周期 [	](maven_20200410012359805)
+### Maven生命周期 [	](maven_20200410012359805790
 
 ### clean生命周期阶段与插件目标的绑定关系 [	](maven_20200410012359806)
 
@@ -374,8 +374,8 @@
 
 ### 同一模块中，聚合与继承的区别 [	](maven_20200410012359819)
 
-|              | 聚合                        | 继承                        |
-| :----------- | --------------------------- | --------------------------- |
+|              | 聚合                                | 继承                                |
+| :----------- | ----------------------------------- | ----------------------------------- |
 | **作用**     | {{c1::方便构建项目}}                | {{c1::消除重复配置}}                |
 | **语法**     | {{c1::父模块中配置`<modules>`}}     | {{c1::子模块中配置`<parent>`}}      |
 | **打包方式** | {{c1::`<packaging>pom<packaging>`}} | {{c1::`<packaging>pom<packaging>`}} |
@@ -410,3 +410,39 @@
 
 + 作用：{{c1:: 任何一个Maven项目都隐式的继承自该POM }}
 + 位置：{{c1:: lib下maven-model-builder-3.6.3.jar包中 }}
+
+### maven的`Reactor Build Order`概念
++ Maven按顺序读取POM，读取当前模块时，会检查是否有POM依赖链，如果有会从链顶端开始构建模块。
++ Reactor Build Order是POM的构建顺序。
+
+### 裁剪反应堆
++ 作用：构建完整反应堆中的某些个模块。
++ 构建指定的几个模块命令：{{c1::`mvn clean install -pl account-email,account-persist`}}
++ 同时构建所列模块的依赖模块：{{c1::`mvn clean install -pl account-email-am`}}
++ 同时构建依赖于所列模块的模块：{{c1::`mvn clean install -pl account-email-amd`}}
++ 在完整的反应堆构建顺序基础上制定从哪个模块开始构建：{{c1::`mvn clean install -rf account-email`}}
++ 在-pl -am或者-pl -amd的基础上应用-rf参数：{{c1::`mvn clean install -pl account-parent -amd -rf acount-email`}}
+
+### windows下安装Nexus与启动
+
+1. 下载Nexus安装包后。
+2. {{c1:: 在.../nexus-3.14.0-04-win64/nexus-3.14.0-04/bin 目录下，以管理员身份运行cmd。}}
+3. 启动nexus服务
+   -  启动nexus服务命令：{{c1::`nexus.exe /run`}}
+   - 安装nexus本地服务来启动
+     - 安装服务：{{c1::`nexus.exe /install <optional-service-name>`}}
+     - 启动服务：{{c1::`nexus.exe /start <optional-service-name>`}}
+     - 关闭服务：{{c1::`nexus.exe /stop <optional-service-name>`}}
+     - 手动开启与关闭服务：{{c1::`控制面板\系统和安全\管理工具\服务`}}
+4. 访问Nexus:{{c1::`http://localhost:8081/`}}
+
+### nexus仓库类型
+
+默认安装有以下这几个仓库，在控制台也可以修改远程仓库的地址，第三方仓库等。
+
+| 仓库名               | 作用                                                         |
+| -------------------- | ------------------------------------------------------------ |
+| hosted（宿主仓库库） | 地仓库，通常我们会部署自己的构件到这一类型的仓库。比如公司的第二方库 |
+| proxy（代理仓库）    | 代理仓库，它们被用来代理远程的公共仓库，如maven中央仓库。    |
+| group（组仓库）      | 仓库组，用来合并多个hosted/proxy仓库，当你的项目希望在多个repository使用资源时就不需要多次引用了，只需要引用一个group即可。 |
+| virtual (虚拟仓库)   | 基本用不到，重点关注上面三个仓库的使用                       |
