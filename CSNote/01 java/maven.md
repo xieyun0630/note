@@ -411,11 +411,11 @@
 + 作用：{{c1:: 任何一个Maven项目都隐式的继承自该POM }}
 + 位置：{{c1:: lib下maven-model-builder-3.6.3.jar包中 }}
 
-### maven的`Reactor Build Order`概念
+### maven的`Reactor Build Order`概念 [	](maven_20200412024742027)
 + Maven按顺序读取POM，读取当前模块时，会检查是否有POM依赖链，如果有会从链顶端开始构建模块。
 + Reactor Build Order是POM的构建顺序。
 
-### 裁剪反应堆
+### 裁剪反应堆 [	](maven_20200412024742032)
 + 作用：构建完整反应堆中的某些个模块。
 + 构建指定的几个模块命令：{{c1::`mvn clean install -pl account-email,account-persist`}}
 + 同时构建所列模块的依赖模块：{{c1::`mvn clean install -pl account-email-am`}}
@@ -423,7 +423,7 @@
 + 在完整的反应堆构建顺序基础上制定从哪个模块开始构建：{{c1::`mvn clean install -rf account-email`}}
 + 在-pl -am或者-pl -amd的基础上应用-rf参数：{{c1::`mvn clean install -pl account-parent -amd -rf acount-email`}}
 
-### windows下安装Nexus与启动
+### windows下安装Nexus与启动 [	](maven_20200412024742034)
 
 1. 下载Nexus安装包后。
 2. {{c1:: 在.../nexus-3.14.0-04-win64/nexus-3.14.0-04/bin 目录下，以管理员身份运行cmd。}}
@@ -436,7 +436,7 @@
      - 手动开启与关闭服务：{{c1::`控制面板\系统和安全\管理工具\服务`}}
 4. 访问Nexus:{{c1::`http://localhost:8081/`}}
 
-### nexus仓库类型
+### nexus仓库类型 [	](maven_20200412024742035)
 
 默认安装有以下这几个仓库，在控制台也可以修改远程仓库的地址，第三方仓库等。
 
