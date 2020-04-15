@@ -208,6 +208,7 @@
 
 ```xml
 <!-- 远程依赖仓库 -->
+<!-- {{c1:: -->
 <repositories>
         <repository>
             <id>maven-ali</id>
@@ -217,13 +218,14 @@
             </releases>
             <snapshots>
                 <enabled>true</enabled>
-                <!-- daily,always -->
+                 <!--always（一直），daily（默认，每日），interval：X（这里X是以分钟为单位的时间间隔），或者never（从不）。 -->
                 <updatePolicy>always</updatePolicy>
                 <!-- ignore,warn,fail -->
                 <checksumPolicy>fail</checksumPolicy>
             </snapshots>
         </repository>
 </repositories>
+<!-- }} -->
 ```
 + `<updatePolicy>`: {{c1:: 配置Maven检查更新的频率。}}
 + `<checksumPolicy>`: {{c1:: 配置Maven检查检验和文件的策略。}}
