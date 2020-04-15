@@ -1,9 +1,10 @@
+
 ### MAVEN配置HTTP代理
 1. 检测本地网络是否不能直接访问Maven的远程中央仓库，
-    
+   
     + 命令为ping repo1.maven.org
 2. 要检查代理服务器是否畅通
-    
+   
     + 运行`telnet  192.168.10.117 3267`来检查该地址的该端口是否畅通
 3. 修改~/.m2/settings.xml
     ```xml
@@ -88,3 +89,19 @@ maven的默认编译使用的jdk版本貌似很低，使用maven-compiler-plugin
 方式一：搜索:java.configuration.maven，配置setting.xml路径
 
 ![image-20200331122852944](java.assets/image-20200331122852944.png)
+
+
+### cobertura-maven-plugin配置
+```xml
+			<plugin>
+				<groupId>org.codehaus.mojo</groupId>
+				<artifactId>cobertura-maven-plugin</artifactId>
+				<version>2.6</version>
+				<configuration>
+					<formats>
+						<format>html</format>
+						<format>xml</format>
+					</formats>
+				</configuration>
+			</plugin>
+```

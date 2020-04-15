@@ -3,6 +3,7 @@
 - {{c1::环境变量`M2_HOME`：Maven安装目录}}
 - {{c1::环境变量`Path`:添加`"%M2_HOME%\bin"`}}
 - {{c1::管理员运行命令行检查安装情况：`mvn -v`}}
+
 ### .m2文件夹的作用 [	](maven_20200331123149426)
 
 - 位置：{{c1::~/.m2}}
@@ -410,3 +411,32 @@
 
 + 作用：{{c1:: 任何一个Maven项目都隐式的继承自该POM }}
 + 位置：{{c1:: lib下maven-model-builder-3.6.3.jar包中 }}
+
+### maven-surefire-plugin的test目标自动执行测试源码类名的默认规则？
++ `* /Test*.java`:{{c1:: 任何子目录下所有命令以Test开头的java类}}
++ `** / * Test.java`:{{c1:: 任何子目录下所有命令以Test结尾的java类}}
++ `** / * TestCase.java`:{{c1:: 任何子目录下所有命令以TestCase结尾的java类}}
+
+### maven构建项目时跳过测试
+
++ 直接跳过测试：{{c1:: `mvn package -DskipTests`}}
++ 跳过测试与测试编译：{{c1:: `mvn package -Dmaven.test.skip=true`}}
+
+### 动态指定要运行的测试用例
+
+- 只执行单个测试类：{{c1:: `mvn test -Dtest = RandomGeneratorTest`}}
+- 执行符合通配符的类：{{c1:: `mvn test -Dtest = Random*Test`}}
+- 结合使星号与逗号指定类：{{c1:: `mvn test -Dtest = Random*Test,AccountCaptchaServiceTest`}}
+
+### Maven生成的基本测试报告
+
+- maven-surefire-plugin会在项目的{{c1:: target/surefire-reports}}目录下生成两种风格的错误报告
+  1. {{c1::简单测试报告}}
+  2. {{c1::与Junit兼容的XML格式}}
+
+### Maven生成代码覆盖率报告
+
+- 插件：{{c1::`cobertura-maven-plugin`}}
+- 目标命令：{{c1::`mvn cobertura:cobertura`}}
+- 报告生成位置：{{c1::`报表生成在target/site/cobertura目录下  `}}
+
