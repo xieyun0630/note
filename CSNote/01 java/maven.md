@@ -452,7 +452,10 @@
 | group    | {{c1::仓库组，用来合并多个hosted/proxy仓库，当你的项目希望在多个repository使用资源时就不需要多次引用了，只需要引用一个group即可。}} |
 | virtual  | {{c1::基本用不到，重点关注上面三个仓库的使用}}
 
+## Maven测试
+
 ### maven-surefire-plugin的test目标自动执行测试源码类名的默认规则？
+
 + `* /Test*.java`:{{c1:: 任何子目录下所有命令以Test开头的java类}}
 + `** / * Test.java`:{{c1:: 任何子目录下所有命令以Test结尾的java类}}
 + `** / * TestCase.java`:{{c1:: 任何子目录下所有命令以TestCase结尾的java类}}
@@ -479,3 +482,80 @@
 - 插件：{{c1::`cobertura-maven-plugin`}}
 - 目标命令：{{c1::`mvn cobertura:cobertura`}}
 - 报告生成位置：{{c1::`报表生成在target/site/cobertura目录下  `}}
+
+### `cargo-maven2-plugin`插件配置
+
+1. maven快捷命令配置
+```xml
+ <pluginGroups>
+     {{c1::
+     <pluginGroup>org.codehaus.cargo</pluginGroup>
+     }}
+  </pluginGroups>
+```
+2. 本地部署配置
+    ```xml
+    <plugin>    
+    <groupId>org.codehaus.cargo</groupId>    
+    <artifactId>cargo-maven2-plugin</artifactId>    
+    <version>1.1.3</version>    
+    <configuration>    
+    <!-- {{c1:: -->
+        <container>    
+            <containerId>tomcat7x</containerId>    
+            <home>E:\tomcat\apache-tomcat-7.0.26</home>    
+        </container>    
+        <configuration>    
+            <type>existing</type>    
+            <home>E:\tomcat\apache-tomcat-7.0.26</home>    
+            <!--     
+            <type>standalone</type>    
+            <home>${project.build.directory}/tomcat7x</home>    
+            -->    
+            <!-- 指定端口 -->
+            <properties>
+                <cargo.servlet.port>8081</cargo.servlet.port>
+            </properties>
+        </configuration>
+    <!-- }} -->
+    </configuration>    
+    </plugin>    
+    ```
+    + standalone模式：{{c1:: 会从Web容器目录复制一份配置到用户指定的目录，然后在此基础上部署应用，每次重新构建，这个目录会被清空，所有配置重新生成}}
+    + existing模式：{{c1:: 用户需要指定现有的Web容器配置目录， 然后Cargo会直接使用这些配置并将应用部署到对应的位置。}}
+    + 启用命令：{{c1:: `mvn cargo：start`}}
+3. 远程部署
+    ```xml
+             <plugin>
+                <groupId>org.codehaus.cargo</groupId>
+                <artifactId>cargo-maven2-plugin</artifactId>
+                <version>1.0</version>
+                <configuration>
+                    <!-- {{c1:: -->
+                    <container>
+                        <containerId>tomcat6x</containerId>
+                        <type>remote</type>
+                    </container>
+                    <configuration>
+                        <type>runtime</type>
+                        <properties>
+                            <cargo.remote.username>admin</cargo.remote.username>
+                            <cargo.remote.password>admin</cargo.remote.password>
+                            <cargo.remote.manager.url>http://localhost:8080/manager</cargo.remote.manager.url>
+                        </properties>
+                    </configuration>
+                    <!-- }} -->
+                </configuration>
+            </plugin>
+    ```
+    + tomcat的tomcat-users.xml中配置管理员密码
+
+    ```xml
+        <!-- {{c1:: -->
+        <tomcat-users>
+            <role rolename="manager"/>
+            <user username="admin" password="admin" roles="manager"/>
+        </tomcat-users>
+        <!-- }} -->
+    ```
+    + 使用命令:{{c1::`mvn cargo:redeploy`}}
