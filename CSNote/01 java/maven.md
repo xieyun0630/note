@@ -452,35 +452,38 @@
 | group    | {{c1::仓库组，用来合并多个hosted/proxy仓库，当你的项目希望在多个repository使用资源时就不需要多次引用了，只需要引用一个group即可。}} |
 | virtual  | {{c1::基本用不到，重点关注上面三个仓库的使用}}
 
-### maven-surefire-plugin的test目标自动执行测试源码类名的默认规则？
+## Maven测试 [	](maven_20200416080933417)
+
+### maven-surefire-plugin的test目标自动执行测试源码类名的默认规则？ [	](maven_20200416080933420)
+
 + `* /Test*.java`:{{c1:: 任何子目录下所有命令以Test开头的java类}}
 + `** / * Test.java`:{{c1:: 任何子目录下所有命令以Test结尾的java类}}
 + `** / * TestCase.java`:{{c1:: 任何子目录下所有命令以TestCase结尾的java类}}
 
-### maven构建项目时跳过测试
+### maven构建项目时跳过测试 [	](maven_20200416080933422)
 
 + 直接跳过测试：{{c1:: `mvn package -DskipTests`}}
 + 跳过测试与测试编译：{{c1:: `mvn package -Dmaven.test.skip=true`}}
 
-### 动态指定要运行的测试用例
+### 动态指定要运行的测试用例 [	](maven_20200416080933424)
 
 - 只执行单个测试类：{{c1:: `mvn test -Dtest = RandomGeneratorTest`}}
 - 执行符合通配符的类：{{c1:: `mvn test -Dtest = Random*Test`}}
 - 结合使星号与逗号指定类：{{c1:: `mvn test -Dtest = Random*Test,AccountCaptchaServiceTest`}}
 
-### Maven生成的基本测试报告
+### Maven生成的基本测试报告 [	](maven_20200416080933426)
 
 - maven-surefire-plugin会在项目的{{c1:: target/surefire-reports}}目录下生成两种风格的错误报告
   1. {{c1::简单测试报告}}
   2. {{c1::与Junit兼容的XML格式}}
 
-### Maven生成代码覆盖率报告
+### Maven生成代码覆盖率报告 [	](maven_20200416080933428)
 
 - 插件：{{c1::`cobertura-maven-plugin`}}
 - 目标命令：{{c1::`mvn cobertura:cobertura`}}
 - 报告生成位置：{{c1::`报表生成在target/site/cobertura目录下  `}}
 
-### 配置`maven-surefire-plugin`插件以包含或者排除一些测试类
+### 配置`maven-surefire-plugin`插件以包含或者排除一些测试类 [	](maven_20200416080933429)
 
 ```xml
     <plugin>
@@ -503,7 +506,7 @@
     </configuration>
     </plugin>
 ```
-### TestNG依赖
+### TestNG依赖 [	](maven_20200416080933431)
 ```xml
     <dependency>
     <!-- {{c1:: -->
@@ -514,18 +517,18 @@
     <!-- }} -->
     </dependency>
 ```
-### TestNG 与 JUnit 常用类库对应关系
+### TestNG 与 JUnit 常用类库对应关系 [	](maven_20200416080933433)
 
 | Junit | testNG | 作用 |
 |------- | ------- | -------|
-|org.junit.Test | org.testng.annotations.Test | {{c1:: 标注方法为测试方法}} | 
-|org.junit.Assert | org.testng.Assert | {{c1:: 检查测试结果}} | 
-|org.junit.Before | org.testng.annotations.BeforeMethod | {{c1:: 标注方法在每个测试方法之前运行}} | 
-|org.junit.After | org.testng.annotations.AfterMethod | {{c1:: 标注方法在每个测试方法之后运行}} | 
-|org.junit.BeforeClass | org.testng.annotations.BeforeClass | {{c1:: 标注方法在所有测试方法之前运行}} | 
-|org.junit.AfterClass | org.testng.annotations.AfterClass | {{c1:: 标注方法在所有测试方法之后运行}} | 
+|org.junit.Test | org.testng.annotations.Test | {{c1:: 标注方法为测试方法}} |
+|org.junit.Assert | org.testng.Assert | {{c1:: 检查测试结果}} |
+|org.junit.Before | org.testng.annotations.BeforeMethod | {{c1:: 标注方法在每个测试方法之前运行}} |
+|org.junit.After | org.testng.annotations.AfterMethod | {{c1:: 标注方法在每个测试方法之后运行}} |
+|org.junit.BeforeClass | org.testng.annotations.BeforeClass | {{c1:: 标注方法在所有测试方法之前运行}} |
+|org.junit.AfterClass | org.testng.annotations.AfterClass | {{c1:: 标注方法在所有测试方法之后运行}} |
 
-### 配置TestNG要运行的测试类
+### 配置TestNG要运行的测试类 [	](maven_20200416080933435)
 + 在`testing.xml`资源文件中配置如下
     ```xml
     <suite name="test">
@@ -537,7 +540,7 @@
         </test>
     </suite>
     ```
-### 配置maven-surefire-plugin使用testing.xml
+### 配置maven-surefire-plugin使用testing.xml [	](maven_20200416080933436)
 ```xml
     <plugin>
     <groupId>org.apache.maven.plugins</groupId>
@@ -552,7 +555,7 @@
     </configuration>
     </plugin>
 ```
-### `maven-surefire-plugin`测试TestNG测试组中的方法
+### `maven-surefire-plugin`测试TestNG测试组中的方法 [	](maven_20200416080933438)
 
 + 加入测试组：{{c1:: `Test(groups = {"util","medium"})` }}
 + 配置：
@@ -568,7 +571,7 @@
             </configuration>
         </plugin>
     ```
-### maven打包测试代码到本地仓库
+### maven打包测试代码到本地仓库 [	](maven_20200416080933440)
 + 插件配置：
     ```xml
         <plugin>
@@ -596,7 +599,7 @@
             <scope>test</scope>
         </dependency>
     ```
-### Maven的web项目目录结构
+### Maven的web项目目录结构 [	](maven_20200416080933442)
 
 + 在原本的jar项目目录结构之上新添加：`src/main/webapp/`目录结构
 + 该目录结构包含：
@@ -604,7 +607,7 @@
         + web.xml
     + HTML jsp css js之类的文件
 
-### 配置maven过滤，用指定的参数替换directory下的文件中的参数
+### 配置maven过滤，用指定的参数替换directory下的文件中的参数 [	](maven_20200416080933444)
 1. 配置如下
     ```xml
         <build>
@@ -623,7 +626,7 @@
 3. 执行 mvn resources:resources 命令，最后会在target/classes下看到test.txt的内容变成了，如下所示：
 {{c1:: I want to say : HelloWorld }}
 
-### 指定maven生成的war包的名字
+### 指定maven生成的war包的名字 [	](maven_20200416080933445)
 + 配置：
     ```xml
     <!-- {{c1:: -->
@@ -634,7 +637,7 @@
     ```
 + 如果没有设置，{{c1:: 打包后的报名-----artifactId与version拼接的结果 }}
 
-### `jetty-maven-plugin`插件使用
+### `jetty-maven-plugin`插件使用 [	](maven_20200416080933447)
 1. 配置插件
     ```xml
     <plugin>
@@ -677,3 +680,80 @@
     </settings>
     ```
 3. 运行命令行：{{c1:: `mvn jetty:run [-Djetty.port=9999]` }}
+
+### `cargo-maven2-plugin`插件配置 [	](maven_20200416080933449)
+
+1. maven快捷命令配置
+    ```xml
+    <pluginGroups>
+        {{c1::
+        <pluginGroup>org.codehaus.cargo</pluginGroup>
+        }}
+    </pluginGroups>
+    ```
+2. 本地部署配置
+    ```xml
+    <plugin>    
+    <groupId>org.codehaus.cargo</groupId>    
+    <artifactId>cargo-maven2-plugin</artifactId>    
+    <version>1.1.3</version>    
+    <configuration>    
+    <!-- {{c1:: -->
+        <container>    
+            <containerId>tomcat7x</containerId>    
+            <home>E:\tomcat\apache-tomcat-7.0.26</home>    
+        </container>    
+        <configuration>    
+            <type>existing</type>    
+            <home>E:\tomcat\apache-tomcat-7.0.26</home>    
+            <!--     
+            <type>standalone</type>    
+            <home>${project.build.directory}/tomcat7x</home>    
+            -->    
+            <!-- 指定端口 -->
+            <properties>
+                <cargo.servlet.port>8081</cargo.servlet.port>
+            </properties>
+        </configuration>
+    <!-- }} -->
+    </configuration>    
+    </plugin>    
+    ```
+    + standalone模式：{{c1:: 会从Web容器目录复制一份配置到用户指定的目录，然后在此基础上部署应用，每次重新构建，这个目录会被清空，所有配置重新生成}}
+    + existing模式：{{c1:: 用户需要指定现有的Web容器配置目录， 然后Cargo会直接使用这些配置并将应用部署到对应的位置。}}
+    + 启用命令：{{c1:: `mvn cargo：start`}}
+3. 远程部署
+    ```xml
+             <plugin>
+                <groupId>org.codehaus.cargo</groupId>
+                <artifactId>cargo-maven2-plugin</artifactId>
+                <version>1.0</version>
+                <configuration>
+                    <!-- {{c1:: -->
+                    <container>
+                        <containerId>tomcat6x</containerId>
+                        <type>remote</type>
+                    </container>
+                    <configuration>
+                        <type>runtime</type>
+                        <properties>
+                            <cargo.remote.username>admin</cargo.remote.username>
+                            <cargo.remote.password>admin</cargo.remote.password>
+                            <cargo.remote.manager.url>http://localhost:8080/manager</cargo.remote.manager.url>
+                        </properties>
+                    </configuration>
+                    <!-- }} -->
+                </configuration>
+            </plugin>
+    ```
+    + tomcat的tomcat-users.xml中配置管理员密码
+
+    ```xml
+        <!-- {{c1:: -->
+        <tomcat-users>
+            <role rolename="manager"/>
+            <user username="admin" password="admin" roles="manager"/>
+        </tomcat-users>
+        <!-- }} -->
+    ```
+    + 使用命令:{{c1::`mvn cargo:redeploy`}}
