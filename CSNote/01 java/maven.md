@@ -479,3 +479,201 @@
 - 插件：{{c1::`cobertura-maven-plugin`}}
 - 目标命令：{{c1::`mvn cobertura:cobertura`}}
 - 报告生成位置：{{c1::`报表生成在target/site/cobertura目录下  `}}
+
+### 配置`maven-surefire-plugin`插件以包含或者排除一些测试类
+
+```xml
+    <plugin>
+    <groupId>org.apache.maven.plugins</groupId>
+    <atifactId>maven-surefire-plugin</atifactId>
+    <version>2.5</version>
+    <configuration>
+        <!-- 测试以Tests.java结尾的类 -->
+        <!-- {{c1:: -->
+        <includes>
+            <include>** / *Tests.java</include>
+        </includes>
+        <!-- }} -->
+        <!-- 排除运行测试类 -->
+        <!-- {{c1:: -->
+        <excludes>
+            <exclude>** / *ServiceTest.java</exclude>
+        </excludes>
+        <!-- }} -->
+    </configuration>
+    </plugin>
+```
+### TestNG依赖
+```xml
+    <dependency>
+    <!-- {{c1:: -->
+      <groupId>org.testng</groupId>
+      <artifactId>testng</artifactId>
+      <version>6.10</version>
+      <scope>test</scope>
+    <!-- }} -->
+    </dependency>
+```
+### TestNG 与 JUnit 常用类库对应关系
+
+| Junit | testNG | 作用 |
+|------- | ------- | -------|
+|org.junit.Test | org.testng.annotations.Test | {{c1:: 标注方法为测试方法}} | 
+|org.junit.Assert | org.testng.Assert | {{c1:: 检查测试结果}} | 
+|org.junit.Before | org.testng.annotations.BeforeMethod | {{c1:: 标注方法在每个测试方法之前运行}} | 
+|org.junit.After | org.testng.annotations.AfterMethod | {{c1:: 标注方法在每个测试方法之后运行}} | 
+|org.junit.BeforeClass | org.testng.annotations.BeforeClass | {{c1:: 标注方法在所有测试方法之前运行}} | 
+|org.junit.AfterClass | org.testng.annotations.AfterClass | {{c1:: 标注方法在所有测试方法之后运行}} | 
+
+### 配置TestNG要运行的测试类
++ 在`testing.xml`资源文件中配置如下
+    ```xml
+    <suite name="test">
+        <test name="login">
+            <classes>
+                <class name="com.units.mytest.suite.SuiteConfig"/>
+                <class name="com.units.mytest.suite.LoginTest"/>
+            </classes>
+        </test>
+    </suite>
+    ```
+### 配置maven-surefire-plugin使用testing.xml
+```xml
+    <plugin>
+    <groupId>org.apache.maven.plugins</groupId>
+    <atifactId>maven-surefire-plugin</atifactId>
+    <version>2.5</version>
+    <configuration>
+        <!-- {{c1:: -->
+        <suiteXmlFiles>
+            <suiteXmlFile>testing.xml</suiteXmlFile>
+        </suiteXmlFiles>>
+        <!-- }} -->
+    </configuration>
+    </plugin>
+```
+### `maven-surefire-plugin`测试TestNG测试组中的方法
+
++ 加入测试组：{{c1:: `Test(groups = {"util","medium"})` }}
++ 配置：
+    ```xml
+        <plugin>
+            <groupId>org.apache.maven.plugins</groupId>
+            <atifactId>maven-surefire-plugin</atifactId>
+            <version>2.5</version>
+            <configuration>
+            <!-- {{c1:: -->
+                <groups>util,medium</groups>
+            <!-- }} -->
+            </configuration>
+        </plugin>
+    ```
+### maven打包测试代码到本地仓库
++ 插件配置：
+    ```xml
+        <plugin>
+            <groupId>org.apache.maven.plugins</groupId>
+            <atifactId>maven-jar-plugin</atifactId>
+            <version>2.2</version>
+            <executions>
+                <execution>
+                <!-- {{c1:: -->
+                    <goals>
+                        <goal>test-jar</goal>
+                    </goals>
+                <!-- }} -->
+                </execution>
+            </executions>
+        </plugin>
+    ```
++ 依赖测试包构建配置
+    ```xml
+        <dependency>
+            <groupId>testPackage</groupId>
+            <artifactId>testPackage</artifactId>
+            <version>1.0.0-SNAPSHOT</version>
+            <type>test-jar</type>
+            <scope>test</scope>
+        </dependency>
+    ```
+### Maven的web项目目录结构
+
++ 在原本的jar项目目录结构之上新添加：`src/main/webapp/`目录结构
++ 该目录结构包含：
+    + WEB-INF
+        + web.xml
+    + HTML jsp css js之类的文件
+
+### 配置maven过滤，用指定的参数替换directory下的文件中的参数
+1. 配置如下
+    ```xml
+        <build>
+            <resources>
+            <!-- {{c1:: -->
+                <resource>
+                    <directory>src/main/resources</directory>
+                    <filtering>true</filtering>
+                </resource>
+            <!-- }} -->
+            </resources>
+        </build>
+    ```
+2. 然后在src/main/resources下，添加一个文件，比如叫test.txt。test.txt内容如下：
+{{c1:: I want to say :　${name} }}
+3. 执行 mvn resources:resources 命令，最后会在target/classes下看到test.txt的内容变成了，如下所示：
+{{c1:: I want to say : HelloWorld }}
+
+### 指定maven生成的war包的名字
++ 配置：
+    ```xml
+    <!-- {{c1:: -->
+    <build>
+        <finalName>account</finalName>
+    </build>
+    <!-- }} -->
+    ```
++ 如果没有设置，{{c1:: 打包后的报名-----artifactId与version拼接的结果 }}
+
+### `jetty-maven-plugin`插件使用
+1. 配置插件
+    ```xml
+    <plugin>
+        <!-- {{c1:: -->
+        <groupId>org.eclipse.jetty</groupId>
+        <artifactId>jetty-maven-plugin</artifactId>
+        <!-- }} -->
+        <version>9.4.7.v20180619</version>
+        <configuration>
+            <!-- 每隔10秒扫描一次项目变更 -->
+            <!-- {{c1:: -->
+            <scanInteralSeconds>10</scanInteralSeconds>
+            <!-- }} -->	
+            <!-- 可以通过：http:localhost:port/test/访问应用 -->
+            <!-- {{c1:: -->
+            <webAppConfig>
+                <contextPath>/test</contextPath>
+            </webAppConfig>
+            <!-- }} -->	
+            <!-- 配置端口号与主机名 -->
+            <!-- {{c1:: -->
+            <httpConnector>
+                <port>8080</port>
+                <host>localhost</host>
+            </httpConnector>
+            <!-- }} -->	
+        </configuration>
+    </plugin>
+    ```
+2. 在settings.xml中配置简化命令行:
+    ```xml
+    <settings>
+        <!-- {{c1:: -->
+        <pluginGroups>
+            <pluginGroup>
+                org.eclipse.jetty
+            </pluginGroup>
+        </pluginGroups>
+        <!-- }} -->	
+    </settings>
+    ```
+3. 运行命令行：{{c1:: `mvn jetty:run [-Djetty.port=9999]` }}
