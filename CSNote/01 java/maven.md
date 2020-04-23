@@ -257,25 +257,24 @@
 ```
 }}
 
-- id：唯一标识一个镜像
-- name：镜像名称
-- url：镜像地址
-- mirrorOf：代表一个镜像的替代位置，例如central就表示代替官方的中央仓库
-- mirrorOf用法如下：
-
-{{c1::![image-20200401164331881](maven.assets/image-20200401164331881.png)}}
+- id：{{c1::唯一标识一个镜像}}
+- name：{{c1::镜像名称}}
+- url：{{c1::镜像地址}}
+- mirrorOf：{{c1::代表一个镜像的替代位置，例如central就表示代替官方的中央仓库}}
+- mirrorOf匹配语法如下：
+    + {{c1::![image-20200401164331881](maven.assets/image-20200401164331881.png)}}
 
 ### 中央仓库的概念 [	](maven_20200410012359802)
-+ 中央仓库是Maven配置文件中默认的仓库地址，如果用户没有修改仓库配置，那么Maven默认会从中央仓库下载依赖。
-+ 其在超级POM文件中的默认配置了`<repository>`元素
++ 中央仓库是{{c1::Maven配置文件中默认的仓库地址，如果用户没有修改仓库配置，那么Maven默认会从中央仓库下载依赖。}}
++ 其在超级POM文件中{{c1::默认配置了`<repository>`元素}}
 
 ### Maven的快照版本机制 [	](maven_20200410012359804)
-{{c1::
-+ 将当前项目坐标中`<version>`改为类似2.1-SNAPSHOT的值
+
++ 将当前项目坐标中`<version>`改为类似{{c1::`2.1-SNAPSHOT`}}的值
 + 然后发布到私服中，发布过程中，maven自动为构件打上时间戳。
-+ 类似：2.1-20091214.221414-13.jar
++ 类似：{{c1:: 2.1-20091214.221414-13.jar }}
 }}
-+ 强制更新命令：{{c1:: `mvn clean install-U`}}
++ 强制更新当前快照版本命令：{{c1:: `mvn clean install-U`}}
 
 ### Maven生命周期 [	](maven_20200410012359805790
 
@@ -298,7 +297,7 @@
 | 生命周期阶段           |               插件目标                | 执行任务                               |
 | ---------------------- | :-----------------------------------: | -------------------------------------- |
 | process-resources      |   maven-resources-plugin:resources    | {{c1::复制主资源文件至主输出目录}}     |
-| compile                |     maven-compile-plugin:compile      | {{c1::编译主代码至主输出目录}}         |
+| compile                |     maven-compiler-plugin:compile      | {{c1::编译主代码至主输出目录}}         |
 | process-test-resources | maven-resources-plugin:testRresources | {{c1::复制测试资源文件至测试输出目录}} |
 | test-compile           |   maven-compiler-plugin:testCompile   | {{c1::编译测试代码至测试输出目录}}     |
 | test                   |      maven-surefire-plugin:test       | {{c1::执行测试用例}}                   |
@@ -324,7 +323,7 @@
             </execution>
         </executions>
     </plugin>
-    <!-- 当执行 verify生命周期阶段的时候，maven-Source-plugin:jar-no-fork会得以执行，它会创建一个以 ources. Jar结尾的源码文件包。}} -->
+    <!-- 当执行 verify生命周期阶段的时候，maven-Source-plugin:jar-no-fork会得以执行，它会创建一个以 sources.Jar结尾的源码文件包。}} -->
 ```
 
 ### maven中插件的配置 [	](maven_20200410012359813)
@@ -599,13 +598,13 @@
             <scope>test</scope>
         </dependency>
     ```
-### Maven的web项目目录结构 [	](maven_20200416080933442)
-
-+ 在原本的jar项目目录结构之上新添加：`src/main/webapp/`目录结构
+### 生成Maven的web项目目录结构 [	](maven_20200416080933442)
++ pom配置：{{c1:: `<packaging>war</packaging>` }}
++ 在原本的jar项目目录结构之上新添加：{{c1:: `src/main/webapp/`目录结构 }}
 + 该目录结构包含：
     + WEB-INF
-        + web.xml
-    + HTML jsp css js之类的文件
+        + {{c1:: web.xml }}
+    + {{c1:: HTML jsp css js之类的文件 }}
 
 ### 配置maven过滤，用指定的参数替换directory下的文件中的参数 [	](maven_20200416080933444)
 1. 配置如下
