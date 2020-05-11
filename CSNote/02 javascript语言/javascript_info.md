@@ -1,3 +1,4 @@
+### 与用户交互的 3 个浏览器指定的函数：[	](javascript_info_20191219101334387)
 我们使用浏览器作为工作环境，所以基本的 UI 功能将是：
 
 -  {{c1::  prompt(question[, default])}}
@@ -526,8 +527,6 @@ if (zero) { // zero is true, because it's an object
   alert( "zero is truthy?!?" );
 }
 ```
-
-## 数字类型  [	](javascript_info_20191219101334457)
 
 ### `js`中编写数字的更多方法  [	](javascript_info_20191219101334459)
 
