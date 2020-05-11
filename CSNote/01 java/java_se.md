@@ -313,7 +313,7 @@ circle.setStroke(Color.BLACK);
 // Add circle and rectangle to the pane
 pane.getChildren().add(circle);
 pane.getChildren().add(rectangle);
-//{{c1:
+//{{c1::
 // Create a path transition 
 PathTransition pt = new PathTransition();
 pt.setDuration(Duration.millis(4000));
@@ -699,7 +699,7 @@ vScrollBar.setOrientation(Orientation.VERTICAL);
 
 ### Media MediaPlayer  MediaView之间的关系 [	](java_se_20191219101334795)
 
-{{c1:：
+{{c1::
 
 ![image-20191218232335953](java_se.assets/image-20191218232335953.png)
 

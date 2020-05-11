@@ -1,4 +1,5 @@
 ### 与用户交互的 3 个浏览器指定的函数：[	](javascript_info_20191219101334387)
+
 我们使用浏览器作为工作环境，所以基本的 UI 功能将是：
 
 -  {{c1::  prompt(question[, default])}}
@@ -3440,4 +3441,231 @@ let results = await Promise.all([
 这个 `await` 关键字又让 JavaScript 引擎等待直到 promise 完成，然后：
 
 1. {{c1::如果有错误，就会抛出异常，就像那里有一个 `throw error` 语句一样。}}
+
 2. {{c1::否则，就返回结果，并赋值。}}
+
+## Generator，高级 iteration
+
+### Generator 函数:以下代码将会输出什么？
+
+```javascript
+  function* generateSequence() {
+  yield 1;
+  yield 2;
+  return 3;
+  }
+  let generator = generateSequence();
+  alert(JSON.stringify(generator.next())); 
+  alert(JSON.stringify(generator.next())); 
+  alert(JSON.stringify(generator.next())); 
+```
+结果：
+{{c1::
+```json
+{value: 1, done: false}
+{value: 2, done: false}
+{value: 3, done: true}
+```
+}}
+
+### 使用遍历Generator 函数例子
+
+- 注意当 done: true 时，for..of 循环会忽略最后一个 value
+
+```javascript
+function* generateSequence() {
+  yield 1;
+  yield 2;
+  return 3;
+}
+// 遍历Generator函数
+//for..of 循环遍历
+//{{c1::
+let generator = generateSequence();
+for(let value of generator) {
+  alert(value); // 1，然后是 2
+}
+//}}
+//spread 语法 ...
+//{{c1::
+let sequence = [0, ...generateSequence()];
+alert(sequence); // 0, 1, 2, 3
+//}}
+```
+
+### 使用 generator 函数创建迭代器
+
+```js
+let range = {
+  from: 1,
+  to: 5,
+	//{{c1::
+  *[Symbol.iterator]() { // [Symbol.iterator]: function*() 的简写形式
+    for(let value = this.from; value <= this.to; value++) {
+      yield value;
+    }
+  }
+  //}}
+};
+
+alert( [...range] ); // 1,2,3,4,5
+```
+
+### 组合的 generator函数的例子
+
+```javascript
+function* generateSequence(start, end) {
+  for (let i = start; i <= end; i++) yield i;
+}
+//{{c1::
+function* generatePasswordCodes() {
+  // 0..9
+  yield* generateSequence(48, 57);
+  // A..Z
+  yield* generateSequence(65, 90);
+  // a..z
+  yield* generateSequence(97, 122);
+}
+//}}
+
+let str = '';
+for(let code of generatePasswordCodes()) {
+  str += String.fromCharCode(code);
+}
+alert(str); // 0..9A..Za..z
+```
+### yield 是一条双向路（two-way street）
+
+- 下面代码的执行结果与流程
+
+```js
+function* gen() {
+  let ask1 = yield "2 + 2 = ?";
+
+  alert(ask1);
+
+  let ask2 = yield "3 * 3 = ?"
+
+  alert(ask2);
+}
+
+let generator = gen();
+
+alert( generator.next().value ); 
+
+alert( generator.next(4).value );
+
+alert( generator.next(9).done ); 
+```
+
+结果：{{c1::
+
+```log
+2 + 2 = ?
+4
+3 * 3 = ?
+9
+true
+```
+
+}}
+
+### `generator.throw`的2种使用例子
+
+- 在generator函数内部处理异常例子。
+  ```javascript
+  function* gen() {
+    //{{c1::
+    try {
+      let result = yield "2 + 2 = ?"; // (1)
+      alert("The execution does not reach here, because the exception is thrown above");
+    } catch(e) {
+      alert(e); // 显示这个 error
+    }
+    //}}
+  }
+  let generator = gen();
+  let question = generator.next().value;
+  //{{c1::
+  generator.throw(new Error("The answer is not found in my database")); 
+  }}
+  ```
+- 在generator函数调用处，处理异常例子。
+  ```javascript
+  function* generate() {
+    let result = yield "2 + 2 = ?"; // 这行出现 error
+  }
+  //{{c1::
+  let generator = generate();
+  let question = generator.next().value;
+  try {
+    generator.throw(new Error("The answer is not found in my database"));
+  } catch(e) {
+    alert(e); // 显示这个 eor
+  }
+  //}}
+  ```
+
+### Async iterator 与常规 iterator 区别
+
+|                          | **Iterator**              | Async Iterable                 |
+| :----------------------- | :------------------------ | ------------------------------ |
+| 提供 iterator 的对象方法 | {{c1::`Symbol.iterator`}} | {{c1::`Symbol.asyncIterator`}} |
+| `next()` 返回的值是      | {{c1::任意值}}            | {{c1::`Promise`}}              |
+| 要进行循环，使用         | {{c1::`for..of`}}         | {{c1::`for await..of`}}        |
+
+- Async iterator例子：{{c1::
+```javascript
+let range = {
+  from: 1,
+  to: 5,
+  [Symbol.asyncIterator]() { // (1)
+    return {
+      current: this.from,
+      last: this.to,
+      async next() { 
+        await new Promise(resolve => setTimeout(resolve, 1000)); // (3)
+        if (this.current <= this.last) {
+          return { done: false, value: this.current++ };
+        } else {
+          return { done: true };
+        }
+      }
+    };
+  }
+};
+(async () => {
+  for await (let value of range) { // (4)
+    alert(value); // 1,2,3,4,5
+  }
+})()
+```
+}}
+### Async generator 与常规 generator 区别
+
+|                     | Generator                             | Async generator                                              |
+| :------------------ | :------------------------------------ | ------------------------------------------------------------ |
+| 声明方式            | {{c1::`function*`}}                   | {{c1::`async function*`}}                                    |
+| `next()` 返回的值是 | {{c1::`{value:…, done: true/false}`}} | {{c1::resolve 成 `{value:…, done: true/false}` 的 `Promise` }} |
+
++ Async generator例子：{{c1::
+```javascript
+let range = {
+  from: 1,
+  to: 5,
+  async *[Symbol.asyncIterator]() {
+    for(let value = this.from; value <= this.to; value++) {
+      await new Promise(resolve => setTimeout(resolve, 1000));
+      yield value;
+    }
+  }
+};
+(async () => {
+  for await (let value of range) {
+    alert(value); // 1，然后 2，然后 3，然后 4，然后 5
+  }
+})();
+```
+}}
+
+## 模块
