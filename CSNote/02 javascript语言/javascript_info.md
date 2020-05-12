@@ -3444,9 +3444,9 @@ let results = await Promise.all([
 
 2. {{c1::否则，就返回结果，并赋值。}}
 
-## Generator，高级 iteration
+## Generator，高级 iteration [	](javascript_info_20200512080327643)
 
-### Generator 函数:以下代码将会输出什么？
+### Generator 函数:以下代码将会输出什么？ [	](javascript_info_20200512080327644)
 
 ```javascript
   function* generateSequence() {
@@ -3468,7 +3468,7 @@ let results = await Promise.all([
 ```
 }}
 
-### 使用遍历Generator 函数例子
+### 使用遍历Generator 函数例子 [	](javascript_info_20200512080327645)
 
 - 注意当 done: true 时，for..of 循环会忽略最后一个 value
 
@@ -3493,7 +3493,7 @@ alert(sequence); // 0, 1, 2, 3
 //}}
 ```
 
-### 使用 generator 函数创建迭代器
+### 使用 generator 函数创建迭代器 [	](javascript_info_20200512080327646)
 
 ```js
 let range = {
@@ -3511,7 +3511,7 @@ let range = {
 alert( [...range] ); // 1,2,3,4,5
 ```
 
-### 组合的 generator函数的例子
+### 组合的 generator函数的例子 [	](javascript_info_20200512080327647)
 
 ```javascript
 function* generateSequence(start, end) {
@@ -3534,7 +3534,7 @@ for(let code of generatePasswordCodes()) {
 }
 alert(str); // 0..9A..Za..z
 ```
-### yield 是一条双向路（two-way street）
+### yield 是一条双向路（two-way street） [	](javascript_info_20200512080327648)
 
 - 下面代码的执行结果与流程
 
@@ -3570,7 +3570,7 @@ true
 
 }}
 
-### `generator.throw`的2种使用例子
+### `generator.throw`的2种使用例子 [	](javascript_info_20200512080327650)
 
 - 在generator函数内部处理异常例子。
   ```javascript
@@ -3606,7 +3606,7 @@ true
   //}}
   ```
 
-### Async iterator 与常规 iterator 区别
+### Async iterator 与常规 iterator 区别 [	](javascript_info_20200512080327651)
 
 |                          | **Iterator**              | Async Iterable                 |
 | :----------------------- | :------------------------ | ------------------------------ |
@@ -3641,7 +3641,7 @@ let range = {
 })()
 ```
 }}
-### Async generator 与常规 generator 区别
+### Async generator 与常规 generator 区别 [	](javascript_info_20200512080327653)
 
 |                     | Generator                             | Async generator                                              |
 | :------------------ | :------------------------------------ | ------------------------------------------------------------ |
@@ -3668,4 +3668,4 @@ let range = {
 ```
 }}
 
-## 模块
+## 模块 [	](javascript_info_20200512080327654)
