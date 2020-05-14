@@ -90,7 +90,7 @@ public SqlSessionFactory build(Reader|InputStream reader, String environment, Pr
 ```
 **参数:**
 
-- }}autoCommit:{{c1:: 是否自动提交事务}}
+- autoCommit:{{c1:: 是否自动提交事务}}
 - connection：{{c1:: 设置指定的JDBC连接对象}}
 - level：{{c1:: 设置事务隔离级别}}
 - execType：{{c1:: 执行语句的类型}}
