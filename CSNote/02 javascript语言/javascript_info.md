@@ -50,7 +50,7 @@ let sayHi = function(name) {  // (*) no magic any more
 | `typeof`使用例子 | 结果                 | 原因                   |
 | ---------------- | -------------------- | ---------------------- |
 | `typeof null`    | {{c1::`"object"  `}} | {{c1::语言的设计错误}} |
-| `typeof null`    | {{c1::`"function"`}} | {{c1::函数被特殊对待}} |
+| `typeof function(){}`    | {{c1::`"function"`}} | {{c1::函数被特殊对待}} |
 
 ### “switch” 结构  [	](javascript_info_20191219101334395)
 
