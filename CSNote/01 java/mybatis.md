@@ -122,12 +122,81 @@ int delete(String statement, Object parameter);
 flushStatements():{{c1:: 执行批量更新。}}
 force:{{c1:: 是否强制提交或回滚。}}
 
-### Mybatis允许3个地方配置属性 [	](mybatis_20200514071548553)
+## Mybatis配置
 
-1. {{c1::  额外属性文件配置：`<properties esource="db.properties">`。}}
+### Mybatis允许3个地方配置属性 [	](mybatis_20200514071548553)
+1. {{c1::  额外属性文件配置：`<properties resource="db.properties">`。}}
 2. {{c1:: 直接配置`<properties>`的子元素。}}
 3. {{c1:: SqlSessionFactory中build()方法传入Properties对象。}}
-
 属性优先级为：{{c1::  build()方法 > 额外属性文件 >  `<propertiy>`子元素。
-
 引用属性语法：{{c1::  `${user:defaultUser}` }}
+
+### Mybatis设置配置：启用延时加载功能
+{{c1::
+```xml
+<settings>
+    <setting name="lazyLoadingEnabled" value="true"/>
+</settings>
+```
+}}
+
+### Mybatis配置别名
+1. 为单个类指定别名
+    {{c1::
+    ```xml
+        <typeAlias alias="news" type="top.xieyun.domain.News" />
+    ```
+    }}
+2. 为指定包下的所有类指定别名
+    {{c1::
+    ```xml
+        <package name= "top.xieyun.domain" />
+    ```
+    }}
+3. 使用注解指定别名
+    {{c1::
+    ```java
+        @Alias("fkNews")
+        public class News{
+            //...
+        }
+    ```
+    }}
+4. 使用别名
+    {{c1::
+    ```
+        <select id="getNews" resultType="fkNews">
+    ```
+    }}
+
+### 自定义对象工厂
+
++ 首先实现{{c1::`ObjectFactory`}}接口，或者继承{{c1::`DefaultObjectFactory`}}基类,实现以下方法
+    1. `T create(Class<T> type)`
+    2. `T create​(Class<T> type,List<Class<T>> constructorArgTypes, List<Object> constructorArgs)`
+    3. `T setProperties(Properties properties)`
+    4. `<T> boolean isCollection(Class<T> type)`
+    + type：{{c1:: 要创建对象的类型。}}
+    + constructorArgTypes：{{c1:: 要创建对象的构造器参数列表}}
+    + constructorArgs：{{c1:: 多个构造器参数的值}}
+    + properties:{{c1:: 核心配置文件中对象工厂配置的属性}}
++ 配置自定义工厂类
+{{c1::
+    ```xml
+        <objectFactory type="top.xieyun.mybatis.myObjectFactory">
+            <property name="author" value="crazyit" />
+        </objectFactory>
+    ```
+}}
+### 4种加载Mapper的方式
+1. {{c1::<mapper resource="top/xieyun/app/dao/NewsMapper.xml">}}
+2. {{c1::<mapper url="file:///G:/abc/NewsMapper.xml">}}
+3. {{c1::<mapper class="top.xieyun.app.dao.NewsMapper.xml">}}
+4. {{c1::<mapper package="top.xieyun.app.dao">}}
+
+### Mybatis类型转换器
++ 首先实现{{c1::`TypeHandler<T>`}}接口，或者继承{{c1::`BaseTypeHandler<T>`}}基类,实现以下方法
+    1. `void setNonNullParameter(PreparedStatement ps, int i,T param, JdbcType jdbcType)`
+    2. `T getNullableResult(ResultSet rs, String columnIndex)`
+    3. `T getNullableResult(ResultSet rs, int columnIndex)`
+    4. `T getNullableResult(CallableStatement cs, int columnIndex)`
