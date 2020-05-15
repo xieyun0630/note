@@ -189,10 +189,10 @@ force:{{c1:: 是否强制提交或回滚。}}
     ```
 }}
 ### 4种加载Mapper的方式
-1. {{c1::<mapper resource="top/xieyun/app/dao/NewsMapper.xml">}}
-2. {{c1::<mapper url="file:///G:/abc/NewsMapper.xml">}}
-3. {{c1::<mapper class="top.xieyun.app.dao.NewsMapper.xml">}}
-4. {{c1::<mapper package="top.xieyun.app.dao">}}
+1. {{c1::`<mapper resource="top/xieyun/app/dao/NewsMapper.xml">`}}
+2. {{c1::`<mapper url="file:///G:/abc/NewsMapper.xml">`}}
+3. {{c1::`<mapper class="top.xieyun.app.dao.NewsMapper.xml">`}}
+4. {{c1::`<mapper package="top.xieyun.app.dao">`}}
 
 ### Mybatis类型转换器
 + 首先实现{{c1::`TypeHandler<T>`}}接口，或者继承{{c1::`BaseTypeHandler<T>`}}基类,实现以下方法
