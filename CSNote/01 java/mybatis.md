@@ -203,3 +203,21 @@ force:{{c1:: 是否强制提交或回滚。}}
     2. `T getNullableResult(ResultSet rs, String columnIndex)`
     3. `T getNullableResult(ResultSet rs, int columnIndex)`
     4. `T getNullableResult(CallableStatement cs, int columnIndex)`
++ 配置类型转换器
+    ```xml
+        <typeHandlers>
+            <typeHandler handler="com.zy.converter.BooleanAndIntConverter"/>
+        </typeHandlers>
+    ```
++ 指定JDBC类型与JAVA类型
+    1. 核心配置指定
+    ```xml
+    <typeHandler handler="com.zy.converter.BooleanAndIntConverter"
+                javaType="Boolean" jdbcType="INTEGER" />
+    ```
+    2. java注解指定
+    ```java
+    @MappedJdbcTypes({JdbcType.VARCHAR})
+    @MappedTypes({Name.class})
+    public class MyTypeHandler extends BaseTypeHandler<Name> {
+    ```
