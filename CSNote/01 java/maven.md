@@ -772,6 +772,7 @@
 + 增量版本：{{c1::一般只中大bug的修复；}}
 + 里程碑版本：{{c1::与正式版相比，往往表示不是非常稳定，还需要很多测试。}}
 + 排序规则：{{c1::前3项按数字大小顺序，里程碑版本按字符串排序。}}
++ 版本（alpha,beta等）的解释：{{c1:: ![image-20200513071149330](C:\Users\Yun\AppData\Roaming\Typora\typora-user-images\image-20200513071149330.png) }}
 
 ### maven-release-plugin [	](maven_20200510104820636)
 + `mvn release:prepare`的作用:{{c1:: 实现自动打tag、递增版本号 }}
@@ -871,9 +872,9 @@
 
 ### 激活Profile的方式 [	](maven_20200510104820643)
 
-1. 命令行激活：{{c1::`mvn clean install -Pdev-x,dev-y`}}
+- 命令行激活：{{c1::`mvn clean install -Pdev-x,dev-y`}}
 
-2. settings文件显式激活：
+- settings文件显式激活：
    ```xml
    <settings>
      ...
@@ -885,59 +886,60 @@
      ...
    </settings>
    ```
-   
-3. `<activation>`系统属性激活
-   ```xml
-   <profile>
-    <!-- 当存在系统属性test且值为x时，激活该profile -->
-   	<activation>
-    <!-- {{c1:: -->
-     	<property>
-       	<name>test</name>
-         <value>x</value>
-       </property>
-     <!-- }} -->
-     </activation>
-   </profile>
-   ```
-4. `<activation>`操作系统环境激活
-    ```xml
-   <profile>
-   	<activation>
-        <!-- {{c1:: -->
-     	<os>
-            <name>windows XP</name>
-            <family>windows</family>
-            <arch>x86</arch>
-            <version>5.1.2600</version>
-         </os>
-        <!-- }} -->
-     </activation>
-   </profile>
-   ```
-5. `<activation>`文件存在与否激活
-    ```xml
-   <profile>
-   	<activation>
-        <!-- {{c1:: -->
-     	<file>
-            <missing>x.properties</missing>
-            <exists>y.properties</exists>
-        </file>
-        <!-- }} -->
-     </activation>
-   </profile>
-   ```
-6. `<activation>`默认激活
-    ```xml
-   <profile>
-   	<activation>
-        <!-- {{c1:: -->
-        <activeByDefault>true</activeByDefault>
-        <!-- }} -->
-     </activation>
-   </profile>
-   ```
+- `<activation>`元素配置的4种激活方式
+    1. `<activation>`系统属性激活
+        ```xml
+        <profile>
+            <!-- 当存在系统属性test且值为x时，激活该profile -->
+            <activation>
+            <!-- {{c1:: -->
+                <property>
+                <name>test</name>
+                <value>x</value>
+            </property>
+            <!-- }} -->
+            </activation>
+        </profile>
+        ```
+    2. `<activation>`操作系统环境激活
+        ```xml
+        <profile>
+            <activation>
+                <!-- {{c1:: -->
+                <os>
+                    <name>windows XP</name>
+                    <family>windows</family>
+                    <arch>x86</arch>
+                    <version>5.1.2600</version>
+                </os>
+                <!-- }} -->
+            </activation>
+        </profile>
+        ```
+    3. `<activation>`文件存在与否激活
+        ```xml
+        <profile>
+            <activation>
+                <!-- {{c1:: -->
+                <file>
+                    <missing>x.properties</missing>
+                    <exists>y.properties</exists>
+                </file>
+                <!-- }} -->
+            </activation>
+        </profile>
+        ```
+    4. `<activation>`默认激活
+
+        ```xml
+        <profile>
+            <activation>
+                <!-- {{c1:: -->
+                <activeByDefault>true</activeByDefault>
+                <!-- }} -->
+            </activation>
+        </profile>
+        ```
 
 ### maven为web资源目录开启过滤 [	](maven_20200510104820647)
 ```xml
@@ -1015,7 +1017,7 @@
   + cobertura-maven-plugin:{{c1::在`<reporting>`元素下配置，可以在站点中生成覆盖率报告。}}
 
 ### 简单创建一个maven插件 [	](maven_20200510104820654)
-+ 使用archetype模板：{{c1:: maven-archetype-plugin }}
++ 使用archetype模板AtifactId：{{c1:: maven-archetype-plugin }}
 + Maven插件项目的两个特色点：
   1. {{c1:: `<packaging>maven-plugin</packaging>` }}
   2. {{c1:: artifactId`为`maven-plugin-api`的依赖 }}
