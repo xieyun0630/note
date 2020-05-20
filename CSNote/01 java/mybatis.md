@@ -1,4 +1,5 @@
 ### ORM简介 [	](mybatis_20200512080327616)
+
 + ORM的全称:{{c1:: Object/Relation Mapping，对象/关系映射。}}
 + 作用：{{c1:: 面向对象语言与关系型数据库的发展不同步的解决方案。}}
 
@@ -125,16 +126,16 @@ int delete(String statement, Object parameter);
 flushStatements():{{c1:: 执行批量更新。}}
 force:{{c1:: 是否强制提交或回滚。}}
 
-## Mybatis配置
+## Mybatis配置 [	](mybatis_20200520043218578)
 
 ### Mybatis允许3个地方配置属性 [	](mybatis_20200514071548553)
 1. {{c1::  额外属性文件配置：`<properties resource="db.properties">`。}}
 2. {{c1:: 直接配置`<properties>`的子元素。}}
 3. {{c1:: SqlSessionFactory中build()方法传入Properties对象。}}
-属性优先级为：{{c1::  build()方法 > 额外属性文件 >  `<propertiy>`子元素。
-引用属性语法：{{c1::  `${user:defaultUser}` }}
++ 属性优先级为：{{c1::  build()方法 > 额外属性文件 >  `<propertiy>`子元素。
++ 引用属性语法：{{c1::  `${user:defaultUser}` }}
 
-### Mybatis设置配置：启用延时加载功能
+### Mybatis设置配置：启用延时加载功能 [	](mybatis_20200520043218581)
 {{c1::
 ```xml
 <settings>
@@ -143,7 +144,7 @@ force:{{c1:: 是否强制提交或回滚。}}
 ```
 }}
 
-### Mybatis配置别名
+### Mybatis配置别名 [	](mybatis_20200520043218583)
 1. 为单个类指定别名
     {{c1::
     ```xml
@@ -172,7 +173,7 @@ force:{{c1:: 是否强制提交或回滚。}}
     ```
     }}
 
-### 自定义对象工厂
+### 自定义对象工厂 [	](mybatis_20200520043218584)
 
 + 首先实现{{c1::`ObjectFactory`}}接口，或者继承{{c1::`DefaultObjectFactory`}}基类,实现以下方法
     1. `T create(Class<T> type)`
@@ -191,13 +192,13 @@ force:{{c1:: 是否强制提交或回滚。}}
         </objectFactory>
     ```
 }}
-### 4种加载Mapper的方式
+### 4种加载Mapper的方式 [	](mybatis_20200520043218586)
 1. {{c1:: `<mapper resource="top/xieyun/app/dao/NewsMapper.xml">`}}
 2. {{c1:: `<mapper url="file:///G:/abc/NewsMapper.xml">`}}
 3. {{c1:: `<mapper class="top.xieyun.app.dao.NewsMapper.xml">`}}
 4. {{c1:: `<mapper package="top.xieyun.app.dao">`}}
 
-### Mybatis类型转换器
+### Mybatis类型转换器 [	](mybatis_20200520043218588)
 + 首先实现{{c1::`TypeHandler<T>`}}接口，或者继承{{c1::`BaseTypeHandler<T>`}}基类,实现以下方法
     1. `void setNonNullParameter(PreparedStatement ps, int i,T param, JdbcType jdbcType)`
     2. `T getNullableResult(ResultSet rs, String columnIndex)`
@@ -227,12 +228,12 @@ force:{{c1:: 是否强制提交或回滚。}}
     public class MyTypeHandler extends BaseTypeHandler<Name> {
     ```
     }}
-### Mybatis枚举的类型处理器
+### Mybatis枚举的类型处理器 [	](mybatis_20200520043218590)
 + Mybatis默认的枚举处理器：{{c1:: `EnumTypeHandler` }}
 + `EnumTypeHandler`:{{c1:: 将枚举值转换成对应名称（字符串）}}
 + `EnumOrdinalTypeHandler`:{{c1:: 将枚举值转换成对应序号（整数）,使用需单独配置。}}
 
-### 在Mybatis中为特定属性指定类型处理器的方式
+### 在Mybatis中为特定属性指定类型处理器的方式 [	](mybatis_20200520043218592)
 + 查询的情况
     + {{c1:: 在`<result>`元素中或者`@Result`注解中指定typeHandler属性
     ```xml
@@ -242,11 +243,13 @@ force:{{c1:: 是否强制提交或回滚。}}
     ```java
         @Result(property = "recordSeason", column = "record_season",
 			typeHandler = EnumTypeHandler.class)
-    ```}}
+    ​```}}
+    ```
 + 插入的情况:
     + {{c1:: 在#{}中指定typeHandler属性:
     ```sql
         insert into news_inf values
 		(null, #{title}, #{content}, #{happenSeason}, #{recordSeason,
 		typeHandler=org.apache.ibatis.type.EnumTypeHandler})
-    ```}}
+    ​``` }}
+    ```

@@ -3670,12 +3670,13 @@ let range = {
 
 ## 模块 [	](javascript_info_20200512080327654)
 
-### 模块
-什么是模块：{{c1:: 一个模块（module）就是一个文件。一个脚本就是一个模块。}}
-export：{{c1:: 关键字标记了可以从当前模块外部访问的变量和函数。}}
-import：{{c1:: 关键字允许从其他模块导入功能。}}
+### 模块 [	](javascript_info_20200520043218611)
 
-### export与import的使用
++ 什么是模块：{{c1:: 一个模块（module）就是一个文件。一个脚本就是一个模块。}}
++ export：{{c1:: 关键字标记了可以从当前模块外部访问的变量和函数。}}
++ import：{{c1:: 关键字允许从其他模块导入功能。}}
+
+### export与import的使用 [	](javascript_info_20200520043218613)
 ```javascript
 //say.js
 export function sayHi(user) {
@@ -3693,28 +3694,29 @@ export function sayHi(user) {
   ```
   }}
 
-### 模块核心功能
-1. {{c1:: 始终使用 “use strict”。}}
-2. {{c1:: 模块具有自己的本地顶级作用域，并可以通过 import/export 交换功能。}}
-3. {{c1:: 模块代码只执行一次。导出仅创建一次，然后会在导入之间共享。}}
-4. {{c1:: `import.meta` 对象包含关于当前模块的信息}}
-  + {{c1:: 例：`alert(import.meta.url); `}}
-5. {{c1:: 在一个模块中，“this” 是 undefined}}
+### 模块核心功能 [	](javascript_info_20200520043218615)
 
-### 模块相较于常规脚本有几点差别：
+1.  始终使用 “use strict”。
+2.  模块具有自己的本地顶级作用域，并可以通过 import/export 交换功能。
+3.  模块代码只执行一次。导出仅创建一次，然后会在导入之间共享。
+4.  `import.meta` 对象包含关于当前模块的信息
+  + {{c1:: 例：`alert(import.meta.url); `}}
+5.  在一个模块中，“this” 是 undefined
+
+### 模块相较于常规脚本有几点差别： [	](javascript_info_20200520043218617)
 + {{c1::默认是延迟解析的（deferred）。}}
 + {{c1::Async 可用于内联脚本。}}
 + {{c1:: 要从另一个源（域/协议/端口）加载外部脚本，需要 CORS header。}}
 + {{c1::重复的外部脚本会被忽略}}
 
-### 命名的`export`与默认的`export`区别
+### 命名的`export`与默认的`export`区别 [	](javascript_info_20200520043218619)
 
 | 命名的导出                | 默认的导出                        |
 | :------------------------ | :-------------------------------- |
 | {{c1:: `export class User {...}`}} | {{c1:: `export default class User {...}`}} |
 | {{c1:: `import {User} from ...` }} | {{c1:: `import User from ...`           }} |
 
-### `export` 语法总结
+### `export` 语法总结 [	](javascript_info_20200520043218621)
 - 在声明一个 class/function/… 之前：
   1. {{c1:: `export [default] class/function/variable ...`}}
 - 独立的导出：
@@ -3724,7 +3726,7 @@ export function sayHi(user) {
   2. {{c1:: `export * from "module"`（不会重新导出默认的导出）。}}
   3. {{c1:: `export {default [as y]} from "module"`（重新导出默认的导出）}}
 
-### `import`语法总结
+### `import`语法总结 [	](javascript_info_20200520043218623)
 - 模块中命名的导出：
   1. {{c1:: `import {x [as y], ...} from "module"`}}
 - 默认的导出：
@@ -3735,7 +3737,8 @@ export function sayHi(user) {
 - 导入模块（它的代码，并运行），但不要将其赋值给变量：
   1. {{c1:: `import "module"`}}
 
-### 使用import() 表达式
+### 使用import() 表达式 [	](javascript_info_20200520043218625)
+
 1. 直接调用promise方式
    {{c1:: 
   ```js
@@ -3745,7 +3748,7 @@ export function sayHi(user) {
   ```
    }}
 2. async语法方式
-  {{c1::
+    {{c1::
   ```js
     async function load() {
       let say = await import('./say.js');
@@ -3755,4 +3758,3 @@ export function sayHi(user) {
     }
   ```
    }}
-

@@ -63,12 +63,12 @@ maven的默认编译使用的jdk版本貌似很低，使用maven-compiler-plugin
         <artifactId>maven-shade-plugin</artifactId>
         <version>2.0</version>
         <configuration>
-      <transformers>
-	     <transformer implementation = "org.apache.maven.plugins.shade.resource.MainifestResourceTransformer">
-         <!-- 设置入口主类 -->
-		 <mainClass>com.xun.pf.sayHello.HelloWorld</mainClass>
-	     </transformer>
-	  </transformers>
+          <transformers>
+          <transformer implementation = "org.apache.maven.plugins.shade.resource.MainifestResourceTransformer">
+            <!-- 设置入口主类 -->
+            <mainClass>com.xun.pf.sayHello.HelloWorld</mainClass>
+          </transformer>
+          </transformers>
         </configuration>
         <executions>
           <execution>
