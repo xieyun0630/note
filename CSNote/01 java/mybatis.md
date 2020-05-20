@@ -69,7 +69,7 @@ var newsMapper = sqlSession.getMapper(NewsMapper.class);
 | 核心类及组件             | 最佳作用域                | 原因                                                         |
 | ------------------------ | ------------------------- | ------------------------------------------------------------ |
 | SqlSessionFactoryBuilder | {{c1::局部作用域}}        | {{c1::唯一作用就是创建SqlSessionFactory，只有单个Build()方法}} |
-| SqlSessionFactory        | {{c1::整个应用运行期间}}  | {{c1::底层封装的当前应用的数据库配置环境}}                   |
+| SqlSessionFactory        | {{c1::整个应用运行期间}}  | {{c1::底层封装的当前应用的数据库配置环境，每个数据库对应一个SqlSessionFactory实例}}                   |
 | SqlSession               | {{c1::方法或单个Request}} | {{c1::线程不安全，无法多线程访问}}                           |
 | Mapper组件               | {{c1::局部作用域}}        | {{c1::因为是由SqlSession创建，作用域应该不大于SqlSession。}} |
 
@@ -204,20 +204,49 @@ force:{{c1:: 是否强制提交或回滚。}}
     3. `T getNullableResult(ResultSet rs, int columnIndex)`
     4. `T getNullableResult(CallableStatement cs, int columnIndex)`
 + 配置类型转换器
+    {{c1::
     ```xml
         <typeHandlers>
             <typeHandler handler="com.zy.converter.BooleanAndIntConverter"/>
         </typeHandlers>
     ```
+    }}
 + 指定JDBC类型与JAVA类型
     1. 核心配置指定
+    {{C1::
     ```xml
     <typeHandler handler="com.zy.converter.BooleanAndIntConverter"
                 javaType="Boolean" jdbcType="INTEGER" />
     ```
+    }}
     2. java注解指定
+    {{C1::
     ```java
     @MappedJdbcTypes({JdbcType.VARCHAR})
     @MappedTypes({Name.class})
     public class MyTypeHandler extends BaseTypeHandler<Name> {
     ```
+    }}
+### Mybatis枚举的类型处理器
++ Mybatis默认的枚举处理器：{{c1:: `EnumTypeHandler` }}
++ `EnumTypeHandler`:{{c1:: 将枚举值转换成对应名称（字符串）}}
++ `EnumOrdinalTypeHandler`:{{c1:: 将枚举值转换成对应序号（整数）,使用需单独配置。}}
+
+### 在Mybatis中为特定属性指定类型处理器的方式
++ 查询的情况
+    + {{c1:: 在`<result>`元素中或者`@Result`注解中指定typeHandler属性
+    ```xml
+        <result column="record_season" property="recordSeason"
+                typeHandler="org.apache.ibatis.type.EnumTypeHandler"/>
+    ```
+    ```java
+        @Result(property = "recordSeason", column = "record_season",
+			typeHandler = EnumTypeHandler.class)
+    ```}}
++ 插入的情况:
+    + {{c1:: 在#{}中指定typeHandler属性:
+    ```sql
+        insert into news_inf values
+		(null, #{title}, #{content}, #{happenSeason}, #{recordSeason,
+		typeHandler=org.apache.ibatis.type.EnumTypeHandler})
+    ```}}
