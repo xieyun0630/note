@@ -3758,3 +3758,114 @@ export function sayHi(user) {
     }
   ```
    }}
+
+### 直接访问`<html> <body> <head>`的DOM元素 [	](javascript_info_20200521062435052)
+{{c1::
+```xml
+<html> = document.documentElement
+<body> = document.body
+<head> = document.head
+```
+}}
+
+
+### 表格的导航属性 [	](javascript_info_20200521062435054)
+
++ `table.rows`: {{c1:: `<tr> `元素的集合。}}
++ `table.caption/tHead/tFoot`: {{c1:: 引用元素` <caption>，<thead>，<tfoot>` }}
++ `table.tBodies`: {{c1:: `<tbody>` 元素的集合 }}
++ `tbody.rows`: {{c1:: 表格内部 `<tr>` 元素的集合。}}
++ `tr.cells`: {{c1:: 在给定 `<tr> `中的 `<td>` 和 `<th>` 单元格的集合 }}
++ `tr.sectionRowIndex`:{{c1::  给定的 `<tr>` 在封闭的 `<thead>/<tbody>/<tfoot> `中的位置（索引）。}}
++ `tr.rowIndex`: {{c1:: 在整个表格中 `<tr>`  的编号（包括表格的所有行）。}}
++ `td.cellIndex`: {{c1:: 在封闭的 `<tr> `中单元格的编号。}}
+
+### 遍历DOM主要属性 [	](javascript_info_20200521062435055)
+对于所有节点：{{c1:: `parentNode，childNodes，firstChild，lastChild，previousSibling，nextSibling。`}}
+仅对于元素节点：{{c1:: `parentElement，children，firstElementChild，lastElementChild，previousElementSibling，nextElementSibling。`}}
+
+### 兄弟节点问题 [	](javascript_info_20200521062435057)
++ 如果 elem 是任意一个 DOM 元素节点……
+  + elem.lastChild.nextSibling 值一直都是 null，这个判定是不是真的？
+  + elem.children[0].previousSibling 值一直都是 null，这个判定是不是真的？
+回答：
+1. {{c1:: 是的，这是真的。elem.lastChild 就是最后一个元素，它没有 nextSibling。}}
+2. {{c1:: 不，这是错的，因为 elem.children[0] 是元素中的第一个子元素。但是在它前面可能存在非元素的节点。所以 previousSibling 可能是一个文本节点。}}
+
+
+
+### 6种主要的DOM搜索方法 [	](javascript_info_20200521062435058)
+
+| Method                   | Searches by... | Can call on an element? | Live? |
+| ------------------------ | -------------- | ----------------------- | ----- |
+| `querySelector`          | {{c1:: CSS-selector   }}| {{c1:: ✔}}                       | {{c1:: -}}     |
+| `querySelectorAll`       | {{c1:: CSS-selector   }}| {{c1:: ✔}}                       | {{c1:: -}}     |
+| `getElementById`         | {{c1:: `id`           }}| {{c1:: - }}                      | {{c1:: - }}    |
+| `getElementsByName`      | {{c1:: `name`         }}| {{c1:: - }}                      | {{c1:: ✔}}     |
+| `getElementsByTagName`   | {{c1:: tag or `'*'`   }}| {{c1:: ✔}}                       | {{c1:: ✔}}     |
+| `getElementsByClassName` | {{c1:: class          }}| {{c1:: ✔ }}                      | {{c1:: ✔}}     |
+}}
+
+### DOM搜索匹配方法 [	](javascript_info_20200521062435060)
+
+- `elem.matches(css)`:{{c1:: 用于检查 `elem` 与给定的 CSS 选择器是否匹配。}}
+- `elem.closest(css)`:{{c1:: 用于查找与给定 CSS 选择器相匹配的最近的祖先。`elem` 本身也会被检查。}}
+- `elemA.contains(elemB)`:{{c1::如果 `elemB` 在 `elemA` 内（`elemA` 的后代）或者 `elemA==elemB`，`elemA.contains(elemB)` 将返回 true。}}
+
+### console.dir(elem) 与 console.log(elem) [	](javascript_info_20200521062435062)
+
++ `console.log(elem)`:{{c1:: 显示元素的 DOM 树。}
++ `console.dir(elem)`:{{c1:: 将元素显示为 DOM 对象，非常适合探索其属性。}}
+
+
+
+### 每个 DOM 节点都属于一个特定的类,这些类形成层次结构如下 [	](javascript_info_20200521062435064)
+
+{{c1:: ![image-20200521161035902](javascript_info.assets/image-20200521161035902.png)}}
+
+### “nodeType” 属性：过时获取DOM节点类型方法 [	](javascript_info_20200521062435066)
+
++ 对于元素节点:{{c1:: `elem.nodeType` == 1}}
++ 对于文本节点:{{c1:: `elem.nodeType` == 3}}
++ 对于 document 对象:{{c1:: `elem.nodeType` == 9}}
+
+### `tagName`属性 和 `nodeName`属性 之间有什么不同吗？ [	](javascript_info_20200521062435068)
+
+- {{c1:: `tagName` 属性仅适用于 `Element` 节点。}}
+- {{c1:: `nodeName` 是为任意 `Node` 定义的：}}
+  1. {{c1:: 对于元素，它的意义与 `tagName` 相同。}}
+  2. {{c1:: 对于其他节点类型（`text`，`comment` 等），它拥有一个对应节点类型的字符串。}}
+
+### `div.outerHTML='<p>A new element</p>'` 中发生的事情是： [	](javascript_info_20200521062435070)
+1. {{c1:: div 被从文档（document）中移除。}}
+2. {{c1:: 另一个 HTML 片段 `<p>A new element</p>` 被插入到其位置上。}}
+3. {{c1:: 包含div的变量仍拥有其旧的值。新的 HTML 没有被赋值给任何变量。}}
+
+### `innerHTML+= "..." `做了以下工作: [	](javascript_info_20200521062435072)
+
+1. {{c1:: 移除旧的内容。}}
+2. {{c1:: 然后写入新的` innerHTML`（新旧结合）。}}
+
+### 主要的通用DOM节点属性有： [	](javascript_info_20200521062435074)
+
+| DOM 节点属性       | 作用                                                         |
+| ------------------ | ------------------------------------------------------------ |
+| `nodeType`         | {{c1::我们可以使用它来查看节点是文本节点还是元素节点。它具有一个数值型值（numeric value）：1 表示元素，3 表示文本节点，其他一些则代表其他节点类型。只读。 }} |
+| `nodeName/tagName` | {{c1::用于元素名，标签名（除了 XML 模式，都要大写）。对于非元素节点，`nodeName` 描述了它是什么。只读。 }} |
+| `innerHTML`        | {{c1::元素的 HTML 内容。可以被修改。                               }} |
+| `outerHTML`        | {{c1::元素的完整 HTML。对  `elem.outerHTML` 的写入操作不会触及 `elem` 本身。而是在外部上下文中将其替换为新的 HTML。 }} |
+| `nodeValue/data`   | {{c1::非元素节点（文本、注释）的内容。两者几乎一样，我们通常使用  data。可以被修改。 }} |
+| `textContent`      | {{c1::元素内的文本：HTML 减去所有 `<tags>`。写入文本会将文本放入元素内，所有特殊字符和标签均被视为文本。可以安全地插入用户生成的文本，并防止不必要的 HTML 插入。 }} |
+| `hidden`           | {{c1::当被设置为 true 时，执行与 CSS  `display:none` 相同的事。    }} |
+
+### HTML中所有特性都可以通过使用以下方法进行访问： [	](javascript_info_20200521062435076)
+
++ elem.hasAttribute(name)：{{c1:: 检查特性是否存在。 }}
++ elem.getAttribute(name)：{{c1:: 获取这个特性值。 }}
++ elem.setAttribute(name, value)：{{c1:: 设置这个特性值。 }}
++ elem.removeAttribute(name)：{{c1:: 移除这个特性。 }}
++ elem.attributes:{{c1:: 读取所有特性,属于内建 Attr 类的对象的集合，具有 name 和 value 属性。 }}
+
+### HTML 特性(attributes)有以下几个特征： [	](javascript_info_20200521062435078)
++ 它们的名字是大小写不敏感的（id 与 ID 相同）。
++ 它们的值总是字符串类型的。

@@ -214,20 +214,21 @@ force:{{c1:: 是否强制提交或回滚。}}
     }}
 + 指定JDBC类型与JAVA类型
     1. 核心配置指定
-    {{C1::
-    ```xml
-    <typeHandler handler="com.zy.converter.BooleanAndIntConverter"
-                javaType="Boolean" jdbcType="INTEGER" />
-    ```
-    }}
+        {{C1::
+        ```xml
+        <typeHandler handler="com.zy.converter.BooleanAndIntConverter"
+                    javaType="Boolean" jdbcType="INTEGER" />
+        ```
+        }}
+
     2. java注解指定
-    {{C1::
-    ```java
-    @MappedJdbcTypes({JdbcType.VARCHAR})
-    @MappedTypes({Name.class})
-    public class MyTypeHandler extends BaseTypeHandler<Name> {
-    ```
-    }}
+        {{C1::
+        ```java
+        @MappedJdbcTypes({JdbcType.VARCHAR})
+        @MappedTypes({Name.class})
+        public class MyTypeHandler extends BaseTypeHandler<Name> {
+        ```
+        }}
 ### Mybatis枚举的类型处理器 [	](mybatis_20200520043218590)
 + Mybatis默认的枚举处理器：{{c1:: `EnumTypeHandler` }}
 + `EnumTypeHandler`:{{c1:: 将枚举值转换成对应名称（字符串）}}
