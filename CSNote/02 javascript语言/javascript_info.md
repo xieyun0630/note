@@ -3759,6 +3759,8 @@ export function sayHi(user) {
   ```
    }}
 
+## Document DOM
+
 ### 直接访问`<html> <body> <head>`的DOM元素 [	](javascript_info_20200521062435052)
 {{c1::
 ```xml
@@ -3781,8 +3783,8 @@ export function sayHi(user) {
 + `td.cellIndex`: {{c1:: 在封闭的 `<tr> `中单元格的编号。}}
 
 ### 遍历DOM主要属性 [	](javascript_info_20200521062435055)
-+ 对于所有节点：{{c1:: `parentNode，childNodes，firstChild，lastChild，previousSibling，nextSibling。`}}
-+ 仅对于元素节点：{{c1:: `parentElement，children，firstElementChild，lastElementChild，previousElementSibling，nextElementSibling。`}}
+对于所有节点：{{c1:: `parentNode，childNodes，firstChild，lastChild，previousSibling，nextSibling。`}}
+仅对于元素节点：{{c1:: `parentElement，children，firstElementChild，lastElementChild，previousElementSibling，nextElementSibling。`}}
 
 ### 兄弟节点问题 [	](javascript_info_20200521062435057)
 + 如果 elem 是任意一个 DOM 元素节点……
@@ -3860,12 +3862,108 @@ export function sayHi(user) {
 
 ### HTML中所有特性都可以通过使用以下方法进行访问： [	](javascript_info_20200521062435076)
 
-+ elem.hasAttribute(name)：{{c1:: 检查特性是否存在。 }}
-+ elem.getAttribute(name)：{{c1:: 获取这个特性值。 }}
-+ elem.setAttribute(name, value)：{{c1:: 设置这个特性值。 }}
-+ elem.removeAttribute(name)：{{c1:: 移除这个特性。 }}
-+ elem.attributes:{{c1:: 读取所有特性,属于内建 Attr 类的对象的集合，具有 name 和 value 属性。 }}
++ `elem.hasAttribute(name)`：{{c1:: 检查特性是否存在。 }}
++ `elem.getAttribute(name)`：{{c1:: 获取这个特性值。 }}
++ `elem.setAttribute(name, value)`：{{c1:: 设置这个特性值。 }}
++ `elem.removeAttribute(name)`：{{c1:: 移除这个特性。 }}
++ `elem.attributes`:{{c1:: 读取所有特性,属于内建 `Attr` 类的对象的集合，具有 `name` 和` value` 属性。 }}
 
-### HTML 特性(attributes)有以下几个特征： [	](javascript_info_20200521062435078)
-+ 它们的名字是大小写不敏感的（id 与 ID 相同）。
-+ 它们的值总是字符串类型的。
+### 特性（attribute）与属性（property）对比 [	](javascript_info_20200521062435078)
+
+|      | 属性                                            | 特性                                  |
+| :--- | :---------------------------------------------- | ------------------------------------- |
+| 类型 | {{c1:: 任何值，标准的属性具有规范中描述的类型}} | {{c1:: 字符串}}                       |
+| 名字 | {{c1:: 名字（name）是大小写敏感的}}             | {{c1:: 名字（name）是大小写不敏感的}} |
+
+### 获取特性
+
+编写代码，从文档（document）中获取带有 `data-widget-name` 特性（attribute）的元素，并读取它的值。
+```html
+<!DOCTYPE html>
+<html>
+<body>
+
+  <div data-widget-name="menu">Choose the genre</div>
+
+  <script>
+    /* your code */
+  </script>
+</body>
+</html>
+```
+回答：
+{{c1::
+```html
+<!DOCTYPE html>
+<html>
+<body>
+  <div data-widget-name="menu">Choose the genre</div>
+  <script>
+    // 获取它
+    let elem = document.querySelector('[data-widget-name]');
+    // 读取值
+    alert(elem.dataset.widgetName);
+    // 或
+    alert(elem.getAttribute('data-widget-name'));
+  </script>
+</body>
+</html>
+```
+}}
+
+### 创建新节点的方法
+
+- `document.createElement(tag)`:{{c1::用给定的标签创建一个元素节点。}}
+- `document.createTextNode(value)`:{{c1::创建一个文本节点（很少使用）。}}
+- `elem.cloneNode(deep)`:{{c1::克隆元素，如果 `deep==true` 则与其后代一起克隆。}}
+
+### 插入和移除节点的node方法：
+
+- `node.append(...nodes or strings)`:{{c1::在 `node` 末尾插入。}}
+- `node.prepend(...nodes or strings)`:{{c1::在 `node` 开头插入。}}
+- `node.before(...nodes or strings)`:{{c1::在 `node` 之前插入。}}
+- `node.after(...nodes or strings)`:{{c1::在 `node` 之后插入。}}
+- `node.replaceWith(...nodes or strings)`:{{c1::替换 `node`。}}
+- `node.remove()`:{{c1::移除 `node`。}}
+文本字符串被“作为文本”插入。
+
+### “旧式”的插入和移除节点的node方法：
+
+1. {{c1:: `parent.appendChild(node)`}}
+2. {{c1:: `parent.insertBefore(node, nextSibling)`}}
+3. {{c1:: `parent.removeChild(node)`}}
+4. {{c1:: `parent.replaceChild(newElem, node)`}}
+   这些方法都返回 {{c1:: `node` }}。
+
+### ` elem.insertAdjacentHTML/Text/Element`方法
+
+- 在 `html` 中给定一些 HTML，`elem.insertAdjacentHTML(where, html)` 会根据 `where` 的值来插入它：
+  - `"beforebegin"`:{{c1::将 `html` 插入到 `elem` 前面。}}
+  - `"afterbegin"`:{{c1::将 `html` 插入到 `elem` 的开头。}}
+  - `"beforeend"`:{{c1::将 `html` 插入到 `elem` 的末尾。}}
+  - `"afterend"`:{{c1::将 `html` 插入到 `elem` 后面。}}
++  `elem.insertAdjacentText(where, text)` 和`elem.insertAdjacentElement(where, Element)`：它们会插入文本字符串和元素，但很少使用。}}
+
+### 要在页面加载完成之前将 HTML 附加到页面：
+
+- {{c1:: `document.write(html)`}}
+页面加载完成后，这样的调用将会擦除文档。多见于旧脚本。
+
+### 要管理 class，有两个 DOM 属性：
++ className: {{c1:: 字符串值，可以很好地管理整个类的集合。}}
++ classList: {{c1:: 具有 add/remove/toggle/contains 方法的对象，可以很好地支持单个类。}}
+
+### `classList`属性的方法
+- `elem.classList.add/remove(class)`: {{c1:: 添加/移除类。}}
+- `elem.classList.toggle(class)`: {{c1:: 如果类不存在就添加类，存在就移除它。}}
+- `elem.classList.contains(class)`: {{c1:: 检查给定类，返回 `true/false`。}}
+- `classList`是可迭代的
+
+### 元素样式访问规则
+
++ `background-color`  : {{c1:: elem.style.backgroundColor }}
++ `z-index`           : {{c1:: elem.style.zIndex }}
++ `border-left-width` : {{c1:: elem.style.borderLeftWidth }}
++ `-moz-border-radius` : {{c1:: button.style.MozBorderRadius }}
++ `style.cssText` ： {{c1:: 属性对应于整个 "style" 特性（attribute），即完整的样式字符串。 }}
++ `getComputedStyle(element, [pseudo])`： {{c1::  返回与 style 对象类似的，且包含了所有类的对象。只读 }}
