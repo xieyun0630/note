@@ -3781,8 +3781,8 @@ export function sayHi(user) {
 + `td.cellIndex`: {{c1:: 在封闭的 `<tr> `中单元格的编号。}}
 
 ### 遍历DOM主要属性 [	](javascript_info_20200521062435055)
-对于所有节点：{{c1:: `parentNode，childNodes，firstChild，lastChild，previousSibling，nextSibling。`}}
-仅对于元素节点：{{c1:: `parentElement，children，firstElementChild，lastElementChild，previousElementSibling，nextElementSibling。`}}
++ 对于所有节点：{{c1:: `parentNode，childNodes，firstChild，lastChild，previousSibling，nextSibling。`}}
++ 仅对于元素节点：{{c1:: `parentElement，children，firstElementChild，lastElementChild，previousElementSibling，nextElementSibling。`}}
 
 ### 兄弟节点问题 [	](javascript_info_20200521062435057)
 + 如果 elem 是任意一个 DOM 元素节点……

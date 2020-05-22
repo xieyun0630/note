@@ -244,13 +244,89 @@ force:{{c1:: 是否强制提交或回滚。}}
     ```java
         @Result(property = "recordSeason", column = "record_season",
 			typeHandler = EnumTypeHandler.class)
-    ​```}}
+    ​```
     ```
+    
+    }}
+    
 + 插入的情况:
+  
     + {{c1:: 在#{}中指定typeHandler属性:
     ```sql
-        insert into news_inf values
+	    insert into news_inf values
 		(null, #{title}, #{content}, #{happenSeason}, #{recordSeason,
-		typeHandler=org.apache.ibatis.type.EnumTypeHandler})
-    ​``` }}
+    	typeHandler=org.apache.ibatis.type.EnumTypeHandler})
     ```
+    
+    ​		 }}
+    
+
+### 事务管理器 [	](mybatis_20200521095802607)
+
+`<transactionManager type="JDBC"/>`:{{c1:: 使用JDBC自带的事务提交与回滚，对应类为`JdbcTransactionFactory`。}}
+`<transactionManager type="MANAGED"/>`:{{c1:: 使用容器来管理事务的生命周期}}
+
+### 自定义Mybatis事务管理器 [	](mybatis_20200521095802608)
+
+1. 实现TransactionFactory接口
+```java
+void setProperties(Properties props);
+Transaction newTransaction(Connection conn);
+Transaction newTransaction(DataSource ds,TransactionIsolationLevel level, boolean autoCommit);
+```
+    + props:{{c1:: `传入<transactionManager />`中的配置属性 }}
+    + conn:{{c1:: 传入指定Connection}}
+    + ds:{{c1:: 传入指定的数据源}}
+    + level:{{c1:: 事务隔离级别}}
+    + autoCommit:{{c1:: 是否自动提交事务}}
+2. 实现Transaction接口
+```java
+Connection getConnection() throws SQLException;
+void commit() throws SQLException;
+void rollback() throws SQLException;
+void close() throws SQLException;
+Integer getTimeout() throws SQLException;
+```
++ 注意：{{c1:: 从数据源获得connection与直接传入connection的区别 }}
+
+### MyBatis内置了三种数据源实现 [	](mybatis_20200521095802609)
+
+1. UNPOOLED:{{c1:: 不使用连接池，每次都会重新打开连接。}}
+2. POOLED：{{c1:: 使用Mybatis内置的连接池。}}
+3. JNDI：{{c1:: 使用容器管理的连接池。}}
+4. 以上连接池对应的实现类为：{{c1:: `UnpooledDataSourceFactory` `PooledDataSourceFactory` `JndiDataSourceFactory`}}
+
+### MyBatis自定义C3P0数据源 [	](mybatis_20200521095802611)
+
+1. 实现{{c1::`DataSourceFactory`}}接口或继承{{c1::`UnpooledDataSourceFactory`}}类
+    ```java
+        public class C3P0DataSourceFactory extends UnpooledDataSourceFactory
+        {
+            //{{c1::
+            public C3P0DataSourceFactory()
+            {
+                this.dataSource = new ComboPooledDataSource();
+            }
+            //}}
+        }
+    ```
+2. 配置数据源
+    + 配置自定义数据源别名：{{c1::`<typeAlias type="top.xieyun.dao.C3P0DataSourceFactory" alias="C3P0"/>`}}
+    + 配置数据源：
+        ```xml
+            <!-- {{c1:: -->
+            <dataSource type="C3P0">
+            <!-- 下面这些属性是直接注入C3P0数据源（ComboPooledDataSource对象）的
+            因此这些属性名必须是ComboPooledDataSource类的各setter方法对应
+            -->
+            <property name="driverClass" value="com.mysql.cj.jdbc.Driver"/>
+            <property name="jdbcUrl" value="jdbc:mysql://127.0.0.1:3306/mybatis?serverTimezone=UTC"/>
+            <property name="user" value="root"/>
+            <property name="password" value="32147"/>
+            <property name="maxPoolSize" value="40"/>
+            <property name="minPoolSize" value="2"/>
+            <property name="initialPoolSize" value="2"/>
+            <property name="maxIdleTime" value="200"/>
+			</dataSource>
+            <!-- }} -->
+        ```
