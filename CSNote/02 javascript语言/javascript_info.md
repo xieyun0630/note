@@ -3982,7 +3982,7 @@ showNotification({
   className: "welcome" // div 的附加类（可选）
 });
 ```
-如图：![image-20200522201109343](C:\Users\Yun\AppData\Roaming\Typora\typora-user-images\image-20200522201109343.png)
+如图：![image-20200522201109343](C:\note\CSNote\02 javascript语言\javascript_info.assets\image-20200522201109343.png)
 
 答案：
 
@@ -4063,7 +4063,7 @@ alert(example.offsetTop); // 180
 + `scrollLeft/scrollTop`: {{c1::从元素的左上角开始，滚动出元素的上半部分的 width/height。}}
 + 除了{{c1:: `scrollLeft/scrollTop`}} 外，所有属性都是只读的。
 + 如图所示：
-{{c1::![image-20200522225402747](C:\Users\Yun\AppData\Roaming\Typora\typora-user-images\image-20200522225402747.png)}}
+{{c1::![image-20200522225402747](C:\note\CSNote\02 javascript语言\javascript_info.assets\image-20200522225402747.png)}}
 
 ### Window的大小
 - 文档可见部分的 width/height（内容区域的 width/height）：{{c1:: `document.documentElement.clientWidth/Height`}}
