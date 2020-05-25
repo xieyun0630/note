@@ -3950,10 +3950,12 @@ export function sayHi(user) {
 页面加载完成后，这样的调用将会擦除文档。多见于旧脚本。
 
 ### 要管理 class，有两个 DOM 属性：
-+ className: {{c1:: 字符串值，可以很好地管理整个类的集合。}}
-+ classList: {{c1:: 具有 add/remove/toggle/contains 方法的对象，可以很好地支持单个类。}}
+
++ `className`: {{c1:: 字符串值，可以很好地管理整个类的集合。}}
++ `classList`: {{c1:: 具有 add/remove/toggle/contains 方法的对象，可以很好地支持单个类。}}
 
 ### `classList`属性的方法
+
 - `elem.classList.add/remove(class)`: {{c1:: 添加/移除类。}}
 - `elem.classList.toggle(class)`: {{c1:: 如果类不存在就添加类，存在就移除它。}}
 - `elem.classList.contains(class)`: {{c1:: 检查给定类，返回 `true/false`。}}
@@ -3961,9 +3963,127 @@ export function sayHi(user) {
 
 ### 元素样式访问规则
 
-+ `background-color`  : {{c1:: elem.style.backgroundColor }}
-+ `z-index`           : {{c1:: elem.style.zIndex }}
-+ `border-left-width` : {{c1:: elem.style.borderLeftWidth }}
-+ `-moz-border-radius` : {{c1:: button.style.MozBorderRadius }}
++ `background-color`  : {{c1:: `elem.style.backgroundColor` }}
++ `z-index`           : {{c1:: `elem.style.zIndex` }}
++ `border-left-width` : {{c1:: `elem.style.borderLeftWidth` }}
++ `-moz-border-radius` : {{c1:: `button.style.MozBorderRadius` }}
 + `style.cssText` ： {{c1:: 属性对应于整个 "style" 特性（attribute），即完整的样式字符串。 }}
 + `getComputedStyle(element, [pseudo])`： {{c1::  返回与 style 对象类似的，且包含了所有类的对象。只读 }}
+
+### 创建一个通知
+编写一个函数 `showNotification(options)`：该函数创建一个带有给定内容的通知 ``。该通知应该在 1.5 秒后自动消失。
+参数：
+```javascript
+// 在窗口的右上角附近显示一个带有文本 "Hello" 的元素
+showNotification({
+  top: 10, // 距窗口顶部 10px（默认为 0px）
+  right: 10, // 距窗口右边缘 10px（默认为 0px）
+  html: "Hello!", // 通知中的 HTML
+  className: "welcome" // div 的附加类（可选）
+});
+```
+如图：![image-20200522201109343](C:\Users\Yun\AppData\Roaming\Typora\typora-user-images\image-20200522201109343.png)
+
+答案：
+
+```html
+  <script>
+    function showNotification({top = 0, right = 0, className, html}) {
+
+      let notification = document.createElement('div');
+      notification.className = "notification";
+      if (className) {
+        notification.classList.add(className);
+      }
+
+      notification.style.top = top + 'px';
+      notification.style.right = right + 'px';
+
+      notification.innerHTML = html;
+      document.body.append(notification);
+
+      setTimeout(() => notification.remove(), 1500);
+    }
+
+    // test it
+    let i = 1;
+    setInterval(() => {
+      showNotification({
+        top: 10,
+        right: 10,
+        html: 'Hello ' + i++,
+        className: "welcome"
+      });
+    }, 2000);
+  </script>
+```
+
+### `offsetParent`元素与`offsetLeft/Top`属性
++ offsetParent 是最接近的祖先（ancestor）,最近的祖先为下列之一：
+  1. CSS 定位的（position 为 absolute，relative 或 fixed），
+  2. 或 `<td>`，`<th>`，`<table>`，
+  3. 或 `<body>`。
++ 有以下几种情况下，offsetParent 的值为 null：
+  1. 对于未显示的元素（`display:none `或者不在文档中）。
+  1. 对于` <body>` 与` <html>`。
+  1. 对于带有 `position:fixed `的元素。
+
+
+
+### `offsetParent`：下面代码输出什么？
+```html
+<main style="position: relative" id="main">
+<article>
+  <div id="example" style="position: absolute; left: 180px; top: 180px">...</div>
+</article>
+</main>
+<script>
+  alert(example.offsetParent.id); 
+  alert(example.offsetLeft); 
+  alert(example.offsetTop); 
+</script>
+```
+结果：
+{{c1::
+
+```js
+alert(example.offsetParent.id); // main
+alert(example.offsetLeft); // 180（注意：这是一个数字，不是字符串 "180px"）
+alert(example.offsetTop); // 180
+```
+}}
+
+### 几何属性：画出下面所有属性的代表图
++ `offsetParent`: {{c1::是最接近的 `CSS` 定位的祖先，或者是 `td，th，table，body`。}}
++ `offsetLeft/offsetTop`: {{c1::是相对于 `offsetParent` 的左上角边缘的坐标。}}
++ `offsetWidth/offsetHeight`: {{c1::元素的“外部” `width/height`，边框（border）尺寸计算在内。}}
++ `clientLeft/clientTop`: {{c1:: 左边框宽度/上边框宽度 包括滚动条  }}
++ `clientWidth/clientHeight`: {{c1::内容的 `width/height`，包括` padding`，但不包括滚动条（scrollbar）。}}
++ `scrollWidth/scrollHeight`: {{c1::内容的 `width/height`，就像 `clientWidth/clientHeight` 一样，但还包括元素的滚动出的不可见的部分。}}
++ `scrollLeft/scrollTop`: {{c1::从元素的左上角开始，滚动出元素的上半部分的 width/height。}}
++ 除了{{c1:: `scrollLeft/scrollTop`}} 外，所有属性都是只读的。
++ 如图所示：
+{{c1::![image-20200522225402747](C:\Users\Yun\AppData\Roaming\Typora\typora-user-images\image-20200522225402747.png)}}
+
+### Window的大小
+- 文档可见部分的 width/height（内容区域的 width/height）：{{c1:: `document.documentElement.clientWidth/Height`}}
+- 整个文档的 width/height，其中包括滚动出去的部分：
+  ```javascript
+  //{{c1::
+  let scrollHeight = Math.max(
+    document.body.scrollHeight, document.documentElement.scrollHeight,
+    document.body.offsetHeight, document.documentElement.offsetHeight,
+    document.body.clientHeight, document.documentElement.clientHeight
+  );
+  //}}
+  ```
+
+### Window的滚动
++ 滚动：
+  - 读取当前的滚动：{{c1:: `window.pageYOffset/pageXOffset`。}}
+  - 更改当前的滚动：
+    - `window.scrollTo(pageX,pageY)`: {{c1:: 绝对坐标。}}
+    - `window.scrollBy(x,y)`: {{c1:: 相对当前位置进行滚动。}}
+    - `elem.scrollIntoView(top)`: {{c1:: 滚动以使 `elem` 可见（`elem` 与窗口的顶部/底部对齐）。}}
+  + 禁止滚动: {{c1:: `document.body.style.overflow = ‘hidden’` }}
+  + 恢复滚动：{{c1:: `document.body.style.overflow = ‘’` }}
