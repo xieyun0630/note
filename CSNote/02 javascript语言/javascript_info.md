@@ -1,4 +1,4 @@
-### 与用户交互的 3 个浏览器指定的函数：[	](javascript_info_20191219101334387)
+### `与用户交互的 3 个浏览器指定的函数：[	](javascript_info_20191219101334387)
 
 我们使用浏览器作为工作环境，所以基本的 UI 功能将是：
 
@@ -3759,7 +3759,7 @@ export function sayHi(user) {
   ```
    }}
 
-## Document DOM
+## Document DOM [	](javascript_info_20200525035508017)
 
 ### 直接访问`<html> <body> <head>`的DOM元素 [	](javascript_info_20200521062435052)
 {{c1::
@@ -3875,7 +3875,7 @@ export function sayHi(user) {
 | 类型 | {{c1:: 任何值，标准的属性具有规范中描述的类型}} | {{c1:: 字符串}}                       |
 | 名字 | {{c1:: 名字（name）是大小写敏感的}}             | {{c1:: 名字（name）是大小写不敏感的}} |
 
-### 获取特性
+### 获取特性 [	](javascript_info_20200525035508020)
 
 编写代码，从文档（document）中获取带有 `data-widget-name` 特性（attribute）的元素，并读取它的值。
 ```html
@@ -3911,13 +3911,13 @@ export function sayHi(user) {
 ```
 }}
 
-### 创建新节点的方法
+### 创建新节点的方法 [	](javascript_info_20200525035508021)
 
 - `document.createElement(tag)`:{{c1::用给定的标签创建一个元素节点。}}
 - `document.createTextNode(value)`:{{c1::创建一个文本节点（很少使用）。}}
 - `elem.cloneNode(deep)`:{{c1::克隆元素，如果 `deep==true` 则与其后代一起克隆。}}
 
-### 插入和移除节点的node方法：
+### 插入和移除节点的node方法： [	](javascript_info_20200525035508024)
 
 - `node.append(...nodes or strings)`:{{c1::在 `node` 末尾插入。}}
 - `node.prepend(...nodes or strings)`:{{c1::在 `node` 开头插入。}}
@@ -3927,7 +3927,7 @@ export function sayHi(user) {
 - `node.remove()`:{{c1::移除 `node`。}}
 文本字符串被“作为文本”插入。
 
-### “旧式”的插入和移除节点的node方法：
+### “旧式”的插入和移除节点的node方法： [	](javascript_info_20200525035508026)
 
 1. {{c1:: `parent.appendChild(node)`}}
 2. {{c1:: `parent.insertBefore(node, nextSibling)`}}
@@ -3935,7 +3935,7 @@ export function sayHi(user) {
 4. {{c1:: `parent.replaceChild(newElem, node)`}}
    这些方法都返回 {{c1:: `node` }}。
 
-### ` elem.insertAdjacentHTML/Text/Element`方法
+### ` elem.insertAdjacentHTML/Text/Element`方法 [	](javascript_info_20200525035508031)
 
 - 在 `html` 中给定一些 HTML，`elem.insertAdjacentHTML(where, html)` 会根据 `where` 的值来插入它：
   - `"beforebegin"`:{{c1::将 `html` 插入到 `elem` 前面。}}
@@ -3944,24 +3944,24 @@ export function sayHi(user) {
   - `"afterend"`:{{c1::将 `html` 插入到 `elem` 后面。}}
 +  `elem.insertAdjacentText(where, text)` 和`elem.insertAdjacentElement(where, Element)`：它们会插入文本字符串和元素，但很少使用。}}
 
-### 要在页面加载完成之前将 HTML 附加到页面：
+### 要在页面加载完成之前将 HTML 附加到页面： [	](javascript_info_20200525035508034)
 
 - {{c1:: `document.write(html)`}}
 页面加载完成后，这样的调用将会擦除文档。多见于旧脚本。
 
-### 要管理 class，有两个 DOM 属性：
+### 要管理 class，有两个 DOM 属性： [	](javascript_info_20200525035508040)
 
 + `className`: {{c1:: 字符串值，可以很好地管理整个类的集合。}}
 + `classList`: {{c1:: 具有 add/remove/toggle/contains 方法的对象，可以很好地支持单个类。}}
 
-### `classList`属性的方法
+### `classList`属性的方法 [	](javascript_info_20200525035508042)
 
 - `elem.classList.add/remove(class)`: {{c1:: 添加/移除类。}}
 - `elem.classList.toggle(class)`: {{c1:: 如果类不存在就添加类，存在就移除它。}}
 - `elem.classList.contains(class)`: {{c1:: 检查给定类，返回 `true/false`。}}
 - `classList`是可迭代的
 
-### 元素样式访问规则
+### 元素样式访问规则 [	](javascript_info_20200525035508044)
 
 + `background-color`  : {{c1:: `elem.style.backgroundColor` }}
 + `z-index`           : {{c1:: `elem.style.zIndex` }}
@@ -3970,7 +3970,8 @@ export function sayHi(user) {
 + `style.cssText` ： {{c1:: 属性对应于整个 "style" 特性（attribute），即完整的样式字符串。 }}
 + `getComputedStyle(element, [pseudo])`： {{c1::  返回与 style 对象类似的，且包含了所有类的对象。只读 }}
 
-### 创建一个通知
+### 创建一个通知 [	](javascript_info_20200525035508045)
+
 编写一个函数 `showNotification(options)`：该函数创建一个带有给定内容的通知 ``。该通知应该在 1.5 秒后自动消失。
 参数：
 ```javascript
@@ -4018,19 +4019,21 @@ showNotification({
   </script>
 ```
 
-### `offsetParent`元素与`offsetLeft/Top`属性
-+ offsetParent 是最接近的祖先（ancestor）,最近的祖先为下列之一：
+### `offsetParent`元素与`offsetLeft/Top`属性 [	](javascript_info_20200525035508047)
+
++ `offsetParent` 是最接近的祖先（ancestor）,最近的祖先为下列之一：
   1. CSS 定位的（position 为 absolute，relative 或 fixed），
   2. 或 `<td>`，`<th>`，`<table>`，
   3. 或 `<body>`。
-+ 有以下几种情况下，offsetParent 的值为 null：
++ 有以下几种情况下，`offsetParent` 的值为 null：
   1. 对于未显示的元素（`display:none `或者不在文档中）。
   1. 对于` <body>` 与` <html>`。
   1. 对于带有 `position:fixed `的元素。
 
 
 
-### `offsetParent`：下面代码输出什么？
+### `offsetParent`：下面代码输出什么？ [	](javascript_info_20200525035508049)
+
 ```html
 <main style="position: relative" id="main">
 <article>
@@ -4053,7 +4056,8 @@ alert(example.offsetTop); // 180
 ```
 }}
 
-### 几何属性：画出下面所有属性的代表图
+### 几何属性：画出下面所有属性的代表图 [	](javascript_info_20200525035508051)
+
 + `offsetParent`: {{c1::是最接近的 `CSS` 定位的祖先，或者是 `td，th，table，body`。}}
 + `offsetLeft/offsetTop`: {{c1::是相对于 `offsetParent` 的左上角边缘的坐标。}}
 + `offsetWidth/offsetHeight`: {{c1::元素的“外部” `width/height`，边框（border）尺寸计算在内。}}
@@ -4065,7 +4069,8 @@ alert(example.offsetTop); // 180
 + 如图所示：
 {{c1::![image-20200522225402747](C:\note\CSNote\02 javascript语言\javascript_info.assets\image-20200522225402747.png)}}
 
-### Window的大小
+### Window的大小 [	](javascript_info_20200525035508053)
+
 - 文档可见部分的 width/height（内容区域的 width/height）：{{c1:: `document.documentElement.clientWidth/Height`}}
 - 整个文档的 width/height，其中包括滚动出去的部分：
   ```javascript
@@ -4078,7 +4083,8 @@ alert(example.offsetTop); // 180
   //}}
   ```
 
-### Window的滚动
+### Window的滚动 [	](javascript_info_20200525035508055)
+
 + 滚动：
   - 读取当前的滚动：{{c1:: `window.pageYOffset/pageXOffset`。}}
   - 更改当前的滚动：
@@ -4088,13 +4094,13 @@ alert(example.offsetTop); // 180
   + 禁止滚动: {{c1:: `document.body.style.overflow = ‘hidden’` }}
   + 恢复滚动：{{c1:: `document.body.style.overflow = ‘’` }}
 
-### 大多数 JavaScript 方法处理的是以下两种坐标系中的一个
+### 大多数 JavaScript 方法处理的是以下两种坐标系中的一个 [	](javascript_info_20200525035508056)
 
 `pageY`{{c1:: 元素在文档中的相对坐标保持不变，从文档顶部（现在已滚动出去）开始计算。}}
 `clientY`{{c1:: 窗口相对坐标确实发生了变化（箭头变短了），因为同一个点越来越靠近窗口顶部。}}
 {{c1:: ![image-20200525100352412](javascript_info.assets/image-20200525100352412.png)}}
 
-### 元素坐标：getBoundingClientRect
+### 元素坐标：`getBoundingClientRect` [	](javascript_info_20200525035508058)
 
 作用:{{c1:: 返回最小矩形的窗口坐标 }}
 x/y: {{c1::矩形原点相对于窗口的 X/Y 坐标，}}
@@ -4102,3 +4108,94 @@ width/height: {{c1::矩形的 width/height（可以为负）。}}
 top/bottom: {{c1::顶部/底部矩形边缘的 Y 坐标，}}
 left/right: {{c1::左/右矩形边缘的 X 坐标。}}
 {{c1::![image-20200525101421628](javascript_info.assets/image-20200525101421628.png)}}
+
+### 页面上的任何点都有坐标： [	](javascript_info_20200525035508060)
+
++ 相对于窗口的坐标: {{c1::`elem.getBoundingClientRect()`。}}
++ 相对于文档的坐标: {{c1::`elem.getBoundingClientRect() `加上当前页面滚动。}}
++ 窗口坐标非常适合和 {{c1:: `position:fixed`}} 一起使用，文档坐标非常适合和 {{c1:: `position:absolute`}}一起使用。
++ `document.elementFromPoint(x, y)`: {{c1::返回在窗口坐标 (x, y) 处嵌套最多（the most nested）的元素。}}
+
+### 使用事件时，可能会出现的错误 [	](javascript_info_20200525035508062)
+
++ 函数应该被以 `sayThanks` 的形式进行非配，而不是 {{c1::`sayThanks()`}}。
++ 使用函数，{{c1:: 而不是字符串}}。
++ 不要对处理程序使用 {{c1:: `setAttribute`}}。
++ DOM 属性是{{c1:: 大小写敏感的}}。
+
+### `addEventListener`添加事件 [	](javascript_info_20200525035508064)
+
++ 语法`element.addEventListener(event, handler[, options]);`
++ event:{{c1:: 事件名，例如："click"。}}
++ handler:{{c1:: 处理程序。}}
++ options
+  - `once`：{{c1:: 如果为 `true`，那么会在被触发后自动删除监听器。}}
+  - `capture`：{{c1:: 在捕获阶段设置处理程序}}
+  - `passive`：{{c1:: 如果为 `true`，那么处理程序将不会 `preventDefault()`}}
++ 当 `addEventListener` 接收一个对象作为处理程序(handler)时，{{c1:: 在事件发生时，它就会调用 `object.handleEvent(event)` }}
++ 如果我们 `addEventListener(..., true)`，那么我们应该在 {{c1:: `removeEventListener(..., true)` }} 中提到同一阶段，以正确删除处理程序。
+
+### event 对象的一些属性： [	](javascript_info_20200525035508066)
+
++ `event.type`: {{c1:: 事件类型，这里是 "click"。}}
++ `event.currentTarget`: {{c1:: 处理事件的元素。这与 this 相同}}
++ `event.clientX / event.clientY`: {{c1:: 鼠标事件的指针的窗口相对坐标。}}
++ `event.target`: {{c1:: 引发事件的层级最深的元素。}}
++ `event.eventPhase`: {{c1:: 当前阶段（capturing=1，target=2，bubbling=3）。}}
+
+### 停止事件 [	](javascript_info_20200525035508068)
+
++ `event.stopPropagation()`:{{c1:: 停止事件向上移动，但是当前元素上的其他处理程序都会继续运行 }}
++ `event.stopImmediatePropagation()`:{{c1:: 可以用于停止冒泡事件，并阻止当前元素上的处理程序运行。 }}
++ `event.preventDefault()`:{{c1:: 阻止浏览器执行默认行为 }}
++ `event.defaultPrevented`:{{c1:: 如果默认行为被阻止，那么 event.defaultPrevented 属性为 true，否则为 false。 }}
+
+### 阻止浏览器行为 [	](javascript_info_20200525035508070)
+
++ 有两种方式来告诉浏览器我们不希望它执行默认行为：
+  ```html
+    <!-- {{c1:: -->
+    <a href="/" onclick="return false">Click here</a>
+    or
+    <a href="/" onclick="event.preventDefault()">here</a>
+    <!-- }} -->
+  ```
+
+### 常见默认的浏览器行为事件 [	](javascript_info_20200525035508074)
+
++ `mousedown`: {{c1::开始选择（移动鼠标进行选择）。}}
++ 在 `<input type="checkbox"> `上的 click: {{c1::选中/取消选中的 input。}}
++ `submit`: {{c1::点击 `<input type="submit">` 或者在表单字段中按下 Enter 键会触发该事件，之后浏览器将提交表单。}}
++ `keydown`: {{c1::按下一个按键会导致将字符添加到字段，或者触发其他行为。}}
++ `contextmenu`: {{c1::事件发生在鼠标右键单击时，触发的行为是显示浏览器上下文菜单。}}
+
+### 自定义事件 [	](javascript_info_20200525035508076)
+
+语法：`let event = new Event(type[, options]);`
+参数：
+
++ type: {{c1::事件类型，可以是像这样 "click" 的字符串，或者我们自己的像这样 "my-event" 的参数。}}
++ options: 具有两个可选属性的对象
+  + bubbles: true/false: {{c1::如果为 true，那么事件会冒泡。}}
+  + cancelable: true/false: {{c1::如果为 true，那么“默认行为”就会被阻止。稍后我们会看到对于自定义事件，它意味着什么。}}
++ 默认情况下，以上两者都为 false： {{c1:: {bubbles: false, cancelable: false}。}}
+
+### 自定义事件冒泡示例 [	](javascript_info_20200525035508078)
+
+```html
+<h1 id="elem">Hello from the script!</h1>
+<script>
+  // 在 document 上捕获...
+  //{{c1::
+  document.addEventListener("hello", function(event) { // (1)
+    alert("Hello from " + event.target.tagName); // Hello from H1
+  });
+  //}}
+  // ...在 elem 上 dispatch！
+  //{{c1::
+  let event = new Event("hello", {bubbles: true}); // (2)
+  elem.dispatchEvent(event);
+  //}}
+  // 在 document 上的处理程序将被激活，并显示消息。
+</script>
+```
