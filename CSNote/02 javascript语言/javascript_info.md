@@ -4087,3 +4087,18 @@ alert(example.offsetTop); // 180
     - `elem.scrollIntoView(top)`: {{c1:: 滚动以使 `elem` 可见（`elem` 与窗口的顶部/底部对齐）。}}
   + 禁止滚动: {{c1:: `document.body.style.overflow = ‘hidden’` }}
   + 恢复滚动：{{c1:: `document.body.style.overflow = ‘’` }}
+
+### 大多数 JavaScript 方法处理的是以下两种坐标系中的一个
+
+`pageY`{{c1:: 元素在文档中的相对坐标保持不变，从文档顶部（现在已滚动出去）开始计算。}}
+`clientY`{{c1:: 窗口相对坐标确实发生了变化（箭头变短了），因为同一个点越来越靠近窗口顶部。}}
+{{c1:: ![image-20200525100352412](javascript_info.assets/image-20200525100352412.png)}}
+
+### 元素坐标：getBoundingClientRect
+
+作用:{{c1:: 返回最小矩形的窗口坐标 }}
+x/y: {{c1::矩形原点相对于窗口的 X/Y 坐标，}}
+width/height: {{c1::矩形的 width/height（可以为负）。}}
+top/bottom: {{c1::顶部/底部矩形边缘的 Y 坐标，}}
+left/right: {{c1::左/右矩形边缘的 X 坐标。}}
+{{c1::![image-20200525101421628](javascript_info.assets/image-20200525101421628.png)}}
