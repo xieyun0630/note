@@ -3816,8 +3816,8 @@ export function sayHi(user) {
 
 ### console.dir(elem) 与 console.log(elem) [	](javascript_info_20200521062435062)
 
-+ `console.log(elem)`:{{c1:: 显示元素的 DOM 树。}
-+ `console.dir(elem)`:{{c1:: 将元素显示为 DOM 对象，非常适合探索其属性。}}
++ `console.log(elem)`: {{c1:: 显示元素的 DOM 树。}}
++ `console.dir(elem)`: {{c1:: 将元素显示为 DOM 对象，非常适合探索其属性。}}
 
 
 
@@ -3837,6 +3837,10 @@ export function sayHi(user) {
 - {{c1:: `nodeName` 是为任意 `Node` 定义的：}}
   1. {{c1:: 对于元素，它的意义与 `tagName` 相同。}}
   2. {{c1:: 对于其他节点类型（`text`，`comment` 等），它拥有一个对应节点类型的字符串。}}
+1. alert( document.tagName ); {{c1:: // undefined（不是一个元素）}}
+2. alert( document.nodeName ); {{c1:: // #document }}
+3. alert( document.body.firstChild.tagName ); {{c1:: // undefined（不是一个元素）}}
+4. alert( document.body.firstChild.nodeName ); {{c1:: // #comment }}
 
 ### `div.outerHTML='<p>A new element</p>'` 中发生的事情是： [	](javascript_info_20200521062435070)
 1. {{c1:: div 被从文档（document）中移除。}}
@@ -3923,9 +3927,9 @@ export function sayHi(user) {
 - `node.prepend(...nodes or strings)`:{{c1::在 `node` 开头插入。}}
 - `node.before(...nodes or strings)`:{{c1::在 `node` 之前插入。}}
 - `node.after(...nodes or strings)`:{{c1::在 `node` 之后插入。}}
-- `node.replaceWith(...nodes or strings)`:{{c1::替换 `node`。}}
+- `node.replaceWith(...nodes or strings)`:{{c1::替换 `node`。文本字符串被“作为文本”插入。}}
 - `node.remove()`:{{c1::移除 `node`。}}
-文本字符串被“作为文本”插入。
+
 
 ### “旧式”的插入和移除节点的node方法： [	](javascript_info_20200525035508026)
 
@@ -3933,7 +3937,7 @@ export function sayHi(user) {
 2. {{c1:: `parent.insertBefore(node, nextSibling)`}}
 3. {{c1:: `parent.removeChild(node)`}}
 4. {{c1:: `parent.replaceChild(newElem, node)`}}
-   这些方法都返回 {{c1:: `node` }}。
++ 这些方法都返回 {{c1:: `node` }}。
 
 ### ` elem.insertAdjacentHTML/Text/Element`方法 [	](javascript_info_20200525035508031)
 
