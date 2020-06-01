@@ -3783,16 +3783,22 @@ export function sayHi(user) {
 + `td.cellIndex`: {{c1:: 在封闭的 `<tr> `中单元格的编号。}}
 
 ### 遍历DOM主要属性 [	](javascript_info_20200521062435055)
-对于所有节点：{{c1:: `parentNode，childNodes，firstChild，lastChild，previousSibling，nextSibling。`}}
-仅对于元素节点：{{c1:: `parentElement，children，firstElementChild，lastElementChild，previousElementSibling，nextElementSibling。`}}
+| 主要属性           | 对于所有节点    | 仅对于元素节点 |
+| ------------------ | --------------- | -------------- |
+| 获取父节点         | {{c1:: `parentNode`}}      | {{c1::`parentElement`}} |
+| 获取所有子节点     | {{c1:: `childNodes`}}      | {{c1::`children`}} |
+| 获取第一个子节点   | {{c1:: `firstChild`}}      | {{c1::`firstElementChild`}} |
+| 获取最后一个子节点 | {{c1:: `lastChild`}}       | {{c1::`lastElementChild`}} |
+| 获取前一个兄弟节点 | {{c1::`previousSibling`}} | {{c1::`previousElementSibling`}} |
+| 获取后一个兄弟节点 | {{c1:: `nextSibling`}}     | {{c1::`nextElementSibling`}} |
 
 ### 兄弟节点问题 [	](javascript_info_20200521062435057)
 + 如果 elem 是任意一个 DOM 元素节点……
   + elem.lastChild.nextSibling 值一直都是 null，这个判定是不是真的？
   + elem.children[0].previousSibling 值一直都是 null，这个判定是不是真的？
-回答：
-1. {{c1:: 是的，这是真的。elem.lastChild 就是最后一个元素，它没有 nextSibling。}}
-2. {{c1:: 不，这是错的，因为 elem.children[0] 是元素中的第一个子元素。但是在它前面可能存在非元素的节点。所以 previousSibling 可能是一个文本节点。}}
++ 回答：
+  1. {{c1:: 是的，这是真的。elem.lastChild 就是最后一个元素，它没有 nextSibling。}}
+  2. {{c1:: 不，这是错的，因为 elem.children[0] 是元素中的第一个子元素。但是在它前面可能存在非元素的节点。所以 previousSibling 可能是一个文本节点。}}
 
 
 
@@ -3983,10 +3989,10 @@ showNotification({
   className: "welcome" // div 的附加类（可选）
 });
 ```
-如图：![image-20200522201109343](C:\note\CSNote\02 javascript语言\javascript_info.assets\image-20200522201109343.png)
+如图：![image-20200522201109343](javascript_info.assets\image-20200522201109343.png)
 
 答案：
-
+{{c1::
 ```html
   <script>
     function showNotification({top = 0, right = 0, className, html}) {
@@ -4017,18 +4023,19 @@ showNotification({
       });
     }, 2000);
   </script>
+}}
 ```
 
 ### `offsetParent`元素与`offsetLeft/Top`属性 [	](javascript_info_20200525035508047)
 
 + `offsetParent` 是最接近的祖先（ancestor）,最近的祖先为下列之一：
-  1. CSS 定位的（position 为 absolute，relative 或 fixed），
-  2. 或 `<td>`，`<th>`，`<table>`，
-  3. 或 `<body>`。
+  1. {{c1:: CSS 定位的（position 为 absolute，relative 或 fixed），}}
+  2. {{c1:: 或 `<td>`，`<th>`，`<table>`，}}
+  3. {{c1:: 或 `<body>`。}}
 + 有以下几种情况下，`offsetParent` 的值为 null：
-  1. 对于未显示的元素（`display:none `或者不在文档中）。
-  1. 对于` <body>` 与` <html>`。
-  1. 对于带有 `position:fixed `的元素。
+  1. {{c1:: 对于未显示的元素（`display:none `或者不在文档中）。}}
+  1. {{c1:: 对于` <body>` 与` <html>`。}}
+  1. {{c1:: 对于带有 `position:fixed `的元素。}}
 
 
 
@@ -4056,7 +4063,7 @@ alert(example.offsetTop); // 180
 ```
 }}
 
-### 几何属性：画出下面所有属性的代表图 [	](javascript_info_20200525035508051)
+### 几何属性：画 [	](javascript_info_20200525035508051)
 
 + `offsetParent`: {{c1::是最接近的 `CSS` 定位的祖先，或者是 `td，th，table，body`。}}
 + `offsetLeft/offsetTop`: {{c1::是相对于 `offsetParent` 的左上角边缘的坐标。}}
@@ -4067,7 +4074,7 @@ alert(example.offsetTop); // 180
 + `scrollLeft/scrollTop`: {{c1::从元素的左上角开始，滚动出元素的上半部分的 width/height。}}
 + 除了{{c1:: `scrollLeft/scrollTop`}} 外，所有属性都是只读的。
 + 如图所示：
-{{c1::![image-20200522225402747](C:\note\CSNote\02 javascript语言\javascript_info.assets\image-20200522225402747.png)}}
+{{c1::![image-20200522225402747](javascript_info.assets\image-20200522225402747.png)}}
 
 ### Window的大小 [	](javascript_info_20200525035508053)
 
@@ -4090,23 +4097,23 @@ alert(example.offsetTop); // 180
   - 更改当前的滚动：
     - `window.scrollTo(pageX,pageY)`: {{c1:: 绝对坐标。}}
     - `window.scrollBy(x,y)`: {{c1:: 相对当前位置进行滚动。}}
-    - `elem.scrollIntoView(top)`: {{c1:: 滚动以使 `elem` 可见（`elem` 与窗口的顶部/底部对齐）。}}
+    - `elem.scrollIntoView(true/false)`: {{c1:: 滚动以使 `elem` 可见（`elem` 与窗口的顶部/底部对齐）。}}
   + 禁止滚动: {{c1:: `document.body.style.overflow = ‘hidden’` }}
   + 恢复滚动：{{c1:: `document.body.style.overflow = ‘’` }}
 
 ### 大多数 JavaScript 方法处理的是以下两种坐标系中的一个 [	](javascript_info_20200525035508056)
 
-`pageY`{{c1:: 元素在文档中的相对坐标保持不变，从文档顶部（现在已滚动出去）开始计算。}}
-`clientY`{{c1:: 窗口相对坐标确实发生了变化（箭头变短了），因为同一个点越来越靠近窗口顶部。}}
-{{c1:: ![image-20200525100352412](javascript_info.assets/image-20200525100352412.png)}}
++ `pageY`{{c1:: 元素在文档中的相对坐标保持不变，从文档顶部（现在已滚动出去）开始计算。}}
++ `clientY`{{c1:: 窗口相对坐标确实发生了变化（箭头变短了），因为同一个点越来越靠近窗口顶部。}}
+  {{c1:: ![image-20200525100352412](javascript_info.assets/image-20200525100352412.png)}}
 
 ### 元素坐标：`getBoundingClientRect` [	](javascript_info_20200525035508058)
 
-作用:{{c1:: 返回最小矩形的窗口坐标 }}
-x/y: {{c1::矩形原点相对于窗口的 X/Y 坐标，}}
-width/height: {{c1::矩形的 width/height（可以为负）。}}
-top/bottom: {{c1::顶部/底部矩形边缘的 Y 坐标，}}
-left/right: {{c1::左/右矩形边缘的 X 坐标。}}
++ 作用: {{c1:: 返回最小矩形的窗口坐标 }}
++ x/y: {{c1::矩形原点相对于窗口的 X/Y 坐标，}}
++ width/height: {{c1::矩形的 width/height（可以为负）。}}
++ top/bottom: {{c1::顶部/底部矩形边缘的 Y 坐标，}}
++ left/right: {{c1::左/右矩形边缘的 X 坐标。}}
 {{c1::![image-20200525101421628](javascript_info.assets/image-20200525101421628.png)}}
 
 ### 页面上的任何点都有坐标： [	](javascript_info_20200525035508060)

@@ -128,7 +128,7 @@ force:{{c1:: 是否强制提交或回滚。}}
 
 ## Mybatis配置 [	](mybatis_20200520043218578)
 
-### Mybatis允许3个地方配置属性 [	](mybatis_20200514071548553)
+### Mybatis允许3个地方配置Properties [	](mybatis_20200514071548553)
 1. {{c1::  额外属性文件配置：`<properties resource="db.properties">`。}}
 2. {{c1:: 直接配置`<properties>`的子元素。}}
 3. {{c1:: SqlSessionFactory中build()方法传入Properties对象。}}
@@ -215,12 +215,13 @@ force:{{c1:: 是否强制提交或回滚。}}
 + 指定JDBC类型与JAVA类型
     1. 核心配置指定
         {{C1::
+        
         ```xml
         <typeHandler handler="com.zy.converter.BooleanAndIntConverter"
                     javaType="Boolean" jdbcType="INTEGER" />
         ```
-        }}
-
+}}
+        
     2. java注解指定
         {{C1::
         ```java
@@ -229,12 +230,12 @@ force:{{c1:: 是否强制提交或回滚。}}
         public class MyTypeHandler extends BaseTypeHandler<Name> {
         ```
         }}
-### Mybatis枚举的类型处理器 [	](mybatis_20200520043218590)
+### Mybatis枚举的类型转换器 [	](mybatis_20200520043218590)
 + Mybatis默认的枚举处理器：{{c1:: `EnumTypeHandler` }}
 + `EnumTypeHandler`:{{c1:: 将枚举值转换成对应名称（字符串）}}
 + `EnumOrdinalTypeHandler`:{{c1:: 将枚举值转换成对应序号（整数）,使用需单独配置。}}
 
-### 在Mybatis中为特定属性指定类型处理器的方式 [	](mybatis_20200520043218592)
+### 在Mybatis中为特定属性指定类型转换器的方式 [	](mybatis_20200520043218592)
 + 查询的情况
     + {{c1:: 在`<result>`元素中或者`@Result`注解中指定typeHandler属性
     ```xml
@@ -245,26 +246,23 @@ force:{{c1:: 是否强制提交或回滚。}}
         @Result(property = "recordSeason", column = "record_season",
 			typeHandler = EnumTypeHandler.class)
     ​```
-    ```
-    
     }}
-    
+    ```
 + 插入的情况:
-  
     + {{c1:: 在#{}中指定typeHandler属性:
     ```sql
 	    insert into news_inf values
 		(null, #{title}, #{content}, #{happenSeason}, #{recordSeason,
     	typeHandler=org.apache.ibatis.type.EnumTypeHandler})
+    ​``` }}
+    ​		 
+    
     ```
-    
-    ​		 }}
-    
 
 ### 事务管理器 [	](mybatis_20200521095802607)
 
-`<transactionManager type="JDBC"/>`:{{c1:: 使用JDBC自带的事务提交与回滚，对应类为`JdbcTransactionFactory`。}}
-`<transactionManager type="MANAGED"/>`:{{c1:: 使用容器来管理事务的生命周期}}
++ `<transactionManager type="JDBC"/>`:{{c1:: 使用JDBC自带的事务提交与回滚，对应类为`JdbcTransactionFactory`。}}
++ `<transactionManager type="MANAGED"/>`:{{c1:: 使用容器来管理事务的生命周期}}
 
 ### 自定义Mybatis事务管理器 [	](mybatis_20200521095802608)
 
@@ -330,3 +328,180 @@ Integer getTimeout() throws SQLException;
 			</dataSource>
             <!-- }} -->
         ```
+### MyBatis支持不同类型的数据库 [	](mybatis_20200602074442597)
+
+1. 配置`<databaseIdProvider />`
+```xml
+<environment id="mysql">
+    <!-- ... -->
+</environment>
+<environment id="pgsql">
+    <!-- ... -->
+</environment>
+<!-- {{c1::  -->
+<databaseIdProvider type="DB_VENDOR">
+<!-- DB_VENDOR是VendorDatabaseIdProvider类的别名 -->
+<property name="PostgreSQL" value="pgsql"/>
+<property name="MySQL" value="mysql"/>
+</databaseIdProvider>
+<!-- }} -->
+```
+2. 定义SQL语句
+```xml
+<!-- {{c1:: -->
+<select id="findNews" resultType="news" databaseId="mysql">
+    ...
+</select>
+<select id="findNews" resultType="news" databaseId="pgsql">
+    ...
+</select>
+<!-- }}  -->
+```
+3. 自定义`databaseIdProvider` 
+    1. {{c1:: 实现`DatabaseIdProvider`接口}}
+    2. {{c1:: void setProperties(Properites p):p为`<databaseIdProvider>`中的配置属性}}
+    3. {{c1:: String getDatabaseId(DataSource dataSource)：返回数据库类的别名。}}
+### insert时返回自增长得主键值 [	](mybatis_20200602074442599)
++ sql语句配置
+    {{c1:: 
+    ```xml
+	<insert id="saveNews" useGeneratedKeys="true" keyProperty="id">
+		insert into news_inf values
+		(null, #{title}, #{content})
+	</insert>
+    ```
+    }}
++ 调用SQL语句
+    {{c1:: 
+    ```java
+    var news = new News(null, "李刚","公众号：fkbooks");
+    var n = newsMapper.saveNews(news);
+    System.out.printf("插入了%d条记录%n", n);
+    System.out.println("数据库为新插入记录生成主键为：" + news.getId())
+    ```
+    }}
+### 在mybatis中使用序列插入一条记录 [	](mybatis_20200602074442600)
+
+```sql
+-- 创建数据表
+create table news_inf
+(
+ news_id integer primary key,
+ news_title varchar(255),
+ news_content varchar(255)
+);
+-- 创建序列
+create sequence news_inf_seq;
+```
++ mapper.xml中的定义
+    {{c1::
+    
+    ```xml
+		<insert id="saveNews">
+		<!-- 先从序列获取主键值
+			该SQL语句返回的值将设置给参数对象的id属性 -->
+		<selectKey keyProperty="id" resultType="int" order="BEFORE">
+			select nextval('news_inf_seq')
+		</selectKey>
+		insert into news_inf values (#{id}, #{title}, #{content})
+    </insert>
+    ```
+    }}
++ java注解定义
+    {{c1::
+    ```java
+    	@Insert("insert into news_inf values (#{id}, #{title}, #{content})")
+        // 先从序列获取主键值，该SQL语句返回的值将设置给参数对象的id属性 -->
+        @SelectKey(keyProperty = "id", resultType = Integer.class, before = true,
+            statement = "select nextval('news_inf_seq')")
+        int saveNews(News news);
+    ```
+    }}
+
+
+### 使用`<sql>`定义可复用的SQL片段 [	](mybatis_20200602074442601)
+
+1. 定义SQL片段，其id为newsColumns
+{{c1::
+```xml
+	<sql id="newsColumns">
+		${alias}.news_id id, 
+		${alias}.news_title title,
+		${alias}.news_content content
+	</sql>
+```
+}}
+2. 引用newsColumns对应的SQL片段，将其中alias替换成ni
+{{c1::
+```xml
+	<select id="getNews" resultType="news">
+		select 
+		<include refid="newsColumns">
+			<property name="alias" value="ni"/>
+		</include>
+		from news_inf ni where ni.news_id = #{id}
+	</select>
+```
+}}
+
+ ### Mapper接口中方法的参数处理 [	](mybatis_20200602074442602)
+ 1. {{c1:: 8个基本类型加String等}}
+    + {{c1:: 方法的参数值直接传给SQL中唯一的#{}}}
+ 2. {{c1:: object或map}}
+    + {{c1:: #{}中的参数名必须是对象的属性值或Map中的key值}}
+ 3. {{c1:: 多个参数}}
+    + 内置名
+        1. {{c1:: #{param1},#{param2},#{param3}}}
+        2. {{c1:: #{arg0},#{arg1},#{arg2}}}
+    + 使用@param注解
+        ```java
+        @Delete("delete from news_inf where news_id between #{from} and #{end}")
+        int deleteNewsInRange(@Param("from") int from,@Param("end") int end);
+        ```
+    + {{c1:: 使用java8以上中-parameters编译选项}}
+
+### `#{}`还可以指定的额外属性 [	](mybatis_20200602074442603)
++ javaType:{{c1:: 表明传入参数的类型}}
++ jdbcType:{{c1:: 表明对应数据库中的类型，一般用来处理传入的参数为空的情况}}
++ numericSacle:{{c1:: numericScale=3，可以指定传入数据库的字段为数值类型，并且只有小数点数后三位}}
++ typeHandler:{{c1:: 指定类型转换器}}
+
+### `#{}`与`${}`的区别 [	](mybatis_20200602074442604)
+`${}`：{{c1:: 执行字符串替换}}
+`#{}`：{{c1:: 先以？代替，再以该SQL语句创建PreparedStatement，然后调用setXXX()方法设置，其值来自#{}中的参数值。}}
+
+### 下面方法定义定义的两个参数，第一个定义了要查询的列名，第二个定义了查询的目标值 [	](mybatis_20200602074442605)
+```java
+	List<News> findNewsByColumn(@Param("column") String column, @Param("value") String value);
+```
++ 给出对应的SQL语句的mapper.xml定义:
+```xml
+    <!-- {{c1:: -->
+    <select id="findNewsByColumn" resultType="news">
+        select news_id id, news_title title, news_content content
+        from news_inf where ${column} like #{value}
+    </select>
+    <!-- }} -->
+```
+
+### MyBatis代码生成器的使用 [	](mybatis_20200602074442606)
+
+1. 添加MAVEN插件依赖并配置:
+    ```xml
+        <plugin>
+        <groupId>org.mybatis.generator</groupId>
+        <!-- {{c1:: -->
+        <artifactId>mybatis-generator-maven-plugin</artifactId>
+        <!-- }} -->
+        <version>1.3.2</version>
+        <configuration>
+            <!-- {{c1:: -->
+            <configurationFile>${basedir}/src/main/resources/generator/generatorConfig.xml</configurationFile>
+            <overwrite>true</overwrite>
+            <verbose>true</verbose>
+            <!-- }} -->
+        </configuration>
+        </plugin>
+    ```
+2. {{c1:: 配置generatorConfig.xml文件 }}
+3. {{c1:: 执行该插件的generate目标 }}
