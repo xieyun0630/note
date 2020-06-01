@@ -4,9 +4,9 @@
 + 作用：{{c1:: 面向对象语言与关系型数据库的发展不同步的解决方案。}}
 
 ### ORM映射方式 [	](mybatis_20200512080327617)
-1. 数据表映射类
-2. 数据表的行映射对象（即实例）
-3. 数据表的列（字段）映射对象的属性
+1. {{c1:: 数据表映射类 }}
+2. {{c1:: 数据表的行映射对象（即实例） }}
+3. {{c1:: 数据表的列（字段）映射对象的属性 }}
 
 ### MyBatis如何将ResultSet的每一行转换成Java对象呢？ [	](mybatis_20200512080327618)
 1. 自动转换:{{c1:: 表列名（或列别名）和对象属性名相同 }}
@@ -50,14 +50,14 @@
 ### 使用SqLSession执行Mapper中定义的SQL语句 [	](mybatis_20200512080327622)
 
 ```java
-{{c1::
+//{{c1::
 var n = sqlSession.insert("org.crazyit.app.dao.NewsMapper.saveNews", news);
 var n = sqlSession.update("org.crazyit.app.dao.NewsMapper.updateNews", news);
 var n = sqlSession.delete("org.crazyit.app.dao.NewsMapper.deleteNews", 2);
 var news = sqlSession.selectOne("org.crazyit.app.dao.NewsMapper.getNews", 1);
 var news = sqlSession.selectList("org.crazyit.app.dao.NewsMapper.getNews", 1);
 var newsMapper = sqlSession.getMapper(NewsMapper.class);
-}}
+//}}
 ```
 ### 创建Mapper接口建议约定 [	](mybatis_20200512080327623)
 
