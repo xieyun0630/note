@@ -50,14 +50,14 @@
 ### 使用SqLSession执行Mapper中定义的SQL语句 [	](mybatis_20200512080327622)
 
 ```java
-//{{c1::
+// {{c1::
 var n = sqlSession.insert("org.crazyit.app.dao.NewsMapper.saveNews", news);
 var n = sqlSession.update("org.crazyit.app.dao.NewsMapper.updateNews", news);
 var n = sqlSession.delete("org.crazyit.app.dao.NewsMapper.deleteNews", 2);
 var news = sqlSession.selectOne("org.crazyit.app.dao.NewsMapper.getNews", 1);
 var news = sqlSession.selectList("org.crazyit.app.dao.NewsMapper.getNews", 1);
 var newsMapper = sqlSession.getMapper(NewsMapper.class);
-//}}
+// }}
 ```
 ### 创建Mapper接口建议约定 [	](mybatis_20200512080327623)
 
