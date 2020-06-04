@@ -431,6 +431,7 @@ create sequence news_inf_seq;
 	</sql>
 ```
 }}
+
 2. 引用newsColumns对应的SQL片段，将其中alias替换成ni
 {{c1::
 ```xml
@@ -445,14 +446,14 @@ create sequence news_inf_seq;
 }}
 
  ### Mapper接口中方法的参数处理 [	](mybatis_20200602074442602)
- 1. {{c1:: 8个基本类型加String等}}
-    + {{c1:: 方法的参数值直接传给SQL中唯一的#{}}}
- 2. {{c1:: object或map}}
+ 1. 8个基本类型加String等
+    + {{c1:: 方法的参数值直接传给SQL中唯一的#{} }}
+ 2. object或map
     + {{c1:: #{}中的参数名必须是对象的属性值或Map中的key值}}
- 3. {{c1:: 多个参数}}
+ 3. 多个参数
     + 内置名
-        1. {{c1:: #{param1},#{param2},#{param3}}}
-        2. {{c1:: #{arg0},#{arg1},#{arg2}}}
+        1. {{c1:: #{param1},#{param2},#{param3} }}
+        2. {{c1:: #{arg0},#{arg1},#{arg2} }}
     + 使用@param注解
         ```java
         @Delete("delete from news_inf where news_id between #{from} and #{end}")
@@ -467,8 +468,8 @@ create sequence news_inf_seq;
 + typeHandler:{{c1:: 指定类型转换器}}
 
 ### `#{}`与`${}`的区别 [	](mybatis_20200602074442604)
-`${}`：{{c1:: 执行字符串替换}}
-`#{}`：{{c1:: 先以？代替，再以该SQL语句创建PreparedStatement，然后调用setXXX()方法设置，其值来自#{}中的参数值。}}
++ `${}`：{{c1:: 执行字符串替换}}
++ `#{}`：{{c1:: 先以？代替，再以该SQL语句创建PreparedStatement，然后调用setXXX()方法设置，其值来自#{}中的参数值。}}
 
 ### 下面方法定义定义的两个参数，第一个定义了要查询的列名，第二个定义了查询的目标值 [	](mybatis_20200602074442605)
 ```java
@@ -505,3 +506,101 @@ create sequence news_inf_seq;
     ```
 2. {{c1:: 配置generatorConfig.xml文件 }}
 3. {{c1:: 执行该插件的generate目标 }}
+
+
+### 为下面SQL语句创建id为newsMap的映射关系 [	](mybatis_20200604111131382)
+```sql
+	<select id="findNewsByTitle" resultMap="newsMap">
+		select news_id,news_title,news_content from news_inf where news_title like #{title}
+	</select>
+```
++ xml配置版:
+    {{c1::
+    ```xml
+        <!-- 指定该resultMap映射的Java对象是news类型 -->
+        <resultMap id="newsMap" type="news">
+            <!-- 指定数据列与属性之间的对应关系 -->
+            <id column="news_id" property="id"/>
+            <result column="news_title" property="title"/>
+            <result column="news_content" property="content"/>
+        </resultMap>
+    ```
+    }}
++ java注解版:
+    {{c1::
+    ```java
+        @Select("select * from news_inf where news_title like #{title}")
+        @Results({
+            // 指定id为true，相当于<id.../>子元素
+            @Result(column = "news_id", property = "id", id = true),
+            @Result(column = "news_title", property = "title"),
+            @Result(column = "news_content", property = "content")
+        })
+        List<News> findNewsByTitle(String title);
+    ```
+    }}
+
+### 为下面`entity`调用构造器创建id为`newsMap`的映射关系 [	](mybatis_20200604111131383)
+```java
+// 对应SQL语句为
+// select * from news_inf where news_title like #{title}
+public class News{
+	private Integer id;
+	private String title;
+	private String content;
+	public News(@Param("id") Integer id, @Param("title") String title){
+		this.id = id;
+		this.title = title;
+    }
+    //getter setter....
+}
+```
++ xml配置版:
+    {{c1::
+    ```xml
+        <select id="findNewsByTitle" resultMap="newsMap">
+            select * from news_inf where news_title like #{title}
+        </select>
+        <!-- 指定该resultMap映射的Java对象是news类型 -->
+        <resultMap id="newsMap" type="news">
+            <constructor>
+                <!-- 配置name属性之后，就不再根据参数顺序 -->
+                <idArg column="news_id" name="id" javaType="int"/>
+                <arg column="news_title" name="title" javaType="String"/>
+            </constructor>
+            <!-- 指定数据列与属性之间的对应关系 -->
+            <result column="news_content" property="content"/>
+        </resultMap>
+    ```
+    }}
++ java注解版:
+    {{c1::
+    ```java
+        @Select("select * from news_inf where news_title like #{title}")
+        @ConstructorArgs({
+            // 指定name属性后，就不再根据参数顺序，因此下面两个顺序可以颠倒
+            @Arg(column = "news_title", name = "title", javaType = String.class),
+            // 指定id为true，相当于<idArg.../>子元素
+            @Arg(column = "news_id", name = "id", javaType = Integer.class, id = true)
+        })
+        @Results({
+            @Result(column = "news_content", property = "content")
+        })
+        List<News> findNewsByTitle(String title);
+    ```
+    }}
+
+### MyBatis自动映射的配置 [	](mybatis_20200604111131384)
++ 开启自动映射与驼峰映射的settings配置
+    {{c1::
+    ```xml
+    <settings>
+        <setting name="mapUnderscoreToCamelCase" value="true"/>
+        <setting name="autoMappingBehavior" value="true"/>
+    </settings>
+    ```
+    }}
++ MyBatis支持3种自动映射策略
+    1. {{c1:: NONE: 不使用自动映射。 }}
+    2. {{c1:: PARTIAL：自动映射result定义之外的属性。 }}
+    3. {{c1:: FULL：总是自动映射任意属性。 }}

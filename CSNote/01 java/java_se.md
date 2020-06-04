@@ -722,6 +722,8 @@ MediaView mediaView = new MediaView(mediaPlayer);
 
 }}
 
+# 正则表达式 [	](java_se_20200604111131317)
+
 ### 元字符 [	](java_se_20200510104820590)
 
 | 元字符 | 描述                                                         |
@@ -856,3 +858,322 @@ MediaView mediaView = new MediaView(mediaPlayer);
 **结果**
 
 (313) 555-1234
+
+# java多线程 [	](java_se_20200604111131318)
+
+### 线程与进程概念 [	](java_se_20200604111131319)
++ 进程的特征：{{c1:: 独立性，动态性，并发性。}}
++ 并发性：同一时刻，有多条指令在多个处理器上同时执行。
++ 并行性：同一时刻只有一条指令执行，多个进程快速轮流执行
++ 多线程的优点：{{c1:: 共享内存。创建线程代价小，java内置。}}
+
+### 有三种使用线程的方法： [	](java_se_20200604111131320)
+
+1. 实现 Runnable 接口；
+2. 实现 Callable 接口；
+3. 继承 Thread 类。
+
+### 实现 Runnable 接口 [	](java_se_20200604111131321)
+
++ 需要实现接口中的 run() 方法。
+
+```java
+public class MyRunnable implements Runnable {
+    @Override
+    public void run() {
+        // ...
+    }
+}
+```
+
++ 使用 Runnable 实例再创建一个 Thread 实例，然后调用 Thread 实例的 start() 方法来启动线程。
+
+```java
+public static void main(String[] args) {
+    MyRunnable instance = new MyRunnable();
+    Thread thread = new Thread(instance);
+    thread.start();
+}
+```
+
+### 实现 Callable 接口 [	](java_se_20200604111131323)
+
++ 与 Runnable 相比，Callable 可以有返回值，返回值通过 FutureTask 进行封装。
+
+  ```java
+  public class MyCallable implements Callable<Integer> {
+      public Integer call() {
+          return 123;
+      }
+  }
+  ```
+
++ 调用
+
+  ```java
+  public static void main(String[] args) throws ExecutionException, InterruptedException {
+      MyCallable mc = new MyCallable();
+      FutureTask<Integer> ft = new FutureTask<>(mc);
+      Thread thread = new Thread(ft);
+      thread.start();
+      System.out.println(ft.get());
+  }
+  ```
+
+### 获取线程名字的2个方法 [	](java_se_20200604111131324)
+
+1. Thread.currentThread():总是返回当前正在执行的线程。
+2. getName():Thread类的实例方法，常用于继承 Thread 类的线程。
+
+### 多线程：Callable 接口 VS Runnable 接口 [	](java_se_20200604111131325)
+
+- call()更加强大。
+- call()方法可以有返回值。
+- call()方法可以声明抛出异常。
+
+### Future接口 [	](java_se_20200604111131326)
+
+- boolean cancel(boolean mayInterruptIfRunning)：试图取消关联的callable任务
+- boolean isCancelled()：判断Callable任务是否取消
+- boolean isDone()：判断Callable任务是否结束
+- V get()：返回Callable任务中的返回值
+- V get(long timeout, TimeUnit unit)：指定时间内，返回Callable任务中的返回值
+
+线程
+
+### 线程状态 [	](java_se_20200604111131327)
+
++ isAlive()：当线程处于新建与死亡状态时，返回false
++ 对死亡的线程调用`start()`方法,会引发`IllegalThreadStateException`异常
+
++ 五种线程状态转换图
+
+![image-20200603230326712](java_se.assets\image-20200603230326712.png)
+
+### 线程之间的协助 [	](java_se_20200604111131328)
+
++ join()：Thread实例方法，在线程中调用另一个线程的 join() 方法，会将当前线程挂起，而不是忙等待，直到目标线程结束。
++ `wait() notify() notifyAll()`：
+  1. Object的实例方法
+  2. 只能用在同步方法或者同步控制块中使用
+  3. 使用 wait() 挂起期间，线程会释放锁。这是因为，如果没有释放锁，那么其它线程就无法进入对象的同步方法或者同步控制块中，那么就无法执行 notify() 或者 notifyAll() 来唤醒挂起的线程，造成死锁。
+
+### `wait() notify() notifyAll()`使用例子`before after` [	](java_se_20200604111131329)
+
+```java
+public class WaitNotifyExample {
+
+    public synchronized void before() {
+        System.out.println("before");
+        notifyAll();
+    }
+
+    public synchronized void after() {
+        try {
+            wait();
+        } catch (InterruptedException e) {
+            e.printStackTrace();
+        }
+        System.out.println("after");
+    }
+}
+public static void main(String[] args) {
+    ExecutorService executorService = Executors.newCachedThreadPool();
+    WaitNotifyExample example = new WaitNotifyExample();
+    executorService.execute(() -> example.after());
+    executorService.execute(() -> example.before());
+}
+```
+
+## wait() 和 sleep() 的区别 [	](java_se_20200604111131330)
+
+1. wait() 是 Object 的方法，而 sleep() 是 Thread 的静态方法；
+2. wait() 会释放锁，sleep() 不会。
+
+### 后台线程 [	](java_se_20200604111131331)
+
+- 特征：{{c1:: 如何前台线程都死亡，后台线程自动死亡 }}
+- 设置指定线程成后台线程：{{c1:: Thread对象的setDaemon(true)方法 }}
+
+### sleep()方法与yield()方法的区别 [	](java_se_20200604111131333)
+
+1. 优先级：{{c1:: sleep()不理会线程的优先级 }}
+2. 状态转换：{{c1:: sleep()会进入阻塞状态，yield直接进入就绪状态 }}
+3. 异常：{{c1:: sleep会抛出InterruptedException异常，yield没有抛出异常。 }}
+4. 可移植性：{{c1:: sleep()比yield()要好。 }}
+
+### 线程的优先级设置 [	](java_se_20200604111131334)
++ Thread类提供了{{c1:: SetPriority(int newPriority)}}方法设置优先级。
++ Thread包含3个优先级静态常量：
+    1. {{c1:: MAX_PRIORITY:值为10}}
+    2. {{c1:: MIN_PRIORITY:值为1}}
+    3. {{c1:: NORM_PRIORITY:值为5}}
+
+### Java 提供了两种锁机制来控制多个线程对共享资源的互斥访问 [	](java_se_20200604111131335)
+
+1. {{c1:: JVM 实现的 synchronized。 }}
+2. {{c1:: JDK 实现的 ReentrantLock。 }}
+
+### synchronized同步方式 [	](java_se_20200604111131337)
+
+1. 同步一个代码块：
+    {{c1::
+  ```java
+  public void func() {
+    synchronized (this) {
+      // ...
+      }
+  }
+  ```
+  }}
+2. 同步一个方法：
+    {{c1::
+  ```java
+  public synchronized void func () {
+    // ...
+  }
+  ```
+  }}
+3. 同步一个类：
+    {{c1::
+  ```java
+  public void func() {
+    synchronized (SynchronizedExample.class) {
+      // ...
+      }
+  }
+  ```
+  }}
+4. 同步一个静态方法：
+    {{c1::
+```java
+  public synchronized static void fun() {
+    // ...
+  }
+```
+  }}
+### ReentrantLock同步方式 [	](java_se_20200604111131338)
+```java
+//{{c1::
+public class LockExample {
+  private Lock lock = new ReentrantLock();
+    int count;
+    public void func() {
+      lock.lock();
+        try {
+          for (int i = 0; i < 10; i++) {
+            System.out.println(Thread.currentThread().getName()+":"+(++count));
+            }
+        } finally {
+          lock.unlock(); // 确保释放锁，从而避免发生死锁。
+        }
+    }
+}
+//}}
+```
+
+
+### 线程不会释放同步监视器的情况 [	](java_se_20200604111131339)
+
+1. {{c1:: 程序调用`Thread.sleep()`方法时 }}
+2. {{c1:: 程序调用`Thread.yield()`方法时   }}
+3. {{c1:: 调用了线程的`suspend()`方法 }}
+
+### 使用Conditon控制线程通信 [	](java_se_20200604111131340)
+
++ 实例创建：{{c1:: Conditoin实例被绑定在一个Lock对象上，调用Lock对象的newCondition()方法即可。 }}
+
++ Condition类提供了3个线程通信方法
+  1. {{c1:: `await()`:类似于同步监视器上的`wait()`方法，只是监视器对象变成了Lock对象。 }}
+  2. {{c1:: `signal()`:类似与`notify()` }}
+  3. {{c1:: `signalAll()`:类似于`notifyAll()` }}
+
+### 使用ReentrantLock与Conditon的生产者消费者模式(实践) [	](java_se_20200604111131342)
+
+```java
+public class Account {
+	// 显示定义Lock对象
+	private final Lock lock = new ReentrantLock();
+	// 获得指定Lock对象对应的条件变量
+	private final Condition cond = lock.newCondition();
+	// 账户编号
+	private String accountNo;
+	// 余额
+	private double balance;
+
+	// 标识账户中是否已经存款的旗标
+	private boolean flag = false;
+
+	public void draw(double drawAmount) {
+    // {{c1::
+		// 加锁
+		lock.lock();
+		try {
+			// 如果账户中还没有存入存款，该线程等待
+			if (!flag) {
+				cond.await();
+			} else {
+				// 执行取钱操作
+				System.out.println(Thread.currentThread().getName() + " 取钱:" + drawAmount);
+				balance -= drawAmount;
+				System.out.println("账户余额为：" + balance);
+				// 将标识是否成功存入存款的旗标设为false
+				flag = false;
+				// 唤醒该Lock对象对应的其他线程
+				cond.signalAll();
+			}
+		} catch (InterruptedException ex) {
+			ex.printStackTrace();
+		}
+		// 使用finally块来确保释放锁
+		finally {
+			lock.unlock();
+    }
+    // }}
+	}
+
+	public void deposit(double depositAmount) {
+    // {{c1::
+		lock.lock();
+		try {
+			// 如果账户中已经存入了存款，该线程等待
+			if (flag) {
+				cond.await();
+			} else {
+				// 执行存款操作
+				System.out.println(Thread.currentThread().getName() + " 存款:" + depositAmount);
+				balance += depositAmount;
+				System.out.println("账户余额为：" + balance);
+				// 将标识是否成功存入存款的旗标设为true
+				flag = true;
+				// 唤醒该Lock对象对应的其他线程
+				cond.signalAll();
+			}
+		} catch (InterruptedException ex) {
+			ex.printStackTrace();
+		}
+		// 使用finally块来确保释放锁
+		finally {
+			lock.unlock();
+    }
+    //}}
+	}
+}
+```
+
+### BlockingQueue接口包含的方法之间的对应关系 [	](java_se_20200604111131343)
+
+| 失败时，         | 抛出异常  | 返回false | 阻塞线程 | 指定超时时长       |
+| ---------------- | --------- | --------- | -------- | ------------------ |
+| 队尾插入元素     | add(e)    | offer(e)  | put(e)   | offer(e,time,unit) |
+| 队头删除元素     | remove()  | poll()    | take()   | poll(time,unit)    |
+| 获取、不删除元素 | element() | peek()    | 无       | 无                 |
+
+### BlockingQueue接口具有的实现类 [	](java_se_20200604111131344)
+- ArrayBlockingQueue
+- LinkedBlockingQueue 
+- PriorityBlockingQueue 
+- DelayQueue
+- SynchronousQueu
+
+{{c1:: ![image-20200604222338200](java_se.assets/image-20200604222338200.png) }}
