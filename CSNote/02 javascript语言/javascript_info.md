@@ -1,4 +1,4 @@
-### `与用户交互的 3 个浏览器指定的函数：[	](javascript_info_20191219101334387)
+`与用户交互的 3 个浏览器指定的函数：[	](javascript_info_20191219101334387)
 
 我们使用浏览器作为工作环境，所以基本的 UI 功能将是：
 
@@ -2393,9 +2393,9 @@ f.defer(1000)(1, 2); // shows 3 after 1 sec
 
 获取/设置原型的方式有很多，我们已知的有：
 
-- [Object.create(proto\[, descriptors\])](https://developer.mozilla.org/zh/docs/Web/JavaScript/Reference/Global_Objects/Object/create) —— {{c1::利用 `proto` 作为 `[[Prototype]]` 和可选的属性描述来创建一个空对象。}}
-- [Object.getPrototypeOf(obj)](https://developer.mozilla.org/zh/docs/Web/JavaScript/Reference/Global_Objects/Object/getPrototypeOf) ——{{c1:: 返回 `obj` 对象的 `[[Prototype]]`。}}
-- [Object.setPrototypeOf(obj, proto)](https://developer.mozilla.org/zh/docs/Web/JavaScript/Reference/Global_Objects/Object/setPrototypeOf) ——{{c1:: 将 `obj` 对象的 `[[Prototype]]` 设置为 `proto`。}}
+- Object.create(proto\[, descriptors\]) : {{c1::利用 `proto` 作为 `[[Prototype]]` 和可选的属性描述来创建一个空对象。}}
+- Object.getPrototypeOf(obj) : {c1:: 返回 `obj` 对象的 `[[Prototype]]`。}}
+- Object.setPrototypeOf(obj, proto) : {c1:: 将 `obj` 对象的 `[[Prototype]]` 设置为 `proto`。}}
 
 对原型的操作
 
@@ -4123,9 +4123,16 @@ alert(example.offsetTop); // 180
 ### 页面上的任何点都有坐标： [	](javascript_info_20200525035508060)
 
 + 相对于窗口的坐标: {{c1::`elem.getBoundingClientRect()`。}}
+
 + 相对于文档的坐标: {{c1::`elem.getBoundingClientRect() `加上当前页面滚动。}}
+
 + 窗口坐标非常适合和 {{c1:: `position:fixed`}} 一起使用，文档坐标非常适合和 {{c1:: `position:absolute`}}一起使用。
+
 + `document.elementFromPoint(x, y)`: {{c1::返回在窗口坐标 (x, y) 处嵌套最多（the most nested）的元素。}}
+
+  
+
+## 事件
 
 ### 使用事件时，可能会出现的错误 [	](javascript_info_20200525035508062)
 
@@ -4209,4 +4216,366 @@ alert(example.offsetTop); // 180
   //}}
   // 在 document 上的处理程序将被激活，并显示消息。
 </script>
+```
+
+## UI事件
+
+### 鼠标事件
+1. 简单事件
+  + mousedown/mouseup：{{c1:: 在元素上点击/释放鼠标按钮。 }}
+  + mouseover/mouseout：{{c1:: 鼠标指针从一个元素上移入/移出。 }}
+  + mousemove：{{c1:: 鼠标在元素上的每个移动都会触发此事件。 }}
+  + contextmenu：{{c1:: 尝试打开上下文菜单时触发。 }}
+  + mousedown的默认浏览器操作：{{c1:: 是文本选择，如果它对界面不利，则应避免它。}}
+2. 复杂事件
+  + 作用：{{c1:: 复杂事件是由简单事件组成的 }}
+  + click：{{c1:: 如果使用的是鼠标左键，则在同一个元素上的 mousedown 及 mouseup 相继触发后，触发该事件。}}
+  + dblclick：{{c1:: 双击一个元素后触发。}}
++ 一个行为可能会触发多个事件:{{c1:: 在按下鼠标按钮时，点击会首先触发 mousedown，然后释放鼠标按钮时，会触发 mouseup 和 click。}}
+
+### 鼠标事件属性：which
++ 作用：{{c1:: 与点击相关的事件始终具有 which 属性，该属性允许获取确切的鼠标按钮。}}
++ event.which == 1：{{c1:: 左按钮}}
++ event.which == 2：{{c1:: 中间按钮}}
++ event.which == 3：{{c1:: 右按钮}}
+
+### 鼠标事件的组合键属性
+
+- `shiftKey`：{{c1:: `Shift` }}
+- `altKey`：{{c1:: `Alt`（或对于 Mac 是 `Opt`） }}
+- `ctrlKey`：{{c1:: `Ctrl` }}
+- `metaKey`：{{c1:: 对于 Mac 是 `Cmd` }}
++ 下面这个按钮仅在 Alt+Shift+click 时才有效：
+  {{c1::
+  ```javascript
+    <button id="button">Alt+Shift+Click on me!</button>
+    <script>
+      button.onclick = function(event) {
+        if (event.altKey && event.shiftKey) {
+          alert('Hooray!');
+        }
+      };
+    </script>
+  ```
+  }}
+
+### 为元素设置禁用选择与防止复制
+1. 禁用选择:
+  ```xml
+    <b ondblclick="alert('Click!')" onmousedown="return false">
+      Double-click me
+    </b>
+  ```
+2. 防止复制
+  ``` xml
+    <div oncopy="alert('Copying forbidden!');return false">
+    Dear user,
+    The copying is forbidden for you.
+    If you know JS or HTML, then you can get everything from the page source though.
+  </div>
+  ```
+
+### 创建一个可以选择元素的列表，例如在文件管理器中。
+
+- 点击列表元素，只选择该元素（添加 `.selected` 类），取消选择其他所有元素。
+- 如果点击时，按键 Ctrl（在 Mac 中为 Cmd）是被按下的，则选择会被切换到被点击的元素上，但其他元素不会被改动。
+![image-20200604104707552](C:\Users\Yun\AppData\Roaming\Typora\typora-user-images\image-20200604104707552.png)
+一种结果：
+```js
+//{{c1:: 
+ul.onclick = function(event) {
+    if (event.target.tagName != "LI") return;
+    if (event.ctrlKey || event.metaKey) {
+        toggleSelect(event.target);
+    } else {
+        singleSelect(event.target);
+    }
+}
+ul.onmousedown = function{
+    return false;
+};
+function toggleSelect(li) {
+    li.classList.toggle('selected');
+}
+function singleSelect(li) {
+    let selected = ul.querySelectorAll('.selected');
+    for(let elem of selected) {
+        elem.classList.remove('selected');
+    }
+    li.classList.add('selected');
+}
+//}}
+```
+
+### 事件 mouseover/mouseout，relatedTarget
+1. 对于 mouseover：
+  + event.target:{{c1:: 是鼠标移过的那个元素。}}
+  + event.relatedTarget:{{c1:: 是鼠标来自的那个元素（relatedTarget → target）。}}
+2. mouseout 则与之相反：
+  + event.target:{{c1:: 是鼠标离开的元素。}}
+  + event.relatedTarget:{{c1:: 是鼠标移动到的，当前指针位置下的元素（target → relatedTarget）。}}
+3. relatedTarget 属性可以为 null : {{c1:: 意味着来自窗口之外 }}
+4. 如果 mouseover 被触发了，则必须有 mouseout
+
+### `mouseenter/mouseleave`与 `mouseover/mouseout` 的区别
++ 元素内部与后代之间的转换不会产生影响。
++ 事件 `mouseenter/mouseleave` 不会冒泡。
+
+![image-20200604113942191](javascript_info.assets\image-20200604113942191.png)
+
+
+
+### 使用事件委托实现类似以下效果
+
++ 例如：
+  ```xml
+  <div data-tooltip="Here – is the house interior" id="house">
+    <div data-tooltip="Here – is the roof" id="roof"></div>
+    ...
+    <a href="https://en.wikipedia.org/wiki/The_Three_Little_Pigs" data-tooltip="Read on…">Hover over me</a>
+  </div>
+  ```
++ 效果图：
+  ![UZkXhRLqta](javascript_info.assets\UZkXhRLqta.gif)
++ 参考思路:
+```js
+//{{c1::
+document.onmouseover = function (event) {
+  let anchorElem = event.target.closest('[data-tooltip]');
+    if (!anchorElem) return;
+    tooltip = showTooltip(anchorElem, anchorElem.dataset.tooltip);
+}
+
+document.onmouseout = function () {
+  if (tooltip) {
+    tooltip.remove();
+        tooltip = false;
+    }
+}
+function showTooltip(anchorElem, html) {
+  let tooltipElem = document.createElement('div');
+    tooltipElem.className = 'tooltip';
+    tooltipElem.innerHTML = html;
+    document.body.append(tooltipElem);
+    let coords = anchorElem.getBoundingClientRect();
+    let left = coords.left + (anchorElem.offsetWidth - tooltipElem.offsetWidth) / 2;
+    if (left < 0) left = 0;
+    let top = coords.top - tooltipElem.offsetHeight - 5;
+    if (top < 0) {
+      top = coords.top + anchorElem.offsetHeight + 5;
+    }
+    tooltipElem.style.left = left + 'px';
+    tooltipElem.style.top = top + 'px';
+    return tooltipElem;
+}
+//}}
+```
+
+### 实现图中拖放一个球的算法
+
+![TQEN8RNhVl](javascript_info.assets\TQEN8RNhVl.gif)
+
+```javascript
+ball.onmousedown = function (event) { // (1) 启动处理
+        //获取光标在球内的相对位置
+        //{{c1::
+        let shiftX = event.clientX - ball.getBoundingClientRect().left;
+        let shiftY = event.clientY - ball.getBoundingClientRect().top;
+        //}}
+
+        // (2) 准备移动：确保 absolute，并通过设置 z-index 以确保球在顶部
+        //{{c1::
+        ball.style.position = 'absolute';
+        ball.style.zIndex = 1000;
+        //}}
+        // 将其从当前父元素中直接移动到 body 中
+        // 以使其定位是相对于 body 的
+        //{{c1::
+        document.body.append(ball);
+        //}}
+        // ...并将绝对定位的球放在鼠标指针下方
+        //{{c1::
+        moveAt(event.pageX, event.pageY);
+        //}}
+
+        // 现在球的中心在 (pageX, pageY) 坐标上
+        //{{c1::
+        function moveAt(pageX, pageY) {
+          ball.style.left = pageX - shiftX + 'px';
+          ball.style.top = pageY - shiftY + 'px';
+        }
+        function onMouseMove(event) {
+            moveAt(event.pageX, event.pageY);
+        }
+        //}}
+
+        // (3) 在 mousemove 事件上移动球
+        //{{c1::
+        document.addEventListener('mousemove', onMouseMove);
+        //}}
+        // (4) 放下球，并移除不需要的处理程序
+        //{{c1::
+        ball.onmouseup = function () {
+            document.removeEventListener('mousemove', onMouseMove);
+            ball.onmouseup = null;
+        };
+        //}}
+        //(5) 禁用浏览器自己对图片和一些其他元素的拖放处理
+        //{{c1::
+        ball.ondragstart = function () {
+            return false;
+        };
+        //}}
+    };
+```
+
+### 在下面这个示例中，当球被拖到球门上时，球门会被高亮显示。
+
+![image-20200604150734337](javascript_info.assets\image-20200604150734337.png)
+
+```javascript
+        // 当前飞过的droppable
+        //{{c1:: 
+        let currentDroppable = null;
+        //}}
+
+        function onMouseMove(event) {
+            moveAt(event.pageX, event.pageY);
+
+            //将拖动中的元素隐藏，获取当前光标位置下嵌套最深的元素
+            //{{c1:: 
+            ball.hidden = true;
+            let elemBelow = document.elementFromPoint(event.clientX, event.clientY);
+            ball.hidden = false;
+            //}}
+
+            // 嵌套最深的元素为null时，代表光标在浏览器外
+            if (!elemBelow) return;
+
+            // 从嵌套最深的元素开始找出带有.droppable的元素
+            // 找到了，渲染颜色
+            // 没有找到，判断上一次move是否是.droppable的元素
+            // 如果是，取消效果
+            //{{c1:: 
+            let droppableBelow = elemBelow.closest('.droppable');
+            if (currentDroppable != droppableBelow) {
+                if (currentDroppable) {
+                    leaveDroppable(currentDroppable);
+                }
+                currentDroppable = droppableBelow;
+                if (currentDroppable) {
+                    enterDroppable(currentDroppable);
+                }
+            }
+            //}}
+        }
+```
+
+### 使用keydown事件，实现一个`<input>`,它不会接受除数字，+，() 和 - 以外的按键
+```html
+  <script>
+    //{{c1::
+    function checkPhoneKey(key) {
+        return (key >= '0' && key <= '9') || key == '+' || key == '(' || key == ')' || key == '-' ||
+    key == 'ArrowLeft' || key == 'ArrowRight' || key == 'Delete' || key == 'Backspace';
+    }
+    //}}
+  </script>
+  <!-- {{c1:: -->
+  <input onkeydown="return checkPhoneKey(event.key)" placeholder="Phone, please" type="tel">
+  <!-- }} -->
+```
+
+### 键盘：`keydown` 和 `keyup`
++ 键盘事件：
+  - `keydown`:{{c1:: 在按下键时（如果长按按键，则将自动重复），}}
+  - `keyup`:{{c1:: 释放按键时。}}
++ 键盘事件的主要属性：
+  - `code`:{{c1:: “按键代码”（`"KeyA"`，`"ArrowLeft"` 等），特定于键盘上按键的物理位置。}}
+    - 字符键的代码为：{{c1::  `"Key<letter>"`：`"KeyA"`，`"KeyB"` 等。}}
+    - 数字键的代码为：{{c1:: `"Digit<number>"`：`"Digit0"`，`"Digit1"` 等。}}
+    - 特殊按键的代码为按键的名字：{{c1:: `"Enter"`，`"Backspace"`，`"Tab"` 等。}}
+  - `key`:{{c1:: 字符（`"A"`，`"a"` 等），对于非字符（non-character）的按键，通常具有与 `code` 相同的值。}}
+
+## 网络请求
+
+### 典型的 fetch 请求由两个 await 调用组成：
+```js
+//{{c1::
+let response = await fetch(url, options); // 解析 response header
+let result = await response.json(); // 将 body 读取为 json
+//}}
+```
+或者以 promise 形式：
+```js
+//{{c1::
+fetch(url, options)
+  .then(response => response.json())
+  .then(result => /* process result */)
+//}}
+```
+
+### fetch 请求响应的属性：
+response.status —— response 的 HTTP 状态码，
+response.ok —— HTTP 状态码为 200-299，则为 true。
+response.headers —— 类似于 Map 的带有 HTTP header 的对象。
+
+### 获取fetch请求返回的response body 的方法：
+1. `response.text()`：{{c1:: 读取 response，并以文本形式返回 response，}}
+2. `response.json()`：{{c1:: 将 response 解析为 JSON 对象形式，}}
+3. `response.formData()`：{{c1:: 以 FormData 对象（form/multipart 编码，参见下一章）的形式返回 response，}}
+4. `response.blob()`：{{c1:: 以 Blob（具有类型的二进制数据）形式返回 response，}}
+5. `response.arrayBuffer()`：{{c1:: 以 ArrayBuffer（低级别的二进制数据）形式返回 response。}}
++ 注意：{{c1:: 同一个response执行一次以上body的方法 }}
+
+### 获取Response header
+```js
+let response = await fetch('https://api.github.com/repos/javascript-tutorial/en.javascript.info/commits');
+// 获取一个 header
+// {{c1::
+alert(response.headers.get('Content-Type')); // application/json; charset=utf-8
+// }}
+// 迭代所有 header
+// {{c1::
+for (let [key, value] of response.headers) {
+  alert(`${key} = ${value}`);
+}
+// }}
+```
+
+### 设置 request header
+```js
+// {{c1::
+  let response = fetch(url, {
+    headers: {
+      Authentication: 'secret'
+    }
+  });
+// }}
+```
+
+### fetch 选项
++ `method`：{{c1:: HTTP 方法，}}
++ `headers`：{{c1:: 具有 request header 的对象（不是所有 header 都是被允许的）}}
++ `body`：{{c1:: 要以 string，FormData，BufferSource，Blob 或 UrlSearchParams 对象的形式发送的数据（request body）。}}
+
+### 使用fetch,以JSON 形式发送 `user` 对象
+
+```javascript
+let user = {
+  name: 'John',
+  surname: 'Smith'
+};
+//使用fetch,以JSON 形式发送 `user` 对象
+//{{c1::
+let response = await fetch('/article/fetch/post/user', {
+  method: 'POST',
+  headers: {
+    'Content-Type': 'application/json;charset=utf-8'
+  },
+  body: JSON.stringify(user)
+});
+//}}
+let result = await response.json();
+alert(result.message);
 ```
