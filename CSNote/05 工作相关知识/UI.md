@@ -1,4 +1,4 @@
-### UI单个请求处理文件封装格式以及主要步骤
+### UI单个请求处理文件封装格式以及主要步骤 [	](UI_20200604111305718)
 
 1. MyAction.java
 1. 继承AbstractBaseAction类
@@ -17,7 +17,7 @@
    1. 继承AbstractUIKRService类
    2. 实现MyService接口
 
-### UI的ACTION类定义模板
+### UI的ACTION类定义模板 [	](UI_20200604111305720)
 
 ```java
    @StrutsAction(parameter = "method", validate = BoolType.FALSE)
@@ -40,7 +40,7 @@
    }
 ```
 
-### 添加AJAX请求的方法
+### 添加AJAX请求的方法 [	](UI_20200604111305721)
 
 1. 添加`mayaa`文件 
 

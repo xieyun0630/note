@@ -4132,7 +4132,7 @@ alert(example.offsetTop); // 180
 
   
 
-## 事件
+## 事件 [	](javascript_info_20200604111305675)
 
 ### 使用事件时，可能会出现的错误 [	](javascript_info_20200525035508062)
 
@@ -4218,9 +4218,9 @@ alert(example.offsetTop); // 180
 </script>
 ```
 
-## UI事件
+## UI事件 [	](javascript_info_20200604111305676)
 
-### 鼠标事件
+### 鼠标事件 [	](javascript_info_20200604111305677)
 1. 简单事件
   + mousedown/mouseup：{{c1:: 在元素上点击/释放鼠标按钮。 }}
   + mouseover/mouseout：{{c1:: 鼠标指针从一个元素上移入/移出。 }}
@@ -4233,13 +4233,13 @@ alert(example.offsetTop); // 180
   + dblclick：{{c1:: 双击一个元素后触发。}}
 + 一个行为可能会触发多个事件:{{c1:: 在按下鼠标按钮时，点击会首先触发 mousedown，然后释放鼠标按钮时，会触发 mouseup 和 click。}}
 
-### 鼠标事件属性：which
+### 鼠标事件属性：which [	](javascript_info_20200604111305678)
 + 作用：{{c1:: 与点击相关的事件始终具有 which 属性，该属性允许获取确切的鼠标按钮。}}
 + event.which == 1：{{c1:: 左按钮}}
 + event.which == 2：{{c1:: 中间按钮}}
 + event.which == 3：{{c1:: 右按钮}}
 
-### 鼠标事件的组合键属性
+### 鼠标事件的组合键属性 [	](javascript_info_20200604111305679)
 
 - `shiftKey`：{{c1:: `Shift` }}
 - `altKey`：{{c1:: `Alt`（或对于 Mac 是 `Opt`） }}
@@ -4259,7 +4259,7 @@ alert(example.offsetTop); // 180
   ```
   }}
 
-### 为元素设置禁用选择与防止复制
+### 为元素设置禁用选择与防止复制 [	](javascript_info_20200604111305680)
 1. 禁用选择:
   ```xml
     <b ondblclick="alert('Click!')" onmousedown="return false">
@@ -4275,7 +4275,7 @@ alert(example.offsetTop); // 180
   </div>
   ```
 
-### 创建一个可以选择元素的列表，例如在文件管理器中。
+### 创建一个可以选择元素的列表，例如在文件管理器中。 [	](javascript_info_20200604111305681)
 
 - 点击列表元素，只选择该元素（添加 `.selected` 类），取消选择其他所有元素。
 - 如果点击时，按键 Ctrl（在 Mac 中为 Cmd）是被按下的，则选择会被切换到被点击的元素上，但其他元素不会被改动。
@@ -4307,7 +4307,7 @@ function singleSelect(li) {
 //}}
 ```
 
-### 事件 mouseover/mouseout，relatedTarget
+### 事件 mouseover/mouseout，relatedTarget [	](javascript_info_20200604111305682)
 1. 对于 mouseover：
   + event.target:{{c1:: 是鼠标移过的那个元素。}}
   + event.relatedTarget:{{c1:: 是鼠标来自的那个元素（relatedTarget → target）。}}
@@ -4317,7 +4317,7 @@ function singleSelect(li) {
 3. relatedTarget 属性可以为 null : {{c1:: 意味着来自窗口之外 }}
 4. 如果 mouseover 被触发了，则必须有 mouseout
 
-### `mouseenter/mouseleave`与 `mouseover/mouseout` 的区别
+### `mouseenter/mouseleave`与 `mouseover/mouseout` 的区别 [	](javascript_info_20200604111305683)
 + 元素内部与后代之间的转换不会产生影响。
 + 事件 `mouseenter/mouseleave` 不会冒泡。
 
@@ -4325,7 +4325,7 @@ function singleSelect(li) {
 
 
 
-### 使用事件委托实现类似以下效果
+### 使用事件委托实现类似以下效果 [	](javascript_info_20200604111305684)
 
 + 例如：
   ```xml
@@ -4371,7 +4371,7 @@ function showTooltip(anchorElem, html) {
 //}}
 ```
 
-### 实现图中拖放一个球的算法
+### 实现图中拖放一个球的算法 [	](javascript_info_20200604111305685)
 
 ![TQEN8RNhVl](javascript_info.assets\TQEN8RNhVl.gif)
 
@@ -4429,7 +4429,7 @@ ball.onmousedown = function (event) { // (1) 启动处理
     };
 ```
 
-### 在下面这个示例中，当球被拖到球门上时，球门会被高亮显示。
+### 在下面这个示例中，当球被拖到球门上时，球门会被高亮显示。 [	](javascript_info_20200604111305687)
 
 ![image-20200604150734337](javascript_info.assets\image-20200604150734337.png)
 
@@ -4471,7 +4471,7 @@ ball.onmousedown = function (event) { // (1) 启动处理
         }
 ```
 
-### 使用keydown事件，实现一个`<input>`,它不会接受除数字，+，() 和 - 以外的按键
+### 使用keydown事件，实现一个`<input>`,它不会接受除数字，+，() 和 - 以外的按键 [	](javascript_info_20200604111305688)
 ```html
   <script>
     //{{c1::
@@ -4486,7 +4486,7 @@ ball.onmousedown = function (event) { // (1) 启动处理
   <!-- }} -->
 ```
 
-### 键盘：`keydown` 和 `keyup`
+### 键盘：`keydown` 和 `keyup` [	](javascript_info_20200604111305689)
 + 键盘事件：
   - `keydown`:{{c1:: 在按下键时（如果长按按键，则将自动重复），}}
   - `keyup`:{{c1:: 释放按键时。}}
@@ -4497,9 +4497,9 @@ ball.onmousedown = function (event) { // (1) 启动处理
     - 特殊按键的代码为按键的名字：{{c1:: `"Enter"`，`"Backspace"`，`"Tab"` 等。}}
   - `key`:{{c1:: 字符（`"A"`，`"a"` 等），对于非字符（non-character）的按键，通常具有与 `code` 相同的值。}}
 
-## 网络请求
+## 网络请求 [	](javascript_info_20200604111305690)
 
-### 典型的 fetch 请求由两个 await 调用组成：
+### 典型的 fetch 请求由两个 await 调用组成： [	](javascript_info_20200604111305691)
 ```js
 //{{c1::
 let response = await fetch(url, options); // 解析 response header
@@ -4515,12 +4515,12 @@ fetch(url, options)
 //}}
 ```
 
-### fetch 请求响应的属性：
+### fetch 请求响应的属性： [	](javascript_info_20200604111305692)
 response.status —— response 的 HTTP 状态码，
 response.ok —— HTTP 状态码为 200-299，则为 true。
 response.headers —— 类似于 Map 的带有 HTTP header 的对象。
 
-### 获取fetch请求返回的response body 的方法：
+### 获取fetch请求返回的response body 的方法： [	](javascript_info_20200604111305693)
 1. `response.text()`：{{c1:: 读取 response，并以文本形式返回 response，}}
 2. `response.json()`：{{c1:: 将 response 解析为 JSON 对象形式，}}
 3. `response.formData()`：{{c1:: 以 FormData 对象（form/multipart 编码，参见下一章）的形式返回 response，}}
@@ -4528,7 +4528,7 @@ response.headers —— 类似于 Map 的带有 HTTP header 的对象。
 5. `response.arrayBuffer()`：{{c1:: 以 ArrayBuffer（低级别的二进制数据）形式返回 response。}}
 + 注意：{{c1:: 同一个response执行一次以上body的方法 }}
 
-### 获取Response header
+### 获取Response header [	](javascript_info_20200604111305694)
 ```js
 let response = await fetch('https://api.github.com/repos/javascript-tutorial/en.javascript.info/commits');
 // 获取一个 header
@@ -4543,7 +4543,7 @@ for (let [key, value] of response.headers) {
 // }}
 ```
 
-### 设置 request header
+### 设置 request header [	](javascript_info_20200604111305695)
 ```js
 // {{c1::
   let response = fetch(url, {
@@ -4554,12 +4554,12 @@ for (let [key, value] of response.headers) {
 // }}
 ```
 
-### fetch 选项
+### fetch 选项 [	](javascript_info_20200604111305696)
 + `method`：{{c1:: HTTP 方法，}}
 + `headers`：{{c1:: 具有 request header 的对象（不是所有 header 都是被允许的）}}
 + `body`：{{c1:: 要以 string，FormData，BufferSource，Blob 或 UrlSearchParams 对象的形式发送的数据（request body）。}}
 
-### 使用fetch,以JSON 形式发送 `user` 对象
+### 使用fetch,以JSON 形式发送 `user` 对象 [	](javascript_info_20200604111305697)
 
 ```javascript
 let user = {
