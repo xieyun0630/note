@@ -4191,7 +4191,6 @@ alert(example.offsetTop); // 180
 
 语法：`let event = new Event(type[, options]);`
 参数：
-
 + type: {{c1::事件类型，可以是像这样 "click" 的字符串，或者我们自己的像这样 "my-event" 的参数。}}
 + options: 具有两个可选属性的对象
   + bubbles: true/false: {{c1::如果为 true，那么事件会冒泡。}}
@@ -4261,12 +4260,15 @@ alert(example.offsetTop); // 180
 
 ### 为元素设置禁用选择与防止复制 [	](javascript_info_20200604111305680)
 1. 禁用选择:
+    {{c1::
   ```xml
     <b ondblclick="alert('Click!')" onmousedown="return false">
       Double-click me
     </b>
   ```
+  }}
 2. 防止复制
+    {{c1::
   ``` xml
     <div oncopy="alert('Copying forbidden!');return false">
     Dear user,
@@ -4274,6 +4276,7 @@ alert(example.offsetTop); // 180
     If you know JS or HTML, then you can get everything from the page source though.
   </div>
   ```
+  }}
 
 ### 创建一个可以选择元素的列表，例如在文件管理器中。 [	](javascript_info_20200604111305681)
 
@@ -4516,16 +4519,16 @@ fetch(url, options)
 ```
 
 ### fetch 请求响应的属性： [	](javascript_info_20200604111305692)
-response.status —— response 的 HTTP 状态码，
-response.ok —— HTTP 状态码为 200-299，则为 true。
-response.headers —— 类似于 Map 的带有 HTTP header 的对象。
++ response.status:{{c1:: response 的 HTTP 状态码， }}
++ response.ok:{{c1:: HTTP 状态码为 200-299，则为 true。 }}
++ response.headers:{{c1:: 类似于 Map 的带有 HTTP header 的对象。 }}
 
 ### 获取fetch请求返回的response body 的方法： [	](javascript_info_20200604111305693)
 1. `response.text()`：{{c1:: 读取 response，并以文本形式返回 response，}}
 2. `response.json()`：{{c1:: 将 response 解析为 JSON 对象形式，}}
 3. `response.formData()`：{{c1:: 以 FormData 对象（form/multipart 编码，参见下一章）的形式返回 response，}}
 4. `response.blob()`：{{c1:: 以 Blob（具有类型的二进制数据）形式返回 response，}}
-5. `response.arrayBuffer()`：{{c1:: 以 ArrayBuffer（低级别的二进制数据）形式返回 response。}}
+5. `response.arrayBuffer()`：{{c1:: 以` ArrayBuffer`（低级别的二进制数据）形式返回 response。}}
 + 注意：{{c1:: 同一个response执行一次以上body的方法 }}
 
 ### 获取Response header [	](javascript_info_20200604111305694)
