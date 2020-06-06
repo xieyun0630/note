@@ -4260,29 +4260,29 @@ alert(example.offsetTop); // 180
 
 ### 为元素设置禁用选择与防止复制 [	](javascript_info_20200604111305680)
 1. 禁用选择:
-    {{c1::
   ```xml
+    <!-- {{c1:: -->
     <b ondblclick="alert('Click!')" onmousedown="return false">
       Double-click me
     </b>
+    <!-- }} -->
   ```
-  }}
 2. 防止复制
-    {{c1::
   ``` xml
+    <!-- {{c1:: -->
     <div oncopy="alert('Copying forbidden!');return false">
-    Dear user,
-    The copying is forbidden for you.
-    If you know JS or HTML, then you can get everything from the page source though.
-  </div>
+      Dear user,
+      The copying is forbidden for you.
+      If you know JS or HTML, then you can get everything from the page source though.
+    </div>
+    <!-- }} -->
   ```
-  }}
 
 ### 创建一个可以选择元素的列表，例如在文件管理器中。 [	](javascript_info_20200604111305681)
 
 - 点击列表元素，只选择该元素（添加 `.selected` 类），取消选择其他所有元素。
 - 如果点击时，按键 Ctrl（在 Mac 中为 Cmd）是被按下的，则选择会被切换到被点击的元素上，但其他元素不会被改动。
-![image-20200604104707552](C:\Users\Yun\AppData\Roaming\Typora\typora-user-images\image-20200604104707552.png)
+![image-20200604104707552](javascript_info.assets\image-20200604104707552.png)
 一种结果：
 ```js
 //{{c1:: 
@@ -4526,7 +4526,7 @@ fetch(url, options)
 ### 获取fetch请求返回的response body 的方法： [	](javascript_info_20200604111305693)
 1. `response.text()`：{{c1:: 读取 response，并以文本形式返回 response，}}
 2. `response.json()`：{{c1:: 将 response 解析为 JSON 对象形式，}}
-3. `response.formData()`：{{c1:: 以 FormData 对象（form/multipart 编码，参见下一章）的形式返回 response，}}
+3. `response.formData()`：{{c1:: 以 `FormData` 对象（form/multipart 编码，参见下一章）的形式返回 response，}}
 4. `response.blob()`：{{c1:: 以 Blob（具有类型的二进制数据）形式返回 response，}}
 5. `response.arrayBuffer()`：{{c1:: 以` ArrayBuffer`（低级别的二进制数据）形式返回 response。}}
 + 注意：{{c1:: 同一个response执行一次以上body的方法 }}
@@ -4560,7 +4560,7 @@ for (let [key, value] of response.headers) {
 ### fetch 选项 [	](javascript_info_20200604111305696)
 + `method`：{{c1:: HTTP 方法，}}
 + `headers`：{{c1:: 具有 request header 的对象（不是所有 header 都是被允许的）}}
-+ `body`：{{c1:: 要以 string，FormData，BufferSource，Blob 或 UrlSearchParams 对象的形式发送的数据（request body）。}}
++ `body`：{{c1:: 要以` string，FormData，BufferSource，Blob` 或 `UrlSearchParams `对象的形式发送的数据（request body）。}}
 
 ### 使用fetch,以JSON 形式发送 `user` 对象 [	](javascript_info_20200604111305697)
 
@@ -4582,3 +4582,142 @@ let response = await fetch('/article/fetch/post/user', {
 let result = await response.json();
 alert(result.message);
 ```
+
+### 表单属性
++ `document.forms`：{{c1:: 一个表单元素可以通过 `document.forms[name/index]` 访问到。 }}
++ `form.elements`：{{c1:: 表单元素可以通过 `form.elements[name/index]` 的方式访问，或者也可以使用 `form[name/index]`。`elements` 属性也适用于 `<fieldset>`。 }}
++ `element.form`：{{c1:: 元素通过 form 属性来引用它们所属的表单。}}
++ `value` 可以被通过 {{c1::  `input.value`，`textarea.value`，`select.value`  }}等来获取到，对于单选按钮和复选框来说可以使用 {{c1:: `input.checked`。}}
+
+### select 和 option
+
++ 三种为 `<select>` 设置 `value` 的不同方式：
+
+```html
+<select id="select">
+  <option value="apple">Apple</option>
+  <option value="pear">Pear</option>
+  <option value="banana">Banana</option>
+</select>
+
+<script>
+  // 所有这三行做的是同一件事
+  //{{c1:: 
+  select.options[2].selected = true;
+  select.selectedIndex = 2;
+  select.value = 'banana';
+  //}}
+</script>
+```
+### 聚焦：focus/blur
++ 在元素获得/失去焦点时会触发 {{c1:: `focus 和 blur` }}事件。
++ 它们的特点是：
+  + 它们不会冒泡。但是可以改为在捕获阶段触发，或者使用 {{c1:: `focusin/focusout`}}。
+  + 大多数元素默认不支持聚焦。使用{{c1::  `tabindex` }}可以使任何元素变成可聚焦的。
++ 可以通过{{c1::  `document.activeElement` }}来获取当前所聚焦的元素。
+
+### 事件：change，input，cut，copy，paste
+
+| 事件             | 描述                          | 特点                                                         |
+| :--------------- | :---------------------------- | :----------------------------------------------------------- |
+| `change`         | {{c1:: 值被改变。}}           | {{c1:: 对于文本输入，当失去焦点时触发。}}                    |
+| `input`          | {{c1:: 文本输入的每次更改。}} | {{c1:: 立即触发，与 `change` 不同。}}                        |
+| `cut/copy/paste` | {{c1:: 剪贴/拷贝/粘贴行为。}} | {{c1:: 行为可以被阻止。`event.clipboardData` 属性可以用于读/写剪贴板。}} |
+### submit 和 click 的关系
++ {{c1:: 在输入框中使用 Enter 发送表单时，会在 <input type="submit"> 上触发一次 click 事件。 }}
+
+### 手动将表单提交到服务器
+
+```javascript
+  //{{c1::
+    let form = document.createElement('form');
+    form.action = 'https://google.com/search';
+    form.method = 'GET';
+    form.innerHTML = '<input name="q" value="test">';
+    // 该表单必须在文档中才能提交
+    document.body.append(form);
+    form.submit();
+  //}}
+```
+
+### HTML 页面的生命周期包含三个重要事件：
+
+- `DOMContentLoaded` 事件:{{c1:: DOM 已经就绪，因此处理程序可以查找 DOM 节点，并初始化接口。}}
+- `load` 事件:{{c1:: 外部资源已加载完成，样式已被应用，图片大小也已知了。}}
+- `beforeunload` 事件:{{c1:: 用户正在离开：我们可以检查用户是否保存了更改，并询问他是否真的要离开。}}
+- `unload` 事件:{{c1:: 用户几乎已经离开了，但是我们仍然可以启动一些操作，例如发送统计数据。}}
+
+### window.onbeforeunload
+
++ 下面代码的输出是什么？
+  ```javascript
+    <script>
+      log('initial readyState:' + document.readyState);
+
+      document.addEventListener('readystatechange', () => log('readyState:' + document.readyState));
+      document.addEventListener('DOMContentLoaded', () => log('DOMContentLoaded'));
+
+      window.onload = () => log('window onload');
+    </script>
+
+    <iframe src="iframe.html" onload="log('iframe onload')"></iframe>
+
+    <img src="http://en.js.cx/clipart/train.gif" id="img">
+    <script>
+      img.onload = () => log('img onload');
+    </script>
+  ```
++ 典型输出：
+  1. {{c1:: [1] initial readyState:loading }}
+  2. {{c1:: [2] readyState:interactive }}
+  3. {{c1:: [2] DOMContentLoaded }}
+  4. {{c1:: [3] iframe onload }}
+  5. {{c1:: [4] img onload }}
+  6. {{c1:: [4] readyState:complete }}
+  7. {{c1:: [4] window onload }}
+  8. {{c1:: 方括号中的数字表示发生这种情况的大致时间。标有相同数字的事件几乎是同时发生的（± 几毫秒）。 }}
+
+### document.readyState 
+
+- 可以在 {{c1:: `readystatechange` }} 事件中跟踪状态更改：
+- `loading`:{{c1:: 文档正在被加载。}}
+- `interactive`:{{c1:: 文档已被解析完成，与 `DOMContentLoaded` 几乎同时发生，但是在 `DOMContentLoaded` 之前发生。}}
+- `complete`:{{c1:: 文档和资源均已加载完成，与 `window.onload` 几乎同时发生，但是在 `window.onload` 之前发生。}}
+
+### `navigator.sendBeacon(url, data)` 方法
+
+```javascript
+let analyticsData = { /* 带有收集的数据的对象 */ };
+//{{c1:: 
+window.addEventListener("unload", function() {
+  //浏览器离开页面，但仍然在执行 sendBeacon。
+  navigator.sendBeacon("/analytics", JSON.stringify(analyticsData));
+};
+//}}
+```
+### 动态脚本
+```js
+function loadScript(src) {
+  //{{c1::
+  let script = document.createElement('script');
+  script.src = src;
+  // 默认情况下，动态脚本的行为是“异步”的,为true
+  script.async = false;
+  document.body.append(script);
+  //}}
+}
+// long.js 先执行，因为代码中设置了 async=false
+loadScript("/article/script-async-defer/long.js");
+loadScript("/article/script-async-defer/small.js");
+```
+
+### `defer` 特性
++ `defer` 特性:{{c1:: 告诉浏览器它应该继续处理页面，并“在后台”下载脚本，然后等页面加载完成后，再执行此脚本。}}
++ `async` 特性:{{c1:: 异步加载脚本，加载完成后立刻执行，不会等待其他脚本与`DOMContentLoaded` 。}}
+
+### `async特性` 和 `defer特性`区别
+`async` 和 `defer` 有一个共同点：{{c1:: 加载这样的脚本都不会阻塞页面的渲染。因此，用户可以立即阅读并了解页面内容。}}
+|         | 顺序                                                         | `DOMContentLoaded`                                           |
+| :------ | :----------------------------------------------------------- | :----------------------------------------------------------- |
+| `async` | {{c1::**加载优先顺序**。脚本在文档中的顺序不重要 —— 先加载完成先执行}} | {{c1::不相关。可能在文档加载完成前加载并执行完毕。如果脚本很小或者来自于缓存，同时文档足够长，就会发生这种情况。}} |
+| `defer` | {{c1::**文档顺序**（它们在文档中的顺序）}}                           | {{c1::在文档加载和解析完成之后（如果需要，则会等待），即在 `DOMContentLoaded` 之前执行。}} |
