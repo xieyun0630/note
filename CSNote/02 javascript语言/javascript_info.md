@@ -4583,13 +4583,13 @@ let result = await response.json();
 alert(result.message);
 ```
 
-### 表单属性
+### 表单属性 [	](javascript_info_20200608063412709)
 + `document.forms`：{{c1:: 一个表单元素可以通过 `document.forms[name/index]` 访问到。 }}
 + `form.elements`：{{c1:: 表单元素可以通过 `form.elements[name/index]` 的方式访问，或者也可以使用 `form[name/index]`。`elements` 属性也适用于 `<fieldset>`。 }}
 + `element.form`：{{c1:: 元素通过 form 属性来引用它们所属的表单。}}
 + `value` 可以被通过 {{c1::  `input.value`，`textarea.value`，`select.value`  }}等来获取到，对于单选按钮和复选框来说可以使用 {{c1:: `input.checked`。}}
 
-### select 和 option
+### select 和 option [	](javascript_info_20200608063412711)
 
 + 三种为 `<select>` 设置 `value` 的不同方式：
 
@@ -4609,24 +4609,24 @@ alert(result.message);
   //}}
 </script>
 ```
-### 聚焦：focus/blur
+### 聚焦：focus/blur [	](javascript_info_20200608063412712)
 + 在元素获得/失去焦点时会触发 {{c1:: `focus 和 blur` }}事件。
 + 它们的特点是：
   + 它们不会冒泡。但是可以改为在捕获阶段触发，或者使用 {{c1:: `focusin/focusout`}}。
   + 大多数元素默认不支持聚焦。使用{{c1::  `tabindex` }}可以使任何元素变成可聚焦的。
 + 可以通过{{c1::  `document.activeElement` }}来获取当前所聚焦的元素。
 
-### 事件：change，input，cut，copy，paste
+### 事件：change，input，cut，copy，paste [	](javascript_info_20200608063412713)
 
 | 事件             | 描述                          | 特点                                                         |
 | :--------------- | :---------------------------- | :----------------------------------------------------------- |
 | `change`         | {{c1:: 值被改变。}}           | {{c1:: 对于文本输入，当失去焦点时触发。}}                    |
 | `input`          | {{c1:: 文本输入的每次更改。}} | {{c1:: 立即触发，与 `change` 不同。}}                        |
 | `cut/copy/paste` | {{c1:: 剪贴/拷贝/粘贴行为。}} | {{c1:: 行为可以被阻止。`event.clipboardData` 属性可以用于读/写剪贴板。}} |
-### submit 和 click 的关系
+### submit 和 click 的关系 [	](javascript_info_20200608063412714)
 + {{c1:: 在输入框中使用 Enter 发送表单时，会在 <input type="submit"> 上触发一次 click 事件。 }}
 
-### 手动将表单提交到服务器
+### 手动将表单提交到服务器 [	](javascript_info_20200608063412715)
 
 ```javascript
   //{{c1::
@@ -4640,14 +4640,14 @@ alert(result.message);
   //}}
 ```
 
-### HTML 页面的生命周期包含三个重要事件：
+### HTML 页面的生命周期包含三个重要事件： [	](javascript_info_20200608063412716)
 
 - `DOMContentLoaded` 事件:{{c1:: DOM 已经就绪，因此处理程序可以查找 DOM 节点，并初始化接口。}}
 - `load` 事件:{{c1:: 外部资源已加载完成，样式已被应用，图片大小也已知了。}}
 - `beforeunload` 事件:{{c1:: 用户正在离开：我们可以检查用户是否保存了更改，并询问他是否真的要离开。}}
 - `unload` 事件:{{c1:: 用户几乎已经离开了，但是我们仍然可以启动一些操作，例如发送统计数据。}}
 
-### window.onbeforeunload
+### window.onbeforeunload [	](javascript_info_20200608063412717)
 
 + 下面代码的输出是什么？
   ```javascript
@@ -4677,14 +4677,14 @@ alert(result.message);
   7. {{c1:: [4] window onload }}
   8. {{c1:: 方括号中的数字表示发生这种情况的大致时间。标有相同数字的事件几乎是同时发生的（± 几毫秒）。 }}
 
-### document.readyState 
+### document.readyState  [	](javascript_info_20200608063412718)
 
 - 可以在 {{c1:: `readystatechange` }} 事件中跟踪状态更改：
 - `loading`:{{c1:: 文档正在被加载。}}
 - `interactive`:{{c1:: 文档已被解析完成，与 `DOMContentLoaded` 几乎同时发生，但是在 `DOMContentLoaded` 之前发生。}}
 - `complete`:{{c1:: 文档和资源均已加载完成，与 `window.onload` 几乎同时发生，但是在 `window.onload` 之前发生。}}
 
-### `navigator.sendBeacon(url, data)` 方法
+### `navigator.sendBeacon(url, data)` 方法 [	](javascript_info_20200608063412719)
 
 ```javascript
 let analyticsData = { /* 带有收集的数据的对象 */ };
@@ -4695,7 +4695,7 @@ window.addEventListener("unload", function() {
 };
 //}}
 ```
-### 动态脚本
+### 动态脚本 [	](javascript_info_20200608063412720)
 ```js
 function loadScript(src) {
   //{{c1::
@@ -4711,25 +4711,25 @@ loadScript("/article/script-async-defer/long.js");
 loadScript("/article/script-async-defer/small.js");
 ```
 
-### `defer` 特性
+### `defer` 特性 [	](javascript_info_20200608063412721)
 + `defer` 特性:{{c1:: 告诉浏览器它应该继续处理页面，并“在后台”下载脚本，然后等页面加载完成后，再执行此脚本。}}
 + `async` 特性:{{c1:: 异步加载脚本，加载完成后立刻执行，不会等待其他脚本与`DOMContentLoaded` 。}}
 
-### `async特性` 和 `defer特性`区别
+### `async特性` 和 `defer特性`区别 [	](javascript_info_20200608063412722)
 `async` 和 `defer` 有一个共同点：{{c1:: 加载这样的脚本都不会阻塞页面的渲染。因此，用户可以立即阅读并了解页面内容。}}
 |         | 顺序                                                         | `DOMContentLoaded`                                           |
 | :------ | :----------------------------------------------------------- | :----------------------------------------------------------- |
 | `async` | {{c1::**加载优先顺序**。脚本在文档中的顺序不重要 —— 先加载完成先执行}} | {{c1::不相关。可能在文档加载完成前加载并执行完毕。如果脚本很小或者来自于缓存，同时文档足够长，就会发生这种情况。}} |
 | `defer` | {{c1::**文档顺序**（它们在文档中的顺序）}}                           | {{c1::在文档加载和解析完成之后（如果需要，则会等待），即在 `DOMContentLoaded` 之前执行。}} |
 
-### 资源加载：onload，onerror
+### 资源加载：onload，onerror [	](javascript_info_20200608063412723)
 
 + 图片 `<img>`，外部样式，脚本和其他资源都提供了{{c1:: `load` 和 `error` }}事件以跟踪它们的加载：
   - `load` ：{{c1:: 在成功加载时被触发。}}
   - `error` ：{{c1:: 在加载失败时被触发。}}
 + 唯一的例外是 `<iframe>`：{{c1:: 出于历史原因，不管加载成功还是失败，即使页面没有被找到，它都会触发 `load` 事件。}}
 
-### DOM 变动观察器（Mutation observer）
+### DOM 变动观察器（Mutation observer） [	](javascript_info_20200608063412724)
 
 + 语法：
   ```js
@@ -4755,7 +4755,7 @@ loadScript("/article/script-async-defer/small.js");
     + `attributeName/attributeNamespace`:{{c1:: 被更改的特性的名称/命名空间（用于 XML），}}
     + `oldValue`:{{c1:: 之前的值，仅适用于特性或文本更改，如果设置了相应选项 `attributeOldValue`/`characterDataOldValue`。}}
 
-### Range对象方法
+### Range对象方法 [	](javascript_info_20200608063412725)
 + 设置范围的起点：
   + setStart(node, offset):{{c1:: 将起点设置在：node 中的位置 offset}}
   + setStartBefore(node):{{c1:: 将起点设置在：node 前面}}
@@ -4777,7 +4777,7 @@ loadScript("/article/script-async-defer/small.js");
   + insertNode(node)：{{c1:: 在范围的起始处将 node 插入文档}}
   + surroundContents(node)：{{c1:: 使用 node 将所选范围内容包裹起来。要使此操作有效，则该范围必须包含其中所有元素的开始和结束标签：不能像 <i>abc 这样的部分范围。}}
 
-### 选择
+### 选择 [	](javascript_info_20200608063412726)
 + 文档选择是由{{c1:: `Selectio`n }} 对象表示的，可通过{{c1:: `window.getSelection(`) }} 或{{c1:: `document.getSelection()`  }}来获取。
 + 主要的选择属性有：
   + anchorNode：{{c1::  选择的起始节点，}}
@@ -4790,13 +4790,13 @@ loadScript("/article/script-async-defer/small.js");
   + 作为文本：{{c1:: 只需调用 document.getSelection().toString()。}}
   + 作为 DOM 节点：{{c1:: 获取底层的（underlying）范围，并调用它们的 cloneContents() 方法（如果我们不支持 Firefox 多选的话，则仅取第一个范围）。}}
 
-### 选择事件
+### 选择事件 [	](javascript_info_20200608063412727)
 + elem.onselectstart：{{c1:: 当选择从 elem 上开始时，例如，用户按下鼠标键并开始移动鼠标。}}
   + 阻止默认行为会使选择无法开始。
 + document.onselectionchange：{{c1:: 当选择变动时。}}
   + 请注意：此处理程序只能在 document 上设置。
 
-### 实现选择跟踪演示效果
+### 实现选择跟踪演示效果 [	](javascript_info_20200608063412728)
 
 ![XGjhAQEjuL](javascript_info.assets\XGjhAQEjuL.gif)
 代码如下：
@@ -4816,22 +4816,22 @@ From <input id="from" disabled> – To <input id="to" disabled>
 </script>
 // }}
 ```
-### 表单控件中的选择
+### 表单控件中的选择 [	](javascript_info_20200608063412729)
 + input.selectionStart:{{c1:: 选择的起始位置（可写），}}
 + input.selectionEnd:{{c1:: 选择的结束位置（可写），}}
 + input.selectionDirection:{{c1:: 选择方向，其中之一：“forward”，“backward” 或 “none”（例如使用鼠标双击进行的选择），}}
 + input.onselect:{{c1:: 当某个东西被选择时触发。}}
 
-### 要使某些内容不可选，有三种方式：
+### 要使某些内容不可选，有三种方式： [	](javascript_info_20200608063412730)
 1. {{c1:: 使用 CSS 属性 user-select: none。}}
 2. {{c1:: 防止 onselectstart 或 mousedown 事件中的默认行为。}}
 3. {{c1:: 我们还可以使用 document.getSelection().empty() 来在选择发生后清除选择。很少使用这种方法，因为这会在选择项消失时导致不必要的闪烁。}}
 
-### 用于选择的两种不同的 API：
+### 用于选择的两种不同的 API： [	](javascript_info_20200608063412731)
 1. {{c1:: 对于文档：`Selection` 和 `Range` 对象。}}
 2. {{c1:: 对于 `input`，`textarea`：其他方法和属性。}}
 
-### 选择（Selection)与范围（Range) 最常用的方案一般是：
+### 选择（Selection)与范围（Range) 最常用的方案一般是： [	](javascript_info_20200608063412732)
 
 1. 获取选择：
    ```javascript
@@ -4858,7 +4858,7 @@ From <input id="from" disabled> – To <input id="to" disabled>
    //}}
    ```
 
-### 宏任务和微任务的关系
+### 宏任务和微任务的关系 [	](javascript_info_20200608063412734)
 
 + 安排（schedule）一个新的 宏任务：{{c1:: 使用零延迟的 setTimeout(f)。}}
 + 安排一个新的 微任务：
@@ -4875,18 +4875,18 @@ alert("code");
   2. {{c1:: `promise` 第二个出现，因为 `then` 会通过微任务队列，并在当前代码之后执行。 }}
   3. {{c1:: `timeout` 最后显示，因为它是一个宏任务。 }}
 
-### 事件循环图示
+### 事件循环图示 [	](javascript_info_20200608063412735)
 + 顺序是从上到下，即：首先是脚本，然后是微任务，渲染等
 {{c1:: ![image-20200608160453621](javascript_info.assets\image-20200608160453621.png) }}
 
-### `window.open`
+### `window.open` [	](javascript_info_20200608063412736)
 + 开一个弹窗的语法是: {{c1:: `window.open(url, name, params);` }}
 + focus() 和 blur() 方法:{{c1:: 允许聚焦/失焦于窗口。但它们并不是一直都有效。 }}
 + focus和 blur 事件:{{c1:: 允许跟踪窗口的切换。但是请注意，在 blur 之后，即使窗口在背景状态下，窗口仍有可能是可见 }}的。
 + 要关闭弹窗：:{{c1:: 使用 close() 调用。 }}
 + 关闭之后:{{c1:: ，window.closed 为 true。 }}
 
-### Iframe：错误文档陷阱
+### Iframe：错误文档陷阱 [	](javascript_info_20200608063412737)
 
 我们可以尝试通过在 `setInterval` 中进行检查，以更早地捕获该时刻：
 ```javascript
@@ -4906,7 +4906,7 @@ alert("code");
 </script>
 ```
 
-### 集合：window.frames
+### 集合：window.frames [	](javascript_info_20200608063412738)
 + 通过索引获取：window.frames[0]：{{c1:: 文档中的第一个 iframe 的 window 对象。 }}
 + 通过名称获取：window.frames.iframeName：{{c1:: 获取 name="iframeName" 的 iframe 的 window 对象。 }}
 + 一个 iframe 内可能嵌套了其他的 iframe。相应的 window 对象会形成一个层次结构（hierarchy）。
@@ -4914,11 +4914,11 @@ alert("code");
   + window.parent:{{c1:: 对“父”（外部）窗口的引用。 }}
   + window.top:{{c1:: 对最顶级父窗口的引用。 }}
 
-### 对于弹窗，我们有两个引用：
+### 对于弹窗，我们有两个引用： [	](javascript_info_20200608063412739)
 - 从打开窗口的（opener）窗口：`window.open`:{{c1:: 打开一个新的窗口，并返回对它的引用， }}
 - 从弹窗：`window.opener`:{{c1:: 是从弹窗中对打开此弹窗的窗口（opener）的引用。 }}
 
-### 对于 iframe，我们可以使用以下方式访问父/子窗口：
+### 对于 iframe，我们可以使用以下方式访问父/子窗口： [	](javascript_info_20200608063412740)
 + 如果几个窗口的源相同（域，端口，协议），那么这几个窗口可以彼此进行所需的操作。
   - `window.frames`:{{c1::一个嵌套的 window 对象的集合，}}
   - `window.parent`，`window.top`:{{c1:: 是对父窗口和顶级窗口的引用，}}
@@ -4930,7 +4930,7 @@ alert("code");
 - 对于二级域相同的窗口：`a.site.com` 和 `b.site.com`。通过在这些窗口中均设置 {{c1:: `document.domain='site.com'` }}，可以使它们处于“同源”状态。
 - 如果一个 iframe 具有 `sandbox` 特性（attribute），则{{c1:: 它会被强制处于“非同源”状态，除非在其特性值中指定了 `allow-same-origin`。这可用于在同一网站的 iframe 中运行不受信任的代码。}}
 
-### `postMessage` 接口允许两个具有任何源的窗口之间进行通信：
+### `postMessage` 接口允许两个具有任何源的窗口之间进行通信： [	](javascript_info_20200608063412741)
 1. 发送方调用 {{c1:: `targetWin.postMessage(data, targetOrigin)`。}}
 2. 如果 `targetOrigin` 不是 `'*'`，那么浏览器会检查窗口 `targetWin` 是否具有源 `targetOrigin`。
 3. 如果它具有，{{c1:: `targetWin` 会触发具有特殊的属性的 `message` 事件：}}
@@ -4938,5 +4938,4 @@ alert("code");
    - `source`:{{c1:: 发送方窗口的引用。}}
    - `data`:{{c1:: 数据，可以是任何对象。但是 IE 浏览器只支持字符串，因此我们需要对复杂的对象调用 `JSON.stringify`方法进行处理，以支持该浏览器。}}
 +我们应该使用 `addEventListener` 来在目标窗口中设置 `message` 事件的处理程序。
-
 
