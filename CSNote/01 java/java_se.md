@@ -926,7 +926,7 @@ MediaView mediaView = new MediaView(mediaPlayer);
   ```
 
 ### 获取线程名字的2个方法 [	](java_se_20200604111131324)
-1. `.currentThread()`:{{c1:: 总是返回当前正在执行的线程。 }}
+1. `Thread.currentThread()`:{{c1:: 总是返回当前正在执行的线程。 }}
 2. `getName()`:{{c1:: Thread类的实例方法，常用于继承 Thread 类的线程。 }}
 
 ### 多线程：Callable 接口 VS Runnable 接口 [	](java_se_20200604111131325)
@@ -946,7 +946,7 @@ MediaView mediaView = new MediaView(mediaPlayer);
 ### 线程状态 [	](java_se_20200604111131327)
 
 + `isAlive()`：{{c1:: 当线程处于新建与死亡状态时，返回false }}
-+ 对死亡的线程调用`start()`方法,会引发{{c1:`IllegalThreadStateException` }}异常
++ 对死亡的线程调用`start()`方法,会引发{{c1::`IllegalThreadStateException` }}异常
 + 五种线程状态转换图
   {{c1:: ![image-20200603230326712](java_se.assets\image-20200603230326712.png) }}
 
