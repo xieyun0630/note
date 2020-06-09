@@ -4500,90 +4500,11 @@ ball.onmousedown = function (event) { // (1) 启动处理
     - 特殊按键的代码为按键的名字：{{c1:: `"Enter"`，`"Backspace"`，`"Tab"` 等。}}
   - `key`:{{c1:: 字符（`"A"`，`"a"` 等），对于非字符（non-character）的按键，通常具有与 `code` 相同的值。}}
 
-## 网络请求 [	](javascript_info_20200604111305690)
 
-### 典型的 fetch 请求由两个 await 调用组成： [	](javascript_info_20200604111305691)
-```js
-//{{c1::
-let response = await fetch(url, options); // 解析 response header
-let result = await response.json(); // 将 body 读取为 json
-//}}
-```
-或者以 promise 形式：
-```js
-//{{c1::
-fetch(url, options)
-  .then(response => response.json())
-  .then(result => /* process result */)
-//}}
-```
-
-### fetch 请求响应的属性： [	](javascript_info_20200604111305692)
-+ response.status:{{c1:: response 的 HTTP 状态码， }}
-+ response.ok:{{c1:: HTTP 状态码为 200-299，则为 true。 }}
-+ response.headers:{{c1:: 类似于 Map 的带有 HTTP header 的对象。 }}
-
-### 获取fetch请求返回的response body 的方法： [	](javascript_info_20200604111305693)
-1. `response.text()`：{{c1:: 读取 response，并以文本形式返回 response，}}
-2. `response.json()`：{{c1:: 将 response 解析为 JSON 对象形式，}}
-3. `response.formData()`：{{c1:: 以 `FormData` 对象（form/multipart 编码，参见下一章）的形式返回 response，}}
-4. `response.blob()`：{{c1:: 以 Blob（具有类型的二进制数据）形式返回 response，}}
-5. `response.arrayBuffer()`：{{c1:: 以` ArrayBuffer`（低级别的二进制数据）形式返回 response。}}
-+ 注意：{{c1:: 同一个response执行一次以上body的方法 }}
-
-### 获取Response header [	](javascript_info_20200604111305694)
-```js
-let response = await fetch('https://api.github.com/repos/javascript-tutorial/en.javascript.info/commits');
-// 获取一个 header
-// {{c1::
-alert(response.headers.get('Content-Type')); // application/json; charset=utf-8
-// }}
-// 迭代所有 header
-// {{c1::
-for (let [key, value] of response.headers) {
-  alert(`${key} = ${value}`);
-}
-// }}
-```
-
-### fetch设置 request header [	](javascript_info_20200604111305695)
-```js
-// {{c1::
-  let response = fetch(url, {
-    headers: {
-      Authentication: 'secret'
-    }
-  });
-// }}
-```
-
-### fetch 选项 [	](javascript_info_20200604111305696)
-+ `method`：{{c1:: HTTP 方法，}}
-+ `headers`：{{c1:: 具有 request header 的对象（不是所有 header 都是被允许的）}}
-+ `body`：{{c1:: 要以` string，FormData，BufferSource，Blob` 或 `UrlSearchParams `对象的形式发送的数据（request body）。}}
-
-### 使用fetch,以JSON 形式发送 `user` 对象 [	](javascript_info_20200604111305697)
-
-```javascript
-let user = {
-  name: 'John',
-  surname: 'Smith'
-};
-//使用fetch,以JSON 形式发送 `user` 对象
-//{{c1::
-let response = await fetch('/article/fetch/post/user', {
-  method: 'POST',
-  headers: {
-    'Content-Type': 'application/json;charset=utf-8'
-  },
-  body: JSON.stringify(user)
-});
-//}}
-let result = await response.json();
-alert(result.message);
-```
+## [表单，控件](https://zh.javascript.info/forms-controls)
 
 ### 表单属性 [	](javascript_info_20200608063412709)
+
 + `document.forms`：{{c1:: 一个表单元素可以通过 `document.forms[name/index]` 访问到。 }}
 + `form.elements`：{{c1:: 表单元素可以通过 `form.elements[name/index]` 的方式访问，或者也可以使用 `form[name/index]`。`elements` 属性也适用于 `<fieldset>`。 }}
 + `element.form`：{{c1:: 元素通过 form 属性来引用它们所属的表单。}}
@@ -4639,6 +4560,8 @@ alert(result.message);
     form.submit();
   //}}
 ```
+
+## 加载文档和其他资源
 
 ### HTML 页面的生命周期包含三个重要事件： [	](javascript_info_20200608063412716)
 
@@ -4728,6 +4651,8 @@ loadScript("/article/script-async-defer/small.js");
   - `load` ：{{c1:: 在成功加载时被触发。}}
   - `error` ：{{c1:: 在加载失败时被触发。}}
 + 唯一的例外是 `<iframe>`：{{c1:: 出于历史原因，不管加载成功还是失败，即使页面没有被找到，它都会触发 `load` 事件。}}
+
+## 杂项
 
 ### DOM 变动观察器（Mutation observer） [	](javascript_info_20200608063412724)
 
@@ -4879,7 +4804,10 @@ alert("code");
 + 顺序是从上到下，即：首先是脚本，然后是微任务，渲染等
 {{c1:: ![image-20200608160453621](javascript_info.assets\image-20200608160453621.png) }}
 
+## Frame 和 window
+
 ### `window.open` [	](javascript_info_20200608063412736)
+
 + 开一个弹窗的语法是: {{c1:: `window.open(url, name, params);` }}
 + focus() 和 blur() 方法:{{c1:: 允许聚焦/失焦于窗口。但它们并不是一直都有效。 }}
 + focus和 blur 事件:{{c1:: 允许跟踪窗口的切换。但是请注意，在 blur 之后，即使窗口在背景状态下，窗口仍有可能是可见 }}的。
@@ -4939,3 +4867,238 @@ alert("code");
    - `data`:{{c1:: 数据，可以是任何对象。但是 IE 浏览器只支持字符串，因此我们需要对复杂的对象调用 `JSON.stringify`方法进行处理，以支持该浏览器。}}
 +我们应该使用 `addEventListener` 来在目标窗口中设置 `message` 事件的处理程序。
 
+## 二进制数据，文件
+
+### 例子：使用`Uint32Array`遍历一个`ArrayBuffer`
+
+```javascript
+let buffer = new ArrayBuffer(16); // 创建一个长度为 16 的 buffer
+let view = new Uint32Array(buffer); // 将 buffer 视为一个 32 位整数的序列
+alert(Uint32Array.BYTES_PER_ELEMENT); // 每个整数 4 个字节
+alert(view.length); // 4，它存储了 4 个整数
+alert(view.byteLength); // 16，字节中的大小
+// 让我们写入一个值
+view[0] = 123456;
+// 遍历值
+for(let num of view) {
+  alert(num); // 123456，然后 0，0，0（一共 4 个值）
+}
+```
+
+### TypedArray 构造器与方法
+作用：{{c1:: TypedArray是所有视图（Uint8Array，Uint32Array 等）的通用术语，有同一组方法与属性。 }}
+1. `new TypedArray(buffer, [byteOffset], [length]);`:{{c1:: 如果给定的是 ArrayBuffer 参数，则会在其上创建视图。 }}
+2. `new TypedArray(object);`:{{c1:: 如果给定的是 Array，或任何类数组对象，则会创建一个相同长度的类型化数组，并复制其内容。 }}
+3. `new TypedArray(typedArray);`:{{c1:: 创建一个相同长度的类型化数组，并复制其内容。}}
+4. `new TypedArray(length);`:{{c1::  创建类型化数组以包含这么多元素。它的字节长度将是 length 乘以单个 TypedArray.BYTES_PER_ELEMENT 中的字节数}}
+5. `new TypedArray();`:{{c1:: 创建长度为零的类型化数组}}
++ 除第一种情况（已提供 ArrayBuffer）外，{{c1:: 其他所有情况都会自动创建 ArrayBuffer。 }}
++ 如要访问 ArrayBuffer，可以用以下属性：  
+  1. arr.buffer:{{c1:: 引用 ArrayBuffer。 }}
+  2. arr.byteLength:{{c1:: ArrayBuffer 的长度。 }}
+
+### DataView
++ 作用：{{c1:: `DataView `是在 `ArrayBuffer` 上的一种特殊的超灵活“未类型化”视图。 }}
++ 语法：{{c1:: `new DataView(buffer, [byteOffset], [byteLength])` }}
+    ```javascript
+    // 4 个字节的二进制数组，每个都是最大值 255
+    let buffer = new Uint8Array([255, 255, 255, 255]).buffer;
+    let dataView = new DataView(buffer);
+    // 在偏移量为 0 处获取 8 位数字 {{c1::
+    alert( dataView.getUint8(0) ); // 255}}
+    
+    // 现在在偏移量为 0 处获取 16 位数字，它由 2 个字节组成，一起解析为 65535{{c1::
+    alert( dataView.getUint16(0) ); // 65535（最大的 16 位无符号整数）}}
+    
+    // 在偏移量为 0 处获取 32 位数字 {{c1::
+    alert( dataView.getUint32(0) ); // 4294967295（最大的 32 位无符号整数）}}
+
+      // 将 4 个字节的数字设为 0，即将所有字节都设为 0  {{c1::
+    dataView.setUint32(0, 0); //}}
+    ```
+    
+### BufferSource术语
++ 作用：{{c1:: 指“任何类型的二进制数据” —— ArrayBuffer 或其上的视图。 }}
++ BufferSource体系图：{{c1:: ![image-20200609133016048](javascript_info.assets\image-20200609133016048.png) }}
+
+### TextDecoder 和 TextEncoder
++ TextDecoder构造器：`new TextDecoder([label], [options]);`
++ TextEncoder构造器：`new TextEncoder();`
++ 将"hello"编码与解码例子：
+  ```javascript
+    let uint8Array = new Uint8Array([0, 72, 101, 108, 108, 111, 0]);
+    //解码{{c1::
+    let binaryString = uint8Array.subarray(1, -1);
+    alert( new TextDecoder().decode(binaryString) ); // Hello
+    //}}
+
+    //编码{{c1::
+    let encoder = new TextEncoder();
+    let uint8Array = encoder.encode("Hello");
+    alert(uint8Array); // 72,101,108,108,111
+    //}}
+  ```
+
+
+### Blob
++ 构造函数的语法:{{c1:: `new Blob(blobParts, options);` }}
+- `blobParts`:{{c1::  `Blob`/`BufferSource`/`String` 类型的值的**数组**。}}
+- `options`可选对象：
+  - `type`:{{c1:: `Blob` 类型，通常是 MIME 类型，例如 `image/png`，}}
+  - `endings`:{{c1:: 是否转换换行符，使 `Blob` 对应于当前操作系统的换行符（`\r\n` 或 `\n`）。默认为`"transparent"`（啥也不做），不过也可以是 `"native"`（转换）。}}
++ slice 方法：blob.slice([byteStart], [byteEnd], [contentType]);
+  1. `byteStart`:{{c1:: 起始字节，默认为 0。}}
+  2. `byteEnd`:{{c1:: 最后一个字节（专有，默认为最后）。}}
+  3. `contentType`:{{c1:: 新 blob 的 `type`，默认与源 blob 相同。}}
++ Blob 对象是不可变对象
+
+### Blob 和低级别的二进制数据类型之间进行转换：
++ new Blob(...) 构造函数从一个类型化数组（typed array）创建 Blob。
++ FileReader 从 Blob 中取回 ArrayBuffer，然后在其上创建一个视图（view），用于低级别的二进制处理。
+
+### File对象
++ 拓展自Blob，有一个构造器：`new File(fileParts, fileName, [options])`
+  + `fileParts`:{{c1:: Blob/BufferSource/String 类型值的数组。}}
+  + `fileName`:{{c1:: 文件名字符串。}}
+  + `options`:{{c1:: 可选对象：}}
+    - `lastModified`:{{c1:: 最后一次修改的时间戳（整数日期）。}}
++ 除了 Blob 方法和属性外，File 对象还有 `name` 和 `lastModified` 属性
+
+### 例子：从 `<input type="file"> `中获取 File 对象
+```js
+<input type="file" onchange="showFile(this)">
+<script>
+function showFile(input) {
+  //{{c1::
+  let file = input.files[0];
+  alert(`File name: ${file.name}`); // 例如 my.png
+  alert(`Last modified: ${file.lastModified}`); // 例如 1552830408824
+  //}}
+}
+</script>
+```
+
+## FileReader对象
++ 作用：唯一目的是从 Blob（因此也从 File）对象中读取数据。
+  + readAsArrayBuffer(blob)：{{c1:: 将数据读取为二进制格式的 ArrayBuffer。 }}
+  + readAsText(blob, [encoding])：{{c1:: 将数据读取为给定编码（默认为 utf-8 编码）的文本字符串。 }}
+  + readAsDataURL(blob)：{{c1:: 读取二进制数据，并将其编码为 base64 的 data url。 }}
+  + abort()：{{c1:: 取消操作。 }}
++ 读取过程中，有以下事件：
+  + `loadstart`:{{c1:: 开始加载。 }}
+  + `progress`:{{c1:: 在读取过程中出现。 }}
+  + `load`:{{c1:: 读取完成，没有 error。 }}
+  + `abort`:{{c1:: 调用了 abort()。 }}
+  + `error`:{{c1:: 出现 error。 }}
+  + `loadend`:{{c1:: 读取完成，无论成功还是失败。 }}
++ 读取完成后，我们可以通过以下方式访问读取结果：
+  + `reader.result`:{{c1:: 是结果（如果成功）}}
+  + `reader.error`:{{c1:: 是 error（如果失败）。}}
++ URL.createObjectURL(file) :`创建一个短的 url，并将其赋给 <a> 或 <img>。这样，文件便可以下载文件或者将其呈现为图像，作为 canvas 等的一部分。`
+
+### 示例:读取一个文本文件并且显示所有的内容
+```js
+<input type="file" onchange="readFile(this)">
+<script>
+function readFile(input) {
+  //{{c1::
+  let file = input.files[0];
+
+  let reader = new FileReader();
+  reader.readAsText(file);
+
+  reader.onload = function() {
+    console.log(reader.result);
+  };
+
+  reader.onerror = function() {
+    console.log(reader.error);
+  };
+  // }}
+}
+```
+</script>
+
+
+## 网络请求 [	](javascript_info_20200604111305690)
+
+### 典型的 fetch 请求由两个 await 调用组成： [	](javascript_info_20200604111305691)
+```js
+//{{c1::
+let response = await fetch(url, options); // 解析 response header
+let result = await response.json(); // 将 body 读取为 json
+//}}
+```
+或者以 promise 形式：
+```js
+//{{c1::
+fetch(url, options)
+  .then(response => response.json())
+  .then(result => /* process result */)
+//}}
+```
+
+### fetch 请求响应的属性： [	](javascript_info_20200604111305692)
++ response.status:{{c1:: response 的 HTTP 状态码， }}
++ response.ok:{{c1:: HTTP 状态码为 200-299，则为 true。 }}
++ response.headers:{{c1:: 类似于 Map 的带有 HTTP header 的对象。 }}
+
+### 获取fetch请求返回的response body 的方法： [	](javascript_info_20200604111305693)
+1. `response.text()`：{{c1:: 读取 response，并以文本形式返回 response，}}
+2. `response.json()`：{{c1:: 将 response 解析为 JSON 对象形式，}}
+3. `response.formData()`：{{c1:: 以 `FormData` 对象（form/multipart 编码，参见下一章）的形式返回 response，}}
+4. `response.blob()`：{{c1:: 以 Blob（具有类型的二进制数据）形式返回 response，}}
+5. `response.arrayBuffer()`：{{c1:: 以` ArrayBuffer`（低级别的二进制数据）形式返回 response。}}
++ 注意：{{c1:: 同一个response执行一次以上body的方法 }}
+
+### 获取Response header [	](javascript_info_20200604111305694)
+```js
+let response = await fetch('https://api.github.com/repos/javascript-tutorial/en.javascript.info/commits');
+// 获取一个 header
+// {{c1::
+alert(response.headers.get('Content-Type')); // application/json; charset=utf-8
+// }}
+// 迭代所有 header
+// {{c1::
+for (let [key, value] of response.headers) {
+  alert(`${key} = ${value}`);
+}
+// }}
+```
+
+### fetch设置 request header [	](javascript_info_20200604111305695)
+```js
+// {{c1::
+  let response = fetch(url, {
+    headers: {
+      Authentication: 'secret'
+    }
+  });
+// }}
+```
+
+### fetch 选项 [	](javascript_info_20200604111305696)
++ `method`：{{c1:: HTTP 方法，}}
++ `headers`：{{c1:: 具有 request header 的对象（不是所有 header 都是被允许的）}}
++ `body`：{{c1:: 要以` string，FormData，BufferSource，Blob` 或 `UrlSearchParams `对象的形式发送的数据（request body）。}}
+
+### 使用fetch,以JSON 形式发送 `user` 对象 [	](javascript_info_20200604111305697)
+
+```javascript
+let user = {
+  name: 'John',
+  surname: 'Smith'
+};
+//使用fetch,以JSON 形式发送 `user` 对象
+//{{c1::
+let response = await fetch('/article/fetch/post/user', {
+  method: 'POST',
+  headers: {
+    'Content-Type': 'application/json;charset=utf-8'
+  },
+  body: JSON.stringify(user)
+});
+//}}
+let result = await response.json();
+alert(result.message);
+```
