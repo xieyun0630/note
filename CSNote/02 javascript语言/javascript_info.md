@@ -4501,7 +4501,7 @@ ball.onmousedown = function (event) { // (1) 启动处理
   - `key`:{{c1:: 字符（`"A"`，`"a"` 等），对于非字符（non-character）的按键，通常具有与 `code` 相同的值。}}
 
 
-## [表单，控件](https://zh.javascript.info/forms-controls)
+## [表单，控件](https://zh.javascript.info/forms-controls) [	](javascript_info_20200609045144089)
 
 ### 表单属性 [	](javascript_info_20200608063412709)
 
@@ -4561,7 +4561,7 @@ ball.onmousedown = function (event) { // (1) 启动处理
   //}}
 ```
 
-## 加载文档和其他资源
+## 加载文档和其他资源 [	](javascript_info_20200609045144090)
 
 ### HTML 页面的生命周期包含三个重要事件： [	](javascript_info_20200608063412716)
 
@@ -4652,7 +4652,7 @@ loadScript("/article/script-async-defer/small.js");
   - `error` ：{{c1:: 在加载失败时被触发。}}
 + 唯一的例外是 `<iframe>`：{{c1:: 出于历史原因，不管加载成功还是失败，即使页面没有被找到，它都会触发 `load` 事件。}}
 
-## 杂项
+## 杂项 [	](javascript_info_20200609045144091)
 
 ### DOM 变动观察器（Mutation observer） [	](javascript_info_20200608063412724)
 
@@ -4804,7 +4804,7 @@ alert("code");
 + 顺序是从上到下，即：首先是脚本，然后是微任务，渲染等
 {{c1:: ![image-20200608160453621](javascript_info.assets\image-20200608160453621.png) }}
 
-## Frame 和 window
+## Frame 和 window [	](javascript_info_20200609045144092)
 
 ### `window.open` [	](javascript_info_20200608063412736)
 
@@ -4867,9 +4867,9 @@ alert("code");
    - `data`:{{c1:: 数据，可以是任何对象。但是 IE 浏览器只支持字符串，因此我们需要对复杂的对象调用 `JSON.stringify`方法进行处理，以支持该浏览器。}}
 +我们应该使用 `addEventListener` 来在目标窗口中设置 `message` 事件的处理程序。
 
-## 二进制数据，文件
+## 二进制数据，文件 [	](javascript_info_20200609045144093)
 
-### 例子：使用`Uint32Array`遍历一个`ArrayBuffer`
+### 例子：使用`Uint32Array`遍历一个`ArrayBuffer` [	](javascript_info_20200609045144094)
 
 ```javascript
 let buffer = new ArrayBuffer(16); // 创建一个长度为 16 的 buffer
@@ -4885,7 +4885,7 @@ for(let num of view) {
 }
 ```
 
-### TypedArray 构造器与方法
+### TypedArray 构造器与方法 [	](javascript_info_20200609045144095)
 作用：{{c1:: TypedArray是所有视图（Uint8Array，Uint32Array 等）的通用术语，有同一组方法与属性。 }}
 1. `new TypedArray(buffer, [byteOffset], [length]);`:{{c1:: 如果给定的是 ArrayBuffer 参数，则会在其上创建视图。 }}
 2. `new TypedArray(object);`:{{c1:: 如果给定的是 Array，或任何类数组对象，则会创建一个相同长度的类型化数组，并复制其内容。 }}
@@ -4897,7 +4897,7 @@ for(let num of view) {
   1. arr.buffer:{{c1:: 引用 ArrayBuffer。 }}
   2. arr.byteLength:{{c1:: ArrayBuffer 的长度。 }}
 
-### DataView
+### DataView [	](javascript_info_20200609045144097)
 + 作用：{{c1:: `DataView `是在 `ArrayBuffer` 上的一种特殊的超灵活“未类型化”视图。 }}
 + 语法：{{c1:: `new DataView(buffer, [byteOffset], [byteLength])` }}
     ```javascript
@@ -4917,11 +4917,11 @@ for(let num of view) {
     dataView.setUint32(0, 0); //}}
     ```
     
-### BufferSource术语
+### BufferSource术语 [	](javascript_info_20200609045144098)
 + 作用：{{c1:: 指“任何类型的二进制数据” —— ArrayBuffer 或其上的视图。 }}
 + BufferSource体系图：{{c1:: ![image-20200609133016048](javascript_info.assets\image-20200609133016048.png) }}
 
-### TextDecoder 和 TextEncoder
+### TextDecoder 和 TextEncoder [	](javascript_info_20200609045144099)
 + TextDecoder构造器：`new TextDecoder([label], [options]);`
 + TextEncoder构造器：`new TextEncoder();`
 + 将"hello"编码与解码例子：
@@ -4940,7 +4940,7 @@ for(let num of view) {
   ```
 
 
-### Blob
+### Blob [	](javascript_info_20200609045144100)
 + 构造函数的语法:{{c1:: `new Blob(blobParts, options);` }}
 - `blobParts`:{{c1::  `Blob`/`BufferSource`/`String` 类型的值的**数组**。}}
 - `options`可选对象：
@@ -4952,11 +4952,11 @@ for(let num of view) {
   3. `contentType`:{{c1:: 新 blob 的 `type`，默认与源 blob 相同。}}
 + Blob 对象是不可变对象
 
-### Blob 和低级别的二进制数据类型之间进行转换：
+### Blob 和低级别的二进制数据类型之间进行转换： [	](javascript_info_20200609045144101)
 + new Blob(...) 构造函数从一个类型化数组（typed array）创建 Blob。
 + FileReader 从 Blob 中取回 ArrayBuffer，然后在其上创建一个视图（view），用于低级别的二进制处理。
 
-### File对象
+### File对象 [	](javascript_info_20200609045144102)
 + 拓展自Blob，有一个构造器：`new File(fileParts, fileName, [options])`
   + `fileParts`:{{c1:: Blob/BufferSource/String 类型值的数组。}}
   + `fileName`:{{c1:: 文件名字符串。}}
@@ -4964,7 +4964,7 @@ for(let num of view) {
     - `lastModified`:{{c1:: 最后一次修改的时间戳（整数日期）。}}
 + 除了 Blob 方法和属性外，File 对象还有 `name` 和 `lastModified` 属性
 
-### 例子：从 `<input type="file"> `中获取 File 对象
+### 例子：从 `<input type="file"> `中获取 File 对象 [	](javascript_info_20200609045144103)
 ```js
 <input type="file" onchange="showFile(this)">
 <script>
@@ -4978,7 +4978,7 @@ function showFile(input) {
 </script>
 ```
 
-## FileReader对象
+## FileReader对象 [	](javascript_info_20200609045144104)
 + 作用：唯一目的是从 Blob（因此也从 File）对象中读取数据。
   + readAsArrayBuffer(blob)：{{c1:: 将数据读取为二进制格式的 ArrayBuffer。 }}
   + readAsText(blob, [encoding])：{{c1:: 将数据读取为给定编码（默认为 utf-8 编码）的文本字符串。 }}
@@ -4996,7 +4996,7 @@ function showFile(input) {
   + `reader.error`:{{c1:: 是 error（如果失败）。}}
 + URL.createObjectURL(file) :`创建一个短的 url，并将其赋给 <a> 或 <img>。这样，文件便可以下载文件或者将其呈现为图像，作为 canvas 等的一部分。`
 
-### 示例:读取一个文本文件并且显示所有的内容
+### 示例:读取一个文本文件并且显示所有的内容 [	](javascript_info_20200609045144105)
 ```js
 <input type="file" onchange="readFile(this)">
 <script>
