@@ -4545,7 +4545,7 @@ ball.onmousedown = function (event) { // (1) 启动处理
 | `input`          | {{c1:: 文本输入的每次更改。}} | {{c1:: 立即触发，与 `change` 不同。}}                        |
 | `cut/copy/paste` | {{c1:: 剪贴/拷贝/粘贴行为。}} | {{c1:: 行为可以被阻止。`event.clipboardData` 属性可以用于读/写剪贴板。}} |
 ### submit 和 click 的关系 [	](javascript_info_20200608063412714)
-+ {{c1:: 在输入框中使用 Enter 发送表单时，会在 <input type="submit"> 上触发一次 click 事件。 }}
++ {{c1:: 在输入框中使用 Enter 发送表单时，会在 `<input type="submit"> `上触发一次 click 事件。 }}
 
 ### 手动将表单提交到服务器 [	](javascript_info_20200608063412715)
 
@@ -4565,15 +4565,15 @@ ball.onmousedown = function (event) { // (1) 启动处理
 
 ### HTML 页面的生命周期包含三个重要事件： [	](javascript_info_20200608063412716)
 
-- `DOMContentLoaded` 事件:{{c1:: DOM 已经就绪，因此处理程序可以查找 DOM 节点，并初始化接口。}}
-- `load` 事件:{{c1:: 外部资源已加载完成，样式已被应用，图片大小也已知了。}}
-- `beforeunload` 事件:{{c1:: 用户正在离开：我们可以检查用户是否保存了更改，并询问他是否真的要离开。}}
-- `unload` 事件:{{c1:: 用户几乎已经离开了，但是我们仍然可以启动一些操作，例如发送统计数据。}}
+- `DOMContentLoaded` 事件:{{c1:: 发生在document上，DOM 已经就绪，因此处理程序可以查找 DOM 节点，并初始化接口。}}
+- `load` 事件:{{c1:: window上，外部资源已加载完成，样式已被应用，图片大小也已知了。}}
+- `beforeunload` 事件:{{c1::window上，用户正在离开：我们可以检查用户是否保存了更改，并询问他是否真的要离开。}}
+- `unload` 事件:{{c1::window上，用户几乎已经离开了，但是我们仍然可以启动一些操作，例如发送统计数据。}}
 
 ### window.onbeforeunload [	](javascript_info_20200608063412717)
 
 + 下面代码的输出是什么？
-  ```javascript
+  ```html
     <script>
       log('initial readyState:' + document.readyState);
 
@@ -4776,7 +4776,7 @@ From <input id="from" disabled> – To <input id="to" disabled>
    //{{c1::
     let selection = document.getSelection();
     // 直接：
-    selection.setBaseAndExtent(...from...to...);
+    selection.setBaseAndExtent(anchorNode,anchorOffset,focusNode,focusOffset)
     // 或者我们可以创建一个范围并：
     selection.removeAllRanges();
     selection.addRange(range);
@@ -4802,7 +4802,8 @@ alert("code");
 
 ### 事件循环图示 [	](javascript_info_20200608063412735)
 + 顺序是从上到下，即：首先是脚本，然后是微任务，渲染等
-{{c1:: ![image-20200608160453621](javascript_info.assets\image-20200608160453621.png) }}
++ 示意图：
+  {{c1:: ![image-20200608160453621](javascript_info.assets\image-20200608160453621.png) }}
 
 ## Frame 和 window [	](javascript_info_20200609045144092)
 

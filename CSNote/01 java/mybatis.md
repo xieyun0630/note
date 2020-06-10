@@ -236,28 +236,26 @@ force:{{c1:: 是否强制提交或回滚。}}
 + `EnumOrdinalTypeHandler`:{{c1:: 将枚举值转换成对应序号（整数）,使用需单独配置。}}
 
 ### 在Mybatis中为特定属性指定类型转换器的方式 [	](mybatis_20200520043218592)
-+ 查询的情况
-    + {{c1:: 在`<result>`元素中或者`@Result`注解中指定typeHandler属性
-    ```xml
-        <result column="record_season" property="recordSeason"
-                typeHandler="org.apache.ibatis.type.EnumTypeHandler"/>
-    ```
-    ```java
-        @Result(property = "recordSeason", column = "record_season",
-			typeHandler = EnumTypeHandler.class)
-    ​```
++ ResultSet转对象的情况
+    + {{c1:: 在`<result>`元素指定typeHandler属性
+        ```xml
+            <result column="record_season" property="recordSeason"
+                    typeHandler="org.apache.ibatis.type.EnumTypeHandler"/>
+        ```
+    + 或者`@Result`注解中指定typeHandler属性
+        ```java
+            @Result(property = "recordSeason", column = "record_season",
+                typeHandler = EnumTypeHandler.class)
+        ​```
     }}
-    ```
-+ 插入的情况:
++ 对象转ResultSet的情况:
     + {{c1:: 在#{}中指定typeHandler属性:
     ```sql
-	    insert into news_inf values
-		(null, #{title}, #{content}, #{happenSeason}, #{recordSeason,
-    	typeHandler=org.apache.ibatis.type.EnumTypeHandler})
-    ​``` }}
-    ​		 
-    
+        insert into news_inf values
+        (null, #{title}, #{content}, #{happenSeason}, #{recordSeason,
+        typeHandler=org.apache.ibatis.type.EnumTypeHandler})
     ```
+    }}
 
 ### 事务管理器 [	](mybatis_20200521095802607)
 
