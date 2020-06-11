@@ -4134,13 +4134,6 @@ alert(example.offsetTop); // 180
 
 ## 事件 [	](javascript_info_20200604111305675)
 
-### 使用事件时，可能会出现的错误 [	](javascript_info_20200525035508062)
-
-+ 函数应该被以 `sayThanks` 的形式进行非配，而不是 {{c1::`sayThanks()`}}。
-+ 使用函数，{{c1:: 而不是字符串}}。
-+ 不要对处理程序使用 {{c1:: `setAttribute`}}。
-+ DOM 属性是{{c1:: 大小写敏感的}}。
-
 ### `addEventListener`添加事件 [	](javascript_info_20200525035508064)
 
 + 语法`element.addEventListener(event, handler[, options]);`
@@ -4634,16 +4627,13 @@ loadScript("/article/script-async-defer/long.js");
 loadScript("/article/script-async-defer/small.js");
 ```
 
-### `defer` 特性 [	](javascript_info_20200608063412721)
-+ `defer` 特性:{{c1:: 告诉浏览器它应该继续处理页面，并“在后台”下载脚本，然后等页面加载完成后，再执行此脚本。}}
-+ `async` 特性:{{c1:: 异步加载脚本，加载完成后立刻执行，不会等待其他脚本与`DOMContentLoaded` 。}}
 
 ### `async特性` 和 `defer特性`区别 [	](javascript_info_20200608063412722)
 `async` 和 `defer` 有一个共同点：{{c1:: 加载这样的脚本都不会阻塞页面的渲染。因此，用户可以立即阅读并了解页面内容。}}
 |         | 顺序                                                         | `DOMContentLoaded`                                           |
 | :------ | :----------------------------------------------------------- | :----------------------------------------------------------- |
-| `async` | {{c1::**加载优先顺序**。脚本在文档中的顺序不重要 —— 先加载完成先执行}} | {{c1::不相关。可能在文档加载完成前加载并执行完毕。如果脚本很小或者来自于缓存，同时文档足够长，就会发生这种情况。}} |
-| `defer` | {{c1::**文档顺序**（它们在文档中的顺序）}}                           | {{c1::在文档加载和解析完成之后（如果需要，则会等待），即在 `DOMContentLoaded` 之前执行。}} |
+| `async` | {{c1::**加载优先顺序**。}} | {{c1::不相关。可能在文档加载完成前加载并执行完毕。如果脚本很小或者来自于缓存，同时文档足够长，就会发生这种情况。}} |
+| `defer` | {{c1::**文档顺序**}}                           | {{c1::在文档加载和解析完成之后（如果需要，则会等待），即在 `DOMContentLoaded` 之前执行。}} |
 
 ### 资源加载：onload，onerror [	](javascript_info_20200608063412723)
 
@@ -4658,8 +4648,10 @@ loadScript("/article/script-async-defer/small.js");
 
 + 语法：
   ```js
-  let observer = new MutationObserver(callback); //回调传入MutationRecord
-  observer.observe(node, config);
+  //{{c1::
+    let observer = new MutationObserver(callback); //回调传入MutationRecord
+    observer.observe(node, config);
+  //}}
   ```
 + config 是一个具有布尔选项的对象，该布尔选项表示“将对哪些更改做出反应”：
     + childList:{{c1:: node 的直接子节点的更改， }}
@@ -4713,7 +4705,7 @@ loadScript("/article/script-async-defer/small.js");
   + rangeCoun：{{c1::  选择中的范围数，除 Firefox 外，其他浏览器最多为 1。}}
 + 要获取整个选择：
   + 作为文本：{{c1:: 只需调用 document.getSelection().toString()。}}
-  + 作为 DOM 节点：{{c1:: 获取底层的（underlying）范围，并调用它们的 cloneContents() 方法（如果我们不支持 Firefox 多选的话，则仅取第一个范围）。}}
+  + 作为 DOM 节点：{{c1:: `selection.getRangeAt(i).cloneContents()`（如果我们不支持 Firefox 多选的话，则仅取第一个范围）。}}
 
 ### 选择事件 [	](javascript_info_20200608063412727)
 + elem.onselectstart：{{c1:: 当选择从 elem 上开始时，例如，用户按下鼠标键并开始移动鼠标。}}
@@ -4815,25 +4807,25 @@ alert("code");
 + 要关闭弹窗：:{{c1:: 使用 close() 调用。 }}
 + 关闭之后:{{c1:: ，window.closed 为 true。 }}
 
-### Iframe：错误文档陷阱 [	](javascript_info_20200608063412737)
-
-我们可以尝试通过在 `setInterval` 中进行检查，以更早地捕获该时刻：
-```javascript
-<iframe src="/" id="iframe"></iframe>
-<script>
-// 解决方案代码如下：
-//{{c1::
-  let oldDoc = iframe.contentDocument;
-  // 每 100ms 检查一次文档是否为新文档
-  let timer = setInterval(() => {
-    let newDoc = iframe.contentDocument;
-    if (newDoc == oldDoc) return;
-    alert("New document is here!");
-    clearInterval(timer); // 取消 setInterval，不再需要它做任何事儿
-  }, 100);
-//}}
-</script>
-```
+### Iframe：错误文档陷阱（实践） [	](javascript_info_20200608063412737)
++ 含义：{{c1:: 在创建 iframe 后，iframe 会立即就拥有了一个文档。但是该文档不同于加载到其中的文档！ }}
++ 解决方案：利用 `setInterval` 定时检查新文档是否加载
+  ```html
+  <iframe src="/" id="iframe"></iframe>
+  <script>
+  // 解决方案代码如下：
+  //{{c1::
+    let oldDoc = iframe.contentDocument;
+    // 每 100ms 检查一次文档是否为新文档
+    let timer = setInterval(() => {
+      let newDoc = iframe.contentDocument;
+      if (newDoc == oldDoc) return;
+      alert("New document is here!");
+      clearInterval(timer); // 取消 setInterval，不再需要它做任何事儿
+    }, 100);
+  //}}
+  </script>
+  ```
 
 ### 集合：window.frames [	](javascript_info_20200608063412738)
 + 通过索引获取：window.frames[0]：{{c1:: 文档中的第一个 iframe 的 window 对象。 }}
@@ -4852,34 +4844,40 @@ alert("code");
   - `window.frames`:{{c1::一个嵌套的 window 对象的集合，}}
   - `window.parent`，`window.top`:{{c1:: 是对父窗口和顶级窗口的引用，}}
   - `iframe.contentWindow`:{{c1:: `<iframe>` 标签内的 window 对象。}}
-+ 否则，只能进行以下操作：
++ 如果几个窗口的源不相同，只能进行以下操作：
   1. {{c1:: 更改另一个窗口的 `location`（只能写入）。 }}
   2. {{c1:: 向其发送一条消息。 }}
-例外情况：
-- 对于二级域相同的窗口：`a.site.com` 和 `b.site.com`。通过在这些窗口中均设置 {{c1:: `document.domain='site.com'` }}，可以使它们处于“同源”状态。
-- 如果一个 iframe 具有 `sandbox` 特性（attribute），则{{c1:: 它会被强制处于“非同源”状态，除非在其特性值中指定了 `allow-same-origin`。这可用于在同一网站的 iframe 中运行不受信任的代码。}}
++ 例外情况：
+  1. 对于二级域相同的窗口：`a.site.com` 和 `b.site.com`。通过在这些窗口中均设置 {{c1:: `document.domain='site.com'` }}，可以使它们处于“同源”状态。
+  2. 如果一个 iframe 具有 `sandbox` 特性（attribute），则{{c1:: 它会被强制处于“非同源”状态，除非在其特性值中指定了 `allow-same-origin`。这可用于在同一网站的 iframe 中运行不受信任的代码。}}
 
-### `postMessage` 接口允许两个具有任何源的窗口之间进行通信： [	](javascript_info_20200608063412741)
-1. 发送方调用 {{c1:: `targetWin.postMessage(data, targetOrigin)`。}}
-2. 如果 `targetOrigin` 不是 `'*'`，那么浏览器会检查窗口 `targetWin` 是否具有源 `targetOrigin`。
-3. 如果它具有，{{c1:: `targetWin` 会触发具有特殊的属性的 `message` 事件：}}
+### `targetWindow.postMessage(data,targetOrigin)` 方法允许两个具有任何源的窗口之间进行通信： [	](javascript_info_20200608063412741)
+
+1. 发送方调用 {{c1:: `targetWindow.postMessage(data, targetOrigin)`。}}
+  + data：{{c1:: 要发送的数据对象，IE只支持字符串 }}
+  + targetOrigin：{{c1:: 指定目标窗口的源，可以是`URL`与`*`}}
+    + `URL`： {{c1:: 检查目标窗口的源是否是来自该URL的文档 }}
+    + `*`： {{c1:: 不希望做URL检查时可以设置为`*` }}
+2. 接受方收到消息会触发`window`对象的`message`事件，该事件带有特殊属性如下：
    - `origin`:{{c1:: 发送方窗口的源（比如 `http://my.site.com`）。}}
    - `source`:{{c1:: 发送方窗口的引用。}}
-   - `data`:{{c1:: 数据，可以是任何对象。但是 IE 浏览器只支持字符串，因此我们需要对复杂的对象调用 `JSON.stringify`方法进行处理，以支持该浏览器。}}
-+我们应该使用 `addEventListener` 来在目标窗口中设置 `message` 事件的处理程序。
+   - `data`:{{c1:: 收到的数据，可以是任何对象。但是 IE 浏览器只支持字符串，因此最好调用 `JSON.stringify`方法进行处理}}
 
 ## 二进制数据，文件 [	](javascript_info_20200609045144093)
 
 ### 例子：使用`Uint32Array`遍历一个`ArrayBuffer` [	](javascript_info_20200609045144094)
 
 ```javascript
+
 let buffer = new ArrayBuffer(16); // 创建一个长度为 16 的 buffer
+//{{c1::
 let view = new Uint32Array(buffer); // 将 buffer 视为一个 32 位整数的序列
 alert(Uint32Array.BYTES_PER_ELEMENT); // 每个整数 4 个字节
 alert(view.length); // 4，它存储了 4 个整数
 alert(view.byteLength); // 16，字节中的大小
 // 让我们写入一个值
 view[0] = 123456;
+//}}
 // 遍历值
 for(let num of view) {
   alert(num); // 123456，然后 0，0，0（一共 4 个值）
@@ -4940,22 +4938,39 @@ for(let num of view) {
     //}}
   ```
 
-
 ### Blob [	](javascript_info_20200609045144100)
+
++ 全称：Binary Large Object 直译为二进制大对象
 + 构造函数的语法:{{c1:: `new Blob(blobParts, options);` }}
-- `blobParts`:{{c1::  `Blob`/`BufferSource`/`String` 类型的值的**数组**。}}
-- `options`可选对象：
-  - `type`:{{c1:: `Blob` 类型，通常是 MIME 类型，例如 `image/png`，}}
-  - `endings`:{{c1:: 是否转换换行符，使 `Blob` 对应于当前操作系统的换行符（`\r\n` 或 `\n`）。默认为`"transparent"`（啥也不做），不过也可以是 `"native"`（转换）。}}
-+ slice 方法：blob.slice([byteStart], [byteEnd], [contentType]);
++ `blobParts`:{{c1::  `Blob`/`BufferSource`/`String` 类型的值的**数组**。}}
++ `options`可选对象：
+  + `type`:{{c1::  用来表示文件类型，例如 'text/json' 代表一个JSON文件，`image/png`为图片文件}}
+  + `endings`:{{c1:: 是否转换换行符，使 `Blob` 对应于当前操作系统的换行符（`\r\n` 或 `\n`）。默认为`"transparent"`（啥也不做），不过也可以是 `"native"`（转换）。}}
++ `blob.slice([start[, end[, contentType]]])`方法:
   1. `byteStart`:{{c1:: 起始字节，默认为 0。}}
   2. `byteEnd`:{{c1:: 最后一个字节（专有，默认为最后）。}}
   3. `contentType`:{{c1:: 新 blob 的 `type`，默认与源 blob 相同。}}
-+ Blob 对象是不可变对象
++ 生成Blob链接的两个方法：
+  + `URL.createObjectURL(blob);`:{{c1:: 如果传入的参数是blob对象的话，则可以生成一个blob链接}}
+  + `URL.revokeObjectURL(url);`:{{c1:: 静态方法用来释放一个之前通过调用 URL.createObjectURL() 创建的已经存在的 URL 对象。}}
 
-### Blob 和低级别的二进制数据类型之间进行转换： [	](javascript_info_20200609045144101)
-+ new Blob(...) 构造函数从一个类型化数组（typed array）创建 Blob。
-+ FileReader 从 Blob 中取回 ArrayBuffer，然后在其上创建一个视图（view），用于低级别的二进制处理。
+### 使用Blob实现文件下载，以及销毁URL例子（实践） [	](javascript_info_20200611040825987)
+
+```html
+    <a id="id" download="a.txt">点我</a>
+    <button id="btn">销毁</button>
+    <script>
+        // {{c1::
+        let blob = new Blob(['hello world'],{type:'text/plain'})
+        let url = URL.createObjectURL(blob)
+        document.getElementById('id').href = url
+        document.getElementById('btn').onclick = function () {
+          URL.revokeObjectURL(url)
+        }
+        // }}
+    </script>
+```
+
 
 ### File对象 [	](javascript_info_20200609045144102)
 + 拓展自Blob，有一个构造器：`new File(fileParts, fileName, [options])`
@@ -4965,7 +4980,7 @@ for(let num of view) {
     - `lastModified`:{{c1:: 最后一次修改的时间戳（整数日期）。}}
 + 除了 Blob 方法和属性外，File 对象还有 `name` 和 `lastModified` 属性
 
-### 例子：从 `<input type="file"> `中获取 File 对象 [	](javascript_info_20200609045144103)
+### 例子：从 `<input type="file"> `中获取 `File对象` [	](javascript_info_20200609045144103)
 ```js
 <input type="file" onchange="showFile(this)">
 <script>
@@ -4980,7 +4995,7 @@ function showFile(input) {
 ```
 
 ## FileReader对象 [	](javascript_info_20200609045144104)
-+ 作用：唯一目的是从 Blob（因此也从 File）对象中读取数据。
++ 作用：{{c1:: 唯一目的是从 Blob（因此也从 File）对象中读取数据。 }}
   + readAsArrayBuffer(blob)：{{c1:: 将数据读取为二进制格式的 ArrayBuffer。 }}
   + readAsText(blob, [encoding])：{{c1:: 将数据读取为给定编码（默认为 utf-8 编码）的文本字符串。 }}
   + readAsDataURL(blob)：{{c1:: 读取二进制数据，并将其编码为 base64 的 data url。 }}
@@ -4995,7 +5010,27 @@ function showFile(input) {
 + 读取完成后，我们可以通过以下方式访问读取结果：
   + `reader.result`:{{c1:: 是结果（如果成功）}}
   + `reader.error`:{{c1:: 是 error（如果失败）。}}
-+ URL.createObjectURL(file) :`创建一个短的 url，并将其赋给 <a> 或 <img>。这样，文件便可以下载文件或者将其呈现为图像，作为 canvas 等的一部分。`
+
+### FileReader读取文件示例 [	](javascript_info_20200611040825989)
+
+```html
+<input type="file" onchange="readFile(this)">
+<script>
+function readFile(input) {
+  //{{c1::
+  let file = input.files[0];
+  let reader = new FileReader();
+  reader.readAsText(file);
+  reader.onload = function() {
+    console.log(reader.result);
+  };
+  reader.onerror = function() {
+    console.log(reader.error);
+  };
+  //}}
+}
+</script>
+```
 
 ### 示例:读取一个文本文件并且显示所有的内容 [	](javascript_info_20200609045144105)
 ```js
@@ -5103,3 +5138,4 @@ let response = await fetch('/article/fetch/post/user', {
 let result = await response.json();
 alert(result.message);
 ```
+
