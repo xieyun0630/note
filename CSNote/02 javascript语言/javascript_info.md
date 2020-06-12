@@ -6,7 +6,7 @@
 
   询问一个问题，并返回访问者输入的内容，如果他按下「取消」则返回 `null`。
 
--  {{c1::  confirm(question)}}
+-  {{c1::  confirm(question)}}7
 
   提出一个问题，并建议在确定和取消之间进行选择。该选项以 `true/false` 形式返回。
 
@@ -5059,6 +5059,7 @@ function readFile(input) {
 ## 网络请求 [	](javascript_info_20200604111305690)
 
 ### 典型的 fetch 请求由两个 await 调用组成： [	](javascript_info_20200604111305691)
+
 ```js
 //{{c1::
 let response = await fetch(url, options); // 解析 response header
@@ -5075,11 +5076,13 @@ fetch(url, options)
 ```
 
 ### fetch 请求响应的属性： [	](javascript_info_20200604111305692)
+
 + response.status:{{c1:: response 的 HTTP 状态码， }}
 + response.ok:{{c1:: HTTP 状态码为 200-299，则为 true。 }}
 + response.headers:{{c1:: 类似于 Map 的带有 HTTP header 的对象。 }}
 
 ### 获取fetch请求返回的response body 的方法： [	](javascript_info_20200604111305693)
+
 1. `response.text()`：{{c1:: 读取 response，并以文本形式返回 response，}}
 2. `response.json()`：{{c1:: 将 response 解析为 JSON 对象形式，}}
 3. `response.formData()`：{{c1:: 以 `FormData` 对象（form/multipart 编码，参见下一章）的形式返回 response，}}
@@ -5088,6 +5091,7 @@ fetch(url, options)
 + 注意：{{c1:: 同一个response执行一次以上body的方法 }}
 
 ### 获取Response header [	](javascript_info_20200604111305694)
+
 ```js
 let response = await fetch('https://api.github.com/repos/javascript-tutorial/en.javascript.info/commits');
 // 获取一个 header
@@ -5103,6 +5107,7 @@ for (let [key, value] of response.headers) {
 ```
 
 ### fetch设置 request header [	](javascript_info_20200604111305695)
+
 ```js
 // {{c1::
   let response = fetch(url, {
@@ -5114,6 +5119,7 @@ for (let [key, value] of response.headers) {
 ```
 
 ### fetch 选项 [	](javascript_info_20200604111305696)
+
 + `method`：{{c1:: HTTP 方法，}}
 + `headers`：{{c1:: 具有 request header 的对象（不是所有 header 都是被允许的）}}
 + `body`：{{c1:: 要以` string，FormData，BufferSource，Blob` 或 `UrlSearchParams `对象的形式发送的数据（request body）。}}
@@ -5139,3 +5145,377 @@ let result = await response.json();
 alert(result.message);
 ```
 
+### FormData [	](javascript_info_20200612065930959)
+
++ 作用：用于捕获 HTML 表单，并使用 fetch 或其他网络方法提交。
++ 构造函数：`let formData = new FormData([form]);`
++ FormData 方法
+  + `formData.append(name, value)`:{{c1:: 添加具有给定 name 和 value 的表单字段， }}
+  + `formData.append(name, blob, fileName)`:{{c1:: 添加一个字段，就像它是 <input type="file">，第三个参数 + fileName  }}设置文件名（而不是表单字段名），因为它是用户文件系统中文件的名称，
+  + `formData.delete(name)`:{{c1:: 移除带有给定 name 的字段， }}
+  + `formData.get(name)`:{{c1:: 获取带有给定 name 的字段值， }}
+  + `formData.has(name)`:{{c1:: 如果存在带有给定 name 的字段，则返回 true，否则返回 false。 }}
+  + `formData.set(name, value)`:{{c1:: 设值 }}
+  + `formData.set(name, blob, fileName)`:{{c1:: 设置文件到表单 }}
+注意点:
+  1. 迭代：{{c1:: 可以使用 for..of 循环迭代 formData}}
+  2. 设值：{{c1:: set 方法会移除具有相同名称（name）的字段，而 append 不会。}}
+  3. 文件：{{c1:: 要发送文件，需要使用三个参数的语法，最后一个参数是文件名，一般是通过 <input type="file"> 从用户文件系统中获取的。}}
+
+ ### 使用fetch发送一个简单的FormData [	](javascript_info_20200612065930961)
+
+ ```js
+    //{{c1::
+    let response = await fetch('/article/formdata/post/user', {
+      method: 'POST',
+      body: new FormData(form)
+    });
+    //}}
+ ```
+
+
+### Fetch实例：从response的ReadableStream读取2进制内容，并且转换成字符串。 [	](javascript_info_20200612065930962)
+```js
+// Step 1：启动 fetch，并获得一个 reader
+//{{c1::
+let response = await fetch('https://api.github.com/repos/javascript-tutorial/en.javascript.info/commits?per_page=100');
+const reader = response.body.getReader();
+//}}
+
+// Step 2：获得总长度（length）
+//{{c1::
+const contentLength = +response.headers.get('Content-Length');
+//}}
+
+// Step 3：读取数据
+//{{c1::
+let receivedLength = 0; // 当前接收到了这么多字节
+let chunks = []; // 接收到的二进制块的数组（包括 body）
+while(true) {
+  const {done, value} = await reader.read();
+
+  if (done) {
+    break;
+  }
+
+  chunks.push(value);
+  receivedLength += value.length;
+
+  console.log(`Received ${receivedLength} of ${contentLength}`)
+}
+//}}
+
+// Step 4：将块连接到单个 Uint8Array
+//{{c1::
+let chunksAll = new Uint8Array(receivedLength); // (4.1)
+let position = 0;
+for(let chunk of chunks) {
+  chunksAll.set(chunk, position); // (4.2)
+  position += chunk.length;
+}
+//}}
+
+// Step 5：解码成字符串
+//{{c1::
+let result = new TextDecoder("utf-8").decode(chunksAll);
+//}}
+
+// 我们完成啦！
+let commits = JSON.parse(result);
+alert(commits[0].author.login);
+```
+
+### Fetch：中止（Abort） [	](javascript_info_20200612065930963)
+```js
+  let urls = [...];
+  // 1.创建控制器
+  //{{c1::
+  let controller = new AbortController();
+  //}}
+  let ourJob = new Promise((resolve, reject) => { // 我们的任务
+    ...
+    // 2.监听终止对象
+    //{{c1::
+    controller.signal.addEventListener('abort', reject);
+    //}}
+  });
+  // 设置批量终止fetch
+  // {{c1::
+  let fetchJobs = urls.map(url => fetch(url, { // fetches
+    signal: controller.signal
+  }));
+  //}}
+
+  // 等待完成我们的任务和所有 fetch
+  let results = await Promise.all([...fetchJobs, ourJob]);
+  // 如果 controller.abort() 被从其他地方调用，
+  // 它将中止所有 fetch 和 ourJob
+```
+
+### Fetch：跨源请求 [	](javascript_info_20200612065930964)
+
++ 这里的核心概念是 源（origin）：{{c1:: 域（domain）/端口（port）/协议（protocol）的组合。}}
++ 跨源请求：{{c1::  那些发送到其他域（即使是子域）、协议或端口的请求 —— 需要来自远程端的特殊 header。}}
++ 这个策略被称为 “CORS”：{{c1:: 跨源资源共享（Cross-Origin Resource Sharing）。 }}
+
+
+### 跨源请求:简单请求 必须满足下列条件： [	](javascript_info_20200612065930965)
+
++ 方法：{{c1:: GET，POST 或 HEAD。 }}
++ header —— 我们仅能设置：
+  1. {{c1:: Accept}}
+  2. {{c1:: Accept-Language}}
+  3. {{c1:: Content-Language}}
+  4. {{c1:: Content-Type 的值为 application/x-www-form-urlencoded，multipart/form-data 或 text/plain。}}
+  
+
+### Fetch：两种跨源请求：“简单”请求和其他请求 [	](javascript_info_20200612065930966)
+
++ 对于简单请求：
+  - → 浏览器发送带有源的 `Origin` header。
+  - ← 对于没有凭据的请求（默认不发送），服务器应该设置：
+    1.{{c1:: `Access-Control-Allow-Origin` 为 `*` 或与 `Origin` 的值相同}}
+  - ← 对于具有凭据的请求，服务器应该设置：
+    1.{{c1:: `Access-Control-Allow-Origin` 值与 `Origin` 的相同}}
+    2.{{c1:: `Access-Control-Allow-Credentials` 为 `true`}}
++ 要授予 JavaScript 访问任何 response header 的权限:{{c1::服务器应该在 header Access-Control-Expose-Headers 中列出允许的那些 header}}
++ 对于非简单请求，会在请求之前发出初步“预检”请求：
+  - → 浏览器将具有以下 header 的{{c1:: `OPTIONS` }}请求发送到相同的 URL：
+    1.{{c1:: `Access-Control-Request-Method` 有请求方法。}}
+    2.{{c1:: `Access-Control-Request-Headers` 以逗号分隔的“非简单” header 列表。}}
+  - ← 服务器应该响应状态码为 200 和 header：
+    1.{{c1:: `Access-Control-Allow-Methods` 带有允许的方法的列表，}}
+    2.{{c1:: `Access-Control-Allow-Headers` 带有允许的 header 的列表，}}
+    3.{{c1:: `Access-Control-Max-Age` 带有指定缓存权限的秒数。}}
+  - 然后，发出实际请求，应用先前的“简单”方案。
+
+### `fetch()`方法的其他选项:`referrer`与`referrerPolicy` [	](javascript_info_20200612065930967)
+
++ `referrer`：{{c1:: 默认发出请求的页面的 url，可以设置为，或者当前域内的另一个url.}}
++ `referrerPolicy`:决定referrer中发送的内容规则，如下表:
+  | 值                                           | 同源       | 跨源       | HTTPS→HTTP |
+  | -------------------------------------------- | ---------- | ---------- | ---------- |
+  | `no-referrer`                              | {{c1::-}}    | {{c1::-         }} |{{c1:: -        }}  |
+  | `no-referrer-when-downgrade 或 （默认）` | {{c1::完整的 url}} | {{c1::完整的 url }}| {{c1::-        }}  |
+  | `origin`                                   | {{c1::仅域}}       | {{c1::仅域    }}   | {{c1::仅域    }}   |
+  | `origin-when-cross-origin`                 | {{c1::完整的 url}} | {{c1::仅域    }}   | {{c1::仅域     }}  |
+  | `same-origin`                              | {{c1::完整的 url}} | {{c1::-       }}   | {{c1::-        }}  |
+  | `strict-origin`                            | {{c1::仅域  }}     | {{c1::仅域    }}   | {{c1::-        }}  |
+  | `strict-origin-when-cross-origin`          | {{c1::完整的 url }}| {{c1::仅域    }}   | {{c1::-        }}  |
+  | `unsafe-url`                               | {{c1::完整的 url }}| {{c1::完整的 url }}| {{c1::完整的 url}} |
+
+
+### `fetch()`方法的其他选项:`mode`与`credentials` [	](javascript_info_20200612065930968)
+
++ `mode` :{{c1:: 是一种安全措施，可以防止偶发的跨源请求：}}
+  1. "cors":{{c1:: 默认值，允许跨源请求，如 Fetch：跨源请求 一章所述，}}
+  2. "same-origin":{{c1:: 禁止跨源请求，}}
+  3. "no-cors":{{c1:: 只允许简单的跨源请求。}}
++ `credentials` : {{指定 fetch 是否应该随请求发送 cookie 和 HTTP-Authorization header。}}
+  + "same-origin":{{c1:: 默认值，对于跨源请求不发送，}}
+  + "include":{{c1:: 总是发送，需要来自跨源服务器的 Accept-Control-Allow-Credentials，才能使 JavaScript 能够访问响应，详细内容在 Fetch：跨源请求 一章有详细介绍，}}
+  + "omit":{{c1:: 不发送，即使对于同源请求。}}
+
+### `fetch()`方法的其他选项 [	](javascript_info_20200612065930969)
+
++ `cache`：{{c1:: 可以忽略 HTTP 缓存或者对其用法进行微调 }}
++ `redirect`:{{c1:: 遵循 HTTP 重定向的策略 }}
++ `integrity`:{{c1:: 检查响应是否与已知的预先校验和相匹配。 }}
++ `keepalive`:{{c1:: keepalive 选项告诉浏览器，即使在离开页面后，也要在后台执行请求。 }}
+
+### URL 对象 [	](javascript_info_20200612065930970)
++ 作用：所有使用url字符串的地方几乎都可以使用URL对象
++ 构造方法：`new URL(url, [base])`
+  + url:{{c1:: 完整的 URL，或者仅路径（如果设置了 base），}}
+  + base:{{c1:: 可选的 base URL：如果设置了此参数，且参数 url 只有路径，则会根据这个 base 生成 URL。}}
++ 常用属性：href,origin,host,protocol,hostname,port,pathname,search,hash.
++ 属性示意图：
+  {{c1:: ![image-20200612162953117](javascript_info.assets/image-20200612162953117.png) }}
+
+### url.searchParams [	](javascript_info_20200612065930971)
+
++ 作用：URLSearchParams 类型的对象，为搜索参数提供简便方法。
+  + **`append(name, value)`** —— 按照 `name` 添加参数，
+  + **`delete(name)`** —— 按照 `name` 移除参数，
+  + **`get(name)`** —— 按照 `name` 获取参数，
+  + **`getAll(name)`** —— 获取相同 `name` 的所有参数（这是可行的，例如 `?user=John&user=Pete`），
+  + **`has(name)`** —— 按照 `name` 检查参数是否存在，
+  + **`set(name, value)`** —— set/replace 参数，
+  + **`sort()`** —— 按 name 对参数进行排序，很少使用，
+  + ……并且它是可迭代的，类似于 `Map`。
+  + URL会将非拉丁字母与空格自动编码对URL字符串。
++ 包含空格和标点符号的参数的示例：
+  ```js
+    //{{c1::
+    url.searchParams.set('q', 'test me!'); // 添加带有一个空格和一个 ! 的参数
+    alert(url); // https://google.com/search?q=test+me%21
+    url.searchParams.set('tbs', 'qdr:y'); // 添加带有一个冒号 : 的参数
+    // 参数会被自动编码
+    alert(url); // https://google.com/search?q=test+me%21&tbs=qdr%3Ay
+    //}}
+  ```
+
+### URL编码（encoding） [	](javascript_info_20200612065930972)
+
++ 下面是用于编码/解码 URL 的内建函数：
+  + encodeURI —— 编码整个 URL。
+  + decodeURI —— 解码为编码前的状态。
+  + encodeURIComponent —— 编码 URL 组件，例如搜索参数，或者 hash，或者 pathname。
+  + decodeURIComponent —— 解码为编码前的状态。
++ 2类方法的区别：
+    encodeURI 仅编码 URL 中完全禁止的字符。
+    encodeURIComponent 也编码这类字符，此外，还编码 #，$，&，+，,，/，:，;，=，? 和 @ 字符。
+
+
+### 使用XMLHttpRequest步骤 [	](javascript_info_20200612065930973)
+
+1. 创建 XMLHttpRequest：`let xhr = new XMLHttpRequest();`
+2. 初始化：`xhr.open(method, URL, [async, user, password])`
+  + `async`如果为`false`:{{c1:: JavaScript 执行在 send() 处暂停，并在收到响应后恢复执行。 }}
+3. 发送请求:`xhr.send([body])`
+4. 监听 xhr 事件以获取响应。
+  + load:{{c1:: 当请求完成（即使 HTTP 状态为 400 或 500 等），并且响应已完全下载。 }}
+  + error:{{c1:: 当无法发出请求，例如网络中断或者无效的 URL。 }}
+  + progress:{{c1:: 在下载响应期间定期触发，报告已经下载了多少。 }}
++ 完整例子如下：{{c1::
+  ```js
+      // 1. 创建一个 new XMLHttpRequest 对象
+      let xhr = new XMLHttpRequest();
+      // 2. 配置它：从 URL /article/.../load GET-request
+      xhr.open('GET', '/article/xmlhttprequest/example/load');
+      // 3. 通过网络发送请求
+      xhr.send();
+      // 4. 当接收到响应后，将调用此函数
+      xhr.onload = function() {
+        if (xhr.status != 200) { // 分析响应的 HTTP 状态
+          alert(`Error ${xhr.status}: ${xhr.statusText}`); // 例如 404: Not Found
+        } else { // 显示结果
+          alert(`Done, got ${xhr.response.length} bytes`); // response 是服务器响应
+        }
+      };
+      xhr.onprogress = function(event) {
+        if (event.lengthComputable) {
+          alert(`Received ${event.loaded} of ${event.total} bytes`);
+        } else {
+          alert(`Received ${event.loaded} bytes`); // 没有 Content-Length
+        }
+      };
+      xhr.onerror = function() {
+        alert("Request failed");
+      };
+  ```
+}}
+
+### XMLHttpRequest:一旦服务器有了响应，我们可以在以下 xhr 属性中接收结果： [	](javascript_info_20200612065930974)
+
++ status:{{c1::HTTP 状态码（一个数字）：200，404，403 等，如果出现非 HTTP 错误，则为 0。}}
++ statusText:{{c1::HTTP 状态消息（一个字符串）：状态码为 200 对应于 OK，404 对应于 Not Found，403 对应于 Forbidden。}}
++ response（旧脚本可能用的是 responseText）:{{c1::服务器 response body。}}
++ 可以使用相应的属性指定超时:
+  1. {{c1::`xhr.timeout = 10000;` }}
+     - 作用：{{c1:: 如果在给定时间内请求没有成功执行，请求就会被取消，并且触发 timeout 事件。 }}
+
+### XMLHttpRequest结合URL保证正确的编码例子 [	](javascript_info_20200612065930975)
+
+```javascript
+let url = new URL('https://google.com/search');
+url.searchParams.set('q', 'test me!');
+// 参数 'q' 被编码
+xhr.open('GET', url); // https://google.com/search?q=test+me%21
+```
+
+### 响应类型 [	](javascript_info_20200612065930976)
+
++ 我们可以使用 `xhr.responseType` 属性来设置响应格式：
+- `""`（默认）:{{c1:: 响应格式为字符串，}}
+- `"text"`:{{c1::  响应格式为字符串，}}
+- `"arraybuffer"`:{{c1::  响应格式为 `ArrayBuffer`}}
+- `"blob"`:{{c1::  响应格式为 `Blob`}}
+- `"document"`:{{c1::  响应格式为 XML document（可以使用 XPath 和其他 XML 方法），}}
+- `"json"`:{{c1::  响应格式为 JSON（自动解析）。}}
++ 例如，我们以 JSON 格式获取响应：
+  ```js
+    let xhr = new XMLHttpRequest();
+    xhr.open('GET', '/article/xmlhttprequest/example/json');
+    xhr.responseType = 'json';
+    xhr.send();
+    // 响应为 {"message": "Hello, world!"}
+    xhr.onload = function() {
+      let responseObj = xhr.response;
+      alert(responseObj.message); // Hello, world!
+    };
+  ```
+
+### xhr.readyState [	](javascript_info_20200612065930977)
+
++ 可以通过 xhr.readyState 来了解当前状态
+  + `UNSENT = 0;`:{{c1:: // 初始状态}}
+  + `OPENED = 1;`:{{c1:: // open 被调用}}
+  + `HEADERS_RECEIVED = 2;`:{{c1:: // 接收到 response header}}
+  + `LOADING = 3;`:{{c1:: // 响应正在被加载（接收到一个数据包）}}
+  + `DONE = 4;`:{{c1:: // 请求完成}}
++ 可以使用 readystatechange 事件来跟踪,如今，它已被 load/error/progress 事件处理程序所替代。
+
+### xhr.abort()方法 [	](javascript_info_20200612065930978)
+
++ 作用：
+  1.{{c1:: 终止请求 }}
+  2.{{c1:: 触发 abort 事件。 }}
+  3.{{c1:: 且 xhr.status 变为 0 }}
+### xhr操作header的方法 [	](javascript_info_20200612065930979)
+
++ `xhr.setRequestHeader('Content-Type', 'application/json');`
+  + 注意：{{c1:: 一旦设置了 header，就无法撤销了。 }}
++ `xhr.getResponseHeader('Content-Type');`
++ `getAllResponseHeaders();`
+  + 注意：{{c1:: header 之间的换行符始终为 "\r\n" }}
+
+### 使用xmr发送POST请求 [	](javascript_info_20200612065930980)
+
++ 使用内建的`FormData`对象发送请求
+  ```js
+      \\ {{c1::
+      let xhr = new XMLHttpRequest();
+      xhr.open("POST", "/article/xmlhttprequest/post/user");
+      xhr.send(formData);
+      \\ }}
+  ```
++ 使用`JSON`字符串发送请求
+  ```js
+    \\ {{c1::
+    xhr.open("POST", '/submit')
+    xhr.setRequestHeader('Content-type', 'application/json; charset=utf-8');
+    xhr.send(jsonString);
+    \\ }}
+  ```
+
+### 上传进度 [	](javascript_info_20200612065930981)
+
++ xhr.upload:{{c1:: 专门用于跟踪上传事件 }}
+  + loadstart：{{c1:: 上传开始。}}
+  + progress：{{c1:: 上传期间定期触发。}}
+  + abort：{{c1:: 上传中止。}}
+  + error：{{c1:: 非 HTTP 错误。}}
+  + load：{{c1:: 上传成功完成。}}
+  + timeout：{{c1:: 上传超时（如果设置了 timeout 属性）。}}
+  + loadend：{{c1:: 上传完成，无论成功还是 error。}}
++  跟踪上传进度例子
+  ```js
+  //{{c1::
+    xhr.upload.onprogress = function(event) {
+      console.log(`Uploaded ${event.loaded} of ${event.total}`);
+    };
+  //}}
+  ```
+
+### xhr的跨源请求设置。 [	](javascript_info_20200612065930982)
+
++ 默认情况下不会将 cookie 和 HTTP 授权发送到其他域。要启用它们，可以将 {{c1:: xhr.withCredentials 设置为 true }}
+```js
+  let xhr = new XMLHttpRequest();
+  //例子
+  //{{c1::
+    xhr.withCredentials = true;
+    xhr.open('POST', 'http://anywhere.com/request');
+  //}}
+```
