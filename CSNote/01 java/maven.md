@@ -25,7 +25,7 @@
 | 元素                 | 意义                                                            |
 | -------------------- | --------------------------------------------------------------- |
 | `<modelVersion>`元素 | {{c1::当前POM模型的版本}}                                       |
-| `<groupId>`元素      | {{c1::定义项目属于哪个组，通常与公司域名关联，建立一个myapp组为 | `com.google.myapp.`}} |
+| `<groupId>`元素      | {{c1::定义项目属于哪个组，通常与公司域名关联，建立一个myapp组为 `com.google.myapp.`}} |
 | `<artifactId>`元素   | {{c1:: 当前项目在组中的唯一ID,通常与模块文件夹名称一致 }}       |
 | `<version>`元素      | {{c1:: 定义项目版本,1.0.SHNAPSHOT,其中SHNAPSHOT代表快照版本 }}  |
 | `<name>`元素         | {{c1::可选的，声明一个对用户友好的项目名称。}}                  |
@@ -1077,7 +1077,7 @@ mvn archetype:generate -B \
 - `<directory>`元素：{{c1:: 指定对应的样例代码的文件夹。}}
   - filtered属性：{{c1:: 是否使用maven属性过滤}}
   - packaged属性：{{c1:: 是否将文件放在包文件夹下}}
-  -`<include>`:{{c1:: 包含该文件夹下指定文件。}}
+  - `<include>`:{{c1:: 包含该文件夹下指定文件。}}
 - `<requiredProperty>`元素：{{c1:: 定义创建Archetype时必须的参数}}
 ```xml
 <?xml version="1.0" encoding="UTF-8"?>

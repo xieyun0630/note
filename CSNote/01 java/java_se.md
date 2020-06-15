@@ -986,7 +986,7 @@ public static void main(String[] args) {
 }
 ```
 
-## wait() 和 sleep() 的区别 [	](java_se_20200604111131330)
+### wait() 和 sleep() 的区别 [	](java_se_20200604111131330)
 
 1. {{c1:: wait() 是 Object 的方法，而 sleep() 是 Thread 的静态方法。}}
 2. {{c1:: wait() 会释放锁，sleep() 不会。}}
@@ -1178,3 +1178,55 @@ public class Account {
 - {{c1:: `SynchronousQueue` }}
 
 {{c1:: ![image-20200604222338200](java_se.assets/image-20200604222338200.png) }}
+
+### 线程组 [	](java_se_20200615060135980)
+
++ 作用：{{c1:: **可以批量管理线程或线程组对象，有效地对线程或线程组对象进行组织**。}}
++ 概念图:
+	{{c1:: ![img](https://images2015.cnblogs.com/blog/801753/201510/801753-20151005180622909-789401754.png)}}
+
+### 线程组的相关API [	](java_se_20200615060135982)
+
++ `Tread`类提供的构造器，设置新创建的线程属于哪个线程组
+  + `Thread(ThreadGroup group, Runnable target)`
+  + `Thread(ThreadGroup group, Runnable target, String name)`
+  + `Thread(ThreadGroup group, String name)`
+  + 参数：
+    + `ThreadGroup group`:{{c1:: 指定线程组}}
+    + `Runnable target`:{{c1:: 线程类}}
+    + `String name`:{{c1:: 线程名称}}
+  + 注意：{{c1:: 线程一旦加入指定线程组后，中途不能改变该线程所属组。  }}
++ `ThreadGroup`类
+  + 构造器
+    `ThreadGroup(String name) `
+    `ThreadGroup(ThreadGroup parent, String name) `
+    + 参数：
+      + ThreadGroup parent：{{c1:: 父线程组 }}
+      + String name：{{c1:: 线程组名称 }}
+  + 方法：
+    + `int activeCount()`：{{c1:: 活动线程的数目 }}
+    + `void interrupt()`：{{c1:: 中断线程组中所有线程 }}
+    + `boolean isDaemon()`：{{c1:: 是否后台线程组 }}
+    + `void setDaemon(boolean daemon)`：{{c1:: 设置为后台线程组 }}
+    + `void setMaxPriority(int pri)`：{{c1:: 设置线程组的最高优先级 }}
+
+### Thread提供了两个方法来自定义（未处理的）异常处理： [	](java_se_20200615060135983)
+
++ `static setDefaultUncaughtExceptionHandler(UncaughtExceptionHandler eh)`:{{c1::  为线程类的所有实例设置默认的异常处理器}}
++ `setUncaughtExceptionHandler(UncaughtExceptionHandler eh)`:{{c1:: 为指定线程实例设置异常处理器}}
++ 自定义异常处理器
+  ```java
+    public class ExHandler
+    {
+      public static void main(String[] args) 
+      {
+        //{{c1::
+        Thread.currentThread().setUncaughtExceptionHandler(
+            (t,e)->{
+                System.out.println(t + " 线程出现了异常：" + e);
+            });
+        int a = 5 / 0;
+        //}}
+      }
+    }
+  ```
