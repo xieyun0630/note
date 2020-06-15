@@ -602,3 +602,97 @@ public class News{
     1. {{c1:: NONE: 不使用自动映射。 }}
     2. {{c1:: PARTIAL：自动映射result定义之外的属性。 }}
     3. {{c1:: FULL：总是自动映射任意属性。 }}
+
+### 基于嵌套select的一对一映射
+```xml
+<!-- {{c1:: -->
+<association property="person" javaType="Person"
+    column="owner_id"
+    select="org.crazyit.app.dao.PersonMapper.getPerson" fetchType="lazy"/>
+<!-- }} -->
+<!-- 复合主键形式 -->
+<!-- {{c1:: -->
+<association property="person" javaType="Person"
+    column="{ownerName=owner_name, ownerAge=owner_age}"
+    select="org.crazyit.app.dao.PersonMapper.getPerson" fetchType="lazy"/>
+<!-- }} -->
+```
+```java
+//{{c1::
+@Result(property = "person", javaType = Person.class,
+    column = "owner_id",
+    one = @One(select = "org.crazyit.app.dao.PersonMapper.getPerson",
+    fetchType = FetchType.LAZY))
+//}}
+
+//复合主键形式
+//{{c1::
+@Result(property = "addresses", javaType = ArrayList.class,
+    column = "{ownerName=person_name, ownerAge=person_age}",
+    one = @One(select = "org.crazyit.app.dao.AddressMapper.selectAddressByOwner",
+    fetchType = FetchType.LAZY))
+//}}
+```
++ 注意：
+    1. 需要与延迟加载结合使用。
+
+### 基于多表连接查询的一对一映射
++ 在这样映射策略下`<association>`元素提供了如下属性：
+    + `resultMap`:{{c1:: 引用一个结果映射ID}}
+    + `columnPrefix`:{{c1:: 指定一个列前缀，避免重名}}
+    + `notNullColumn`:{{c1:: 默认情况，任意关联实体的任意列不为null就会创建实体。}}
+        + 例：{{c1:: 指定`addr_detail,addr_zip`后，需要这2列都不会`null`才创建实体。}}
+    + `autoMapping`:{{c1:: 是否进行同名映射，会覆盖全局`autoMappingBehavior`设置 }}
++ 例：
+    ```xml
+        <select id="getAddress" resultMap="addressMap">
+            <!-- 使用多表连接查询 -->
+            select a.addr_id addr_id, a.addr_detail addr_detail,
+            p.*
+            from address_inf a
+            join person_inf p
+            on a.owner_id = p.person_id
+            where a.addr_id = #{id}
+        </select>
+    	<resultMap id="addressMap" type="address">
+        <!-- {{c1:: -->
+		<id column="addr_id" property="id"/>
+		<result column="addr_detail" property="detail"/>
+		<association property="person" javaType="person"
+			resultMap="org.crazyit.app.dao.PersonMapper.personMap"/>
+        <!-- }} -->
+        </resultMap>
+    ```
+
+### 基于多结果集的一对一映射
++ 在这样映射策略下`<association>`元素提供了如下属性：
+    + `resultSet`:{{c1:: 指定结果集名称}}
+    + `column`:{{c1:: 指定主表列名}}
+    + `foreignColumn`:{{c1:: 指定从表列名}}
++ 例：
+    + sql如下
+    ```sql
+        create procedure p_get_address_person(in id int)
+        begin
+            select * from address_inf where addr_id > id;
+            select * from person_inf where person_id in 
+            (select owner_id from address_inf where addr_id > id);
+        end $$
+    ```
+    + mapper.xml
+    ```xml
+        <select id="findPersonById" resultSets="persons,addrs"
+            resultMap="personMap" statementType="CALLABLE">
+            {call p_get_person_address(#{id, jdbcType=INTEGER, mode=IN})}
+        </select>
+        <resultMap id="personMap" type="person">
+        <!-- {{c1:: -->
+            <id property="id" column="person_id" />
+            <id property="name" column="person_name" />
+            <result property="age" column="person_age"/>
+            <association property="address" javaType="address" 
+                resultSet="addrs" column="person_id" foreignColumn="owner_id"
+                resultMap="org.crazyit.app.dao.AddressMapper.addrMap"/>
+        <!-- }} -->
+        </resultMap>
+    ```
