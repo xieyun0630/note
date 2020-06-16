@@ -636,6 +636,50 @@ public class News{
 + 注意：
     1. 需要与延迟加载结合使用。
 
+### 基于嵌套select的一对多映射
+
++ 对应实体类
+    ```java
+        public class Person
+        {
+            private Integer id;
+            private String name;
+            private int age;
+            private List<Address> addresses;
+            // ....
+        }
+    ```
++ 对应mapper.xml
+    ```xml
+        <resultMap id="personMap" type="person">
+            <id column="person_id" property="id"/>
+            <result column="person_name" property="name"/>
+            <result column="person_age" property="age"/>
+            <!-- {{c1:: -->
+            <collection property="addresses" javaType="ArrayList"
+                ofType="address" 
+                column="person_id" select="org.crazyit.app.dao.AddressMapper.findAddressByOwner"
+                fetchType="lazy"/>
+            <!-- }} -->
+        </resultMap>
+    ```
++ 注解形式：
+    ```java
+        @Select("select * from person_inf where person_id=#{id}")
+        @Results(id = "personMap", value = {
+            @Result(column = "person_id", property = "id", id = true),
+            @Result(column = "person_name", property = "name"),
+            @Result(column = "person_age", property = "age"),
+            //{{c1::
+            @Result(property = "addresses", javaType = java.util.ArrayList.class,
+                column = "person_id",
+                many = @Many(select = "org.crazyit.app.dao.AddressMapper.selectAddressByOwner"
+                , fetchType = FetchType.LAZY))
+            //}}
+        })
+        Person getPerson(Integer id);
+    ```
++ 注意复合主键形式:{{c1:: `column = "{ownerName=person_name, ownerAge=person_age}"` }}
 ### 基于多表连接查询的一对一映射
 + 在这样映射策略下`<association>`元素提供了如下属性：
     + `resultMap`:{{c1:: 引用一个结果映射ID}}
@@ -672,12 +716,12 @@ public class News{
 + 例：
     + sql如下
     ```sql
-        create procedure p_get_address_person(in id int)
-        begin
-            select * from address_inf where addr_id > id;
-            select * from person_inf where person_id in 
-            (select owner_id from address_inf where addr_id > id);
-        end $$
+    create procedure p_get_person_address(in id int)
+    begin
+        select * from person_inf where person_id > id;
+        select * from address_inf where owner_id in
+        (select person_id from person_inf where person_id > id);
+    end $$
     ```
     + mapper.xml
     ```xml
@@ -696,3 +740,4 @@ public class News{
         <!-- }} -->
         </resultMap>
     ```
+
