@@ -3642,33 +3642,31 @@ let range = {
 ```
 }}
 ### Async generator 与常规 generator 区别 [	](javascript_info_20200512080327653)
-+ Async generator例子：{{c1::
++ Async generator例子：
   ```javascript
-  //对象
-  //{{c1::
-  let range = {
-    from: 1,
-    to: 5,
-    async *[Symbol.asyncIterator]() {
-      for(let value = this.from; value <= this.to; value++) {
-        await new Promise(resolve => setTimeout(resolve, 1000));
-        yield value;
+    //对象
+    //{{c1::
+    let range = {
+      from: 1,
+      to: 5,
+      async *[Symbol.asyncIterator]() {
+        for(let value = this.from; value <= this.to; value++) {
+          await new Promise(resolve => setTimeout(resolve, 1000));
+          yield value;
+        }
       }
-    }
-  };
-  //}}
+    };
+    //}}
 
-  //迭代该对象
-  //{{c1::
-  (async () => {
-    for await (let value of range) {
-      alert(value); // 1，然后 2，然后 3，然后 4，然后 5
-    }
-  })();
-  //}}
+    //迭代该对象
+    //{{c1::
+    (async () => {
+      for await (let value of range) {
+        alert(value); // 1，然后 2，然后 3，然后 4，然后 5
+      }
+    })();
+    //}}
   ```
-  }}
-
 ## 模块 [	](javascript_info_20200512080327654)
 
 ### 模块 [	](javascript_info_20200520043218611)

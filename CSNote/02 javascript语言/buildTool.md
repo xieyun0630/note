@@ -106,3 +106,106 @@
 + 页面使用引入:
     1. `<script type="text/javascript" src="js/dist/bundle.js"></script>`
 
+
+
+# webPack
+
+### npm install 本地安装与全局安装的区别
++ 本地安装:{{c1:: `npm install grunt`  }}
++ 全局安装:{{c1:: `npm install -g grunt-cli`  }}
++ 要区别在于（后面通过具体的例子来说明）：
++ 本地安装
+    1. {{c1:: 将安装包放在 ./node_modules 下（运行npm时所在的目录） }}
+    2. {{c1:: 可以通过 require() 来引入本地安装的包 }}
++ 全局安装
+    1. {{c1:: 将安装包放在 ~\AppData\Roaming\npm 下 }}
+    2. {{c1:: 可以直接在命令行里使用 }}
+
+### npm 中`--save-dev`与`--save`的区别
++ `npm install vue –save `：{{c1:: 依赖会保存到dependencies下，运行时依赖，开发完成后还会用到。}}
++ `npm install webpack –save-dev` ：{{c1:: 依赖会保存到devDependencies下，开发时依赖。}}
+
+### webpack开发环境与生产环境的打包的区别
+
++ 开发环境打包：{{c1:: `webpack ./src/index.js -o ./build/built.js --mode=development` }}
++ 生产环境打包：{{c1::` }}
++ 区别
+    1. {{c1:: 生产环境和开发环境将ES6模块化编译成浏览器能识别的模块化~ }}
+    2. {{c1:: 生产环境比开发环境多一个压缩js代码。 }}
+
+### webpack基本配置
+
++ 目录结构
+    + {{c1::`./src/index.js`}}
+    + {{c1::`./webpack.config.js`}}
++ 配置文件中基本配置：
+    ```js
+        //{{c1::
+        const { resolve } = require('path');
+        const HtmlWebpackPlugin = require('html-webpack-plugin');
+
+        module.exports = {
+        entry: './src/index.js',
+        output: {
+            filename: 'built.js',
+            path: resolve(__dirname, 'build')
+        },
+        module: {
+            rules: [
+            {
+                test: /\.css$/,
+                use: [
+                'style-loader',
+                'css-loader'
+                ]
+            }
+            ]
+        },
+        plugins: [
+            new HtmlWebpackPlugin({
+            template: './src/index.html'
+            })
+        ],
+        mode: 'development'
+        };
+        //}}
+    ```
+
+### 打包样式资源配置
+```js
+module: {
+    rules: [
+    //{{c1::
+      {
+        test: /\.css$/,
+        use: [
+          'style-loader',
+          'css-loader'
+        ]
+      },
+      {
+        test: /\.less$/,
+        use: [
+          'style-loader',
+          'css-loader',
+          'less-loader'
+        ]
+      }
+    //}}
+    ]
+  }
+```
+
+
+### 打包html资源
++ 需要插件： `HtmlWebpackPlugin`
++ 功能：默认会创建一个空的HTML，自动引入打包输出的所有资源（JS/CSS）
++ 基本配置：
+    ```js
+        //{{c1::
+        new HtmlWebpackPlugin({
+        // 复制 './src/index.html' 文件，并自动引入打包输出的所有资源（JS/CSS）
+        template: './src/index.html'
+        })
+        //}}
+    ```

@@ -1198,8 +1198,8 @@ public class Account {
   + 注意：{{c1:: 线程一旦加入指定线程组后，中途不能改变该线程所属组。  }}
 + `ThreadGroup`类
   + 构造器
-    `ThreadGroup(String name) `
-    `ThreadGroup(ThreadGroup parent, String name) `
+    + `ThreadGroup(String name) `
+    + `ThreadGroup(ThreadGroup parent, String name) `
     + 参数：
       + ThreadGroup parent：{{c1:: 父线程组 }}
       + String name：{{c1:: 线程组名称 }}
