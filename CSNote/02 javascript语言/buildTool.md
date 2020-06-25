@@ -75,6 +75,7 @@
     1.  {{c1:: `module.exports = value;` }}
     2.  {{c1:: `exports.xxx = value;` }}
 + 引入模块:
+  
     1. {{c1:: `var module = require(模块名或模块路径);` }}
 
 ### CommonJS规范：浏览器端模块化
@@ -100,15 +101,18 @@
     1. {{c1:: `module.exports = value;` }}
     2. {{c1:: `exports.xxx = value;` }}
 + 引入模块:
+  
     1. {{c1:: `var module = require(模块名或模块路径);` }}
 + 编译：
+  
     1. browserify `js/src/app.js -o js/dist/bundle.js`
 + 页面使用引入:
+  
     1. `<script type="text/javascript" src="js/dist/bundle.js"></script>`
 
 
 
-# webPack
+# webPack基本使用
 
 ### npm install 本地安装与全局安装的区别
 + 本地安装:{{c1:: `npm install grunt`  }}
@@ -139,43 +143,44 @@
     + {{c1::`./src/index.js`}}
     + {{c1::`./webpack.config.js`}}
 + 配置文件中基本配置：
+    + 五大核心概念属性:{{c1:: `output output module plugins mode` }}
     ```js
-        //{{c1::
+
         const { resolve } = require('path');
         const HtmlWebpackPlugin = require('html-webpack-plugin');
-
         module.exports = {
-        entry: './src/index.js',
-        output: {
-            filename: 'built.js',
-            path: resolve(__dirname, 'build')
-        },
-        module: {
-            rules: [
-            {
-                test: /\.css$/,
-                use: [
-                'style-loader',
-                'css-loader'
+        //{{c1::
+            entry: './src/index.js',
+            output: {
+                filename: 'built.js',
+                path: resolve(__dirname, 'build')
+            },
+            module: {
+                rules: [
+                {
+                    test: /\.css$/,
+                    use: [
+                    'style-loader',
+                    'css-loader'
+                    ]
+                }
                 ]
-            }
-            ]
-        },
-        plugins: [
-            new HtmlWebpackPlugin({
-            template: './src/index.html'
-            })
-        ],
-        mode: 'development'
-        };
+            },
+            plugins: [
+                new HtmlWebpackPlugin({
+                template: './src/index.html'
+                })
+            ],
+            mode: 'development'
         //}}
+        };
     ```
+## webpack开发环境配置
 
 ### 打包样式资源配置
 ```js
 module: {
     rules: [
-    //{{c1::
       {
         test: /\.css$/,
         use: [
@@ -191,21 +196,538 @@ module: {
           'less-loader'
         ]
       }
-    //}}
     ]
   }
 ```
-
++ 作用:
+    1. 'style-loader'：{{c1:: 将加载后的文件放置到`<style>`标签中 }}
+    2. 'css-loader'：{{c1:: 将css文件加载到js入口文件中 }}
+    3. 'less-loader'：{{c1:: 将less文件转换成css }}:
 
 ### 打包html资源
-+ 需要插件： `HtmlWebpackPlugin`
-+ 功能：默认会创建一个空的HTML，自动引入打包输出的所有资源（JS/CSS）
-+ 基本配置：
++ 配置代码如下：
+    ```js
+        new HtmlWebpackPlugin({
+            template: './src/index.html'
+        })
+    ```
++ 完成任务：
+    1. {{c1:: 复制 './src/index.html' 文件，并自动引入打包输出的所有资源（JS/CSS）}}
+    2. 注意:{{c1:: 默认创建一个空的html，并自动引入打包输出的所有资源（JS/CSS）}}
+
+### 打包图片资源
+
++ 配置代码如下：
+    ```js
+        {
+            test: /\.(jpg|png|gif)$/,
+            loader: 'url-loader',
+            options: {
+                limit: 8 * 1024,
+                esModule: false,
+                name: '[hash:10].[ext]'
+                outputPath: 'imgs'
+            }
+        }，
+        {
+            test: /\.html$/,
+            loader: 'html-loader'
+        }
+    ```
++ 作用：
+    + `url-loader`: 处理图片资源，依赖于`file-loader`
+        1. `limit`：图片大小小于8kb，就会被base64处理
+        2. `esModule`：
+            + 因为url-loader默认使用es6模块化解析，而html-loader引入图片是commonjs
+            + 关闭url-loader的es6模块化，使用commonjs解析
+        3. `name`：给图片进行重命名
+            + `[hash:10]`：{{c1:: 取图片的hash的前10位 }}
+            + `[ext]`：{{c1:: 取文件原来扩展名 }}
+        4. `outputPath`: {{c1:: 图片输出路径 }}
+    + `html-loader`: {{c1:: 处理html中img资源 }}
+
+### 打包其他资源
+
++ 配置代码如下：
+    ```js
+        {
+            exclude: /\.(css|js|html|less)$/,
+            loader: 'file-loader',
+            options: {
+             name: '[hash:10].[ext]'
+             outputPath: 'media'
+            }
+        }
+    ```
++ 作用：
+    + `file-loader`：{{c1:: 复制对所有没有排除的文件打包· }}
+        1. `outputPath`：{{c1:: 文件输出路径 }}
+
+## webpack生产环境配置
+
+### 提取css成单独文件
+
++ 配置代码如下：
+```js
+  module: {
+    rules: [
+      {
+        test: /\.css$/,
+        use: [
+          MiniCssExtractPlugin.loader,
+          'css-loader'
+        ]
+      }
+    ]
+  },
+  plugins: [
+    new HtmlWebpackPlugin({
+      template: './src/index.html'
+    }),
+    new MiniCssExtractPlugin({
+      filename: 'css/built.css'
+    })
+  ]
+```
+作用：
++ `MiniCssExtractPlugin.loader`:{{c1:: 取代style-loader,提取js中的css成单独文件 }}
++ `filename`:{{c1:: 对输出的css文件进行重命名 }}
+
+### webpack进行css兼容性处理
+
++ 所需模块：{{c1:: ostcss-loader postcss-preset-env }}
++ 配置代码如下：
+    ```js
+    {
+        loader: 'postcss-loader',
+        options: {
+            ident: 'postcss',
+            plugins: () => [
+                require('postcss-preset-env')()
+            ]
+        }
+    }
+    ```
++ 作用：{{c1:: 帮postcss找到package.json中browserslist里面的配置}}
+    ```js
+        "browserslist": {
+            // 开发环境 --> 设置node环境变量：process.env.NODE_ENV = development
+            "development": [
+            "last 1 chrome version",
+            "last 1 firefox version",
+            "last 1 safari version"
+            ],
+            // 生产环境：默认是看生产环境
+            "production": [
+            ">0.2%",
+            "not dead",
+            "not op_mini all"
+            ]
+        }
+    ```
+
+### 打包时压缩css
+
+```js
+plugins: [
+    new HtmlWebpackPlugin({
+      template: './src/index.html'
+    }),
+    new MiniCssExtractPlugin({
+      filename: 'css/built.css'
+    }),
+    // 压缩css
+    //{{c1::
+    new OptimizeCssAssetsWebpackPlugin()
+    //}}
+  ]
+```
+
+### 打包时执行js语法检查
+
++ 所需模块： {{c1:: `eslint-loader` `eslint` }}
++ package.json中eslintConfig中设置
     ```js
         //{{c1::
-        new HtmlWebpackPlugin({
-        // 复制 './src/index.html' 文件，并自动引入打包输出的所有资源（JS/CSS）
-        template: './src/index.html'
-        })
+        "eslintConfig": {
+            "extends": "airbnb-base"
+        }
         //}}
     ```
++ airbnb风格检查所需模块：{{c1:: `eslint-config-airbnb-base` `eslint-plugin-import`  `eslint` }}
++ 配置：
+    ```js
+      {
+        //{{c1::
+        test: /\.js$/,
+        exclude: /node_modules/,
+        loader: 'eslint-loader',
+        options: {
+          // 自动修复eslint的错误
+          fix: true
+        }
+        //}}
+      }
+    ```
+
+
+
+### 打包时将js文件与html文件压缩
+
+```js
+  plugins: [
+    new HtmlWebpackPlugin({
+      template: './src/index.html',
+      // 压缩html代码,移除空格,移除注释
+      //{{c1::
+      minify: {
+        collapseWhitespace: true,
+        removeComments: true
+      }
+      //}}
+    })
+  ],
+  // 生产环境下会自动压缩js代码
+  //{{c1::
+  mode: 'production'
+  //}}
+```
+
+
+### HMR
+
++ HMR: {{c1:: hot module replacement 热模块替换 / 模块热替换 }}
++ 作用：{{c1:: 一个模块发生变化，只会重新打包这一个模块（而不是打包所有模块）,极大提升构建速度 }}
++ 样式文件：可以使用HMR功能：因为style-loader内部实现了
++ js文件：默认不能使用HMR功能 --> 
+    + 注意：HMR功能对js的处理，只能处理非入口js文件的其他文件。
+    + 解决：需要修改js模块代码，添加支持HMR功能的代码
+    ```js
+        if (module.hot) {
+        // 一旦 module.hot 为true，说明开启了HMR功能。 --> 让HMR功能代码生效
+        module.hot.accept('./print.js', function() {
+            // 方法会监听 print.js 文件的变化，一旦发生变化，其他模块不会重新打包构建。
+            // 会执行后面的回调函数
+            print();
+        });
+        }
+    ```
++ html文件: 默认不能使用HMR功能.同时会导致问题：html文件不能热更新了~ （不用做HMR功能）
+    + 解决：修改entry入口，将html文件引入
+    ```js
+    module.exports = {
+    entry: ['./src/js/index.js', './src/index.html'],
+    ```
++ 开启HMR功能
+    ```js
+        //{{c1::
+    devServer: {
+        contentBase: resolve(__dirname, 'build'),
+        compress: true,
+        port: 3000,
+        open: true,
+        // 开启HMR功能
+        // 当修改了webpack配置，新配置要想生效，必须重新webpack服务
+        hot: true
+    }
+        //}}
+    ```
+
+### source-map
+
++ `source-map`: 一种 提供源代码到构建后代码映射 技术 （如果构建后代码出错了，通过映射可以追踪源代码错误）
++ 可选值: `[inline-|hidden-|eval-][nosources-][cheap-[module-]]source-map`
++ 配置：
+    ```java
+        module.exports = {
+        //{{c1:: 
+            devtool: 'eval-source-map'
+        //}}
+        }
+    ```
+
+
+### oneOf
+
++ 作用：{{c1:: 在oneOf中声明的loader数组，只会匹配一个loader }}
++ 注意：{{c1:: 不能有两个配置处理同一种类型文件 }}
+
+### 缓存
++ 开启babel缓存
+    + 作用： 第二次构建时，如果文件没有变化，会读取之前的缓存
+    + 配置：
+    ```js
+        {
+            //{{c1:: 
+            test: /\.js$/,
+            exclude: /node_modules/,
+            loader: 'babel-loader',
+            options: {
+              presets: [
+                [
+                  '@babel/preset-env',
+                  {
+                    useBuiltIns: 'usage',
+                    corejs: { version: 3 },
+                    targets: {
+                      chrome: '60',
+                      firefox: '50'
+                    }
+                  }
+                ]
+              ],
+              cacheDirectory: true
+            }
+            //}}
+        }
+    ```
++ 文件资源文件缓存:
+ + 作用：通过给资源文件的名称加上一个hash值进行缓存
+ + 配置(分别给js,css添加hash值)：
+    ```js
+    output: {
+        filename: 'js/built.[contenthash:10].js',
+        path: resolve(__dirname, 'build')
+    }
+    //...
+    new MiniCssExtractPlugin({
+      filename: 'css/built.[contenthash:10].css'
+    })
+    ```
++ 3种类型的hash值
+    1. `hash`:{{c1::  每次wepack构建时会生成一个唯一的hash值。}}
+        问题: {{c1:: 因为js和css同时使用一个hash值，如果重新打包，会导致所有缓存失效。（可能我却只改动一个文件） }}
+    2. `chunkhash`：{{c1:: 根据chunk生成的hash值。如果打包来源于同一个chunk，那么hash值就一样}}
+        问题: {{c1:: 因为css是在js中被引入的，所以同属于一个chunk,js和css的hash值还是一样的 }}
+    3. `contenthash`:{{c1::  根据文件的内容生成hash值。不同文件hash值一定不一样    }}
+
+### 使用express构建一个node服务器向外暴露静态资源
+```js
+    //{{c1::
+    const express = require('express');
+    const app = express();
+    // express.static向外暴露静态资源
+    // maxAge 资源缓存的最大时间，单位ms
+    app.use(express.static('build', { maxAge: 1000 * 3600 }));
+    app.listen(3000);
+    //}}
+```
+
+### treeShaking
+
++ 开启条件：
+    1. {{c1:: 必须使用ES6模块化   }}
+    2. {{c1:: 开启production环境 }}
+    3. 在package.json中配置:
+        + `"sideEffects": false` :{{c1:: 所有代码都没有副作用,可能会把css / @babel/polyfill （副作用）文件干掉}}
+        + `"sideEffects": ["*.css", "*.less"]`：{{c1:: 指定的文件不会treeShaking}}
++ 作用: {{c1:: 减少代码体积 }}
+
+
+### code split的3种方式
+
++ 通过多入口方式来拆分js文件：
+    + 配置：
+    ```js
+    entry: {
+      index: './src/js/index.js',
+      test: './src/js/test.js'
+    }
+    output: {
+      filename: 'js/[name].[contenthash:10].js',
+      path: resolve(__dirname, 'build')
+    }
+    ```
+    + 注意：单页面应用通常是单入口，多页面应用对应多入口，
+    + 问题：不太灵活，每次添加js文件都需要添加入口。
++  配置`optimization`
+    ```js
+    optimization: {
+      //{{c1::
+      splitChunks: {
+        chunks: 'all'
+      }
+      //}}
+    }
+    ```
+    + 作用：
+        1. {{c1:: 可以将node_modules中代码单独打包一个chunk最终输出 }}
+        2. {{c1:: 自动分析多入口chunk中，有没有公共的文件。如果有会打包成单独一个chunk }}
++  通过import动态导入语法将某个文件单独打包
+    ```js
+    import(/* webpackChunkName: 'test' */'./test')
+      .then(({ mul, count }) => {
+      // 文件加载成功~
+      // eslint-disable-next-line
+      console.log(mul(2, 5));
+    })
+      .catch(() => {
+      // eslint-disable-next-line
+      console.log('文件加载失败~');
+    });
+  ```
+
++ 3种方式并不冲突
+
+### 懒加载与预加载
+
+- 懒加载：当文件需要使用时才加载
+- 预加载：等其他资源加载完毕，浏览器空闲了，再偷偷加载资源
+- 正常加载：可以认为是并行加载（同一时间加载多个文件） 
+- 配置：
+```js
+document.getElementById('btn').onclick = function() {
+  import(/* webpackChunkName: 'test', webpackPrefetch: true */'./test')
+  .then(({ mul }) => {
+    console.log(mul(4, 5));
+  });
+};
+```
+
+### PWA
+
+- PWA: 渐进式网络开发应用程序(离线可访问)
+- 所需模块： workbox-webpack-plugin
+
+```js
+    new WorkboxWebpackPlugin.GenerateSW({
+      /*
+        1. 帮助serviceworker快速启动
+        2. 删除旧的 serviceworker
+        生成一个 serviceworker 配置文件~
+      */  
+      clientsClaim: true,
+      skipWaiting: true
+    })
+```
+
+- 注册serviceworker
+
+```js
+if ('serviceWorker' in navigator) {
+  window.addEventListener('load', () => {
+    navigator.serviceWorker
+      .register('/service-worker.js')
+      .then(() => {
+        console.log('sw注册成功了~');
+      })
+      .catch(() => {
+        console.log('sw注册失败了~');
+      });
+  });
+}
+```
+
+-   eslint不认识 window、navigator全局变量
+
+```js
+// 解决：需要修改package.json中eslintConfig配置
+"eslintConfig": {
+  "extends": "airbnb-base",
+    "env": {
+      "browser": true
+    }
+}
+```
+
+- sw代码必须运行在服务器上
+
+  - npm i serve -g
+  - serve -s build :启动服务器，将build目录下所有资源作为静态资源暴露出去
+
+  
+
+### 多进程打包
+
+安装：npm i thread-loader -D
+
+  ```js
+          {
+            test: /\.js$/,
+            exclude: /node_modules/,
+            use: [
+              /* 
+                开启多进程打包。 
+                进程启动大概为600ms，进程通信也有开销。
+                只有工作消耗时间比较长，才需要多进程打包
+              */
+              //{{c1::
+              {
+                loader: 'thread-loader',
+                options: {
+                  workers: 2 // 进程2个,默认是1
+                }
+              },
+              //}}
+              {
+                loader: 'babel-loader',
+                options: {
+                  presets: [
+                    [
+                      '@babel/preset-env',
+                      {
+                        useBuiltIns: 'usage',
+                        corejs: { version: 3 },
+                        targets: {
+                          chrome: '60',
+                          firefox: '50'
+                        }
+                      }
+                    ]
+                  ],
+                  // 开启babel缓存
+                  // 第二次构建时，会读取之前的缓存
+                  cacheDirectory: true
+                }
+              }
+            ]
+          },
+  ```
+
+### dll技术
+
+- 作用：对某些库（第三方库：jquery、react、vue...）进行单独打包
+
+- 配置`webpack.dll.js`
+  ```js
+  const { resolve } = require('path');
+  const webpack = require('webpack');
+
+  module.exports = {
+    entry: {
+      // 最终打包生成的[name] --> jquery
+      // ['jquery'] --> 要打包的库是jquery
+      jquery: ['jquery'],
+    },
+    output: {
+      filename: '[name].js',
+      path: resolve(__dirname, 'dll'),
+      library: '[name]_[hash]' // 打包的库里面向外暴露出去的内容叫什么名字
+    },
+    plugins: [
+      // 打包生成一个 manifest.json --> 提供和jquery映射
+      new webpack.DllPlugin({
+        name: '[name]_[hash]', // 映射库的暴露的内容名称
+        path: resolve(__dirname, 'dll/manifest.json') // 输出文件路径
+      })
+    ],
+    mode: 'production'
+  };
+  ```
+
+- 生成manifest.json文件命令：`webpack --config webpack.dll.js`
+  
+- 告诉webpack哪些库不参与打包，同时使用时的名称也得变~
+  
+  ```JS
+  new webpack.DllReferencePlugin({
+  manifest: resolve(__dirname, 'dll/manifest.json')
+  }),
+  ```
+  
+- 将某个文件打包输出去，并在html中自动引入该资源
+  ```JS
+  new AddAssetHtmlWebpackPlugin({
+  filepath: resolve(__dirname, 'dll/jquery.js')
+  })
+  ```
