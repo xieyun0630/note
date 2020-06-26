@@ -1,3 +1,71 @@
+## Ant基础
+
+### windows上安装ant
+
+- {{c1::环境变量`ANT_HOME`：ant的安装目录}}
+- {{c1::环境变量`Path`:添加`"%ANT_HOME%\bin"`}}
+- {{c1::管理员运行命令行或者powerShell检查安装情况：`ant`}}
+
+### ant命令
+
+`ant`:{{c1:: 在当前目录下搜索build.xml文件，并执行默认配置}}
+`ant -find`：{{c1:: 到上级目录搜索build.xml文件，直到文件系统的根路径。}}
+`ant -f/-file a.xml`:{{c1:: 显示指定a.xml做为生成文件}}
+`ant -quiet\-q`:{{c1:: 运行ant时只输出必要的信息}}
+`ant -verbose -l a.log`:{{c1:: 运行ant时输出更多的信息到a.log文件}}
+`ant -Denv1=%ANT_HOME%`:{{c1:: 设置env1参数的值为环境变量}}
+`ant -Denv1=$ANT_HOME`:{{c1:: linux上设置env1参数的值为环境变量}}
+
+### `<project>`元素的
++ 常用属性:
+    + `default`:{{c1::  指定默认target }}
+    + `basedir`:{{c1::  指定项目的基准目录 }}
+    + `name`:{{c1::  项目名 }}
+    + `description`:{{c1:: 项目描述 }}
++ 两个重要元素：
+    + `<property .../>`:{{c1:: 用于定义一个或多个属性 }}
+    + `<path .../>`:{{c1:: 用于定义一个或多个文件和路径 }}
+
+### `<target>`元素的常用属性：
+
+- `name`:{{c1:: 必要属性，指定target名 }}
+- `depends`:{{c1:: 指定所依赖的一个或多个target名 }}
+- `if`:{{c1:: 指定一个属性名，仅当存在该属性才执行该target }}
+- `unless`:{{c1:: 指定一个属性名，仅当不存在该属性才执行该target }}
+- `description`: {{c1:: 描述信息 }}
+
+### `<path .../>`和`<classpath .../>`的子元素组合使用
+```xml
+<path id="classpath">
+<!-- 定义classpath属性值所代表的路径 -->
+<!-- {{c1:: -->
+<pathelement path="${classpath}" />
+<!-- }} -->
+<!-- 定义lib路径下所有*.jar文件 -->
+<!-- {{c1:: -->
+<fileset dir="lib">
+    <include name="**/*.jar" />
+</fileset>
+<!-- }} -->
+<!-- 定义build/apps路径下的所有classes路径 -->
+<!-- {{c1:: -->
+<dirset dir="build">
+    <include name="apps/**/classes">
+    <exclude name="apps/**/*Test*">
+</dirset>
+<!-- }} -->
+<!-- 定义res路径下的a.properties文件和b.xml文件 -->
+<!-- {{c1:: -->
+<filelist dir="res" files="a.properties,b.xml" />
+<!-- }} -->
+
+        <!-- 指定编译Java文件所需要第三方类库所在的位置 -->
+        <!-- 这里是其他地方引用上面path的内容 -->
+        <!-- {{c1:: -->
+        <classpath refid="classpath"/>
+        <!-- }} -->
+</path>
+```
 ## Maven基础概念 [	](maven_20200512080327602)
 
 ### windows上安装Maven [	](maven_20200331123149423)

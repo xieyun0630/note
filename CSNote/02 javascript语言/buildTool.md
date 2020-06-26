@@ -1,4 +1,5 @@
 ## 模块化
+
 ### 模块化进化史
 1. 全局function模式
     + 例子：
@@ -31,7 +32,7 @@
     + 特点： {{c1:: 简单对象封装 }}
     + 缺点： {{c1:: 不能隐藏模块中的细节 }}
 3. IIFE模式
-    + IIFE全称:immediately-invoked function expression(立即调用函数表达式)
+    + IIFE全称:{{c1:: immediately-invoked function expression(立即调用函数表达式) }}
     + 例子：
     ```js
         //{{c1::
@@ -72,8 +73,8 @@
     ```
     }}
 + 定义暴露模块：
-    1.  {{c1:: `module.exports = value;` }}
-    2.  {{c1:: `exports.xxx = value;` }}
+    1.  {{c1:: `module.exports = value/{...};` }}
+    2.  {{c1:: `exports.xxx = value/{...};` }}
 + 引入模块:
   
     1. {{c1:: `var module = require(模块名或模块路径);` }}
@@ -105,25 +106,24 @@
     1. {{c1:: `var module = require(模块名或模块路径);` }}
 + 编译：
   
-    1. browserify `js/src/app.js -o js/dist/bundle.js`
+    1. {{c1:: browserify `js/src/app.js -o js/dist/bundle.js` }}
 + 页面使用引入:
   
-    1. `<script type="text/javascript" src="js/dist/bundle.js"></script>`
+    1. {{c1::`<script type="text/javascript" src="js/dist/bundle.js"></script>` }}
 
 
 
-# webPack基本使用
+## webPack基本使用
 
 ### npm install 本地安装与全局安装的区别
-+ 本地安装:{{c1:: `npm install grunt`  }}
-+ 全局安装:{{c1:: `npm install -g grunt-cli`  }}
-+ 要区别在于（后面通过具体的例子来说明）：
-+ 本地安装
++ 本地安装：
     1. {{c1:: 将安装包放在 ./node_modules 下（运行npm时所在的目录） }}
     2. {{c1:: 可以通过 require() 来引入本地安装的包 }}
-+ 全局安装
+    3. 命令：{{c1:: `npm install grunt`}}
++ 全局安装：
     1. {{c1:: 将安装包放在 ~\AppData\Roaming\npm 下 }}
     2. {{c1:: 可以直接在命令行里使用 }}
+    3. 命令：{{c1:: `npm install -g grunt-cli`}}
 
 ### npm 中`--save-dev`与`--save`的区别
 + `npm install vue –save `：{{c1:: 依赖会保存到dependencies下，运行时依赖，开发完成后还会用到。}}
@@ -132,17 +132,15 @@
 ### webpack开发环境与生产环境的打包的区别
 
 + 开发环境打包：{{c1:: `webpack ./src/index.js -o ./build/built.js --mode=development` }}
-+ 生产环境打包：{{c1::` }}
-+ 区别
-    1. {{c1:: 生产环境和开发环境将ES6模块化编译成浏览器能识别的模块化~ }}
-    2. {{c1:: 生产环境比开发环境多一个压缩js代码。 }}
++ 生产环境打包：{{c1:: `webpack ./src/index.js -o ./build/built.js --mode=development` }}
++ 区别：{{c1:: 生产环境比开发环境多一个压缩js代码。 }}
 
 ### webpack基本配置
 
 + 目录结构
     + {{c1::`./src/index.js`}}
     + {{c1::`./webpack.config.js`}}
-+ 配置文件中基本配置：
++ 配置文件中最基本配置：
     + 五大核心概念属性:{{c1:: `output output module plugins mode` }}
     ```js
 
@@ -254,7 +252,7 @@ module: {
             exclude: /\.(css|js|html|less)$/,
             loader: 'file-loader',
             options: {
-             name: '[hash:10].[ext]'
+             name: '[hash:10].[ext]',
              outputPath: 'media'
             }
         }
@@ -396,9 +394,14 @@ plugins: [
 
 ### HMR
 
++ 部署命令：`npx webpack-dev-server`
+
 + HMR: {{c1:: hot module replacement 热模块替换 / 模块热替换 }}
+
 + 作用：{{c1:: 一个模块发生变化，只会重新打包这一个模块（而不是打包所有模块）,极大提升构建速度 }}
+
 + 样式文件：可以使用HMR功能：因为style-loader内部实现了
+
 + js文件：默认不能使用HMR功能 --> 
     + 注意：HMR功能对js的处理，只能处理非入口js文件的其他文件。
     + 解决：需要修改js模块代码，添加支持HMR功能的代码
@@ -412,12 +415,14 @@ plugins: [
         });
         }
     ```
+    
 + html文件: 默认不能使用HMR功能.同时会导致问题：html文件不能热更新了~ （不用做HMR功能）
     + 解决：修改entry入口，将html文件引入
     ```js
     module.exports = {
     entry: ['./src/js/index.js', './src/index.html'],
     ```
+    
 + 开启HMR功能
     ```js
         //{{c1::
@@ -731,3 +736,161 @@ if ('serviceWorker' in navigator) {
   filepath: resolve(__dirname, 'dll/jquery.js')
   })
   ```
+
+### webpack entry的配置的3种值
+
+- string: 只声明单个js文件，只输出一个bundle文件
+
+- array：声明多个js文件，合并后只输出一个bundle文件
+
+- object：会安装对象中的属性值为文件名生成多个bundle文件。
+
+- 混合用法：
+
+  ```js
+  {
+    // 所有入口文件最终只会形成一个chunk, 输出出去只有一个bundle文件。
+    index: ['./src/index.js', './src/count.js'], 
+      // 形成一个chunk，输出一个bundle文件。
+      add: './src/add.js'
+  }
+  ```
+
+### webpack output配置
+
+```js
+module.exports = {
+  entry: './src/index.js',
+  output: {
+    // 文件名称（指定名称+目录）{{c1::
+    filename: 'js/[name].js',
+    //}}
+    // 输出文件目录（将来所有资源输出的公共目录）{{c1::
+    path: resolve(__dirname, 'build'),
+    //}}
+    // 所有资源引入公共路径前缀 --> 'imgs/a.jpg' --> '/imgs/a.jpg'{{c1::
+    publicPath: '/',
+    //}}
+    // 非入口chunk的名称{{c1::
+    chunkFilename: 'js/[name]_chunk.js', 
+    //}}
+    // 整个库向外暴露的变量名{{c1::
+    library: '[name]', 
+    //}}
+    // 变量名添加到哪个上 browser{{c1::
+    // libraryTarget: 'window' }}
+    // 变量名添加到哪个上 node{{c1::
+    // libraryTarget: 'global' }}
+    // 指定模块标准{{c1::
+    // libraryTarget: 'commonjs'}}
+  },
+  plugins: [new HtmlWebpackPlugin()],
+  mode: 'development'
+};
+```
+
+### webpack module 配置
+
+```js
+  module: {
+    rules: [
+      // loader的配置
+      {
+        test: /\.css$/,
+        // 多个loader用use{{c1::
+        use: ['style-loader', 'css-loader']
+        //}}
+      },
+      {
+        test: /\.js$/,
+        // 排除node_modules下的js文件{{c1::
+        exclude: /node_modules/,
+        //}}
+        // 只检查 src 下的js文件{{c1::
+        include: resolve(__dirname, 'src'),
+        //}}
+        // 优先执行{{c1::
+        enforce: 'pre',
+        //}}
+        // 延后执行{{c1::
+        // enforce: 'post',}}
+        // 单个loader用loader{{c1::
+        loader: 'eslint-loader',
+        //}}
+        options: {}
+      },
+      {
+        // 以下配置只会生效一个{{c1::
+        oneOf: []
+        // }}
+      }
+    ]
+  },
+```
+
+###  webpack devServer
+
+```js
+ devServer: {
+    // 运行代码的目录
+    // {{c1::
+    contentBase: resolve(__dirname, 'build'),
+    // }}
+    // 监视 contentBase 目录下的所有文件，一旦文件变化就会 reload
+    // {{c1::
+    watchContentBase: true,
+    // }}
+    // 忽略文件
+    // {{c1::
+    watchOptions: {
+      ignored: /node_modules/
+    },
+    // }}
+    // 启动gzip压缩
+    // {{c1::
+    compress: true,
+    // }}
+    // 端口号
+    // {{c1::
+    port: 5000,
+    // }}
+    // 域名
+    // {{c1::
+    host: 'localhost',
+    // }}
+    // 自动打开浏览器
+    // {{c1::
+    open: true,
+    // }}
+    // 开启HMR功能
+    // {{c1::
+    hot: true,
+    // }}
+    // 不要显示启动服务器日志信息
+    // {{c1::
+    clientLogLevel: 'none',
+    // }}
+    // 除了一些基本启动信息以外，其他内容都不要显示
+    // {{c1::
+    quiet: true,
+    // }}
+    // 如果出错了，不要全屏提示~
+    // {{c1::
+    overlay: false,
+    // }}
+    // 服务器代理 --> 解决开发环境跨域问题.
+    // 一旦devServer(5000)服务器接受到 /api/xxx 的请求，就会把请求转发到另外一个服务器(3000)
+    //{{c1::
+    proxy: {
+      '/api': {
+        target: 'http://localhost:3000',
+        // 发送请求时，请求路径重写：将 /api/xxx --> /xxx （去掉/api）
+        pathRewrite: {
+          '^/api': ''
+        }
+      }
+    }
+    //}}
+  }
+```
+
