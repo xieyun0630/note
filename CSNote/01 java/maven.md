@@ -1,12 +1,12 @@
-## Ant基础
+## Ant基础 [	](maven_20200626090144117)
 
-### windows上安装ant
+### windows上安装ant [	](maven_20200626090144118)
 
 - {{c1::环境变量`ANT_HOME`：ant的安装目录}}
 - {{c1::环境变量`Path`:添加`"%ANT_HOME%\bin"`}}
 - {{c1::管理员运行命令行或者powerShell检查安装情况：`ant`}}
 
-### ant命令
+### ant命令 [	](maven_20200626090144119)
 
 `ant`:{{c1:: 在当前目录下搜索build.xml文件，并执行默认配置}}
 `ant -find`：{{c1:: 到上级目录搜索build.xml文件，直到文件系统的根路径。}}
@@ -16,7 +16,7 @@
 `ant -Denv1=%ANT_HOME%`:{{c1:: 设置env1参数的值为环境变量}}
 `ant -Denv1=$ANT_HOME`:{{c1:: linux上设置env1参数的值为环境变量}}
 
-### `<project>`元素的
+### `<project>`元素的 [	](maven_20200626090144120)
 + 常用属性:
     + `default`:{{c1::  指定默认target }}
     + `basedir`:{{c1::  指定项目的基准目录 }}
@@ -26,7 +26,7 @@
     + `<property .../>`:{{c1:: 用于定义一个或多个属性 }}
     + `<path .../>`:{{c1:: 用于定义一个或多个文件和路径 }}
 
-### `<target>`元素的常用属性：
+### `<target>`元素的常用属性： [	](maven_20200626090144121)
 
 - `name`:{{c1:: 必要属性，指定target名 }}
 - `depends`:{{c1:: 指定所依赖的一个或多个target名 }}
@@ -34,7 +34,7 @@
 - `unless`:{{c1:: 指定一个属性名，仅当不存在该属性才执行该target }}
 - `description`: {{c1:: 描述信息 }}
 
-### `<path .../>`和`<classpath .../>`的子元素组合使用
+### `<path .../>`和`<classpath .../>`的子元素组合使用 [	](maven_20200626090144122)
 ```xml
 <path id="classpath">
 <!-- 定义classpath属性值所代表的路径 -->

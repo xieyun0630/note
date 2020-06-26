@@ -1,6 +1,6 @@
-## 模块化
+## 模块化 [	](buildTool_20200626090144132)
 
-### 模块化进化史
+### 模块化进化史 [	](buildTool_20200626090144133)
 1. 全局function模式
     + 例子：
     ```js
@@ -59,7 +59,7 @@
     + 特点： {{c1:: 现代模块实现的基础。 }}
     + 缺点： {{c1:: 页面需要加载多个js文件导致请求过多，难以维护依赖关系 }}
 
-### CommonJS规范：Nodejs端的模块化
+### CommonJS规范：Nodejs端的模块化 [	](buildTool_20200626090144134)
 
 + 项目目录结构:
     {{c1::
@@ -79,7 +79,7 @@
   
     1. {{c1:: `var module = require(模块名或模块路径);` }}
 
-### CommonJS规范：浏览器端模块化
+### CommonJS规范：浏览器端模块化 [	](buildTool_20200626090144135)
 
 + npm安装编译工具：
   + 全局: {{c1:: npm install browserify -g }}
@@ -113,9 +113,9 @@
 
 
 
-## webPack基本使用
+## webPack基本使用 [	](buildTool_20200626090144136)
 
-### npm install 本地安装与全局安装的区别
+### npm install 本地安装与全局安装的区别 [	](buildTool_20200626090144137)
 + 本地安装：
     1. {{c1:: 将安装包放在 ./node_modules 下（运行npm时所在的目录） }}
     2. {{c1:: 可以通过 require() 来引入本地安装的包 }}
@@ -125,17 +125,17 @@
     2. {{c1:: 可以直接在命令行里使用 }}
     3. 命令：{{c1:: `npm install -g grunt-cli`}}
 
-### npm 中`--save-dev`与`--save`的区别
+### npm 中`--save-dev`与`--save`的区别 [	](buildTool_20200626090144138)
 + `npm install vue –save `：{{c1:: 依赖会保存到dependencies下，运行时依赖，开发完成后还会用到。}}
 + `npm install webpack –save-dev` ：{{c1:: 依赖会保存到devDependencies下，开发时依赖。}}
 
-### webpack开发环境与生产环境的打包的区别
+### webpack开发环境与生产环境的打包的区别 [	](buildTool_20200626090144139)
 
 + 开发环境打包：{{c1:: `webpack ./src/index.js -o ./build/built.js --mode=development` }}
 + 生产环境打包：{{c1:: `webpack ./src/index.js -o ./build/built.js --mode=development` }}
 + 区别：{{c1:: 生产环境比开发环境多一个压缩js代码。 }}
 
-### webpack基本配置
+### webpack基本配置 [	](buildTool_20200626090144140)
 
 + 目录结构
     + {{c1::`./src/index.js`}}
@@ -173,9 +173,9 @@
         //}}
         };
     ```
-## webpack开发环境配置
+## webpack开发环境配置 [	](buildTool_20200626090144141)
 
-### 打包样式资源配置
+### 打包样式资源配置 [	](buildTool_20200626090144143)
 ```js
 module: {
     rules: [
@@ -202,7 +202,7 @@ module: {
     2. 'css-loader'：{{c1:: 将css文件加载到js入口文件中 }}
     3. 'less-loader'：{{c1:: 将less文件转换成css }}:
 
-### 打包html资源
+### 打包html资源 [	](buildTool_20200626090144144)
 + 配置代码如下：
     ```js
         new HtmlWebpackPlugin({
@@ -213,7 +213,7 @@ module: {
     1. {{c1:: 复制 './src/index.html' 文件，并自动引入打包输出的所有资源（JS/CSS）}}
     2. 注意:{{c1:: 默认创建一个空的html，并自动引入打包输出的所有资源（JS/CSS）}}
 
-### 打包图片资源
+### 打包图片资源 [	](buildTool_20200626090144145)
 
 + 配置代码如下：
     ```js
@@ -233,18 +233,18 @@ module: {
         }
     ```
 + 作用：
-    + `url-loader`: 处理图片资源，依赖于`file-loader`
-        1. `limit`：图片大小小于8kb，就会被base64处理
+    + `url-loader`: {{c1:: 处理图片资源，依赖于`file-loader` }}
+        1. `limit`：{{c1:: 图片大小小于8kb，就会被base64处理 }}
         2. `esModule`：
-            + 因为url-loader默认使用es6模块化解析，而html-loader引入图片是commonjs
-            + 关闭url-loader的es6模块化，使用commonjs解析
+            + {{c1:: 因为url-loader默认使用es6模块化解析，而html-loader引入图片是commonjs }}
+            + {{c1:: 关闭url-loader的es6模块化，使用commonjs解析 }}
         3. `name`：给图片进行重命名
             + `[hash:10]`：{{c1:: 取图片的hash的前10位 }}
             + `[ext]`：{{c1:: 取文件原来扩展名 }}
         4. `outputPath`: {{c1:: 图片输出路径 }}
     + `html-loader`: {{c1:: 处理html中img资源 }}
 
-### 打包其他资源
+### 打包其他资源 [	](buildTool_20200626090144146)
 
 + 配置代码如下：
     ```js
@@ -261,9 +261,9 @@ module: {
     + `file-loader`：{{c1:: 复制对所有没有排除的文件打包· }}
         1. `outputPath`：{{c1:: 文件输出路径 }}
 
-## webpack生产环境配置
+## webpack生产环境配置 [	](buildTool_20200626090144147)
 
-### 提取css成单独文件
+### 提取css成单独文件 [	](buildTool_20200626090144149)
 
 + 配置代码如下：
 ```js
@@ -291,7 +291,7 @@ module: {
 + `MiniCssExtractPlugin.loader`:{{c1:: 取代style-loader,提取js中的css成单独文件 }}
 + `filename`:{{c1:: 对输出的css文件进行重命名 }}
 
-### webpack进行css兼容性处理
+### webpack进行css兼容性处理 [	](buildTool_20200626090144150)
 
 + 所需模块：{{c1:: ostcss-loader postcss-preset-env }}
 + 配置代码如下：
@@ -324,7 +324,7 @@ module: {
         }
     ```
 
-### 打包时压缩css
+### 打包时压缩css [	](buildTool_20200626090144151)
 
 ```js
 plugins: [
@@ -341,7 +341,7 @@ plugins: [
   ]
 ```
 
-### 打包时执行js语法检查
+### 打包时执行js语法检查 [	](buildTool_20200626090144152)
 
 + 所需模块： {{c1:: `eslint-loader` `eslint` }}
 + package.json中eslintConfig中设置
@@ -370,7 +370,7 @@ plugins: [
 
 
 
-### 打包时将js文件与html文件压缩
+### 打包时将js文件与html文件压缩 [	](buildTool_20200626090144154)
 
 ```js
   plugins: [
@@ -392,20 +392,21 @@ plugins: [
 ```
 
 
-### HMR
+### HMR [	](buildTool_20200626090144155)
 
-+ 部署命令：`npx webpack-dev-server`
++ 部署命令：{{c1:: `npx webpack-dev-server` }}
 
 + HMR: {{c1:: hot module replacement 热模块替换 / 模块热替换 }}
 
-+ 作用：{{c1:: 一个模块发生变化，只会重新打包这一个模块（而不是打包所有模块）,极大提升构建速度 }}
+  + 作用：{{c1:: 一个模块发生变化，只会重新打包这一个模块（而不是打包所有模块）,极大提升构建速度 }}
 
-+ 样式文件：可以使用HMR功能：因为style-loader内部实现了
+1. 样式文件：{{c1:: 可以使用HMR功能：因为style-loader内部实现了 }}
 
-+ js文件：默认不能使用HMR功能 --> 
-    + 注意：HMR功能对js的处理，只能处理非入口js文件的其他文件。
-    + 解决：需要修改js模块代码，添加支持HMR功能的代码
+2. js文件：默认不能使用HMR功能 --> 
+    + 注意：{{c1:: HMR功能对js的处理，只能处理非入口js文件的其他文件。 }}
+    + 解决：{{c1:: 需要修改js模块代码，添加支持HMR功能的代码 }}
     ```js
+        //{{c1::
         if (module.hot) {
         // 一旦 module.hot 为true，说明开启了HMR功能。 --> 让HMR功能代码生效
         module.hot.accept('./print.js', function() {
@@ -414,13 +415,16 @@ plugins: [
             print();
         });
         }
+        //}}
     ```
     
-+ html文件: 默认不能使用HMR功能.同时会导致问题：html文件不能热更新了~ （不用做HMR功能）
-    + 解决：修改entry入口，将html文件引入
++ html文件: {{c1:: 默认不能使用HMR功能.同时会导致问题：html文件不能热更新了~ （不用做HMR功能） }}
+    + 解决：{{c1:: 修改entry入口，将html文件引入 }}
     ```js
-    module.exports = {
-    entry: ['./src/js/index.js', './src/index.html'],
+      //{{c1::
+      module.exports = {
+      entry: ['./src/js/index.js', './src/index.html'],
+      //}}
     ```
     
 + 开启HMR功能
@@ -438,7 +442,7 @@ plugins: [
         //}}
     ```
 
-### source-map
+### source-map [	](buildTool_20200626090144156)
 
 + `source-map`: 一种 提供源代码到构建后代码映射 技术 （如果构建后代码出错了，通过映射可以追踪源代码错误）
 + 可选值: `[inline-|hidden-|eval-][nosources-][cheap-[module-]]source-map`
@@ -452,12 +456,12 @@ plugins: [
     ```
 
 
-### oneOf
+### oneOf [	](buildTool_20200626090144157)
 
 + 作用：{{c1:: 在oneOf中声明的loader数组，只会匹配一个loader }}
 + 注意：{{c1:: 不能有两个配置处理同一种类型文件 }}
 
-### 缓存
+### 缓存 [	](buildTool_20200626090144158)
 + 开启babel缓存
     + 作用： 第二次构建时，如果文件没有变化，会读取之前的缓存
     + 配置：
@@ -506,7 +510,7 @@ plugins: [
         问题: {{c1:: 因为css是在js中被引入的，所以同属于一个chunk,js和css的hash值还是一样的 }}
     3. `contenthash`:{{c1::  根据文件的内容生成hash值。不同文件hash值一定不一样    }}
 
-### 使用express构建一个node服务器向外暴露静态资源
+### 使用express构建一个node服务器向外暴露静态资源 [	](buildTool_20200626090144159)
 ```js
     //{{c1::
     const express = require('express');
@@ -518,7 +522,7 @@ plugins: [
     //}}
 ```
 
-### treeShaking
+### treeShaking [	](buildTool_20200626090144160)
 
 + 开启条件：
     1. {{c1:: 必须使用ES6模块化   }}
@@ -529,11 +533,12 @@ plugins: [
 + 作用: {{c1:: 减少代码体积 }}
 
 
-### code split的3种方式
+### code split的3种方式 [	](buildTool_20200626090144161)
 
 + 通过多入口方式来拆分js文件：
     + 配置：
     ```js
+    //{{c1::
     entry: {
       index: './src/js/index.js',
       test: './src/js/test.js'
@@ -542,58 +547,61 @@ plugins: [
       filename: 'js/[name].[contenthash:10].js',
       path: resolve(__dirname, 'build')
     }
+    //}}
     ```
-    + 注意：单页面应用通常是单入口，多页面应用对应多入口，
-    + 问题：不太灵活，每次添加js文件都需要添加入口。
+    + 注意：{{c1:: 单页面应用通常是单入口，多页面应用对应多入口， }}
+    + 问题：{{c1:: 不太灵活，每次添加js文件都需要添加入口。 }}
 +  配置`optimization`
     ```js
-    optimization: {
       //{{c1::
-      splitChunks: {
-        chunks: 'all'
+      optimization: {
+        splitChunks: {
+          chunks: 'all'
+        }
       }
       //}}
-    }
     ```
     + 作用：
         1. {{c1:: 可以将node_modules中代码单独打包一个chunk最终输出 }}
         2. {{c1:: 自动分析多入口chunk中，有没有公共的文件。如果有会打包成单独一个chunk }}
 +  通过import动态导入语法将某个文件单独打包
     ```js
+    //{{c1::
     import(/* webpackChunkName: 'test' */'./test')
-      .then(({ mul, count }) => {
+    .then(({ mul, count }) => {
       // 文件加载成功~
       // eslint-disable-next-line
       console.log(mul(2, 5));
     })
-      .catch(() => {
+    .catch(() => {
       // eslint-disable-next-line
       console.log('文件加载失败~');
     });
+    //}}
   ```
-
 + 3种方式并不冲突
 
-### 懒加载与预加载
+### 懒加载与预加载 [	](buildTool_20200626090144162)
 
-- 懒加载：当文件需要使用时才加载
-- 预加载：等其他资源加载完毕，浏览器空闲了，再偷偷加载资源
-- 正常加载：可以认为是并行加载（同一时间加载多个文件） 
+- 懒加载：{{c1:: 当文件需要使用时才加载 }}
+- 预加载：{{c1:: 等其他资源加载完毕，浏览器空闲了，再偷偷加载资源 }}
+- 正常加载：{{c1:: 可以认为是并行加载（同一时间加载多个文件）  }}
 - 配置：
 ```js
+//{{c1::
 document.getElementById('btn').onclick = function() {
   import(/* webpackChunkName: 'test', webpackPrefetch: true */'./test')
   .then(({ mul }) => {
     console.log(mul(4, 5));
   });
 };
+//}}
 ```
 
-### PWA
+### PWA [	](buildTool_20200626090144163)
 
-- PWA: 渐进式网络开发应用程序(离线可访问)
-- 所需模块： workbox-webpack-plugin
-
+- PWA: {{c1:: 渐进式网络开发应用程序(离线可访问) }}
+- 所需模块： {{c1:: workbox-webpack-plugin }}
 ```js
     new WorkboxWebpackPlugin.GenerateSW({
       /*
@@ -605,9 +613,7 @@ document.getElementById('btn').onclick = function() {
       skipWaiting: true
     })
 ```
-
 - 注册serviceworker
-
 ```js
 if ('serviceWorker' in navigator) {
   window.addEventListener('load', () => {
@@ -622,9 +628,7 @@ if ('serviceWorker' in navigator) {
   });
 }
 ```
-
 -   eslint不认识 window、navigator全局变量
-
 ```js
 // 解决：需要修改package.json中eslintConfig配置
 "eslintConfig": {
@@ -634,15 +638,11 @@ if ('serviceWorker' in navigator) {
     }
 }
 ```
-
 - sw代码必须运行在服务器上
-
   - npm i serve -g
   - serve -s build :启动服务器，将build目录下所有资源作为静态资源暴露出去
 
-  
-
-### 多进程打包
+### 多进程打包 [	](buildTool_20200626090144164)
 
 安装：npm i thread-loader -D
 
@@ -689,20 +689,20 @@ if ('serviceWorker' in navigator) {
           },
   ```
 
-### dll技术
+### dll技术 [	](buildTool_20200626090144165)
 
-- 作用：对某些库（第三方库：jquery、react、vue...）进行单独打包
-
+- 作用：{{c1:: 对某些库（第三方库：jquery、react、vue...）进行单独打包 }}
 - 配置`webpack.dll.js`
   ```js
   const { resolve } = require('path');
   const webpack = require('webpack');
-
   module.exports = {
     entry: {
       // 最终打包生成的[name] --> jquery
+      //{{c1::
       // ['jquery'] --> 要打包的库是jquery
       jquery: ['jquery'],
+      //}}
     },
     output: {
       filename: '[name].js',
@@ -711,52 +711,56 @@ if ('serviceWorker' in navigator) {
     },
     plugins: [
       // 打包生成一个 manifest.json --> 提供和jquery映射
+      //{{c1::
       new webpack.DllPlugin({
         name: '[name]_[hash]', // 映射库的暴露的内容名称
         path: resolve(__dirname, 'dll/manifest.json') // 输出文件路径
       })
+      //}}
     ],
     mode: 'production'
   };
   ```
-
-- 生成manifest.json文件命令：`webpack --config webpack.dll.js`
-  
+- 生成manifest.json文件命令：{{c1:: `webpack --config webpack.dll.js` }}
 - 告诉webpack哪些库不参与打包，同时使用时的名称也得变~
-  
   ```JS
-  new webpack.DllReferencePlugin({
-  manifest: resolve(__dirname, 'dll/manifest.json')
-  }),
+    //{{c1::
+      new webpack.DllReferencePlugin({
+      manifest: resolve(__dirname, 'dll/manifest.json')
+      }),
+    //}}
   ```
-  
 - 将某个文件打包输出去，并在html中自动引入该资源
   ```JS
-  new AddAssetHtmlWebpackPlugin({
-  filepath: resolve(__dirname, 'dll/jquery.js')
-  })
+  //{{c1::
+    new AddAssetHtmlWebpackPlugin({
+    filepath: resolve(__dirname, 'dll/jquery.js')
+    })
+  //}}
   ```
 
-### webpack entry的配置的3种值
+### webpack entry的配置的3种值 [	](buildTool_20200626090144166)
 
-- string: 只声明单个js文件，只输出一个bundle文件
+- string: {{c1:: 只声明单个js文件，只输出一个bundle文件 }}
 
-- array：声明多个js文件，合并后只输出一个bundle文件
+- array：{{c1:: 声明多个js文件，合并后只输出一个bundle文件 }}
 
-- object：会安装对象中的属性值为文件名生成多个bundle文件。
+- object：{{c1:: 会安装对象中的属性值为文件名生成多个bundle文件。 }}
 
 - 混合用法：
 
   ```js
+  //{{c1::
   {
     // 所有入口文件最终只会形成一个chunk, 输出出去只有一个bundle文件。
     index: ['./src/index.js', './src/count.js'], 
       // 形成一个chunk，输出一个bundle文件。
       add: './src/add.js'
   }
+  //}}
   ```
 
-### webpack output配置
+### webpack output配置 [	](buildTool_20200626090144168)
 
 ```js
 module.exports = {
@@ -789,7 +793,7 @@ module.exports = {
 };
 ```
 
-### webpack module 配置
+### webpack module 配置 [	](buildTool_20200626090144169)
 
 ```js
   module: {
@@ -828,7 +832,7 @@ module.exports = {
   },
 ```
 
-###  webpack devServer
+###  webpack devServer [	](buildTool_20200626090144170)
 
 ```js
  devServer: {
@@ -893,4 +897,3 @@ module.exports = {
     //}}
   }
 ```
-
