@@ -601,92 +601,99 @@ document.getElementById('btn').onclick = function() {
 ### PWA [	](buildTool_20200626090144163)
 
 - PWA: {{c1:: 渐进式网络开发应用程序(离线可访问) }}
-- 所需模块： {{c1:: workbox-webpack-plugin }}
-```js
-    new WorkboxWebpackPlugin.GenerateSW({
-      /*
-        1. 帮助serviceworker快速启动
-        2. 删除旧的 serviceworker
-        生成一个 serviceworker 配置文件~
-      */  
-      clientsClaim: true,
-      skipWaiting: true
-    })
-```
-- 注册serviceworker
-```js
-if ('serviceWorker' in navigator) {
-  window.addEventListener('load', () => {
-    navigator.serviceWorker
-      .register('/service-worker.js')
-      .then(() => {
-        console.log('sw注册成功了~');
-      })
-      .catch(() => {
-        console.log('sw注册失败了~');
+1. 所需模块： {{c1:: workbox-webpack-plugin }}
+  ```js
+//{{c1::
+new WorkboxWebpackPlugin.GenerateSW({
+  /*
+          作用：
+          1. 帮助serviceworker快速启动
+          2. 删除旧的 serviceworker
+          生成一个 serviceworker 配置文件~
+        */  
+  clientsClaim: true,
+  skipWaiting: true
+})
+//}}
+  ```
+2. 在入口文件中，注册serviceworker配置文件
+  ```js
+  //{{c1::
+    if ('serviceWorker' in navigator) {
+      window.addEventListener('load', () => {
+        navigator.serviceWorker
+          .register('/service-worker.js')
+          .then(() => {
+            console.log('sw注册成功了~');
+          })
+          .catch(() => {
+            console.log('sw注册失败了~');
+          });
       });
-  });
-}
-```
--   eslint不认识 window、navigator全局变量
-```js
-// 解决：需要修改package.json中eslintConfig配置
-"eslintConfig": {
-  "extends": "airbnb-base",
-    "env": {
-      "browser": true
     }
-}
-```
-- sw代码必须运行在服务器上
-  - npm i serve -g
-  - serve -s build :启动服务器，将build目录下所有资源作为静态资源暴露出去
+  //}}
+  ```
+3. eslint不认识 window、navigator全局变量问题的解决：
+  ```js
+  // 解决：需要修改package.json中eslintConfig配置
+  //{{c1::
+  "eslintConfig": {
+    "extends": "airbnb-base",
+      "env": {
+        "browser": true
+      }
+  }
+  //}}{{c1::  }}
+  ```
+- serviceworker代码必须运行在服务器上:
+  1. {{c1:: `npm i serve -g` }}
+  2. {{c1:: `serve -s build` :启动服务器，将build目录下所有资源作为静态资源暴露出去 }}
 
 ### 多进程打包 [	](buildTool_20200626090144164)
 
 安装：npm i thread-loader -D
 
   ```js
-          {
-            test: /\.js$/,
-            exclude: /node_modules/,
-            use: [
-              /* 
-                开启多进程打包。 
-                进程启动大概为600ms，进程通信也有开销。
-                只有工作消耗时间比较长，才需要多进程打包
-              */
-              //{{c1::
-              {
-                loader: 'thread-loader',
-                options: {
-                  workers: 2 // 进程2个,默认是1
-                }
-              },
-              //}}
-              {
-                loader: 'babel-loader',
-                options: {
-                  presets: [
-                    [
-                      '@babel/preset-env',
-                      {
-                        useBuiltIns: 'usage',
-                        corejs: { version: 3 },
-                        targets: {
-                          chrome: '60',
-                          firefox: '50'
-                        }
-                      }
-                    ]
-                  ],
-                  // 开启babel缓存
-                  // 第二次构建时，会读取之前的缓存
-                  cacheDirectory: true
-                }
+{
+  test: /\.js$/,
+  exclude: /node_modules/,
+  use: [
+    /* 
+      开启多进程打包。 
+      进程启动大概为600ms，进程通信也有开销。
+      只有工作消耗时间比较长，才需要多进程打包
+    */
+    //{{c1::
+    {
+      loader: 'thread-loader',
+      options: {
+        workers: 2 // 进程2个,默认是1
+      }
+    },
+    //}}
+    {
+      loader: 'babel-loader',
+      options: {
+        presets: [
+          [
+            '@babel/preset-env',
+            {
+              useBuiltIns: 'usage',
+              corejs: { version: 3 },
+              targets: {
+                chrome: '60',
+                firefox: '50'
               }
-            ]
-          },
+            }
+          ]
+        ],
+        // 开启babel缓存
+        // 第二次构建时，会读取之前的缓存
+        cacheDirectory: true
+      }
+    }
+  ]
+},
   ```
 
 ### dll技术 [	](buildTool_20200626090144165)
