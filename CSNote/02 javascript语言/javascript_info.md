@@ -5269,7 +5269,7 @@ alert(commits[0].author.login);
     1. {{c1:: `Access-Control-Allow-Origin` 值与 `Origin` 的相同}}
     2. {{c1:: `Access-Control-Allow-Credentials` 为 `true`}}
 + 要授予 JavaScript 访问任何 response header 的权限:{{c1::服务器应该在 header Access-Control-Expose-Headers 中列出允许的那些 header}}
-+ 对于跨源非简单请求，{{c1:: 会在请求之前发出初步“预检”请求： }]
++ 对于跨源非简单请求，{{c1:: 会在请求之前发出初步“预检”请求： }}
   - → 浏览器将具有以下 header 的{{c1:: `OPTIONS` }}请求发送到相同的 URL：
     1. {{c1:: `Access-Control-Request-Method` 有请求方法。}}
     2. {{c1:: `Access-Control-Request-Headers` 以逗号分隔的“非简单” header 列表。}}

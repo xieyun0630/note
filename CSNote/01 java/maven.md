@@ -8,13 +8,13 @@
 
 ### ant命令 [	](maven_20200626090144119)
 
-`ant`:{{c1:: 在当前目录下搜索build.xml文件，并执行默认配置}}
-`ant -find`：{{c1:: 到上级目录搜索build.xml文件，直到文件系统的根路径。}}
-`ant -f/-file a.xml`:{{c1:: 显示指定a.xml做为生成文件}}
-`ant -quiet\-q`:{{c1:: 运行ant时只输出必要的信息}}
-`ant -verbose -l a.log`:{{c1:: 运行ant时输出更多的信息到a.log文件}}
-`ant -Denv1=%ANT_HOME%`:{{c1:: 设置env1参数的值为环境变量}}
-`ant -Denv1=$ANT_HOME`:{{c1:: linux上设置env1参数的值为环境变量}}
++ `ant`:{{c1:: 在当前目录下搜索build.xml文件，并执行默认配置}}
++ `ant -find`：{{c1:: 到上级目录搜索build.xml文件，直到文件系统的根路径。}}
++ `ant -f/-file a.xml`:{{c1:: 显示指定a.xml做为生成文件}}
++ `ant -quiet\-q`:{{c1:: 运行ant时只输出必要的信息}}
++ `ant -verbose -l a.log`:{{c1:: 运行ant时输出更多的信息到a.log文件}}
++ `ant -Denv1=%ANT_HOME%`:{{c1:: 设置env1参数的值为环境变量}}
++ `ant -Denv1=$ANT_HOME`:{{c1:: linux上设置env1参数的值为环境变量}}
 
 ### `<project>`元素的 [	](maven_20200626090144120)
 + 常用属性:
@@ -221,6 +221,7 @@
 ### 自定义本地仓库目录地址 [	](maven_20200410012359793)
 {{c1::
 将以下配置加入settings.xml文件
+
 ```xml
 <settings>
 <localRepository>D:\java\myRepository</localRepository>
@@ -229,7 +230,7 @@
 }}
 
 ### 将本地项目的构建安装到Maven仓库中 [	](maven_20200410012359794)
-命令：{{c1:: mvn clean install }}
+命令：{{c1:: `mvn clean install` }}
 
 ### Maven仓库的分类 [	](maven_20200410012359796)
 + {{c1:: 本地仓库 }}
