@@ -445,7 +445,7 @@ plugins: [
 ### source-map [	](buildTool_20200626090144156)
 
 + `source-map`: 一种 提供源代码到构建后代码映射 技术 （如果构建后代码出错了，通过映射可以追踪源代码错误）
-+ 可选值: `[inline-|hidden-|eval-][nosources-][cheap-[module-]]source-map`
++ 可选值: {{c1:: `[inline-|hidden-|eval-][nosources-][cheap-[module-]]source-map` }}
 + 配置：
     ```java
         module.exports = {

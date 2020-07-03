@@ -85,9 +85,7 @@ switch (age) {
 ```javascript
 function hello(name) {
   let phrase = `Hello, ${name}!`;
-
   debugger;  // <-- 调试器会在这停止
-
   say(phrase);
 }
 ```
@@ -142,14 +140,11 @@ alert(user["likes birds"]); // true
 
 ```javascript
 let fruit = prompt("Which fruit to buy?", "apple");
-
 let bag = {
   [fruit]: 5, // 属性名从 fruit 变量中计算
 };
-
 alert( bag.apple ); // 5 如果 fruit="apple"
 ```
-
 }}
 
 ### 用存在的变量当做属性名时的简写  [	](javascript_info_20191219101334407)
@@ -236,9 +231,25 @@ delete user.name;
 
 ### Symbol类型  [	](javascript_info_20191219101334424)
 
-Symbol 总是不同的值，即使它们有相同的名称。如果我们希望同名 Symbol 相等，那么{{c1::  我们应该使用全局注册表：`Symbol.for(key)` 返回（如果需要的话创建）一个以 `key` 作为名称的全局 Symbol。`Symbol.for` 的多次调用完全返回相同的 Symbol。}}
++ Symbol 总是不同的值，即使它们有相同的名称。如果我们希望同名 Symbol 相等，那么{{c1::  我们应该使用全局注册表：`Symbol.for(key)` 返回（如果需要的话创建）一个以 `key` 作为名称的全局 Symbol。`Symbol.for` 的多次调用完全返回相同的 Symbol。}}
+  ```js
+  //{{c1:: 
+  let s = Symbol();
+  let one = Symbol("蚂蚁部落");
+  let two = Symbol("蚂蚁部落");
+  console.log(one == two);
 
-Symbol 不是 100% 隐藏的。有一个内置方法 {{c1::  [Object.getOwnPropertySymbols(obj)](https://developer.mozilla.org/zh/docs/Web/JavaScript/Reference/Global_Objects/Object/getOwnPropertySymbols) }}允许我们获取所有的 Symbol。还有一个名为{{c1::   [Reflect.ownKeys(obj)](https://developer.mozilla.org/zh/docs/Web/JavaScript/Reference/Global_Objects/Reflect/ownKeys) }}返回**所有**键，包括 Symbol。
+  let one = Symbol.for("蚂蚁部落");
+  let two = Symbol.for("蚂蚁部落");
+  console.log(typeof one);
+  console.log(one == two);
+  //}}
+  ```
+
+
+
++ Symbol 不是 100% 隐藏的。有一个内置方法 {{c1::  [Object.getOwnPropertySymbols(obj)](https://developer.mozilla.org/zh/docs/Web/JavaScript/Reference/Global_Objects/Object/getOwnPropertySymbols) }}允许我们获取所有的 Symbol。
++ 还有一个名为{{c1::   [Reflect.ownKeys(obj)](https://developer.mozilla.org/zh/docs/Web/JavaScript/Reference/Global_Objects/Reflect/ownKeys) }}返回**所有**键，包括 Symbol。
 
 ### 对象方法与 "this"  [	](javascript_info_20191219101334426)
 
