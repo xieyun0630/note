@@ -280,7 +280,7 @@ var watchExampleVM = new Vue({
 + 多重值：{{c1:: `<div :style="{ display: ['-webkit-box', '-ms-flexbox', 'flex'] }"></div>`}}
   + {{c1:: 只会渲染数组中最后一个被浏览器支持的值}}
 
-### 用 key 管理可复用的元素
+### 用 key 管理可复用的元素 [	](vue_20200707060718093)
 
 ```xml
 <!-- {{c1:: -->
@@ -295,14 +295,14 @@ var watchExampleVM = new Vue({
 <!-- }} -->
 ```
 
-### v-if vs v-show
+### v-if vs v-show [	](vue_20200707060718094)
 
 + `v-if`:{{c1:: 如果在初始渲染时条件为假，则什么也不做——直到条件第一次变为真时，才会开始渲染条件块。}}
 + `v-show`:{{c1:: 不管初始条件是什么，元素总是会被渲染，并且只是简单地基于 CSS 进行切换。}}
 
-## 列表渲染
+## 列表渲染 [	](vue_20200707060718095)
 
-### `v-for`指令
+### `v-for`指令 [	](vue_20200707060718098)
 
 + 在v-for里遍历数组
   1. {{c1:: `v-for="item in/of items"`  }}
@@ -318,7 +318,7 @@ var watchExampleVM = new Vue({
 + 注意：{{c1:: 为了给 Vue 一个提示，以便它能跟踪每个节点的身份，建议尽可能在使用 v-for 时提供 key attribute }}
 + 不推荐在同一元素上使用 v-if 和 v-for:{{c1:: 当它们处于同一节点，`v-for` 的优先级比 `v-if` 更高}}
 
-### Vue.js 为 `v-on` 提供了事件修饰符:
+### Vue.js 为 `v-on` 提供了事件修饰符: [	](vue_20200707060718099)
 
 + `.stop`:{{c1:: 阻止冒泡 }}
 + `.prevent`:{{c1:: 拦截默认事件 }}
@@ -334,7 +334,7 @@ var watchExampleVM = new Vue({
   ```
   }}
 
-### `v-on`按键修饰符
+### `v-on`按键修饰符 [	](vue_20200707060718100)
 
 ```xml
 <!-- 只有在 `key` 是 `Enter` 时调用 `vm.submit()` -->
@@ -355,7 +355,7 @@ var watchExampleVM = new Vue({
 <!-- }} -->
 ```
 
-### `.exact` 修饰符
+### `.exact` 修饰符 [	](vue_20200707060718101)
 
 ```html
 <!-- 即使 Alt 或 Shift 被一同按下时也会触发 -->
@@ -374,20 +374,20 @@ var watchExampleVM = new Vue({
 
 
 
-### v-model 在内部为不同的输入元素使用不同的 property 并抛出不同的事件：
+### v-model 在内部为不同的输入元素使用不同的 property 并抛出不同的事件： [	](vue_20200707060718102)
 
 + `text` 和 `textarea` 元素:{{c1:: 使用 value property 和 input 事件； }}
 + `checkbox` 和 radio:{{c1::  使用 checked property 和 change 事件； }}
   + 单个复选框，绑定到布尔值,多个复选框，绑定到同一个数组
 + `select`:{{c1::  字段将 value 作为 prop 并将 change 作为事件。 }}
 
-### `v-model`修饰符
+### `v-model`修饰符 [	](vue_20200707060718103)
 
 + 转为在 change 事件之后进行同步：{{c1:: `<input v-model.lazy="msg">`  }}
 + 自动将用户的输入值转为数值类型:{{c1:: `<input v-model.number="age" type="number">`  }}
 + 自动过滤用户输入的首尾空白字符:{{c1:: `<input v-model.trim="msg">`  }}
 
-### `v-model`把值绑定到 Vue 实例的一个动态 property
+### `v-model`把值绑定到 Vue 实例的一个动态 property [	](vue_20200707060718104)
 
 ```html
 
@@ -414,9 +414,9 @@ vm.selected.number // => 123
 </script>
 ```
 
-### 组件基础
+### 组件基础 [	](vue_20200707060718105)
 
-### 监听子组件事件
+### 监听子组件事件 [	](vue_20200707060718106)
 
 + 父级组件可以像处理 native DOM 事件一样通过 v-on 监听子组件实例的任意事件：
   ```xml
@@ -437,7 +437,7 @@ vm.selected.number // => 123
   <!-- }} -->
   ```
 
-### 使用子组件事件抛出一个值
+### 使用子组件事件抛出一个值 [	](vue_20200707060718107)
 
 + 这时可以使用 $emit 的第二个参数来提供这个值：
   ```xml
@@ -463,7 +463,7 @@ vm.selected.number // => 123
   //}}
   ```
 
-### 在组件上使用 `v-model`
+### 在组件上使用 `v-model` [	](vue_20200707060718108)
 
 + 自定义事件也可以用于创建支持 `v-model` 的自定义输入组件。记住：
   ```html
@@ -508,7 +508,7 @@ vm.selected.number // => 123
   <custom-input v-model="searchText"></custom-input>
   ```
 
-### 动态组件
+### 动态组件 [	](vue_20200707060718109)
 
 + 动态组件的使用
   ```xml
@@ -521,7 +521,7 @@ vm.selected.number // => 123
   + {{c1:: 一个组件的选项对象 }}
 
 
-### 特殊的 is attribute
+### 特殊的 is attribute [	](vue_20200707060718110)
 
 + `is attribute`的使用：
   ```xml
@@ -541,9 +541,9 @@ vm.selected.number // => 123
   <!-- }} -->
   ```
 
-## 深入了解组件
+## 深入了解组件 [	](vue_20200707060718111)
 
-### 组件注册
+### 组件注册 [	](vue_20200707060718113)
 
 - 组件名
   - 使用 kebab-case (建议)：{{c1:: `Vue.component('my-component-name', { /* ... */ })`}}
@@ -590,7 +590,7 @@ vm.selected.number // => 123
     //}}
     ```
 
-### 组件 Prop 的大小写注意点：
+### 组件 Prop 的大小写注意点： [	](vue_20200707060718114)
 
 + js中:
   ```js
@@ -608,7 +608,7 @@ vm.selected.number // => 123
   <!-- }} -->
   ```
 
-### 组件Prop的类型
+### 组件Prop的类型 [	](vue_20200707060718115)
 
 + 数组形式：没有指定类型
   ```js
@@ -631,7 +631,7 @@ vm.selected.number // => 123
   //}}
   ```
 
-### 传递静态或动态Prop
+### 传递静态或动态Prop [	](vue_20200707060718116)
 
 ```html
 <!-- 传入一个静态的值 -->
@@ -650,7 +650,7 @@ vm.selected.number // => 123
 <!-- }} -->
 ```
 
-### 组件的Prop 验证
+### 组件的Prop 验证 [	](vue_20200707060718117)
 
 ```js
 Vue.component('my-component', {
@@ -712,7 +712,7 @@ Vue.component('my-component', {
     })
   ```
 
-### 禁用 Attribute 继承
+### 禁用 Attribute 继承 [	](vue_20200707060718118)
 
 ```js
 //{{c1::
