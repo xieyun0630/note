@@ -722,3 +722,225 @@ Vue.component('my-component', {
 })
 //}}
 ```
+
+## 自定义事件 [	](vue_20200708060208394)
+
+### 自定义组件的 v-model [	](vue_20200708060208396)
+
++ 一个组件上的 v-model 默认会利用:{{c1:: 名为 **value 的 prop** 和名为 **input 的事件** }}
++ model 选项可以自定prop与事件：
+  ```js
+  Vue.component('base-checkbox', {
+    // model 选项可以自定prop与事件
+    //{{c1::
+    model: {
+      prop: 'checked',
+      event: 'change'
+    },
+    //}}
+    props: {
+      checked: Boolean
+    },
+    template: `
+    <input
+    type="checkbox"
+    v-bind:checked="checked"
+    v-on:change="$emit('change', $event.target.checked)"
+    >
+    `
+  })
+<base-checkbox v-model="lovingVue"></base-checkbox>
+  ```
+
+### 将组件根元素下子元素中原生事件绑定到组件 [	](vue_20200708060208397)
+
+```js
+Vue.component('base-input', {
+  inheritAttrs: false,
+  props: ['label', 'value'],
+  computed: {
+    // 将原生事件绑定到组件,下面是主要代码
+    // {{c1::
+    inputListeners: function () {
+      var vm = this
+      // `Object.assign` 将所有的对象合并为一个新对象
+      return Object.assign({},
+        // 我们从父级添加所有的监听器
+        this.$listeners,
+        // 然后我们添加自定义监听器，
+        // 或覆写一些监听器的行为
+        {
+          // 这里确保组件配合 `v-model` 的工作
+          input: function (event) {
+            vm.$emit('input', event.target.value)
+          }
+        }
+      )
+    }
+    //}}
+  },
+  template: `
+    <label>
+      {{ label }}
+      <input
+        v-bind="$attrs"
+        v-bind:value="value"
+        v-on="inputListeners"
+      >
+    </label>
+  `
+})
+```
+
+### `v-bind`指令中`.sync `修饰符 [	](vue_20200708060208398)
+
++ 主要作用：实现双向绑定，子组件修改父组件中的值。
+  
++ 在一个包含 `title` prop 的假设的组件中，我们可以用以下方法表达对其赋新值的意图：
+  
+  ```js
+  //{{c1::
+  this.$emit('update:title', newTitle)
+  //}}
+  ```
+  
++ 然后父组件可以监听那个事件并根据需要更新一个本地的数据 property。例如：
+  ```xml
+  <text-document
+    v-bind:title="doc.title"
+    v-on:update:title="doc.title = $event"
+  ></text-document>
+  ```
+  
++ 为了方便起见，我们为这种模式提供一个缩写，即 `.sync` 修饰符：
+  ```xml
+  <!-- {{c1:: -->
+  <text-document v-bind:title.sync="doc.title"></text-document>
+  <!-- }} -->
+  ```
+  
++ 当我们用一个对象同时设置多个 prop 的时候，也可以将这个 `.sync` 修饰符和 `v-bind` 配合使用：
+  ```xml
+  <!-- {{c1:: -->
+  <text-document v-bind.sync="doc"></text-document>
+  <!-- }} -->
+  ```
+
+## 插槽 [	](vue_20200708060247087)
+
+### 插槽 [	](vue_20200708060208399)
+
++ 编译作用域:{{c1:: **父级模板里的所有内容都是在父级作用域中编译的；子模板里的所有内容都是在子作用域中编译的。**}}
++ 插槽后备内容:
+  ```html
+  <!-- {{c1:: -->
+    <button type="submit">
+      <!-- 如果没有插槽内容就使用如下 -->
+     <slot>Submit</slot>
+    </button>
+  <!-- }} -->
+  ```
+
+### 具名插槽 [	](vue_20200708060208400)
+
++ 具名插槽的模板定义
+```xml
+<!-- {{c1:: -->
+  <div class="container">
+    <header>
+      <slot name="header"></slot>
+    </header>
+    <main>
+      <slot></slot>
+    </main>
+    <footer>
+      <slot name="footer"></slot>
+    </footer>
+  </div>
+<!-- }} -->
+```
++ 具名插槽调用
+```html
+<!-- {{c1:: -->
+  <base-layout>
+    <template v-slot:header>
+      <h1>Here might be a page title</h1>
+    </template>
+    <p>A paragraph for the main content.</p>
+    <p>And another one.</p>
+    <template v-slot:footer>
+      <p>Here's some contact info</p>
+    </template>
+  </base-layout>
+<!-- }} -->
+```
+
+### 作用域插槽 [	](vue_20200708060208401)
+
++ 模板中使用作用域插槽声明：
+  ```xml
+    <!-- {{c1:: -->
+    <span>
+      <!-- 注意这里传入的user值，如果没有这里的值，组件插槽模板中将访问不到user对象 -->
+      <slot v-bind:user="user">
+        {{ user.lastName }}
+      </slot>
+    </span>
+    <!-- }} -->
+  ```
++ 插槽prop调用：
+  ```xml
+    <!-- {{c1:: -->
+    <current-user>
+      // 将包含所有插槽 prop 的对象命名为 slotProps
+      <template v-slot:default="slotProps">
+        {{ slotProps.user.firstName }}
+      </template>
+    </current-user>
+    <!-- }} -->~
+  ```
+
+### 独占默认插槽的缩写语法 [	](vue_20200708060208402)
+
++ 不带参数的 `v-slot` 被假定对应默认插槽：
+  ```xml
+  <!-- {{c1:: -->
+  <!-- <current-user v-slot:default="slotProps"> -->
+  <current-user v-slot:default="slotProps">
+    {{ slotProps.user.firstName }}
+  </current-user>
+  <!-- }} -->
+  ```
+  
++ 只要出现多个插槽，{{c1:: **必须使用完整的基于 `<template>` 的语法** }}
+
++ 解构插槽 Prop
+  ```xml
+    <!-- {{c1:: -->
+  	<!-- 解构赋值，这里可以缩小范围不用接收整个对象 -->
+    <current-user v-slot="{ user: person }">
+      {{ person.firstName }}
+    </current-user>
+    <!-- }} -->
+    <!-- 你甚至可以定义后备内容，用于插槽 prop 是 undefined 的情形： -->
+    <!-- {{c1:: -->
+    <current-user v-slot="{ user = { firstName: 'Guest' } }">
+      {{ user.firstName }}
+    </current-user>
+    <!-- }} -->
+  ```
+  
++ 动态插槽名:
+  ```xml
+    <!-- {{c1:: -->
+    <base-layout>
+      <template v-slot:[dynamicSlotName]>
+        ...
+      </template>
+    </base-layout>
+    <!-- }} -->
+  ```
+  
++ 具名插槽的缩写:例如 v-slot:header 可以被重写为 {{c1:: `#header` }}
+
+  + 解构赋值版： {{c1::`#default="{ user }"`}}

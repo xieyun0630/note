@@ -214,7 +214,7 @@ force:{{c1:: 是否强制提交或回滚。}}
     }}
 + 指定JDBC类型与JAVA类型
     1. 核心配置指定
-        {{C1::
+        {{c1::
         
         ```xml
         <typeHandler handler="com.zy.converter.BooleanAndIntConverter"
@@ -223,7 +223,7 @@ force:{{c1:: 是否强制提交或回滚。}}
 }}
         
     2. java注解指定
-        {{C1::
+        {{c1::
         ```java
         @MappedJdbcTypes({JdbcType.VARCHAR})
         @MappedTypes({Name.class})

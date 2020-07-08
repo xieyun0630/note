@@ -429,7 +429,7 @@ End Function
 6. 调用子过程示例：
 
   ```vb
-  //{{C1::
+  //{{c1::
   Function findArea(Length As Double, Width As Variant)
      area Length, Width    ' To Calculate Area 'area' sub proc is called
   End Function
