@@ -215,12 +215,11 @@ force:{{c1:: 是否强制提交或回滚。}}
 + 指定JDBC类型与JAVA类型
     1. 核心配置指定
         {{C1::
-        
         ```xml
         <typeHandler handler="com.zy.converter.BooleanAndIntConverter"
                     javaType="Boolean" jdbcType="INTEGER" />
         ```
-}}
+        }}
         
     2. java注解指定
         {{C1::
@@ -604,3 +603,171 @@ public class News{
     1. {{c1:: NONE: 不使用自动映射。 }}
     2. {{c1:: PARTIAL：自动映射result定义之外的属性。 }}
     3. {{c1:: FULL：总是自动映射任意属性。 }}
+
+### 调用返回结果集的存储过程
++ sql语句如下
+```sql
+    # mysql数据库
+    create procedure p_get_news_by_id(v_id integer)
+    begin
+        select news_id,news_title,news_content
+        from news_inf
+        where news_id > v_id;
+    end
+```
++ XML Mapper版代码：
+```xml
+    	<select id="findNewsByProcedure" resultMap="newsMap"
+		statementType="CALLABLE">
+		{call p_get_news_by_id(#{id, mode=IN})}
+	</select>
+	<resultMap id="newsMap" type="news">
+		<id column="news_id" property="id"/>
+		<result column="news_title" property="title"/>
+		<result column="news_content" property="content"/>
+	</resultMap>
+```
++ 注解版
+```java
+	@Select("{call p_get_news_by_id(#{id, mode=IN})}")
+	@Options(statementType = StatementType.CALLABLE)
+	@Results({
+		@Result(column = "news_id", property = "id", id = true),
+		@Result(column = "news_title", property = "title"),
+		@Result(column = "news_content", property = "content")
+	})
+	List<News> findNewsByProcedure(Integer id);
+```
+
+### 调用带out模式参数的存储过程
++ sql语句如下
+```sql
+    # mysql数据库
+    create procedure p_insert_news
+    (out v_id integer, v_title varchar(255), v_content varchar(255))
+    begin
+        insert into news_inf
+        values (null, v_title, v_content);
+        -- last_insert_id是MySQL的内置函数，用于获取自增长主键的值
+        set v_id = last_insert_id();
+    end
+```
++ XML Mapper版代码：
+```xml
+    <!-- 传出参数必须制定`mode="OUT"` 或 `mode="INOUT"` -->
+	<insert id="saveNewsByProcedure" statementType="CALLABLE">
+		{call p_insert_news(#{id, mode=OUT, jdbcType=INTEGER}, #{title}, #{content})}
+	</insert>
+```
++ 注解版
+```java
+	@Insert("{call p_insert_news(#{id, mode=OUT, jdbcType=INTEGER}, #{title}, #{content})}")
+	@Options(statementType = StatementType.CALLABLE)
+	void saveNewsByProcedure(News news);
+```
+
+### 调用传出参数为游标引用的存储过程
++ sql语句如下
+```sql
+    # PostgreSQL
+    create function p_get_news_by_id(in v_id integer) RETURNS refcursor as $$
+    declare
+        ref refcursor;
+    begin
+        -- 打开、并返回游标
+        OPEN ref for select * from news_inf where news_id > v_id;
+        return ref;
+    end;
+```
++ XML Mapper版代码：
+```xml
+	<select id="findNewsByProcedure" statementType="CALLABLE">
+		{call p_get_news_by_id(#{id}, 
+		#{result, jdbcType=OTHER, mode=OUT, javaType=ResultSet, resultMap=newsMap})}
+	</select>
+	<resultMap id="newsMap" type="news">
+		<id column="news_id" property="id"/>
+		<result column="news_title" property="title"/>
+		<result column="news_content" property="content"/>
+	</resultMap>
+```
++ 注解版
+```java
+    // 注意2种方法的重载
+    @Select("{call p_get_news_by_id(#{id}, " +
+    "#{result, jdbcType=OTHER, mode=OUT, javaType=ResultSet, resultMap=newsMap})}")
+	@Options(statementType = StatementType.CALLABLE)
+	void findNewsByProcedure1(Map<String, Object> params);
+
+	@Select("{call p_get_news_by_id(#{id}, " +
+		"#{result, jdbcType=OTHER, mode=OUT, javaType=ResultSet, resultMap=newsMap})}")
+	@Options(statementType = StatementType.CALLABLE)
+	// 以复合对象为参数
+	void findNewsByProcedure2(NewsWrapper params);
+```
++ 2种重载方法的调用
+```java
+    // 调用Mapper对象的第一种方法执行持久化操作
+    newsMapper.findNewsByProcedure(map);
+    System.out.println("查询返回到记录为：" + map.get("result"));
+    // 调用Mapper对象的第二种方法执行持久化操作
+    newsMapper.findNewsByProcedure(nw);
+    System.out.println("查询返回到记录为：" + nw.getResult());
+```
+### Mybatis的3种映射策略
+1. {{c1:: 基于嵌套select的策略 }}
+    + 必要：{{c1:: 需要与延迟加载结合使用 }}
+2. {{c1:: 基于多表连接查询的映射策略 }}
+3. {{c1:: 基于多结果集的映射策略 }}
+
+### 基于嵌套select的一对一映射
++ PersonMapper.xml主要代码
+```xml
+	<select id="getPerson" resultMap="personMap">
+		select * from person_inf where person_id=#{id}
+	</select>
+	<resultMap id="personMap" type="person">
+		<id column="person_id" property="id"/>
+		<result column="person_name" property="name"/>
+		<result column="person_age" property="age"/>
+		<!-- 使用select指定的select语句去抓取关联实体，
+		当前实体的person_id列的值作为参数传给select语句 -->
+		<association property="address" javaType="Address"
+			column="person_id" select="org.crazyit.app.dao.AddressMapper.findAddressByOwner"
+			fetchType="eager"/>
+	</resultMap>
+```
++ AddressMapper.xml主要代码
+```xml
+	<select id="getAddress" resultMap="addressMap">
+		select * from address_inf where addr_id=#{id}
+	</select>
+	<resultMap id="addressMap" type="address">
+		<id column="addr_id" property="id"/>
+		<result column="addr_detail" property="detail"/>
+		<!-- 使用select指定的select语句去抓取关联实体，
+		当前实体的owner_id列的值作为参数传给select语句 -->
+        
+		<association property="person" javaType="Person"
+			column="owner_id" select="org.crazyit.app.dao.PersonMapper.getPerson" fetchType="lazy"/>
+	</resultMap>
+	<select id="findAddressByOwner" resultMap="addressMap">
+		select * from address_inf where owner_id=#{id}
+	</select>
+```
+
+### @One注解的用法
++ 单个主键：
+```java
+    @Result(property = "person", javaType = Person.class, column = "owner_id",
+        one = @One(select = "org.crazyit.app.dao.PersonMapper.getPerson",
+        fetchType = FetchType.LAZY))
+```
++ column属性指定复合主键：
+```java
+    @Result(property = "person", javaType = Person.class,
+        column = "{ownerName=owner_name, ownerAge=owner_age}",
+        one = @One(select = "org.crazyit.app.dao.PersonMapper.getPerson",
+        fetchType = FetchType.LAZY))
+```
+
