@@ -1,6 +1,6 @@
-## 工厂
+## 工厂 [	](spring_20200713102713838)
 
-### EJB对比Spring
+### EJB对比Spring [	](spring_20200713102713839)
 
 - EJB({{c1:: Enterprise Java Bean }})特点：
     1. {{c1:: 运行环境苛刻 }}
@@ -17,12 +17,12 @@
     3.  {{c1:: 模板 }}
     4.  {{c1:: 策略 }}
 
-### 设计模式
+### 设计模式 [	](spring_20200713102713841)
 
 1. 广义概念:{{c1:: 面向对象设计中，解决特定问题的经典代码 }}
 2. 狭义概念:{{c1:: GOF4人帮定义的23种设计模式：工厂、适配器、装饰器、门面、代理、模板... }}
 
-### 通用工厂的设计
+### 通用工厂的设计 [	](spring_20200713102713842)
 - 简单工厂会存在大量的代码冗余![image-20200411181701143](spring.assets/image-20200411181701143.png)
 - 通用工厂的代码
   ```java
@@ -43,14 +43,14 @@
   <!-- }} -->
   ```
 
-##  Spring的核心API
+##  Spring的核心API [	](spring_20200713102713844)
 
-### Spring的配置文件
+### Spring的配置文件 [	](spring_20200713102713845)
 
 1.  配置文件的放置位置：{{c1:: 没有硬性要求，可以任意位置 }}
 2.  配置文件的命名 ：{{c1:: 没有硬性要求 ，通常使用`applicationContext.xml` }}
 
-### ApplicationContext
+### ApplicationContext [	](spring_20200713102713846)
 
 + 作用：工厂接口
 - 主要实现类
@@ -58,7 +58,7 @@
   - web环境 ：{{c1::   `XmlWebApplicationContext` }}
 - 重量级资源含义：{{c1:: ApplicationContext工厂的对象占用大量内存，一个应用只会创建一个工厂对象，一定是线程安全的。 }}
 
-### spring程序开发流程
+### spring程序开发流程 [	](spring_20200713102713847)
 
 1. 创建类型:{{c1:: `public class Person{...}` }}
 2. 配置文件的配置 :{{c1:: `<bean id="person" class="com.baizhiedu.basic.Person"/>` }}
@@ -71,7 +71,7 @@
    ```
 - 注意：Spring工厂创建的对象，叫做{{c1:: bean或者组件(componet) }}
 
-### Spring工厂的相关的方法
+### Spring工厂的相关的方法 [	](spring_20200713102713849)
 
 + 通过这种方式获得对象，就不需要强制类型转换:{{c1:: `Person person = ctx.getBean("person", Person.class);`}}
 + 当前Spring的配置文件中 只能有一个`<bean class ..>`是Person类型:{{c1:: `Person person = ctx.getBean(Person.class);`}}
@@ -80,7 +80,7 @@
 + 用于判断是否存在指定id值得bean:{{c1:: `ctx.containsBeanDefinition("a")`}}
 + 用于判断是否存在指定id值得bean:{{c1:: `ctx.containsBean("person")`}}
 
-### 配置文件细节
+### 配置文件细节 [	](spring_20200713102713850)
 + `<bean  class="com.baizhiedu.basic.Person"/>`自动分配的id值为:{{c1:: com.baizhiedu.basic.Person#0 }}
 + name属性与id属性的区别
   1. 多个别名：{{c1:: 别名可以定义多个,但是id属性只能有一个值}}
@@ -88,7 +88,7 @@
   3. ctx.containsBean("p"):{{c1:: 也可以判断name值}}
   4. ctx.containsBeanDefinition("person"):{{c1:: 不可以判断name值}}
 
-### Spring工厂的底层实现原理(简易版)
+### Spring工厂的底层实现原理(简易版) [	](spring_20200713102713852)
 
 ![image-20200713221458576](spring.assets/image-20200713221458576.png)
 {{c1::![image-20200415113032782](spring.assets/image-20200415113032782.png)}}
