@@ -6,7 +6,7 @@
 
   询问一个问题，并返回访问者输入的内容，如果他按下「取消」则返回 `null`。
 
--  {{c1::  confirm(question)}}
+-  {{c1::  confirm(question)}}7
 
   提出一个问题，并建议在确定和取消之间进行选择。该选项以 `true/false` 形式返回。
 
@@ -36,7 +36,7 @@ alert( 2 ** 4 ); // 16 (2 * 2 * 2 * 2)
 
 函数表达式需要执行到以后才会生效。
 
-```js
+```javascript
 sayHi("John"); // error!
 let sayHi = function(name) {  // (*) no magic any more
   alert( `Hello, ${name}` );
@@ -85,9 +85,7 @@ switch (age) {
 ```javascript
 function hello(name) {
   let phrase = `Hello, ${name}!`;
-
   debugger;  // <-- 调试器会在这停止
-
   say(phrase);
 }
 ```
@@ -142,14 +140,11 @@ alert(user["likes birds"]); // true
 
 ```javascript
 let fruit = prompt("Which fruit to buy?", "apple");
-
 let bag = {
   [fruit]: 5, // 属性名从 fruit 变量中计算
 };
-
 alert( bag.apple ); // 5 如果 fruit="apple"
 ```
-
 }}
 
 ### 用存在的变量当做属性名时的简写  [	](javascript_info_20191219101334407)
@@ -225,7 +220,7 @@ Object.assign(user, permissions1, permissions2);
 
 ---
 {{c1::  
-```js
+```javascript
 let user={};
 user.name="John";
 user.surname="Smith";
@@ -236,9 +231,25 @@ delete user.name;
 
 ### Symbol类型  [	](javascript_info_20191219101334424)
 
-Symbol 总是不同的值，即使它们有相同的名称。如果我们希望同名 Symbol 相等，那么{{c1::  我们应该使用全局注册表：`Symbol.for(key)` 返回（如果需要的话创建）一个以 `key` 作为名称的全局 Symbol。`Symbol.for` 的多次调用完全返回相同的 Symbol。}}
++ Symbol 总是不同的值，即使它们有相同的名称。如果我们希望同名 Symbol 相等，那么{{c1::  我们应该使用全局注册表：`Symbol.for(key)` 返回（如果需要的话创建）一个以 `key` 作为名称的全局 Symbol。`Symbol.for` 的多次调用完全返回相同的 Symbol。}}
+  ```js
+  //{{c1:: 
+  let s = Symbol();
+  let one = Symbol("蚂蚁部落");
+  let two = Symbol("蚂蚁部落");
+  console.log(one == two);
 
-Symbol 不是 100% 隐藏的。有一个内置方法 {{c1::  [Object.getOwnPropertySymbols(obj)](https://developer.mozilla.org/zh/docs/Web/JavaScript/Reference/Global_Objects/Object/getOwnPropertySymbols) }}允许我们获取所有的 Symbol。还有一个名为{{c1::   [Reflect.ownKeys(obj)](https://developer.mozilla.org/zh/docs/Web/JavaScript/Reference/Global_Objects/Reflect/ownKeys) }}返回**所有**键，包括 Symbol。
+  let one = Symbol.for("蚂蚁部落");
+  let two = Symbol.for("蚂蚁部落");
+  console.log(typeof one);
+  console.log(one == two);
+  //}}
+  ```
+
+
+
++ Symbol 不是 100% 隐藏的。有一个内置方法 {{c1::  [Object.getOwnPropertySymbols(obj)](https://developer.mozilla.org/zh/docs/Web/JavaScript/Reference/Global_Objects/Object/getOwnPropertySymbols) }}允许我们获取所有的 Symbol。
++ 还有一个名为{{c1::   [Reflect.ownKeys(obj)](https://developer.mozilla.org/zh/docs/Web/JavaScript/Reference/Global_Objects/Reflect/ownKeys) }}返回**所有**键，包括 Symbol。
 
 ### 对象方法与 "this"  [	](javascript_info_20191219101334426)
 
@@ -531,7 +542,7 @@ if (zero) { // zero is true, because it's an object
 
 ### `js`中编写数字的更多方法  [	](javascript_info_20191219101334459)
 
-```js
+```javascript
 //数字简写
 1e-3 =//{{c1:: 1 / 1000 (=0.001)}}
 1.23e-6 =//{{c1:: 1.23 / 1000000 (=0.00000123) }}
@@ -909,7 +920,7 @@ alert(arr);  // 1, 2, 15
 **参数列表示例**：
  {{c1::  
 
-```js
+```javascript
 let value = arr.reduce(function(previousValue, item, index, arr) {
   // ...
 }, initial);
@@ -1457,7 +1468,7 @@ let sayHi = function func(who) {
 
 ### task: 为 `counter` 添加 `set` 和 `decrease` 方法  [	](javascript_info_20191219101334579)
 
-```js
+```javascript
 function makeCounter() {
   function counter() {
     return counter.count++;
@@ -1486,7 +1497,7 @@ P.S. 你也可以使用闭包或者函数属性来保持当前的计数，或者
 
  该解在局部变量中使用 `count`，但是在 `counter` 中直接添加了方法。它们共享同一个外部词法环境，并且可以访问当前 `count`。 
 
-```js
+```javascript
     function makeCounter() {
         function counter() {
             return counter.count++;
@@ -1696,7 +1707,7 @@ alert("Hello");
 
 **给浏览器渲染的机会**
 
-```js
+```javascript
 <div id="progress"></div>
 
 <script>
@@ -2399,7 +2410,7 @@ f.defer(1000)(1, 2); // shows 3 after 1 sec
 
 对原型的操作
 
-```js
+```javascript
 let animal = {
   eats: true
 };
@@ -2876,7 +2887,7 @@ try {
 
 ### 全局 catch  ` window.onerror`的使用 [	](javascript_info_20200114084259605)
 
-```js
+```javascript
   //{{c1::
   window.onerror = function(message, url, line, col, error) {
     alert(`${message}\n At ${line}:${col} of ${url}`);
@@ -2935,7 +2946,7 @@ alert( err instanceof SyntaxError ); // true
 ## 异步编程 [	](javascript_info_20200114084259608)
 
 ### Promise 对象的构造方法签名是： [	](javascript_info_20200114084259610)
-
++ promise对象的主要作用：{{c1:: 解决异步深层嵌套问题（回调地狱）,因为调整异步调用的顺序所造成的问题。 }}
 ```javascript
 //{{c1::
 let promise = new Promise(function(resolve, reject) {
@@ -2990,6 +3001,31 @@ promise.then(
 );
 
 promise.then(script => alert('One more handler to do something else!'));
+```
+
+### 基于Promise发送Ajax请求示例： [	](javascript_info_20200713065313191)
+
+```js
+    function queryData(url) {
+      var p = new Promise(function(resolve, reject){
+        // {{c1::
+        var xhr = new XMLHttpRequest();
+        xhr.onreadystatechange = function(){
+          if(xhr.readyState != 4) return;
+          if(xhr.readyState == 4 && xhr.status == 200) {
+            // 处理正常的情况
+            resolve(xhr.responseText);
+          }else{
+            // 处理异常情况
+            reject('服务器错误');
+          }
+        };
+        xhr.open('get', url);
+        xhr.send(null);
+        //}}
+      });
+      return p;
+    }
 ```
 
 ### task:下列代码会输出什么？ [	](javascript_info_20200114084259618)
@@ -3242,7 +3278,7 @@ Promise.allSettled(urls.map(url => fetch(url)))
 
 ### 如果浏览器不支持 `Promise.allSettled`的，使用`promise.all`的替代方式 [	](javascript_info_20200308041234746)
 
-```js
+```javascript
 if(!Promise.allSettled) {
   Promise.allSettled = function(promises) {
     //{{c1::
@@ -3262,7 +3298,7 @@ if(!Promise.allSettled) {
 
 - 在第一个 promise 被解决（“赢得比赛[wins the race]”）后，所有后面的结果/错误都会被忽略。
 
-```js
+```javascript
 Promise.race([
   new Promise((resolve, reject) => setTimeout(() => resolve(1), 1000)),
   new Promise((resolve, reject) => setTimeout(() => reject(new Error("Whoops!")), 2000)),
@@ -3495,7 +3531,7 @@ alert(sequence); // 0, 1, 2, 3
 
 ### 使用 generator 函数创建迭代器 [	](javascript_info_20200512080327646)
 
-```js
+```javascript
 let range = {
   from: 1,
   to: 5,
@@ -3538,7 +3574,7 @@ alert(str); // 0..9A..Za..z
 
 - 下面代码的执行结果与流程
 
-```js
+```javascript
 function* gen() {
   let ask1 = yield "2 + 2 = ?";
 
@@ -3642,32 +3678,31 @@ let range = {
 ```
 }}
 ### Async generator 与常规 generator 区别 [	](javascript_info_20200512080327653)
++ Async generator例子：
+  ```javascript
+    //对象
+    //{{c1::
+    let range = {
+      from: 1,
+      to: 5,
+      async *[Symbol.asyncIterator]() {
+        for(let value = this.from; value <= this.to; value++) {
+          await new Promise(resolve => setTimeout(resolve, 1000));
+          yield value;
+        }
+      }
+    };
+    //}}
 
-|                     | Generator                             | Async generator                                              |
-| :------------------ | :------------------------------------ | ------------------------------------------------------------ |
-| 声明方式            | {{c1::`function*`}}                   | {{c1::`async function*`}}                                    |
-| `next()` 返回的值是 | {{c1::`{value:…, done: true/false}`}} | {{c1::resolve 成 `{value:…, done: true/false}` 的 `Promise` }} |
-
-+ Async generator例子：{{c1::
-```javascript
-let range = {
-  from: 1,
-  to: 5,
-  async *[Symbol.asyncIterator]() {
-    for(let value = this.from; value <= this.to; value++) {
-      await new Promise(resolve => setTimeout(resolve, 1000));
-      yield value;
-    }
-  }
-};
-(async () => {
-  for await (let value of range) {
-    alert(value); // 1，然后 2，然后 3，然后 4，然后 5
-  }
-})();
-```
-}}
-
+    //迭代该对象
+    //{{c1::
+    (async () => {
+      for await (let value of range) {
+        alert(value); // 1，然后 2，然后 3，然后 4，然后 5
+      }
+    })();
+    //}}
+  ```
 ## 模块 [	](javascript_info_20200512080327654)
 
 ### 模块 [	](javascript_info_20200520043218611)
@@ -3685,7 +3720,7 @@ export function sayHi(user) {
 ```
 + 使用上面的模块:
   {{c1::
-  ```js
+  ```javascript
     <!doctype html>
     <script type="module">
       import {sayHi} from './say.js';
@@ -3694,20 +3729,11 @@ export function sayHi(user) {
   ```
   }}
 
-### 模块核心功能 [	](javascript_info_20200520043218615)
-
-1.  始终使用 “use strict”。
-2.  模块具有自己的本地顶级作用域，并可以通过 import/export 交换功能。
-3.  模块代码只执行一次。导出仅创建一次，然后会在导入之间共享。
-4.  `import.meta` 对象包含关于当前模块的信息
-  + {{c1:: 例：`alert(import.meta.url); `}}
-5.  在一个模块中，“this” 是 undefined
-
 ### 模块相较于常规脚本有几点差别： [	](javascript_info_20200520043218617)
-+ {{c1::默认是延迟解析的（deferred）。}}
-+ {{c1::Async 可用于内联脚本。}}
-+ {{c1:: 要从另一个源（域/协议/端口）加载外部脚本，需要 CORS header。}}
-+ {{c1::重复的外部脚本会被忽略}}
++ deferred:{{c1::默认是延迟解析的（deferred）。}}
++ Async:{{c1::Async 可用于内联脚本。}}
++ CORS:{{c1:: 要从另一个源（域/协议/端口）加载外部脚本，需要 CORS header。}}
++ 重复:{{c1::重复的外部脚本会被忽略}}
 
 ### 命名的`export`与默认的`export`区别 [	](javascript_info_20200520043218619)
 
@@ -3741,7 +3767,7 @@ export function sayHi(user) {
 
 1. 直接调用promise方式
    {{c1:: 
-  ```js
+  ```javascript
   import(modulePath)
     .then(obj => <module object>)
     .catch(err => <loading error, e.g. if no such module>)
@@ -3749,7 +3775,7 @@ export function sayHi(user) {
    }}
 2. async语法方式
     {{c1::
-  ```js
+  ```javascript
     async function load() {
       let say = await import('./say.js');
       say.hi(); // Hello!
@@ -4032,14 +4058,14 @@ showNotification({
 
 ### `offsetParent`元素与`offsetLeft/Top`属性 [	](javascript_info_20200525035508047)
 
-+ `offsetParent` 是最接近的祖先（ancestor）,最近的祖先为下列之一：
++ `offsetParent` 是在以下列出条件中最接近的祖先（ancestor）：
   1. {{c1:: CSS 定位的（position 为 absolute，relative 或 fixed），}}
   2. {{c1:: 或 `<td>`，`<th>`，`<table>`，}}
   3. {{c1:: 或 `<body>`。}}
 + 有以下几种情况下，`offsetParent` 的值为 null：
-  1. {{c1:: 对于未显示的元素（`display:none `或者不在文档中）。}}
-  1. {{c1:: 对于` <body>` 与` <html>`。}}
-  1. {{c1:: 对于带有 `position:fixed `的元素。}}
+  1. `display:none `：{{c1:: 对于未显示的元素（`display:none `或者不在文档中）。}}
+  1. ` <body>` ` <html>`：{{c1:: 对于` <body>` 与` <html>`。}}
+  1. `position:fixed `：{{c1:: 对于带有 `position:fixed `的元素。}}
 
 
 
@@ -4060,7 +4086,7 @@ showNotification({
 结果：
 {{c1::
 
-```js
+```javascript
 alert(example.offsetParent.id); // main
 alert(example.offsetLeft); // 180（注意：这是一个数字，不是字符串 "180px"）
 alert(example.offsetTop); // 180
@@ -4133,13 +4159,6 @@ alert(example.offsetTop); // 180
   
 
 ## 事件 [	](javascript_info_20200604111305675)
-
-### 使用事件时，可能会出现的错误 [	](javascript_info_20200525035508062)
-
-+ 函数应该被以 `sayThanks` 的形式进行非配，而不是 {{c1::`sayThanks()`}}。
-+ 使用函数，{{c1:: 而不是字符串}}。
-+ 不要对处理程序使用 {{c1:: `setAttribute`}}。
-+ DOM 属性是{{c1:: 大小写敏感的}}。
 
 ### `addEventListener`添加事件 [	](javascript_info_20200525035508064)
 
@@ -4284,7 +4303,7 @@ alert(example.offsetTop); // 180
 - 如果点击时，按键 Ctrl（在 Mac 中为 Cmd）是被按下的，则选择会被切换到被点击的元素上，但其他元素不会被改动。
 ![image-20200604104707552](javascript_info.assets\image-20200604104707552.png)
 一种结果：
-```js
+```javascript
 //{{c1:: 
 ul.onclick = function(event) {
     if (event.target.tagName != "LI") return;
@@ -4321,10 +4340,8 @@ function singleSelect(li) {
 4. 如果 mouseover 被触发了，则必须有 mouseout
 
 ### `mouseenter/mouseleave`与 `mouseover/mouseout` 的区别 [	](javascript_info_20200604111305683)
-+ 元素内部与后代之间的转换不会产生影响。
 + 事件 `mouseenter/mouseleave` 不会冒泡。
-
-![image-20200604113942191](javascript_info.assets\image-20200604113942191.png)
+  {{c1:: ![image-20200604113942191](javascript_info.assets\image-20200604113942191.png) }}
 
 
 
@@ -4341,7 +4358,7 @@ function singleSelect(li) {
 + 效果图：
   ![UZkXhRLqta](javascript_info.assets\UZkXhRLqta.gif)
 + 参考思路:
-```js
+```javascript
 //{{c1::
 document.onmouseover = function (event) {
   let anchorElem = event.target.closest('[data-tooltip]');
@@ -4500,90 +4517,11 @@ ball.onmousedown = function (event) { // (1) 启动处理
     - 特殊按键的代码为按键的名字：{{c1:: `"Enter"`，`"Backspace"`，`"Tab"` 等。}}
   - `key`:{{c1:: 字符（`"A"`，`"a"` 等），对于非字符（non-character）的按键，通常具有与 `code` 相同的值。}}
 
-## 网络请求 [	](javascript_info_20200604111305690)
 
-### 典型的 fetch 请求由两个 await 调用组成： [	](javascript_info_20200604111305691)
-```js
-//{{c1::
-let response = await fetch(url, options); // 解析 response header
-let result = await response.json(); // 将 body 读取为 json
-//}}
-```
-或者以 promise 形式：
-```js
-//{{c1::
-fetch(url, options)
-  .then(response => response.json())
-  .then(result => /* process result */)
-//}}
-```
-
-### fetch 请求响应的属性： [	](javascript_info_20200604111305692)
-+ response.status:{{c1:: response 的 HTTP 状态码， }}
-+ response.ok:{{c1:: HTTP 状态码为 200-299，则为 true。 }}
-+ response.headers:{{c1:: 类似于 Map 的带有 HTTP header 的对象。 }}
-
-### 获取fetch请求返回的response body 的方法： [	](javascript_info_20200604111305693)
-1. `response.text()`：{{c1:: 读取 response，并以文本形式返回 response，}}
-2. `response.json()`：{{c1:: 将 response 解析为 JSON 对象形式，}}
-3. `response.formData()`：{{c1:: 以 `FormData` 对象（form/multipart 编码，参见下一章）的形式返回 response，}}
-4. `response.blob()`：{{c1:: 以 Blob（具有类型的二进制数据）形式返回 response，}}
-5. `response.arrayBuffer()`：{{c1:: 以` ArrayBuffer`（低级别的二进制数据）形式返回 response。}}
-+ 注意：{{c1:: 同一个response执行一次以上body的方法 }}
-
-### 获取Response header [	](javascript_info_20200604111305694)
-```js
-let response = await fetch('https://api.github.com/repos/javascript-tutorial/en.javascript.info/commits');
-// 获取一个 header
-// {{c1::
-alert(response.headers.get('Content-Type')); // application/json; charset=utf-8
-// }}
-// 迭代所有 header
-// {{c1::
-for (let [key, value] of response.headers) {
-  alert(`${key} = ${value}`);
-}
-// }}
-```
-
-### fetch设置 request header [	](javascript_info_20200604111305695)
-```js
-// {{c1::
-  let response = fetch(url, {
-    headers: {
-      Authentication: 'secret'
-    }
-  });
-// }}
-```
-
-### fetch 选项 [	](javascript_info_20200604111305696)
-+ `method`：{{c1:: HTTP 方法，}}
-+ `headers`：{{c1:: 具有 request header 的对象（不是所有 header 都是被允许的）}}
-+ `body`：{{c1:: 要以` string，FormData，BufferSource，Blob` 或 `UrlSearchParams `对象的形式发送的数据（request body）。}}
-
-### 使用fetch,以JSON 形式发送 `user` 对象 [	](javascript_info_20200604111305697)
-
-```javascript
-let user = {
-  name: 'John',
-  surname: 'Smith'
-};
-//使用fetch,以JSON 形式发送 `user` 对象
-//{{c1::
-let response = await fetch('/article/fetch/post/user', {
-  method: 'POST',
-  headers: {
-    'Content-Type': 'application/json;charset=utf-8'
-  },
-  body: JSON.stringify(user)
-});
-//}}
-let result = await response.json();
-alert(result.message);
-```
+## [表单，控件](https://zh.javascript.info/forms-controls) [	](javascript_info_20200609045144089)
 
 ### 表单属性 [	](javascript_info_20200608063412709)
+
 + `document.forms`：{{c1:: 一个表单元素可以通过 `document.forms[name/index]` 访问到。 }}
 + `form.elements`：{{c1:: 表单元素可以通过 `form.elements[name/index]` 的方式访问，或者也可以使用 `form[name/index]`。`elements` 属性也适用于 `<fieldset>`。 }}
 + `element.form`：{{c1:: 元素通过 form 属性来引用它们所属的表单。}}
@@ -4624,7 +4562,7 @@ alert(result.message);
 | `input`          | {{c1:: 文本输入的每次更改。}} | {{c1:: 立即触发，与 `change` 不同。}}                        |
 | `cut/copy/paste` | {{c1:: 剪贴/拷贝/粘贴行为。}} | {{c1:: 行为可以被阻止。`event.clipboardData` 属性可以用于读/写剪贴板。}} |
 ### submit 和 click 的关系 [	](javascript_info_20200608063412714)
-+ {{c1:: 在输入框中使用 Enter 发送表单时，会在 <input type="submit"> 上触发一次 click 事件。 }}
++ {{c1:: 在输入框中使用 Enter 发送表单时，会在 `<input type="submit"> `上触发一次 click 事件。 }}
 
 ### 手动将表单提交到服务器 [	](javascript_info_20200608063412715)
 
@@ -4640,17 +4578,19 @@ alert(result.message);
   //}}
 ```
 
+## 加载文档和其他资源 [	](javascript_info_20200609045144090)
+
 ### HTML 页面的生命周期包含三个重要事件： [	](javascript_info_20200608063412716)
 
-- `DOMContentLoaded` 事件:{{c1:: DOM 已经就绪，因此处理程序可以查找 DOM 节点，并初始化接口。}}
-- `load` 事件:{{c1:: 外部资源已加载完成，样式已被应用，图片大小也已知了。}}
-- `beforeunload` 事件:{{c1:: 用户正在离开：我们可以检查用户是否保存了更改，并询问他是否真的要离开。}}
-- `unload` 事件:{{c1:: 用户几乎已经离开了，但是我们仍然可以启动一些操作，例如发送统计数据。}}
+- `DOMContentLoaded` 事件:{{c1:: 发生在document上，DOM 已经就绪，因此处理程序可以查找 DOM 节点，并初始化接口。}}
+- `load` 事件:{{c1:: window上，外部资源已加载完成，样式已被应用，图片大小也已知了。}}
+- `beforeunload` 事件:{{c1::window上，用户正在离开：我们可以检查用户是否保存了更改，并询问他是否真的要离开。}}
+- `unload` 事件:{{c1::window上，用户几乎已经离开了，但是我们仍然可以启动一些操作，例如发送统计数据。}}
 
 ### window.onbeforeunload [	](javascript_info_20200608063412717)
 
 + 下面代码的输出是什么？
-  ```javascript
+  ```html
     <script>
       log('initial readyState:' + document.readyState);
 
@@ -4696,7 +4636,7 @@ window.addEventListener("unload", function() {
 //}}
 ```
 ### 动态脚本 [	](javascript_info_20200608063412720)
-```js
+```javascript
 function loadScript(src) {
   //{{c1::
   let script = document.createElement('script');
@@ -4711,16 +4651,13 @@ loadScript("/article/script-async-defer/long.js");
 loadScript("/article/script-async-defer/small.js");
 ```
 
-### `defer` 特性 [	](javascript_info_20200608063412721)
-+ `defer` 特性:{{c1:: 告诉浏览器它应该继续处理页面，并“在后台”下载脚本，然后等页面加载完成后，再执行此脚本。}}
-+ `async` 特性:{{c1:: 异步加载脚本，加载完成后立刻执行，不会等待其他脚本与`DOMContentLoaded` 。}}
 
 ### `async特性` 和 `defer特性`区别 [	](javascript_info_20200608063412722)
 `async` 和 `defer` 有一个共同点：{{c1:: 加载这样的脚本都不会阻塞页面的渲染。因此，用户可以立即阅读并了解页面内容。}}
 |         | 顺序                                                         | `DOMContentLoaded`                                           |
 | :------ | :----------------------------------------------------------- | :----------------------------------------------------------- |
-| `async` | {{c1::**加载优先顺序**。脚本在文档中的顺序不重要 —— 先加载完成先执行}} | {{c1::不相关。可能在文档加载完成前加载并执行完毕。如果脚本很小或者来自于缓存，同时文档足够长，就会发生这种情况。}} |
-| `defer` | {{c1::**文档顺序**（它们在文档中的顺序）}}                           | {{c1::在文档加载和解析完成之后（如果需要，则会等待），即在 `DOMContentLoaded` 之前执行。}} |
+| `async` | {{c1::**加载优先顺序**。}} | {{c1::不相关。可能在文档加载完成前加载并执行完毕。如果脚本很小或者来自于缓存，同时文档足够长，就会发生这种情况。}} |
+| `defer` | {{c1::**文档顺序**}}                           | {{c1::在文档加载和解析完成之后（如果需要，则会等待），即在 `DOMContentLoaded` 之前执行。}} |
 
 ### 资源加载：onload，onerror [	](javascript_info_20200608063412723)
 
@@ -4729,12 +4666,18 @@ loadScript("/article/script-async-defer/small.js");
   - `error` ：{{c1:: 在加载失败时被触发。}}
 + 唯一的例外是 `<iframe>`：{{c1:: 出于历史原因，不管加载成功还是失败，即使页面没有被找到，它都会触发 `load` 事件。}}
 
-### DOM 变动观察器（Mutation observer） [	](javascript_info_20200608063412724)
+## 杂项 [	](javascript_info_20200609045144091)
+
+### DOM 变动观察器 [	](javascript_info_20200608063412724)
 
 + 语法：
-  ```js
-  let observer = new MutationObserver(callback); //回调传入MutationRecord
-  observer.observe(node, config);
+  ```javascript
+  //{{c1::
+    let observer = new MutationObserver(function(mutationRecord){
+      //...
+    });
+    observer.observe(node, config);
+  //}}
   ```
 + config 是一个具有布尔选项的对象，该布尔选项表示“将对哪些更改做出反应”：
     + childList:{{c1:: node 的直接子节点的更改， }}
@@ -4788,7 +4731,7 @@ loadScript("/article/script-async-defer/small.js");
   + rangeCoun：{{c1::  选择中的范围数，除 Firefox 外，其他浏览器最多为 1。}}
 + 要获取整个选择：
   + 作为文本：{{c1:: 只需调用 document.getSelection().toString()。}}
-  + 作为 DOM 节点：{{c1:: 获取底层的（underlying）范围，并调用它们的 cloneContents() 方法（如果我们不支持 Firefox 多选的话，则仅取第一个范围）。}}
+  + 作为 DOM 节点：{{c1:: `selection.getRangeAt(i).cloneContents()`（如果我们不支持 Firefox 多选的话，则仅取第一个范围）。}}
 
 ### 选择事件 [	](javascript_info_20200608063412727)
 + elem.onselectstart：{{c1:: 当选择从 elem 上开始时，例如，用户按下鼠标键并开始移动鼠标。}}
@@ -4823,14 +4766,14 @@ From <input id="from" disabled> – To <input id="to" disabled>
 + input.onselect:{{c1:: 当某个东西被选择时触发。}}
 
 ### 要使某些内容不可选，有三种方式： [	](javascript_info_20200608063412730)
-1. {{c1:: 使用 CSS 属性 user-select: none。}}
-2. {{c1:: 防止 onselectstart 或 mousedown 事件中的默认行为。}}
-3. {{c1:: 我们还可以使用 document.getSelection().empty() 来在选择发生后清除选择。很少使用这种方法，因为这会在选择项消失时导致不必要的闪烁。}}
+1. `user-select: none`:{{c1:: 使用 CSS 属性 user-select: none。}}
+2. `onselectstart 或 mousedown`:{{c1:: 防止 onselectstart 或 mousedown 事件中的默认行为。}}
+3. `document.getSelection().empty()`:{{c1:: 我们还可以使用 document.getSelection().empty() 来在选择发生后清除选择。很少使用这种方法，因为这会在选择项消失时导致不必要的闪烁。}}
 
 ### 用于选择的两种不同的 API： [	](javascript_info_20200608063412731)
 1. {{c1:: 对于文档：`Selection` 和 `Range` 对象。}}
 2. {{c1:: 对于 `input`，`textarea`：其他方法和属性。}}
-
+ []
 ### 选择（Selection)与范围（Range) 最常用的方案一般是： [	](javascript_info_20200608063412732)
 
 1. 获取选择：
@@ -4851,7 +4794,7 @@ From <input id="from" disabled> – To <input id="to" disabled>
    //{{c1::
     let selection = document.getSelection();
     // 直接：
-    selection.setBaseAndExtent(...from...to...);
+    selection.setBaseAndExtent(anchorNode,anchorOffset,focusNode,focusOffset)
     // 或者我们可以创建一个范围并：
     selection.removeAllRanges();
     selection.addRange(range);
@@ -4865,7 +4808,7 @@ From <input id="from" disabled> – To <input id="to" disabled>
   1. {{c1:: 使用 queueMicrotask(f)。}}
   2. {{c1:: promise 处理程序也会通过微任务队列。}}
 + 关系：{{c1:: 每个宏任务之后，引擎会立即执行微任务队列中的所有任务，然后再执行其他的宏任务，或渲染，或进行其他任何操作。 }}
-```js
+```javascript
 setTimeout(() => alert("timeout"));
 Promise.resolve().then(() => alert("promise"));
 alert("code");
@@ -4877,34 +4820,38 @@ alert("code");
 
 ### 事件循环图示 [	](javascript_info_20200608063412735)
 + 顺序是从上到下，即：首先是脚本，然后是微任务，渲染等
-{{c1:: ![image-20200608160453621](javascript_info.assets\image-20200608160453621.png) }}
++ 示意图：
+  {{c1:: ![image-20200608160453621](javascript_info.assets\image-20200608160453621.png) }}
+
+## Frame 和 window [	](javascript_info_20200609045144092)
 
 ### `window.open` [	](javascript_info_20200608063412736)
+
 + 开一个弹窗的语法是: {{c1:: `window.open(url, name, params);` }}
 + focus() 和 blur() 方法:{{c1:: 允许聚焦/失焦于窗口。但它们并不是一直都有效。 }}
 + focus和 blur 事件:{{c1:: 允许跟踪窗口的切换。但是请注意，在 blur 之后，即使窗口在背景状态下，窗口仍有可能是可见 }}的。
 + 要关闭弹窗：:{{c1:: 使用 close() 调用。 }}
 + 关闭之后:{{c1:: ，window.closed 为 true。 }}
 
-### Iframe：错误文档陷阱 [	](javascript_info_20200608063412737)
-
-我们可以尝试通过在 `setInterval` 中进行检查，以更早地捕获该时刻：
-```javascript
-<iframe src="/" id="iframe"></iframe>
-<script>
-// 解决方案代码如下：
-//{{c1::
-  let oldDoc = iframe.contentDocument;
-  // 每 100ms 检查一次文档是否为新文档
-  let timer = setInterval(() => {
-    let newDoc = iframe.contentDocument;
-    if (newDoc == oldDoc) return;
-    alert("New document is here!");
-    clearInterval(timer); // 取消 setInterval，不再需要它做任何事儿
-  }, 100);
-//}}
-</script>
-```
+### Iframe：错误文档陷阱（实践） [	](javascript_info_20200608063412737)
++ 含义：{{c1:: 在创建 iframe 后，iframe 会立即就拥有了一个文档。但是该文档不同于加载到其中的文档！ }}
++ 解决方案：利用 `setInterval` 定时检查新文档是否加载
+  ```html
+  <iframe src="/" id="iframe"></iframe>
+  <script>
+  // 解决方案代码如下：
+  //{{c1::
+    let oldDoc = iframe.contentDocument;
+    // 每 100ms 检查一次文档是否为新文档
+    let timer = setInterval(() => {
+      let newDoc = iframe.contentDocument;
+      if (newDoc == oldDoc) return;
+      alert("New document is here!");
+      clearInterval(timer); // 取消 setInterval，不再需要它做任何事儿
+    }, 100);
+  //}}
+  </script>
+  ```
 
 ### 集合：window.frames [	](javascript_info_20200608063412738)
 + 通过索引获取：window.frames[0]：{{c1:: 文档中的第一个 iframe 的 window 对象。 }}
@@ -4923,19 +4870,761 @@ alert("code");
   - `window.frames`:{{c1::一个嵌套的 window 对象的集合，}}
   - `window.parent`，`window.top`:{{c1:: 是对父窗口和顶级窗口的引用，}}
   - `iframe.contentWindow`:{{c1:: `<iframe>` 标签内的 window 对象。}}
-+ 否则，只能进行以下操作：
++ 如果几个窗口的源不相同，只能进行以下操作：
   1. {{c1:: 更改另一个窗口的 `location`（只能写入）。 }}
   2. {{c1:: 向其发送一条消息。 }}
-例外情况：
-- 对于二级域相同的窗口：`a.site.com` 和 `b.site.com`。通过在这些窗口中均设置 {{c1:: `document.domain='site.com'` }}，可以使它们处于“同源”状态。
-- 如果一个 iframe 具有 `sandbox` 特性（attribute），则{{c1:: 它会被强制处于“非同源”状态，除非在其特性值中指定了 `allow-same-origin`。这可用于在同一网站的 iframe 中运行不受信任的代码。}}
++ 例外情况：
+  1. 对于二级域相同的窗口：`a.site.com` 和 `b.site.com`。通过在这些窗口中均设置 {{c1:: `document.domain='site.com'` }}，可以使它们处于“同源”状态。
+  2. 如果一个 iframe 具有 `sandbox` 特性（attribute），则{{c1:: 它会被强制处于“非同源”状态，除非在其特性值中指定了 `allow-same-origin`。这可用于在同一网站的 iframe 中运行不受信任的代码。}}
 
-### `postMessage` 接口允许两个具有任何源的窗口之间进行通信： [	](javascript_info_20200608063412741)
-1. 发送方调用 {{c1:: `targetWin.postMessage(data, targetOrigin)`。}}
-2. 如果 `targetOrigin` 不是 `'*'`，那么浏览器会检查窗口 `targetWin` 是否具有源 `targetOrigin`。
-3. 如果它具有，{{c1:: `targetWin` 会触发具有特殊的属性的 `message` 事件：}}
+### `targetWindow.postMessage(data,targetOrigin)` 方法允许两个具有任何源的窗口之间进行通信： [	](javascript_info_20200608063412741)
+
+1. 发送方调用 {{c1:: `targetWindow.postMessage(data, targetOrigin)`。}}
+  + data：{{c1:: 要发送的数据对象，IE只支持字符串 }}
+  + targetOrigin：{{c1:: 指定目标窗口的源，可以是`URL`与`*`}}
+    + `URL`： {{c1:: 检查目标窗口的源是否是来自该URL的文档 }}
+    + `*`： {{c1:: 不希望做URL检查时可以设置为`*` }}
+2. 接受方收到消息会触发`window`对象的`message`事件，该事件带有特殊属性如下：
    - `origin`:{{c1:: 发送方窗口的源（比如 `http://my.site.com`）。}}
    - `source`:{{c1:: 发送方窗口的引用。}}
-   - `data`:{{c1:: 数据，可以是任何对象。但是 IE 浏览器只支持字符串，因此我们需要对复杂的对象调用 `JSON.stringify`方法进行处理，以支持该浏览器。}}
-+我们应该使用 `addEventListener` 来在目标窗口中设置 `message` 事件的处理程序。
+   - `data`:{{c1:: 收到的数据，可以是任何对象。但是 IE 浏览器只支持字符串，因此最好调用 `JSON.stringify`方法进行处理}}
 
+## 二进制数据，文件 [	](javascript_info_20200609045144093)
+
+### 例子：使用`Uint32Array`遍历一个`ArrayBuffer` [	](javascript_info_20200609045144094)
+
+```javascript
+
+let buffer = new ArrayBuffer(16); // 创建一个长度为 16 的 buffer
+//{{c1::
+let view = new Uint32Array(buffer); // 将 buffer 视为一个 32 位整数的序列
+alert(Uint32Array.BYTES_PER_ELEMENT); // 每个整数 4 个字节
+alert(view.length); // 4，它存储了 4 个整数
+alert(view.byteLength); // 16，字节中的大小
+// 让我们写入一个值
+view[0] = 123456;
+//}}
+// 遍历值
+for(let num of view) {
+  alert(num); // 123456，然后 0，0，0（一共 4 个值）
+}
+```
+
+### TypedArray 构造器与方法 [	](javascript_info_20200609045144095)
+作用：{{c1:: TypedArray是所有视图（Uint8Array，Uint32Array 等）的通用术语，有同一组方法与属性。 }}
+1. `new TypedArray(buffer, [byteOffset], [length]);`:{{c1:: 如果给定的是 ArrayBuffer 参数，则会在其上创建视图。 }}
+2. `new TypedArray(object);`:{{c1:: 如果给定的是 Array，或任何类数组对象，则会创建一个相同长度的类型化数组，并复制其内容。 }}
+3. `new TypedArray(typedArray);`:{{c1:: 创建一个相同长度的类型化数组，并复制其内容。}}
+4. `new TypedArray(length);`:{{c1::  创建类型化数组以包含这么多元素。它的字节长度将是 length 乘以单个 TypedArray.BYTES_PER_ELEMENT 中的字节数}}
+5. `new TypedArray();`:{{c1:: 创建长度为零的类型化数组}}
++ 除第一种情况（已提供 ArrayBuffer）外，{{c1:: 其他所有情况都会自动创建 ArrayBuffer。 }}
++ 如要访问 ArrayBuffer，可以用以下属性：  
+  1. arr.buffer:{{c1:: 引用 ArrayBuffer。 }}
+  2. arr.byteLength:{{c1:: ArrayBuffer 的长度。 }}
+
+### DataView [	](javascript_info_20200609045144097)
++ 作用：{{c1:: `DataView `是在 `ArrayBuffer` 上的一种特殊的超灵活“未类型化”视图。 }}
++ 语法：{{c1:: `new DataView(buffer, [byteOffset], [byteLength])` }}
+    ```javascript
+    // 4 个字节的二进制数组，每个都是最大值 255
+    let buffer = new Uint8Array([255, 255, 255, 255]).buffer;
+    let dataView = new DataView(buffer);
+    // 在偏移量为 0 处获取 8 位数字 {{c1::
+    alert( dataView.getUint8(0) ); // 255}}
+    
+    // 现在在偏移量为 0 处获取 16 位数字，它由 2 个字节组成，一起解析为 65535{{c1::
+    alert( dataView.getUint16(0) ); // 65535（最大的 16 位无符号整数）}}
+    
+    // 在偏移量为 0 处获取 32 位数字 {{c1::
+    alert( dataView.getUint32(0) ); // 4294967295（最大的 32 位无符号整数）}}
+
+      // 将 4 个字节的数字设为 0，即将所有字节都设为 0  {{c1::
+    dataView.setUint32(0, 0); //}}
+    ```
+    
+### BufferSource术语 [	](javascript_info_20200609045144098)
++ 作用：{{c1:: 指“任何类型的二进制数据” —— ArrayBuffer 或其上的视图。 }}
++ BufferSource体系图：{{c1:: ![image-20200609133016048](javascript_info.assets\image-20200609133016048.png) }}
+
+### TextDecoder 和 TextEncoder [	](javascript_info_20200609045144099)
++ TextDecoder构造器：`new TextDecoder([label], [options]);`
++ TextEncoder构造器：`new TextEncoder();`
++ 将"hello"编码与解码例子：
+  ```javascript
+    let uint8Array = new Uint8Array([0, 72, 101, 108, 108, 111, 0]);
+    //解码{{c1::
+    let binaryString = uint8Array.subarray(1, -1);
+    alert( new TextDecoder().decode(binaryString) ); // Hello
+    //}}
+
+    //编码{{c1::
+    let encoder = new TextEncoder();
+    let uint8Array = encoder.encode("Hello");
+    alert(uint8Array); // 72,101,108,108,111
+    //}}
+  ```
+
+### Blob [	](javascript_info_20200609045144100)
+
++ 全称：Binary Large Object 直译为二进制大对象
++ 构造函数的语法:{{c1:: `new Blob(blobParts, options);` }}
++ `blobParts`:{{c1::  `Blob`/`BufferSource`/`String` 类型的值的**数组**。}}
++ `options`可选对象：
+  + `type`:{{c1::  用来表示文件类型，例如 'text/json' 代表一个JSON文件，`image/png`为图片文件}}
+  + `endings`:{{c1:: 是否转换换行符，使 `Blob` 对应于当前操作系统的换行符（`\r\n` 或 `\n`）。默认为`"transparent"`（啥也不做），不过也可以是 `"native"`（转换）。}}
++ `blob.slice([start[, end[, contentType]]])`方法:
+  1. `byteStart`:{{c1:: 起始字节，默认为 0。}}
+  2. `byteEnd`:{{c1:: 最后一个字节（专有，默认为最后）。}}
+  3. `contentType`:{{c1:: 新 blob 的 `type`，默认与源 blob 相同。}}
++ 生成Blob链接的两个方法：
+  + `URL.createObjectURL(blob);`:{{c1:: 如果传入的参数是blob对象的话，则可以生成一个blob链接}}
+  + `URL.revokeObjectURL(url);`:{{c1:: 静态方法用来释放一个之前通过调用 URL.createObjectURL() 创建的已经存在的 URL 对象。}}
+
+### 使用Blob实现文件下载，以及销毁URL例子（实践） [	](javascript_info_20200611040825987)
+
+```html
+    <a id="id" download="a.txt">点我</a>
+    <button id="btn">销毁</button>
+    <script>
+        // {{c1::
+        let blob = new Blob(['hello world'],{type:'text/plain'})
+        let url = URL.createObjectURL(blob)
+        document.getElementById('id').href = url
+        document.getElementById('btn').onclick = function () {
+          URL.revokeObjectURL(url)
+        }
+        // }}
+    </script>
+```
+
+
+### File对象 [	](javascript_info_20200609045144102)
++ 拓展自Blob，有一个构造器：`new File(fileParts, fileName, [options])`
+  + `fileParts`:{{c1:: Blob/BufferSource/String 类型值的数组。}}
+  + `fileName`:{{c1:: 文件名字符串。}}
+  + `options`:{{c1:: 可选对象：}}
+    - `lastModified`:{{c1:: 最后一次修改的时间戳（整数日期）。}}
++ 除了 Blob 方法和属性外，File 对象还有 `name` 和 `lastModified` 属性
+
+### 例子：从 `<input type="file"> `中获取 `File对象` [	](javascript_info_20200609045144103)
+```javascript
+<input type="file" onchange="showFile(this)">
+<script>
+function showFile(input) {
+  //{{c1::
+  let file = input.files[0];
+  alert(`File name: ${file.name}`); // 例如 my.png
+  alert(`Last modified: ${file.lastModified}`); // 例如 1552830408824
+  //}}
+}
+</script>
+```
+
+### FileReader对象 [	](javascript_info_20200609045144104)
++ 作用：{{c1:: 唯一目的是从 Blob（因此也从 File）对象中读取数据。 }}
+  + readAsArrayBuffer(blob)：{{c1:: 将数据读取为二进制格式的 ArrayBuffer。 }}
+  + readAsText(blob, [encoding])：{{c1:: 将数据读取为给定编码（默认为 utf-8 编码）的文本字符串。 }}
+  + readAsDataURL(blob)：{{c1:: 读取二进制数据，并将其编码为 base64 的 data url。 }}
+  + abort()：{{c1:: 取消操作。 }}
++ 读取过程中，有以下事件：
+  + `loadstart`:{{c1:: 开始加载。 }}
+  + `progress`:{{c1:: 在读取过程中出现。 }}
+  + `load`:{{c1:: 读取完成，没有 error。 }}
+  + `abort`:{{c1:: 调用了 abort()。 }}
+  + `error`:{{c1:: 出现 error。 }}
+  + `loadend`:{{c1:: 读取完成，无论成功还是失败。 }}
++ 读取完成后，我们可以通过以下方式访问读取结果：
+  + `reader.result`:{{c1:: 是结果（如果成功）}}
+  + `reader.error`:{{c1:: 是 error（如果失败）。}}
+
+### FileReader读取文件示例 [	](javascript_info_20200611040825989)
+
+```html
+<input type="file" onchange="readFile(this)">
+<script>
+function readFile(input) {
+  //{{c1::
+  let file = input.files[0];
+  let reader = new FileReader();
+  reader.readAsText(file);
+  reader.onload = function() {
+    console.log(reader.result);
+  };
+  reader.onerror = function() {
+    console.log(reader.error);
+  };
+  //}}
+}
+</script>
+```
+
+### 示例:读取一个文本文件并且显示所有的内容 [	](javascript_info_20200609045144105)
+```javascript
+<input type="file" onchange="readFile(this)">
+<script>
+function readFile(input) {
+  //{{c1::
+  let file = input.files[0];
+
+  let reader = new FileReader();
+  reader.readAsText(file);
+
+  reader.onload = function() {
+    console.log(reader.result);
+  };
+
+  reader.onerror = function() {
+    console.log(reader.error);
+  };
+  // }}
+}
+```
+</script>
+
+
+## 网络请求 [	](javascript_info_20200604111305690)
+
+### 典型的 fetch 请求由两个 await 调用组成： [	](javascript_info_20200604111305691)
+
+```javascript
+//{{c1::
+let response = await fetch(url, options); // 解析 response header
+let result = await response.json(); // 将 body 读取为 json
+//}}
+```
+或者以 promise 形式：
+```javascript
+//{{c1::
+fetch(url, options)
+  .then(response => response.json())
+  .then(result => /* process result */)
+//}}
+```
+
+### fetch 请求响应的属性： [	](javascript_info_20200604111305692)
+
++ response.status:{{c1:: response 的 HTTP 状态码， }}
++ response.ok:{{c1:: HTTP 状态码为 200-299，则为 true。 }}
++ response.headers:{{c1:: 类似于 Map 的带有 HTTP header 的对象。 }}
+
+### 获取fetch请求返回的response body 的方法： [	](javascript_info_20200604111305693)
+
+1. `response.text()`：{{c1:: 读取 response，并以文本形式返回 response，}}
+2. `response.json()`：{{c1:: 将 response 解析为 JSON 对象形式，}}
+3. `response.formData()`：{{c1:: 以 `FormData` 对象（form/multipart 编码，参见下一章）的形式返回 response，}}
+4. `response.blob()`：{{c1:: 以 Blob（具有类型的二进制数据）形式返回 response，}}
+5. `response.arrayBuffer()`：{{c1:: 以` ArrayBuffer`（低级别的二进制数据）形式返回 response。}}
++ 注意：{{c1:: 同一个response执行一次以上body的方法 }}
+
+### 获取Response header [	](javascript_info_20200604111305694)
+
+```javascript
+let response = await fetch('https://api.github.com/repos/javascript-tutorial/en.javascript.info/commits');
+// 获取一个 header
+// {{c1::
+alert(response.headers.get('Content-Type')); // application/json; charset=utf-8
+// }}
+// 迭代所有 header
+// {{c1::
+for (let [key, value] of response.headers) {
+  alert(`${key} = ${value}`);
+}
+// }}
+```
+
+### fetch设置 request header [	](javascript_info_20200604111305695)
+
+```javascript
+// {{c1::
+  let response = fetch(url, {
+    headers: {
+      Authentication: 'secret'
+    }
+  });
+// }}
+```
+
+### `fetch()`方法选项 [	](javascript_info_20200604111305696)
+
++ `method`：{{c1:: HTTP 方法，}}
++ `headers`：{{c1:: 具有 request header 的对象（不是所有 header 都是被允许的）}}
++ `body`：{{c1:: 要以` string，FormData，BufferSource，Blob` 或 `UrlSearchParams `对象的形式发送的数据（request body）。}}
+
+### 使用fetch,以JSON 形式发送 `user` 对象 [	](javascript_info_20200604111305697)
+
+```javascript
+let user = {
+  name: 'John',
+  surname: 'Smith'
+};
+//使用fetch,以JSON 形式发送 `user` 对象
+//{{c1::
+let response = await fetch('/article/fetch/post/user', {
+  method: 'POST',
+  headers: {
+    'Content-Type': 'application/json;charset=utf-8'
+  },
+  body: JSON.stringify(user)
+});
+//}}
+let result = await response.json();
+alert(result.message);
+```
+
+### FormData [	](javascript_info_20200612065930959)
+
++ 作用：用于捕获 HTML 表单，并使用 fetch 或其他网络方法提交。
++ 构造函数：`let formData = new FormData([form]);`
++ FormData 方法
+  + `formData.append(name, value)`:{{c1:: 添加具有给定 name 和 value 的表单字段， }}
+  + `formData.append(name, blob, fileName)`:{{c1:: 添加一个字段，就像它是` <input type="file">`，第三个参数 + fileName  }}设置文件名（而不是表单字段名），因为它是用户文件系统中文件的名称，
+  + `formData.delete(name)`:{{c1:: 移除带有给定 name 的字段， }}
+  + `formData.get(name)`:{{c1:: 获取带有给定 name 的字段值， }}
+  + `formData.has(name)`:{{c1:: 如果存在带有给定 name 的字段，则返回 true，否则返回 false。 }}
+  + `formData.set(name, value)`:{{c1:: 设值 }}
+  + `formData.set(name, blob, fileName)`:{{c1:: 设置文件到表单 }}
++ 注意点:
+  1. 迭代：{{c1:: 可以使用 for..of 循环迭代 formData}}
+  2. 设值：{{c1:: set 方法会移除具有相同名称（name）的字段，而 append 不会。}}
+  3. 文件：{{c1:: 要发送文件，需要使用三个参数的语法，最后一个参数是文件名，一般是通过` <input type="file">` 从用户文件系统中获取的。}}
+
+ ### 使用fetch发送一个简单的FormData [	](javascript_info_20200612065930961)
+
+ ```javascript
+    //{{c1::
+    let response = await fetch('/article/formdata/post/user', {
+      method: 'POST',
+      body: new FormData(form)
+    });
+    //}}
+ ```
+
+
+### Fetch实例：从response的ReadableStream读取2进制内容，并且转换成字符串。 [	](javascript_info_20200612065930962)
+```javascript
+// Step 1：启动 fetch，并获得一个 reader
+//{{c1::
+let response = await fetch('https://api.github.com/repos/javascript-tutorial/en.javascript.info/commits?per_page=100');
+const reader = response.body.getReader();
+//}}
+
+// Step 2：获得总长度（length）
+//{{c1::
+const contentLength = +response.headers.get('Content-Length');
+//}}
+
+// Step 3：读取数据
+//{{c1::
+let receivedLength = 0; // 当前接收到了这么多字节
+let chunks = []; // 接收到的二进制块的数组（包括 body）
+while(true) {
+  const {done, value} = await reader.read();
+
+  if (done) {
+    break;
+  }
+
+  chunks.push(value);
+  receivedLength += value.length;
+
+  console.log(`Received ${receivedLength} of ${contentLength}`)
+}
+//}}
+
+// Step 4：将块连接到单个 Uint8Array
+//{{c1::
+let chunksAll = new Uint8Array(receivedLength); // (4.1)
+let position = 0;
+for(let chunk of chunks) {
+  chunksAll.set(chunk, position); // (4.2)
+  position += chunk.length;
+}
+//}}
+
+// Step 5：解码成字符串
+//{{c1::
+let result = new TextDecoder("utf-8").decode(chunksAll);
+//}}
+
+// 我们完成啦！
+let commits = JSON.parse(result);
+alert(commits[0].author.login);
+```
+
+### Fetch：中止（Abort） [	](javascript_info_20200612065930963)
+```javascript
+  let urls = [...];
+  // 1.创建控制器
+  //{{c1::
+  let controller = new AbortController();
+  //}}
+  let ourJob = new Promise((resolve, reject) => { // 我们的任务
+    ...
+    // 2.监听终止对象
+    //{{c1::
+    controller.signal.addEventListener('abort', reject);
+    //}}
+  });
+  // 设置批量终止fetch
+  // {{c1::
+  let fetchJobs = urls.map(url => fetch(url, { // fetches
+    signal: controller.signal
+  }));
+  //}}
+
+  // 等待完成我们的任务和所有 fetch
+  let results = await Promise.all([...fetchJobs, ourJob]);
+  // 如果 controller.abort() 被从其他地方调用，
+  // 它将中止所有 fetch 和 ourJob
+```
+
+### Fetch：跨源请求 [	](javascript_info_20200612065930964)
+
++ 这里的核心概念是 源（origin）：{{c1:: 域（domain）/端口（port）/协议（protocol）的组合。}}
++ 跨源请求需要：{{c1::  需要来自远程端的特殊 header。}}
++ 这个策略被称为 “CORS”：{{c1:: 跨源资源共享（Cross-Origin Resource Sharing）。 }}
+
+
+### 跨源简单请求必须满足下列条件： [	](javascript_info_20200612065930965)
+
++ 方法：{{c1:: GET，POST 或 HEAD。 }}
++ header —— 我们仅能设置：
+  1. {{c1:: Accept}}
+  2. {{c1:: Accept-Language}}
+  3. {{c1:: Content-Language}}
+  4. {{c1:: Content-Type 的值为 application/x-www-form-urlencoded，multipart/form-data 或 text/plain。}}
+  
+
+### Fetch：两种跨源请求：跨源简单请求和跨源其他请求 [	](javascript_info_20200612065930966)
+
++ 对于跨源简单请求：
+  - → 浏览器发送{{c1:: 带有源的 `Origin` header。 }}
+  - ← 对于没有凭据的请求（默认不发送），服务器应该设置：
+    1. {{c1:: `Access-Control-Allow-Origin` 为 `*` 或与 `Origin` 的值相同}}
+  - ← 对于具有凭据的请求，服务器应该设置：
+    1. {{c1:: `Access-Control-Allow-Origin` 值与 `Origin` 的相同}}
+    2. {{c1:: `Access-Control-Allow-Credentials` 为 `true`}}
++ 要授予 JavaScript 访问任何 response header 的权限:{{c1::服务器应该在 header Access-Control-Expose-Headers 中列出允许的那些 header}}
++ 对于跨源非简单请求，{{c1:: 会在请求之前发出初步“预检”请求： }}
+  - → 浏览器将具有以下 header 的{{c1:: `OPTIONS` }}请求发送到相同的 URL：
+    1. {{c1:: `Access-Control-Request-Method` 有请求方法。}}
+    2. {{c1:: `Access-Control-Request-Headers` 以逗号分隔的“非简单” header 列表。}}
+  - ← 服务器应该响应状态码为 200 和 header：
+    1. {{c1:: `Access-Control-Allow-Methods` 带有允许的方法的列表，}}
+    2. {{c1:: `Access-Control-Allow-Headers` 带有允许的 header 的列表，}}
+    3. {{c1:: `Access-Control-Max-Age` 带有指定缓存权限的秒数。}}
+  - 然后，{{c1:: 发出实际请求，应用先前的“简单”方案。 }}
+
+### `fetch()`方法选项:`referrer`与`referrerPolicy` [	](javascript_info_20200612065930967)
+
++ `referrer`：{{c1:: 默认发出请求的页面的 url，可以设置为，或者当前域内的另一个url.}}
++ `referrerPolicy`:决定referrer中发送的内容规则，如下表:
+  | 值                                           | 同源       | 跨源       | HTTPS→HTTP |
+  | -------------------------------------------- | ---------- | ---------- | ---------- |
+  | `no-referrer`                              | {{c1::-}}    | {{c1::-         }} |{{c1:: -        }}  |
+  | `no-referrer-when-downgrade 或 （默认）` | {{c1::完整的 url}} | {{c1::完整的 url }}| {{c1::-        }}  |
+  | `origin`                                   | {{c1::仅域}}       | {{c1::仅域    }}   | {{c1::仅域    }}   |
+  | `origin-when-cross-origin`                 | {{c1::完整的 url}} | {{c1::仅域    }}   | {{c1::仅域     }}  |
+  | `same-origin`                              | {{c1::完整的 url}} | {{c1::-       }}   | {{c1::-        }}  |
+  | `strict-origin`                            | {{c1::仅域  }}     | {{c1::仅域    }}   | {{c1::-        }}  |
+  | `strict-origin-when-cross-origin`          | {{c1::完整的 url }}| {{c1::仅域    }}   | {{c1::-        }}  |
+  | `unsafe-url`                               | {{c1::完整的 url }}| {{c1::完整的 url }}| {{c1::完整的 url}} |
+
+
+### `fetch()`方法选项:`mode`与`credentials` [	](javascript_info_20200612065930968)
+
++ `mode` :{{c1:: 是一种安全措施，可以防止偶发的跨源请求：}}
+  1. "cors":{{c1:: 默认值，允许跨源请求，如 Fetch：跨源请求 一章所述，}}
+  2. "same-origin":{{c1:: 禁止跨源请求，}}
+  3. "no-cors":{{c1:: 只允许简单的跨源请求。}}
++ `credentials` : {{c1:: 指定 fetch 是否应该随请求发送 cookie 和 HTTP-Authorization header。}}
+  + "same-origin":{{c1:: 默认值，对于跨源请求不发送，}}
+  + "include":{{c1:: 总是发送，需要来自跨源服务器的 Accept-Control-Allow-Credentials，才能使 JavaScript 能够访问响应，详细内容在 Fetch：跨源请求 一章有详细介绍，}}
+  + "omit":{{c1:: 不发送，即使对于同源请求。}}
+
+### `fetch()`方法的其他选项 [	](javascript_info_20200612065930969)
+
++ `cache`：{{c1:: 可以忽略 HTTP 缓存或者对其用法进行微调 }}
++ `redirect`:{{c1:: 遵循 HTTP 重定向的策略 }}
++ `integrity`:{{c1:: 检查响应是否与已知的预先校验和相匹配。 }}
++ `keepalive`:{{c1:: keepalive 选项告诉浏览器，即使在离开页面后，也要在后台执行请求。 }}
+
+### URL 对象 [	](javascript_info_20200612065930970)
++ 作用：所有使用url字符串的地方几乎都可以使用URL对象
++ 构造方法：`new URL(url, [base])`
+  + url:{{c1:: 完整的 URL，或者仅路径（如果设置了 base），}}
+  + base:{{c1:: 可选的 base URL：如果设置了此参数，且参数 url 只有路径，则会根据这个 base 生成 URL。}}
++ 常用属性：href,origin,host,protocol,hostname,port,pathname,search,hash.
++ 属性示意图：
+  {{c1:: ![image-20200612162953117](javascript_info.assets/image-20200612162953117.png) }}
+
+### url.searchParams [	](javascript_info_20200612065930971)
+
++ 作用：URLSearchParams 类型的对象，为搜索参数提供简便方法。
+  + **`append(name, value)`** —— 按照 `name` 添加参数，
+  + **`delete(name)`** —— 按照 `name` 移除参数，
+  + **`get(name)`** —— 按照 `name` 获取参数，
+  + **`getAll(name)`** —— 获取相同 `name` 的所有参数（这是可行的，例如 `?user=John&user=Pete`），
+  + **`has(name)`** —— 按照 `name` 检查参数是否存在，
+  + **`set(name, value)`** —— set/replace 参数，
+  + **`sort()`** —— 按 name 对参数进行排序，很少使用，
+  + ……并且它是可迭代的，类似于 `Map`。
+  + URL会将非拉丁字母与空格自动编码对URL字符串。
++ 包含空格和标点符号的参数的示例：
+  ```javascript
+    //{{c1::
+    url.searchParams.set('q', 'test me!'); // 添加带有一个空格和一个 ! 的参数
+    alert(url); // https://google.com/search?q=test+me%21
+    url.searchParams.set('tbs', 'qdr:y'); // 添加带有一个冒号 : 的参数
+    // 参数会被自动编码
+    alert(url); // https://google.com/search?q=test+me%21&tbs=qdr%3Ay
+    //}}
+  ```
+
+### URL编码（encoding） [	](javascript_info_20200612065930972)
+
++ 下面是用于编码/解码 URL 的内建函数：
+  + encodeURI:{{c1:: 编码整个 URL。 }}
+  + decodeURI:{{c1:: 解码为编码前的状态。 }}
+  + encodeURIComponent:{{c1:: 编码 URL 组件，例如搜索参数，或者 hash，或者 pathname。 }}
+  + decodeURIComponent:{{c1:: 解码为编码前的状态。 }}
++ 2类方法的区别：
+    encodeURI:{{c1:: 仅编码 URL 中完全禁止的字符。}}
+    encodeURIComponent:{{c1:: 也编码这类字符，此外，还编码 #，$，&，+，,，/，:，;，=，? 和 @ 字符。}}
+
+
+### 使用XMLHttpRequest步骤 [	](javascript_info_20200612065930973)
+
+1. 创建 XMLHttpRequest：`let xhr = new XMLHttpRequest();`
+2. 初始化：`xhr.open(method, URL, [async, user, password])`
+  + `async`如果为`false`:{{c1:: JavaScript 执行在 send() 处暂停，并在收到响应后恢复执行。 }}
+3. 发送请求:`xhr.send([body])`
+4. 监听 xhr 事件以获取响应。
+  + load:{{c1:: 当请求完成（即使 HTTP 状态为 400 或 500 等），并且响应已完全下载。 }}
+  + error:{{c1:: 当无法发出请求，例如网络中断或者无效的 URL。 }}
+  + progress:{{c1:: 在下载响应期间定期触发，报告已经下载了多少。 }}
++ 完整例子如下：{{c1::
+  ```javascript
+      // 1. 创建一个 new XMLHttpRequest 对象
+      let xhr = new XMLHttpRequest();
+      // 2. 配置它：从 URL /article/.../load GET-request
+      xhr.open('GET', '/article/xmlhttprequest/example/load');
+      // 3. 通过网络发送请求
+      xhr.send();
+      // 4. 当接收到响应后，将调用此函数
+      xhr.onload = function() {
+        if (xhr.status != 200) { // 分析响应的 HTTP 状态
+          alert(`Error ${xhr.status}: ${xhr.statusText}`); // 例如 404: Not Found
+        } else { // 显示结果
+          alert(`Done, got ${xhr.response.length} bytes`); // response 是服务器响应
+        }
+      };
+      xhr.onprogress = function(event) {
+        if (event.lengthComputable) {
+          alert(`Received ${event.loaded} of ${event.total} bytes`);
+        } else {
+          alert(`Received ${event.loaded} bytes`); // 没有 Content-Length
+        }
+      };
+      xhr.onerror = function() {
+        alert("Request failed");
+      };
+  ```
+}}
+
+### XMLHttpRequest:一旦服务器有了响应，我们可以在以下 xhr 属性中接收结果： [	](javascript_info_20200612065930974)
+
++ status:{{c1::HTTP 状态码（一个数字）：200，404，403 等，如果出现非 HTTP 错误，则为 0。}}
++ statusText:{{c1::HTTP 状态消息（一个字符串）：状态码为 200 对应于 OK，404 对应于 Not Found，403 对应于 Forbidden。}}
++ response（旧脚本可能用的是 responseText）:{{c1::服务器 response body。}}
++ 可以使用相应的属性指定超时:
+  1. {{c1::`xhr.timeout = 10000;` }}
+     - 作用：{{c1:: 如果在给定时间内请求没有成功执行，请求就会被取消，并且触发 timeout 事件。 }}
+
+### XMLHttpRequest结合URL保证正确的编码例子 [	](javascript_info_20200612065930975)
+
+```javascript
+//{{c1::
+let url = new URL('https://google.com/search');
+url.searchParams.set('q', 'test me!');
+//}}
+// 参数 'q' 被编码
+xhr.open('GET', url); 
+
+// https://google.com/search?q=test+me%21
+```
+
+### xhr响应类型 [	](javascript_info_20200612065930976)
+
++ 我们可以使用 `xhr.responseType` 属性来设置响应格式：
+- `""`（默认）:{{c1:: 响应格式为字符串，}}
+- `"text"`:{{c1::  响应格式为字符串，}}
+- `"arraybuffer"`:{{c1::  响应格式为 `ArrayBuffer`}}
+- `"blob"`:{{c1::  响应格式为 `Blob`}}
+- `"document"`:{{c1::  响应格式为 XML document（可以使用 XPath 和其他 XML 方法），}}
+- `"json"`:{{c1::  响应格式为 JSON（自动解析）。}}
++ 例如，我们以 JSON 格式获取响应：
+  ```javascript
+    let xhr = new XMLHttpRequest();
+    xhr.open('GET', '/article/xmlhttprequest/example/json');
+    xhr.responseType = 'json';
+    xhr.send();
+    // 响应为 {"message": "Hello, world!"}
+    xhr.onload = function() {
+      let responseObj = xhr.response;
+      alert(responseObj.message); // Hello, world!
+    };
+  ```
+
+### xhr.readyState [	](javascript_info_20200612065930977)
+
++ 可以通过 xhr.readyState 来了解当前状态
+  + `UNSENT = 0;`:{{c1:: // 初始状态}}
+  + `OPENED = 1;`:{{c1:: // open 被调用}}
+  + `HEADERS_RECEIVED = 2;`:{{c1:: // 接收到 response header}}
+  + `LOADING = 3;`:{{c1:: // 响应正在被加载（接收到一个数据包）}}
+  + `DONE = 4;`:{{c1:: // 请求完成}}
++ 可以使用 readystatechange 事件来跟踪,如今，它已被 load/error/progress 事件处理程序所替代。
+
+### xhr.abort()方法 [	](javascript_info_20200612065930978)
+
++ 作用：
+  1.{{c1:: 终止请求 }}
+  2.{{c1:: 触发 abort 事件。 }}
+  3.{{c1:: 且 xhr.status 变为 0 }}
+### xhr操作header的方法 [	](javascript_info_20200612065930979)
+
++ `xhr.setRequestHeader('Content-Type', 'application/json');`
+  + 注意：{{c1:: 一旦设置了 header，就无法撤销了。 }}
++ `xhr.getResponseHeader('Content-Type');`
++ `getAllResponseHeaders();`
+  + 注意：{{c1:: header 之间的换行符始终为 "\r\n" }}
+
+### 使用xhr发送POST请求 [	](javascript_info_20200612065930980)
+
++ 使用内建的`FormData`对象发送请求
+  ```javascript
+      //{{c1::
+      let xhr = new XMLHttpRequest();
+      xhr.open("POST", "/article/xmlhttprequest/post/user");
+      xhr.send(formData);
+      //}}
+  ```
++ 使用`JSON`字符串发送请求
+  ```javascript
+    //{{c1::
+    xhr.open("POST", '/submit')
+    xhr.setRequestHeader('Content-type', 'application/json; charset=utf-8');
+    xhr.send(jsonString);
+    //}}
+  ```
+
+### 上传进度 [	](javascript_info_20200612065930981)
+
++ xhr.upload:{{c1:: 专门用于跟踪上传事件 }}
+  + loadstart：{{c1:: 上传开始。}}
+  + progress：{{c1:: 上传期间定期触发。}}
+  + abort：{{c1:: 上传中止。}}
+  + error：{{c1:: 非 HTTP 错误。}}
+  + load：{{c1:: 上传成功完成。}}
+  + timeout：{{c1:: 上传超时（如果设置了 timeout 属性）。}}
+  + loadend：{{c1:: 上传完成，无论成功还是 error。}}
++  跟踪上传进度例子
+  ```javascript
+  //{{c1::
+    xhr.upload.onprogress = function(event) {
+      console.log(`Uploaded ${event.loaded} of ${event.total}`);
+    };
+  //}}
+  ```
+
+### xhr的跨源请求设置。 [	](javascript_info_20200612065930982)
+
++ 默认情况下不会将 cookie 和 HTTP 授权发送到其他域。要启用它们，可以将 {{c1:: xhr.withCredentials 设置为 true }}
+```javascript
+  let xhr = new XMLHttpRequest();
+  //例子
+  //{{c1::
+    xhr.withCredentials = true;
+    xhr.open('POST', 'http://anywhere.com/request');
+  //}}
+```
+
+## 在浏览器中存储数据 [	](javascript_info_20200615060136002)
+
+### js Cookie操作 [	](javascript_info_20200615060136003)
+
++ 访问coockie:document.cookie
++ 注意点:
+  1. {{c1:: 写入操作只会修改其中提到的 cookie。 }}
+  2. {{c1:: name/value 必须被编码。 }}
+  3. {{c1:: 一个 cookie 最大为 4kb，每个网站最多有 20+ 个左右的 cookie（具体取决于浏览器）。 }}
++ Cookie 选项：
+  + path=/:{{c1:: 默认为当前路径，使 cookie 仅在该路径下可见。 }}
+  + domain=site.com:{{c1:: 默认 cookie 仅在当前域下可见，如果显式设置了域，可以使 cookie 在子域下也可见。 }}
+  + expires:{{c1:: 或 max-age 设置 cookie 过期时间，如果没有设置，则当浏览器关闭时 cookie 就失效了。 }}
+  + secure:{{c1:: 使 cookie 仅在 HTTPS 下有效。 }}
+  + samesite:{{c1:: 如果请求来自外部网站，禁止浏览器发送 cookie，这有助于防止 XSRF 攻击。 }}
++ XSRF攻击全称：{{c1:: Cross-Site Request Forgery }}
+
+### `LocalStorage`，`sessionStorage` [	](javascript_info_20200615060136004)
+
++ 两个存储对象都提供相同的方法和属性：
+  + `setItem(key, value)`:{{c1:: 存储键/值对。 }}
+  + `getItem(key)`:{{c1:: 按照键获取值。 }}
+  + `removeItem(key)`:{{c1:: 删除键及其对应的值。 }}
+  + `clear()`:{{c1:: 删除所有数据。 }}
+  + `key(index)`:{{c1:: 获取该索引下的键名。 }}
+  + `length`:{{c1:: 存储的内容的长度。}}
++ `localStorage`最主要的特点是：
+  + {{c1:: 在同源的所有标签页和窗口之间共享数据。 }}
+  + {{c1:: 数据不会过期。它在浏览器重启甚至系统重启后仍然存在。}}
+  + {{c1:: 可以类对象形式访问，但是通常不建议}}
++ `sessionStorage `最主要的特点是：
+  + {{c1:: sessionStorage 的数据只存在于当前浏览器标签页。}}
+    + {{c1:: 具有相同页面的另一个标签页中将会有不同的存储。}}
+    + {{c1:: 但是，它在同一标签页下的 iframe 之间是共享的（假如它们来自相同的源）。}}
+  + {{c1:: 数据在页面刷新后仍然保留，但在关闭/重新打开浏览器标签页后不会被保留。}}
+
+### 遍历`LocalStorage`，`sessionStorage` [	](javascript_info_20200615060136005)
+
++ 像遍历数组那样遍历:
+```js
+  //{{c1::
+  for(let i = 0; i < localStorage.length; i++) {
+    let key = localStorage.key(i);
+    alert(`${key}: ${localStorage.getItem(key)}`);
+  }
+  //}}
+```
++ `for key in localStorage`:
+```js
+  //{{c1::
+  for(let key in localStorage) {
+    if (!localStorage.hasOwnProperty(key)) {
+      continue; // 跳过像 "setItem"，"getItem" 等这样的键
+    }
+    alert(`${key}: ${localStorage.getItem(key)}`);
+  }
+  //}}
+```
++ Object.keys 获取只属于“自己”的键:
+```js
+  //{{c1::
+  let keys = Object.keys(localStorage);
+  for(let key of keys) {
+    alert(`${key}: ${localStorage.getItem(key)}`);
+  }
+  //}}
+```
+
+### Storage 事件 [	](javascript_info_20200615060136006)
+
++ 作用：{{c1:: 当 localStorage 或 sessionStorage 中的数据更新后，storage 事件就会触发 }}
++ 属性：
+  + `key`:{{c1:: 发生更改的数据的 key（如果调用的是 .clear() 方法，则为 null）。}}
+  + `oldValue`:{{c1:: 旧值（如果是新增数据，则为 null）。}}
+  + `newValue`:{{c1:: 新值（如果是删除数据，则为 null）。}}
+  + `url`:{{c1:: 发生数据更新的文档的 url。}}
+  + `storageArea`:{{c1:: 发生数据更新的 localStorage 或 sessionStorage 对象。}}
++ 注意：{{c1:: 在所有可访问到存储对象的 window 对象上触发`window.onstorage` }}
