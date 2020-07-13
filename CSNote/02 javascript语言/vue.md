@@ -1,4 +1,4 @@
-
+## 基本使用 [	](vue_20200709073019529)
 
 ### 声明式绑定,条件与循环 [	](vue_20200703080524558)
 
@@ -806,10 +806,12 @@ Vue.component('base-input', {
   
 + 然后父组件可以监听那个事件并根据需要更新一个本地的数据 property。例如：
   ```xml
+  <!-- {{c1:: -->
   <text-document
     v-bind:title="doc.title"
     v-on:update:title="doc.title = $event"
   ></text-document>
+  <!-- }} -->
   ```
   
 + 为了方便起见，我们为这种模式提供一个缩写，即 `.sync` 修饰符：
@@ -911,9 +913,7 @@ Vue.component('base-input', {
   </current-user>
   <!-- }} -->
   ```
-  
 + 只要出现多个插槽，{{c1:: **必须使用完整的基于 `<template>` 的语法** }}
-
 + 解构插槽 Prop
   ```xml
     <!-- {{c1:: -->
@@ -929,7 +929,6 @@ Vue.component('base-input', {
     </current-user>
     <!-- }} -->
   ```
-  
 + 动态插槽名:
   ```xml
     <!-- {{c1:: -->
@@ -940,7 +939,634 @@ Vue.component('base-input', {
     </base-layout>
     <!-- }} -->
   ```
-  
 + 具名插槽的缩写:例如 v-slot:header 可以被重写为 {{c1:: `#header` }}
-
+  
   + 解构赋值版： {{c1::`#default="{ user }"`}}
+
+### `<keep-alive>`的使用 [	](vue_20200709073019531)
+
++ 作用：{{c1:: 包裹动态组件时，会缓存不活动的组件实例，而不是销毁它们。 }}
++ 示例代码：
+  ```xml
+  <!-- 失活的组件将会被缓存！-->
+  <!-- {{c1:: -->
+  <keep-alive>
+    <component v-bind:is="currentTabComponent"></component>
+  </keep-alive>
+  <!-- }} -->
+  ```
+
+### vue引入异步组件 [	](vue_20200709073019533)
+
++ `setTimeout`模拟异步组件简单例子
+  ```js
+    //{{c1:: 
+    Vue.component('async-example', function (resolve, reject) {
+      setTimeout(function () {
+        // 向 `resolve` 回调传递组件定义
+        resolve({
+          template: '<div>I am async!</div>'
+        })
+      }, 1000)
+    })
+    //}}
+  ```
++ 返回一个 Promise
+  ```js
+    //{{c1:: 
+    Vue.component(
+      'async-webpack-example',
+      // 这个动态导入会返回一个 `Promise` 对象。
+      () => import('./my-async-component')
+    )
+    //}}
+  ```
++ 局部注册：
+  ```js
+    //{{c1:: 
+    new Vue({
+      // ...
+      components: {
+        'my-component': () => import('./my-async-component')
+      }
+    })
+    //}}
+  ```
++ 自定义异步组件工厂函数:
+  ```js
+    const AsyncComponent = () => ({
+    // 需要加载的组件 (应该是一个 `Promise` 对象)
+    //{{c1::
+    component: import('./MyComponent.vue'),
+    //}}
+    // 异步组件加载时使用的组件
+    //{{c1::
+    loading: LoadingComponent,
+    //}}
+    // 加载失败时使用的组件
+    //{{c1::
+    error: ErrorComponent,
+    //}}
+    // 展示加载时组件的延时时间。默认值是 200 (毫秒)
+    //{{c1::
+    delay: 200,
+    //}}
+    // 如果提供了超时时间且组件加载也超时了，
+    // 则使用加载失败时使用的组件。默认值是：`Infinity`
+    //{{c1::
+    timeout: 3000
+    //}}
+  })
+  ```
+
+## 处理边界情况 [	](vue_20200709073019535)
+
+### 访问元素 & 组件 [	](vue_20200709073019537)
+
++ 访问根实例:{{c1:: 在每个 `new Vue` 实例的子组件中，其根实例可以通过 `$root.property `进行访问 }}
++ 访问父级组件实例:{{c1:: `$parent property` 可以用来从一个子组件访问父组件的实例。它提供了一种机会，可以在后期随时触达父级组件，以替代将数据以 prop 的方式传入子组件的方式。 }}
++ 访问子组件实例或子元素:{{c1:: `<base-input ref="usernameInput"></base-input>` }}
+  + 在父组件中调用：{{c1:: `this.$refs.usernameInput` }}
+
+
+### vue组件:依赖注入 [	](vue_20200709073019539)
++ provide 选项允许我们指定我们想要提供给后代组件的数据/方法。
+  ```js
+  //{{c1::
+  provide: function () {
+    return {
+      getMap: this.getMap
+    }
+  }
+  //}}
+  ```
++ 然后在任何后代组件里使用inject 选项接收：
+  ```js
+  //{{c1::
+  inject: ['getMap']
+  //}}
+  ```
+
+### 程序化的事件侦听器 [	](vue_20200709073019541)
+
++ 现在，你已经知道了 `$emit` 的用法，它可以被 `v-on` 侦听，但是 Vue 实例同时在其事件接口中提供了其它的方法。我们可以：
+  + 通过 {{c1::`$on(eventName, eventHandler)`}} 侦听一个事件
+  + 通过 {{c1::`$once(eventName, eventHandler)`}} 一次性侦听一个事件
+  + 通过 {{c1::`$off(eventName, eventHandler)`}} 停止侦听一个事件
+
+### 组件：循环引用 [	](vue_20200709073019543)
++ 当你使用 `Vue.component` 全局注册一个组件时，这个全局的 ID 会自动设置为该组件的{{c1:: `name` 选项}}
+
+
+### 模板定义的替代品 [	](vue_20200709073019544)
+
++ 内联模板例子:
+  ```html
+  <!-- {{c1:: -->
+  <div id="x">
+    <my-component inline-template>
+        <div>
+            <p>{{message}}</p>
+        </div>
+    </my-component>
+  <div>
+  <script>
+    var vm=new Vue({
+      el:'#x'
+      data:{
+        message:'hello'
+      }
+      components:{
+          'my-component':{
+              props:["message"]
+          }
+      }
+    })
+  </script>
+  <!-- }} -->
+  ```
++ X-Template
+  + 定义：
+  ```html
+  <!-- {{c1:: -->
+  <script type="text/x-template" id="hello-world-template">
+     <p>Hello hello hello</p>
+  </script>
+  <!-- }} -->
+  ```
+  + 引用：
+  ```js
+  //{{c1::
+  Vue.component('hello-world', {
+    template: '#hello-world-template'
+  })
+  //}}
+  ```
+## 动画 [	](vue_20200713065313204)
+
+### 单元素/组件的过渡例子 [	](vue_20200709073019546)
+
+```xml
+<div id="demo">
+  <button v-on:click="show = !show">
+    Toggle
+  </button>
+  <!-- {{c1:: -->
+  <transition name="fade">
+    <p v-if="show">hello</p>
+  </transition>
+  <!-- }} -->
+</div>
+```
+
+### 过渡的6个类名的关系 [	](vue_20200709073019548)
+
++ 过渡类的关系图：{{c1::
+  ![image-20200709171740953](vue.assets/image-20200709171740953.png)}}
++ 过渡的类名：{{c1:: 对于这些在过渡中切换的类名来说，如果你使用一个没有名字的 `<transition>`，则 `v-` 是这些类名的默认前缀。}}
+
+### VUE实现简单CSS过渡 [	](vue_20200709073019550)
+
++ 效果：![P7pMdJjG3D](vue.assets/P7pMdJjG3D.gif) 
+
++ css样式代码：
+
+  ```css
+  /* {{c1:: */
+  .slide-fade-enter-active {
+    transition: all .3s ease;
+  }
+  .slide-fade-leave-active {
+    transition: all .8s cubic-bezier(1.0, 0.5, 0.8, 1.0);
+  }
+  .slide-fade-enter, .slide-fade-leave-to{
+    transform: translateX(10px);
+    opacity: 0;
+  }
+  /* }} */ 
+  ```
+
+### VUE实现简单CSS动画 [	](vue_20200709073019552)
+
++ 效果![ngmWShQWb6](vue.assets/ngmWShQWb6.gif)
++ css样式代码：
+  ```css
+  /* {{c1:: */
+  .bounce-enter-active {
+    animation: bounce-in .5s;
+  }
+  .bounce-leave-active {
+    animation: bounce-in .5s reverse;
+  }
+  @keyframes bounce-in {
+    0% {
+      transform: scale(0);
+    }
+    50% {
+      transform: scale(1.5);
+    }
+    100% {
+      transform: scale(1);
+    }
+  }
+  /* }} */
+  ```
+
+### 自定义过渡的类名 [	](vue_20200709073019554)
+
+1. `v-enter`的自定义类名：{{c1:: `enter-class` }}
+2. `v-enter-active`的自定义类名：{{c1:: `enter-active-class` }}
+3. `v-enter-to`的自定义类名：{{c1:: `enter-to-class`  }}
+4. `v-leave`的自定义类名：{{c1:: `leave-class` }}
+5. `v-leave-active`的自定义类名：{{c1:: `leave-active-class` }}
+6. `v-leave-to`的自定义类名：{{c1:: `leave-to-class` }}
+
+### 显性的过渡持续时间 [	](vue_20200713065313206)
+
+- 在这种情况下你可以用 `<transition>` 组件上的 `duration` prop 定制一个显性的过渡持续时间 (以毫秒计)：
+  ```xml
+  <!-- {{c1:: -->
+  <transition :duration="1000">...</transition>
+  <!-- }} -->
+  ```
+- 你也可以定制进入和移出的持续时间：
+  ```xml
+  <!-- {{c1:: -->
+  <transition :duration="{ enter: 500, leave: 800 }">...</transition>
+  <!-- }} -->
+  ```
+
+### VUE过渡：`<transition>`的attribute 中声明 JavaScript 钩子 [	](vue_20200713065313208)
+
+```xml
+<!-- {{c1:: -->
+<transition
+  v-on:before-enter="beforeEnter"
+  v-on:enter="enter"
+  v-on:after-enter="afterEnter"
+  v-on:enter-cancelled="enterCancelled"
+  v-on:before-leave="beforeLeave"
+  v-on:leave="leave"
+  v-on:after-leave="afterLeave"
+  v-on:leave-cancelled="leaveCancelled"
+>
+</transition>
+<!-- }} -->
+
+<script>
+...
+methods: {
+  // --------
+  // 进入中
+  // --------
+  beforeEnter: function (el) {
+    // ...
+  },
+  // ...
+</script>
+```
+
+
+
+
+# 黑马内容 [	](vue_20200713065313210)
+
+## 前后端交互 [	](vue_20200713065313212)
+
+### Jquery Ajax API简单调用 [	](vue_20200713065313214)
+
+```js
+// {{c1::
+  $.ajax({
+    url: 'http://localhost:3000/data',
+    success: function(data) {
+      console.log(data)
+    }
+  });
+// }}
+```
+
+## vue路由 [	](vue_20200713065313216)
+
+### 模拟路由 [	](vue_20200713065313218)
+```html
+    <!-- 被 vue 实例控制的 div 区域 -->
+      <!-- {{c1:: -->
+    <div id="app">
+      <a href="#/zhuye">主页</a> 
+      <a href="#/keji">科技</a> 
+      <a href="#/caijing">财经</a>
+      <a href="#/yule">娱乐</a>
+      <component :is="comName"></component>
+    </div>
+      <!-- }} -->
+
+    <script>
+      // #region vue 实例对象
+      const vm = new Vue({
+        el: '#app',
+        data: {
+          comName: 'zhuye'
+        },
+        // 注册私有组件
+        components: {
+          zhuye,keji,caijing,yule
+        }
+      })
+      // 监听 window 的 onhashchange 事件，根据获取到的最新的 hash 值，切换要显示的组件的名称
+        //{{c1::
+      window.onhashchange = function() {
+        // 通过 location.hash 获取到最新的 hash 值
+        console.log(location.hash);
+        switch(location.hash.slice(1)){
+          case '/zhuye':
+            vm.comName = 'zhuye'
+          break
+          case '/keji':
+            vm.comName = 'keji'
+          break
+          case '/caijing':
+            vm.comName = 'caijing'
+          break
+          case '/yule':
+            vm.comName = 'yule'
+          break
+        }
+      }
+      //}}
+    </script>
+```
+
+### vue-router的基本使用 [	](vue_20200713065313220)
+1. 创建路由实例对象，定义路由规则:
+    ```js
+    //{{c1::
+    const router = new VueRouter({
+      routes: [
+        { path: '/user', component: User },
+        { path: '/register', component: Register }
+      ]
+    })
+    //}}
+    ```
+2. 挂载到vue实例:
+   ```js
+    //{{c1::
+   const vm = new Vue({
+     el: '#app',
+     data: {},
+     // router: router
+     router
+   })
+    //}}
+   ```
+3. 定义路由链接与占位符:
+   ```html
+    <!-- {{c1:: -->
+   <div id="app">
+     <router-link to="/user">User</router-link>
+     <router-link to="/register">Register</router-link>
+     <router-view></router-view>
+   </div>
+    <!-- }} -->
+   ```
+
+### 路由重定向 [	](vue_20200713065313222)
+```js
+    //{{c1::
+      const router = new VueRouter({
+        routes: [
+          { path: '/', redirect: '/user'},
+          { path: '/user', component: User },
+          { path: '/register', component: Register }
+        ]
+      }) 
+    //}}
+```
+
+### 路由嵌套 [	](vue_20200713065313224)
++ 嵌套路由的定义:
+  ```js
+    const router = new VueRouter({
+      routes: [
+        { path: '/', redirect: '/user'},
+        { path: '/user', component: User },
+        //嵌套路由
+        //{{c1::
+        { path: '/register', component: Register, children: [
+          { path: '/register/tab1', component: Tab1 },
+          { path: '/register/tab2', component: Tab2 }
+        ] }
+        //}}
+        
+      ]
+    })
+  ```
++ 对应的组件模板的定义
+  ```js
+    const Register = {
+      //{{c1::
+      template: `
+      <div>
+        <h1>Register 组件</h1>
+        <hr/>
+        <router-link to="/register/tab1">tab1</router-link>
+        <router-link to="/register/tab2">tab2</router-link>
+        <router-view />
+      <div>`
+      //}}
+    }
+  ```
+
+### 动态路由匹配 [	](vue_20200713065313225)
+
+1. 4种路由匹配组件时传递参数的方式:
+
+   ```js
+    //{{c1:: 
+    { path: '/user/:id', component: User },
+    { path: '/user/:id', component: User, props: true },
+    { path: '/user/:id', component: User, props: { uname: 'lisi', age: 20 } },
+    { path: '/user/:id', component: User, props: route => ({ uname: 'zs', age: 20, id: route.params.id })},
+    //}}
+   ```
+
+2. 对应的组件定义
+
+   - 不带props属性时：
+     ```js
+     //{{c1:: 
+     const User = {
+     template: '<h1>User 组件 -- 用户id为: {{$route.params.id}}</h1>'
+     }
+     //}}
+     ```
+   - 带props属性时：
+     ```js
+     //{{c1:: 
+     const User = {
+     props: ['id', 'uname', 'age'],
+     template: '<h1>User 组件 -- 用户id为: {{id}} -- 姓名为:{{uname}} -- 年龄为：{{age}}</h1>'
+     }
+     //}}
+     ```
+
+3. 路由声明:
+
+   ```html
+   <!-- {{c1:: -->
+   <div id="app">
+   <router-link to="/user/1">User1</router-link>
+   <router-link to="/user/2">User2</router-link>
+   <router-link to="/user/3">User3</router-link>
+   <router-link to="/register">Register</router-link>
+   <router-view></router-view>
+   </div>
+   <!-- }} -->
+   ```
+
+### 命名路由 [	](vue_20200713065313227)
+
+1. 路由规则对象：
+   ```js
+    //{{c1::
+    {
+    // 命名路由
+    name: 'user',
+    path: '/user/:id',
+    component: User,
+    props: route => ({ uname: 'zs', age: 20, id: route.params.id })
+    },
+    //}}
+   ```
+
+2. 路由链接：
+   ```html
+    <!-- {{c1:: -->
+    <router-link :to="{ name: 'user', params: {id: 3} }">User3</router-link>
+    <!-- }} -->
+   ```
+
+### 路由编程式导航 [	](vue_20200713065313229)
+
+```js
+      const User = {
+        props: ['id', 'uname', 'age'],
+        template: `<div>
+          <h1>User 组件 -- 用户id为: {{id}} -- 姓名为:{{uname}} -- 年龄为：{{age}}</h1>
+          <button @click="goRegister">跳转到注册页面</button>
+        </div>`,
+        methods: {
+          goRegister() {
+            //{{c1::
+            this.$router.push('/register')
+            //}}
+          }
+        },
+      }
+
+      const Register = {
+        template: `<div>
+          <h1>Register 组件</h1>
+          <button @click="goBack">后退</button>
+        </div>`,
+        methods: {
+          goBack() {
+            //{{c1::
+            this.$router.go(-1)
+            //}}
+          }
+        }
+      }
+```
+
+## 工程化 [	](vue_20200713065313231)
+
+### vue单文件组件的使用 [	](vue_20200713065313233)
++ 单文件组件的声明
+  ```html
+    <!-- {{c1:: -->
+    <template>
+      <div>
+        <h1>这是 App 根组件</h1>
+      </div>
+    </template>
+
+    <script>
+    export default {
+      data() {
+        return {};
+      },
+      methods: {}
+    };
+    </script>
+
+    <style scoped>
+    h1 {
+      color: red;
+    }
+    </style>
+    <!-- }} -->
+  ```
++ 单文件所需webpack配置
+  1. 安装：{{c1:: `vue-loader` `vue-template-compiler` }}
+  2. 引入：{{c1:: `const VueLoaderPlugin = require('vue-loader/lib/plugin')` }}
+  3. 配置插件：{{c1:: `  plugins: [htmlPlguin, new VueLoaderPlugin()]` }}
+  4. 配置loader:{{c1:: ` { test: /\.vue$/, use: 'vue-loader' }` }}
++ 在入口文件中使用单文件组件
+  ```js
+    //{{c1::
+    import Vue from 'vue'
+    import App from './components/App.vue'
+    const vm = new Vue({
+      el: '#app',
+      render: h => h(App)
+    })
+    //}}
+  ```
+
+### vue脚手架 [	](vue_20200713065313236)
++ 安装：{{c1:: `npm install -g @vue/cli` }}  
++ 命令行创建vue项目：{{c1:: `vue create my-project` }}  
++ 可视化创建vue项目：{{c1:: `vue ui` }}  
++ 基于2.x旧模板创建vue项目：
+  1. 安装命令工具：{{c1:: `npm install -g @vue/cli-init` }}  
+  2. 创建项目：{{c1:: `vue init webpack my-project` }}  
+
+### Vue脚手架的自定义配置 [	](vue_20200713065313238)
+ 1. 通过 package.json 进行配置 [不推荐使用]
+    ```js
+    //{{c1::
+     "vue":{
+         "devServer":{
+             "port":"9990",
+             "open":true
+         }
+     }
+    //}}
+    ```
+ 2. 通过单独的配置文件进行配置，创建vue.config.js
+    ```js
+    //{{c1::
+     module.exports = {
+         devServer:{
+             port:8888,
+             open:true
+         }
+     }
+     //}}
+    ```
+## Element-UI [	](vue_20200713065313240)
+
+### Element-UI的基本使用 [	](vue_20200713065313242)
+
++ 安装：{{c1:: `npm install element-ui -S` }}
++ 导入使用：
+  ```js
+  //{{c1::
+  import ElementUI from "element-ui";
+  import "element-ui/lib/theme-chalk/index.css";
+  ...
+  Vue.use(ElementUI)
+  //}}
+  ```

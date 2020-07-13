@@ -2946,7 +2946,7 @@ alert( err instanceof SyntaxError ); // true
 ## 异步编程 [	](javascript_info_20200114084259608)
 
 ### Promise 对象的构造方法签名是： [	](javascript_info_20200114084259610)
-
++ promise对象的主要作用：{{c1:: 解决异步深层嵌套问题（回调地狱）,因为调整异步调用的顺序所造成的问题。 }}
 ```javascript
 //{{c1::
 let promise = new Promise(function(resolve, reject) {
@@ -3001,6 +3001,31 @@ promise.then(
 );
 
 promise.then(script => alert('One more handler to do something else!'));
+```
+
+### 基于Promise发送Ajax请求示例： [	](javascript_info_20200713065313191)
+
+```js
+    function queryData(url) {
+      var p = new Promise(function(resolve, reject){
+        // {{c1::
+        var xhr = new XMLHttpRequest();
+        xhr.onreadystatechange = function(){
+          if(xhr.readyState != 4) return;
+          if(xhr.readyState == 4 && xhr.status == 200) {
+            // 处理正常的情况
+            resolve(xhr.responseText);
+          }else{
+            // 处理异常情况
+            reject('服务器错误');
+          }
+        };
+        xhr.open('get', url);
+        xhr.send(null);
+        //}}
+      });
+      return p;
+    }
 ```
 
 ### task:下列代码会输出什么？ [	](javascript_info_20200114084259618)
@@ -4033,14 +4058,14 @@ showNotification({
 
 ### `offsetParent`元素与`offsetLeft/Top`属性 [	](javascript_info_20200525035508047)
 
-+ `offsetParent` 是最接近的祖先（ancestor）,最近的祖先为下列之一：
++ `offsetParent` 是在以下列出条件中最接近的祖先（ancestor）：
   1. {{c1:: CSS 定位的（position 为 absolute，relative 或 fixed），}}
   2. {{c1:: 或 `<td>`，`<th>`，`<table>`，}}
   3. {{c1:: 或 `<body>`。}}
 + 有以下几种情况下，`offsetParent` 的值为 null：
-  1. {{c1:: 对于未显示的元素（`display:none `或者不在文档中）。}}
-  1. {{c1:: 对于` <body>` 与` <html>`。}}
-  1. {{c1:: 对于带有 `position:fixed `的元素。}}
+  1. `display:none `：{{c1:: 对于未显示的元素（`display:none `或者不在文档中）。}}
+  1. ` <body>` ` <html>`：{{c1:: 对于` <body>` 与` <html>`。}}
+  1. `position:fixed `：{{c1:: 对于带有 `position:fixed `的元素。}}
 
 
 
@@ -4741,14 +4766,14 @@ From <input id="from" disabled> – To <input id="to" disabled>
 + input.onselect:{{c1:: 当某个东西被选择时触发。}}
 
 ### 要使某些内容不可选，有三种方式： [	](javascript_info_20200608063412730)
-1. {{c1:: 使用 CSS 属性 user-select: none。}}
-2. {{c1:: 防止 onselectstart 或 mousedown 事件中的默认行为。}}
-3. {{c1:: 我们还可以使用 document.getSelection().empty() 来在选择发生后清除选择。很少使用这种方法，因为这会在选择项消失时导致不必要的闪烁。}}
+1. `user-select: none`:{{c1:: 使用 CSS 属性 user-select: none。}}
+2. `onselectstart 或 mousedown`:{{c1:: 防止 onselectstart 或 mousedown 事件中的默认行为。}}
+3. `document.getSelection().empty()`:{{c1:: 我们还可以使用 document.getSelection().empty() 来在选择发生后清除选择。很少使用这种方法，因为这会在选择项消失时导致不必要的闪烁。}}
 
 ### 用于选择的两种不同的 API： [	](javascript_info_20200608063412731)
 1. {{c1:: 对于文档：`Selection` 和 `Range` 对象。}}
 2. {{c1:: 对于 `input`，`textarea`：其他方法和属性。}}
-
+ []
 ### 选择（Selection)与范围（Range) 最常用的方案一般是： [	](javascript_info_20200608063412732)
 
 1. 获取选择：
