@@ -23,10 +23,11 @@
 2. 狭义概念:{{c1:: GOF4人帮定义的23种设计模式：工厂、适配器、装饰器、门面、代理、模板... }}
 
 ### 通用工厂的设计 [	](spring_20200713102713842)
-- 简单工厂会存在大量的代码冗余![image-20200411181701143](spring.assets/image-20200411181701143.png)
+- 简单工厂会存在大量的代码冗余
+  - ![image-20200411181701143](spring.assets/image-20200411181701143.png)
 - 通用工厂的代码
   ```java
-  <!-- {{c1:: -->
+  //{{c1::
   public class BeanFactory{
       public static Object getBean(String key){
           Object ret = null;
@@ -40,7 +41,7 @@
       }
 
   }
-  <!-- }} -->
+  //}}
   ```
 
 ##  Spring的核心API [	](spring_20200713102713844)

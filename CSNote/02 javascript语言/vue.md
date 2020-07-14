@@ -1508,11 +1508,6 @@ methods: {
     </style>
     <!-- }} -->
   ```
-+ 单文件所需webpack配置
-  1. 安装：{{c1:: `vue-loader` `vue-template-compiler` }}
-  2. 引入：{{c1:: `const VueLoaderPlugin = require('vue-loader/lib/plugin')` }}
-  3. 配置插件：{{c1:: `  plugins: [htmlPlguin, new VueLoaderPlugin()]` }}
-  4. 配置loader:{{c1:: ` { test: /\.vue$/, use: 'vue-loader' }` }}
 + 在入口文件中使用单文件组件
   ```js
     //{{c1::
@@ -1524,6 +1519,14 @@ methods: {
     })
     //}}
   ```
+  
+### 使用vue单文件组件所需webpack配置
+
+  1. 安装：{{c1:: `vue-loader` `vue-template-compiler` }}
+  2. 引入：{{c1:: `const VueLoaderPlugin = require('vue-loader/lib/plugin')` }}
+  3. 配置插件：{{c1:: `  plugins: [htmlPlguin, new VueLoaderPlugin()]` }}
+  4. 配置loader:{{c1:: ` { test: /\.vue$/, use: 'vue-loader' }` }}
+   
 
 ### vue脚手架 [	](vue_20200713065313236)
 + 安装：{{c1:: `npm install -g @vue/cli` }}  
@@ -1569,4 +1572,4 @@ methods: {
   ...
   Vue.use(ElementUI)
   //}}
-  ```
+  ``` 
