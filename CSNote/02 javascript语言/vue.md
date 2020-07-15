@@ -1226,6 +1226,101 @@ methods: {
 </script>
 ```
 
+### 多个元素的过渡
+
++ 多个元素过渡代码
+  ```js
+  <transition>
+    <button v-if="docState === 'saved'" key="saved">
+      Edit
+    </button>
+    <button v-if="docState === 'edited'" key="edited">
+      Save
+    </button>
+    <button v-if="docState === 'editing'" key="editing">
+      Cancel
+    </button>
+  </transition>
+  ```
+  + 可以重写为：
+    ```js
+    //{{c1::
+    <transition>
+      <button v-bind:key="docState">
+        {{ buttonMessage }}
+      </button>
+    </transition>
+    // ...
+    computed: {
+      buttonMessage: function () {
+        switch (this.docState) {
+          case 'saved': return 'Edit'
+          case 'edited': return 'Save'
+          case 'editing': return 'Cancel'
+        }
+      }
+    }
+    //}}
+    ```
++ 多组件过渡：
+  ```xml
+  <!-- {{c1:: -->
+  <transition name="component-fade" mode="out-in">
+    <component v-bind:is="view"></component>
+  </transition>
+  <!-- }} -->
+  ```
++ 注意：给在 `<transition> `组件中的多个元素设置 key 是一个更好的实践。
++ Vue 提供了过渡模式
+  + in-out：{{c1:: 新元素先进行过渡，完成之后当前元素过渡离开。  }}
+  + out-in：{{c1:: 当前元素先进行过渡，完成之后新元素过渡进入。 }}
+
+### 列表过渡
+
++ 效果：![rPw6hScs72](vue.assets/rPw6hScs72-1594812237726.gif)
++ html代码：
+  ```html
+  <transition-group name="list-complete" tag="p">
+    <span
+      v-for="item in items"
+      v-bind:key="item"
+      class="list-complete-item"
+    >
+      {{ item }}
+    </span>
+  </transition-group>
+  ```
++ CSS代码:
+  ```css
+    .list-complete-item {
+      transition: all 1s;
+      display: inline-block;
+      margin-right: 10px;
+    }
+    .list-complete-enter, .list-complete-leave-to {
+      opacity: 0;
+      transform: translateY(30px);
+    }
+    .list-complete-leave-active {
+      position: absolute;
+    }
+  ```
++ 注意:{{c1:: 使用 FLIP 过渡的元素不能设置为 display: `inline` 。作为替代方案，可以设置为 `display: inline-block` 或者放置于 `flex` 中 }}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 
@@ -1520,13 +1615,13 @@ methods: {
     //}}
   ```
   
-### 使用vue单文件组件所需webpack配置
+### 使用vue单文件组件所需webpack配置 [	](vue_20200715110208950)
 
   1. 安装：{{c1:: `vue-loader` `vue-template-compiler` }}
   2. 引入：{{c1:: `const VueLoaderPlugin = require('vue-loader/lib/plugin')` }}
   3. 配置插件：{{c1:: `  plugins: [htmlPlguin, new VueLoaderPlugin()]` }}
   4. 配置loader:{{c1:: ` { test: /\.vue$/, use: 'vue-loader' }` }}
-   
+
 
 ### vue脚手架 [	](vue_20200713065313236)
 + 安装：{{c1:: `npm install -g @vue/cli` }}  
@@ -1572,4 +1667,4 @@ methods: {
   ...
   Vue.use(ElementUI)
   //}}
-  ``` 
+  ```

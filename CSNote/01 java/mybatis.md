@@ -1,3 +1,9 @@
+
+
+# Mybatis基本使用
+
+## 介绍
+
 ### ORM简介 [	](mybatis_20200512080327616)
 
 + ORM的全称:{{c1:: Object/Relation Mapping，对象/关系映射。}}
@@ -12,7 +18,10 @@
 1. 自动转换:{{c1:: 表列名（或列别名）和对象属性名相同 }}
 2. 显式指定:{{c1:: 使用`<result>`元素或`@Result`来指定列名与属性之间的关系。 }}
 
+## 基本使用
+
 ### mybatis-config.xml文件 [	](mybatis_20200512080327619)
+
 + `<environments>`的配置
 {{c1::
     ```xml
@@ -64,6 +73,8 @@ var newsMapper = sqlSession.getMapper(NewsMapper.class);
 1. {{c1:: Mapper接口的接口名应该与对应XML文件同名。}}
 2. {{c1:: Mapper接口的源文件应该与对应XML文档放在相同的包下。}}
 3. {{c1:: Mapper接口中抽象方法的方法名与XML Mapper中SQL语句的id相同。}}
+
+## Mybatis核心API
 
 ### Mybatis核心API及作用域 [	](mybatis_20200514071548547)
 
@@ -126,9 +137,10 @@ int delete(String statement, Object parameter);
 flushStatements():{{c1:: 执行批量更新。}}
 force:{{c1:: 是否强制提交或回滚。}}
 
-## Mybatis配置 [	](mybatis_20200520043218578)
+## Mybatis全局配置
 
 ### Mybatis允许3个地方配置Properties [	](mybatis_20200514071548553)
+
 1. {{c1::  额外属性文件配置：`<properties resource="db.properties">`。}}
 2. {{c1:: 直接配置`<properties>`的子元素。}}
 3. {{c1:: SqlSessionFactory中build()方法传入Properties对象。}}
@@ -185,20 +197,24 @@ force:{{c1:: 是否强制提交或回滚。}}
     + constructorArgs：{{c1:: 多个构造器参数的值}}
     + properties:{{c1:: 核心配置文件中对象工厂配置的属性}}
 + 配置自定义工厂类
-{{c1::
+  {{c1::
+
     ```xml
         <objectFactory type="top.xieyun.mybatis.myObjectFactory">
             <property name="author" value="crazyit" />
         </objectFactory>
     ```
-}}
+  }}
 ### 4种加载Mapper的方式 [	](mybatis_20200520043218586)
 1. {{c1:: `<mapper resource="top/xieyun/app/dao/NewsMapper.xml">`}}
 2. {{c1:: `<mapper url="file:///G:/abc/NewsMapper.xml">`}}
 3. {{c1:: `<mapper class="top.xieyun.app.dao.NewsMapper.xml">`}}
 4. {{c1:: `<mapper package="top.xieyun.app.dao">`}}
 
+## 类型转换器配置
+
 ### Mybatis类型转换器 [	](mybatis_20200520043218588)
+
 + 首先实现{{c1::`TypeHandler<T>`}}接口，或者继承{{c1::`BaseTypeHandler<T>`}}基类,实现以下方法
     1. `void setNonNullParameter(PreparedStatement ps, int i,T param, JdbcType jdbcType)`
     2. `T getNullableResult(ResultSet rs, String columnIndex)`
@@ -248,6 +264,7 @@ force:{{c1:: 是否强制提交或回滚。}}
                 typeHandler = EnumTypeHandler.class)
         ​```
     }}
+        ```
 + 对象转ResultSet的情况:
     + {{c1:: 在#{}中指定typeHandler属性:
     ```sql
@@ -256,6 +273,8 @@ force:{{c1:: 是否强制提交或回滚。}}
         typeHandler=org.apache.ibatis.type.EnumTypeHandler})
     ```
     }}
+
+## 事务
 
 ### 事务管理器 [	](mybatis_20200521095802607)
 
@@ -284,6 +303,8 @@ void close() throws SQLException;
 Integer getTimeout() throws SQLException;
 ```
 + 注意：{{c1:: 从数据源获得connection与直接传入connection的区别 }}
+
+## 数据源
 
 ### MyBatis内置了三种数据源实现 [	](mybatis_20200521095802609)
 
@@ -359,7 +380,13 @@ Integer getTimeout() throws SQLException;
     1. {{c1:: 实现`DatabaseIdProvider`接口}}
     2. {{c1:: void setProperties(Properites p):p为`<databaseIdProvider>`中的配置属性}}
     3. {{c1:: String getDatabaseId(DataSource dataSource)：返回数据库类的别名。}}
+
+
+
+## mapper配置
+
 ### insert时返回自增长得主键值 [	](mybatis_20200602074442599)
+
 + sql语句配置
     {{c1:: 
     ```xml
@@ -445,8 +472,10 @@ create sequence news_inf_seq;
 
  ### Mapper接口中方法的参数处理 [	](mybatis_20200602074442602)
  1. 8个基本类型加String等
+    
     + {{c1:: 方法的参数值直接传给SQL中唯一的#{} }}
  2. object或map
+    
     + {{c1:: #{}中的参数名必须是对象的属性值或Map中的key值}}
  3. 多个参数
     + 内置名
@@ -505,8 +534,10 @@ create sequence news_inf_seq;
 2. {{c1:: 配置generatorConfig.xml文件 }}
 3. {{c1:: 执行该插件的generate目标 }}
 
+## 简单映射
 
 ### 为下面SQL语句创建id为newsMap的映射关系 [	](mybatis_20200604111131382)
+
 ```sql
 	<select id="findNewsByTitle" resultMap="newsMap">
 		select news_id,news_title,news_content from news_inf where news_title like #{title}
@@ -526,6 +557,7 @@ create sequence news_inf_seq;
     }}
 + java注解版:
     {{c1::
+    
     ```java
         @Select("select * from news_inf where news_title like #{title}")
         @Results({
@@ -594,19 +626,21 @@ public class News{
     ```xml
     <settings>
         <setting name="mapUnderscoreToCamelCase" value="true"/>
-        <setting name="autoMappingBehavior" value="true"/>
+        <setting name="autoMappingBehavior" value="PARTIAL"/>
     </settings>
     ```
     }}
-+ autoMappingBehavior支持3种自动映射策略
++ `autoMappingBehavior`支持3种自动映射策略
     1. {{c1:: NONE: 不使用自动映射。 }}
     2. {{c1:: PARTIAL：自动映射result定义之外的属性。 }}
     3. {{c1:: FULL：总是自动映射任意属性。 }}
 
+## 调用存储过程
+
 ### 调用返回结果集的存储过程
+
 + sql语句如下
 ```sql
-    # mysql数据库
     create procedure p_get_news_by_id(v_id integer)
     begin
         select news_id,news_title,news_content
@@ -616,7 +650,7 @@ public class News{
 ```
 + XML Mapper版代码：
 ```xml
-    	<select id="findNewsByProcedure" resultMap="newsMap"
+    <select id="findNewsByProcedure" resultMap="newsMap"
 		statementType="CALLABLE">
 		{call p_get_news_by_id(#{id, mode=IN})}
 	</select>
@@ -641,7 +675,6 @@ public class News{
 ### 调用带out模式参数的存储过程
 + sql语句如下
 ```sql
-    # mysql数据库
     create procedure p_insert_news
     (out v_id integer, v_title varchar(255), v_content varchar(255))
     begin
@@ -668,7 +701,7 @@ public class News{
 ### 调用传出参数为游标引用的存储过程
 + sql语句如下
 ```sql
-    # PostgreSQL
+    # PostgreSQL [	](mybatis_20200715110208912)
     create function p_get_news_by_id(in v_id integer) RETURNS refcursor as $$
     declare
         ref refcursor;
@@ -682,7 +715,7 @@ public class News{
 ```xml
 	<select id="findNewsByProcedure" statementType="CALLABLE">
 		{call p_get_news_by_id(#{id}, 
-		#{result, jdbcType=OTHER, mode=OUT, javaType=ResultSet, resultMap=newsMap})}
+		#{result, jdbcType=OTHER, mode=OUT, javaType=ResultSet, resultMap=newsMap})} [	](mybatis_20200715110208913)
 	</select>
 	<resultMap id="newsMap" type="news">
 		<id column="news_id" property="id"/>
@@ -713,7 +746,10 @@ public class News{
     newsMapper.findNewsByProcedure(nw);
     System.out.println("查询返回到记录为：" + nw.getResult());
 ```
+## 关联映射
+
 ### Mybatis的3种映射策略
+
 1. {{c1:: 基于嵌套select的策略 }}
     + 必要：{{c1:: 需要与延迟加载结合使用 }}
 2. {{c1:: 基于多表连接查询的映射策略 }}
@@ -769,4 +805,3 @@ public class News{
         one = @One(select = "org.crazyit.app.dao.PersonMapper.getPerson",
         fetchType = FetchType.LAZY))
 ```
-

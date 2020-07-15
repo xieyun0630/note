@@ -1,4 +1,4 @@
-## 工厂 [	](spring_20200713102713838)
+## 简介 [	](spring_20200713102713838)
 
 ### EJB对比Spring [	](spring_20200713102713839)
 
@@ -17,12 +17,7 @@
     3.  {{c1:: 模板 }}
     4.  {{c1:: 策略 }}
 
-### 设计模式 [	](spring_20200713102713841)
-
-1. 广义概念:{{c1:: 面向对象设计中，解决特定问题的经典代码 }}
-2. 狭义概念:{{c1:: GOF4人帮定义的23种设计模式：工厂、适配器、装饰器、门面、代理、模板... }}
-
-### 通用工厂的设计 [	](spring_20200713102713842)
+### 静态类实现通用工厂 [	](spring_20200713102713842)
 - 简单工厂会存在大量的代码冗余
   
   - ![image-20200411181701143](spring.assets/image-20200411181701143.png)
@@ -45,11 +40,6 @@
   ```
 
 ##  Spring的核心API [	](spring_20200713102713844)
-
-### Spring的配置文件 [	](spring_20200713102713845)
-
-1.  配置文件的放置位置：{{c1:: 没有硬性要求，可以任意位置 }}
-2.  配置文件的命名 ：{{c1:: 没有硬性要求 ，通常使用`applicationContext.xml` }}
 
 ### ApplicationContext [	](spring_20200713102713846)
 
@@ -81,7 +71,7 @@
 + 用于判断是否存在指定id值得bean:{{c1:: `ctx.containsBeanDefinition("a")`}}
 + 用于判断是否存在指定id值得bean:{{c1:: `ctx.containsBean("person")`}}
 
-### 配置文件细节 [	](spring_20200713102713850)
+### spring配置文件细节 [	](spring_20200713102713850)
 + `<bean  class="com.baizhiedu.basic.Person"/>`自动分配的id值为:{{c1:: com.baizhiedu.basic.Person#0 }}
 + name属性与id属性的区别
   1. 多个别名：{{c1:: 别名可以定义多个,但是id属性只能有一个值}}
@@ -89,12 +79,7 @@
   3. ctx.containsBean("p"):{{c1:: 也可以判断name值}}
   4. ctx.containsBeanDefinition("person"):{{c1:: 不可以判断name值}}
 
-### Spring工厂的底层实现原理(简易版) [	](spring_20200713102713852)
-
-![image-20200713221458576](spring.assets/image-20200713221458576.png)
-{{c1::![image-20200415113032782](spring.assets/image-20200415113032782.png)}}
-
-### Spring5.x与日志框架的整合
+### Spring5.x与日志框架的整合 [	](spring_20200715110208921)
 
 + 默认日志框架
   + spring 1/2/3 早起都是基于：{{c1:: commons-logging.jar}}
@@ -103,8 +88,8 @@
   1. 引入依赖：{{c1:: `slf4j-log4j12` `log4j`}}
   2. 配置文件：{{c1:: 将`log4j.properties`放在`resources`文件夹根目录下}}
 
-## 依赖注入
-### 什么是注入
+## 依赖注入 [	](spring_20200715110208922)
+### 什么是注入 [	](spring_20200715110208923)
   + 注入：{{c1:: Injection,通过Spring工厂及配置文件，为所创建对象的成员变量赋值 }}
   + 为什么需要注入：{{c1:: **通过编码的方式，为成员变量进行赋值，存在耦合** }}
   + 如何进行注入[开发步骤]
@@ -122,12 +107,12 @@
         </bean>
         <!-- }} -->
       ```
-### Spring注入的原理分析(简易版)
+### Spring注入的原理分析(简易版) [	](spring_20200715110208924)
 
 + `<bean id="account" class="xxx.Accout">`等效于：{{c1:: `Account account = new Account();`}}
 + `<property name="name">`等效于：{{c1:: `account.setName("suns");`}}
 
-### JDK内置类型注入
+### JDK内置类型注入 [	](spring_20200715110208925)
 
 + String + 8种基本类型：
   ```xml
@@ -193,7 +178,7 @@
   <!-- }} -->
   ```
 
-### 用户自定义类型注入
+### 用户自定义类型注入 [	](spring_20200715110208926)
 
 - 新建bean注入(赋值)
   ```xml
@@ -220,7 +205,7 @@
   <!-- }} -->
   ```
 
-### Set注入的简化写法
+### 依赖注入:Set注入的简化写法 [	](spring_20200715110208927)
 
 - 基于属性的简化写法
   - spring + 8种基本类型:{{c1:: `<property name="name" value="suns"/>`}}
@@ -229,11 +214,11 @@
   - spring + 8种基本类型:{{c1:: `<bean id="person" class="xxx.Person" p:name="suns"/>`}}
   - 用户自定义类型：{{c1:: `<bean id="userService" class="xxx.UserServiceImpl" p:userDAO-ref="userDAO"/>`}}
 
-### 构造注入
+### 依赖注入:构造注入 [	](spring_20200715110208928)
 
 - 基于以下代码进行构造注入
     ```java
-    <!-- {{c1:: -->
+    //{{c1::
     public class Customer implements Serializable {
         private String name;
         private int age;
@@ -242,7 +227,7 @@
             this.age = age;
         }
     }
-    <!-- }} -->
+    //}}
     ```
 + 配置文件
     ```xml
@@ -262,11 +247,11 @@
   1. 参数个数不同时：{{c1:: 通过控制`<constructor-arg>`标签的数量进行区分  }}
   2. 构造参数个数相同时：{{c1:: `用type属性进行类型的区分 <constructor-arg type="">` }}
 
-### spring注入的总结图
+### spring注入的总结图 [	](spring_20200715110208929)
 
 {{c1::![image-20200416155620897](spring.assets/image-20200416155620897.png)}}
 
-### 反转控制与依赖注入
+### 反转控制与依赖注入 [	](spring_20200715110208930)
 
 - 反转控制：
   - IOC：{{c1:: inverse of Control }}
@@ -277,7 +262,9 @@
   - 注入：{{c1:: 通过Spring的工厂及配置文件，为对象（bean，组件）的成员变量赋值 }}
   - 依赖注入：{{c1:: 当一个类需要另一个类时，就意味着依赖，一旦出现依赖，就可以把另一个类作为本类的成员变量，最终通过Spring配置文件进行注入(赋值),达到解耦合的目的 }}
 
-### Spring工厂创建复杂对象的3种方式
+## spring工程高级特性
+
+### Spring工厂创建复杂对象的3种方式 [	](spring_20200715110208931)
 
 - 实例工厂与静态工厂
   - 作用：{{c1:: 避免Spring框架的侵入，整合遗留系统  }}s
@@ -296,30 +283,26 @@
       ```
 
 - 实现FactoryBean接口
-  - 实现内部3个方法:![image-20200416204458451](spring.assets/image-20200416204458451.png)
-  - 配置：`<bean id="conn" class="com.baizhiedu.factorybean.ConnectionFactoryBean"/>`
+  - 实现内部3个方法:
+    1. {{c1:: T getObject() throws Exception;：返回要创建的对象 }}
+    2. {{c1:: Class<?> getObjectType();：反对对象类型 }}
+    3. {{c1:: boolean isSingleton();：是否使用单例模式 }}
+  
+  - 配置：{{c1:: `<bean id="conn" class="com.baizhiedu.factorybean.ConnectionFactoryBean"/>` }}
+  
   - 细节:
-    - 获得FactoryBean类型的对象 :`ctx.getBean("&conn")`获得就是ConnectionFactoryBean对象
-    - 依赖注入的体会(DI):
-      ```xml
-      把ConnectionFactoryBean中依赖的4个字符串信息 ，进行配置文件的注入
-      <bean id="conn" class="com.baizhiedu.factorybean.ConnectionFactoryBean">
-        <property name="driverClassName" value="com.mysql.jdbc.Driver"/>
-        <property name="url" value="jdbc:mysql://localhost:3306/suns?useSSL=false"/>
-        <property name="username" value="root"/>
-        <property name="password" value="123456"/>
-      </bean>
-      ```
+    - 获得FactoryBean类型的对象 :{{c1:: `ctx.getBean("&conn")`获得就是ConnectionFactoryBean对象 }}
     - mysql高版本连接创建时，需要制定SSL证书，解决问题的方式
-      ```
-      url = "jdbc:mysql://localhost:3306/suns?useSSL=false"
-      ```
+      
+      - {{c1:: `url = "jdbc:mysql://localhost:3306/suns?useSSL=false"` }}
+  
+- 注意：以上3种方法创建的Bean同样可以使用`<property>`进行set依赖注入
 
-### Spring工厂创建对象的总结图
+### Spring工厂创建对象与依赖注入的流程 [	](spring_20200715110208932)
 
 {{c1::![image-20200417152030222](spring.assets/image-20200417152030222.png)}}
 
-### Spring工厂创建对象的次数
+### Spring工厂创建对象的次数 [	](spring_20200715110208933)
 
 - 创建对象的次数的类型：
   - singleton:{{c1:: 只会创建一次简单对象 默认值}}
@@ -334,3 +317,97 @@
   1. {{c1:: `Connection` }}
   2. {{c1:: `SqlSession | Session` }}
   3. {{c1:: `Struts2 Action` }}
+
+
+### spring中Bean的生命周期执行步骤： [	](spring_20200715110208935)
+
+1. 创建：调用构造方法
+   1. {{c1:: 当`scope=singleton`时，ctx创建时就创建对象 }}
+   2. {{c1:: 当`scope=prototype`时，`ctx.getBean(..)`时创建对象 }}
+2. 初始化：{{c1:: 调用`InitializingBean`接口中的`afterPropertiesSet`方法 }}
+3. 初始化：{{c1:: 调用`<bean>`元素`init-mehotd`指定的方法 }}
+4. 销毁：{{c1:: 调用`DisposableBean`接口中的`destroy()`方法 }}
+5. 销毁：{{c1:: 调用`<bean>`元素`destroy-mehotd`指定的方法 }}
++ 注意：
+  1. {{c1:: 销毁方法的操作只适用于 scope="singleton" }}
+  2. {{c1:: 注入一定发生在初始化操作的前面 }}
+
+### spring配置文件参数化的开发步骤 [	](spring_20200715110208936)
+
+- 提供一个小的配置文件(.properities)
+  ```properties
+  <!-- {{c1:: -->
+  jdbc.driverClassName = com.mysql.jdbc.Driver
+  jdbc.url = jdbc:mysql://localhost:3306/suns?useSSL=false
+  jdbc.username = root
+  jdbc.password = 123456
+  <!-- }} -->
+  ```
+- applicationContext.xml中配置
+  ```xml
+  <!-- {{c1:: -->
+  <context:property-placeholder location="classpath:/db.properties"/>
+  <!-- }} -->
+  ```
+- 在Spring配置文件中通过${key}获取小配置文件中对应的值
+  ```xml
+  <!-- {{c1:: -->
+  <bean id="conn" class="com.baizhiedu.factorybean.ConnectionFactoryBean">
+    <property name="driverClassName" value="${jdbc.driverClassName}"/>
+    <property name="url" value="${jdbc.url}"/>
+    <property name="username" value="${jdbc.username}"/>
+    <property name="password" value="${jdbc.password}"/>
+  </bean>
+  <!-- }} -->
+  ```
+
+### 自定义spring类型转换器 [	](spring_20200715110208937)
+
++ 自定义Converter接口:
+  ```java
+  //{{c1::
+  public class MyDateConverter implements Converter<String, Date> {
+    @Override
+    public Date convert(String source) {
+      Date date = null;
+      try {
+        SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
+        date = sdf.parse(source);
+      } catch (ParseException e) {
+        e.printStackTrace();
+      }
+      return date;
+    }
+  }
+  //}}
+  ```
++ applicationContext.xml中配置:
+  + 创建转换器对象：
+  ```xml
+    <!-- {{c1:: -->
+    <bean id="myDateConverter" class="com.baizhiedu.converter.MyDateConverter">
+      <property name="pattern" value="yyyy-MM-dd"/>
+    </bean>
+    <!-- }} -->
+  ```
+  + 类型转换器的注册
+  ```xml
+    <!-- {{c1:: -->
+    <!-- ConversionSeviceFactoryBean 定义 id属性 值必须 conversionService  -->
+    <bean id="conversionService" class="....ConversionServiceFactoryBean">
+      <property name="converters">
+        <set>
+          <ref bean="myDateConverter"/>
+        </set>
+      </property>
+    </bean>
+    <!-- }} -->
+  ```
+
+### 后置处理器 [	](spring_20200715110208938)
+
+1. {{c1:: 实现 BeanPostProcessor接口 }}
+2. {{c1:: Spring的配置文件中进行配置`<bean id="myBeanPostProcessor" class="xxx.MyBeanPostProcessor"/>` }}
+   +  注意：{{c1:: BeanPostProcessor会对Spring工厂中所有创建的对象进行加工。 }}
++ 运行流程图
+  + {{c1::![image-20200420155053027](spring.assets/image-20200420155053027.png)}}
