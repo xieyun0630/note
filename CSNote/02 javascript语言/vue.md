@@ -1280,6 +1280,7 @@ methods: {
 + 效果：![rPw6hScs72](vue.assets/rPw6hScs72-1594812237726.gif)
 + html代码：
   ```html
+  <!-- {{c1:: -->
   <transition-group name="list-complete" tag="p">
     <span
       v-for="item in items"
@@ -1289,9 +1290,11 @@ methods: {
       {{ item }}
     </span>
   </transition-group>
+  <!-- }} -->
   ```
 + CSS代码:
   ```css
+    /** {{c1:: */
     .list-complete-item {
       transition: all 1s;
       display: inline-block;
@@ -1304,6 +1307,7 @@ methods: {
     .list-complete-leave-active {
       position: absolute;
     }
+    /** }} */
   ```
 + 注意:{{c1:: 使用 FLIP 过渡的元素不能设置为 display: `inline` 。作为替代方案，可以设置为 `display: inline-block` 或者放置于 `flex` 中 }}
 
@@ -1311,10 +1315,76 @@ methods: {
 
 
 
+### vue对象的混入
+```js
+// 定义一个混入对象
+// {{c1::
+var myMixin = {
+  created: function () {
+    this.hello()
+  },
+  methods: {
+    hello: function () {
+      console.log('hello from mixin!')
+    }
+  }
+}
+//}}
+
+// 定义一个使用混入对象的组件
+// {{c1::
+var Component = Vue.extend({
+  mixins: [myMixin]
+})
+var component = new Component() // => "hello from mixin!
+//}}
+```
+### 
 
 
+### 当组件和混入对象含有同名选项时的合并策略
 
-
++ 数据对象：{{c1::在内部会进行递归合并，并在发生冲突时以组件数据优先。}}
++ 同名钩子函数：{{c1::将合并为一个数组，因此都将被调用，混入对象钩子先被调用}}
++ 值为对象的选项：{{c1::methods、components 和 directives，将被合并为同一个对象。两个对象键名冲突时，取组件对象的键值对。}}
++ 自定义选项合并策略：
+  ```js 
+    //{{c1::
+    Vue.config.optionMergeStrategies.myOption = function (toVal, fromVal) {
+      // 返回合并后的值
+    }
+    //}}
+  ```
+### 混入方式
++ `vue`实例混入：
+  ```js
+    //{{c1::
+    var vm = new Vue({
+      mixins:[mixin]
+      //..
+    })
+    //}}
+  ```
++ `Vue.extend()`混入：
+  ```js
+    // 定义一个使用混入对象的组件
+    //{{c1::
+    var Component = Vue.extend({
+      mixins: [myMixin]
+    })
+    //}}
+  ```
++ 全局混入：
+  ```js
+  Vue.mixin({
+    created: function () {
+      var myOption = this.$options.myOption
+      if (myOption) {
+        console.log(myOption)
+      }
+    }
+  })
+  ```
 
 
 
