@@ -1226,7 +1226,7 @@ methods: {
 </script>
 ```
 
-### 多个元素的过渡
+### 多个元素的过渡 [	](vue_20200717061050991)
 
 + 多个元素过渡代码
   ```js
@@ -1275,7 +1275,7 @@ methods: {
   + in-out：{{c1:: 新元素先进行过渡，完成之后当前元素过渡离开。  }}
   + out-in：{{c1:: 当前元素先进行过渡，完成之后新元素过渡进入。 }}
 
-### 列表过渡
+### 列表过渡 [	](vue_20200717061050992)
 
 + 效果：![rPw6hScs72](vue.assets/rPw6hScs72-1594812237726.gif)
 + html代码：
@@ -1312,10 +1312,10 @@ methods: {
 + 注意:{{c1:: 使用 FLIP 过渡的元素不能设置为 display: `inline` 。作为替代方案，可以设置为 `display: inline-block` 或者放置于 `flex` 中 }}
 
 
+## 可复用性&组合 [	](vue_20200717061050993)
 
+### vue对象的混入 [	](vue_20200717061050994)
 
-
-### vue对象的混入
 ```js
 // 定义一个混入对象
 // {{c1::
@@ -1339,10 +1339,9 @@ var Component = Vue.extend({
 var component = new Component() // => "hello from mixin!
 //}}
 ```
-### 
 
-
-### 当组件和混入对象含有同名选项时的合并策略
+学生
+### 当组件和混入对象含有同名选项时的合并策略 [	](vue_20200717061050995)
 
 + 数据对象：{{c1::在内部会进行递归合并，并在发生冲突时以组件数据优先。}}
 + 同名钩子函数：{{c1::将合并为一个数组，因此都将被调用，混入对象钩子先被调用}}
@@ -1355,7 +1354,8 @@ var component = new Component() // => "hello from mixin!
     }
     //}}
   ```
-### 混入方式
+### 混入方式 [	](vue_20200717061050996)
+
 + `vue`实例混入：
   ```js
     //{{c1::
@@ -1386,15 +1386,210 @@ var component = new Component() // => "hello from mixin!
   })
   ```
 
+### 自定义指令 [	](vue_20200717061050997)
+
+1. 全局指令：
+  ```js
+    //{{c1::
+    Vue.directive('focus', {
+      // 当被绑定的元素插入到 DOM 中时……
+      inserted: function (el) {
+        // 聚焦元素
+        el.focus()
+      }
+    })
+    //}}
+  ```
+2. 局部指令：
+  ```js
+  // 组件中可以提供如下选项
+  //{{c1::
+  directives: {
+    focus: {
+      // 指令的定义
+      inserted: function (el) {
+        el.focus()
+      }
+    }
+  }
+  //}}
+  ```
+3. 使用：{{c1:: `<input v-focus>` }}
+
+### 自定义指令对象中的钩子函数 [	](vue_20200717061050998)
+
++ 钩子函数
+  + `bind`：{{c1:: 只调用一次，指令第一次绑定到元素时调用。在这里可以进行一次性的初始化设置。 }}
+  + `inserted`：{{c1:: 被绑定元素插入父节点时调用 (仅保证父节点存在，但不一定已被插入文档中)。 }}
+  + `update`：{{c1:: 所在组件的 VNode 更新时调用，但是可能发生在其子 VNode 更新之前。指令的值可能发生了改变，也可能没有。但是你可以通过比较更新前后的值来忽略不必要的模板更新 (详细的钩子函数参数见下)。 }}
+  + `componentUpdated`：{{c1:: 指令所在组件的 VNode 及其子 VNode 全部更新后调用。 }}
+  + `unbind`：{{c1:: 只调用一次，指令与元素解绑时调用。 }}
++ 函数简写：{{c1:: 在 bind 和 update 时触发相同行为，而不关心其它的钩子 }}
+  ```js
+  //{{c1::
+  Vue.directive('color-swatch', function (el, binding) {
+    el.style.backgroundColor = binding.value
+  })
+  //}}
+  ```
+
+### 自定义指令对象中的钩子函数参数 [	](vue_20200717061050999)
+
++ 指令钩子函数会被传入以下参数：
+  - `el`：{{c1:: 指令所绑定的元素，可以用来直接操作 DOM。}}
+  - `binding`：{{c1:: 一个对象，包含以下 property：}}
+    - `name`：{{c1:: 指令名，不包括 `v-` 前缀。}}
+    - `value`：{{c1:: 指令的绑定值，例如：`v-my-directive="1 + 1"` 中，绑定值为 `2`。}}
+    - `oldValue`：{{c1:: 指令绑定的前一个值，仅在 `update` 和 `componentUpdated` 钩子中可用。无论值是否改变都可用。}}
+    - `expression`：{{c1:: 字符串形式的指令表达式。例如 `v-my-directive="1 + 1"` 中，表达式为 `"1 + 1"`。}}
+    - `arg`：{{c1:: 传给指令的参数，可选。例如 `v-my-directive:foo` 中，参数为 `"foo"`。}}
+    - `modifiers`：{{c1:: 一个包含修饰符的对象。例如：`v-my-directive.foo.bar` 中，修饰符对象为 `{ foo: true, bar: true }`。}}
+  - `vnode`：{{c1:: Vue 编译生成的虚拟节点。移步 [VNode API](https://cn.vuejs.org/v2/api/#VNode-接口) 来了解更多详情。}}
+  - `oldVnode`：{{c1:: 上一个虚拟节点，仅在 `update` 和 `componentUpdated` 钩子中可用。}}
++ 对象字面量:
+  ```html
+  <!-- {{c1:: -->
+  <div v-demo="{ color: 'white', text: 'hello!' }"></div>
+  <script>
+    Vue.directive('demo', function (el, binding) {
+      console.log(binding.value.color) // => "white"
+      console.log(binding.value.text)  // => "hello!"
+    })
+  </script>
+  <!-- }} -->
+  ```
++ 钩子函数以及钩子函数参数简单使用：
+  + html代码:
+    ```html
+    <!-- {{c1:: -->
+      <div id="hook-arguments-example" v-demo:foo.a.b="message"></div>
+    <!-- }} -->
+    ```
+  + js代码：
+    ```js
+    //{{c1::
+    Vue.directive('demo', {
+      bind: function (el, binding, vnode) {
+        var s = JSON.stringify
+        el.innerHTML =
+          'name: '       + s(binding.name) + '<br>' +
+          'value: '      + s(binding.value) + '<br>' +
+          'expression: ' + s(binding.expression) + '<br>' +
+           // binding.arg可以获取动态指令的值：v-pin:[direction]="200"
+          'argument: '   + s(binding.arg) + '<br>' +
+          'modifiers: '  + s(binding.modifiers) + '<br>' +
+          'vnode keys: ' + Object.keys(vnode).join(', ')
+      }
+    })
+    //}}
+    new Vue({
+      el: '#hook-arguments-example',
+      data: {
+        message: 'hello!'
+      }
+    })
+    ```
 
 
+## 渲染函数 & JSX [	](vue_20200717061051000)
+
+### 组件的render选项的使用 [	](vue_20200717061051001)
+
+```js
+Vue.component('anchored-heading', {
+  //{{c1::
+  render: function (createElement) {
+    return createElement(
+      'h' + this.level,   // 标签名称
+      this.$slots.default // 子节点数组
+    )
+  },
+  //}}
+  props: {
+    level: {
+      type: Number,
+      required: true
+    }
+  }
+})
+```
+
+### 使用渲染函数代替 `v-if` 和 `v-for` [	](vue_20200717061051002)
+
+```js
+  //{{c1::
+  props: ['items'],
+  render: function (createElement) {
+    if (this.items.length) {
+      return createElement('ul', this.items.map(function (item) {
+        return createElement('li', item.name)
+      }))
+    } else {
+      return createElement('p', 'No items found.')
+    }
+  }
+  //}}
+```
+
+### 使用渲染函数代替 `v-model` [	](vue_20200717061051003)
+
+```js
+//{{c1::
+props: ['value'],
+render: function (createElement) {
+  var self = this
+  return createElement('input', {
+    domProps: {
+      value: self.value
+    },
+    on: {
+      input: function (event) {
+        self.$emit('input', event.target.value)
+      },
+      '!click': this.doThisInCapturingMode,
+      '~keyup': this.doThisOnce,
+      '~!mouseover': this.doThisOnceInCapturingMode
+    }
+  })
+}
+//}}
+```
++ on选项中时间修饰符
+  | 修饰符                             | 前缀 |
+| :--------------------------------- | :--- |
+  | `.passive`                         | {{c1:: `&` }} |
+  | `.capture`                         | {{c1:: `!` }} |
+  | `.once`                            | {{c1:: `~` }} |
+  | `.capture.once` 或 `.once.capture` | {{c1:: `~!`}} |
 
 
+### vue过滤器 [	](vue_20200717061051004)
 
-
-
-
-# 黑马内容 [	](vue_20200713065313210)
++ 局部过滤器
+  ```js
+    //{{c1::
+    filters: {
+      capitalize: function (value) {
+        if (!value) return ''
+        value = value.toString()
+        return value.charAt(0).toUpperCase() + value.slice(1)
+      }
+    }
+    //}}
+  ```
++ 全局过滤器
+  ```js
+    //{{c1::
+    Vue.filter('capitalize', function (value) {
+      if (!value) return ''
+      value = value.toString()
+      return value.charAt(0).toUpperCase() + value.slice(1)
+    })
+    // 当全局过滤器和局部过滤器重名时，会采用局部过滤器。
+    //}}
+  ```
++ 过滤器可以串联：{{c1:: `{{ message | filterA | filterB }}` }}
++ 过滤器是 JavaScript 函数，因此可以接收参数：{{c1:: `{{ message | filterA('arg1', arg2) }}` }}
 
 ## 前后端交互 [	](vue_20200713065313212)
 
@@ -1410,6 +1605,7 @@ var component = new Component() // => "hello from mixin!
   });
 // }}
 ```
+
 
 ## vue路由 [	](vue_20200713065313216)
 
@@ -1645,7 +1841,7 @@ var component = new Component() // => "hello from mixin!
       }
 ```
 
-## 工程化 [	](vue_20200713065313231)
+## vue工程化 [	](vue_20200713065313231)
 
 ### vue单文件组件的使用 [	](vue_20200713065313233)
 + 单文件组件的声明
@@ -1724,17 +1920,70 @@ var component = new Component() // => "hello from mixin!
      }
      //}}
     ```
-## Element-UI [	](vue_20200713065313240)
+# Element-UI [	](vue_20200713065313240)
+
+## 基本使用 [	](vue_20200717061051005)
 
 ### Element-UI的基本使用 [	](vue_20200713065313242)
 
 + 安装：{{c1:: `npm install element-ui -S` }}
-+ 导入使用：
++ 引入：
+  + 完整引入：
+    ```js
+    //{{c1::
+    import ElementUI from "element-ui";
+    import "element-ui/lib/theme-chalk/index.css";
+    ...
+    Vue.use(ElementUI)
+    //}}
+    ```
+  + 按需引用：
+    + 安装：`npm install babel-plugin-component -D`
+    + 引入 .babelrc文件
+    + 引入部分组件 
+    ```js
+    //{{c1::...
+    import { Button, Select } from 'element-ui';
+    Vue.component(Button.name, Button);
+    //或
+    Vue.use(Button)
+    //...}}
+    ```
+
+### 全局配置 [	](vue_20200717061051006)
+
++ 完整引入 Element的情况：
+  ```js
+    import Vue from 'vue';
+    import Element from 'element-ui';
+    //{{c1::
+    Vue.use(Element, { size: 'small', zIndex: 3000 });
+    //}}
+  ```
++ 按需引入 Element的情况：
+  ```js
+    import Vue from 'vue'; 
+    import { Button } from 'element-ui';
+    //{{c1::
+    Vue.prototype.$ELEMENT = { size: 'small', zIndex: 3000 };
+    Vue.use(Button);
+    //}}
+  ```
+
+### 国际化 [	](vue_20200717061051007)
+
++ 完整引入 Element的情况：
   ```js
   //{{c1::
-  import ElementUI from "element-ui";
-  import "element-ui/lib/theme-chalk/index.css";
-  ...
-  Vue.use(ElementUI)
+  import locale from 'element-ui/lib/locale/lang/en'
+  Vue.use(ElementUI, { locale })
+  //}}
+  ```
++ 按需引入 Element的情况：
+  ```js
+  //{{c1::
+  import lang from 'element-ui/lib/locale/lang/en'
+  import locale from 'element-ui/lib/locale'
+  locale.use(lang)
   //}}
   ```

@@ -1,8 +1,8 @@
 
 
-# Mybatis基本使用
+# Mybatis基本使用 [	](mybatis_20200717061050954)
 
-## 介绍
+## 介绍 [	](mybatis_20200717061050956)
 
 ### ORM简介 [	](mybatis_20200512080327616)
 
@@ -18,7 +18,7 @@
 1. 自动转换:{{c1:: 表列名（或列别名）和对象属性名相同 }}
 2. 显式指定:{{c1:: 使用`<result>`元素或`@Result`来指定列名与属性之间的关系。 }}
 
-## 基本使用
+## 基本使用 [	](mybatis_20200717061050957)
 
 ### mybatis-config.xml文件 [	](mybatis_20200512080327619)
 
@@ -74,7 +74,7 @@ var newsMapper = sqlSession.getMapper(NewsMapper.class);
 2. {{c1:: Mapper接口的源文件应该与对应XML文档放在相同的包下。}}
 3. {{c1:: Mapper接口中抽象方法的方法名与XML Mapper中SQL语句的id相同。}}
 
-## Mybatis核心API
+## Mybatis核心API [	](mybatis_20200717061050958)
 
 ### Mybatis核心API及作用域 [	](mybatis_20200514071548547)
 
@@ -137,7 +137,7 @@ int delete(String statement, Object parameter);
 flushStatements():{{c1:: 执行批量更新。}}
 force:{{c1:: 是否强制提交或回滚。}}
 
-## Mybatis全局配置
+## Mybatis全局配置 [	](mybatis_20200717061050959)
 
 ### Mybatis允许3个地方配置Properties [	](mybatis_20200514071548553)
 
@@ -211,7 +211,7 @@ force:{{c1:: 是否强制提交或回滚。}}
 3. {{c1:: `<mapper class="top.xieyun.app.dao.NewsMapper.xml">`}}
 4. {{c1:: `<mapper package="top.xieyun.app.dao">`}}
 
-## 类型转换器配置
+## 类型转换器配置 [	](mybatis_20200717061050960)
 
 ### Mybatis类型转换器 [	](mybatis_20200520043218588)
 
@@ -274,7 +274,7 @@ force:{{c1:: 是否强制提交或回滚。}}
     ```
     }}
 
-## 事务
+## 事务 [	](mybatis_20200717061050961)
 
 ### 事务管理器 [	](mybatis_20200521095802607)
 
@@ -304,7 +304,7 @@ Integer getTimeout() throws SQLException;
 ```
 + 注意：{{c1:: 从数据源获得connection与直接传入connection的区别 }}
 
-## 数据源
+## 数据源 [	](mybatis_20200717061050962)
 
 ### MyBatis内置了三种数据源实现 [	](mybatis_20200521095802609)
 
@@ -383,7 +383,7 @@ Integer getTimeout() throws SQLException;
 
 
 
-## mapper配置
+## mapper配置 [	](mybatis_20200717061050963)
 
 ### insert时返回自增长得主键值 [	](mybatis_20200602074442599)
 
@@ -534,7 +534,7 @@ create sequence news_inf_seq;
 2. {{c1:: 配置generatorConfig.xml文件 }}
 3. {{c1:: 执行该插件的generate目标 }}
 
-## 简单映射
+## 简单映射 [	](mybatis_20200717061050964)
 
 ### 为下面SQL语句创建id为newsMap的映射关系 [	](mybatis_20200604111131382)
 
@@ -635,9 +635,9 @@ public class News{
     2. {{c1:: PARTIAL：自动映射result定义之外的属性。 }}
     3. {{c1:: FULL：总是自动映射任意属性。 }}
 
-## 调用存储过程
+## 调用存储过程 [	](mybatis_20200717061050965)
 
-### 调用返回结果集的存储过程
+### 调用返回结果集的存储过程 [	](mybatis_20200717061050966)
 
 + sql语句如下
 ```sql
@@ -672,7 +672,7 @@ public class News{
 	List<News> findNewsByProcedure(Integer id);
 ```
 
-### 调用带out模式参数的存储过程
+### 调用带out模式参数的存储过程 [	](mybatis_20200717061050967)
 + sql语句如下
 ```sql
     create procedure p_insert_news
@@ -698,7 +698,7 @@ public class News{
 	void saveNewsByProcedure(News news);
 ```
 
-### 调用传出参数为游标引用的存储过程
+### 调用传出参数为游标引用的存储过程 [	](mybatis_20200717061050968)
 + sql语句如下
 ```sql
     # PostgreSQL [	](mybatis_20200715110208912)
@@ -746,16 +746,16 @@ public class News{
     newsMapper.findNewsByProcedure(nw);
     System.out.println("查询返回到记录为：" + nw.getResult());
 ```
-## 关联映射
+## 关联映射 [	](mybatis_20200717061050969)
 
-### Mybatis的3种映射策略
+### Mybatis的3种映射策略 [	](mybatis_20200717061050970)
 
 1. {{c1:: 基于嵌套select的策略 }}
     + 必要：{{c1:: 需要与延迟加载结合使用 }}
 2. {{c1:: 基于多表连接查询的映射策略 }}
 3. {{c1:: 基于多结果集的映射策略 }}
 
-### 基于嵌套select的一对一映射
+### 基于嵌套select的一对一映射 [	](mybatis_20200717061050971)
 + PersonMapper.xml主要代码
 ```xml
 	<select id="getPerson" resultMap="personMap">
@@ -791,7 +791,7 @@ public class News{
 	</select>
 ```
 
-### @One注解的用法
+### @One注解的用法 [	](mybatis_20200717061050972)
 + 单个主键：
 ```java
     @Result(property = "person", javaType = Person.class, column = "owner_id",
