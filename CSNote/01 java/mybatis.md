@@ -60,11 +60,11 @@
 
 ```java
 // {{c1::
-var n = sqlSession.insert("org.crazyit.app.dao.NewsMapper.saveNews", news);
-var n = sqlSession.update("org.crazyit.app.dao.NewsMapper.updateNews", news);
-var n = sqlSession.delete("org.crazyit.app.dao.NewsMapper.deleteNews", 2);
-var news = sqlSession.selectOne("org.crazyit.app.dao.NewsMapper.getNews", 1);
-var news = sqlSession.selectList("org.crazyit.app.dao.NewsMapper.getNews", 1);
+var n = sqlSession.insert("top.xieyun.dao.NewsMapper.saveNews", news);
+var n = sqlSession.update("top.xieyun.dao.NewsMapper.updateNews", news);
+var n = sqlSession.delete("top.xieyun.dao.NewsMapper.deleteNews", 2);
+var news = sqlSession.selectOne("top.xieyun.dao.NewsMapper.getNews", 1);
+var news = sqlSession.selectList("top.xieyun.dao.NewsMapper.getNews", 1);
 var newsMapper = sqlSession.getMapper(NewsMapper.class);
 // }}
 ```
@@ -639,42 +639,47 @@ public class News{
 
 ### 调用返回结果集的存储过程 [	](mybatis_20200717061050966)
 
-+ sql语句如下
-```sql
++ sql语句如下：
+    ```sql
     create procedure p_get_news_by_id(v_id integer)
     begin
         select news_id,news_title,news_content
         from news_inf
         where news_id > v_id;
     end
-```
+    ```
 + XML Mapper版代码：
-```xml
+    ```xml
+    <!-- {{c1:: -->
     <select id="findNewsByProcedure" resultMap="newsMap"
-		statementType="CALLABLE">
-		{call p_get_news_by_id(#{id, mode=IN})}
-	</select>
-	<resultMap id="newsMap" type="news">
-		<id column="news_id" property="id"/>
-		<result column="news_title" property="title"/>
-		<result column="news_content" property="content"/>
-	</resultMap>
-```
-+ 注解版
-```java
-	@Select("{call p_get_news_by_id(#{id, mode=IN})}")
-	@Options(statementType = StatementType.CALLABLE)
-	@Results({
-		@Result(column = "news_id", property = "id", id = true),
-		@Result(column = "news_title", property = "title"),
-		@Result(column = "news_content", property = "content")
-	})
-	List<News> findNewsByProcedure(Integer id);
-```
+        statementType="CALLABLE">
+        {call p_get_news_by_id(#{id, mode=IN})}
+    </select>
+    <resultMap id="newsMap" type="news">
+        <id column="news_id" property="id"/>
+        <result column="news_title" property="title"/>
+        <result column="news_content" property="content"/>
+    </resultMap>
+    <!-- }} -->
+    ```
++ 注解版：
+    ```java
+    //{{c1::
+    @Select("{call p_get_news_by_id(#{id, mode=IN})}")
+    @Options(statementType = StatementType.CALLABLE)
+    @Results({
+        @Result(column = "news_id", property = "id", id = true),
+        @Result(column = "news_title", property = "title"),
+        @Result(column = "news_content", property = "content")
+    })
+    List<News> findNewsByProcedure(Integer id);
+    //}}
+    ```
 
 ### 调用带out模式参数的存储过程 [	](mybatis_20200717061050967)
+
 + sql语句如下
-```sql
+    ```sql
     create procedure p_insert_news
     (out v_id integer, v_title varchar(255), v_content varchar(255))
     begin
@@ -683,69 +688,76 @@ public class News{
         -- last_insert_id是MySQL的内置函数，用于获取自增长主键的值
         set v_id = last_insert_id();
     end
-```
+    ```
 + XML Mapper版代码：
-```xml
+    ```xml
+    <!-- {{c1:: -->
     <!-- 传出参数必须制定`mode="OUT"` 或 `mode="INOUT"` -->
-	<insert id="saveNewsByProcedure" statementType="CALLABLE">
-		{call p_insert_news(#{id, mode=OUT, jdbcType=INTEGER}, #{title}, #{content})}
-	</insert>
-```
+    <insert id="saveNewsByProcedure" statementType="CALLABLE">
+        {call p_insert_news(#{id, mode=OUT, jdbcType=INTEGER}, #{title}, #{content})}
+    </insert>
+    <!-- }} -->
+    ```
 + 注解版
-```java
-	@Insert("{call p_insert_news(#{id, mode=OUT, jdbcType=INTEGER}, #{title}, #{content})}")
-	@Options(statementType = StatementType.CALLABLE)
-	void saveNewsByProcedure(News news);
-```
+    ```java
+    //{{c1::
+    @Insert("{call p_insert_news(#{id, mode=OUT, jdbcType=INTEGER}, #{title}, #{content})}")
+    @Options(statementType = StatementType.CALLABLE)
+    void saveNewsByProcedure(News news);
+    //}}
+    ```
 
 ### 调用传出参数为游标引用的存储过程 [	](mybatis_20200717061050968)
-+ sql语句如下
-```sql
-    # PostgreSQL [	](mybatis_20200715110208912)
-    create function p_get_news_by_id(in v_id integer) RETURNS refcursor as $$
-    declare
-        ref refcursor;
-    begin
-        -- 打开、并返回游标
-        OPEN ref for select * from news_inf where news_id > v_id;
-        return ref;
-    end;
-```
-+ XML Mapper版代码：
-```xml
-	<select id="findNewsByProcedure" statementType="CALLABLE">
-		{call p_get_news_by_id(#{id}, 
-		#{result, jdbcType=OTHER, mode=OUT, javaType=ResultSet, resultMap=newsMap})} [	](mybatis_20200715110208913)
-	</select>
-	<resultMap id="newsMap" type="news">
-		<id column="news_id" property="id"/>
-		<result column="news_title" property="title"/>
-		<result column="news_content" property="content"/>
-	</resultMap>
-```
-+ 注解版
-```java
-    // 注意2种方法的重载
-    @Select("{call p_get_news_by_id(#{id}, " +
-    "#{result, jdbcType=OTHER, mode=OUT, javaType=ResultSet, resultMap=newsMap})}")
-	@Options(statementType = StatementType.CALLABLE)
-	void findNewsByProcedure1(Map<String, Object> params);
 
-	@Select("{call p_get_news_by_id(#{id}, " +
-		"#{result, jdbcType=OTHER, mode=OUT, javaType=ResultSet, resultMap=newsMap})}")
-	@Options(statementType = StatementType.CALLABLE)
-	// 以复合对象为参数
-	void findNewsByProcedure2(NewsWrapper params);
-```
-+ 2种重载方法的调用
-```java
-    // 调用Mapper对象的第一种方法执行持久化操作
++ sql语句如下
+    ```sql
+        create function p_get_news_by_id(in v_id integer) RETURNS refcursor as $$
+        declare
+            ref refcursor;
+        begin
+            -- 打开、并返回游标
+            OPEN ref for select * from news_inf where news_id > v_id;
+            return ref;
+        end;
+    ```
++ XML Mapper版代码：
+    ```xml
+    <!-- {{c1:: -->
+    <select id="findNewsByProcedure" statementType="CALLABLE">
+    {call p_get_news_by_id(#{id}, 
+    <!-- PostgreSQL需设置jdbcType为OTHER,Oracle为CURSOR -->
+    <!-- 当jdbcType为CURSOR时，javaType被自动推断为ResultSet -->
+    . #{result, jdbcType=OTHER, mode=OUT, javaType=ResultSet, resultMap=newsMap})} 
+    </select>
+    <resultMap id="newsMap" type="news">
+    <id column="news_id" property="id"/>
+    <result column="news_title" property="title"/>
+    <result column="news_content" property="content"/>
+    </resultMap>
+    <!-- }} -->
+    ```
++ 注解版
+    ```java
+    //{{c1::
+    // 注意这里传入的参数，以及返回的都是void
+    @Select("{call p_get_news_by_id(#{id}, " +
+            "#{result, jdbcType=OTHER, mode=OUT, javaType=ResultSet, resultMap=newsMap})}")
+    @Options(statementType = StatementType.CALLABLE)
+    void findNewsByProcedure1(Map<String, Object> params);
+    //对应对应调用 
     newsMapper.findNewsByProcedure(map);
     System.out.println("查询返回到记录为：" + map.get("result"));
-    // 调用Mapper对象的第二种方法执行持久化操作
+
+    @Select("{call p_get_news_by_id(#{id}, " +
+            "#{result, jdbcType=OTHER, mode=OUT, javaType=ResultSet, resultMap=newsMap})}")
+    @Options(statementType = StatementType.CALLABLE)
+    void findNewsByProcedure2(NewsWrapper params);
+
+    //对应调用 
     newsMapper.findNewsByProcedure(nw);
     System.out.println("查询返回到记录为：" + nw.getResult());
-```
+    //}}
+    ```
 ## 关联映射 [	](mybatis_20200717061050969)
 
 ### Mybatis的3种映射策略 [	](mybatis_20200717061050970)
@@ -755,53 +767,271 @@ public class News{
 2. {{c1:: 基于多表连接查询的映射策略 }}
 3. {{c1:: 基于多结果集的映射策略 }}
 
-### 基于嵌套select的一对一映射 [	](mybatis_20200717061050971)
-+ PersonMapper.xml主要代码
-```xml
-	<select id="getPerson" resultMap="personMap">
-		select * from person_inf where person_id=#{id}
-	</select>
-	<resultMap id="personMap" type="person">
-		<id column="person_id" property="id"/>
-		<result column="person_name" property="name"/>
-		<result column="person_age" property="age"/>
-		<!-- 使用select指定的select语句去抓取关联实体，
-		当前实体的person_id列的值作为参数传给select语句 -->
-		<association property="address" javaType="Address"
-			column="person_id" select="org.crazyit.app.dao.AddressMapper.findAddressByOwner"
-			fetchType="eager"/>
-	</resultMap>
-```
-+ AddressMapper.xml主要代码
-```xml
-	<select id="getAddress" resultMap="addressMap">
-		select * from address_inf where addr_id=#{id}
-	</select>
-	<resultMap id="addressMap" type="address">
-		<id column="addr_id" property="id"/>
-		<result column="addr_detail" property="detail"/>
-		<!-- 使用select指定的select语句去抓取关联实体，
-		当前实体的owner_id列的值作为参数传给select语句 -->
-        
-		<association property="person" javaType="Person"
-			column="owner_id" select="org.crazyit.app.dao.PersonMapper.getPerson" fetchType="lazy"/>
-	</resultMap>
-	<select id="findAddressByOwner" resultMap="addressMap">
-		select * from address_inf where owner_id=#{id}
-	</select>
-```
 
-### @One注解的用法 [	](mybatis_20200717061050972)
-+ 单个主键：
-```java
-    @Result(property = "person", javaType = Person.class, column = "owner_id",
-        one = @One(select = "org.crazyit.app.dao.PersonMapper.getPerson",
-        fetchType = FetchType.LAZY))
-```
-+ column属性指定复合主键：
-```java
-    @Result(property = "person", javaType = Person.class,
-        column = "{ownerName=owner_name, ownerAge=owner_age}",
-        one = @One(select = "org.crazyit.app.dao.PersonMapper.getPerson",
-        fetchType = FetchType.LAZY))
-```
+### 基于嵌套select [	](mybatis_20200718074811912)
+
++ `1-1`需要的额外属性:`select` `column` `fetchType`:
+    ```xml
+    <!-- {{c1:: -->
+    <association property="address" javaType="Address"
+                column="person_id" select="top.xieyun.dao.AddressMapper.findAddressByOwner"
+                fetchType="eager|lazy"/>
+    <!-- 嵌套代表address成员变量属性Person变量 -->
+    <!-- 一旦查询一个perosn list就会导致N+1问题，N代表list，1代表select list -->
+    <!-- 所以基于嵌套的查询最好结合lazy loading使用 -->
+    <!-- person_id列的值作为参数传给select语句 -->
+    <!-- }} ->
+    ```
++ `1-N`需要的额外属性:`select` `column` `fetchType` `ofType`:
+    ```xml
+    <!-- {{c1:: -->
+    <collection property="addresses" javaType="ArrayList"
+                ofType="address" column="person_id" select="top.xieyun.dao.AddressMapper.findAddressByOwner"
+                fetchType="lazy"/>
+    <!-- }} -->
+    ```
+
+### 基于多表连接查询的映射策略 [	](mybatis_20200718074811914)
+
++ `1-1`需要的额外属性:`resultMap` `columnPrefix` `notNullColumn` `autoMapping`:
+    ```xml
+        <!-- {{c1:: -->
+		<!-- 指定columnPrefix="rental_"，代表去掉当前多表查询列名中的前缀，通常为别名，去掉后需要与引入的resultMap列名匹配 -->
+		<association property="rentalAddr" javaType="address" columnPrefix="rental_"
+			resultMap="top.xieyun.dao.AddressMapper.addressMap"/>
+        <!-- }} -->
+    ```
+    + `notNullColumn="detail,zip"`属性：默认情况下，任意列不为null就会创建实体，该情况下只有当detail与zip列都不为null时，MyBatis才会创建关联实体的实例。
++ `1-N`需要的额外属性: `resultMap` `columnPrefix` `notNullColumn` `autoMapping` `ofType`
+    ```xml
+    <!-- {{c1:: -->
+    <collection property="addresses" javaType="ArrayList"
+                ofType="address"
+                resultMap="top.xieyun.dao.AddressMapper.addressMap"/>
+    <!-- }} -->
+    ```
+
+### 基于多结果集的映射策略 [	](mybatis_20200718074811916)
+
++ 基于多结果集的1-1需要的额外属性：`resultSet` `column` `foreignColumn`
+  + 基于多结果集含义：程序只要访问一次数据库就能得到两个以上实体的多个结果集
+  + 创建存储过程：
+    ```sql
+        create procedure p_get_person_address(in id int)
+        begin
+            select * from person_inf where person_id > id;
+            select * from address_inf where owner_id in
+            (select person_id from person_inf where person_id > id);
+        end
+    ```
+  + 调用存储过程并指定`resultSets`:
+    ```xml
+    <!-- {{c1:: -->
+    <select id="findPersonById" resultSets="persons,addrs"
+            resultMap="personMap" statementType="CALLABLE">
+      {call p_get_person_address(#{id, jdbcType=INTEGER, mode=IN})}
+    </select>
+    <!-- }} -->
+    ```
+   + 设置`1-1`映射
+        ```xml
+        <!-- {{c1:: -->
+        <resultMap id="personMap" type="person">
+            <id property="id" column="person_id" />
+            <id property="name" column="person_name" />
+            <result property="age" column="person_age"/>
+            <!-- column指定person_inf表中被引用的主键列，foreignColumn指定从表的外键列
+                    如果resultSet指定的结果集不存在，MyBatis不会报错 -->
+            <association property="address" javaType="address" 
+                        resultSet="addrs" column="person_id" foreignColumn="owner_id"
+                        resultMap="top.xieyun.dao.AddressMapper.addrMap"/>
+        </resultMap>
+        <!-- }} -->
+        ```
+    + 设置`1-N`映射：
+        ```xml
+        <!-- {{c1:: -->
+        <collection property="addresses" javaType="ArrayList" ofType="address" 
+                resultSet="addrs" column="person_id" foreignColumn="owner_id"
+                resultMap="top.xieyun.dao.AddressMapper.addrMap"/>
+        <!-- }} -->
+        ```
+
+### 基于辨别者列的继承映射 [	](mybatis_20200718074811918)
+
++ MyBatis的继承映射:{{c1:: 将整个继承树的所有实例保存在一个数据表中，辨别者列用于区别实例属性那个类 }}
++ `<resultMap.../>`的`<discriminator.../>`子元素简单使用：
+    ```xml
+    <!-- 定义辨别者列，列名person_type -->
+    <!-- {{c1:: -->
+    <discriminator column="person_type" javaType="int">
+      <!-- 辨别者列的值为1时，代表该记录是Customer实例 -->
+      <case value="1" resultType="customer">
+        <result column="comments" property="comments"/>
+      </case>
+    </discriminator>
+    <!-- }} -->
+    ```
++ `<discriminator>`元素的常见属性:{{c1:: `column javaType jdbcType typeHandler` }}
++ `<case>`元素的常见属性:{{c1:: `value,resultType,resultMap` }}
+
+### @XxxProvider注解 [	](mybatis_20200718074811920)
++ 含义：{{c1:: 通常的@Select注解不能接受动态SQL，动态SQL必须使用`@SelectProvider`注解来代替`<select.../>`元素。 }}
++ 2个属性：
+  + `type或value`：{{c1:: 指定用于生成动态SQL的类。 }}
+  + `method`：{{c1:: 指定前一个类中哪个方法用于生成动态SQL。该属性可以省略，其默认值为provideSql。 }}
++ 例子：
+    ```java
+        @SelectProvider(NewsSqlBuilder.class)
+        List<News> findActiveNews(@Param("title") String title,
+        @Param("content") String content);
+        //实现类如下：
+        //{{c1::
+        public class NewsSqlBuilder
+        {
+            public String provideSql(@Param("title") String title,
+                    @Param("content") String content)
+            {
+                return new SQL(){{
+                    ...
+                }}.toString();
+            }
+        }
+        //}}
+    ```
+
+### 动态SQL：条件控制 [	](mybatis_20200718074811922)
+
++ `<if>`的使用：
+    ```xml
+    <!-- {{c1:: -->
+    <if test="title != null">
+      and news_title like #{title}
+    </if>
+    <!-- }} -->
+    ```
++ `<choose>`的使用：
+    ```xml
+    <!-- {{c1:: -->
+    <choose>
+      <when test="title != null">
+        and news_title like #{title}
+      </when>
+      <when test="content != null">
+        and news_content like #{content}
+      </when>
+      <otherwise>
+        and lower(news_poster) = 'charlie'
+      </otherwise>
+    </choose>
+    <!-- }} -->
+    ```
+
+### 动态SQL：`<trim>`： [	](mybatis_20200718090253955)
+  + 4个属性：
+    + prefix:{{c1:: 在元素内容前面添加的字符串 }}
+    + suffix:{{c1:: 在元素内容后面添加的字符串 }}
+    + prefixOverides:{{c1:: 删除前面不需要的字符串 }}
+    + suffixOverrides:{{c1:: 删除后面不需要的字符串 }}
+  + 等价于`<where>`版：
+    ```xml
+    <!-- <where> -->
+    <trim prefix="WHERE" prefixOverrides="AND |OR" >
+        <!-- ... -->
+    </trim>
+    <!-- </where> -->
+    ```
+  + 等价于`<set>`版:
+    ```xml
+    <!-- <set> -->
+    <trim prefix="SET" suffixOverrides=",">
+        ...
+    </trim>
+    <!-- </set> -->
+    ```
+### 动态SQL：`<foreach>` [	](mybatis_20200718090253957)
+
+  + 遍历`ids`参数:
+    ```xml
+    <!-- {{c1:: -->
+    <foreach item="item" index="index" collection="ids"
+        open="(" separator="," close=")">
+        #{item}
+    </foreach>
+    <!-- }} -->
+    ```
+ + `@Select`注解版本  
+   ```java
+    //{{c1::
+   @Select(
+   "<script>" +
+   "select news_id id, news_title title, " +
+   "news_content content from news_inf " +
+   "where news_id in " +
+   "<foreach item='item' index='index' collection='ids' " +
+   "open='(' separator=',' close=')'> " +
+   "#{item} " +
+   "</foreach> " +
+   "</script>"
+   )
+   List<News> findNewsByIds(@Param("ids") Integer... ids);
+   //}}
+   ```
+
+### 使用foreach实现批量更新 [	](mybatis_20200718074811924)
+
++ 实现下面Mapper方法对应的SQL配置文件
+  ```java
+  public interface NewsMapper{
+  /** 传入News数组实现批量更新news_title,newscontent属性 */
+  Integer updateNews(@Param("news") List<News> news);
+  }
+  ```
++ sql配置文件：
+  ```xml
+  <update id="updateNews">
+    <!-- {{c1:: -->
+    update news_inf
+    <set>
+      <trim prefix="news_title=case" suffix="end,">
+        <foreach collection="news" item="item" index="index">
+          <if test="item.title != null">
+            when news_id=#{item.id} then #{item.title}
+          </if>
+        </foreach>
+      </trim>
+      <trim prefix="news_content=case" suffix="end,">
+        <foreach collection="news" item="item" index="index">
+          <if test="item.content != null">
+            when news_id=#{item.id} then #{item.content}
+          </if>
+        </foreach>
+      </trim>
+    </set>
+    where news_id in
+    <foreach collection="news" index="index" item="item"
+             separator="," open="(" close=")">
+      #{item.id}
+    </foreach>
+    <!-- }} -->
+  </update>
+  ```
+
+### `<bind>`元素 [	](mybatis_20200718074811926)
++ 属性：
+  + `name`:{{c1:: 指定变量名 }}
+  + `value`:{{c1:: 指定一个OGNL表达式 }}
++ 示例：
+    ```xml
+    <!-- List<News> findNewsByTitle(@Param("title") String title); -->
+    <!-- {{c1:: -->
+    <select id="findNewsByTitle" resultType="news">
+        <!-- 使用bind定义变量，变量名为titlePattern
+            变量值为：'%' + _parameter.title + '%'-->
+        <bind name="titlePattern" value="'%' + _parameter.title + '%'" />
+        select news_id id, news_title title, 
+        news_content content from news_inf
+        where news_title like #{titlePattern}
+    </select>
+    <!-- }} -->
+    ```
