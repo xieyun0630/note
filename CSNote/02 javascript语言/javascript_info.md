@@ -3679,7 +3679,7 @@ let range = {
 }}
 ### Async generator 与常规 generator 区别 [	](javascript_info_20200512080327653)
 + Async generator例子：
-  ```javascript
+  ```js
     //对象
     //{{c1::
     let range = {
@@ -3693,8 +3693,9 @@ let range = {
       }
     };
     //}}
-
-    //迭代该对象
+  ```
++ 迭代Async generator：
+  ```js
     //{{c1::
     (async () => {
       for await (let value of range) {
@@ -4058,7 +4059,7 @@ showNotification({
 
 ### `offsetParent`元素与`offsetLeft/Top`属性 [	](javascript_info_20200525035508047)
 
-+ `offsetParent` 是在以下列出条件中最接近的祖先（ancestor）：
++ `offsetParent` 作用：{{c1:: 返回最接近的祖先定位元素 }}
   1. {{c1:: CSS 定位的（position 为 absolute，relative 或 fixed），}}
   2. {{c1:: 或 `<td>`，`<th>`，`<table>`，}}
   3. {{c1:: 或 `<body>`。}}
@@ -4066,7 +4067,6 @@ showNotification({
   1. `display:none `：{{c1:: 对于未显示的元素（`display:none `或者不在文档中）。}}
   1. ` <body>` ` <html>`：{{c1:: 对于` <body>` 与` <html>`。}}
   1. `position:fixed `：{{c1:: 对于带有 `position:fixed `的元素。}}
-
 
 
 ### `offsetParent`：下面代码输出什么？ [	](javascript_info_20200525035508049)
