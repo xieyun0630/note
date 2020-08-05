@@ -885,7 +885,7 @@ Vue.component('base-input', {
     <span>
       <!-- 注意这里传入的user值，如果没有这里的值，组件插槽模板中将访问不到user对象 -->
       <slot v-bind:user="user">
-        {{ user.lastName }}
+        { { user.lastName }}
       </slot>
     </span>
     <!-- }} -->
@@ -896,7 +896,7 @@ Vue.component('base-input', {
     <current-user>
       // 将包含所有插槽 prop 的对象命名为 slotProps
       <template v-slot:default="slotProps">
-        {{ slotProps.user.firstName }}
+        { { slotProps.user.firstName }}
       </template>
     </current-user>
     <!-- }} -->~
@@ -992,7 +992,10 @@ Vue.component('base-input', {
     })
     //}}
   ```
-+ 自定义异步组件工厂函数:
+
+
+### 自定义异步组件工厂函数: [	](vue_20200720091245716)
++ 定义：
   ```js
     const AsyncComponent = () => ({
     // 需要加载的组件 (应该是一个 `Promise` 对象)
@@ -1018,7 +1021,12 @@ Vue.component('base-input', {
     //}}
   })
   ```
-
++ 使用：
+  ```js
+    //{{c1::
+    Vue.component('async-webpack-example',AsyncComponent)
+    //}}
+  ```
 ## 处理边界情况 [	](vue_20200709073019535)
 
 ### 访问元素 & 组件 [	](vue_20200709073019537)
@@ -1340,7 +1348,6 @@ var component = new Component() // => "hello from mixin!
 //}}
 ```
 
-学生
 ### 当组件和混入对象含有同名选项时的合并策略 [	](vue_20200717061050995)
 
 + 数据对象：{{c1::在内部会进行递归合并，并在发生冲突时以组件数据优先。}}
@@ -1376,6 +1383,7 @@ var component = new Component() // => "hello from mixin!
   ```
 + 全局混入：
   ```js
+  //{{c1::
   Vue.mixin({
     created: function () {
       var myOption = this.$options.myOption
@@ -1384,6 +1392,7 @@ var component = new Component() // => "hello from mixin!
       }
     }
   })
+  //}}
   ```
 
 ### 自定义指令 [	](vue_20200717061050997)
@@ -1840,8 +1849,7 @@ render: function (createElement) {
         }
       }
 ```
-
-## vue工程化 [	](vue_20200713065313231)
+## Vue CLI [	](vue_20200713065313231)
 
 ### vue单文件组件的使用 [	](vue_20200713065313233)
 + 单文件组件的声明
@@ -1920,6 +1928,29 @@ render: function (createElement) {
      }
      //}}
     ```
+### 快速原型开发 [	](vue_20200722073620495)
+
++ 命令安装：{{c1;: `npm install -g @vue/cli-service-global` }}
++ 发布单个文件:
+  + 命令：{{c1;: `vue serve [options] [entry]` }}
+  + 选项：
+  + `-o, --open`:{{c1:: 打开浏览器 }}
+  + `-c, --copy`:{{c1:: 将本地 URL 复制到剪切板 }}
+  + `-h, --help`:{{c1:: 输出用法信息 }}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 # Element-UI [	](vue_20200713065313240)
 
 ## 基本使用 [	](vue_20200717061051005)

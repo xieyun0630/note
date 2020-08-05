@@ -78,12 +78,12 @@ var newsMapper = sqlSession.getMapper(NewsMapper.class);
 
 ### Mybatis核心API及作用域 [	](mybatis_20200514071548547)
 
-| 核心类及组件             | 最佳作用域                | 原因                                                         |
-| ------------------------ | ------------------------- | ------------------------------------------------------------ |
-| SqlSessionFactoryBuilder | {{c1::局部作用域}}        | {{c1::唯一作用就是创建SqlSessionFactory，只有单个Build()方法}} |
-| SqlSessionFactory        | {{c1::整个应用运行期间}}  | {{c1::底层封装的当前应用的数据库配置环境，每个数据库对应一个SqlSessionFactory实例}}                   |
-| SqlSession               | {{c1::方法或单个Request}} | {{c1::线程不安全，无法多线程访问}}                           |
-| Mapper组件               | {{c1::局部作用域}}        | {{c1::因为是由SqlSession创建，作用域应该不大于SqlSession。}} |
+| 核心类及组件             | 最佳作用域                | 原因                                                                                |
+| ------------------------ | ------------------------- | ----------------------------------------------------------------------------------- |
+| SqlSessionFactoryBuilder | {{c1::局部作用域}}        | {{c1::唯一作用就是创建SqlSessionFactory，只有单个Build()方法}}                      |
+| SqlSessionFactory        | {{c1::整个应用运行期间}}  | {{c1::底层封装的当前应用的数据库配置环境，每个数据库对应一个SqlSessionFactory实例}} |
+| SqlSession               | {{c1::方法或单个Request}} | {{c1::线程不安全，无法多线程访问}}                                                  |
+| Mapper组件               | {{c1::局部作用域}}        | {{c1::因为是由SqlSession创建，作用域应该不大于SqlSession。}}                        |
 
 ### SqlSessionFactoryBuilder主要方法 [	](mybatis_20200514071548549)
 ```java
@@ -770,7 +770,7 @@ public class News{
 
 ### 基于嵌套select [	](mybatis_20200718074811912)
 
-+ `1-1`需要的额外属性:`select` `column` `fetchType`:
++ `1-1`需要的额外属性:{{c1:: `select` `column` `fetchType`: }}
     ```xml
     <!-- {{c1:: -->
     <association property="address" javaType="Address"
@@ -782,7 +782,7 @@ public class News{
     <!-- person_id列的值作为参数传给select语句 -->
     <!-- }} ->
     ```
-+ `1-N`需要的额外属性:`select` `column` `fetchType` `ofType`:
++ `1-N`需要的额外属性:{{c1:: `select` `column` `fetchType` `ofType`: }}
     ```xml
     <!-- {{c1:: -->
     <collection property="addresses" javaType="ArrayList"
@@ -793,7 +793,7 @@ public class News{
 
 ### 基于多表连接查询的映射策略 [	](mybatis_20200718074811914)
 
-+ `1-1`需要的额外属性:`resultMap` `columnPrefix` `notNullColumn` `autoMapping`:
++ `1-1`需要的额外属性:{{c1:: `resultMap` `columnPrefix` `notNullColumn`  }}`autoMapping`:
     ```xml
         <!-- {{c1:: -->
 		<!-- 指定columnPrefix="rental_"，代表去掉当前多表查询列名中的前缀，通常为别名，去掉后需要与引入的resultMap列名匹配 -->
@@ -802,7 +802,7 @@ public class News{
         <!-- }} -->
     ```
     + `notNullColumn="detail,zip"`属性：默认情况下，任意列不为null就会创建实体，该情况下只有当detail与zip列都不为null时，MyBatis才会创建关联实体的实例。
-+ `1-N`需要的额外属性: `resultMap` `columnPrefix` `notNullColumn` `autoMapping` `ofType`
++ `1-N`需要的额外属性:{{c1::  `resultMap` `columnPrefix` `notNullColumn`  }}`autoMapping` `ofType`
     ```xml
     <!-- {{c1:: -->
     <collection property="addresses" javaType="ArrayList"
@@ -813,8 +813,8 @@ public class News{
 
 ### 基于多结果集的映射策略 [	](mybatis_20200718074811916)
 
-+ 基于多结果集的1-1需要的额外属性：`resultSet` `column` `foreignColumn`
-  + 基于多结果集含义：程序只要访问一次数据库就能得到两个以上实体的多个结果集
++ 基于多结果集的1-1需要的额外属性：{{c1::`resultSet` `column` `foreignColumn`}}
+  + 基于多结果集含义：{{c1:: 程序只要访问一次数据库就能得到两个以上实体的多个结果集 }}
   + 创建存储过程：
     ```sql
         create procedure p_get_person_address(in id int)
@@ -824,7 +824,7 @@ public class News{
             (select person_id from person_inf where person_id > id);
         end
     ```
-  + 调用存储过程并指定`resultSets`:
+  + 调用存储过程并指定{{c1:: `resultSets`: }}
     ```xml
     <!-- {{c1:: -->
     <select id="findPersonById" resultSets="persons,addrs"
@@ -1035,3 +1035,107 @@ public class News{
     </select>
     <!-- }} -->
     ```
+
+## 缓存 [	](mybatis_20200720091245688)
+
+### 一级缓存 [	](mybatis_20200720091245690)
++ 含义：{{c1:: 也叫Local Cache,SqlSession级别缓存，默认打开不能关闭 }}
++ 清空一级缓存的方式：
+  1. {{c1:: 调用sqlsession.clearCache()方法 }}
+  2. {{c1:: 执行一条非查询的DDL语句 }}
++ 底层缓存存储对象：{{c1:: 是一个HashMap对象 }}
+
+### 一级缓存的脏数据与避免方法 [	](mybatis_20200720091245693)
+
++ 一定不要对MyBatis返回的对象进行修改原因：{{c1:: 会影响缓存中的值，使再次取缓存时与数据库中的值不一致。 }}
++ 一级缓存脏数据发生场景：
+  1. {{c1:: A线程内的SqlSession先获取id为1的News对象。 }}
+  2. {{c1:: 将cpu切换给B线程，B线程内的SqlSession更新了id为1的news对象 }}
+  3. {{c1:: A线程内的SqlSession再次获得id为1的News对象 }}
++ 避免SqlSession缓存的脏数据的方式
+  + {{c1:: 尽量使用短生命周期的SqlSession }}
+  + {{c1:: 避免使用SqlSession一级环境 }}
+    + {{c1:: 每个SqlSession永远只执行一次查询 }}
+    + {{c1:: localCacheScope设置为STATEMENT }}
++ 总结：{{c1:: 应避免对数据实时性要求高的应用中使用一级缓存 }}
+
+### 二级缓存： [	](mybatis_20200720091245695)
+
++ 含义：{{c1:: Mapper级别的缓存，默认是关闭的。}}
++ `<cache ../>`元素与`@CacheNamespace`注解的属性：
+  1. eviction:{{c1:: 清除算法，默认是LRU}}
+  2. flushInterval:{{c1:: 刷新间隔，默认不刷新}}
+  3. type：{{c1:: 指定缓存实现类,可以添加其他的缓存实现类，如redis，Ehcache之类}}
+  4. readyOnly：{{c1:: 是否为只读缓存，否则为读写，默认为flase}}
+  5. size：{{c1:: 指定最多缓存多少项}}
++ 清除算法的类型：
+  1. LRU: {{c1:: Least Recently Used }}
+  2. FIFO:{{c1:: First Input First Output}}
+  3. SOFT:{{c1:: 软引用 }}
+  4. WEAK:{{c1:: 弱引用 }}
++ 注意：{{c1:: 二级缓存可能存储在磁盘或数据库中，因此实体类最好实现Serializable接口}}
+
+### 二级缓存的脏数据出现场景与避免方法 [	](mybatis_20200720091245697)
+
++ 出现场景：
+  1. {{c1:: A Mapper组件执行select语句加载id为1的A对象，并通过关联关系访问B对象}}
+  2. {{c1:: B Mapper组件执行update语句更新了id为2的B对象}}
+  3. {{c1:: A Mapper再次获得id为1的A对象时，关联的B对象则是之前未修改的脏数据。}}
++ 避免方法：
+  + {{c1:: 让A Mapper与B Mapper共用同一个二级缓存}}
+  + {{c1:: 在BMapper.xml中加入`<cache-ref namespace="top.xieyun.AMapper.xml">`}}
+
+### Mybatis开发自定义拦截器 [	](mybatis_20200722091149293)
++ 实现Interceptor接口
+  ```java
+  //{{c1::
+    @Intercepts({
+	@Signature(
+		type= Executor.class,
+		method = "update",
+		args = {MappedStatement.class, Object.class})
+    })
+    public class FkPlugin implements Interceptor
+    {
+        public Object intercept(Invocation invocation) throws Throwable
+        {
+            System.out.printf("-----拦截的目标对象为：%s%n", invocation.getTarget());
+            System.out.printf("-----拦截的方法为：%s%n", invocation.getMethod());
+            System.out.printf("-----拦截的参数为：%s%n", Arrays.toString(invocation.getArgs()));
+            // 回调被拦截的目标方法
+            return invocation.proceed();
+        }
+        public Object plugin(Object target)
+        {
+            return Plugin.wrap(target, this);
+        }
+        public void setProperties(Properties properties)
+        {
+            System.out.println("传入参数为：" + properties);
+        }
+    }
+  //}}
+  ```
++ 配置核心配置文件：
+  ```xml
+    <plugins>
+    <!-- {{c1:: -->
+		<plugin interceptor="top.xieyun.xxxPlugin">
+			<property name="属性名" value="属性值"/>
+		</plugin>
+    <!-- }} -->
+	</plugins>
+  ```
+
+### Mybatis四大对象： [	](mybatis_20200722091149295)
+
+1. {{c1:: `Executor`:Mybatis的执行器 }}
+2. {{c1:: `ParameterHandler`:处理sql的参数对象 }}
+3. {{c1:: `ResultSetHandler`:处理sql的返回结果集 }}
+4. {{c1:: `StatementHandler`:数据库的处理对象  }}
+
+
+
+### 空 [	](mybatis_20200720091440461)
+
++ 空

@@ -218,16 +218,14 @@
 
 - 基于以下代码进行构造注入
     ```java
-    //{{c1::
     public class Customer implements Serializable {
         private String name;
         private int age;
-    public Customer(String name, int age) {
+        public Customer(String name, int age) {
             this.name = name;
             this.age = age;
         }
     }
-    //}}
     ```
 + 配置文件
     ```xml
@@ -267,7 +265,7 @@
 ### Spring工厂创建复杂对象的3种方式 [	](spring_20200715110208931)
 
 - 实例工厂与静态工厂
-  - 作用：{{c1:: 避免Spring框架的侵入，整合遗留系统  }}s
+  - 作用：{{c1:: 避免Spring框架的侵入，整合遗留系统  }}
   - 实例工厂:
     ```xml
       <!-- {{c1:: -->
@@ -298,7 +296,7 @@
   
 - 注意：以上3种方法创建的Bean同样可以使用`<property>`进行set依赖注入
 
-### Spring工厂创建对象与依赖注入的流程 [	](spring_20200715110208932)
+### Spring工厂创建对象与依赖注入的流程图 [	](spring_20200715110208932)
 
 {{c1::![image-20200417152030222](spring.assets/image-20200417152030222.png)}}
 
@@ -321,7 +319,7 @@
 
 ### spring中Bean的生命周期执行步骤： [	](spring_20200715110208935)
 
-1. 创建：调用构造方法
+1. 创建：构造方法调用的时机
    1. {{c1:: 当`scope=singleton`时，ctx创建时就创建对象 }}
    2. {{c1:: 当`scope=prototype`时，`ctx.getBean(..)`时创建对象 }}
 2. 初始化：{{c1:: 调用`InitializingBean`接口中的`afterPropertiesSet`方法 }}
@@ -411,3 +409,4 @@
    +  注意：{{c1:: BeanPostProcessor会对Spring工厂中所有创建的对象进行加工。 }}
 + 运行流程图
   + {{c1::![image-20200420155053027](spring.assets/image-20200420155053027.png)}}
+
