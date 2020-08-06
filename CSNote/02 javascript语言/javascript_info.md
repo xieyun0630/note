@@ -3974,12 +3974,12 @@ export function sayHi(user) {
 
 ### ` elem.insertAdjacentHTML/Text/Element`方法 [	](javascript_info_20200525035508031)
 
-- 在 `html` 中给定一些 HTML，`elem.insertAdjacentHTML(where, html)` 会根据 `where` 的值来插入它：
++ 在 `html` 中给定一些 HTML，`elem.insertAdjacentHTML(where, html)` 会根据 `where` 的值来插入它：
   - `"beforebegin"`:{{c1::将 `html` 插入到 `elem` 前面。}}
   - `"afterbegin"`:{{c1::将 `html` 插入到 `elem` 的开头。}}
   - `"beforeend"`:{{c1::将 `html` 插入到 `elem` 的末尾。}}
   - `"afterend"`:{{c1::将 `html` 插入到 `elem` 后面。}}
-+  `elem.insertAdjacentText(where, text)` 和`elem.insertAdjacentElement(where, Element)`：它们会插入文本字符串和元素，但很少使用。}}
++  `elem.insertAdjacentText(where, text)` 和`elem.insertAdjacentElement(where, Element)`：{{c1:: 它们会插入文本字符串和元素，但很少使用。}}
 
 ### 要在页面加载完成之前将 HTML 附加到页面： [	](javascript_info_20200525035508034)
 
