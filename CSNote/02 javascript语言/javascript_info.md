@@ -2,15 +2,15 @@
 
 我们使用浏览器作为工作环境，所以基本的 UI 功能将是：
 
-- {{c1::  prompt(question[, default])}}
++ {{c1::  prompt(question[, default])}}
 
 询问一个问题，并返回访问者输入的内容，如果他按下「取消」则返回 `null`。
 
-- {{c1::  confirm(question)}}7
++ {{c1::  confirm(question)}}7
 
 提出一个问题，并建议在确定和取消之间进行选择。该选项以 `true/false` 形式返回。
 
-- {{c1::  alert(message)}}
++ {{c1::  alert(message)}}
 
 输出一个 `消息`。
 
@@ -236,7 +236,7 @@ delete user.name;
 
 ### Symbol 类型 [ ](javascript_info_20191219101334424)
 
-- Symbol 总是不同的值，即使它们有相同的名称。如果我们希望同名 Symbol 相等，那么{{c1::  我们应该使用全局注册表：`Symbol.for(key)` 返回（如果需要的话创建）一个以 `key` 作为名称的全局 Symbol。`Symbol.for` 的多次调用完全返回相同的 Symbol。}}
++ Symbol 总是不同的值，即使它们有相同的名称。如果我们希望同名 Symbol 相等，那么{{c1::  我们应该使用全局注册表：`Symbol.for(key)` 返回（如果需要的话创建）一个以 `key` 作为名称的全局 Symbol。`Symbol.for` 的多次调用完全返回相同的 Symbol。}}
 
   ```js
   //{{c1::
@@ -347,9 +347,9 @@ alert(user + 500); // hint: default -> 1500
 1. 调用 `obj[Symbol.toPrimitive](hint)` 如果这个方法存在的话，
 
 2. 否则如果暗示是"string"
-   - 尝试 `obj.toString()` 和 `obj.valueOf()`，无论哪个存在。
+   + 尝试 `obj.toString()` 和 `obj.valueOf()`，无论哪个存在。
 3. 否则，如果暗示"number"或者"default"
-   - 尝试 `obj.valueOf()` 和 `obj.toString()`，无论哪个存在。
+   + 尝试 `obj.valueOf()` 和 `obj.toString()`，无论哪个存在。
 
 }}
 
@@ -523,7 +523,7 @@ alert(new A() == new B()); // true
 
 {{c1::
 
-- `string`、`number`、`boolean`、`symbol`、`null` 和 `undefined`。
++ `string`、`number`、`boolean`、`symbol`、`null` 和 `undefined`。
 
   }}
 
@@ -587,11 +587,11 @@ alert(num.toString(2)); // 11111111
 
 常见的用例如下：
 
-- **base=16** 用于十六进制颜色，字符编码等，数字可以是 `0..9` 或 `A..F`。
++ **base=16** 用于十六进制颜色，字符编码等，数字可以是 `0..9` 或 `A..F`。
 
-- **base=2** 主要用于调试按位操作，数字可以是 `0` 或 `1`。
++ **base=2** 主要用于调试按位操作，数字可以是 `0` 或 `1`。
 
-- **base=36** 是最大值，数字可以是 `0..9` 或 `A..Z`。整个拉丁字母用来表示一个数字。对于 `36` 来说，一个有趣而有用的例子是，当我们需要将一个较长的数字标识符变成较短的时候，例如做一个简短的 URL。可以简单地用基数为 `36` 的数字系统表示：
++ **base=36** 是最大值，数字可以是 `0..9` 或 `A..Z`。整个拉丁字母用来表示一个数字。对于 `36` 来说，一个有趣而有用的例子是，当我们需要将一个较长的数字标识符变成较短的时候，例如做一个简短的 URL。可以简单地用基数为 `36` 的数字系统表示：
 
   }}
 
@@ -643,7 +643,7 @@ alert( NaN === NaN ); // false
 
 ### 测试：`isFinite` [ ](javascript_info_20191219101334470)
 
-- `isFinite(value)`: {{c1::将其参数转换为数字，如果是常规数字，则返回 `true`，而不是 `NaN / Infinity / -Infinity`：
++ `isFinite(value)`: {{c1::将其参数转换为数字，如果是常规数字，则返回 `true`，而不是 `NaN / Infinity / -Infinity`：
 
   ```javascript
   alert(isFinite("15")); // true
@@ -653,7 +653,7 @@ alert( NaN === NaN ); // false
 
   }}
 
-- `Object.is`可以比较 `===` 等值，但对于两种边缘情况更可靠：{{c1::
++ `Object.is`可以比较 `===` 等值，但对于两种边缘情况更可靠：{{c1::
 
   1. 它适用于 `NaN`： `Object.is（NaN，NaN）=== true`，这是件好事。
   2. 值 `0` 和 `-0` 是不同的：`Object.is（0，-0）=== false`，它不是很重要，但这些值在技术上是不同的。}}
@@ -670,7 +670,7 @@ alert(+"100px"); // NaN
 
 `parseInt` 和 `parseFloat` 从字符串中“读出”一个数字，直到他们可以。如果发生错误，则返回收集的数字:
 
-- `parseInt(str，base)` 解析来自任何数字系统的整数，其基数为：`2≤base≤36`。
++ `parseInt(str，base)` 解析来自任何数字系统的整数，其基数为：`2≤base≤36`。
 
 ```javascript
 alert(parseInt("100px")); // 100
@@ -765,9 +765,9 @@ let arr = [];
 
 ### 数组可以存储任何类型的元素。 [ ](javascript_info_20191219101334485)
 
-- 数组和对象一样， 都可以在末尾{{c1::冗余一个逗号。}}
-- 数组是一种特殊的对象。{{c1:: 使用方括号来访问属性 `arr[0]` 实际上是来自于对象的语法。这个数字被用作键值。他们扩展了对象，提供了特殊的方法来处理有序的数据集合，还添加了 `length` 属性。但是核心还是一个对象。}}
-- 数组有自己的 `toString` 方法的实现，会返回以逗号隔开的元素列表。
++ 数组和对象一样， 都可以在末尾{{c1::冗余一个逗号。}}
++ 数组是一种特殊的对象。{{c1:: 使用方括号来访问属性 `arr[0]` 实际上是来自于对象的语法。这个数字被用作键值。他们扩展了对象，提供了特殊的方法来处理有序的数据集合，还添加了 `length` 属性。但是核心还是一个对象。}}
++ 数组有自己的 `toString` 方法的实现，会返回以逗号隔开的元素列表。
 
 ```javascript
 // 混合值
@@ -789,29 +789,29 @@ arr[3](); // hello
 
 ### pop/push, shift/unshift 方法 [ ](javascript_info_20191219101334487)
 
-- `push` {{c1:: 在末端添加一个元素。}}
-- `shift` {{c1:: 取出队列最前端的一个元素，整个队列往前移，这样原先排第二的元素现在排在了第一。}}
-- `pop` {{c1:: 从末端取出一个元素。}}
-- `unshift` {{c1:: 在数组的前端添加元素。![1571887679989](javascript_info.assets/1571887679989.png)
++ `push` {{c1:: 在末端添加一个元素。}}
++ `shift` {{c1:: 取出队列最前端的一个元素，整个队列往前移，这样原先排第二的元素现在排在了第一。}}
++ `pop` {{c1:: 从末端取出一个元素。}}
++ `unshift` {{c1:: 在数组的前端添加元素。![1571887679989](javascript_info.assets/1571887679989.png)
   }}
 
 ### 数组误用的几种方式: [ ](javascript_info_20191219101334489)
 
-- 添加一个非数字的属性比如 `arr.test = 5`。}}
-- 制造空洞，比如：{{c1::  添加 `arr[0]` 后添加 `arr[1000]` (它们中间什么都没有)。}}
-- 以倒序填充数组, {{c1::  比如 `arr[1000]`，`arr[999]` 等等。}}
++ 添加一个非数字的属性比如 `arr.test = 5`。}}
++ 制造空洞，比如：{{c1::  添加 `arr[0]` 后添加 `arr[1000]` (它们中间什么都没有)。}}
++ 以倒序填充数组, {{c1::  比如 `arr[1000]`，`arr[999]` 等等。}}
 
 ### 2 种简化 for 循环的格式区别： [ ](javascript_info_20191219101334491)
 
-- `for..in`： {{c1::  遍历对象的属性名。}}
-- `for..of`： {{c1::  遍历数据元素。}}
++ `for..in`： {{c1::  遍历对象的属性名。}}
++ `for..of`： {{c1::  遍历数据元素。}}
 
 ### `length` 代表数组的大小 [ ](javascript_info_20191219101334492)
 
 `length` 属性的特点是：
 
-- {{c1::它是可写的。}}
-- {{c1::且自动更新。}}
++ {{c1::它是可写的。}}
++ {{c1::且自动更新。}}
 
 所以，清空数组最好的方法就是： {{c1::  ``arr.length = 0;``   }}。
 
@@ -858,9 +858,9 @@ alert(arr.concat(arrayLike)); // 1,2,something,else
 
 ### `indexOf` `lastIndexOf` `includes` [ ](javascript_info_20191219101334499)
 
-- `arr.indexOf(item, from)` {{c1:: 从索引 `from` 查询 `item`，如果找到返回索引，否则返回 `-1`。}}
-- `arr.lastIndexOf(item, from)` — {{c1:: 和上面相同，只是从尾部开始查询。}}
-- `arr.includes(item, from)` — {{c1:: 从索引 `from` 查询 `item`，如果找到则返回 `true`。}}
++ `arr.indexOf(item, from)` {{c1:: 从索引 `from` 查询 `item`，如果找到返回索引，否则返回 `-1`。}}
++ `arr.lastIndexOf(item, from)` — {{c1:: 和上面相同，只是从尾部开始查询。}}
++ `arr.includes(item, from)` — {{c1:: 从索引 `from` 查询 `item`，如果找到则返回 `true`。}}
 
 ### JS 数组中使用 lambda 表达式的方法 [ ](javascript_info_20191219101334501)
 
@@ -887,9 +887,9 @@ alert(arr.concat(arrayLike)); // 1,2,something,else
     alert(someUsers.length); // 2
 ```
 
-- {{c1:: `item` 是元素。
-- `index` 是它的索引。
-- `array` 是数组本身。}}
++ {{c1:: `item` 是元素。
++ `index` 是它的索引。
++ `array` 是数组本身。}}
 
 ### `arr.sort(fn)` [ ](javascript_info_20191219101334502)
 
@@ -988,54 +988,54 @@ alert(youngerUsers.length); // 2
 
 ### 数组方法总结 [ ](javascript_info_20191219101334512)
 
-- 添加/删除元素：
-  - `push(...items)` — 从结尾添加元素，
-  - `pop()` — 从结尾提取元素，
-  - `shift()` — 从开头提取元素，
-  - `unshift(...items)` — 从开头添加元素，
-  - `splice(pos, deleteCount, ...items)` — 从 `index` 开始：删除 `deleteCount` 元素并在当前位置插入元素。
-  - `slice(start, end)` — 它从所有元素的开始索引 `"start"` 复制到 `"end"` (不包括 `"end"`) 返回一个新的数组。
-  - `concat(...items)` — 返回一个新数组：复制当前数组的所有成员并向其中添加 `items`。如果有任何`items` 是一个数组，那么就取其元素。
-- 查询元素：
-  - `indexOf/lastIndexOf(item, pos)` — 从 `pos` 找到 `item`，则返回索引否则返回 `-1`。
-  - `includes(value)` — 如果数组有 `value`，则返回 `true`，否则返回 `false`。
-  - `find/filter(func)` — 通过函数过滤元素，返回 `true` 条件的符合 find 函数的第一个值或符合 filter 函数的全部值。
-  - `findIndex` 和 `find` 类似，但返回索引而不是值。
-- 转换数组：
-  - `map(func)` — 从每个元素调用 `func` 的结果创建一个新数组。
-  - `sort(func)` — 将数组倒序排列，然后返回。
-  - `reverse()` — 在原地颠倒数组，然后返回它。
-  - `split/join` — 将字符串转换为数组并返回。
-  - `reduce(func, initial)` — 通过为每个元素调用 `func` 计算数组上的单个值并在调用之间传递中间结果。
-- 迭代元素：
-  - `forEach(func)` — 为每个元素调用 `func`，不返回任何东西。
-- 其他： – `Array.isArray(arr)` 检查 `arr` 是否是一个数组。
++ 添加/删除元素：
+  + `push(...items)` — 从结尾添加元素，
+  + `pop()` — 从结尾提取元素，
+  + `shift()` — 从开头提取元素，
+  + `unshift(...items)` — 从开头添加元素，
+  + `splice(pos, deleteCount, ...items)` — 从 `index` 开始：删除 `deleteCount` 元素并在当前位置插入元素。
+  + `slice(start, end)` — 它从所有元素的开始索引 `"start"` 复制到 `"end"` (不包括 `"end"`) 返回一个新的数组。
+  + `concat(...items)` — 返回一个新数组：复制当前数组的所有成员并向其中添加 `items`。如果有任何`items` 是一个数组，那么就取其元素。
++ 查询元素：
+  + `indexOf/lastIndexOf(item, pos)` — 从 `pos` 找到 `item`，则返回索引否则返回 `-1`。
+  + `includes(value)` — 如果数组有 `value`，则返回 `true`，否则返回 `false`。
+  + `find/filter(func)` — 通过函数过滤元素，返回 `true` 条件的符合 find 函数的第一个值或符合 filter 函数的全部值。
+  + `findIndex` 和 `find` 类似，但返回索引而不是值。
++ 转换数组：
+  + `map(func)` — 从每个元素调用 `func` 的结果创建一个新数组。
+  + `sort(func)` — 将数组倒序排列，然后返回。
+  + `reverse()` — 在原地颠倒数组，然后返回它。
+  + `split/join` — 将字符串转换为数组并返回。
+  + `reduce(func, initial)` — 通过为每个元素调用 `func` 计算数组上的单个值并在调用之间传递中间结果。
++ 迭代元素：
+  + `forEach(func)` — 为每个元素调用 `func`，不返回任何东西。
++ 其他： – `Array.isArray(arr)` 检查 `arr` 是否是一个数组。
 
 请注意，`sort`，`reverse` 和 `splice` 方法修改数组本身。
 
 这些方法是最常用的方法，它们覆盖 99％ 的用例。但是还有其他几个：
 
-- [arr.some(fn)](https://developer.mozilla.org/zh/docs/Web/JavaScript/Reference/Global_Objects/Array/some)/[arr.every(fn)](https://developer.mozilla.org/zh/docs/Web/JavaScript/Reference/Global_Objects/Array/every) 检查数组。
++ [arr.some(fn)](https://developer.mozilla.org/zh/docs/Web/JavaScript/Reference/Global_Objects/Array/some)/[arr.every(fn)](https://developer.mozilla.org/zh/docs/Web/JavaScript/Reference/Global_Objects/Array/every) 检查数组。
 
   在类似于 `map` 的数组的每个元素上调用函数 `fn`。如果任何/所有结果为 `true`，则返回 `true`，否则返回 `false`。
 
-- [arr.fill(value, start, end)](https://developer.mozilla.org/zh/docs/Web/JavaScript/Reference/Global_Objects/Array/fill) — 从 `start` 到 `end` 用 `value` 重复填充数组。
++ [arr.fill(value, start, end)](https://developer.mozilla.org/zh/docs/Web/JavaScript/Reference/Global_Objects/Array/fill) — 从 `start` 到 `end` 用 `value` 重复填充数组。
 
-- [arr.copyWithin(target, start, end)](https://developer.mozilla.org/zh/docs/Web/JavaScript/Reference/Global_Objects/Array/copyWithin) —将其元素从 `start` 到 `end` 在 `target` 位置复制到 **本身**（覆盖现有）。
++ [arr.copyWithin(target, start, end)](https://developer.mozilla.org/zh/docs/Web/JavaScript/Reference/Global_Objects/Array/copyWithin) —将其元素从 `start` 到 `end` 在 `target` 位置复制到 **本身**（覆盖现有）。
 
 ## `Symbol.iterator`（可迭代对象） [ ](javascript_info_20191219101334513)
 
 ### 可迭代对象概念 [ ](javascript_info_20191219101334515)
 
-- `obj[Symbol.iterator]` 方法返回的结果被称为 {{c1::   **迭代器**}}。由它处理更深入的迭代过程。
-- 一个迭代器必须有 {{c1::   `next()` 方法}}，它返回一个 {{c1::   `{done: Boolean, value: any}`，这里 `done:true` 表明迭代结束，否则 `value` 就是下一个值。}}
++ `obj[Symbol.iterator]` 方法返回的结果被称为 {{c1::   **迭代器**}}。由它处理更深入的迭代过程。
++ 一个迭代器必须有 {{c1::   `next()` 方法}}，它返回一个 {{c1::   `{done: Boolean, value: any}`，这里 `done:true` 表明迭代结束，否则 `value` 就是下一个值。}}
 
 ### 实现`Symbol.iterator` 的两种方式 [ ](javascript_info_20191219101334516)
 
-- 第一种：{{c1::每次调用`obj[Symbol.iterator]`都返回一个实现了next()方法的新对象。}}
-  - 特点：{{c1::每次会返回新的迭代器从头开始迭代。}}
-- 第二种: 每次调用`obj[Symbol.iterator]`都返回`this`,对象本身实现了 next 方法。
-  - 特点：{{c1::对象内部会记住迭代的状态。}}
++ 第一种：{{c1::每次调用`obj[Symbol.iterator]`都返回一个实现了next()方法的新对象。}}
+  + 特点：{{c1::每次会返回新的迭代器从头开始迭代。}}
++ 第二种: 每次调用`obj[Symbol.iterator]`都返回`this`,对象本身实现了 next 方法。
+  + 特点：{{c1::对象内部会记住迭代的状态。}}
 
 ### 显式调用字符串的迭代器 [ ](javascript_info_20191219101334518)
 
@@ -1077,8 +1077,8 @@ for (let item of arrayLike) {}
 Array.from(obj[, mapFn, thisArg])
 ```
 
-- `mapFn` {{c1::  应是一个在元素被添加到数组前，施加于每个元素的方法 }}
-- `thisArg` {{c1:: 允许设置方法的 `this` 对象 }}
++ `mapFn` {{c1::  应是一个在元素被添加到数组前，施加于每个元素的方法 }}
++ `thisArg` {{c1:: 允许设置方法的 `this` 对象 }}
 
 ```javascript
 let arrayLike = {
@@ -1101,14 +1101,14 @@ alert(arr.pop()); // World（pop 方法生效）
 
 主要的方法包括：
 
-- `new Map()` –{{c1::  创建 map。}}
-- `map.set(key, value)` – {{c1:: 根据键（key）存储值（value），**可以链式调用**。}}
-- `map.get(key)` – {{c1:: 根据键返回值，如果 map 中该键不存在，返回 `undefined`。}}
-- `map.has(key)` – {{c1:: 如果键存在，返回 `true`，否则返回 `false`。}}
-- `map.delete(key)` – {{c1:: 移除该键的值。}}
-- `map.clear()` – {{c1:: 清空 map。}}
-- `map.size` – {{c1:: 返回当前元素个数。}}
-- `map.forEach` – {{c1:: 遍历map。}}
++ `new Map()` –{{c1::  创建 map。}}
++ `map.set(key, value)` – {{c1:: 根据键（key）存储值（value），**可以链式调用**。}}
++ `map.get(key)` – {{c1:: 根据键返回值，如果 map 中该键不存在，返回 `undefined`。}}
++ `map.has(key)` – {{c1:: 如果键存在，返回 `true`，否则返回 `false`。}}
++ `map.delete(key)` – {{c1:: 移除该键的值。}}
++ `map.clear()` – {{c1:: 清空 map。}}
++ `map.size` – {{c1:: 返回当前元素个数。}}
++ `map.forEach` – {{c1:: 遍历map。}}
 
 ### `Object.entries(obj)` [ ](javascript_info_20191219101334526)
 
@@ -1133,9 +1133,9 @@ let map = new Map(
 
 {{c1::
 
-- `map.keys()` – 返回键的迭代器，
-- `map.values()` – 返回值的迭代器，
-- `map.entries()` – 返回 `[key, value]` 迭代器入口，`for..of` 循环会默认使用它。
++ `map.keys()` – 返回键的迭代器，
++ `map.values()` – 返回值的迭代器，
++ `map.entries()` – 返回 `[key, value]` 迭代器入口，`for..of` 循环会默认使用它。
 
 注意：map 的迭代顺序是值的插入顺序。
 
@@ -1147,31 +1147,31 @@ let map = new Map(
 
 主要方法包括：
 
-- `new Set(iterable)` – {{c1:: 创建 set，利用数组来创建是可选的（任何可迭代对象都可以）。}}
-- `set.add(value)` – {{c1:: 添加值，返回 set 自身。}}
-- `set.delete(value)` –{{c1::  删除值，如果该 `value` 在调用方法的时候存在则返回 `true` ，否则返回 `false`。}}
-- `set.has(value)` – {{c1:: 如果 set 中存在该值则返回 `true` ，否则返回 `false`。}}
-- `set.clear()` –{{c1::  清空 set。}}
-- `set.size` – {{c1:: 元素个数。}}
++ `new Set(iterable)` – {{c1:: 创建 set，利用数组来创建是可选的（任何可迭代对象都可以）。}}
++ `set.add(value)` – {{c1:: 添加值，返回 set 自身。}}
++ `set.delete(value)` –{{c1::  删除值，如果该 `value` 在调用方法的时候存在则返回 `true` ，否则返回 `false`。}}
++ `set.has(value)` – {{c1:: 如果 set 中存在该值则返回 `true` ，否则返回 `false`。}}
++ `set.clear()` –{{c1::  清空 set。}}
++ `set.size` – {{c1:: 元素个数。}}
 
 我们可以使用 {{c1:: `for..of` 或者 `forEach` }}来循环查看 set
 
 ### `WeakMap`和 `WeakSet` [ ](javascript_info_20191219101334531)
 
-- `WeakMap` —— {{c1:: `Map` 的一个变体，仅允许对象作为键，并且当对象由于其他原因不可引用的时候将其删除。
++ `WeakMap` —— {{c1:: `Map` 的一个变体，仅允许对象作为键，并且当对象由于其他原因不可引用的时候将其删除。
 
-  - 它不支持整体的操作：没有 `size` 属性，没有 `clear()` 方法，没有迭代器。}}
+  + 它不支持整体的操作：没有 `size` 属性，没有 `clear()` 方法，没有迭代器。}}
 
-- `WeakSet` —— {{c1:: `Set` 的一个变体，仅存储对象，并且当对象由于其他原因不可引用的时候将其删除。
-- 同样不支持 `size/clear()` 和迭代器。}}
++ `WeakSet` —— {{c1:: `Set` 的一个变体，仅存储对象，并且当对象由于其他原因不可引用的时候将其删除。
++ 同样不支持 `size/clear()` 和迭代器。}}
 
 ## 对象的键、值、项 [ ](javascript_info_20191219101334535)
 
 ### `Object.keys、values、entries` 三个方法 [ ](javascript_info_20191219101334538)
 
-- [Object.keys(obj)](https://developer.mozilla.org/zh/docs/Web/JavaScript/Reference/Global_Objects/Object/keys) —— {{c1:: 返回一个包含该对象全部的键的**数组**。}}
-- [Object.values(obj)](https://developer.mozilla.org/zh/docs/Web/JavaScript/Reference/Global_Objects/Object/values) —— {{c1::  返回一个包含该对象全部的值的**数组**。}}
-- [Object.entries(obj)](https://developer.mozilla.org/zh/docs/Web/JavaScript/Reference/Global_Objects/Object/entries) —— {{c1:: 返回一个包含该对象全部 [key, value] 键值对的**数组**。}}
++ [Object.keys(obj)](https://developer.mozilla.org/zh/docs/Web/JavaScript/Reference/Global_Objects/Object/keys) —— {{c1:: 返回一个包含该对象全部的键的**数组**。}}
++ [Object.values(obj)](https://developer.mozilla.org/zh/docs/Web/JavaScript/Reference/Global_Objects/Object/values) —— {{c1::  返回一个包含该对象全部的值的**数组**。}}
++ [Object.entries(obj)](https://developer.mozilla.org/zh/docs/Web/JavaScript/Reference/Global_Objects/Object/entries) —— {{c1:: 返回一个包含该对象全部 [key, value] 键值对的**数组**。}}
 
 跟 map 的区别：
 
@@ -1209,8 +1209,8 @@ showMenu(options);
 
 注意：
 
-- 对象属性需要相同的名字
-- 数组元素名称任意但是要注意顺序
++ 对象属性需要相同的名字
++ 数组元素名称任意但是要注意顺序
 
 我们可以通过指定空对象 `{}` 为整个函数参数的默认值。
 
@@ -1248,10 +1248,10 @@ showMenu(options);
 
 字符串的格式是：`YYYY-MM-DDTHH:mm:ss.sssZ`，其中：
 
-- `YYYY-MM-DD` —— 日期：年-月-日。
-- 字符串 `"T"` 是一个分隔符。
-- `HH:mm:ss.sss` —— 时间：小时，分钟，秒，毫秒。
-- 可选字符 `'Z'` 代表时区。单个字符 `Z` 代表 UTC+0。
++ `YYYY-MM-DD` —— 日期：年-月-日。
++ 字符串 `"T"` 是一个分隔符。
++ `HH:mm:ss.sss` —— 时间：小时，分钟，秒，毫秒。
++ 可选字符 `'Z'` 代表时区。单个字符 `Z` 代表 UTC+0。
 
 简短形式也是可以的，比如 `YYYY-MM-DD` 或者 `YYYY-MM` 又或者 `YYYY`。
 
@@ -1259,11 +1259,11 @@ showMenu(options);
 
 ### JavaScript 日期对象小结 [ ](javascript_info_20191219101334552)
 
-- 在 JavaScript 中，日期和时间使用 [Date](https://developer.mozilla.org/zh/docs/Web/JavaScript/Reference/Global_Objects/Date) 对象来表示{{c1:: 。不能只创建日期，或者只创建时间，`Date` 对象总是两个都创建。}}
-- 月份从 {{c1:: 0 开始计数（对，一月是 0）。}}
-- 一周的某一天 `getDay()` 同样从{{c1::  0 开始计算（0 代表星期天）。}}
-- 当超出范围的信息被设置时，{{c1:: `Date` 会做自我校准。这一点对于日/月/小时 的加减很有效。}}
-- 日期可以相减{{c1:: ，得到的是两者的差值，用毫秒表示。因为当转化为数字时，`Date` 对象变为时间戳。}}
++ 在 JavaScript 中，日期和时间使用 [Date](https://developer.mozilla.org/zh/docs/Web/JavaScript/Reference/Global_Objects/Date) 对象来表示{{c1:: 。不能只创建日期，或者只创建时间，`Date` 对象总是两个都创建。}}
++ 月份从 {{c1:: 0 开始计数（对，一月是 0）。}}
++ 一周的某一天 `getDay()` 同样从{{c1::  0 开始计算（0 代表星期天）。}}
++ 当超出范围的信息被设置时，{{c1:: `Date` 会做自我校准。这一点对于日/月/小时 的加减很有效。}}
++ 日期可以相减{{c1:: ，得到的是两者的差值，用毫秒表示。因为当转化为数字时，`Date` 对象变为时间戳。}}
 
 ## JSON 方法，toJSON [ ](javascript_info_20191219101334554)
 
@@ -1271,8 +1271,8 @@ showMenu(options);
 
 {{c1::
 
-- 字符串使用双引号。JSON 中没有单引号或反引号。所以 `'John'` 转成 `"John"`。
-- JSON 对象属性名称也是双引号的。这是强制性的。所以 `age:30` 转成 `"age":30`。
++ 字符串使用双引号。JSON 中没有单引号或反引号。所以 `'John'` 转成 `"John"`。
++ JSON 对象属性名称也是双引号的。这是强制性的。所以 `age:30` 转成 `"age":30`。
 
 }}
 
@@ -1305,11 +1305,11 @@ alert(json);
 
 ### `JSON.stringify` 会跳过的 3 种类型的值 [ ](javascript_info_20191219101334558)
 
-- {{c1::函数属性（方法）。}}
++ {{c1::函数属性（方法）。}}
 
-- {{c1::Symbolic 属性。}}
++ {{c1::Symbolic 属性。}}
 
-- {{c1::存储 `undefined` 的属性。}}解构赋值总结
++ {{c1::存储 `undefined` 的属性。}}解构赋值总结
 
 {{c1::
 
@@ -1335,15 +1335,15 @@ alert(JSON.stringify(user)); // {} (empty object)
 let json = JSON.stringify(value, replacer, space);
 ```
 
-- value
++ value
 
   要编码的值。
 
-- replacer
++ replacer
 
   要编码的属性数组**或**映射函数 `function(key, value)`。
 
-- space
++ space
 
   文本添加缩进、空格和换行符
 
@@ -1399,23 +1399,23 @@ showName("Julius", "Caesar", "Consul", "Imperator");
 
 ### arguments 变量 [ ](javascript_info_20191219101334566)
 
-- 含义：{{c1::所有的参数被按序放置的类数组且可遍历的对象}}
-- 类数组且可遍历的对象不是数组，{{c1::不能调用对应的数组方法}}
++ 含义：{{c1::所有的参数被按序放置的类数组且可遍历的对象}}
++ 类数组且可遍历的对象不是数组，{{c1::不能调用对应的数组方法}}
 
 ### `Array.from(obj)` 和 `[...obj]` 的 2 点差别： [ ](javascript_info_20191219101334567)
 
-- {{c1::`Array.from` 同时适用于类数组对象和可遍历对象。}}
-- {{c1::Spread 操作符只能操作可遍历对象。}}
++ {{c1::`Array.from` 同时适用于类数组对象和可遍历对象。}}
++ {{c1::Spread 操作符只能操作可遍历对象。}}
 
 ### Rest 参数与 Spread 操作符的区分 [ ](javascript_info_20191219101334569)
 
-- {{c1::若 `...` 出现在函数的参数列表，那它表示的就是 Rest 参数，它会把函数多余的实参收集到一个数组中。}}
-- {{c1::若 `...` 出现在函数调用或类似的表达式中，那它就是 Spread 操作符，它会把一个数组展开为逗号分隔的元素列表。}}
++ {{c1::若 `...` 出现在函数的参数列表，那它表示的就是 Rest 参数，它会把函数多余的实参收集到一个数组中。}}
++ {{c1::若 `...` 出现在函数调用或类似的表达式中，那它就是 Spread 操作符，它会把一个数组展开为逗号分隔的元素列表。}}
 
 ### `var` 声明的变量与`let`声明的变量有两点主要区别： [ ](javascript_info_20191219101334570)
 
-- {{c1::变量没有块作用域，它们在最小函数级可见。}}
-- {{c1::变量声明在函数开头处理。}}
++ {{c1::变量没有块作用域，它们在最小函数级可见。}}
++ {{c1::变量声明在函数开头处理。}}
 
 ## 全局对象 [ ](javascript_info_20191219101334572)
 
@@ -1433,10 +1433,10 @@ showName("Julius", "Caesar", "Consul", "Imperator");
 
 ### 函数对象的属性 [ ](javascript_info_20191219101334576)
 
-- name:{{c1::该函数的名字}}
-- length:{{c1::该函数的参数个数}}
++ name:{{c1::该函数的名字}}
++ length:{{c1::该函数的参数个数}}
 
-- 自定义属性{{c1::
++ 自定义属性{{c1::
 
 ```javascript
 function sayHi() {
@@ -1480,8 +1480,8 @@ let sayHi = function func(who) {
 
 总结一下：
 
-- 变量是特定内部对象的属性，与当前执行的（代码）块/函数/脚本有关。
-- 操作变量实际上操作的是该对象的属性。
++ 变量是特定内部对象的属性，与当前执行的（代码）块/函数/脚本有关。
++ 操作变量实际上操作的是该对象的属性。
 
 **当代码试图访问一个变量时 —— 它首先会在内部词法环境中进行搜索，然后是外部环境，然后是更外部的环境，直到（词法环境）链的末尾。**
 
@@ -1506,9 +1506,9 @@ alert(counter()); // 10
 
 修改 `makeCounter()` 代码，使得 counter 可以减一和赋值：
 
-- `counter()` 应该返回下一个数字（同以前逻辑）。
-- `counter.set(value)` 应该设置 `count` 为 `value`。
-- `counter.decrease(value)` 应该把 `count` 减 1。
++ `counter()` 应该返回下一个数字（同以前逻辑）。
++ `counter.set(value)` 应该设置 `count` 为 `value`。
++ `counter.decrease(value)` 应该把 `count` 减 1。
 
 P.S. 你也可以使用闭包或者函数属性来保持当前的计数，或者两者的变体
 
@@ -1865,8 +1865,8 @@ func.apply(context, args); //}} 与使用 apply 相同
 
 {{c1::
 
-- 扩展运算符 `...` 允许将 **可迭代的** `参数列表` 作为列表传递给 `call`。
-- `apply` 只接受 **类似数组一样的** `参数列表`。
++ 扩展运算符 `...` 允许将 **可迭代的** `参数列表` 作为列表传递给 `call`。
++ `apply` 只接受 **类似数组一样的** `参数列表`。
 
 }}
 
@@ -2042,9 +2042,9 @@ alert(double(5)); // = mul(2, 5) = 10
 
 {{c1::
 
-- **`writable`** — 如果为 `true`，则可以修改，否则它是只读的。
-- **`enumerable`** — 如果是 `true`，则可在循环中列出，否则不列出。
-- **`configurable`** — 如果是 `true`，则此属性可以被删除，相应的特性也可以被修改，否则不可以。
++ **`writable`** — 如果为 `true`，则可以修改，否则它是只读的。
++ **`enumerable`** — 如果是 `true`，则可在循环中列出，否则不列出。
++ **`configurable`** — 如果是 `true`，则此属性可以被删除，相应的特性也可以被修改，否则不可以。
 
 }}
 
@@ -2182,10 +2182,10 @@ alert(user.surname); // Cooper
 
 {{c1::
 
-- **`get`** —— 一个没有参数的函数，在读取属性时工作，
-- **`set`** —— 带有一个参数的函数，当属性被设置时调用，
-- **`enumerable`** —— 与数据属性相同，
-- **`configurable`** —— 与数据属性相同。}}
++ **`get`** —— 一个没有参数的函数，在读取属性时工作，
++ **`set`** —— 带有一个参数的函数，当属性被设置时调用，
++ **`enumerable`** —— 与数据属性相同，
++ **`configurable`** —— 与数据属性相同。}}
 
 如果我们试图在同一个描述符中提供 `get` 和 `value`，则会出现错误
 
@@ -2218,12 +2218,12 @@ for (let key in user) alert(key); // name, surname
 
 ### JS 中的原型继承总结 [ ](javascript_info_20191219101334654)
 
-- JavaScript 中，所有的对象都有一个隐藏的 `[[Prototype]]` 属性，它可以是另一个对象或者 `null`。
-- 我们可以使用 `obj.__proto__` 进行访问`[[Prototype]]` ，`[[Prototype]]` 引用的对象称为“原型”。
++ JavaScript 中，所有的对象都有一个隐藏的 `[[Prototype]]` 属性，它可以是另一个对象或者 `null`。
++ 我们可以使用 `obj.__proto__` 进行访问`[[Prototype]]` ，`[[Prototype]]` 引用的对象称为“原型”。
 
-- 请注意 `__proto__` 与 `[[Prototype]]` **不一样**。这是一个 getter/setter。
-- 如果我们想要读取 `obj` 属性或者调用一个方法，而且它不存在，那么 {{c1:: JavaScript 就会尝试在原型中查找它。写/删除直接在对象上进行操作，它们不使用原型（除非属性实际上是一个 setter）。}}
-- 如果我们调用 `obj.method()`，而且 `method` 是从原型中获取的， {{c1::`this` 仍然会引用 `obj`。因此方法总是与当前对象一起工作，即使它们是继承的。}}
++ 请注意 `__proto__` 与 `[[Prototype]]` **不一样**。这是一个 getter/setter。
++ 如果我们想要读取 `obj` 属性或者调用一个方法，而且它不存在，那么 {{c1:: JavaScript 就会尝试在原型中查找它。写/删除直接在对象上进行操作，它们不使用原型（除非属性实际上是一个 setter）。}}
++ 如果我们调用 `obj.method()`，而且 `method` 是从原型中获取的， {{c1::`this` 仍然会引用 `obj`。因此方法总是与当前对象一起工作，即使它们是继承的。}}
 
 ### task: 与原型一起工作 [ ](javascript_info_20191219101334660)
 
@@ -2297,9 +2297,9 @@ Rabbit.prototype = { constructor: Rabbit };
 
 ### 函数原型总结 [ ](javascript_info_20191219101334668)
 
-- `F.prototype` 属性与 `[[Prototype]]` 不同。`F.prototype` 唯一的作用是：{{c1::当 `new F()` 被调用时，它设置新对象的 `[[Prototype]]`。}}
-- `F.prototype` 的值应该是{{c1::一个对象或 null：其他值将不起作用。}}
-- Person 类的原型实例图{{c1::
++ `F.prototype` 属性与 `[[Prototype]]` 不同。`F.prototype` 唯一的作用是：{{c1::当 `new F()` 被调用时，它设置新对象的 `[[Prototype]]`。}}
++ `F.prototype` 的值应该是{{c1::一个对象或 null：其他值将不起作用。}}
++ Person 类的原型实例图{{c1::
   ![image-20191226202831741](javascript_info.assets/image-20191226202831741.png)}}
 
 ### task:`new user.constructor('Pete')` 的工作原理是： [ ](javascript_info_20191219101334669)
@@ -2358,10 +2358,10 @@ alert(arr.__proto__.__proto__.__proto__);
 ```javascript
 function showArgs() {
   // 从数组借用 join 方法并在 arguments 的上下文中调用
-  alert([].join.call(arguments, " - "));
+  alert([].join.call(arguments, " + "));
 }
 
-showArgs("John", "Pete", "Alice"); // John - Pete - Alice
+showArgs("John", "Pete", "Alice"); // John + Pete + Alice
 ```
 
 因为 `join` 方法在 `Array.prototype` 对象上，我们可以直接调用它并且重写上面的代码：
@@ -2369,18 +2369,18 @@ showArgs("John", "Pete", "Alice"); // John - Pete - Alice
 ```javascript
 function showArgs() {
   //{{c1::
-  alert(Array.prototype.join.call(arguments, " - "));
+  alert(Array.prototype.join.call(arguments, " + "));
   //}}
 }
 ```
 
 ## 原生的原型总结 [ ](javascript_info_20191219101334671)
 
-- 所有的内置对象都遵循一样的模式：
-  - 方法都存储在{{c1::原型对象上（`Array.prototype`、`Object.prototype`、`Date.prototype` 等）。}}
-  - 对象本身只存储{{c1::数据（数组元素、对象属性、日期）。}}
-- 基本数据类型同样在{{c1::包装对象的原型}}上存储方法：{{c1::`Number.prototype`、`String.prototype` 和 `Boolean.prototype`。只有 `undefined` 和 `null` 没有包装对象。}}
-- 内置对象的原型可以被修改或者被新的方法填充。但是这样做是不被推荐的。只有当添加一个还没有被 JavaScript 引擎支持的新方法的时候才可能允许这样做。
++ 所有的内置对象都遵循一样的模式：
+  + 方法都存储在{{c1::原型对象上（`Array.prototype`、`Object.prototype`、`Date.prototype` 等）。}}
+  + 对象本身只存储{{c1::数据（数组元素、对象属性、日期）。}}
++ 基本数据类型同样在{{c1::包装对象的原型}}上存储方法：{{c1::`Number.prototype`、`String.prototype` 和 `Boolean.prototype`。只有 `undefined` 和 `null` 没有包装对象。}}
++ 内置对象的原型可以被修改或者被新的方法填充。但是这样做是不被推荐的。只有当添加一个还没有被 JavaScript 引擎支持的新方法的时候才可能允许这样做。
 
 ### 装饰器方法 “defer()“（实践） [ ](javascript_info_20191219101334673)
 
@@ -2421,9 +2421,9 @@ f.defer(1000)(1, 2); // shows 3 after 1 sec
 
 获取/设置原型的方式有很多，我们已知的有：
 
-- Object.create(proto\[, descriptors\]) : {{c1::利用 `proto` 作为 `[[Prototype]]` 和可选的属性描述来创建一个空对象。}}
-- Object.getPrototypeOf(obj) : {c1:: 返回 `obj` 对象的 `[[Prototype]]`。}}
-- Object.setPrototypeOf(obj, proto) : {c1:: 将 `obj` 对象的 `[[Prototype]]` 设置为 `proto`。}}
++ Object.create(proto\[, descriptors\]) : {{c1::利用 `proto` 作为 `[[Prototype]]` 和可选的属性描述来创建一个空对象。}}
++ Object.getPrototypeOf(obj) : {c1:: 返回 `obj` 对象的 `[[Prototype]]`。}}
++ Object.setPrototypeOf(obj, proto) : {c1:: 将 `obj` 对象的 `[[Prototype]]` 设置为 `proto`。}}
 
 对原型的操作
 
@@ -2443,7 +2443,8 @@ Object.setPrototypeOf(rabbit, {}); // 将 rabbit 的原型更改为 {}
 ```javascript
 // obj 对象的浅复制
 
-let clone = Object.create( //{{c1::
+let clone = Object.create(
+  //{{c1::
   Object.getPrototypeOf(obj),
   Object.getOwnPropertyDescriptors(obj)
 );
@@ -2467,21 +2468,21 @@ alert(Object.keys(chineseDictionary)); // hello,bye}}
 
 ### 获取所有属性 [ ](javascript_info_20191219101334677)
 
-- [Object.keys(obj)](https://developer.mozilla.org/zh/docs/Web/JavaScript/Reference/Global_Objects/Object/keys) / [Object.values(obj)](https://developer.mozilla.org/zh/docs/Web/JavaScript/Reference/Global_Objects/Object/values) / [Object.entries(obj)](https://developer.mozilla.org/zh/docs/Web/JavaScript/Reference/Global_Objects/Object/entries) ——{{c1::返回一个数组，包含所有可枚举字符串属性名称/值/键值对。这些方法只会列出**可枚举**属性，而且它们**键名为字符串形式**。}}
++ [Object.keys(obj)](https://developer.mozilla.org/zh/docs/Web/JavaScript/Reference/Global_Objects/Object/keys) / [Object.values(obj)](https://developer.mozilla.org/zh/docs/Web/JavaScript/Reference/Global_Objects/Object/values) / [Object.entries(obj)](https://developer.mozilla.org/zh/docs/Web/JavaScript/Reference/Global_Objects/Object/entries) ——{{c1::返回一个数组，包含所有可枚举字符串属性名称/值/键值对。这些方法只会列出**可枚举**属性，而且它们**键名为字符串形式**。}}
 
 如果我们想要 symbol 属性：
 
-- [Object.getOwnPropertySymbols(obj)](https://developer.mozilla.org/zh/docs/Web/JavaScript/Reference/Global_Objects/Object/getOwnPropertySymbols) —— {{c1::返回包含所有 symbol 属性名称的数组。}}
++ [Object.getOwnPropertySymbols(obj)](https://developer.mozilla.org/zh/docs/Web/JavaScript/Reference/Global_Objects/Object/getOwnPropertySymbols) —— {{c1::返回包含所有 symbol 属性名称的数组。}}
 
 如果我们想要非可枚举属性：
 
-- [Object.getOwnPropertyNames(obj)](https://developer.mozilla.org/zh/docs/Web/JavaScript/Reference/Global_Objects/Object/getOwnPropertyNames) —— {{c1::返回包含所有字符串属性名的数组。}}
++ [Object.getOwnPropertyNames(obj)](https://developer.mozilla.org/zh/docs/Web/JavaScript/Reference/Global_Objects/Object/getOwnPropertyNames) —— {{c1::返回包含所有字符串属性名的数组。}}
 
 如果我们想要**所有**属性：
 
-- [Reflect.ownKeys(obj)](https://developer.mozilla.org/zh/docs/Web/JavaScript/Reference/Global_Objects/Reflect/ownKeys) —— {{c1::返回包含所有属性名称的数组。}}
++ [Reflect.ownKeys(obj)](https://developer.mozilla.org/zh/docs/Web/JavaScript/Reference/Global_Objects/Reflect/ownKeys) —— {{c1::返回包含所有属性名称的数组。}}
 
-- [obj.hasOwnProperty(key)](https://developer.mozilla.org/zh/docs/Web/JavaScript/Reference/Global_Objects/Object/hasOwnProperty)：{{c1::如果 `obj` 有名为 `key` 的自身属性（而非继承），返回值为 `true`。}}
++ [obj.hasOwnProperty(key)](https://developer.mozilla.org/zh/docs/Web/JavaScript/Reference/Global_Objects/Object/hasOwnProperty)：{{c1::如果 `obj` 有名为 `key` 的自身属性（而非继承），返回值为 `true`。}}
 
 ### task:原型方法调用方式的差异 [ ](javascript_info_20191230080406360)
 
@@ -2568,8 +2569,8 @@ class MyClass {
 
 ### 调用父类的方法 [ ](javascript_info_20191230080406369)
 
-- 执行{{c1:: `super.method(...)` }}调用父类方法。
-- 执行{{c1:: `super(...)` }}调用父类构造函数（只能在子类的构造函数中运行）
++ 执行{{c1:: `super.method(...)` }}调用父类方法。
++ 执行{{c1:: `super(...)` }}调用父类构造函数（只能在子类的构造函数中运行）
 
 ### 如果一个类继承了另一个类并且没有 `constructor`，那么将生成以下“空” `constructor`： [ ](javascript_info_20191230080406370)
 
@@ -2613,13 +2614,13 @@ let longEar = {
 longEar.eat(); // Error: Maximum call stack size exceeded
 ```
 
-- {{c1::为了提供解决方法，JavaScript 为函数额外添加了一个特殊的内部属性：`[[HomeObject]]`。
++ {{c1::为了提供解决方法，JavaScript 为函数额外添加了一个特殊的内部属性：`[[HomeObject]]`。
 
   当一个函数被定义为类或者对象方法时，它的 `[[HomeObject]]` 属性就成为那个对象。
 
   然后 `super` 使用它来解析父类原型和它自己的方法。}}
 
-- {{c1::在 (*) 和 (**) 这两行中，`this.__proto__` 的值是完全相同的：都是 `rabbit`。在这个无限循环中，他们都调用了 `rabbit.eat`，而不是在原型链上向上寻找方法。}}
++ {{c1::在 (*) 和 (**) 这两行中，`this.__proto__` 的值是完全相同的：都是 `rabbit`。在这个无限循环中，他们都调用了 `rabbit.eat`，而不是在原型链上向上寻找方法。}}
 
 ### 方法，不是函数属性，以下代码出错原因 [ ](javascript_info_20191230080406377)
 
@@ -2643,8 +2644,8 @@ rabbit.eat(); // 错误调用 super（因为这里并没有 [[HomeObject]]）
 
 {{c1::
 
-- `[[HomeObject]]` 是为类和普通对象中的方法定义的。但是对于对象来说，方法必须确切指定为 `method()`，而不是 `"method: function()"`。
-- 这个差别对我们来说可能不重要，但是对 JavaScript 来说却是非常重要的。}}
++ `[[HomeObject]]` 是为类和普通对象中的方法定义的。但是对于对象来说，方法必须确切指定为 `method()`，而不是 `"method: function()"`。
++ 这个差别对我们来说可能不重要，但是对 JavaScript 来说却是非常重要的。}}
 
 ### JS 中的类继承 [ ](javascript_info_20191230080406379)
 
@@ -2654,24 +2655,24 @@ rabbit.eat(); // 错误调用 super（因为这里并没有 [[HomeObject]]）
    class Child extends Parent
    ```
 
-   - 这就意味着{{c1:: `Child.prototype.__proto__` 将是 `Parent.prototype`}}，所以方法被继承。
+   + 这就意味着{{c1:: `Child.prototype.__proto__` 将是 `Parent.prototype`}}，所以方法被继承。
 
 2. 重写构造函数：
 
-   - 在使用 `this` 之前，我们必须在{{c1::  `Child` 构造函数中将父构造函数调用为 `super()`。}}
+   + 在使用 `this` 之前，我们必须在{{c1::  `Child` 构造函数中将父构造函数调用为 `super()`。}}
 
 3. 重写方法：
 
-   - 我们可以在 `Child` 方法中使用{{c1::  `super.method()` }}来调用 `Parent` 方法。
+   + 我们可以在 `Child` 方法中使用{{c1::  `super.method()` }}来调用 `Parent` 方法。
 
 4. 内部工作：
 
-   - 方法在内部{{c1::  `[[HomeObject]]` }}属性中记住它们的类/对象。这就是 `super` 如何解析父类方法的。
-   - 因此，将一个带有 `super` 的方法从一个对象复制到另一个对象是不安全的。
+   + 方法在内部{{c1::  `[[HomeObject]]` }}属性中记住它们的类/对象。这就是 `super` 如何解析父类方法的。
+   + 因此，将一个带有 `super` 的方法从一个对象复制到另一个对象是不安全的。
 
 补充：
 
-- 箭头函数没有自己的 `this` 或 `super`，所以它们能融入到就近的上下文，像透明似的。
++ 箭头函数没有自己的 `this` 或 `super`，所以它们能融入到就近的上下文，像透明似的。
 
 ### `class Rabbit`与`class Rabbit extends Object`声明的区别 [ ](javascript_info_20191230080406381)
 
@@ -2708,9 +2709,9 @@ MyClass.method = ...
 
 为了隐藏内部接口，我们使用受保护的或私有的属性：
 
-- 受保护的字段以 {{c1::`_`}} 开头。
-- 私有字段以 {{c1::`#` }}开头。JavaScript 确保我们只能访问类中的内容。
-- 私有字段不与公共字段发生冲突。{我们可以同时拥有{c1::私有属性 `#waterAmount` 和公共属性 `waterAmount`。}}
++ 受保护的字段以 {{c1::`_`}} 开头。
++ 私有字段以 {{c1::`#` }}开头。JavaScript 确保我们只能访问类中的内容。
++ 私有字段不与公共字段发生冲突。{我们可以同时拥有{c1::私有属性 `#waterAmount` 和公共属性 `waterAmount`。}}
 
 目前，在各浏览器中不支持私有字段，但可以用 polyfill 解决。
 
@@ -2744,8 +2745,8 @@ alert(filteredArr.isEmpty()); // Error: filteredArr.isEmpty is not a function
 
 ### 内置类的静态方法不被继承 [ ](javascript_info_20191230080406387)
 
-- 比如，`Array` 和 `Data` 都是继承自 `Object`，所以它们的实例都有来自 `Object.prototype` 的方法
-- 但是{{c1:: `Array.[[Prototype]]` 不指向 `Object`，所以它们没有例如 `Array.keys()`(或者 `Data.keys()`)的静态方法。}}
++ 比如，`Array` 和 `Data` 都是继承自 `Object`，所以它们的实例都有来自 `Object.prototype` 的方法
++ 但是{{c1:: `Array.[[Prototype]]` 不指向 `Object`，所以它们没有例如 `Array.keys()`(或者 `Data.keys()`)的静态方法。}}
 
 ### 类型检测：静态方法 `Symbol.hasInstance` 的使用例子 [ ](javascript_info_20191230080406389)
 
@@ -2765,11 +2766,11 @@ alert(obj instanceof Animal); // 返回 true：调用 Animal[Symbol.hasInstance]
 
 ### `obj instanceof Class` 语句的大致执行过程如下： [ ](javascript_info_20191230080406391)
 
-- {{c1::如果提供了静态方法 `Symbol.hasInstance`，那就直接用这个方法进行检测}}
++ {{c1::如果提供了静态方法 `Symbol.hasInstance`，那就直接用这个方法进行检测}}
 
-- {{c1::没有 `Symbol.hasInstance` 方法，这时会检查 `Class.prototype` 是否与 `obj` 的原型链中的任何一个原型相等。}}
++ {{c1::没有 `Symbol.hasInstance` 方法，这时会检查 `Class.prototype` 是否与 `obj` 的原型链中的任何一个原型相等。}}
 
-- [objA.isPrototypeOf(objB)](https://developer.mozilla.org/zh/docs/Web/JavaScript/Reference/Global_Objects/object/isPrototypeOf):{{c1::如果 `objA` 处在 `objB` 的原型链中，调用结果为 `true`。}}
++ [objA.isPrototypeOf(objB)](https://developer.mozilla.org/zh/docs/Web/JavaScript/Reference/Global_Objects/object/isPrototypeOf):{{c1::如果 `objA` 处在 `objB` 的原型链中，调用结果为 `true`。}}
 
 ### 技巧：使用 Object 的 toString 方法来揭示类型 [ ](javascript_info_20191230080406393)
 
@@ -2783,7 +2784,7 @@ alert(s.call(alert)); // [object Function]}}
 
 ### 自定义 obj.toString 方法中揭示类型[ ](javascript_info_20191230080406395)
 
-- 使用{{c1::  Symbol.toStringTag }}这个特殊的对象属性进行自定义输出。
++ 使用{{c1::  Symbol.toStringTag }}这个特殊的对象属性进行自定义输出。
 
 ```javascript
 //{{c1::
@@ -2810,9 +2811,9 @@ alert({}.toString.call(user)); // [object User]
 
 > 思考拓展:如果同时订阅多个相同`select`事件，不同事件处理器，处理器的执行顺序如何自定义?
 
-- `.on(eventName, handler)` — 分配给事件处理器给某个事件。
-- `.off(eventName, handler)` — 在事件处理函数列表中移除指定的函数。
-- `.trigger(eventName, ...args)` — 触发事件：所有被指定到对应事件的事件处理函数都会被调用并且 `args` 会被作为参数传递给它们。
++ `.on(eventName, handler)` — 分配给事件处理器给某个事件。
++ `.off(eventName, handler)` — 在事件处理函数列表中移除指定的函数。
++ `.trigger(eventName, ...args)` — 触发事件：所有被指定到对应事件的事件处理函数都会被调用并且 `args` 会被作为参数传递给它们。
 
 ```javascript
 let eventMixin = {
@@ -2907,9 +2908,9 @@ try {
 
 异常对象包含下列属性：
 
-- `message` —— {{c1::我们能阅读的异常提示信息。}}
-- `name` ——{{c1:: 异常名称（异常对象的构造函数的名称）。}}
-- `stack`（没有标准） ——{{c1:: 异常发生时的调用栈。}}
++ `message` —— {{c1::我们能阅读的异常提示信息。}}
++ `name` ——{{c1:: 异常名称（异常对象的构造函数的名称）。}}
++ `stack`（没有标准） ——{{c1:: 异常发生时的调用栈。}}
 
 ### 全局 catch `window.onerror`的使用 [ ](javascript_info_20200114084259605)
 
@@ -2973,7 +2974,7 @@ alert(err instanceof SyntaxError); // true
 
 ### Promise 对象的构造方法签名是： [ ](javascript_info_20200114084259610)
 
-- promise 对象的主要作用：{{c1:: 解决异步深层嵌套问题（回调地狱）,因为调整异步调用的顺序所造成的问题。 }}
++ promise 对象的主要作用：{{c1:: 解决异步深层嵌套问题（回调地狱）,因为调整异步调用的顺序所造成的问题。 }}
 
 ```javascript
 //{{c1::
@@ -2985,20 +2986,20 @@ let promise = new Promise(function (resolve, reject) {
 
 ### `promise` 对象有内部属性： [ ](javascript_info_20200114084259612)
 
-- `state` —— {{c1:: 最初是 “pending”，然后被改为 “fulfilled” 或 “rejected” }}
-- `result` —— {{c1:: 一个任意值，最初是 `undefined`。}}
++ `state` —— {{c1:: 最初是 “pending”，然后被改为 “fulfilled” 或 “rejected” }}
++ `result` —— {{c1:: 一个任意值，最初是 `undefined`。}}
 
 ### 当`promise`中`executor` 完成任务时，应调用以下两个方法之一： [ ](javascript_info_20200114084259614)
 
 `resolve(value)` ——{{c1:: 说明任务已经完成：}}
 
-- {{c1:: 将 `state` 设置为 `"fulfilled"` }}
-- {{c1:: 将`result` 设置为 `value` }}
++ {{c1:: 将 `state` 设置为 `"fulfilled"` }}
++ {{c1:: 将`result` 设置为 `value` }}
 
 `reject(error)` —— {{c1:: 表明有错误发生：}}
 
-- {{c1:: 将 `state` 设置为 `"rejected"`}}
-- {{c1:: 将 `result` 设置为 `error`}}
++ {{c1:: 将 `state` 设置为 `"rejected"`}}
++ {{c1:: 将 `result` 设置为 `error`}}
 
 ### 使用 promise 示例：loadScript [ ](javascript_info_20200114084259616)
 
@@ -3092,18 +3093,18 @@ Promise 的 `state` 和 `result` 属性是内部的。我们不能从代码中�
 
 ### promises 链中，`.then`方法 3 种返回值 [ ](javascript_info_20200114084259621)
 
-- {{c1:: 作为`result`传给下一个then的属性}}
-- {{c1:: 原生的`Promise`的对象 }}
-- {{c1:: thenable 对象（一个具有 `.then` 方法的任意对象）}}
++ {{c1:: 作为`result`传给下一个then的属性}}
++ {{c1:: 原生的`Promise`的对象 }}
++ {{c1:: thenable 对象（一个具有 `.then` 方法的任意对象）}}
 
 ### promises 链中,thenable 对象的概念 [ ](javascript_info_20200114084259623)
 
-- {{c1:: JavaScript 会检查 promises链中`.then` 方法返回的对象。}}
-- {{c1:: 如果它有一个名为 `then` 的可调用方法，那么它会调用该方法，并提供原生函数 `resolve`，`reject `作为参数（类似于 executor）并在它被调用前一直等待。}}
++ {{c1:: JavaScript 会检查 promises链中`.then` 方法返回的对象。}}
++ {{c1:: 如果它有一个名为 `then` 的可调用方法，那么它会调用该方法，并提供原生函数 `resolve`，`reject `作为参数（类似于 executor）并在它被调用前一直等待。}}
 
 ### fetch 的 promises 链调用示例 [ ](javascript_info_20200114084259624)
 
-- 作为一个规律，一个异步动作应该永远返回一个 promise。
++ 作为一个规律，一个异步动作应该永远返回一个 promise。
 
 ```javascript
 function loadJson(url) {
@@ -3150,8 +3151,8 @@ loadJson("/article/promise-chaining/user.json")
 //{{c1::
 window.addEventListener("unhandledrejection", function (event) {
   // the event object has two special properties:
-  alert(event.promise); // [object Promise] - 产生错误的 promise
-  alert(event.reason); // Error: Whoops! - 未处理的错误对象
+  alert(event.promise); // [object Promise] + 产生错误的 promise
+  alert(event.reason); // Error: Whoops! + 未处理的错误对象
 });
 //}}
 new Promise(function () {
@@ -3236,10 +3237,10 @@ let promise = new Promise((resolve, reject) => reject(error));
 
 ### `Promise.all`静态方法 [ ](javascript_info_20200114084259632)
 
-- 用途:假设我想要并行执行多个 promise，并等待所有 promise 准备就绪。
-- 它们的相对顺序是相同的。
-- **如果任意一个 promise 为 reject，`Promise.all` 返回的 promise 就会立即 reject 这个错误。**
-- **如果出现错误，其他 promise 就会被忽略**
++ 用途:假设我想要并行执行多个 promise，并等待所有 promise 准备就绪。
++ 它们的相对顺序是相同的。
++ **如果任意一个 promise 为 reject，`Promise.all` 返回的 promise 就会立即 reject 这个错误。**
++ **如果出现错误，其他 promise 就会被忽略**
 
 ```javascript
 Promise.all(
@@ -3303,8 +3304,8 @@ Promise.allSettled(urls.map((url) => fetch(url))).then((results) => {
 
 返回所有 promise 的处理结果，返回的数组元素有 2 种类型：
 
-- {{c1::`{status:"fulfilled", value:result}` 对于成功的响应。}}
-- {{c1::`{status:"rejected", reason:error}` 对于错误的响应。}}
++ {{c1::`{status:"fulfilled", value:result}` 对于成功的响应。}}
++ {{c1::`{status:"rejected", reason:error}` 对于错误的响应。}}
 
 ### 如果浏览器不支持 `Promise.allSettled`的，使用`promise.all`的替代方式 [ ](javascript_info_20200308041234746)
 
@@ -3333,7 +3334,7 @@ if (!Promise.allSettled) {
 
 ### `Promise.race` [ ](javascript_info_20200308041234747)
 
-- 在第一个 promise 被解决（“赢得比赛[wins the race]”）后，所有后面的结果/错误都会被忽略。
++ 在第一个 promise 被解决（“赢得比赛[wins the race]”）后，所有后面的结果/错误都会被忽略。
 
 ```javascript
 Promise.race([
@@ -3347,9 +3348,9 @@ Promise.race([
 
 ### 微任务队列（Microtasks queue） [ ](javascript_info_20200308041234749)
 
-- {{c1:: Promise 处理始终是异步的，因为所有 promise 操作都被放入内部的“promise jobs”队列执行，也被称为“微任务队列”（v8 术语）。}}
++ {{c1:: Promise 处理始终是异步的，因为所有 promise 操作都被放入内部的“promise jobs”队列执行，也被称为“微任务队列”（v8 术语）。}}
 
-- {{c1:: 当一个 promise 准备就绪时，它的 `.then/catch/finally` 处理程序就被放入队列中。但是不会立即被执行。当 JavaScript 引擎执行完当前的代码，它会从队列中获取任务并执行它。}}
++ {{c1:: 当一个 promise 准备就绪时，它的 `.then/catch/finally` 处理程序就被放入队列中。但是不会立即被执行。当 JavaScript 引擎执行完当前的代码，它会从队列中获取任务并执行它。}}
 
 以下程序的结果?
 
@@ -3544,7 +3545,7 @@ alert(JSON.stringify(generator.next()));
 
 ### 使用遍历 Generator 函数例子 [ ](javascript_info_20200512080327645)
 
-- 注意当 done: true 时，for..of 循环会忽略最后一个 value
++ 注意当 done: true 时，for..of 循环会忽略最后一个 value
 
 ```javascript
 function* generateSequence() {
@@ -3612,7 +3613,7 @@ alert(str); // 0..9A..Za..z
 
 ### yield 是一条双向路（two-way street） [ ](javascript_info_20200512080327648)
 
-- 下面代码的执行结果与流程
++ 下面代码的执行结果与流程
 
 ```javascript
 function* gen() {
@@ -3648,7 +3649,7 @@ true
 
 ### `generator.throw`的 2 种使用例子 [ ](javascript_info_20200512080327650)
 
-- 在 generator 函数内部处理异常例子。
++ 在 generator 函数内部处理异常例子。
   ```javascript
   function* gen() {
     //{{c1::
@@ -3666,7 +3667,7 @@ true
   generator.throw(new Error("The answer is not found in my database"));
   }}
   ```
-- 在 generator 函数调用处，处理异常例子。
++ 在 generator 函数调用处，处理异常例子。
   ```javascript
   function* generate() {
     let result = yield "2 + 2 = ?"; // 这行出现 error
@@ -3690,7 +3691,7 @@ true
 | `next()` 返回的值是      | {{c1::任意值}}            | {{c1::`Promise`}}              |
 | 要进行循环，使用         | {{c1::`for..of`}}         | {{c1::`for await..of`}}        |
 
-- Async iterator 例子：{{c1::
++ Async iterator 例子：{{c1::
 
 ```javascript
 let range = {
@@ -3724,7 +3725,7 @@ let range = {
 
 ### Async generator 与常规 generator 区别 [ ](javascript_info_20200512080327653)
 
-- Async generator 例子：
++ Async generator 例子：
 
   ```javascript
   //对象
@@ -3755,9 +3756,9 @@ let range = {
 
 ### 模块 [ ](javascript_info_20200520043218611)
 
-- 什么是模块：{{c1:: 一个模块（module）就是一个文件。一个脚本就是一个模块。}}
-- export：{{c1:: 关键字标记了可以从当前模块外部访问的变量和函数。}}
-- import：{{c1:: 关键字允许从其他模块导入功能。}}
++ 什么是模块：{{c1:: 一个模块（module）就是一个文件。一个脚本就是一个模块。}}
++ export：{{c1:: 关键字标记了可以从当前模块外部访问的变量和函数。}}
++ import：{{c1:: 关键字允许从其他模块导入功能。}}
 
 ### export 与 import 的使用 [ ](javascript_info_20200520043218613)
 
@@ -3768,7 +3769,7 @@ export function sayHi(user) {
 }
 ```
 
-- 使用上面的模块:
++ 使用上面的模块:
   {{c1::
   ```javascript
     <!doctype html>
@@ -3781,10 +3782,10 @@ export function sayHi(user) {
 
 ### 模块相较于常规脚本有几点差别： [ ](javascript_info_20200520043218617)
 
-- deferred:{{c1::默认是延迟解析的（deferred）。}}
-- Async:{{c1::Async 可用于内联脚本。}}
-- CORS:{{c1:: 要从另一个源（域/协议/端口）加载外部脚本，需要 CORS header。}}
-- 重复:{{c1::重复的外部脚本会被忽略}}
++ deferred:{{c1::默认是延迟解析的（deferred）。}}
++ Async:{{c1::Async 可用于内联脚本。}}
++ CORS:{{c1:: 要从另一个源（域/协议/端口）加载外部脚本，需要 CORS header。}}
++ 重复:{{c1::重复的外部脚本会被忽略}}
 
 ### 命名的`export`与默认的`export`区别 [ ](javascript_info_20200520043218619)
 
@@ -3795,25 +3796,25 @@ export function sayHi(user) {
 
 ### `export` 语法总结 [ ](javascript_info_20200520043218621)
 
-- 在声明一个 class/function/… 之前：
++ 在声明一个 class/function/… 之前：
   1. {{c1:: `export [default] class/function/variable ...`}}
-- 独立的导出：
++ 独立的导出：
   1. {{c1:: `export {x [as y], ...}`.}}
-- 重新导出：
++ 重新导出：
   1. {{c1:: `export {x [as y], ...} from "module"`}}
   2. {{c1:: `export * from "module"`（不会重新导出默认的导出）。}}
   3. {{c1:: `export {default [as y]} from "module"`（重新导出默认的导出）}}
 
 ### `import`语法总结 [ ](javascript_info_20200520043218623)
 
-- 模块中命名的导出：
++ 模块中命名的导出：
   1. {{c1:: `import {x [as y], ...} from "module"`}}
-- 默认的导出：
++ 默认的导出：
   1. {{c1:: `import x from "module"`}}
   2. {{c1:: `import {default as x} from "module"`}}
-- 所有：
++ 所有：
   1. {{c1:: `import * as obj from "module"`}}
-- 导入模块（它的代码，并运行），但不要将其赋值给变量：
++ 导入模块（它的代码，并运行），但不要将其赋值给变量：
   1. {{c1:: `import "module"`}}
 
 ### 使用 import() 表达式 [ ](javascript_info_20200520043218625)
@@ -3859,14 +3860,14 @@ async function load() {
 
 ### 表格的导航属性 [ ](javascript_info_20200521062435054)
 
-- `table.rows`: {{c1:: `<tr> `元素的集合。}}
-- `table.caption/tHead/tFoot`: {{c1:: 引用元素` <caption>，<thead>，<tfoot>` }}
-- `table.tBodies`: {{c1:: `<tbody>` 元素的集合 }}
-- `tbody.rows`: {{c1:: 表格内部 `<tr>` 元素的集合。}}
-- `tr.cells`: {{c1:: 在给定 `<tr> `中的 `<td>` 和 `<th>` 单元格的集合 }}
-- `tr.sectionRowIndex`:{{c1::  给定的 `<tr>` 在封闭的 `<thead>/<tbody>/<tfoot> `中的位置（索引）。}}
-- `tr.rowIndex`: {{c1:: 在整个表格中 `<tr>`  的编号（包括表格的所有行）。}}
-- `td.cellIndex`: {{c1:: 在封闭的 `<tr> `中单元格的编号。}}
++ `table.rows`: {{c1:: `<tr> `元素的集合。}}
++ `table.caption/tHead/tFoot`: {{c1:: 引用元素` <caption>，<thead>，<tfoot>` }}
++ `table.tBodies`: {{c1:: `<tbody>` 元素的集合 }}
++ `tbody.rows`: {{c1:: 表格内部 `<tr>` 元素的集合。}}
++ `tr.cells`: {{c1:: 在给定 `<tr> `中的 `<td>` 和 `<th>` 单元格的集合 }}
++ `tr.sectionRowIndex`:{{c1::  给定的 `<tr>` 在封闭的 `<thead>/<tbody>/<tfoot> `中的位置（索引）。}}
++ `tr.rowIndex`: {{c1:: 在整个表格中 `<tr>`  的编号（包括表格的所有行）。}}
++ `td.cellIndex`: {{c1:: 在封闭的 `<tr> `中单元格的编号。}}
 
 ### 遍历 DOM 主要属性 [ ](javascript_info_20200521062435055)
 
@@ -3881,10 +3882,10 @@ async function load() {
 
 ### 兄弟节点问题 [ ](javascript_info_20200521062435057)
 
-- 如果 elem 是任意一个 DOM 元素节点……
-  - elem.lastChild.nextSibling 值一直都是 null，这个判定是不是真的？
-  - elem.children[0].previousSibling 值一直都是 null，这个判定是不是真的？
-- 回答：
++ 如果 elem 是任意一个 DOM 元素节点……
+  + elem.lastChild.nextSibling 值一直都是 null，这个判定是不是真的？
+  + elem.children[0].previousSibling 值一直都是 null，这个判定是不是真的？
++ 回答：
   1. {{c1:: 是的，这是真的。elem.lastChild 就是最后一个元素，它没有 nextSibling。}}
   2. {{c1:: 不，这是错的，因为 elem.children[0] 是元素中的第一个子元素。但是在它前面可能存在非元素的节点。所以 previousSibling 可能是一个文本节点。}}
 
@@ -3894,8 +3895,8 @@ async function load() {
 | ------------------------ | ------------------------ | ----------------------- | ----------- |
 | `querySelector`          | {{c1:: CSS-selector   }} | {{c1:: ✔}}              | {{c1:: -}}  |
 | `querySelectorAll`       | {{c1:: CSS-selector   }} | {{c1:: ✔}}              | {{c1:: -}}  |
-| `getElementById`         | {{c1:: `id`           }} | {{c1:: - }}             | {{c1:: - }} |
-| `getElementsByName`      | {{c1:: `name`         }} | {{c1:: - }}             | {{c1:: ✔}}  |
+| `getElementById`         | {{c1:: `id`           }} | {{c1:: + }}             | {{c1:: + }} |
+| `getElementsByName`      | {{c1:: `name`         }} | {{c1:: + }}             | {{c1:: ✔}}  |
 | `getElementsByTagName`   | {{c1:: tag or `'*'`   }} | {{c1:: ✔}}              | {{c1:: ✔}}  |
 | `getElementsByClassName` | {{c1:: class          }} | {{c1:: ✔ }}             | {{c1:: ✔}}  |
 
@@ -3903,14 +3904,14 @@ async function load() {
 
 ### DOM 搜索匹配方法 [ ](javascript_info_20200521062435060)
 
-- `elem.matches(css)`:{{c1:: 用于检查 `elem` 与给定的 CSS 选择器是否匹配。}}
-- `elem.closest(css)`:{{c1:: 用于查找与给定 CSS 选择器相匹配的最近的祖先。`elem` 本身也会被检查。}}
-- `elemA.contains(elemB)`:{{c1::如果 `elemB` 在 `elemA` 内（`elemA` 的后代）或者 `elemA==elemB`，`elemA.contains(elemB)` 将返回 true。}}
++ `elem.matches(css)`:{{c1:: 用于检查 `elem` 与给定的 CSS 选择器是否匹配。}}
++ `elem.closest(css)`:{{c1:: 用于查找与给定 CSS 选择器相匹配的最近的祖先。`elem` 本身也会被检查。}}
++ `elemA.contains(elemB)`:{{c1::如果 `elemB` 在 `elemA` 内（`elemA` 的后代）或者 `elemA==elemB`，`elemA.contains(elemB)` 将返回 true。}}
 
 ### console.dir(elem) 与 console.log(elem) [ ](javascript_info_20200521062435062)
 
-- `console.log(elem)`: {{c1:: 显示元素的 DOM 树。}}
-- `console.dir(elem)`: {{c1:: 将元素显示为 DOM 对象，非常适合探索其属性。}}
++ `console.log(elem)`: {{c1:: 显示元素的 DOM 树。}}
++ `console.dir(elem)`: {{c1:: 将元素显示为 DOM 对象，非常适合探索其属性。}}
 
 ### 每个 DOM 节点都属于一个特定的类,这些类形成层次结构如下 [ ](javascript_info_20200521062435064)
 
@@ -3918,14 +3919,14 @@ async function load() {
 
 ### “nodeType” 属性：过时获取 DOM 节点类型方法 [ ](javascript_info_20200521062435066)
 
-- 对于元素节点:{{c1:: `elem.nodeType` == 1}}
-- 对于文本节点:{{c1:: `elem.nodeType` == 3}}
-- 对于 document 对象:{{c1:: `elem.nodeType` == 9}}
++ 对于元素节点:{{c1:: `elem.nodeType` == 1}}
++ 对于文本节点:{{c1:: `elem.nodeType` == 3}}
++ 对于 document 对象:{{c1:: `elem.nodeType` == 9}}
 
 ### `tagName`属性 和 `nodeName`属性 之间有什么不同吗？ [ ](javascript_info_20200521062435068)
 
-- {{c1:: `tagName` 属性仅适用于 `Element` 节点。}}
-- {{c1:: `nodeName` 是为任意 `Node` 定义的：}}
++ {{c1:: `tagName` 属性仅适用于 `Element` 节点。}}
++ {{c1:: `nodeName` 是为任意 `Node` 定义的：}}
   1. {{c1:: 对于元素，它的意义与 `tagName` 相同。}}
   2. {{c1:: 对于其他节点类型（`text`，`comment` 等），它拥有一个对应节点类型的字符串。}}
 
@@ -3959,11 +3960,11 @@ async function load() {
 
 ### HTML 中所有特性都可以通过使用以下方法进行访问： [ ](javascript_info_20200521062435076)
 
-- `elem.hasAttribute(name)`：{{c1:: 检查特性是否存在。 }}
-- `elem.getAttribute(name)`：{{c1:: 获取这个特性值。 }}
-- `elem.setAttribute(name, value)`：{{c1:: 设置这个特性值。 }}
-- `elem.removeAttribute(name)`：{{c1:: 移除这个特性。 }}
-- `elem.attributes`:{{c1:: 读取所有特性,属于内建 `Attr` 类的对象的集合，具有 `name` 和` value` 属性。 }}
++ `elem.hasAttribute(name)`：{{c1:: 检查特性是否存在。 }}
++ `elem.getAttribute(name)`：{{c1:: 获取这个特性值。 }}
++ `elem.setAttribute(name, value)`：{{c1:: 设置这个特性值。 }}
++ `elem.removeAttribute(name)`：{{c1:: 移除这个特性。 }}
++ `elem.attributes`:{{c1:: 读取所有特性,属于内建 `Attr` 类的对象的集合，具有 `name` 和` value` 属性。 }}
 
 ### 特性（attribute）与属性（property）对比 [ ](javascript_info_20200521062435078)
 
@@ -4013,18 +4014,18 @@ async function load() {
 
 ### 创建新节点的方法 [ ](javascript_info_20200525035508021)
 
-- `document.createElement(tag)`:{{c1::用给定的标签创建一个元素节点。}}
-- `document.createTextNode(value)`:{{c1::创建一个文本节点（很少使用）。}}
-- `elem.cloneNode(deep)`:{{c1::克隆元素，如果 `deep==true` 则与其后代一起克隆。}}
++ `document.createElement(tag)`:{{c1::用给定的标签创建一个元素节点。}}
++ `document.createTextNode(value)`:{{c1::创建一个文本节点（很少使用）。}}
++ `elem.cloneNode(deep)`:{{c1::克隆元素，如果 `deep==true` 则与其后代一起克隆。}}
 
 ### 插入和移除节点的 node 方法： [ ](javascript_info_20200525035508024)
 
-- `node.append(...nodes or strings)`:{{c1::在 `node` 末尾插入。}}
-- `node.prepend(...nodes or strings)`:{{c1::在 `node` 开头插入。}}
-- `node.before(...nodes or strings)`:{{c1::在 `node` 之前插入。}}
-- `node.after(...nodes or strings)`:{{c1::在 `node` 之后插入。}}
-- `node.replaceWith(...nodes or strings)`:{{c1::替换 `node`。文本字符串被“作为文本”插入。}}
-- `node.remove()`:{{c1::移除 `node`。}}
++ `node.append(...nodes or strings)`:{{c1::在 `node` 末尾插入。}}
++ `node.prepend(...nodes or strings)`:{{c1::在 `node` 开头插入。}}
++ `node.before(...nodes or strings)`:{{c1::在 `node` 之前插入。}}
++ `node.after(...nodes or strings)`:{{c1::在 `node` 之后插入。}}
++ `node.replaceWith(...nodes or strings)`:{{c1::替换 `node`。文本字符串被“作为文本”插入。}}
++ `node.remove()`:{{c1::移除 `node`。}}
 
 ### “旧式”的插入和移除节点的 node 方法： [ ](javascript_info_20200525035508026)
 
@@ -4033,43 +4034,43 @@ async function load() {
 3. {{c1:: `parent.removeChild(node)`}}
 4. {{c1:: `parent.replaceChild(newElem, node)`}}
 
-- 这些方法都返回 {{c1:: `node` }}。
++ 这些方法都返回 {{c1:: `node` }}。
 
 ### `elem.insertAdjacentHTML/Text/Element`方法 [ ](javascript_info_20200525035508031)
 
-- 在 `html` 中给定一些 HTML，`elem.insertAdjacentHTML(where, html)` 会根据 `where` 的值来插入它：
-  - `"beforebegin"`:{{c1::将 `html` 插入到 `elem` 前面。}}
-  - `"afterbegin"`:{{c1::将 `html` 插入到 `elem` 的开头。}}
-  - `"beforeend"`:{{c1::将 `html` 插入到 `elem` 的末尾。}}
-  - `"afterend"`:{{c1::将 `html` 插入到 `elem` 后面。}}
++ 在 `html` 中给定一些 HTML，`elem.insertAdjacentHTML(where, html)` 会根据 `where` 的值来插入它：
+  + `"beforebegin"`:{{c1::将 `html` 插入到 `elem` 前面。}}
+  + `"afterbegin"`:{{c1::将 `html` 插入到 `elem` 的开头。}}
+  + `"beforeend"`:{{c1::将 `html` 插入到 `elem` 的末尾。}}
+  + `"afterend"`:{{c1::将 `html` 插入到 `elem` 后面。}}
 
 * `elem.insertAdjacentText(where, text)` 和`elem.insertAdjacentElement(where, Element)`：它们会插入文本字符串和元素，但很少使用。}}
 
 ### 要在页面加载完成之前将 HTML 附加到页面： [ ](javascript_info_20200525035508034)
 
-- {{c1:: `document.write(html)`}}
++ {{c1:: `document.write(html)`}}
   页面加载完成后，这样的调用将会擦除文档。多见于旧脚本。
 
 ### 要管理 class，有两个 DOM 属性： [ ](javascript_info_20200525035508040)
 
-- `className`: {{c1:: 字符串值，可以很好地管理整个类的集合。}}
-- `classList`: {{c1:: 具有 add/remove/toggle/contains 方法的对象，可以很好地支持单个类。}}
++ `className`: {{c1:: 字符串值，可以很好地管理整个类的集合。}}
++ `classList`: {{c1:: 具有 add/remove/toggle/contains 方法的对象，可以很好地支持单个类。}}
 
 ### `classList`属性的方法 [ ](javascript_info_20200525035508042)
 
-- `elem.classList.add/remove(class)`: {{c1:: 添加/移除类。}}
-- `elem.classList.toggle(class)`: {{c1:: 如果类不存在就添加类，存在就移除它。}}
-- `elem.classList.contains(class)`: {{c1:: 检查给定类，返回 `true/false`。}}
-- `classList`是可迭代的
++ `elem.classList.add/remove(class)`: {{c1:: 添加/移除类。}}
++ `elem.classList.toggle(class)`: {{c1:: 如果类不存在就添加类，存在就移除它。}}
++ `elem.classList.contains(class)`: {{c1:: 检查给定类，返回 `true/false`。}}
++ `classList`是可迭代的
 
 ### 元素样式访问规则 [ ](javascript_info_20200525035508044)
 
-- `background-color` : {{c1:: `elem.style.backgroundColor` }}
-- `z-index` : {{c1:: `elem.style.zIndex` }}
-- `border-left-width` : {{c1:: `elem.style.borderLeftWidth` }}
-- `-moz-border-radius` : {{c1:: `button.style.MozBorderRadius` }}
-- `style.cssText` ： {{c1:: 属性对应于整个 "style" 特性（attribute），即完整的样式字符串。 }}
-- `getComputedStyle(element, [pseudo])`： {{c1::  返回与 style 对象类似的，且包含了所有类的对象。只读 }}
++ `background-color` : {{c1:: `elem.style.backgroundColor` }}
++ `z-index` : {{c1:: `elem.style.zIndex` }}
++ `border-left-width` : {{c1:: `elem.style.borderLeftWidth` }}
++ `-moz-border-radius` : {{c1:: `button.style.MozBorderRadius` }}
++ `style.cssText` ： {{c1:: 属性对应于整个 "style" 特性（attribute），即完整的样式字符串。 }}
++ `getComputedStyle(element, [pseudo])`： {{c1::  返回与 style 对象类似的，且包含了所有类的对象。只读 }}
 
 ### 创建一个通知 [ ](javascript_info_20200525035508045)
 
@@ -4125,11 +4126,11 @@ showNotification({
 
 ### `offsetParent`元素与`offsetLeft/Top`属性 [ ](javascript_info_20200525035508047)
 
-- `offsetParent` 是在以下列出条件中最接近的祖先（ancestor）：
++ `offsetParent` 是在以下列出条件中最接近的祖先（ancestor）：
   1. {{c1:: CSS 定位的（position 为 absolute，relative 或 fixed），}}
   2. {{c1:: 或 `<td>`，`<th>`，`<table>`，}}
   3. {{c1:: 或 `<body>`。}}
-- 有以下几种情况下，`offsetParent` 的值为 null：
++ 有以下几种情况下，`offsetParent` 的值为 null：
   1. `display:none`：{{c1:: 对于未显示的元素（`display:none `或者不在文档中）。}}
   1. `<body>` `<html>`：{{c1:: 对于` <body>` 与` <html>`。}}
   1. `position:fixed`：{{c1:: 对于带有 `position:fixed `的元素。}}
@@ -4164,21 +4165,21 @@ alert(example.offsetTop); // 180
 
 ### 几何属性：画 [ ](javascript_info_20200525035508051)
 
-- `offsetParent`: {{c1::是最接近的 `CSS` 定位的祖先，或者是 `td，th，table，body`。}}
-- `offsetLeft/offsetTop`: {{c1::是相对于 `offsetParent` 的左上角边缘的坐标。}}
-- `offsetWidth/offsetHeight`: {{c1::元素的“外部” `width/height`，边框（border）尺寸计算在内。}}
-- `clientLeft/clientTop`: {{c1:: 左边框宽度/上边框宽度 包括滚动条  }}
-- `clientWidth/clientHeight`: {{c1::内容的 `width/height`，包括` padding`，但不包括滚动条（scrollbar）。}}
-- `scrollWidth/scrollHeight`: {{c1::内容的 `width/height`，就像 `clientWidth/clientHeight` 一样，但还包括元素的滚动出的不可见的部分。}}
-- `scrollLeft/scrollTop`: {{c1::从元素的左上角开始，滚动出元素的上半部分的 width/height。}}
-- 除了{{c1:: `scrollLeft/scrollTop`}} 外，所有属性都是只读的。
-- 如图所示：
++ `offsetParent`: {{c1::是最接近的 `CSS` 定位的祖先，或者是 `td，th，table，body`。}}
++ `offsetLeft/offsetTop`: {{c1::是相对于 `offsetParent` 的左上角边缘的坐标。}}
++ `offsetWidth/offsetHeight`: {{c1::元素的“外部” `width/height`，边框（border）尺寸计算在内。}}
++ `clientLeft/clientTop`: {{c1:: 左边框宽度/上边框宽度 包括滚动条  }}
++ `clientWidth/clientHeight`: {{c1::内容的 `width/height`，包括` padding`，但不包括滚动条（scrollbar）。}}
++ `scrollWidth/scrollHeight`: {{c1::内容的 `width/height`，就像 `clientWidth/clientHeight` 一样，但还包括元素的滚动出的不可见的部分。}}
++ `scrollLeft/scrollTop`: {{c1::从元素的左上角开始，滚动出元素的上半部分的 width/height。}}
++ 除了{{c1:: `scrollLeft/scrollTop`}} 外，所有属性都是只读的。
++ 如图所示：
   {{c1::![image-20200522225402747](javascript_info.assets\image-20200522225402747.png)}}
 
 ### Window 的大小 [ ](javascript_info_20200525035508053)
 
-- 文档可见部分的 width/height（内容区域的 width/height）：{{c1:: `document.documentElement.clientWidth/Height`}}
-- 整个文档的 width/height，其中包括滚动出去的部分：
++ 文档可见部分的 width/height（内容区域的 width/height）：{{c1:: `document.documentElement.clientWidth/Height`}}
++ 整个文档的 width/height，其中包括滚动出去的部分：
   ```javascript
   //{{c1::
   let scrollHeight = Math.max(
@@ -4194,72 +4195,72 @@ alert(example.offsetTop); // 180
 
 ### Window 的滚动 [ ](javascript_info_20200525035508055)
 
-- 滚动：
-  - 读取当前的滚动：{{c1:: `window.pageYOffset/pageXOffset`。}}
-  - 更改当前的滚动：
-    - `window.scrollTo(pageX,pageY)`: {{c1:: 绝对坐标。}}
-    - `window.scrollBy(x,y)`: {{c1:: 相对当前位置进行滚动。}}
-    - `elem.scrollIntoView(true/false)`: {{c1:: 滚动以使 `elem` 可见（`elem` 与窗口的顶部/底部对齐）。}}
++ 滚动：
+  + 读取当前的滚动：{{c1:: `window.pageYOffset/pageXOffset`。}}
+  + 更改当前的滚动：
+    + `window.scrollTo(pageX,pageY)`: {{c1:: 绝对坐标。}}
+    + `window.scrollBy(x,y)`: {{c1:: 相对当前位置进行滚动。}}
+    + `elem.scrollIntoView(true/false)`: {{c1:: 滚动以使 `elem` 可见（`elem` 与窗口的顶部/底部对齐）。}}
   * 禁止滚动: {{c1:: `document.body.style.overflow = ‘hidden’` }}
   * 恢复滚动：{{c1:: `document.body.style.overflow = ‘’` }}
 
 ### 大多数 JavaScript 方法处理的是以下两种坐标系中的一个 [ ](javascript_info_20200525035508056)
 
-- `pageY`{{c1:: 元素在文档中的相对坐标保持不变，从文档顶部（现在已滚动出去）开始计算。}}
-- `clientY`{{c1:: 窗口相对坐标确实发生了变化（箭头变短了），因为同一个点越来越靠近窗口顶部。}}
++ `pageY`{{c1:: 元素在文档中的相对坐标保持不变，从文档顶部（现在已滚动出去）开始计算。}}
++ `clientY`{{c1:: 窗口相对坐标确实发生了变化（箭头变短了），因为同一个点越来越靠近窗口顶部。}}
   {{c1:: ![image-20200525100352412](javascript_info.assets/image-20200525100352412.png)}}
 
 ### 元素坐标：`getBoundingClientRect` [ ](javascript_info_20200525035508058)
 
-- 作用: {{c1:: 返回最小矩形的窗口坐标 }}
-- x/y: {{c1::矩形原点相对于窗口的 X/Y 坐标，}}
-- width/height: {{c1::矩形的 width/height（可以为负）。}}
-- top/bottom: {{c1::顶部/底部矩形边缘的 Y 坐标，}}
-- left/right: {{c1::左/右矩形边缘的 X 坐标。}}
++ 作用: {{c1:: 返回最小矩形的窗口坐标 }}
++ x/y: {{c1::矩形原点相对于窗口的 X/Y 坐标，}}
++ width/height: {{c1::矩形的 width/height（可以为负）。}}
++ top/bottom: {{c1::顶部/底部矩形边缘的 Y 坐标，}}
++ left/right: {{c1::左/右矩形边缘的 X 坐标。}}
   {{c1::![image-20200525101421628](javascript_info.assets/image-20200525101421628.png)}}
 
 ### 页面上的任何点都有坐标： [ ](javascript_info_20200525035508060)
 
-- 相对于窗口的坐标: {{c1::`elem.getBoundingClientRect()`。}}
++ 相对于窗口的坐标: {{c1::`elem.getBoundingClientRect()`。}}
 
-- 相对于文档的坐标: {{c1::`elem.getBoundingClientRect() `加上当前页面滚动。}}
++ 相对于文档的坐标: {{c1::`elem.getBoundingClientRect() `加上当前页面滚动。}}
 
-- 窗口坐标非常适合和 {{c1:: `position:fixed`}} 一起使用，文档坐标非常适合和 {{c1:: `position:absolute`}}一起使用。
++ 窗口坐标非常适合和 {{c1:: `position:fixed`}} 一起使用，文档坐标非常适合和 {{c1:: `position:absolute`}}一起使用。
 
-- `document.elementFromPoint(x, y)`: {{c1::返回在窗口坐标 (x, y) 处嵌套最多（the most nested）的元素。}}
++ `document.elementFromPoint(x, y)`: {{c1::返回在窗口坐标 (x, y) 处嵌套最多（the most nested）的元素。}}
 
 ## 事件 [ ](javascript_info_20200604111305675)
 
 ### `addEventListener`添加事件 [ ](javascript_info_20200525035508064)
 
-- 语法`element.addEventListener(event, handler[, options]);`
-- event:{{c1:: 事件名，例如："click"。}}
-- handler:{{c1:: 处理程序。}}
-- options
-  - `once`：{{c1:: 如果为 `true`，那么会在被触发后自动删除监听器。}}
-  - `capture`：{{c1:: 在捕获阶段设置处理程序}}
-  - `passive`：{{c1:: 如果为 `true`，那么处理程序将不会 `preventDefault()`}}
-- 当 `addEventListener` 接收一个对象作为处理程序(handler)时，{{c1:: 在事件发生时，它就会调用 `object.handleEvent(event)` }}
-- 如果我们 `addEventListener(..., true)`，那么我们应该在 {{c1:: `removeEventListener(..., true)` }} 中提到同一阶段，以正确删除处理程序。
++ 语法`element.addEventListener(event, handler[, options]);`
++ event:{{c1:: 事件名，例如："click"。}}
++ handler:{{c1:: 处理程序。}}
++ options
+  + `once`：{{c1:: 如果为 `true`，那么会在被触发后自动删除监听器。}}
+  + `capture`：{{c1:: 在捕获阶段设置处理程序}}
+  + `passive`：{{c1:: 如果为 `true`，那么处理程序将不会 `preventDefault()`}}
++ 当 `addEventListener` 接收一个对象作为处理程序(handler)时，{{c1:: 在事件发生时，它就会调用 `object.handleEvent(event)` }}
++ 如果我们 `addEventListener(..., true)`，那么我们应该在 {{c1:: `removeEventListener(..., true)` }} 中提到同一阶段，以正确删除处理程序。
 
 ### event 对象的一些属性： [ ](javascript_info_20200525035508066)
 
-- `event.type`: {{c1:: 事件类型，这里是 "click"。}}
-- `event.currentTarget`: {{c1:: 处理事件的元素。这与 this 相同}}
-- `event.clientX / event.clientY`: {{c1:: 鼠标事件的指针的窗口相对坐标。}}
-- `event.target`: {{c1:: 引发事件的层级最深的元素。}}
-- `event.eventPhase`: {{c1:: 当前阶段（capturing=1，target=2，bubbling=3）。}}
++ `event.type`: {{c1:: 事件类型，这里是 "click"。}}
++ `event.currentTarget`: {{c1:: 处理事件的元素。这与 this 相同}}
++ `event.clientX / event.clientY`: {{c1:: 鼠标事件的指针的窗口相对坐标。}}
++ `event.target`: {{c1:: 引发事件的层级最深的元素。}}
++ `event.eventPhase`: {{c1:: 当前阶段（capturing=1，target=2，bubbling=3）。}}
 
 ### 停止事件 [ ](javascript_info_20200525035508068)
 
-- `event.stopPropagation()`:{{c1:: 停止事件向上移动，但是当前元素上的其他处理程序都会继续运行 }}
-- `event.stopImmediatePropagation()`:{{c1:: 可以用于停止冒泡事件，并阻止当前元素上的处理程序运行。 }}
-- `event.preventDefault()`:{{c1:: 阻止浏览器执行默认行为 }}
-- `event.defaultPrevented`:{{c1:: 如果默认行为被阻止，那么 event.defaultPrevented 属性为 true，否则为 false。 }}
++ `event.stopPropagation()`:{{c1:: 停止事件向上移动，但是当前元素上的其他处理程序都会继续运行 }}
++ `event.stopImmediatePropagation()`:{{c1:: 可以用于停止冒泡事件，并阻止当前元素上的处理程序运行。 }}
++ `event.preventDefault()`:{{c1:: 阻止浏览器执行默认行为 }}
++ `event.defaultPrevented`:{{c1:: 如果默认行为被阻止，那么 event.defaultPrevented 属性为 true，否则为 false。 }}
 
 ### 阻止浏览器行为 [ ](javascript_info_20200525035508070)
 
-- 有两种方式来告诉浏览器我们不希望它执行默认行为：
++ 有两种方式来告诉浏览器我们不希望它执行默认行为：
   ```html
   <!-- {{c1:: -->
   <a href="/" onclick="return false">Click here</a>
@@ -4270,22 +4271,22 @@ alert(example.offsetTop); // 180
 
 ### 常见默认的浏览器行为事件 [ ](javascript_info_20200525035508074)
 
-- `mousedown`: {{c1::开始选择（移动鼠标进行选择）。}}
-- 在 `<input type="checkbox">`上的 click: {{c1::选中/取消选中的 input。}}
-- `submit`: {{c1::点击 `<input type="submit">` 或者在表单字段中按下 Enter 键会触发该事件，之后浏览器将提交表单。}}
-- `keydown`: {{c1::按下一个按键会导致将字符添加到字段，或者触发其他行为。}}
-- `contextmenu`: {{c1::事件发生在鼠标右键单击时，触发的行为是显示浏览器上下文菜单。}}
++ `mousedown`: {{c1::开始选择（移动鼠标进行选择）。}}
++ 在 `<input type="checkbox">`上的 click: {{c1::选中/取消选中的 input。}}
++ `submit`: {{c1::点击 `<input type="submit">` 或者在表单字段中按下 Enter 键会触发该事件，之后浏览器将提交表单。}}
++ `keydown`: {{c1::按下一个按键会导致将字符添加到字段，或者触发其他行为。}}
++ `contextmenu`: {{c1::事件发生在鼠标右键单击时，触发的行为是显示浏览器上下文菜单。}}
 
 ### 自定义事件 [ ](javascript_info_20200525035508076)
 
 语法：`let event = new Event(type[, options]);`
 参数：
 
-- type: {{c1::事件类型，可以是像这样 "click" 的字符串，或者我们自己的像这样 "my-event" 的参数。}}
-- options: 具有两个可选属性的对象
-  - bubbles: true/false: {{c1::如果为 true，那么事件会冒泡。}}
-  - cancelable: true/false: {{c1::如果为 true，那么“默认行为”就会被阻止。稍后我们会看到对于自定义事件，它意味着什么。}}
-- 默认情况下，以上两者都为 false： {{c1:: {bubbles: false, cancelable: false}。}}
++ type: {{c1::事件类型，可以是像这样 "click" 的字符串，或者我们自己的像这样 "my-event" 的参数。}}
++ options: 具有两个可选属性的对象
+  + bubbles: true/false: {{c1::如果为 true，那么事件会冒泡。}}
+  + cancelable: true/false: {{c1::如果为 true，那么“默认行为”就会被阻止。稍后我们会看到对于自定义事件，它意味着什么。}}
++ 默认情况下，以上两者都为 false： {{c1:: {bubbles: false, cancelable: false}。}}
 
 ### 自定义事件冒泡示例 [ ](javascript_info_20200525035508078)
 
@@ -4314,32 +4315,32 @@ alert(example.offsetTop); // 180
 
 1. 简单事件
 
-- mousedown/mouseup：{{c1:: 在元素上点击/释放鼠标按钮。 }}
-- mouseover/mouseout：{{c1:: 鼠标指针从一个元素上移入/移出。 }}
-- mousemove：{{c1:: 鼠标在元素上的每个移动都会触发此事件。 }}
-- contextmenu：{{c1:: 尝试打开上下文菜单时触发。 }}
-- mousedown 的默认浏览器操作：{{c1:: 是文本选择，如果它对界面不利，则应避免它。}}
++ mousedown/mouseup：{{c1:: 在元素上点击/释放鼠标按钮。 }}
++ mouseover/mouseout：{{c1:: 鼠标指针从一个元素上移入/移出。 }}
++ mousemove：{{c1:: 鼠标在元素上的每个移动都会触发此事件。 }}
++ contextmenu：{{c1:: 尝试打开上下文菜单时触发。 }}
++ mousedown 的默认浏览器操作：{{c1:: 是文本选择，如果它对界面不利，则应避免它。}}
 
 2. 复杂事件
 
-- 作用：{{c1:: 复杂事件是由简单事件组成的 }}
-- click：{{c1:: 如果使用的是鼠标左键，则在同一个元素上的 mousedown 及 mouseup 相继触发后，触发该事件。}}
-- dblclick：{{c1:: 双击一个元素后触发。}}
-- 一个行为可能会触发多个事件:{{c1:: 在按下鼠标按钮时，点击会首先触发 mousedown，然后释放鼠标按钮时，会触发 mouseup 和 click。}}
++ 作用：{{c1:: 复杂事件是由简单事件组成的 }}
++ click：{{c1:: 如果使用的是鼠标左键，则在同一个元素上的 mousedown 及 mouseup 相继触发后，触发该事件。}}
++ dblclick：{{c1:: 双击一个元素后触发。}}
++ 一个行为可能会触发多个事件:{{c1:: 在按下鼠标按钮时，点击会首先触发 mousedown，然后释放鼠标按钮时，会触发 mouseup 和 click。}}
 
 ### 鼠标事件属性：which [ ](javascript_info_20200604111305678)
 
-- 作用：{{c1:: 与点击相关的事件始终具有 which 属性，该属性允许获取确切的鼠标按钮。}}
-- event.which == 1：{{c1:: 左按钮}}
-- event.which == 2：{{c1:: 中间按钮}}
-- event.which == 3：{{c1:: 右按钮}}
++ 作用：{{c1:: 与点击相关的事件始终具有 which 属性，该属性允许获取确切的鼠标按钮。}}
++ event.which == 1：{{c1:: 左按钮}}
++ event.which == 2：{{c1:: 中间按钮}}
++ event.which == 3：{{c1:: 右按钮}}
 
 ### 鼠标事件的组合键属性 [ ](javascript_info_20200604111305679)
 
-- `shiftKey`：{{c1:: `Shift` }}
-- `altKey`：{{c1:: `Alt`（或对于 Mac 是 `Opt`） }}
-- `ctrlKey`：{{c1:: `Ctrl` }}
-- `metaKey`：{{c1:: 对于 Mac 是 `Cmd` }}
++ `shiftKey`：{{c1:: `Shift` }}
++ `altKey`：{{c1:: `Alt`（或对于 Mac 是 `Opt`） }}
++ `ctrlKey`：{{c1:: `Ctrl` }}
++ `metaKey`：{{c1:: 对于 Mac 是 `Cmd` }}
 
 * 下面这个按钮仅在 Alt+Shift+click 时才有效：
   {{c1::
@@ -4381,8 +4382,8 @@ alert(example.offsetTop); // 180
 
 ### 创建一个可以选择元素的列表，例如在文件管理器中。 [ ](javascript_info_20200604111305681)
 
-- 点击列表元素，只选择该元素（添加 `.selected` 类），取消选择其他所有元素。
-- 如果点击时，按键 Ctrl（在 Mac 中为 Cmd）是被按下的，则选择会被切换到被点击的元素上，但其他元素不会被改动。
++ 点击列表元素，只选择该元素（添加 `.selected` 类），取消选择其他所有元素。
++ 如果点击时，按键 Ctrl（在 Mac 中为 Cmd）是被按下的，则选择会被切换到被点击的元素上，但其他元素不会被改动。
   ![image-20200604104707552](javascript_info.assets\image-20200604104707552.png)
   一种结果：
 
@@ -4416,25 +4417,25 @@ function singleSelect(li) {
 
 1. 对于 mouseover：
 
-- event.target:{{c1:: 是鼠标移过的那个元素。}}
-- event.relatedTarget:{{c1:: 是鼠标来自的那个元素（relatedTarget → target）。}}
++ event.target:{{c1:: 是鼠标移过的那个元素。}}
++ event.relatedTarget:{{c1:: 是鼠标来自的那个元素（relatedTarget → target）。}}
 
 2. mouseout 则与之相反：
 
-- event.target:{{c1:: 是鼠标离开的元素。}}
-- event.relatedTarget:{{c1:: 是鼠标移动到的，当前指针位置下的元素（target → relatedTarget）。}}
++ event.target:{{c1:: 是鼠标离开的元素。}}
++ event.relatedTarget:{{c1:: 是鼠标移动到的，当前指针位置下的元素（target → relatedTarget）。}}
 
 3. relatedTarget 属性可以为 null : {{c1:: 意味着来自窗口之外 }}
 4. 如果 mouseover 被触发了，则必须有 mouseout
 
 ### `mouseenter/mouseleave`与 `mouseover/mouseout` 的区别 [ ](javascript_info_20200604111305683)
 
-- 事件 `mouseenter/mouseleave` 不会冒泡。
++ 事件 `mouseenter/mouseleave` 不会冒泡。
   {{c1:: ![image-20200604113942191](javascript_info.assets\image-20200604113942191.png) }}
 
 ### 使用事件委托实现类似以下效果 [ ](javascript_info_20200604111305684)
 
-- 例如：
++ 例如：
   ```xml
   <div data-tooltip="Here – is the house interior" id="house">
     <div data-tooltip="Here – is the roof" id="roof"></div>
@@ -4442,9 +4443,9 @@ function singleSelect(li) {
     <a href="https://en.wikipedia.org/wiki/The_Three_Little_Pigs" data-tooltip="Read on…">Hover over me</a>
   </div>
   ```
-- 效果图：
++ 效果图：
   ![UZkXhRLqta](javascript_info.assets\UZkXhRLqta.gif)
-- 参考思路:
++ 参考思路:
 
 ```javascript
 //{{c1::
@@ -4467,9 +4468,9 @@ function showTooltip(anchorElem, html) {
   document.body.append(tooltipElem);
   let coords = anchorElem.getBoundingClientRect();
   let left =
-    coords.left + (anchorElem.offsetWidth - tooltipElem.offsetWidth) / 2;
+    coords.left + (anchorElem.offsetWidth + tooltipElem.offsetWidth) / 2;
   if (left < 0) left = 0;
-  let top = coords.top - tooltipElem.offsetHeight - 5;
+  let top = coords.top + tooltipElem.offsetHeight + 5;
   if (top < 0) {
     top = coords.top + anchorElem.offsetHeight + 5;
   }
@@ -4581,7 +4582,7 @@ function onMouseMove(event) {
 }
 ```
 
-### 使用 keydown 事件，实现一个`<input>`,它不会接受除数字，+，() 和 - 以外的按键 [ ](javascript_info_20200604111305688)
+### 使用 keydown 事件，实现一个`<input>`,它不会接受除数字，+，() 和 + 以外的按键 [ ](javascript_info_20200604111305688)
 
 ```html
 <script>
@@ -4612,28 +4613,28 @@ function onMouseMove(event) {
 
 ### 键盘：`keydown` 和 `keyup` [ ](javascript_info_20200604111305689)
 
-- 键盘事件：
-  - `keydown`:{{c1:: 在按下键时（如果长按按键，则将自动重复），}}
-  - `keyup`:{{c1:: 释放按键时。}}
-- 键盘事件的主要属性：
-  - `code`:{{c1:: “按键代码”（`"KeyA"`，`"ArrowLeft"` 等），特定于键盘上按键的物理位置。}}
-    - 字符键的代码为：{{c1::  `"Key<letter>"`：`"KeyA"`，`"KeyB"` 等。}}
-    - 数字键的代码为：{{c1:: `"Digit<number>"`：`"Digit0"`，`"Digit1"` 等。}}
-    - 特殊按键的代码为按键的名字：{{c1:: `"Enter"`，`"Backspace"`，`"Tab"` 等。}}
-  - `key`:{{c1:: 字符（`"A"`，`"a"` 等），对于非字符（non-character）的按键，通常具有与 `code` 相同的值。}}
++ 键盘事件：
+  + `keydown`:{{c1:: 在按下键时（如果长按按键，则将自动重复），}}
+  + `keyup`:{{c1:: 释放按键时。}}
++ 键盘事件的主要属性：
+  + `code`:{{c1:: “按键代码”（`"KeyA"`，`"ArrowLeft"` 等），特定于键盘上按键的物理位置。}}
+    + 字符键的代码为：{{c1::  `"Key<letter>"`：`"KeyA"`，`"KeyB"` 等。}}
+    + 数字键的代码为：{{c1:: `"Digit<number>"`：`"Digit0"`，`"Digit1"` 等。}}
+    + 特殊按键的代码为按键的名字：{{c1:: `"Enter"`，`"Backspace"`，`"Tab"` 等。}}
+  + `key`:{{c1:: 字符（`"A"`，`"a"` 等），对于非字符（non-character）的按键，通常具有与 `code` 相同的值。}}
 
 ## [表单，控件](https://zh.javascript.info/forms-controls) [ ](javascript_info_20200609045144089)
 
 ### 表单属性 [ ](javascript_info_20200608063412709)
 
-- `document.forms`：{{c1:: 一个表单元素可以通过 `document.forms[name/index]` 访问到。 }}
-- `form.elements`：{{c1:: 表单元素可以通过 `form.elements[name/index]` 的方式访问，或者也可以使用 `form[name/index]`。`elements` 属性也适用于 `<fieldset>`。 }}
-- `element.form`：{{c1:: 元素通过 form 属性来引用它们所属的表单。}}
-- `value` 可以被通过 {{c1::  `input.value`，`textarea.value`，`select.value`  }}等来获取到，对于单选按钮和复选框来说可以使用 {{c1:: `input.checked`。}}
++ `document.forms`：{{c1:: 一个表单元素可以通过 `document.forms[name/index]` 访问到。 }}
++ `form.elements`：{{c1:: 表单元素可以通过 `form.elements[name/index]` 的方式访问，或者也可以使用 `form[name/index]`。`elements` 属性也适用于 `<fieldset>`。 }}
++ `element.form`：{{c1:: 元素通过 form 属性来引用它们所属的表单。}}
++ `value` 可以被通过 {{c1::  `input.value`，`textarea.value`，`select.value`  }}等来获取到，对于单选按钮和复选框来说可以使用 {{c1:: `input.checked`。}}
 
 ### select 和 option [ ](javascript_info_20200608063412711)
 
-- 三种为 `<select>` 设置 `value` 的不同方式：
++ 三种为 `<select>` 设置 `value` 的不同方式：
 
 ```html
 <select id="select">
@@ -4654,11 +4655,11 @@ function onMouseMove(event) {
 
 ### 聚焦：focus/blur [ ](javascript_info_20200608063412712)
 
-- 在元素获得/失去焦点时会触发 {{c1:: `focus 和 blur` }}事件。
-- 它们的特点是：
-  - 它们不会冒泡。但是可以改为在捕获阶段触发，或者使用 {{c1:: `focusin/focusout`}}。
-  - 大多数元素默认不支持聚焦。使用{{c1::  `tabindex` }}可以使任何元素变成可聚焦的。
-- 可以通过{{c1::  `document.activeElement` }}来获取当前所聚焦的元素。
++ 在元素获得/失去焦点时会触发 {{c1:: `focus 和 blur` }}事件。
++ 它们的特点是：
+  + 它们不会冒泡。但是可以改为在捕获阶段触发，或者使用 {{c1:: `focusin/focusout`}}。
+  + 大多数元素默认不支持聚焦。使用{{c1::  `tabindex` }}可以使任何元素变成可聚焦的。
++ 可以通过{{c1::  `document.activeElement` }}来获取当前所聚焦的元素。
 
 ### 事件：change，input，cut，copy，paste [ ](javascript_info_20200608063412713)
 
@@ -4670,7 +4671,7 @@ function onMouseMove(event) {
 
 ### submit 和 click 的关系 [ ](javascript_info_20200608063412714)
 
-- {{c1:: 在输入框中使用 Enter 发送表单时，会在 `<input type="submit"> `上触发一次 click 事件。 }}
++ {{c1:: 在输入框中使用 Enter 发送表单时，会在 `<input type="submit"> `上触发一次 click 事件。 }}
 
 ### 手动将表单提交到服务器 [ ](javascript_info_20200608063412715)
 
@@ -4690,14 +4691,14 @@ form.submit();
 
 ### HTML 页面的生命周期包含三个重要事件： [ ](javascript_info_20200608063412716)
 
-- `DOMContentLoaded` 事件:{{c1:: 发生在document上，DOM 已经就绪，因此处理程序可以查找 DOM 节点，并初始化接口。}}
-- `load` 事件:{{c1:: window上，外部资源已加载完成，样式已被应用，图片大小也已知了。}}
-- `beforeunload` 事件:{{c1::window上，用户正在离开：我们可以检查用户是否保存了更改，并询问他是否真的要离开。}}
-- `unload` 事件:{{c1::window上，用户几乎已经离开了，但是我们仍然可以启动一些操作，例如发送统计数据。}}
++ `DOMContentLoaded` 事件:{{c1:: 发生在document上，DOM 已经就绪，因此处理程序可以查找 DOM 节点，并初始化接口。}}
++ `load` 事件:{{c1:: window上，外部资源已加载完成，样式已被应用，图片大小也已知了。}}
++ `beforeunload` 事件:{{c1::window上，用户正在离开：我们可以检查用户是否保存了更改，并询问他是否真的要离开。}}
++ `unload` 事件:{{c1::window上，用户几乎已经离开了，但是我们仍然可以启动一些操作，例如发送统计数据。}}
 
 ### window.onbeforeunload [ ](javascript_info_20200608063412717)
 
-- 下面代码的输出是什么？
++ 下面代码的输出是什么？
 
   ```html
   <script>
@@ -4721,7 +4722,7 @@ form.submit();
   </script>
   ```
 
-- 典型输出：
++ 典型输出：
   1. {{c1:: [1] initial readyState:loading }}
   2. {{c1:: [2] readyState:interactive }}
   3. {{c1:: [2] DOMContentLoaded }}
@@ -4733,10 +4734,10 @@ form.submit();
 
 ### document.readyState [ ](javascript_info_20200608063412718)
 
-- 可以在 {{c1:: `readystatechange` }} 事件中跟踪状态更改：
-- `loading`:{{c1:: 文档正在被加载。}}
-- `interactive`:{{c1:: 文档已被解析完成，与 `DOMContentLoaded` 几乎同时发生，但是在 `DOMContentLoaded` 之前发生。}}
-- `complete`:{{c1:: 文档和资源均已加载完成，与 `window.onload` 几乎同时发生，但是在 `window.onload` 之前发生。}}
++ 可以在 {{c1:: `readystatechange` }} 事件中跟踪状态更改：
++ `loading`:{{c1:: 文档正在被加载。}}
++ `interactive`:{{c1:: 文档已被解析完成，与 `DOMContentLoaded` 几乎同时发生，但是在 `DOMContentLoaded` 之前发生。}}
++ `complete`:{{c1:: 文档和资源均已加载完成，与 `window.onload` 几乎同时发生，但是在 `window.onload` 之前发生。}}
 
 ### `navigator.sendBeacon(url, data)` 方法 [ ](javascript_info_20200608063412719)
 
@@ -4777,16 +4778,16 @@ loadScript("/article/script-async-defer/small.js");
 
 ### 资源加载：onload，onerror [ ](javascript_info_20200608063412723)
 
-- 图片 `<img>`，外部样式，脚本和其他资源都提供了{{c1:: `load` 和 `error` }}事件以跟踪它们的加载：
-  - `load` ：{{c1:: 在成功加载时被触发。}}
-  - `error` ：{{c1:: 在加载失败时被触发。}}
-- 唯一的例外是 `<iframe>`：{{c1:: 出于历史原因，不管加载成功还是失败，即使页面没有被找到，它都会触发 `load` 事件。}}
++ 图片 `<img>`，外部样式，脚本和其他资源都提供了{{c1:: `load` 和 `error` }}事件以跟踪它们的加载：
+  + `load` ：{{c1:: 在成功加载时被触发。}}
+  + `error` ：{{c1:: 在加载失败时被触发。}}
++ 唯一的例外是 `<iframe>`：{{c1:: 出于历史原因，不管加载成功还是失败，即使页面没有被找到，它都会触发 `load` 事件。}}
 
 ## 杂项 [ ](javascript_info_20200609045144091)
 
-### DOM 变动观察器 [ ](javascript_info_20200608063412724)
+### DOM 变动观察器 声明与使用 [ ](javascript_info_20200608063412724)
 
-- 语法：
++ 语法：
   ```javascript
   //{{c1::
   let observer = new MutationObserver(function (mutationRecord) {
@@ -4795,73 +4796,79 @@ loadScript("/article/script-async-defer/small.js");
   observer.observe(node, config);
   //}}
   ```
-- config 是一个具有布尔选项的对象，该布尔选项表示“将对哪些更改做出反应”：
-  - childList:{{c1:: node 的直接子节点的更改， }}
-  - subtree:{{c1:: node 的所有后代的更改， }}
-  - attributes:{{c1:: node 的特性（attribute）， }}
-  - attributeFilter:{{c1:: 特性名称数组，只观察选定的特性。 }}
-  - characterData:{{c1:: 是否观察 node.data（文本内容） }}
-  - attributeOldValue:{{c1:: 如果为 true，则将特性的旧值和新值都传递给回调（参见下文），否则只传新值（需要 attributes 选项）}}
-  - characterDataOldValue:{{c1:: 如果为 true，则将 node.data 的旧值和新值都传递给回调（参见下文），否则只传新值（需要 characterData 选项）。}}
-- MutationRecord 对象具有以下属性：
-  - `type`:{{c1:: 变动类型，以下类型之一：}}
-    - `"attributes"`：{{c1:: 特性被修改了， }}
-    - `"characterData"`：{{c1:: 数据被修改了，用于文本节点， }}
-    - `"childList"`：{{c1:: 添加/删除了子元素。 }}
-  - `target`:{{c1:: 更改发生在何处：`"attributes"` 所在的元素，或 `"characterData"` 所在的文本节点，或 `"childList"` 变动所在的元素，}}
-  - `addedNodes/removedNodes`:{{c1:: 添加/删除的节点，}}
-  - `previousSibling/nextSibling`:{{c1:: 添加/删除的节点的上一个/下一个兄弟节点，}}
-  - `attributeName/attributeNamespace`:{{c1:: 被更改的特性的名称/命名空间（用于 XML），}}
-  - `oldValue`:{{c1:: 之前的值，仅适用于特性或文本更改，如果设置了相应选项 `attributeOldValue`/`characterDataOldValue`。}}
+
+### DOM 变动观察器 mutationRecord 对象
+
++ MutationRecord 对象具有以下属性：
+  + `type`:{{c1:: 变动类型，以下类型之一：}}
+    + `"attributes"`：{{c1:: 特性被修改了， }}
+    + `"characterData"`：{{c1:: 数据被修改了，用于文本节点， }}
+    + `"childList"`：{{c1:: 添加/删除了子元素。 }}
+  + `target`:{{c1:: 更改发生在何处：`"attributes"` 所在的元素，或 `"characterData"` 所在的文本节点，或 `"childList"` 变动所在的元素，}}
+  + `addedNodes/removedNodes`:{{c1:: 添加/删除的节点，}}
+  + `previousSibling/nextSibling`:{{c1:: 添加/删除的节点的上一个/下一个兄弟节点，}}
+  + `attributeName/attributeNamespace`:{{c1:: 被更改的特性的名称/命名空间（用于 XML），}}
+  + `oldValue`:{{c1:: 之前的值，仅适用于特性或文本更改，如果设置了相应选项 `attributeOldValue`/`characterDataOldValue`。}}
+
+### DOM 变动观察器 被观察对象的 config 配置
+
++ `observer.observe(node, config)` config 的各个布尔选项：
+  + `childList`:{{c1:: node 的直接子节点的更改}}
+  + `subtree`:{{c1:: node 的所有后代的更改 }}
+  + `attributes`:{{c1:: node 的特性（attribute）}}
+  + `attributeFilter`:{{c1:: 特性名称数组，只观察选定的特性。 }}
+  + `characterData`:{{c1:: 是否观察 node.data（文本内容） }}
+  + `attributeOldValue`:{{c1:: 如果为 true，则将特性的旧值和新值都传递给回调（参见下文），否则只传新值（需要 attributes 选项）}}
+  + `characterDataOldValue`:{{c1:: 如果为 true，则将 node.data 的旧值和新值都传递给回调（参见下文），否则只传新值（需要 characterData 选项）}}
 
 ### Range 对象方法 [ ](javascript_info_20200608063412725)
 
-- 设置范围的起点：
-  - setStart(node, offset):{{c1:: 将起点设置在：node 中的位置 offset}}
-  - setStartBefore(node):{{c1:: 将起点设置在：node 前面}}
-  - setStartAfter(node):{{c1:: 将起点设置在：node 后面}}
-- 设置范围的终点（类似的方法）：
-  - setEnd(node, offset):{{c1:: 将终点设置为：node 中的位置 offset}}
-  - setEndBefore(node):{{c1:: 将终点设置为：node 前面}}
-  - setEndAfter(node):{{c1:: 将终点设置为：node 后面}}
-- node 既可以是文本节点，也可以是元素节点:{{c1:: 对于文本节点，offset 偏移的是字符数，而对于元素节点则是子节点数。}}
-- 其他
-  - selectNode(node):{{c1:: 设置范围以选择整个 node}}
-  - selectNodeContents(node):{{c1:: 设置范围以选择整个 node 的内容}}
-  - collapse(toStart):{{c1:: 如果 toStart=true 则设置 end=start，否则设置 start=end，从而折叠范围}}
-  - cloneRange():{{c1:: 创建一个具有相同起点/终点的新范围}}
-- 如要操纵范围内的内容：
-  - deleteContents()：{{c1:: 从文档中删除范围内容}}
-  - extractContents()：{{c1:: 从文档中删除范围内容，并将删除的内容作为 DocumentFragment 返回}}
-  - cloneContents()：{{c1:: 复制范围内容，并将删除的内容作为 DocumentFragment 返回}}
-  - insertNode(node)：{{c1:: 在范围的起始处将 node 插入文档}}
-  - surroundContents(node)：{{c1:: 使用 node 将所选范围内容包裹起来。要使此操作有效，则该范围必须包含其中所有元素的开始和结束标签：不能像 <i>abc 这样的部分范围。}}
++ 设置范围的起点：
+  + `setStart(node, offset)`:{{c1:: 将起点设置在：node 中的位置 offset}}
+  + `setStartBefore(node)`:{{c1:: 将起点设置在：node 前面}}
+  + `setStartAfter(node)`:{{c1:: 将起点设置在：node 后面}}
++ 设置范围的终点（类似的方法）：
+  + `setEnd(node, offset)`:{{c1:: 将终点设置为：node 中的位置 offset}}
+  + `setEndBefore(node)`:{{c1:: 将终点设置为：node 前面}}
+  + `setEndAfter(node)`:{{c1:: 将终点设置为：node 后面}}
++ `node 既可以是文本节点，也可以是元素节点`:{{c1:: 对于文本节点，offset 偏移的是字符数，而对于元素节点则是子节点数。}}
++ 其他
+  + `selectNode(node)`:{{c1:: 设置范围以选择整个 node}}
+  + `selectNodeContents(node)`:{{c1:: 设置范围以选择整个 node 的内容}}
+  + `collapse(toStart)`:{{c1:: 如果 toStart=true 则设置 end=start，否则设置 start=end，从而折叠范围}}
+  + `cloneRange()`:{{c1:: 创建一个具有相同起点/终点的新范围}}
++ 如要操纵范围内的内容：
+  + `deleteContents()`:{{c1:: 从文档中删除范围内容}}
+  + `extractContents()`:{{c1:: 从文档中删除范围内容，并将删除的内容作为 DocumentFragment 返回}}
+  + `cloneContents()`:{{c1:: 复制范围内容，并将删除的内容作为 DocumentFragment 返回}}
+  + `insertNode(node)`:{{c1:: 在范围的起始处将 node 插入文档}}
+  + `surroundContents(node)`:{{c1:: 使用 node 将所选范围内容包裹起来。要使此操作有效，则该范围必须包含其中所有元素的开始和结束标签:不能像 <i>abc 这样的部分范围。}}
 
 ### 选择 [ ](javascript_info_20200608063412726)
 
-- 文档选择是由{{c1:: `Selectio`n }} 对象表示的，可通过{{c1:: `window.getSelection(`) }} 或{{c1:: `document.getSelection()`  }}来获取。
-- 主要的选择属性有：
-  - anchorNode：{{c1::  选择的起始节点，}}
-  - anchorOffse：{{c1::  选择开始的 anchorNode 中的偏移量，}}
-  - focusNod：{{c1::  选择的结束节点，}}
-  - focusOffse：{{c1::  选择开始处 focusNode 的偏移量，}}
-  - isCollapse：{{c1::  如果未选择任何内容（空范围）或不存在，则为 true 。}}
-  - rangeCoun：{{c1::  选择中的范围数，除 Firefox 外，其他浏览器最多为 1。}}
-- 要获取整个选择：
-  - 作为文本：{{c1:: 只需调用 document.getSelection().toString()。}}
-  - 作为 DOM 节点：{{c1:: `selection.getRangeAt(i).cloneContents()`（如果我们不支持 Firefox 多选的话，则仅取第一个范围）。}}
++ 文档选择是由{{c1:: `Selection` }} 对象表示的，可通过{{c1:: `window.getSelection(`) }} 或{{c1:: `document.getSelection()`  }}来获取。
++ 主要的选择属性有:
+  + `anchorNode`:{{c1::  选择的起始节点，}}
+  + `anchorOffse`:{{c1::  选择开始的 anchorNode 中的偏移量，}}
+  + `focusNod`:{{c1::  选择的结束节点，}}
+  + `focusOffse`:{{c1::  选择开始处 focusNode 的偏移量，}}
+  + `isCollapse`:{{c1::  如果未选择任何内容（空范围）或不存在，则为 true 。}}
+  + `rangeCoun`:{{c1::  选择中的范围数，除 Firefox 外，其他浏览器最多为 1。}}
++ 要获取整个选择:
+  + 作为文本:{{c1:: 只需调用 document.getSelection().toString()。}}
+  + 作为 DOM 节点:{{c1:: `selection.getRangeAt(i).cloneContents()`（如果我们不支持 Firefox 多选的话，则仅取第一个范围）。}}
 
 ### 选择事件 [ ](javascript_info_20200608063412727)
 
-- elem.onselectstart：{{c1:: 当选择从 elem 上开始时，例如，用户按下鼠标键并开始移动鼠标。}}
-  - 阻止默认行为会使选择无法开始。
-- document.onselectionchange：{{c1:: 当选择变动时。}}
-  - 请注意：此处理程序只能在 document 上设置。
++ elem.onselectstart:{{c1:: 当选择从 elem 上开始时，例如，用户按下鼠标键并开始移动鼠标。}}
+  + 阻止默认行为会使选择无法开始。
++ document.onselectionchange:{{c1:: 当选择变动时。}}
+  + 请注意:此处理程序只能在 document 上设置。
 
 ### 实现选择跟踪演示效果 [ ](javascript_info_20200608063412728)
 
 ![XGjhAQEjuL](javascript_info.assets\XGjhAQEjuL.gif)
-代码如下：
+代码如下:
 
 ```javascript
 // {{c1::
@@ -4881,26 +4888,26 @@ From <input id="from" disabled> – To <input id="to" disabled>
 
 ### 表单控件中的选择 [ ](javascript_info_20200608063412729)
 
-- input.selectionStart:{{c1:: 选择的起始位置（可写），}}
-- input.selectionEnd:{{c1:: 选择的结束位置（可写），}}
-- input.selectionDirection:{{c1:: 选择方向，其中之一：“forward”，“backward” 或 “none”（例如使用鼠标双击进行的选择），}}
-- input.onselect:{{c1:: 当某个东西被选择时触发。}}
++ `input.selectionStart`:{{c1:: 选择的起始位置（可写），}}
++ `input.selectionEnd`:{{c1:: 选择的结束位置（可写），}}
++ `input.selectionDirection`:{{c1:: 选择方向，其中之一:“forward”，“backward” 或 “none”（例如使用鼠标双击进行的选择），}}
++ `input.onselect`:{{c1:: 当某个东西被选择时触发。}}
 
-### 要使某些内容不可选，有三种方式： [ ](javascript_info_20200608063412730)
+### 要使某些内容不可选，有三种方式: [ ](javascript_info_20200608063412730)
 
 1. `user-select: none`:{{c1:: 使用 CSS 属性 user-select: none。}}
 2. `onselectstart 或 mousedown`:{{c1:: 防止 onselectstart 或 mousedown 事件中的默认行为。}}
 3. `document.getSelection().empty()`:{{c1:: 我们还可以使用 document.getSelection().empty() 来在选择发生后清除选择。很少使用这种方法，因为这会在选择项消失时导致不必要的闪烁。}}
 
-### 用于选择的两种不同的 API： [ ](javascript_info_20200608063412731)
+### 用于选择的两种不同的 API: [ ](javascript_info_20200608063412731)
 
-1. {{c1:: 对于文档：`Selection` 和 `Range` 对象。}}
-2. {{c1:: 对于 `input`，`textarea`：其他方法和属性。}}
+1. {{c1:: 对于文档:`Selection` 和 `Range` 对象。}}
+2. {{c1:: 对于 `input`，`textarea`:其他方法和属性。}}
    []
 
-### 选择（Selection)与范围（Range) 最常用的方案一般是： [ ](javascript_info_20200608063412732)
+### 选择（Selection)与范围（Range) 最常用的方案一般是: [ ](javascript_info_20200608063412732)
 
-1. 获取选择：
+1. 获取选择:
 
    ```javascript
    //{{c1::
@@ -4918,9 +4925,9 @@ From <input id="from" disabled> – To <input id="to" disabled>
    ```javascript
    //{{c1::
    let selection = document.getSelection();
-   // 直接：
+   // 直接:
    selection.setBaseAndExtent(anchorNode, anchorOffset, focusNode, focusOffset);
-   // 或者我们可以创建一个范围并：
+   // 或者我们可以创建一个范围并:
    selection.removeAllRanges();
    selection.addRange(range);
    //}}
@@ -4928,11 +4935,11 @@ From <input id="from" disabled> – To <input id="to" disabled>
 
 ### 宏任务和微任务的关系 [ ](javascript_info_20200608063412734)
 
-- 安排（schedule）一个新的 宏任务：{{c1:: 使用零延迟的 setTimeout(f)。}}
-- 安排一个新的 微任务：
++ 安排（schedule）一个新的 宏任务:{{c1:: 使用零延迟的 setTimeout(f)。}}
++ 安排一个新的 微任务:
   1. {{c1:: 使用 queueMicrotask(f)。}}
   2. {{c1:: promise 处理程序也会通过微任务队列。}}
-- 关系：{{c1:: 每个宏任务之后，引擎会立即执行微任务队列中的所有任务，然后再执行其他的宏任务，或渲染，或进行其他任何操作。 }}
++ 关系:{{c1:: 每个宏任务之后，引擎会立即执行微任务队列中的所有任务，然后再执行其他的宏任务，或渲染，或进行其他任何操作。 }}
 
 ```javascript
 setTimeout(() => alert("timeout"));
@@ -4940,35 +4947,35 @@ Promise.resolve().then(() => alert("promise"));
 alert("code");
 ```
 
-- 这里的执行顺序是怎样的？
++ 这里的执行顺序是怎样的？
   1. {{c1:: `code` 首先显示，因为它是常规的同步调用。 }}
   2. {{c1:: `promise` 第二个出现，因为 `then` 会通过微任务队列，并在当前代码之后执行。 }}
   3. {{c1:: `timeout` 最后显示，因为它是一个宏任务。 }}
 
 ### 事件循环图示 [ ](javascript_info_20200608063412735)
 
-- 顺序是从上到下，即：首先是脚本，然后是微任务，渲染等
-- 示意图：
++ 顺序是从上到下，即:首先是脚本，然后是微任务，渲染等
++ 示意图:
   {{c1:: ![image-20200608160453621](javascript_info.assets\image-20200608160453621.png) }}
 
 ## Frame 和 window [ ](javascript_info_20200609045144092)
 
 ### `window.open` [ ](javascript_info_20200608063412736)
 
-- 开一个弹窗的语法是: {{c1:: `window.open(url, name, params);` }}
-- focus() 和 blur() 方法:{{c1:: 允许聚焦/失焦于窗口。但它们并不是一直都有效。 }}
-- focus 和 blur 事件:{{c1:: 允许跟踪窗口的切换。但是请注意，在 blur 之后，即使窗口在背景状态下，窗口仍有可能是可见 }}的。
-- 要关闭弹窗：:{{c1:: 使用 close() 调用。 }}
-- 关闭之后:{{c1:: ，window.closed 为 true。 }}
++ 开一个弹窗的语法是: {{c1:: `window.open(url, name, params);` }}
++ focus() 和 blur() 方法:{{c1:: 允许聚焦/失焦于窗口。但它们并不是一直都有效。 }}
++ focus 和 blur 事件:{{c1:: 允许跟踪窗口的切换。但是请注意，在 blur 之后，即使窗口在背景状态下，窗口仍有可能是可见 }}的。
++ 要关闭弹窗::{{c1:: 使用 close() 调用。 }}
++ 关闭之后:{{c1:: ，window.closed 为 true。 }}
 
-### Iframe：错误文档陷阱（实践） [ ](javascript_info_20200608063412737)
+### Iframe:错误文档陷阱（实践） [ ](javascript_info_20200608063412737)
 
-- 含义：{{c1:: 在创建 iframe 后，iframe 会立即就拥有了一个文档。但是该文档不同于加载到其中的文档！ }}
-- 解决方案：利用 `setInterval` 定时检查新文档是否加载
++ 含义:{{c1:: 在创建 iframe 后，iframe 会立即就拥有了一个文档。但是该文档不同于加载到其中的文档！ }}
++ 解决方案:利用 `setInterval` 定时检查新文档是否加载
   ```html
   <iframe src="/" id="iframe"></iframe>
   <script>
-    // 解决方案代码如下：
+    // 解决方案代码如下:
     //{{c1::
     let oldDoc = iframe.contentDocument;
     // 每 100ms 检查一次文档是否为新文档
@@ -4982,46 +4989,46 @@ alert("code");
   </script>
   ```
 
-### 集合：window.frames [ ](javascript_info_20200608063412738)
+### 集合:window.frames [ ](javascript_info_20200608063412738)
 
-- 通过索引获取：window.frames[0]：{{c1:: 文档中的第一个 iframe 的 window 对象。 }}
-- 通过名称获取：window.frames.iframeName：{{c1:: 获取 name="iframeName" 的 iframe 的 window 对象。 }}
-- 一个 iframe 内可能嵌套了其他的 iframe。相应的 window 对象会形成一个层次结构（hierarchy）。
-  - window.frames:{{c1:: “子”窗口的集合（用于嵌套的 iframe）。 }}
-  - window.parent:{{c1:: 对“父”（外部）窗口的引用。 }}
-  - window.top:{{c1:: 对最顶级父窗口的引用。 }}
++ 通过索引获取:window.frames[0]:{{c1:: 文档中的第一个 iframe 的 window 对象。 }}
++ 通过名称获取:window.frames.iframeName:{{c1:: 获取 name="iframeName" 的 iframe 的 window 对象。 }}
++ 一个 iframe 内可能嵌套了其他的 iframe。相应的 window 对象会形成一个层次结构（hierarchy）。
+  + window.frames:{{c1:: “子”窗口的集合（用于嵌套的 iframe）。 }}
+  + window.parent:{{c1:: 对“父”（外部）窗口的引用。 }}
+  + window.top:{{c1:: 对最顶级父窗口的引用。 }}
 
-### 对于弹窗，我们有两个引用： [ ](javascript_info_20200608063412739)
+### 对于弹窗，我们有两个引用: [ ](javascript_info_20200608063412739)
 
-- 从打开窗口的（opener）窗口：`window.open`:{{c1:: 打开一个新的窗口，并返回对它的引用， }}
-- 从弹窗：`window.opener`:{{c1:: 是从弹窗中对打开此弹窗的窗口（opener）的引用。 }}
++ 从打开窗口的（opener）窗口:`window.open`:{{c1:: 打开一个新的窗口，并返回对它的引用， }}
++ 从弹窗:`window.opener`:{{c1:: 是从弹窗中对打开此弹窗的窗口（opener）的引用。 }}
 
-### 对于 iframe，我们可以使用以下方式访问父/子窗口： [ ](javascript_info_20200608063412740)
+### 对于 iframe，我们可以使用以下方式访问父/子窗口: [ ](javascript_info_20200608063412740)
 
-- 如果几个窗口的源相同（域，端口，协议），那么这几个窗口可以彼此进行所需的操作。
-  - `window.frames`:{{c1::一个嵌套的 window 对象的集合，}}
-  - `window.parent`，`window.top`:{{c1:: 是对父窗口和顶级窗口的引用，}}
-  - `iframe.contentWindow`:{{c1:: `<iframe>` 标签内的 window 对象。}}
-- 如果几个窗口的源不相同，只能进行以下操作：
++ 如果几个窗口的源相同（域，端口，协议），那么这几个窗口可以彼此进行所需的操作。
+  + `window.frames`:{{c1::一个嵌套的 window 对象的集合，}}
+  + `window.parent`，`window.top`:{{c1:: 是对父窗口和顶级窗口的引用，}}
+  + `iframe.contentWindow`:{{c1:: `<iframe>` 标签内的 window 对象。}}
++ 如果几个窗口的源不相同，只能进行以下操作:
   1. {{c1:: 更改另一个窗口的 `location`（只能写入）。 }}
   2. {{c1:: 向其发送一条消息。 }}
-- 例外情况：
-  1. 对于二级域相同的窗口：`a.site.com` 和 `b.site.com`。通过在这些窗口中均设置 {{c1:: `document.domain='site.com'` }}，可以使它们处于“同源”状态。
++ 例外情况:
+  1. 对于二级域相同的窗口:`a.site.com` 和 `b.site.com`。通过在这些窗口中均设置 {{c1:: `document.domain='site.com'` }}，可以使它们处于“同源”状态。
   2. 如果一个 iframe 具有 `sandbox` 特性（attribute），则{{c1:: 它会被强制处于“非同源”状态，除非在其特性值中指定了 `allow-same-origin`。这可用于在同一网站的 iframe 中运行不受信任的代码。}}
 
-### `targetWindow.postMessage(data,targetOrigin)` 方法允许两个具有任何源的窗口之间进行通信： [ ](javascript_info_20200608063412741)
+### `targetWindow.postMessage(data,targetOrigin)` 方法允许两个具有任何源的窗口之间进行通信: [ ](javascript_info_20200608063412741)
 
 1. 发送方调用 {{c1:: `targetWindow.postMessage(data, targetOrigin)`。}}
 
-- data：{{c1:: 要发送的数据对象，IE只支持字符串 }}
-- targetOrigin：{{c1:: 指定目标窗口的源，可以是`URL`与`*`}}
-  - `URL`： {{c1:: 检查目标窗口的源是否是来自该URL的文档 }}
-  - `*`： {{c1:: 不希望做URL检查时可以设置为`*` }}
++ data:{{c1:: 要发送的数据对象，IE只支持字符串 }}
++ targetOrigin:{{c1:: 指定目标窗口的源，可以是`URL`与`*`}}
+  + `URL`: {{c1:: 检查目标窗口的源是否是来自该URL的文档 }}
+  + `*`: {{c1:: 不希望做URL检查时可以设置为`*` }}
 
-2. 接受方收到消息会触发`window`对象的`message`事件，该事件带有特殊属性如下：
-   - `origin`:{{c1:: 发送方窗口的源（比如 `http://my.site.com`）。}}
-   - `source`:{{c1:: 发送方窗口的引用。}}
-   - `data`:{{c1:: 收到的数据，可以是任何对象。但是 IE 浏览器只支持字符串，因此最好调用 `JSON.stringify`方法进行处理}}
+2. 接受方收到消息会触发`window`对象的`message`事件，该事件带有特殊属性如下:
+   + `origin`:{{c1:: 发送方窗口的源（比如 `http://my.site.com`）。}}
+   + `source`:{{c1:: 发送方窗口的引用。}}
+   + `data`:{{c1:: 收到的数据，可以是任何对象。但是 IE 浏览器只支持字符串，因此最好调用 `JSON.stringify`方法进行处理}}
 
 ## 二进制数据，文件 [ ](javascript_info_20200609045144093)
 
@@ -5053,15 +5060,15 @@ for (let num of view) {
 4. `new TypedArray(length);`:{{c1::  创建类型化数组以包含这么多元素。它的字节长度将是 length 乘以单个 TypedArray.BYTES_PER_ELEMENT 中的字节数}}
 5. `new TypedArray();`:{{c1:: 创建长度为零的类型化数组}}
 
-- 除第一种情况（已提供 ArrayBuffer）外，{{c1:: 其他所有情况都会自动创建 ArrayBuffer。 }}
-- 如要访问 ArrayBuffer，可以用以下属性：
++ 除第一种情况（已提供 ArrayBuffer）外，{{c1:: 其他所有情况都会自动创建 ArrayBuffer。 }}
++ 如要访问 ArrayBuffer，可以用以下属性：
   1. arr.buffer:{{c1:: 引用 ArrayBuffer。 }}
   2. arr.byteLength:{{c1:: ArrayBuffer 的长度。 }}
 
 ### DataView [ ](javascript_info_20200609045144097)
 
-- 作用：{{c1:: `DataView `是在 `ArrayBuffer` 上的一种特殊的超灵活“未类型化”视图。 }}
-- 语法：{{c1:: `new DataView(buffer, [byteOffset], [byteLength])` }}
++ 作用：{{c1:: `DataView `是在 `ArrayBuffer` 上的一种特殊的超灵活“未类型化”视图。 }}
++ 语法：{{c1:: `new DataView(buffer, [byteOffset], [byteLength])` }}
 
   ```javascript
   // 4 个字节的二进制数组，每个都是最大值 255
@@ -5082,14 +5089,14 @@ for (let num of view) {
 
 ### BufferSource 术语 [ ](javascript_info_20200609045144098)
 
-- 作用：{{c1:: 指“任何类型的二进制数据” —— ArrayBuffer 或其上的视图。 }}
-- BufferSource 体系图：{{c1:: ![image-20200609133016048](javascript_info.assets\image-20200609133016048.png) }}
++ 作用：{{c1:: 指“任何类型的二进制数据” —— ArrayBuffer 或其上的视图。 }}
++ BufferSource 体系图：{{c1:: ![image-20200609133016048](javascript_info.assets\image-20200609133016048.png) }}
 
 ### TextDecoder 和 TextEncoder [ ](javascript_info_20200609045144099)
 
-- TextDecoder 构造器：`new TextDecoder([label], [options]);`
-- TextEncoder 构造器：`new TextEncoder();`
-- 将"hello"编码与解码例子：
++ TextDecoder 构造器：`new TextDecoder([label], [options]);`
++ TextEncoder 构造器：`new TextEncoder();`
++ 将"hello"编码与解码例子：
 
   ```javascript
   let uint8Array = new Uint8Array([0, 72, 101, 108, 108, 111, 0]);
@@ -5107,19 +5114,19 @@ for (let num of view) {
 
 ### Blob [ ](javascript_info_20200609045144100)
 
-- 全称：Binary Large Object 直译为二进制大对象
-- 构造函数的语法:{{c1:: `new Blob(blobParts, options);` }}
-- `blobParts`:{{c1::  `Blob`/`BufferSource`/`String` 类型的值的**数组**。}}
-- `options`可选对象：
-  - `type`:{{c1::  用来表示文件类型，例如 'text/json' 代表一个JSON文件，`image/png`为图片文件}}
-  - `endings`:{{c1:: 是否转换换行符，使 `Blob` 对应于当前操作系统的换行符（`\r\n` 或 `\n`）。默认为`"transparent"`（啥也不做），不过也可以是 `"native"`（转换）。}}
-- `blob.slice([start[, end[, contentType]]])`方法:
++ 全称：Binary Large Object 直译为二进制大对象
++ 构造函数的语法:{{c1:: `new Blob(blobParts, options);` }}
++ `blobParts`:{{c1::  `Blob`/`BufferSource`/`String` 类型的值的**数组**。}}
++ `options`可选对象：
+  + `type`:{{c1::  用来表示文件类型，例如 'text/json' 代表一个JSON文件，`image/png`为图片文件}}
+  + `endings`:{{c1:: 是否转换换行符，使 `Blob` 对应于当前操作系统的换行符（`\r\n` 或 `\n`）。默认为`"transparent"`（啥也不做），不过也可以是 `"native"`（转换）。}}
++ `blob.slice([start[, end[, contentType]]])`方法:
   1. `byteStart`:{{c1:: 起始字节，默认为 0。}}
   2. `byteEnd`:{{c1:: 最后一个字节（专有，默认为最后）。}}
   3. `contentType`:{{c1:: 新 blob 的 `type`，默认与源 blob 相同。}}
-- 生成 Blob 链接的两个方法：
-  - `URL.createObjectURL(blob);`:{{c1:: 如果传入的参数是blob对象的话，则可以生成一个blob链接}}
-  - `URL.revokeObjectURL(url);`:{{c1:: 静态方法用来释放一个之前通过调用 URL.createObjectURL() 创建的已经存在的 URL 对象。}}
++ 生成 Blob 链接的两个方法：
+  + `URL.createObjectURL(blob);`:{{c1:: 如果传入的参数是blob对象的话，则可以生成一个blob链接}}
+  + `URL.revokeObjectURL(url);`:{{c1:: 静态方法用来释放一个之前通过调用 URL.createObjectURL() 创建的已经存在的 URL 对象。}}
 
 ### 使用 Blob 实现文件下载，以及销毁 URL 例子（实践） [ ](javascript_info_20200611040825987)
 
@@ -5140,12 +5147,12 @@ for (let num of view) {
 
 ### File 对象 [ ](javascript_info_20200609045144102)
 
-- 拓展自 Blob，有一个构造器：`new File(fileParts, fileName, [options])`
-  - `fileParts`:{{c1:: Blob/BufferSource/String 类型值的数组。}}
-  - `fileName`:{{c1:: 文件名字符串。}}
-  - `options`:{{c1:: 可选对象：}}
-    - `lastModified`:{{c1:: 最后一次修改的时间戳（整数日期）。}}
-- 除了 Blob 方法和属性外，File 对象还有 `name` 和 `lastModified` 属性
++ 拓展自 Blob，有一个构造器：`new File(fileParts, fileName, [options])`
+  + `fileParts`:{{c1:: Blob/BufferSource/String 类型值的数组。}}
+  + `fileName`:{{c1:: 文件名字符串。}}
+  + `options`:{{c1:: 可选对象：}}
+    + `lastModified`:{{c1:: 最后一次修改的时间戳（整数日期）。}}
++ 除了 Blob 方法和属性外，File 对象还有 `name` 和 `lastModified` 属性
 
 ### 例子：从 `<input type="file">`中获取 `File对象` [ ](javascript_info_20200609045144103)
 
@@ -5164,21 +5171,21 @@ function showFile(input) {
 
 ### FileReader 对象 [ ](javascript_info_20200609045144104)
 
-- 作用：{{c1:: 唯一目的是从 Blob（因此也从 File）对象中读取数据。 }}
-  - readAsArrayBuffer(blob)：{{c1:: 将数据读取为二进制格式的 ArrayBuffer。 }}
-  - readAsText(blob, [encoding])：{{c1:: 将数据读取为给定编码（默认为 utf-8 编码）的文本字符串。 }}
-  - readAsDataURL(blob)：{{c1:: 读取二进制数据，并将其编码为 base64 的 data url。 }}
-  - abort()：{{c1:: 取消操作。 }}
-- 读取过程中，有以下事件：
-  - `loadstart`:{{c1:: 开始加载。 }}
-  - `progress`:{{c1:: 在读取过程中出现。 }}
-  - `load`:{{c1:: 读取完成，没有 error。 }}
-  - `abort`:{{c1:: 调用了 abort()。 }}
-  - `error`:{{c1:: 出现 error。 }}
-  - `loadend`:{{c1:: 读取完成，无论成功还是失败。 }}
-- 读取完成后，我们可以通过以下方式访问读取结果：
-  - `reader.result`:{{c1:: 是结果（如果成功）}}
-  - `reader.error`:{{c1:: 是 error（如果失败）。}}
++ 作用：{{c1:: 唯一目的是从 Blob（因此也从 File）对象中读取数据。 }}
+  + readAsArrayBuffer(blob)：{{c1:: 将数据读取为二进制格式的 ArrayBuffer。 }}
+  + readAsText(blob, [encoding])：{{c1:: 将数据读取为给定编码（默认为 utf-8 编码）的文本字符串。 }}
+  + readAsDataURL(blob)：{{c1:: 读取二进制数据，并将其编码为 base64 的 data url。 }}
+  + abort()：{{c1:: 取消操作。 }}
++ 读取过程中，有以下事件：
+  + `loadstart`:{{c1:: 开始加载。 }}
+  + `progress`:{{c1:: 在读取过程中出现。 }}
+  + `load`:{{c1:: 读取完成，没有 error。 }}
+  + `abort`:{{c1:: 调用了 abort()。 }}
+  + `error`:{{c1:: 出现 error。 }}
+  + `loadend`:{{c1:: 读取完成，无论成功还是失败。 }}
++ 读取完成后，我们可以通过以下方式访问读取结果：
+  + `reader.result`:{{c1:: 是结果（如果成功）}}
+  + `reader.error`:{{c1:: 是 error（如果失败）。}}
 
 ### FileReader 读取文件示例 [ ](javascript_info_20200611040825989)
 
@@ -5249,9 +5256,9 @@ fetch(url, options)
 
 ### fetch 请求响应的属性： [ ](javascript_info_20200604111305692)
 
-- response.status:{{c1:: response 的 HTTP 状态码， }}
-- response.ok:{{c1:: HTTP 状态码为 200-299，则为 true。 }}
-- response.headers:{{c1:: 类似于 Map 的带有 HTTP header 的对象。 }}
++ response.status:{{c1:: response 的 HTTP 状态码， }}
++ response.ok:{{c1:: HTTP 状态码为 200-299，则为 true。 }}
++ response.headers:{{c1:: 类似于 Map 的带有 HTTP header 的对象。 }}
 
 ### 获取 fetch 请求返回的 response body 的方法： [ ](javascript_info_20200604111305693)
 
@@ -5261,7 +5268,7 @@ fetch(url, options)
 4. `response.blob()`：{{c1:: 以 Blob（具有类型的二进制数据）形式返回 response，}}
 5. `response.arrayBuffer()`：{{c1:: 以` ArrayBuffer`（低级别的二进制数据）形式返回 response。}}
 
-- 注意：{{c1:: 同一个response执行一次以上body的方法 }}
++ 注意：{{c1:: 同一个response执行一次以上body的方法 }}
 
 ### 获取 Response header [ ](javascript_info_20200604111305694)
 
@@ -5295,9 +5302,9 @@ let response = fetch(url, {
 
 ### `fetch()`方法选项 [ ](javascript_info_20200604111305696)
 
-- `method`：{{c1:: HTTP 方法，}}
-- `headers`：{{c1:: 具有 request header 的对象（不是所有 header 都是被允许的）}}
-- `body`：{{c1:: 要以` string，FormData，BufferSource，Blob` 或 `UrlSearchParams `对象的形式发送的数据（request body）。}}
++ `method`：{{c1:: HTTP 方法，}}
++ `headers`：{{c1:: 具有 request header 的对象（不是所有 header 都是被允许的）}}
++ `body`：{{c1:: 要以` string，FormData，BufferSource，Blob` 或 `UrlSearchParams `对象的形式发送的数据（request body）。}}
 
 ### 使用 fetch,以 JSON 形式发送 `user` 对象 [ ](javascript_info_20200604111305697)
 
@@ -5322,17 +5329,17 @@ alert(result.message);
 
 ### FormData [ ](javascript_info_20200612065930959)
 
-- 作用：用于捕获 HTML 表单，并使用 fetch 或其他网络方法提交。
-- 构造函数：`let formData = new FormData([form]);`
-- FormData 方法
-  - `formData.append(name, value)`:{{c1:: 添加具有给定 name 和 value 的表单字段， }}
-  - `formData.append(name, blob, fileName)`:{{c1:: 添加一个字段，就像它是` <input type="file">`，第三个参数 + fileName  }}设置文件名（而不是表单字段名），因为它是用户文件系统中文件的名称，
-  - `formData.delete(name)`:{{c1:: 移除带有给定 name 的字段， }}
-  - `formData.get(name)`:{{c1:: 获取带有给定 name 的字段值， }}
-  - `formData.has(name)`:{{c1:: 如果存在带有给定 name 的字段，则返回 true，否则返回 false。 }}
-  - `formData.set(name, value)`:{{c1:: 设值 }}
-  - `formData.set(name, blob, fileName)`:{{c1:: 设置文件到表单 }}
-- 注意点:
++ 作用：用于捕获 HTML 表单，并使用 fetch 或其他网络方法提交。
++ 构造函数：`let formData = new FormData([form]);`
++ FormData 方法
+  + `formData.append(name, value)`:{{c1:: 添加具有给定 name 和 value 的表单字段， }}
+  + `formData.append(name, blob, fileName)`:{{c1:: 添加一个字段，就像它是` <input type="file">`，第三个参数 + fileName  }}设置文件名（而不是表单字段名），因为它是用户文件系统中文件的名称，
+  + `formData.delete(name)`:{{c1:: 移除带有给定 name 的字段， }}
+  + `formData.get(name)`:{{c1:: 获取带有给定 name 的字段值， }}
+  + `formData.has(name)`:{{c1:: 如果存在带有给定 name 的字段，则返回 true，否则返回 false。 }}
+  + `formData.set(name, value)`:{{c1:: 设值 }}
+  + `formData.set(name, blob, fileName)`:{{c1:: 设置文件到表单 }}
++ 注意点:
   1. 迭代：{{c1:: 可以使用 for..of 循环迭代 formData}}
   2. 设值：{{c1:: set 方法会移除具有相同名称（name）的字段，而 append 不会。}}
   3. 文件：{{c1:: 要发送文件，需要使用三个参数的语法，最后一个参数是文件名，一般是通过` <input type="file">` 从用户文件系统中获取的。}}
@@ -5432,14 +5439,14 @@ alert(commits[0].author.login);
 
 ### Fetch：跨源请求 [ ](javascript_info_20200612065930964)
 
-- 这里的核心概念是 源（origin）：{{c1:: 域（domain）/端口（port）/协议（protocol）的组合。}}
-- 跨源请求需要：{{c1::  需要来自远程端的特殊 header。}}
-- 这个策略被称为 “CORS”：{{c1:: 跨源资源共享（Cross-Origin Resource Sharing）。 }}
++ 这里的核心概念是 源（origin）：{{c1:: 域（domain）/端口（port）/协议（protocol）的组合。}}
++ 跨源请求需要：{{c1::  需要来自远程端的特殊 header。}}
++ 这个策略被称为 “CORS”：{{c1:: 跨源资源共享（Cross-Origin Resource Sharing）。 }}
 
 ### 跨源简单请求必须满足下列条件： [ ](javascript_info_20200612065930965)
 
-- 方法：{{c1:: GET，POST 或 HEAD。 }}
-- header —— 我们仅能设置：
++ 方法：{{c1:: GET，POST 或 HEAD。 }}
++ header —— 我们仅能设置：
 
   1. {{c1:: Accept}}
   2. {{c1:: Accept-Language}}
@@ -5448,80 +5455,80 @@ alert(commits[0].author.login);
 
 ### Fetch：两种跨源请求：跨源简单请求和跨源其他请求 [ ](javascript_info_20200612065930966)
 
-- 对于跨源简单请求：
-  - → 浏览器发送{{c1:: 带有源的 `Origin` header。 }}
-  - ← 对于没有凭据的请求（默认不发送），服务器应该设置：
++ 对于跨源简单请求：
+  + → 浏览器发送{{c1:: 带有源的 `Origin` header。 }}
+  + ← 对于没有凭据的请求（默认不发送），服务器应该设置：
     1. {{c1:: `Access-Control-Allow-Origin` 为 `*` 或与 `Origin` 的值相同}}
-  - ← 对于具有凭据的请求，服务器应该设置：
+  + ← 对于具有凭据的请求，服务器应该设置：
     1. {{c1:: `Access-Control-Allow-Origin` 值与 `Origin` 的相同}}
     2. {{c1:: `Access-Control-Allow-Credentials` 为 `true`}}
-- 要授予 JavaScript 访问任何 response header 的权限:{{c1:: 服务器应该在 header Access-Control-Expose-Headers 中列出允许的那些 header}}
-- 对于跨源非简单请求，{{c1:: 会在请求之前发出初步“预检”请求 }}
-  - → 浏览器将具有以下 header 的{{c1:: `OPTIONS` }}请求发送到相同的 URL：
++ 要授予 JavaScript 访问任何 response header 的权限:{{c1:: 服务器应该在 header Access-Control-Expose-Headers 中列出允许的那些 header}}
++ 对于跨源非简单请求，{{c1:: 会在请求之前发出初步“预检”请求 }}
+  + → 浏览器将具有以下 header 的{{c1:: `OPTIONS` }}请求发送到相同的 URL：
     1. {{c1:: `Access-Control-Request-Method` 有请求方法。}}
     2. {{c1:: `Access-Control-Request-Headers` 以逗号分隔的“非简单” header 列表。}}
-  - ← 服务器应该响应状态码为 200 和 header：
+  + ← 服务器应该响应状态码为 200 和 header：
     1. {{c1:: `Access-Control-Allow-Methods` 带有允许的方法的列表，}}
     2. {{c1:: `Access-Control-Allow-Headers` 带有允许的 header 的列表，}}
     3. {{c1:: `Access-Control-Max-Age` 带有指定缓存权限的秒数。}}
-  - 然后，{{c1:: 发出实际请求，应用先前的“简单”方案。 }}
+  + 然后，{{c1:: 发出实际请求，应用先前的“简单”方案。 }}
 
 ### `fetch()`方法选项:`referrer`与`referrerPolicy` [ ](javascript_info_20200612065930967)
 
-- `referrer`：{{c1:: 默认发出请求的页面的 url，可以设置为，或者当前域内的另一个url.}}
-- `referrerPolicy`:决定 referrer 中发送的内容规则，如下表:
++ `referrer`：{{c1:: 默认发出请求的页面的 url，可以设置为，或者当前域内的另一个url.}}
++ `referrerPolicy`:决定 referrer 中发送的内容规则，如下表:
   | 值 | 同源 | 跨源 | HTTPS→HTTP |
   | -------------------------------------------- | ---------- | ---------- | ---------- |
-  | `no-referrer` | {{c1::-}} | {{c1::-         }} |{{c1:: -        }} |
-  | `no-referrer-when-downgrade 或 （默认）` | {{c1::完整的 url}} | {{c1::完整的 url }}| {{c1::-        }} |
+  | `no-referrer` | {{c1::-}} | {{c1::+         }} |{{c1:: +        }} |
+  | `no-referrer-when-downgrade 或 （默认）` | {{c1::完整的 url}} | {{c1::完整的 url }}| {{c1::+        }} |
   | `origin` | {{c1::仅域}} | {{c1::仅域    }} | {{c1::仅域    }} |
   | `origin-when-cross-origin` | {{c1::完整的 url}} | {{c1::仅域    }} | {{c1::仅域     }} |
-  | `same-origin` | {{c1::完整的 url}} | {{c1::-       }} | {{c1::-        }} |
-  | `strict-origin` | {{c1::仅域  }} | {{c1::仅域    }} | {{c1::-        }} |
-  | `strict-origin-when-cross-origin` | {{c1::完整的 url }}| {{c1::仅域    }} | {{c1::-        }} |
+  | `same-origin` | {{c1::完整的 url}} | {{c1::+       }} | {{c1::+        }} |
+  | `strict-origin` | {{c1::仅域  }} | {{c1::仅域    }} | {{c1::+        }} |
+  | `strict-origin-when-cross-origin` | {{c1::完整的 url }}| {{c1::仅域    }} | {{c1::+        }} |
   | `unsafe-url` | {{c1::完整的 url }}| {{c1::完整的 url }}| {{c1::完整的 url}} |
 
 ### `fetch()`方法选项:`mode`与`credentials` [ ](javascript_info_20200612065930968)
 
-- `mode` :{{c1:: 是一种安全措施，可以防止偶发的跨源请求：}}
++ `mode` :{{c1:: 是一种安全措施，可以防止偶发的跨源请求：}}
   1. "cors":{{c1:: 默认值，允许跨源请求，如 Fetch：跨源请求 一章所述，}}
   2. "same-origin":{{c1:: 禁止跨源请求，}}
   3. "no-cors":{{c1:: 只允许简单的跨源请求。}}
-- `credentials` : {{c1:: 指定 fetch 是否应该随请求发送 cookie 和 HTTP-Authorization header。}}
-  - "same-origin":{{c1:: 默认值，对于跨源请求不发送，}}
-  - "include":{{c1:: 总是发送，需要来自跨源服务器的 Accept-Control-Allow-Credentials，才能使 JavaScript 能够访问响应，详细内容在 Fetch：跨源请求 一章有详细介绍，}}
-  - "omit":{{c1:: 不发送，即使对于同源请求。}}
++ `credentials` : {{c1:: 指定 fetch 是否应该随请求发送 cookie 和 HTTP-Authorization header。}}
+  + "same-origin":{{c1:: 默认值，对于跨源请求不发送，}}
+  + "include":{{c1:: 总是发送，需要来自跨源服务器的 Accept-Control-Allow-Credentials，才能使 JavaScript 能够访问响应，详细内容在 Fetch：跨源请求 一章有详细介绍，}}
+  + "omit":{{c1:: 不发送，即使对于同源请求。}}
 
 ### `fetch()`方法的其他选项 [ ](javascript_info_20200612065930969)
 
-- `cache`：{{c1:: 可以忽略 HTTP 缓存或者对其用法进行微调 }}
-- `redirect`:{{c1:: 遵循 HTTP 重定向的策略 }}
-- `integrity`:{{c1:: 检查响应是否与已知的预先校验和相匹配。 }}
-- `keepalive`:{{c1:: keepalive 选项告诉浏览器，即使在离开页面后，也要在后台执行请求。 }}
++ `cache`：{{c1:: 可以忽略 HTTP 缓存或者对其用法进行微调 }}
++ `redirect`:{{c1:: 遵循 HTTP 重定向的策略 }}
++ `integrity`:{{c1:: 检查响应是否与已知的预先校验和相匹配。 }}
++ `keepalive`:{{c1:: keepalive 选项告诉浏览器，即使在离开页面后，也要在后台执行请求。 }}
 
 ### URL 对象 [ ](javascript_info_20200612065930970)
 
-- 作用：所有使用 url 字符串的地方几乎都可以使用 URL 对象
-- 构造方法：`new URL(url, [base])`
-  - url:{{c1:: 完整的 URL，或者仅路径（如果设置了 base），}}
-  - base:{{c1:: 可选的 base URL：如果设置了此参数，且参数 url 只有路径，则会根据这个 base 生成 URL。}}
-- 常用属性：href,origin,host,protocol,hostname,port,pathname,search,hash.
-- 属性示意图：
++ 作用：所有使用 url 字符串的地方几乎都可以使用 URL 对象
++ 构造方法：`new URL(url, [base])`
+  + url:{{c1:: 完整的 URL，或者仅路径（如果设置了 base），}}
+  + base:{{c1:: 可选的 base URL：如果设置了此参数，且参数 url 只有路径，则会根据这个 base 生成 URL。}}
++ 常用属性：href,origin,host,protocol,hostname,port,pathname,search,hash.
++ 属性示意图：
   {{c1:: ![image-20200612162953117](javascript_info.assets/image-20200612162953117.png) }}
 
 ### url.searchParams [ ](javascript_info_20200612065930971)
 
-- 作用：URLSearchParams 类型的对象，为搜索参数提供简便方法。
-  - **`append(name, value)`** —— 按照 `name` 添加参数，
-  - **`delete(name)`** —— 按照 `name` 移除参数，
-  - **`get(name)`** —— 按照 `name` 获取参数，
-  - **`getAll(name)`** —— 获取相同 `name` 的所有参数（这是可行的，例如 `?user=John&user=Pete`），
-  - **`has(name)`** —— 按照 `name` 检查参数是否存在，
-  - **`set(name, value)`** —— set/replace 参数，
-  - **`sort()`** —— 按 name 对参数进行排序，很少使用，
-  - ……并且它是可迭代的，类似于 `Map`。
-  - URL 会将非拉丁字母与空格自动编码对 URL 字符串。
-- 包含空格和标点符号的参数的示例：
++ 作用：URLSearchParams 类型的对象，为搜索参数提供简便方法。
+  + **`append(name, value)`** —— 按照 `name` 添加参数，
+  + **`delete(name)`** —— 按照 `name` 移除参数，
+  + **`get(name)`** —— 按照 `name` 获取参数，
+  + **`getAll(name)`** —— 获取相同 `name` 的所有参数（这是可行的，例如 `?user=John&user=Pete`），
+  + **`has(name)`** —— 按照 `name` 检查参数是否存在，
+  + **`set(name, value)`** —— set/replace 参数，
+  + **`sort()`** —— 按 name 对参数进行排序，很少使用，
+  + ……并且它是可迭代的，类似于 `Map`。
+  + URL 会将非拉丁字母与空格自动编码对 URL 字符串。
++ 包含空格和标点符号的参数的示例：
   ```javascript
   //{{c1::
   url.searchParams.set("q", "test me!"); // 添加带有一个空格和一个 ! 的参数
@@ -5534,12 +5541,12 @@ alert(commits[0].author.login);
 
 ### URL 编码（encoding） [ ](javascript_info_20200612065930972)
 
-- 下面是用于编码/解码 URL 的内建函数：
-  - encodeURI:{{c1:: 编码整个 URL。 }}
-  - decodeURI:{{c1:: 解码为编码前的状态。 }}
-  - encodeURIComponent:{{c1:: 编码 URL 组件，例如搜索参数，或者 hash，或者 pathname。 }}
-  - decodeURIComponent:{{c1:: 解码为编码前的状态。 }}
-- 2 类方法的区别：
++ 下面是用于编码/解码 URL 的内建函数：
+  + encodeURI:{{c1:: 编码整个 URL。 }}
+  + decodeURI:{{c1:: 解码为编码前的状态。 }}
+  + encodeURIComponent:{{c1:: 编码 URL 组件，例如搜索参数，或者 hash，或者 pathname。 }}
+  + decodeURIComponent:{{c1:: 解码为编码前的状态。 }}
++ 2 类方法的区别：
   encodeURI:{{c1:: 仅编码 URL 中完全禁止的字符。}}
   encodeURIComponent:{{c1:: 也编码这类字符，此外，还编码 #，$，&，+，,，/，:，;，=，? 和 @ 字符。}}
 
@@ -5548,15 +5555,15 @@ alert(commits[0].author.login);
 1. 创建 XMLHttpRequest：`let xhr = new XMLHttpRequest();`
 2. 初始化：`xhr.open(method, URL, [async, user, password])`
 
-- `async`如果为`false`:{{c1:: JavaScript 执行在 send() 处暂停，并在收到响应后恢复执行。 }}
++ `async`如果为`false`:{{c1:: JavaScript 执行在 send() 处暂停，并在收到响应后恢复执行。 }}
 
 3. 发送请求:`xhr.send([body])`
 4. 监听 xhr 事件以获取响应。
 
-- load:{{c1:: 当请求完成（即使 HTTP 状态为 400 或 500 等），并且响应已完全下载。 }}
-- error:{{c1:: 当无法发出请求，例如网络中断或者无效的 URL。 }}
-- progress:{{c1:: 在下载响应期间定期触发，报告已经下载了多少。 }}
-- 完整例子如下：{{c1::
++ load:{{c1:: 当请求完成（即使 HTTP 状态为 400 或 500 等），并且响应已完全下载。 }}
++ error:{{c1:: 当无法发出请求，例如网络中断或者无效的 URL。 }}
++ progress:{{c1:: 在下载响应期间定期触发，报告已经下载了多少。 }}
++ 完整例子如下：{{c1::
   ```javascript
   // 1. 创建一个 new XMLHttpRequest 对象
   let xhr = new XMLHttpRequest();
@@ -5589,12 +5596,12 @@ alert(commits[0].author.login);
 
 ### XMLHttpRequest:一旦服务器有了响应，我们可以在以下 xhr 属性中接收结果： [ ](javascript_info_20200612065930974)
 
-- status:{{c1::HTTP 状态码（一个数字）：200，404，403 等，如果出现非 HTTP 错误，则为 0。}}
-- statusText:{{c1::HTTP 状态消息（一个字符串）：状态码为 200 对应于 OK，404 对应于 Not Found，403 对应于 Forbidden。}}
-- response（旧脚本可能用的是 responseText）:{{c1::服务器 response body。}}
-- 可以使用相应的属性指定超时:
++ status:{{c1::HTTP 状态码（一个数字）：200，404，403 等，如果出现非 HTTP 错误，则为 0。}}
++ statusText:{{c1::HTTP 状态消息（一个字符串）：状态码为 200 对应于 OK，404 对应于 Not Found，403 对应于 Forbidden。}}
++ response（旧脚本可能用的是 responseText）:{{c1::服务器 response body。}}
++ 可以使用相应的属性指定超时:
   1. {{c1::`xhr.timeout = 10000;` }}
-     - 作用：{{c1:: 如果在给定时间内请求没有成功执行，请求就会被取消，并且触发 timeout 事件。 }}
+     + 作用：{{c1:: 如果在给定时间内请求没有成功执行，请求就会被取消，并且触发 timeout 事件。 }}
 
 ### XMLHttpRequest 结合 URL 保证正确的编码例子 [ ](javascript_info_20200612065930975)
 
@@ -5611,7 +5618,7 @@ xhr.open("GET", url);
 
 ### xhr 响应类型 [ ](javascript_info_20200612065930976)
 
-- 我们可以使用 `xhr.responseType` 属性来设置响应格式：
++ 我们可以使用 `xhr.responseType` 属性来设置响应格式：
 
 * `""`（默认）:{{c1:: 响应格式为字符串，}}
 * `"text"`:{{c1::  响应格式为字符串，}}
@@ -5620,7 +5627,7 @@ xhr.open("GET", url);
 * `"document"`:{{c1::  响应格式为 XML document（可以使用 XPath 和其他 XML 方法），}}
 * `"json"`:{{c1::  响应格式为 JSON（自动解析）。}}
 
-- 例如，我们以 JSON 格式获取响应：
++ 例如，我们以 JSON 格式获取响应：
   ```javascript
   let xhr = new XMLHttpRequest();
   xhr.open("GET", "/article/xmlhttprequest/example/json");
@@ -5635,29 +5642,29 @@ xhr.open("GET", url);
 
 ### xhr.readyState [ ](javascript_info_20200612065930977)
 
-- 可以通过 xhr.readyState 来了解当前状态
-  - `UNSENT = 0;`:{{c1:: // 初始状态}}
-  - `OPENED = 1;`:{{c1:: // open 被调用}}
-  - `HEADERS_RECEIVED = 2;`:{{c1:: // 接收到 response header}}
-  - `LOADING = 3;`:{{c1:: // 响应正在被加载（接收到一个数据包）}}
-  - `DONE = 4;`:{{c1:: // 请求完成}}
-- 可以使用 readystatechange 事件来跟踪,如今，它已被 load/error/progress 事件处理程序所替代。
++ 可以通过 xhr.readyState 来了解当前状态
+  + `UNSENT = 0;`:{{c1:: // 初始状态}}
+  + `OPENED = 1;`:{{c1:: // open 被调用}}
+  + `HEADERS_RECEIVED = 2;`:{{c1:: // 接收到 response header}}
+  + `LOADING = 3;`:{{c1:: // 响应正在被加载（接收到一个数据包）}}
+  + `DONE = 4;`:{{c1:: // 请求完成}}
++ 可以使用 readystatechange 事件来跟踪,如今，它已被 load/error/progress 事件处理程序所替代。
 
 ### xhr.abort()方法 [ ](javascript_info_20200612065930978)
 
-- 作用： 1.{{c1:: 终止请求 }} 2.{{c1:: 触发 abort 事件。 }} 3.{{c1:: 且 xhr.status 变为 0 }}
++ 作用： 1.{{c1:: 终止请求 }} 2.{{c1:: 触发 abort 事件。 }} 3.{{c1:: 且 xhr.status 变为 0 }}
 
 ### xhr 操作 header 的方法 [ ](javascript_info_20200612065930979)
 
-- `xhr.setRequestHeader('Content-Type', 'application/json');`
-  - 注意：{{c1:: 一旦设置了 header，就无法撤销了。 }}
-- `xhr.getResponseHeader('Content-Type');`
-- `getAllResponseHeaders();`
-  - 注意：{{c1:: header 之间的换行符始终为 "\r\n" }}
++ `xhr.setRequestHeader('Content-Type', 'application/json');`
+  + 注意：{{c1:: 一旦设置了 header，就无法撤销了。 }}
++ `xhr.getResponseHeader('Content-Type');`
++ `getAllResponseHeaders();`
+  + 注意：{{c1:: header 之间的换行符始终为 "\r\n" }}
 
 ### 使用 xhr 发送 POST 请求 [ ](javascript_info_20200612065930980)
 
-- 使用内建的`FormData`对象发送请求
++ 使用内建的`FormData`对象发送请求
   ```javascript
   //{{c1::
   let xhr = new XMLHttpRequest();
@@ -5665,7 +5672,7 @@ xhr.open("GET", url);
   xhr.send(formData);
   //}}
   ```
-- 使用`JSON`字符串发送请求
++ 使用`JSON`字符串发送请求
   ```javascript
   //{{c1::
   xhr.open("POST", "/submit");
@@ -5676,15 +5683,15 @@ xhr.open("GET", url);
 
 ### 上传进度 [ ](javascript_info_20200612065930981)
 
-- xhr.upload:{{c1:: 专门用于跟踪上传事件 }}
-  - loadstart：{{c1:: 上传开始。}}
-  - progress：{{c1:: 上传期间定期触发。}}
-  - abort：{{c1:: 上传中止。}}
-  - error：{{c1:: 非 HTTP 错误。}}
-  - load：{{c1:: 上传成功完成。}}
-  - timeout：{{c1:: 上传超时（如果设置了 timeout 属性）。}}
-  - loadend：{{c1:: 上传完成，无论成功还是 error。}}
-- 跟踪上传进度例子
++ xhr.upload:{{c1:: 专门用于跟踪上传事件 }}
+  + loadstart：{{c1:: 上传开始。}}
+  + progress：{{c1:: 上传期间定期触发。}}
+  + abort：{{c1:: 上传中止。}}
+  + error：{{c1:: 非 HTTP 错误。}}
+  + load：{{c1:: 上传成功完成。}}
+  + timeout：{{c1:: 上传超时（如果设置了 timeout 属性）。}}
+  + loadend：{{c1:: 上传完成，无论成功还是 error。}}
++ 跟踪上传进度例子
 
 ```javascript
 //{{c1::
@@ -5696,7 +5703,7 @@ xhr.upload.onprogress = function (event) {
 
 ### xhr 的跨源请求设置。 [ ](javascript_info_20200612065930982)
 
-- 默认情况下不会将 cookie 和 HTTP 授权发送到其他域。要启用它们，可以将 {{c1:: xhr.withCredentials 设置为 true }}
++ 默认情况下不会将 cookie 和 HTTP 授权发送到其他域。要启用它们，可以将 {{c1:: xhr.withCredentials 设置为 true }}
 
 ```javascript
 let xhr = new XMLHttpRequest();
@@ -5711,41 +5718,41 @@ xhr.open("POST", "http://anywhere.com/request");
 
 ### js Cookie 操作 [ ](javascript_info_20200615060136003)
 
-- 访问 coockie:document.cookie
-- 注意点:
++ 访问 coockie:document.cookie
++ 注意点:
   1. {{c1:: 写入操作只会修改其中提到的 cookie。 }}
   2. {{c1:: name/value 必须被编码。 }}
   3. {{c1:: 一个 cookie 最大为 4kb，每个网站最多有 20+ 个左右的 cookie（具体取决于浏览器）。 }}
-- Cookie 选项：
-  - path=/:{{c1:: 默认为当前路径，使 cookie 仅在该路径下可见。 }}
-  - domain=site.com:{{c1:: 默认 cookie 仅在当前域下可见，如果显式设置了域，可以使 cookie 在子域下也可见。 }}
-  - expires:{{c1:: 或 max-age 设置 cookie 过期时间，如果没有设置，则当浏览器关闭时 cookie 就失效了。 }}
-  - secure:{{c1:: 使 cookie 仅在 HTTPS 下有效。 }}
-  - samesite:{{c1:: 如果请求来自外部网站，禁止浏览器发送 cookie，这有助于防止 XSRF 攻击。 }}
-- XSRF 攻击全称：{{c1:: Cross-Site Request Forgery }}
++ Cookie 选项：
+  + path=/:{{c1:: 默认为当前路径，使 cookie 仅在该路径下可见。 }}
+  + domain=site.com:{{c1:: 默认 cookie 仅在当前域下可见，如果显式设置了域，可以使 cookie 在子域下也可见。 }}
+  + expires:{{c1:: 或 max-age 设置 cookie 过期时间，如果没有设置，则当浏览器关闭时 cookie 就失效了。 }}
+  + secure:{{c1:: 使 cookie 仅在 HTTPS 下有效。 }}
+  + samesite:{{c1:: 如果请求来自外部网站，禁止浏览器发送 cookie，这有助于防止 XSRF 攻击。 }}
++ XSRF 攻击全称：{{c1:: Cross-Site Request Forgery }}
 
 ### `LocalStorage`，`sessionStorage` [ ](javascript_info_20200615060136004)
 
-- 两个存储对象都提供相同的方法和属性：
-  - `setItem(key, value)`:{{c1:: 存储键/值对。 }}
-  - `getItem(key)`:{{c1:: 按照键获取值。 }}
-  - `removeItem(key)`:{{c1:: 删除键及其对应的值。 }}
-  - `clear()`:{{c1:: 删除所有数据。 }}
-  - `key(index)`:{{c1:: 获取该索引下的键名。 }}
-  - `length`:{{c1:: 存储的内容的长度。}}
-- `localStorage`最主要的特点是：
-  - {{c1:: 在同源的所有标签页和窗口之间共享数据。 }}
-  - {{c1:: 数据不会过期。它在浏览器重启甚至系统重启后仍然存在。}}
-  - {{c1:: 可以类对象形式访问，但是通常不建议}}
-- `sessionStorage`最主要的特点是：
-  - {{c1:: sessionStorage 的数据只存在于当前浏览器标签页。}}
-    - {{c1:: 具有相同页面的另一个标签页中将会有不同的存储。}}
-    - {{c1:: 但是，它在同一标签页下的 iframe 之间是共享的（假如它们来自相同的源）。}}
-  - {{c1:: 数据在页面刷新后仍然保留，但在关闭/重新打开浏览器标签页后不会被保留。}}
++ 两个存储对象都提供相同的方法和属性：
+  + `setItem(key, value)`:{{c1:: 存储键/值对。 }}
+  + `getItem(key)`:{{c1:: 按照键获取值。 }}
+  + `removeItem(key)`:{{c1:: 删除键及其对应的值。 }}
+  + `clear()`:{{c1:: 删除所有数据。 }}
+  + `key(index)`:{{c1:: 获取该索引下的键名。 }}
+  + `length`:{{c1:: 存储的内容的长度。}}
++ `localStorage`最主要的特点是：
+  + {{c1:: 在同源的所有标签页和窗口之间共享数据。 }}
+  + {{c1:: 数据不会过期。它在浏览器重启甚至系统重启后仍然存在。}}
+  + {{c1:: 可以类对象形式访问，但是通常不建议}}
++ `sessionStorage`最主要的特点是：
+  + {{c1:: sessionStorage 的数据只存在于当前浏览器标签页。}}
+    + {{c1:: 具有相同页面的另一个标签页中将会有不同的存储。}}
+    + {{c1:: 但是，它在同一标签页下的 iframe 之间是共享的（假如它们来自相同的源）。}}
+  + {{c1:: 数据在页面刷新后仍然保留，但在关闭/重新打开浏览器标签页后不会被保留。}}
 
 ### 遍历`LocalStorage`，`sessionStorage` [ ](javascript_info_20200615060136005)
 
-- 像遍历数组那样遍历:
++ 像遍历数组那样遍历:
 
 ```js
 //{{c1::
@@ -5756,7 +5763,7 @@ for (let i = 0; i < localStorage.length; i++) {
 //}}
 ```
 
-- `for key in localStorage`:
++ `for key in localStorage`:
 
 ```js
 //{{c1::
@@ -5769,7 +5776,7 @@ for (let key in localStorage) {
 //}}
 ```
 
-- Object.keys 获取只属于“自己”的键:
++ Object.keys 获取只属于“自己”的键:
 
 ```js
 //{{c1::
@@ -5782,11 +5789,11 @@ for (let key of keys) {
 
 ### Storage 事件 [ ](javascript_info_20200615060136006)
 
-- 作用：{{c1:: 当 localStorage 或 sessionStorage 中的数据更新后，storage 事件就会触发 }}
-- 属性：
-  - `key`:{{c1:: 发生更改的数据的 key（如果调用的是 .clear() 方法，则为 null）。}}
-  - `oldValue`:{{c1:: 旧值（如果是新增数据，则为 null）。}}
-  - `newValue`:{{c1:: 新值（如果是删除数据，则为 null）。}}
-  - `url`:{{c1:: 发生数据更新的文档的 url。}}
-  - `storageArea`:{{c1:: 发生数据更新的 localStorage 或 sessionStorage 对象。}}
-- 注意：{{c1:: 在所有可访问到存储对象的 window 对象上触发`window.onstorage` }}
++ 作用：{{c1:: 当 localStorage 或 sessionStorage 中的数据更新后，storage 事件就会触发 }}
++ 属性：
+  + `key`:{{c1:: 发生更改的数据的 key（如果调用的是 .clear() 方法，则为 null）。}}
+  + `oldValue`:{{c1:: 旧值（如果是新增数据，则为 null）。}}
+  + `newValue`:{{c1:: 新值（如果是删除数据，则为 null）。}}
+  + `url`:{{c1:: 发生数据更新的文档的 url。}}
+  + `storageArea`:{{c1:: 发生数据更新的 localStorage 或 sessionStorage 对象。}}
++ 注意：{{c1:: 在所有可访问到存储对象的 window 对象上触发`window.onstorage` }}

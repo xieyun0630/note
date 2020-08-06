@@ -45,7 +45,7 @@ public class MyJavaFX extends Application {
 //}}
 ```
 
-- **stage.setResizable(false)**方法：{{c1:禁止改变舞台大小}}
++ **stage.setResizable(false)**方法：{{c1:禁止改变舞台大小}}
 
 ### 使用javaFX类库在一个面版中央显示圆： [	](java_se_20191219101334715)
 
@@ -75,24 +75,24 @@ public class MyJavaFX extends Application {
 
 ### javaFX中各个类的关系。 [	](java_se_20191219101334717)
 
-- Stage组合{{c1::Scene}}
-- Scene组合{{c1::Parent}},因此Scenne不能直接{{c1::包含Shape与ImageView}}
-- {{c1::Shape}}与{{c1::ImageView}}继承自Node
-- {{c1::Control}}与{{c1::Pane}}继承自Parent
++ Stage组合{{c1::Scene}}
++ Scene组合{{c1::Parent}},因此Scenne不能直接{{c1::包含Shape与ImageView}}
++ {{c1::Shape}}与{{c1::ImageView}}继承自Node
++ {{c1::Control}}与{{c1::Pane}}继承自Parent
 
 {{c1::![image-20191216224429952](java_se.assets/image-20191216224429952.png)}}
 
 ### Java FX的绑定属性 [	](java_se_20191219101334719)
 
-- 例：{{c1:: `targetProperty.bind(source)`}}
++ 例：{{c1:: `targetProperty.bind(source)`}}
 
-- 对于 double/float/1ong/int/boolean 类型的值，它的绑定属性类型是{{c1::DoubleProperty/FloatProperty/LongProperty/IntegerProperty/BooleanProperty。}}
++ 对于 double/float/1ong/int/boolean 类型的值，它的绑定属性类型是{{c1::DoubleProperty/FloatProperty/LongProperty/IntegerProperty/BooleanProperty。}}
 
-- 数值类绑定属性提供了{{c1:: 常用的运算方法}}
++ 数值类绑定属性提供了{{c1:: 常用的运算方法}}
 
-- DoubleProperty等基本绑定属性为{{c1:: 抽象类}},需要使用{{c1:: 对应的实现类SimpleDoubleProperty等}}创建实例.
++ DoubleProperty等基本绑定属性为{{c1:: 抽象类}},需要使用{{c1:: 对应的实现类SimpleDoubleProperty等}}创建实例.
 
-- 方法签名{{c1::
++ 方法签名{{c1::
   ```java
   /**
     * 为当前绑定属性对象设置单向绑定。 绑定的对象必须先实现ObservableValue接口
@@ -106,15 +106,15 @@ public class MyJavaFX extends Application {
 
 {{c1::
 
-- getter与setter方法
-- `public propertyType xProperty()`
++ getter与setter方法
++ `public propertyType xProperty()`
 
 }}
 
 ### java FX中Node类的通用方法 [	](java_se_20191219101334722)
 
-- ` setStyle(String value)`:{{c1:: 设置css样式}}
-- `setRotate()`:{{c1:: 可以设置旋转的角度}}
++ ` setStyle(String value)`:{{c1:: 设置css样式}}
++ `setRotate()`:{{c1:: 可以设置旋转的角度}}
 
 ```java
 //黑边 红色填充
@@ -129,7 +129,7 @@ b.setRotate(80);
 
 ### java FX中Color类用法 [	](java_se_20191219101334724)
 
-- 使用构造方法:
++ 使用构造方法:
 
 {{c1::
 
@@ -139,7 +139,7 @@ public Color(double r, double g ,double b double opacity);
 
 }}
 
-- 使用{{c1::Color.RED之类的标准颜色}}
++ 使用{{c1::Color.RED之类的标准颜色}}
 
 ### java FX中Font类用法 [	](java_se_20191219101334725)
 
@@ -230,9 +230,9 @@ pane.getChildren().add(label);
 
 ### 事件与事件源 [	](java_se_20191219101334733)
 
-- java中的事件类的根类是{{c1::`java.util.EventObject`}}
-- javaFX中的事件类的根类是{{c1::`javafx.event.Event`}}
-- 可以通过事件类的{{c1::`getSoource()`}}方法来确定一个事件的源对象。
++ java中的事件类的根类是{{c1::`java.util.EventObject`}}
++ javaFX中的事件类的根类是{{c1::`javafx.event.Event`}}
++ 可以通过事件类的{{c1::`getSoource()`}}方法来确定一个事件的源对象。
 
 ### JavaFx中为一个按钮注册处理器与处理事件 [	](java_se_20191219101334735)
 
@@ -274,9 +274,9 @@ btn.setOnAction(event -> circlePane.enlarge());
 
 ### 可观察对象监听器 [	](java_se_20191219101334742)
 
-- Observable的实例，使用{{c1::`addListener`与`removeListener`}}添加或删除实现{{c1::`InvalidationListener`监听器}}对象，用于监听可观察对象的添加于修改
-- 每个绑定属性都是{{c1::Observable的实例}}
-- Observable与InvalidationListener接口源码：
++ Observable的实例，使用{{c1::`addListener`与`removeListener`}}添加或删除实现{{c1::`InvalidationListener`监听器}}对象，用于监听可观察对象的添加于修改
++ 每个绑定属性都是{{c1::Observable的实例}}
++ Observable与InvalidationListener接口源码：
 ```java
 //{{c1::
 public interface Observable {
@@ -362,8 +362,8 @@ ellipse.setOnMouseReleased(e -> ft.play());
 
 ###  javafx.animation.Timeline的使用 [	](java_se_20191219101334765)
 
-- PathTransition 和 FadeTransition 定义了特定的动画。Timeline 类可以用于通过使用一个或者更多的 KeyFrame (关键帧）来编写任意动画。每个 KeyFrame 在一个给定的时间间隔内顺序执行。Timeline 继承自 Animation。
-- ![image-20191218203918151](java_se.assets/image-20191218203918151.png)
++ PathTransition 和 FadeTransition 定义了特定的动画。Timeline 类可以用于通过使用一个或者更多的 KeyFrame (关键帧）来编写任意动画。每个 KeyFrame 在一个给定的时间间隔内顺序执行。Timeline 继承自 Animation。
++ ![image-20191218203918151](java_se.assets/image-20191218203918151.png)
 
 核心代码：
 
@@ -389,11 +389,11 @@ animation.play();
 
 ### 内部类的特征： [	](java_se_20191219101334768)
 
-- 一个内部类被编译成{{c1::一个名为`OuterClassName$InnerClassName.class`的类}}
-- 一个内部类可以引用{{c1::定义在它所在的外部类中的数据和方法。}}
-- 和类中成员相同,内部类可以使用{{c1:可见性修饰符所定义。}}
++ 一个内部类被编译成{{c1::一个名为`OuterClassName$InnerClassName.class`的类}}
++ 一个内部类可以引用{{c1::定义在它所在的外部类中的数据和方法。}}
++ 和类中成员相同,内部类可以使用{{c1:可见性修饰符所定义。}}
 
-- 可以被定义成{{c1::static}}
++ 可以被定义成{{c1::static}}
 
 ### 创建一个内部类 [	](java_se_20191219101334769)
 
@@ -408,9 +408,9 @@ OuterClass.InnerClass innerObject = new OuterObject.InnerClass();
 
 ### 匿名内部类 [	](java_se_20191219101334771)
 
-- 匿名内部类一步实现定义内部类以及创建一个内部类实例。
++ 匿名内部类一步实现定义内部类以及创建一个内部类实例。
 
-- 语法:{{c1::
++ 语法:{{c1::
 
   ```java 
   new SuperClassName/InterfaceName(){
@@ -419,7 +419,7 @@ OuterClass.InnerClass innerObject = new OuterObject.InnerClass();
   //}}
   ```
 
-- 匿名内部类别编译成名为`OuterClassName$n.class`的类
++ 匿名内部类别编译成名为`OuterClassName$n.class`的类
 
 ### Labeled类与Label类 [	](java_se_20191219101334772)
 
@@ -527,10 +527,10 @@ passwordField.setActionEvent(c -> passwordField.getText());
 
 ### TextArea类 [	](java_se_20191219101334778)
 
-- prefColumnCount绑定属性：{{c1::指定文本的优先列数}}
-- prefRowCount绑定属性：{{c1::指定文本的优先列数}}
-- wrapText绑定属性：{{c1::指定文本是否折到下一行}}
-- 添加滚动功能：{{c1::`ScrollPane scrollPane=new ScrollPane(textArea);`}}
++ prefColumnCount绑定属性：{{c1::指定文本的优先列数}}
++ prefRowCount绑定属性：{{c1::指定文本的优先列数}}
++ wrapText绑定属性：{{c1::指定文本是否折到下一行}}
++ 添加滚动功能：{{c1::`ScrollPane scrollPane=new ScrollPane(textArea);`}}
 
 ### TextArea与ScrollPane 例子 [	](java_se_20191219101334780)
 
@@ -672,7 +672,7 @@ vScrollBar.setOrientation(Orientation.VERTICAL);
         slHorizontal.getMax()));
     
     slVertical.valueProperty().addListener(ov -> 
-      text.setY((slVertical.getMax() - slVertical.getValue()) 
+      text.setY((slVertical.getMax() + slVertical.getValue()) 
         * paneForText.getHeight() / slVertical.getMax()));
     
 ```
@@ -931,17 +931,17 @@ MediaView mediaView = new MediaView(mediaPlayer);
 
 ### 多线程：Callable 接口 VS Runnable 接口 [	](java_se_20200604111131325)
 
-- {{c1:: call()更加强大。}}
-- {{c1:: call()方法可以有返回值。}}
-- {{c1:: call()方法可以声明抛出异常。}}
++ {{c1:: call()更加强大。}}
++ {{c1:: call()方法可以有返回值。}}
++ {{c1:: call()方法可以声明抛出异常。}}
 
 ### Future接口 [	](java_se_20200604111131326)
 
-- `boolean cancel(boolean mayInterruptIfRunning)`：{{c1:: 试图取消关联的callable任务 }}
-- `boolean isCancelled()`：{{c1:: 判断Callable任务是否取消 }}
-- `boolean isDone()`：{{c1:: 判断Callable任务是否结束 }}
-- `V get()`：{{c1:: 返回Callable任务中的返回值 }}
-- `V get(long timeout, TimeUnit unit)`：{{c1:: 指定时间内，返回Callable任务中的返回值 }}
++ `boolean cancel(boolean mayInterruptIfRunning)`：{{c1:: 试图取消关联的callable任务 }}
++ `boolean isCancelled()`：{{c1:: 判断Callable任务是否取消 }}
++ `boolean isDone()`：{{c1:: 判断Callable任务是否结束 }}
++ `V get()`：{{c1:: 返回Callable任务中的返回值 }}
++ `V get(long timeout, TimeUnit unit)`：{{c1:: 指定时间内，返回Callable任务中的返回值 }}
 
 ### 线程状态 [	](java_se_20200604111131327)
 
@@ -993,8 +993,8 @@ public static void main(String[] args) {
 
 ### 后台线程 [	](java_se_20200604111131331)
 
-- 特征：{{c1:: 如何前台线程都死亡，后台线程自动死亡 }}
-- 设置指定线程成后台线程：{{c1:: Thread对象的`setDaemon(true)`方法 }}
++ 特征：{{c1:: 如何前台线程都死亡，后台线程自动死亡 }}
++ 设置指定线程成后台线程：{{c1:: Thread对象的`setDaemon(true)`方法 }}
 
 ### sleep()方法与yield()方法的区别 [	](java_se_20200604111131333)
 
@@ -1171,11 +1171,11 @@ public class Account {
 | 获取、不删除元素 | {{c1:: element()}} | {{c1:: peek()}}   | {{c1:: 无}}     | {{c1:: 无}}             |
 
 ### `BlockingQueue`接口具有的实现类 [	](java_se_20200604111131344)
-- {{c1:: `ArrayBlockingQueue` }}
-- {{c1:: `LinkedBlockingQueue`  }}
-- {{c1:: `PriorityBlockingQueue`  }}
-- {{c1:: `DelayQueue` }}
-- {{c1:: `SynchronousQueue` }}
++ {{c1:: `ArrayBlockingQueue` }}
++ {{c1:: `LinkedBlockingQueue`  }}
++ {{c1:: `PriorityBlockingQueue`  }}
++ {{c1:: `DelayQueue` }}
++ {{c1:: `SynchronousQueue` }}
 
 {{c1:: ![image-20200604222338200](java_se.assets/image-20200604222338200.png) }}
 
