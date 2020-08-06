@@ -135,74 +135,100 @@
 + 生产环境打包：{{c1:: `webpack ./src/index.js -o ./build/built.js --mode=development` }}
 + 区别：{{c1:: 生产环境比开发环境多一个压缩js代码。 }}
 
-### webpack基本配置 [	](buildTool_20200626090144140)
+### webpack基本配置 [	](buildTool_20200722073620437)
 
-+ 目录结构
-    + {{c1::`./src/index.js`}}
-    + {{c1::`./webpack.config.js`}}
+
+
++ 安装webpack命令：{{c1:: `npm install webpack webpack-cli -D` }}
+
++ 创建目录结构
+  
+    + 源代码目录: {{c1::`./src/index.js`}}
+    + 配置文件：{{c1::`./webpack.config.js`}}
+    
++ webpack的4.x版本中默认约定：
+  
+    + 打包的入口文件为:{{c1:: `./src/index.js`}}
+    + 打包的输出文件为:{{c1:: `./dist/main.js`}}
+    
 + 配置文件中最基本配置：
+  
     + 五大核心概念属性:{{c1:: `output output module plugins mode` }}
-    ```js
+    + 基本配置
+      ```js
+      //{{c1::
+      module.exports = {
+          mode:"development"
+      }
+      //}}
+      ```
+    + 修改项目中的package.json文件添加运行脚本，如下
+      ```json
+      //{{c1::
+      "scripts":{
+          "dev":"webpack"
+      }
+      //}}
+      ```
++ 启动webpack进行项目打包命令：`npm run dev`
 
-        const { resolve } = require('path');
-        const HtmlWebpackPlugin = require('html-webpack-plugin');
-        module.exports = {
-        //{{c1::
-            entry: './src/index.js',
-            output: {
-                filename: 'built.js',
-                path: resolve(__dirname, 'build')
-            },
-            module: {
-                rules: [
-                {
-                    test: /\.css$/,
-                    use: [
-                    'style-loader',
-                    'css-loader'
-                    ]
-                }
-                ]
-            },
-            plugins: [
-                new HtmlWebpackPlugin({
-                template: './src/index.html'
-                })
-            ],
-            mode: 'development'
-        //}}
-        };
+### webpack自动打包功能 [	](buildTool_20200722073620438)
++ 安装：{{c1:: `npm install webpack-dev-server -D` }}
++ 配置`html-webpack-plugin`生成预览页面：
+    ```js
+    //{{c1::
+    const HtmlWebpackPlugin = require('html-webpack-plugin')
+    const htmlWebpackPlugin = new HtmlWebpackPlugin({
+      template: './src/index.html',
+      filename: 'index.html'
+    })
+    //...
+    plugins:[htmlPlguin]
+    //}}
     ```
++ `package.json`配置：
+    ```json
+    //{{c1::
+    "scripts": {
+      "dev": "webpack-dev-server --open --host 127.0.0.1 --port 8888"
+    }
+    //}}
+    ```
+
+### npm install -S -D -g 有什么区别 [	](buildTool_20200722073620441)
+
+- `npm install module_name -S` ： {{c1:: 即  `npm install module_name --save`  写入`dependencies` }}
+- `npm install module_name -D` ：{{c1::  即  `npm install module_name --save-dev` 写入`devDependencies` }}
+- `npm install module_name -g`： {{c1:: 全局安装(命令行使用) }}
+- `npm install module_name`： {{c1:: 本地安装(将安装包放在`./node_modules`下) }}
+
 ## webpack开发环境配置 [	](buildTool_20200626090144141)
 
+### webpack的loader调用过程（图） [	](buildTool_20200722073620443)
+
+{{c1::![image-20200721183448836](buildTool.assets/image-20200721183448836.png)}}
+
 ### webpack打包样式资源配置 [	](buildTool_20200626090144143)
+
 ```js
 module: {
     rules: [
-      {
-        test: /\.css$/,
-        use: [
-          'style-loader',
-          'css-loader'
-        ]
-      },
-      {
-        test: /\.less$/,
-        use: [
-          'style-loader',
-          'css-loader',
-          'less-loader'
-        ]
-      }
+      // {{c1::
+      { test: /\.css$/,use: ['style-loader','css-loader']},
+      { test: /\.less$/,use: ['style-loader','css-loader','less-loader']}
+      //}}
     ]
-  }
+}
 ```
 + 作用:
     1. 'style-loader'：{{c1:: 将加载后的文件放置到`<style>`标签中 }}
     2. 'css-loader'：{{c1:: 将css文件加载到js入口文件中 }}
     3. 'less-loader'：{{c1:: 将less文件转换成css }}:
 
+
+
 ### webpack打包html资源 [	](buildTool_20200626090144144)
+
 + 配置代码如下：
     ```js
         new HtmlWebpackPlugin({
@@ -291,38 +317,25 @@ module: {
 + `MiniCssExtractPlugin.loader`:{{c1:: 取代style-loader,提取js中的css成单独文件 }}
 + `filename`:{{c1:: 对输出的css文件进行重命名 }}
 
-### webpack进行css兼容性处理 [	](buildTool_20200626090144150)
+### 配置postCSS自动添加css的兼容前缀 [	](buildTool_20200722073620444)
 
-+ 所需模块：{{c1:: ostcss-loader postcss-preset-env }}
-+ 配置代码如下：
++ 安装所需模块：{{c1:: `npm i postcss-loader autoprefixer-D `}}
+
++ loader配置：
     ```js
-    {
-        loader: 'postcss-loader',
-        options: {
-            ident: 'postcss',
-            plugins: () => [
-                require('postcss-preset-env')()
-            ]
-        }
+    { test: /\.css$/, use: ['style-loader', 'css-loader', 'postcss-loader'] }
+    ```
+    
++ 配置文件：postcss.config.js
+  
+    ```js
+    const autoprefixer = require('autoprefixer')
+    module.exports = {
+      plugins: [autoprefixer]
     }
     ```
-+ 作用：{{c1:: 帮postcss找到package.json中browserslist里面的配置}}
-    ```js
-        "browserslist": {
-            // 开发环境 --> 设置node环境变量：process.env.NODE_ENV = development
-            "development": [
-            "last 1 chrome version",
-            "last 1 firefox version",
-            "last 1 safari version"
-            ],
-            // 生产环境：默认是看生产环境
-            "production": [
-            ">0.2%",
-            "not dead",
-            "not op_mini all"
-            ]
-        }
-    ```
+    
++ 作用：处理各个浏览器不兼容的css属性
 
 ### 打包时压缩css [	](buildTool_20200626090144151)
 
@@ -368,8 +381,6 @@ plugins: [
       }
     ```
 
-
-
 ### 打包时将js文件与html文件压缩 [	](buildTool_20200626090144154)
 
 ```js
@@ -391,57 +402,6 @@ plugins: [
   //}}
 ```
 
-
-### HMR [	](buildTool_20200626090144155)
-
-+ 部署命令：{{c1:: `npx webpack-dev-server` }}
-
-+ HMR: {{c1:: hot module replacement 热模块替换 / 模块热替换 }}
-
-  + 作用：{{c1:: 一个模块发生变化，只会重新打包这一个模块（而不是打包所有模块）,极大提升构建速度 }}
-
-1. 样式文件：{{c1:: 可以使用HMR功能：因为style-loader内部实现了 }}
-
-2. js文件：默认不能使用HMR功能 --> 
-    + 注意：{{c1:: HMR功能对js的处理，只能处理非入口js文件的其他文件。 }}
-    + 解决：{{c1:: 需要修改js模块代码，添加支持HMR功能的代码 }}
-    ```js
-        //{{c1::
-        if (module.hot) {
-        // 一旦 module.hot 为true，说明开启了HMR功能。 --> 让HMR功能代码生效
-        module.hot.accept('./print.js', function() {
-            // 方法会监听 print.js 文件的变化，一旦发生变化，其他模块不会重新打包构建。
-            // 会执行后面的回调函数
-            print();
-        });
-        }
-        //}}
-    ```
-    
-+ html文件: {{c1:: 默认不能使用HMR功能.同时会导致问题：html文件不能热更新了~ （不用做HMR功能） }}
-    + 解决：{{c1:: 修改entry入口，将html文件引入 }}
-    ```js
-      //{{c1::
-      module.exports = {
-      entry: ['./src/js/index.js', './src/index.html'],
-      //}}
-    ```
-    
-+ 开启HMR功能
-    ```js
-        //{{c1::
-    devServer: {
-        contentBase: resolve(__dirname, 'build'),
-        compress: true,
-        port: 3000,
-        open: true,
-        // 开启HMR功能
-        // 当修改了webpack配置，新配置要想生效，必须重新webpack服务
-        hot: true
-    }
-        //}}
-    ```
-
 ### source-map [	](buildTool_20200626090144156)
 
 + `source-map`: 一种 提供源代码到构建后代码映射 技术 （如果构建后代码出错了，通过映射可以追踪源代码错误）
@@ -461,39 +421,31 @@ plugins: [
 + 作用：{{c1:: 在oneOf中声明的loader数组，只会匹配一个loader }}
 + 注意：{{c1:: 不能有两个配置处理同一种类型文件 }}
 
-### 缓存 [	](buildTool_20200626090144158)
-+ 开启babel缓存
-    + 作用： 第二次构建时，如果文件没有变化，会读取之前的缓存
-    + 配置：
-    ```js
-        {
-            //{{c1:: 
-            test: /\.js$/,
-            exclude: /node_modules/,
-            loader: 'babel-loader',
-            options: {
-              presets: [
-                [
-                  '@babel/preset-env',
-                  {
-                    useBuiltIns: 'usage',
-                    corejs: { version: 3 },
-                    targets: {
-                      chrome: '60',
-                      firefox: '50'
-                    }
-                  }
-                ]
-              ],
-              cacheDirectory: true
-            }
-            //}}
-        }
-    ```
-+ 文件资源文件缓存:
- + 作用：通过给资源文件的名称加上一个hash值进行缓存
- + 配置(分别给js,css添加hash值)：
-    ```js
+### 打包处理js文件中的高级语法 [	](buildTool_20200722073620446)
+
++ 安装babel转换器
+      `npm install babel-loader @babel/core @babel/runtime -D`
++ 安装babel语法插件包
+      `npm install @babel/preset-env @babel/plugin-transform-runtime @babel/plugin-proposal-class-properties -D`
++ 在项目根目录创建并配置babel.config.js文件  
+  ```js
+  module.exports = {
+          presets:["@babel/preset-env"],
+          plugins:[ "@babel/plugin-transform-runtime", "@babel/plugin-proposal-class-properties" ]
+  }
+  ```
++ loader配置：
+  ```js
+  //{{c1::
+  { test: /\.js$/, use: 'babel-loader', exclude: /node_modules/ }
+  //}}
+  ```
+
+### 开启babel缓存
++ 添加babel-loader选项：{{c1:: `cacheDirectory: true` }}
++ 根据文件内容添加hash值，以便进行缓存：
+  ```js
+    //{{c1::
     output: {
         filename: 'js/built.[contenthash:10].js',
         path: resolve(__dirname, 'build')
@@ -502,13 +454,18 @@ plugins: [
     new MiniCssExtractPlugin({
       filename: 'css/built.[contenthash:10].css'
     })
-    ```
-+ 3种类型的hash值
-    1. `hash`:{{c1::  每次wepack构建时会生成一个唯一的hash值。}}
-        问题: {{c1:: 因为js和css同时使用一个hash值，如果重新打包，会导致所有缓存失效。（可能我却只改动一个文件） }}
-    2. `chunkhash`：{{c1:: 根据chunk生成的hash值。如果打包来源于同一个chunk，那么hash值就一样}}
-        问题: {{c1:: 因为css是在js中被引入的，所以同属于一个chunk,js和css的hash值还是一样的 }}
-    3. `contenthash`:{{c1::  根据文件的内容生成hash值。不同文件hash值一定不一样    }}
+    //}}
+  ```
++ babel缓存的原因：{{c1:: 只对内容修改过的js文件进行转换。 }}
+
+
+### webpack 3种类型的hash值 [	](buildTool_20200722073620447)
+
+1. `hash`:{{c1::  每次wepack构建时会生成一个唯一的hash值。}}
+    问题: {{c1:: 因为js和css同时使用一个hash值，如果重新打包，会导致所有缓存失效。（可能我却只改动一个文件） }}
+2. `chunkhash`：{{c1:: 根据chunk生成的hash值。如果打包来源于同一个chunk，那么hash值就一样}}
+    问题: {{c1:: 因为css是在js中被引入的，所以同属于一个chunk,js和css的hash值还是一样的 }}
+3. `contenthash`:{{c1::  根据文件的内容生成hash值。不同文件hash值一定不一样    }}
 
 ### 使用express构建一个node服务器向外暴露静态资源 [	](buildTool_20200626090144159)
 ```js
