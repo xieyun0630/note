@@ -41,6 +41,7 @@ public static void main(String[] args) {
 
 ![image-20191113223812058](selenium.assets/image-20191113223812058.png)
 
+
 ### 常见元素:radio的处理
 
 **选中某个按钮**

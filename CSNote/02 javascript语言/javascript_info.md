@@ -3722,34 +3722,32 @@ let range = {
 ```
 
 }}
-
-### Async generator 与常规 generator 区别 [ ](javascript_info_20200512080327653)
-
-+ Async generator 例子：
-
-  ```javascript
-  //对象
-  //{{c1::
-  let range = {
-    from: 1,
-    to: 5,
-    async *[Symbol.asyncIterator]() {
-      for (let value = this.from; value <= this.to; value++) {
-        await new Promise((resolve) => setTimeout(resolve, 1000));
-        yield value;
+### Async generator 与常规 generator 区别 [	](javascript_info_20200512080327653)
++ Async generator例子：
+  ```js
+    //对象
+    //{{c1::
+    let range = {
+      from: 1,
+      to: 5,
+      async *[Symbol.asyncIterator]() {
+        for(let value = this.from; value <= this.to; value++) {
+          await new Promise(resolve => setTimeout(resolve, 1000));
+          yield value;
+        }
       }
-    },
-  };
-  //}}
-
-  //迭代该对象
-  //{{c1::
-  (async () => {
-    for await (let value of range) {
-      alert(value); // 1，然后 2，然后 3，然后 4，然后 5
-    }
-  })();
-  //}}
+    };
+    //}}
+  ```
++ 迭代Async generator：
+  ```js
+    //{{c1::
+    (async () => {
+      for await (let value of range) {
+        alert(value); // 1，然后 2，然后 3，然后 4，然后 5
+      }
+    })();
+    //}}
   ```
 
 ## 模块 [ ](javascript_info_20200512080327654)
@@ -4039,12 +4037,11 @@ async function load() {
 ### `elem.insertAdjacentHTML/Text/Element`方法 [ ](javascript_info_20200525035508031)
 
 + 在 `html` 中给定一些 HTML，`elem.insertAdjacentHTML(where, html)` 会根据 `where` 的值来插入它：
-  + `"beforebegin"`:{{c1::将 `html` 插入到 `elem` 前面。}}
-  + `"afterbegin"`:{{c1::将 `html` 插入到 `elem` 的开头。}}
-  + `"beforeend"`:{{c1::将 `html` 插入到 `elem` 的末尾。}}
-  + `"afterend"`:{{c1::将 `html` 插入到 `elem` 后面。}}
-
-* `elem.insertAdjacentText(where, text)` 和`elem.insertAdjacentElement(where, Element)`：它们会插入文本字符串和元素，但很少使用。}}
+  - `"beforebegin"`:{{c1::将 `html` 插入到 `elem` 前面。}}
+  - `"afterbegin"`:{{c1::将 `html` 插入到 `elem` 的开头。}}
+  - `"beforeend"`:{{c1::将 `html` 插入到 `elem` 的末尾。}}
+  - `"afterend"`:{{c1::将 `html` 插入到 `elem` 后面。}}
++  `elem.insertAdjacentText(where, text)` 和`elem.insertAdjacentElement(where, Element)`：{{c1:: 它们会插入文本字符串和元素，但很少使用。}}
 
 ### 要在页面加载完成之前将 HTML 附加到页面： [ ](javascript_info_20200525035508034)
 
@@ -4126,7 +4123,7 @@ showNotification({
 
 ### `offsetParent`元素与`offsetLeft/Top`属性 [ ](javascript_info_20200525035508047)
 
-+ `offsetParent` 是在以下列出条件中最接近的祖先（ancestor）：
++ `offsetParent` 作用：{{c1:: 返回最接近的祖先定位元素 }}
   1. {{c1:: CSS 定位的（position 为 absolute，relative 或 fixed），}}
   2. {{c1:: 或 `<td>`，`<th>`，`<table>`，}}
   3. {{c1:: 或 `<body>`。}}
@@ -4135,7 +4132,7 @@ showNotification({
   1. `<body>` `<html>`：{{c1:: 对于` <body>` 与` <html>`。}}
   1. `position:fixed`：{{c1:: 对于带有 `position:fixed `的元素。}}
 
-### `offsetParent`：下面代码输出什么？ [ ](javascript_info_20200525035508049)
+### `offsetParent`：下面代码输出什么？ [	](javascript_info_20200525035508049)
 
 ```html
 <main style="position: relative" id="main">

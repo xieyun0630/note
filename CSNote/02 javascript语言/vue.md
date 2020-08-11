@@ -209,14 +209,14 @@ computed: {
 ```
 + 现在再运行 vm.fullName = 'John Doe' 时，setter 会被调用，vm.firstName 和 vm.lastName 也会相应地被更新。
 
-### 侦听器：vatch选项 [	](vue_20200703080524570)
+### 侦听器：watch选项 [	](vue_20200703080524570)
 
 ```js
 var watchExampleVM = new Vue({
   el: '#watch-example',
   data: {
     question: '',
-    answer: 'I cannot give you an answer until you ask a question!'
+    answer: 'I cannot give you an answer until you ask a question!' 
   },
   watch: {
     // 如果 `question` 发生改变，这个函数就会运行
