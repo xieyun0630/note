@@ -70,9 +70,9 @@
 
 ### 元素显示模式的转换 [ ](css_20200722073620469)
 
-- 转换为块元素：{{c1:: display:block;}}
-- 转换为行内元素：{{c1:: display:inline;}}
-- 转换为行内块：{{c1:: display: inline-block;}}
+- 转换为块元素：{{c1:: `display:block;`}}
+- 转换为行内元素：{{c1:: `display:inline;`}}
+- 转换为行内块：{{c1:: `display: inline-block;`}}
 
 ### css 实现小米侧边栏效果 [ ](css_20200722073620471)
 
@@ -248,9 +248,9 @@
 
 ### 元素显示模式的转换 [ ](css_20200722073620469) 
 
-- 转换为块元素：{{c1:: display:block;}}
-- 转换为行内元素：{{c1:: display:inline;}}
-- 转换为行内块：{{c1:: display: inline-block;}}
+- 转换为块元素：{{c1:: `display:block;`}}
+- 转换为行内元素：{{c1:: `display:inline;`}}
+- 转换为行内块：{{c1:: `display: inline-block;`}}
 
 ### css 实现小米侧边栏效果 [ ](css_20200722073620471) 
 
@@ -493,39 +493,17 @@
 - 作用：用于元素的 2D 或 3D 转换，将元素旋转，缩放，移动，倾斜等。
   | 值 | 描述 |
   | :-------------- | :----------------- |
-  | translateX(_x_) | {{c1:: 距离盒子左边的距离}} |
-  | translateY(_y_) | {{c1:: 距离盒子上边的距离}} |
-  | rotate(_angle_) | {{c1:: 定义2D旋转}} |
+  | `translateX(_x_)` | {{c1:: 距离盒子左边的距离}} |
+  | `translateY(_y_)` | {{c1:: 距离盒子上边的距离}} |
+  | `rotate(_angle_)` | {{c1:: 定义2D旋转}} |
 
 ### CSS3 transition 属性 [ ](css_20200709073019514) 
 
 - 语法：{{c1:: `transition: property duration timing-function delay*; `}}
 
-| 值                         | 描述                                                 |
-| :------------------------- | :--------------------------------------------------- |
-| transition-property        | {{c1:: 指定 CSS 属性的 name，transition 效果      }} |
-| transition-duration        | {{c1:: transition 效果需要指定多少秒或毫秒才能完成}} |
-| transition-timing-function | {{c1:: 指定 transition 效果的转速曲线，默认 ease  }} |
-| transition-delay           | {{c1:: 定义 transition 效果开始的时候             }} |
-
-## CSS3 [ ](css_20200722073620480)
-
-### CSS3 transform 属性 [ ](css_20200709073019512) [ ](css_20200722073620482)
-
-- 作用：用于元素的 2D 或 3D 转换，将元素旋转，缩放，移动，倾斜等。
-  | 值 | 描述 |
-  | :-------------- | :----------------- |
-  | translateX(_x_) | {{c1:: 距离盒子左边的距离}} |
-  | translateY(_y_) | {{c1:: 距离盒子上边的距离}} |
-  | rotate(_angle_) | {{c1:: 定义2D旋转}} |
-
-### CSS3 transition 属性 [ ](css_20200709073019514) [ ](css_20200722073620484)
-
-- 语法：{{c1:: `transition: property duration timing-function delay*; `}}
-
-| 值                         | 描述                                                 |
-| :------------------------- | :--------------------------------------------------- |
-| transition-property        | {{c1:: 指定 CSS 属性的 name，transition 效果      }} |
-| transition-duration        | {{c1:: transition 效果需要指定多少秒或毫秒才能完成}} |
-| transition-timing-function | {{c1:: 指定 transition 效果的转速曲线，默认 ease  }} |
-| transition-delay           | {{c1:: 定义 transition 效果开始的时候             }} |
+| 值                           | 描述                                                 |
+| :--------------------------- | :--------------------------------------------------- |
+| `transition-property`        | {{c1:: 指定 CSS 属性的 name，transition 效果      }} |
+| `transition-duration`        | {{c1:: transition 效果需要指定多少秒或毫秒才能完成}} |
+| `transition-timing-function` | {{c1:: 指定 transition 效果的转速曲线，默认 ease  }} |
+| `transition-delay`           | {{c1:: 定义 transition 效果开始的时候             }} |
