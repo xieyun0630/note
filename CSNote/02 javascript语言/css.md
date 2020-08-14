@@ -176,7 +176,7 @@
 
 ## CSS3 [ ](css_20200722073620480)
 
-### CSS3 transform 属性 [ ](css_20200709073019512) [ ](css_20200722073620482)
+### CSS3 transform 属性 [ ](css_20200709073019512)
 
 - 作用：用于元素的 2D 或 3D 转换，将元素旋转，缩放，移动，倾斜等。
   | 值 | 描述 |
@@ -185,7 +185,7 @@
   | translateY(_y_) | {{c1:: 距离盒子上边的距离}} |
   | rotate(_angle_) | {{c1:: 定义2D旋转}} |
 
-### CSS3 transition 属性 [ ](css_20200709073019514) [ ](css_20200722073620484)
+### CSS3 transition 属性 [ ](css_20200709073019514)
 
 - 语法：{{c1:: `transition: property duration timing-function delay*; `}}
 
