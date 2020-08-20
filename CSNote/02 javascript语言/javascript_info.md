@@ -4794,7 +4794,7 @@ loadScript("/article/script-async-defer/small.js");
   //}}
   ```
 
-### DOM 变动观察器 mutationRecord 对象 [	](javascript_info_20200815014421533)
+### DOM 变动观察器 mutationRecord 对象 [	](javascript_info_20200814021328775)
 
 + MutationRecord 对象具有以下属性：
   + `type`:{{c1:: 变动类型，以下类型之一：}}
@@ -4807,7 +4807,7 @@ loadScript("/article/script-async-defer/small.js");
   + `attributeName/attributeNamespace`:{{c1:: 被更改的特性的名称/命名空间（用于 XML），}}
   + `oldValue`:{{c1:: 之前的值，仅适用于特性或文本更改，如果设置了相应选项 `attributeOldValue`/`characterDataOldValue`。}}
 
-### DOM 变动观察器 被观察对象的 config 配置 [	](javascript_info_20200815014421535)
+### DOM 变动观察器 被观察对象的 config 配置 [	](javascript_info_20200814021328779)
 
 + `observer.observe(node, config)` config 的各个布尔选项：
   + `childList`:{{c1:: node 的直接子节点的更改}}

@@ -441,7 +441,7 @@ plugins: [
   //}}
   ```
 
-### 开启babel缓存 [	](buildTool_20200815014421484)
+### 开启babel缓存 [	](buildTool_20200814021328759)
 + 添加babel-loader选项：{{c1:: `cacheDirectory: true` }}
 + 根据文件内容添加hash值，以便进行缓存：
   ```js
