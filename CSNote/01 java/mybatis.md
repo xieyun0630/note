@@ -793,7 +793,7 @@ public class News{
 
 ### 基于多表连接查询的映射策略 [	](mybatis_20200718074811914)
 
-+ `1-1`需要的额外属性:{{c1:: `resultMap` `columnPrefix` `notNullColumn`  }}`autoMapping`:
++ `1-1`需要的额外属性:{{c1:: `resultMap` `columnPrefix` `notNullColumn` `autoMapping`}}
     ```xml
         <!-- {{c1:: -->
 		<!-- 指定columnPrefix="rental_"，代表去掉当前多表查询列名中的前缀，通常为别名，去掉后需要与引入的resultMap列名匹配 -->
@@ -802,7 +802,7 @@ public class News{
         <!-- }} -->
     ```
     + `notNullColumn="detail,zip"`属性：默认情况下，任意列不为null就会创建实体，该情况下只有当detail与zip列都不为null时，MyBatis才会创建关联实体的实例。
-+ `1-N`需要的额外属性:{{c1::  `resultMap` `columnPrefix` `notNullColumn`  }}`autoMapping` `ofType`
++ `1-N`需要的额外属性:{{c1::  `resultMap` `columnPrefix` `notNullColumn` `autoMapping` }}`ofType`
     ```xml
     <!-- {{c1:: -->
     <collection property="addresses" javaType="ArrayList"
