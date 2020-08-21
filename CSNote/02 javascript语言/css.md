@@ -683,26 +683,212 @@
 + 语法： {{c1:: `element::before {}` }}
 + before 和 after 必须有 {{c1:: **content属性** }}
 
+### 伪元素选择器使用场景3：伪元素清除浮动
++ 单伪元素清除浮动
+  ```css
+    /* {{c1:: */
+    .clearfix:after {
+      content: "";
+      display: block;
+      height: 0;
+      clear: both;
+      visibility: hidden;
+    } 
+    /* }} */
+  ```
++ 双伪元素清除浮动
+  ```css
+    /* {{c1:: */
+    .clearfix:before,.clearfix:after {
+      content:"";
+      display:table;
+    }
+    .clearfix:after {
+      clear:both;
+    }
+    /* }} */
+  ```
+
+### CSS3 盒子模型
++ 可以分成两种情况：
+  1. {{c1:: `box-sizing: content-box` 盒子大小为 width + padding + border （以前默认的） }}
+  2. {{c1:: `box-sizing: border-box` 盒子大小为 width,  }}
+区别：{{c1:: padding与border一个是撑大盒子，一个是挤压content盒子。 }}
+
+### CSS3 滤镜与`calc()`
+
++ CSS3滤镜模糊处理:{{c1:: `filter: blur(5px); ` }}
++ `calc()函数`:{{c1:: `width: calc(100% - 80px);`括号里面可以使用 + - * / 来进行计算。 }}
+
+###  CSS3 过渡
+
++ 语法： `transition: 要过渡的属性 花费时间 [运动曲线] [何时开始];`
+1. 属性 ：{{c1::  想要变化的 css 属性， 宽度高度 背景颜色 内外边距都可以 。如果想要所有的属性都变化过渡， 写一个all 就可以。}}
+2. 花费时间：{{c1::  单位是 秒（必须写单位） 比如 0.5s}}
+3. 运动曲线：{{c1::  默认是 ease （可以省略）}}
+4. 何时开始 ：{{c1:: 单位是 秒（必须写单位）可以设置延迟触发时间 默认是 0s （可以省略）}}
++ 使用口诀： 谁做过渡给谁加
++ 分开写语法：
+  + {{c1:: `transition-property` }}
+  + {{c1:: `transition-duration` }}
+  + {{c1:: `transition-timing-function` }}
+  + {{c1:: `transition-delay` }}
+
+### 2D 转换之移动 translate
++ 语法:
+  1. `transform: translate(x,y);`
+  2. `transform: translateX(n);`
+  3. `transform: translateY(n);`
++ 注意点：
+  1. translate最大的优点：{{c1:: 不会影响到其他元素的位置 }}
+  2. 百分比单位:{{c1:: translate中的百分比单位是相对于自身元素的 translate:(50%,50%); }}
+  3. 行内标签:{{c1:: 对行内标签没有效果 }}
+  
+
+ ### 2D 转换之旋转 rotate
++ 语法：`transform:rotate(度数)`
++ 重点：
+  + 跟度数：{{c1:: rotate里面跟度数， 单位是 deg 比如 rotate(45deg) }}
+  + 正负值：{{c1:: 角度为正时，顺时针，负时，为逆时针 }}
+  + 默认旋转的中心点:{{c1:: 是元素的中心点 }}
+  + 中心点设置：{{c1:: transform-origin: x y; }}
+
+### 2D 转换之旋转 rotate：使用盒子实现三角形
++ 效果图：![image-20200821162510182](css.assets/image-20200821162510182.png)
++ 实现：
+  ```css
+  /* {{c1:: */
+    p::before {
+      content: '';
+      position: absolute;
+      right: 20px;
+      top: 10px;
+      width: 10px;
+      height: 10px;
+      border-right: 1px solid #000;
+      border-bottom: 1px solid #000;
+      transform: rotate(45deg);
+    }
+  /* }} */
+  ```
+### 2D 转换之缩放scale
++ 4种语法：
+  + `transform:scale(1,1) `：{{c1:: 宽和高都放大一倍，相对于没有放大}}
+  + `transform:scale(2,2) `：{{c1:: 宽和高都放大了2倍}}
+  + `transform:scale(2) `：{{c1:: 只写一个参数，第二个参数则和第一个参数一样，相当于 }}scale(2,2)
+  + `transform:scale(0.5,0.5)`：{{c1:: 缩小}}
++ 中心点设置：{{c1:: transform-origin: x y; }}
+
+### 2D 转换综合写法
+
++ 格式为：{{c1:: `transform: translate() rotate() scale() ..` }}
++ 注意：{{c1:: 记得要将位移放到最前 }}
+
+### CSS动画
+
+1. 定义动画:
+  ```css
+  /* {{c1:: */
+    @keyframes 动画名称 {
+        0%{
+          width:100px;
+        }
+        100%{
+          width:200px;
+        }
+    }
+  /* }} */
+  ```
+2. 声明使用：`animation: name duration timing-function delay iteration-count direction fill-mode;`
+   + 各属性常见取值：
+     + timing-function：{{c1:: 速度曲线 }}
+     + delay：{{c1:: 什么时候开始 }}
+     + iteration-count：{{c1:: 1/infinite }}
+     + direction：{{c1:: normal/reverse }}
+     + fill-mode：{{c1:: forwards/backwards 指定结束的状态 }}
+
+### CSS过渡与动画的常见速度曲线函数
+
++ `linear`：{{c1:: 动画从头到尾的速度是相同的。匀速 }}
++ `ease`：{{c1:: 默认。动画以低速开始，然后加快，在结束前变慢。 }}
++ `ease-in`：{{c1:: 动画以低速开始。  }}
++ `ease-out`：{{c1:: 动画以低速结束。 }}
++ `ease-in-out`：{{c1:: 动画以低速开始和结束。  }}
++ `steps()`：{{c1:: 指定了时间函数中的间隔数量（步长）  }}
 
 
-## CSS3 [ ](css_20200722073620480) 
 
-### CSS3 transform 属性 [ ](css_20200709073019512) 
 
-- 作用：用于元素的 2D 或 3D 转换，将元素旋转，缩放，移动，倾斜等。
-  | 值 | 描述 |
-  | :-------------- | :----------------- |
-  | `translateX(_x_)` | {{c1:: 距离盒子左边的距离}} |
-  | `translateY(_y_)` | {{c1:: 距离盒子上边的距离}} |
-  | `rotate(_angle_)` | {{c1:: 定义2D旋转}} |
 
-### CSS3 transition 属性 [ ](css_20200709073019514) 
 
-- 语法：{{c1:: `transition: property duration timing-function delay*; `}}
 
-| 值                           | 描述                                                 |
-| :--------------------------- | :--------------------------------------------------- |
-| `transition-property`        | {{c1:: 指定 CSS 属性的 name，transition 效果      }} |
-| `transition-duration`        | {{c1:: transition 效果需要指定多少秒或毫秒才能完成}} |
-| `transition-timing-function` | {{c1:: 指定 transition 效果的转速曲线，默认 ease  }} |
-| `transition-delay`           | {{c1:: 定义 transition 效果开始的时候             }} |
+
+
+
+
+
+### css3使用精灵图核心总结：
+
+1. {{c1:: 精灵图主要针对于小的背景图片使用。 }}
+2. {{c1:: 主要借助于背景位置来实现---background-position 。 }}
+3. {{c1:: 一般情况下精灵图都是负值。 }}
+
+### 2个字体图标推荐下载网站：
+
+1. 国外： {{c1:: http://icomoon.io  }}
+2. 国内： {{c1:: http://www.iconfont.cn/  }}
+
+### 字体图标的使用:
+
+1. {{c1:: 下载字体文件夹 }}
+2. {{c1:: 从文件夹复制字体声明：`@font-face {...}` }}
+3. {{c1:: 使用图标的元素字体样式要与字体声明一致 }}
++ 注意图标codo使用转义：`&#xb1234`
+
+### CSS画三角形
+  ```css
+      /* {{c1:: */
+      border: 50px solid transparent;
+      border-left-color: pink;
+      /* }} */
+  ```
+
+### CSS 用户界面样式
+
++ 去掉表单默认的蓝色边框：{{c1:: `input {outline: none; }` 或 `input {outline: 0; }` }}
++ 防止拖拽文本域：{{c1::`textarea{ resize: none;}`}}
++ 鼠标样式
+  + 默认:{{c1:: `cursor: default;` }}
+  + 小手:{{c1:: `cursor: pointer;` }}
+  + 移动:{{c1:: `cursor: move;` }}
+  + 文本:{{c1:: `cursor: text;` }}
+  + 禁止:{{c1:: `cursor: not-allowed;` }}
+
+### vertical-align 属性应用
+
++ 语法：{{c1:: `vertical-align : baseline | top | middle | bottom ` }}
++ 作用：{{c1:: 用于设置图片或者表单(行内块元素）和文字垂直对齐 }}
++ 注意：
+  1. {{c1:: 默认基线对齐 }}
+  2. {{c1:: 是一行内的多个元素同时基于一种line对齐。 }}
++ 四种线图示：
+  + {{c1:: ![image-20200821144121455](css.assets/image-20200821144121455.png) }}
+
+### 解决图片底部默认空白缝隙问题
+
++ 主要解决方法有两种：
+  1. {{c1:: 给图片添加 vertical-align:middle | top| bottom 等。 （提倡使用的） }}
+  2. {{c1:: 把图片转换为块级元素 display: block; }}
+
+### 溢出的文字省略号显示
+
++ 单行文本溢出显示省略号--必须满足三个条件
+  1. 先强制一行内显示文本:{{c1::`white-space: nowrap; （ 默认 normal 自动换行）`}}
+  2. 超出的部分隐藏:{{c1::`overflow: hidden;`}}
+  3. 文字用省略号替代超出的部分:{{c1::`text-overflow: ellipsis;`}}
++ 多行文本溢出显示省略号:
+  1. 超出的部分隐藏overflow:{{c1:: ` hidden;` }}
+  2. 文字用省略号替代超出的部分:{{c1:: `text-overflow: ellipsis;` }}
+  3. 弹性伸缩盒子模型显示:{{c1:: `display: -webkit-box;` }}
+  4. 限制在一个块元素显示的文本的行数:{{c1:: `-webkit-line-clamp: 2;` }}
+  5. 设置或检索伸缩盒对象的子元素的排列方式:{{c1:: `-webkit-box-orient: vertical;` }}
