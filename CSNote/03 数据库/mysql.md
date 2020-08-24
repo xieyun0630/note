@@ -176,3 +176,16 @@
 1. 修改表名:{{c1:: `rename table t_1 to t1;` }}
     + 跨库修改：{{c1:: 需要使用`数据库名.表名` }}
 2. 修改表选项:{{c1:: `alter table t1 charset utf8;` }}
+
+### 更改字段
+
++ 新增字段:{{c1:: `alter table 表名 add [column] 字段名 字段类型 [字段属性] [字段位置]`}}
+  + 字段位置分为两种：
+      * 为t_3表增加一个id字段，放到最前面:{{c1:: `alter table t_3 add id int first;`}}
+      * 在t_3表name字段后增加一个身份证字段card:{{c1:: `alter table t_3 add card varchar(18) after name;`}}
++ 更改字段名:{{c1:: `alter table 表名 change 原字段名 新字段名 字段类型 [字段属性] [字段位置]`}}
+  + 修改身份证的类型为char(18)并且位置放到id后面:{{c1:: `alter table t_3 modify sfz char(18) after id;`}}
++ 删除字段:{{c1:: `alter table 表名 drop 字段名;`}}
+  + 注意：{{c1:: 同时会删除字段对应的数据，而且不可逆}}
+
+## SQL数据操作
