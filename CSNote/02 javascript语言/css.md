@@ -181,11 +181,6 @@
 - 盒子模型组成图
   - {{c1:: ![image-20200722193002516](css.assets/image-20200722193002516.png) }}
 
-- 边框 border
-  - 语法：{{c1:: `border : border-width || border-style || border-color` }}
-    - border-style 常用值：{{c1:: `none` `solid` `dashed` `dotted` }}
-- 盒子模型组成图
-  - {{c1:: ![image-20200722193002516](css.assets/image-20200722193002516.png) }}
 
 ### 边框(border) [	](css_20200813094652545)
 
