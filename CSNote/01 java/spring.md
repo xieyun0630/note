@@ -1,4 +1,3 @@
-## 简介 [	](spring_20200713102713838)
 
 ### EJB对比Spring [	](spring_20200713102713839)
 
@@ -19,6 +18,7 @@
 
 ### 静态类实现通用工厂 [	](spring_20200713102713842)
 - 简单工厂会存在大量的代码冗余
+  
   - ![image-20200411181701143](spring.assets/image-20200411181701143.png)
 - 通用工厂的代码
   ```java
@@ -40,6 +40,16 @@
 
 ##  Spring的核心API [	](spring_20200713102713844)
 
+### BeanFactory [	](spring_20200824063336925)
+
++ 作用：{{c1:: spring最核心的接口，是`ApplicationContext`的父接口。 }}
+
++ 常用实现类：{{c1:: `DefaultListableBeanFactory` }}
+
+
+
+
+
 ### ApplicationContext [	](spring_20200713102713846)
 
 + 作用：工厂接口
@@ -48,11 +58,69 @@
   - web环境 ：{{c1::   `XmlWebApplicationContext` }}
 - 重量级资源含义：{{c1:: ApplicationContext工厂的对象占用大量内存，一个应用只会创建一个工厂对象，一定是线程安全的。 }}
 
+### ApplicationContext的国际化:概念 [	](spring_20200824063336928)
+
+- ApplicationContext继承了MessageSource接口，该接口具有以下方法：
+  1. {{c1:: `String getMessage(String code,Object[] args,Locale loc)` }}
+  2. {{c1:: `String getMessage(String code,Object[] args,String default,Locale loc)` }}
+- ApplicationContext在创建时，为了实现国际化：
+  - {{c1:: 会自动在其容器中寻找`messageSource bean` }}
+  - {{c1:: 如果没有找到，会自动创建一个`staticMessageSrouce bean`接收getMessage方法的调用 }}
+
+### ApplicationContext的国际化:使用 [	](spring_20200824063336931)
+
+- 给出文件名为`message_en_US.properties`与`message_zh_CN.properties`两个资源文件
+- 配置`messageSource`:
+  ```xml
+   <!-- {{c1:: -->
+  	<bean id="messageSource" class="xxx.ResourceBundleMessageSource">
+  		<property name="defaultEncoding" value="utf-8"/>
+  		<property name="basenames">
+  			<list>
+  				<value>message</value>
+  			</list>
+  		</property>
+  	</bean>
+    <!-- }} -->
+  ```
+- 使用：
+  ```java
+    //{{c1::
+    ctx.getMessage("hello", new String[]{"孙悟空"},Locale.getDefault(Locale.Category.FORMAT));
+    ctx.getMessage("now", new Object[]{new Date()},Locale.getDefault(Locale.Category.FORMAT));  
+    //}}
+  ```
+
+### ApplicationContext的事件机制 [	](spring_20200824063336933)
+
++ 简单使用例子：
+  ```java
+    //{{c1::
+    var ctx = new ClassPathXmlApplicationContext("beans.xml");
+		// 创建一个ApplicationEvent对象
+		var ele = new EmailEvent("test", "spring_test@163.com", "this is a test");
+		// 发布容器事件
+    ctx.publishEvent(ele);
+    //}}
+  ```
++ 使用事件机制的配置步骤：
+   1. {{c1:: 自定义实现了`ApplicationEvent`的事件类 }}
+   2. {{c1:: 自定义实现了`ApplicationListener`的监听器 }}
+   3. {{c1:: 配置监听器：`<bean class="xx.xxApplicationListener" />` }}
+   
+### spring内置的xxxAware接口 [	](spring_20200824063336936)
+
++ 作用：{{c1:: 让容器调用setter将**特定的对象**注入到实现了`xxxAware接口`的`bean`中 }}
++ 常见的`xxxAware接口`：
+  + `BeanNameAware`：{{c1:: 容器会注入bean本身的id值 }}
+  + `ResourceLoaderAware`：TODO
+  + `ApplicationContextAware`：{{c1:: 容器会注入ctx对象 }}
+
 ### spring程序开发流程 [	](spring_20200713102713847)
 
-1. 创建类型:{{c1:: `public class Person{...}` }}
-2. 配置文件的配置 :{{c1:: `<bean id="person" class="com.baizhiedu.basic.Person"/>` }}
-3. 通过工厂类，获得对象
+1. 创建java类:{{c1:: `public class Person{...}` }}
+2. 在配置文件中配置Bean :{{c1:: `<bean id="person" class="com.baizhiedu.basic.Person"/>` }}
+3. 通过工厂（容器）类，获得对象
    ```java
    //{{c1::
    ApplicationContext ctx = new ClassPathXmlApplicationContext("/applicationContext.xml");
@@ -71,6 +139,7 @@
 + 用于判断是否存在指定id值得bean:{{c1:: `ctx.containsBean("person")`}}
 
 ### spring配置文件细节 [	](spring_20200713102713850)
+
 + `<bean  class="com.baizhiedu.basic.Person"/>`自动分配的id值为:{{c1:: com.baizhiedu.basic.Person#0 }}
 + name属性与id属性的区别
   1. 多个别名：{{c1:: 别名可以定义多个,但是id属性只能有一个值}}
@@ -288,7 +357,7 @@
   - 配置：{{c1:: `<bean id="conn" class="com.baizhiedu.factorybean.ConnectionFactoryBean"/>` }}
   
   - 细节:
-    - 获得FactoryBean类型的对象 :{{c1:: `ctx.getBean("&conn")`获得就是ConnectionFactoryBean对象 }}
+    - 获得FactoryBean对象本身 :{{c1:: `ctx.getBean("&conn")`获得就是ConnectionFactoryBean对象 }}
     - mysql高版本连接创建时，需要制定SSL证书，解决问题的方式
       
       - {{c1:: `url = "jdbc:mysql://localhost:3306/suns?useSSL=false"` }}
@@ -318,13 +387,14 @@
 
 ### spring中Bean的生命周期执行步骤： [	](spring_20200715110208935)
 
-1. 创建：构造方法调用的时机
-   1. {{c1:: 当`scope=singleton`时，ctx创建时就创建对象 }}
-   2. {{c1:: 当`scope=prototype`时，`ctx.getBean(..)`时创建对象 }}
-2. 初始化：{{c1:: 调用`InitializingBean`接口中的`afterPropertiesSet`方法 }}
-3. 初始化：{{c1:: 调用`<bean>`元素`init-mehotd`指定的方法 }}
-4. 销毁：{{c1:: 调用`DisposableBean`接口中的`destroy()`方法 }}
-5. 销毁：{{c1:: 调用`<bean>`元素`destroy-mehotd`指定的方法 }}
+1. 创建实例
+2. 注入依赖关系
+3. 初始化：{{c1:: 调用`InitializingBean`接口中的`afterPropertiesSet`方法 }}
+4. 初始化：{{c1:: 调用`<bean>`元素`init-mehotd`指定的方法 }}
+5. 对外提供服务
+6. 销毁：{{c1:: 调用`DisposableBean`接口中的`destroy()`方法 }}
+7. 销毁：{{c1:: 调用`<bean>`元素`destroy-mehotd`指定的方法 }}
+8. Bean实例被销毁
 + 注意：
   1. {{c1:: 销毁方法的操作只适用于 scope="singleton" }}
   2. {{c1:: 注入一定发生在初始化操作的前面 }}
@@ -409,3 +479,136 @@
 + 运行流程图
   + {{c1::![image-20200420155053027](spring.assets/image-20200420155053027.png)}}
 
+### singleton Bean的初始化 [	](spring_20200824063336938)
+
++ 以BeanFactory创建容器不会初始化容器中的Bean
++ singleton Bean 在ApplicationContext创建时会一起创建并初始化
++ 阻止singletonBean初始化:为 `<bean>` 加上` lazy-init="true"`
+
+## spring容器中的bean [	](spring_20200824063336941)
+
+### `<beans>根元素` [	](spring_20200824063336943)
++ 作用：配置文件的根元素，该元素下的所有属性，单个`<bean>`也能指定
++ 属性：
+  1. `default-lazy-init`:{{c1:: 是否延时初始化，也就是第一次调用`ctx.getBean()`才初始化 }}
+  2. `default-merge`:TODO
+  3. `default-autowire`:{{c1:: 进行自动装配 }}
+  4. `default-autowire-candidates`:{{c1:: 将指定`<bean>`设置为不进行自动装配 }}
+  5. `default-init-method`:{{c1:: 指定初始化方法 }}
+  6. `default-destroy-method`:{{c1:: 指定销毁方法 }}
+
+
+### 为`<bean>`指定别名 [	](spring_20200824063336945)
+
++ 指定单个别名:{{c1:: `<bean id="" class="..." alias="singleAlias">` }}
++ 指定多个个别名:{{c1:: `<bean id="" class="..." name="#aaa,@bbb">` }}
+
+### 容器中Bean的作用域 [	](spring_20200824063336947)
++ 基本作用域：
+  1. {{c1:: `singleton` }}
+  2. {{c1:: `prototype` }}
++ web作用域：
+  1. {{c1:: `request` }}
+  2. {{c1:: `session` }}
+  3. {{c1:: `application` }}
+  4. {{c1:: `websocket` }}
++ 注意在非springMVC应用使用web作用域需配置`web.xml`
+  ```xml
+    <!-- {{c1:: -->
+    <listener>
+      <listener-class>xxx.RequestContextListener</listenner-class>
+    </listener>
+    <!-- }} -->
+  ```
+
+### `default-autowire`与`autowire`属性的值： [	](spring_20200824063336949)
+
+1. `no`：{{c1:: 不使用自动装配 }}
+2. `byName`：{{c1:: 根据setter方法查找匹配的id的`bean` }}
+3. `byType`：{{c1:: 根据setter方法型参类型查找`bean` }}
+4. `constructor`：{{c1:: 根据构造方法型参类型查找`bean` }}
+5. `autodetect`：{{c1:: 根据当前bean的结构，自动选择byType或者constructor }}
+
+### 组合属性 [	](spring_20200824063336951)
+
++ 驱动Spring调用`exampleBean的getPerson().setName()`方法
+  ```xml
+		<!-- 以"孙悟空"作为参数 -->
+    <!-- {{c1:: -->
+		<property name="person.name" value="孙悟空"/>
+    <!-- }} -->
+  ```
+### spring的java配置管理 [	](spring_20200824063336955)
+
++ 使用java类配置spring时的常用注解：
+  + `@Configuration`:{{c1:: 修饰**java配置类** }}
+  + `@Bean`:{{c1:: 修饰**方法**，代表一个Bean }}
+  + `@Value`:{{c1:: 修饰**成员变量**，相当于配置了一个变量 }}
+  + `@Import`:{{c1:: 修饰**java配置类**，向当前配置类导入其他java配置类 }}
+  + `@Scope`:{{c1:: 修饰**方法**，指定bean生命周期 }}
+  + `@Lazy`:{{c1:: 修饰**方法**，开启bean延时初始化 }}
+  + `@DependsOn`:{{c1:: 修饰**方法**，在指定bean之后初始化当前bean }}
++ 以配置文件为主，加入java配置类，配置spring
+  ```xml
+  <!-- {{c1:: -->
+    <bean class="top.xieyun.app.config.AppConfig">
+  <!-- }} -->
+  ```
++ 以java类文件为主，加入xml配置文件，配置spring
+  ```java
+    //{{c1::
+    @Configuration
+    @importResource("classpath:/beans.xml")
+    pbulic class MyConfig{
+      ....
+    }
+    //}}
+  ```
+
+  ### 抽象Bean与子Bean [	](spring_20200824063336958)
+
+  + 重要的2个属性：`abstract` `parent`
+  + 例子：
+    ```xml
+    <!-- {{c1:: -->
+    <!-- 指定abstract="true"定义抽象Bean -->
+    <bean id="personTemplate" abstract="true">
+      <property name="name" value="crazyit"/>
+      <property name="axe" ref="steelAxe"/>
+    </bean>
+    <!-- 通过指定parent属性指定下面Bean配置可从父Bean继承得到配置信息 -->
+    <bean id="chinese" class="Chinese" parent="personTemplate"/>
+    <bean id="american" class="American" parent="personTemplate"/>
+    <!-- }} -->
+    ```
+
+### `<lookup-method>`注入 [	](spring_20200824063336960)
+
++ 作用：{{c1:: 当`singleton Bean` 依赖 `prototype Bean`时，后者具有了`singleton`的行为 }}
++ 使用步骤：
+  1. {{c1:: 将`singletonBean`定义为抽象类 }}
+  2. 定义Bean的子元素：{{c1:: `<lookup-method name="" bean="">` }}
+     1. `name`:{{c1:: 方法名（注意是全名） }}
+     2. `bean`:{{c1:: 需要注入的bean id }}
+
+## 使用spring配置文件调用getter方法，普通方法，访问类或对象的Field [	](spring_20200824063336962)
+
+### 调用getter方法 [	](spring_20200824063336964)
+  + 工厂类：{{c1:: `PropertyPathFactoryBean` }}
+  + 普通配置：{{c1:: `<bean class="PropertyPathFactoryBean" p:targetBeanName="person" p:peropertyPath="son.age" />` }}
+  + id简化例配置：{{c1:: `<bean id="person.son.age" class="PropertyPathFactoryBean" />` }}
+  + 命名空间简化配置：{{c1:: `<util:property-path id="theAge" path="person.son.age" />` }}
+
+### 访问类或对象的静态Field [	](spring_20200824063336967)
+  + 工厂类：{{c1:: `FieldRetrievingFactoryBean` }}
+  + 普通配置：{{c1:: `<bean class="FieldRetrievingFactoryBean" p:targetClass="java.sql.Connection" p:targetField="TRANSACTION_SERIALIZABLE" />` }}
+  + 简化配置：{{c1:: `<bean class="FieldRetrievingFactoryBean" p:staticField="java.sql.Connection.TRANSACTION_SERIALIZABLE" />` }}
+  + id简化配置：{{c1:: `<bean id="java.sql.Connection.TRANSACTION_SERIALIZABLE" class="FieldRetrievingFactoryBean"/>` }}
+  + 命名空间简化配置：{{c1:: `<util:constant id="theAge1" static-field="java.sql.Connection.TRANSACTION_SERIALIZABLE" />` }}
+
+### 调用静态或者实例方法：MethodInvokingFactoryBean [	](spring_20200824063336969)
+  + 常用4个property调用
+    1. {{c1:: `setTargetClass(String targetClass)`:调用哪个类 }}
+    2. {{c1:: `setTargetObject(Object targetClass)`:调用哪个对象 }}
+    3. {{c1:: `setTargetMethod(Method targetClass)`:调用哪个方法 }}
+    4. {{c1:: `setArguments(Object[] targetClass)`:调用方法的参数 }}
