@@ -94,8 +94,8 @@
 4. 数据库文件夹位置：TODO
 
 ### 显示数据库 [	](mysql_20200824100449034)
-+ 显示所有数据库:{{c1::`show databases;`
-+ 显示数据库创建指令:{{c1::`show create database db_1;`
++ 显示所有数据库:{{c1::`show databases;` }}
++ 显示数据库创建指令:{{c1::`show create database db_1;` }}
 
 ### 使用数据库 [	](mysql_20200824100449037)
 
@@ -167,9 +167,9 @@
 ### 查看数据表 [	](mysql_20200824100449054)
 + 目的：指查看数据表中的具体结构
 + 查看语法有三种（效果一样）:
-  + `desc 表名；`
-  + `describe 表名;`
-  + `show columns from 表名;`
+  + {{c1:: `desc 表名；` }}
+  + {{c1:: `describe 表名;` }}
+  + {{c1:: `show columns from 表名;` }}
 
 ### 更改数据表 [	](mysql_20200824100449056)
 
