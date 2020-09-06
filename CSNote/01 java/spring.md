@@ -481,9 +481,9 @@
 
 ### singleton Bean的初始化 [	](spring_20200824063336938)
 
-+ BeanFactory:{{c1:: 以BeanFactory创建容器不会初始化容器中的Bean }}
-+ ApplicationContext:{{c1:: singleton Bean 在ApplicationContext创建时会一起创建并初始化 }}
-+ 延时初始化:{{c1:: 阻止singletonBean初始化:为 `<bean>` 加上` lazy-init="true"` }}
++ `BeanFactory`:{{c1:: 以BeanFactory创建容器不会初始化容器中的Bean }}
++ `ApplicationContext`:{{c1:: singleton Bean 在ApplicationContext创建时会一起创建并初始化 }}
++ 阻止`singletonBean`初始化:{{c1:: 阻止singletonBean初始化:为 `<bean>` 加上` lazy-init="true"` }}
 
 ## spring容器中的bean [	](spring_20200824063336941)
 
@@ -584,31 +584,34 @@
 
 ### `<lookup-method>`注入 [	](spring_20200824063336960)
 
-+ 作用：{{c1:: 当`singleton Bean` 依赖 `prototype Bean`时，后者具有了`singleton`的行为 }}
++ 使用原因：{{c1:: 当`singleton Bean` 依赖 `prototype Bean`时，`prototype bean`变成`singleton bean`问题 }}
++ 作用：{{c1:: 自定义抽象方法，然后交给spring容器实现 }}
 + 使用步骤：
-  1. {{c1:: 将`singletonBean`定义为抽象类 }}
+  1. {{c1:: 将`singletonBean`定义为抽象类,以及定义抽象方法 }}
   2. 定义Bean的子元素：{{c1:: `<lookup-method name="" bean="">` }}
-     1. `name`:{{c1:: 方法名（注意是全名） }}
+     1. `name`:{{c1:: 抽象方法名（注意是全名） }}
      2. `bean`:{{c1:: 需要注入的bean id }}
 
 ## 使用spring配置文件调用getter方法，普通方法，访问类或对象的Field [	](spring_20200824063336962)
 
-### 调用getter方法 [	](spring_20200824063336964)
+### 使用spring配置文件，调用getter方法 [	](spring_20200824063336964)
   + 工厂类：{{c1:: `PropertyPathFactoryBean` }}
   + 普通配置：{{c1:: `<bean class="PropertyPathFactoryBean" p:targetBeanName="person" p:peropertyPath="son.age" />` }}
   + id简化例配置：{{c1:: `<bean id="person.son.age" class="PropertyPathFactoryBean" />` }}
   + 命名空间简化配置：{{c1:: `<util:property-path id="theAge" path="person.son.age" />` }}
 
-### 访问类或对象的静态Field [	](spring_20200824063336967)
+### 使用spring配置文件，访问类或对象的静态Field [	](spring_20200824063336967)
   + 工厂类：{{c1:: `FieldRetrievingFactoryBean` }}
   + 普通配置：{{c1:: `<bean class="FieldRetrievingFactoryBean" p:targetClass="java.sql.Connection" p:targetField="TRANSACTION_SERIALIZABLE" />` }}
   + 简化配置：{{c1:: `<bean class="FieldRetrievingFactoryBean" p:staticField="java.sql.Connection.TRANSACTION_SERIALIZABLE" />` }}
   + id简化配置：{{c1:: `<bean id="java.sql.Connection.TRANSACTION_SERIALIZABLE" class="FieldRetrievingFactoryBean"/>` }}
   + 命名空间简化配置：{{c1:: `<util:constant id="theAge1" static-field="java.sql.Connection.TRANSACTION_SERIALIZABLE" />` }}
 
-### 调用静态或者实例方法：MethodInvokingFactoryBean [	](spring_20200824063336969)
+### 使用spring配置文件调用，静态或者实例方法：MethodInvokingFactoryBean [	](spring_20200824063336969)
   + 常用4个property调用
     1. {{c1:: `setTargetClass(String targetClass)`:调用哪个类 }}
     2. {{c1:: `setTargetObject(Object targetClass)`:调用哪个对象 }}
     3. {{c1:: `setTargetMethod(Method targetClass)`:调用哪个方法 }}
     4. {{c1:: `setArguments(Object[] targetClass)`:调用方法的参数 }}
+
+

@@ -3587,7 +3587,7 @@ let range = {
 alert([...range]); // 1,2,3,4,5
 ```
 
-### 组合的 generator 函数的例子 [ ](javascript_info_20200512080327647)
+### `function*`嵌套调用  [ ](javascript_info_20200512080327647)
 
 ```javascript
 function* generateSequence(start, end) {
@@ -4686,7 +4686,7 @@ form.submit();
 
 ## 加载文档和其他资源 [ ](javascript_info_20200609045144090)
 
-### HTML 页面的生命周期包含三个重要事件： [ ](javascript_info_20200608063412716)
+### HTML页面的主要生命周期事件： [ ](javascript_info_20200608063412716)
 
 + `DOMContentLoaded` 事件:{{c1:: 发生在document上，DOM 已经就绪，因此处理程序可以查找 DOM 节点，并初始化接口。}}
 + `load` 事件:{{c1:: window上，外部资源已加载完成，样式已被应用，图片大小也已知了。}}
