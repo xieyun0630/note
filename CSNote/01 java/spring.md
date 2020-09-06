@@ -481,9 +481,9 @@
 
 ### singleton Bean的初始化 [	](spring_20200824063336938)
 
-+ 以BeanFactory创建容器不会初始化容器中的Bean
-+ singleton Bean 在ApplicationContext创建时会一起创建并初始化
-+ 阻止singletonBean初始化:为 `<bean>` 加上` lazy-init="true"`
++ BeanFactory:{{c1:: 以BeanFactory创建容器不会初始化容器中的Bean }}
++ ApplicationContext:{{c1:: singleton Bean 在ApplicationContext创建时会一起创建并初始化 }}
++ 延时初始化:{{c1:: 阻止singletonBean初始化:为 `<bean>` 加上` lazy-init="true"` }}
 
 ## spring容器中的bean [	](spring_20200824063336941)
 
@@ -565,7 +565,7 @@
     //}}
   ```
 
-  ### 抽象Bean与子Bean [	](spring_20200824063336958)
+### 抽象Bean与子Bean [	](spring_20200824063336958)
 
   + 重要的2个属性：`abstract` `parent`
   + 例子：
