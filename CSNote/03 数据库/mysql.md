@@ -52,7 +52,7 @@
 3. DDL：{{c1:: Data Definition Language，数据定义语言，用于创建数据结构}}
 4. DCL：{{c1:: Data Control Language，数据控制语言，用于用户权限管理}}
 5. TPL：{{c1:: Transaction Process Language，事务处理语言，辅助DML进行事务操作（因此也归属于DML） }}
-
+　
 ### 客户端需要连接认证 [	](mysql_20200824100449016)
 
 + 命令：{{c1::  `mysql -uroot -p123456` }}
@@ -80,7 +80,7 @@
 + 显示结构：{{c1::`show 结构类型（复数）;`}}
 + 显示结构创建详情：{{c1::`show create 结构类型 结构名;`}}
 + 新增数据:{{c1::`insert into 表名 values`}}
-+ 查看数据:{{c1::`select from 表名`}}
++ 查看数据:{{c1::`select from 表名`}}　　
 + 更新数据:{{c1::`update 表名 set `}}
 + 删除数据:{{c1::`delete from 表名`}}
 
@@ -183,7 +183,7 @@
   + 字段位置分为两种：
       * 为t_3表增加一个id字段，放到最前面:{{c1:: `alter table t_3 add id int first;`}}
       * 在t_3表name字段后增加一个身份证字段card:{{c1:: `alter table t_3 add card varchar(18) after name;`}}
-+ 更改字段名:{{c1:: `alter table 表名 change 原字段名 新字段名 字段类型 [字段属性] [字段位置]`}}
++ 更改字段名:{{c1:: `alte r table 表名 change 原字段名 新字段名 字段类型 [字段属性] [字段位置]`}}
   + 修改身份证的类型为char(18)并且位置放到id后面:{{c1:: `alter table t_3 modify sfz char(18) after id;`}}
 + 删除字段:{{c1:: `alter table 表名 drop 字段名;`}}
   + 注意：{{c1:: 同时会删除字段对应的数据，而且不可逆}}
