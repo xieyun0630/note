@@ -70,9 +70,9 @@ var newsMapper = sqlSession.getMapper(NewsMapper.class);
 ```
 ### 创建Mapper接口建议约定 [	](mybatis_20200512080327623)
 
-1. {{c1:: Mapper接口的接口名应该与对应XML文件同名。}}
-2. {{c1:: Mapper接口的源文件应该与对应XML文档放在相同的包下。}}
-3. {{c1:: Mapper接口中抽象方法的方法名与XML Mapper中SQL语句的id相同。}}
+1. 文件名:{{c1:: Mapper接口的接口名应该与对应XML文件同名。}}
+2. 文件位置:{{c1:: Mapper接口的源文件应该与对应XML文档放在相同的包下。}}
+3. 方法名:{{c1:: Mapper接口中抽象方法的方法名与XML Mapper中SQL语句的id相同。}}
 
 ## Mybatis核心API [	](mybatis_20200717061050958)
 
@@ -471,14 +471,13 @@ create sequence news_inf_seq;
 }}
 
  ### Mapper接口中方法的参数处理 [	](mybatis_20200602074442602)
- 1. 8个基本类型加String等
-    
-    + {{c1:: 方法的参数值直接传给SQL中唯一的#{} }}
- 2. object或map
-    
-    + {{c1:: #{}中的参数名必须是对象的属性值或Map中的key值}}
- 3. 多个参数
-    + 内置名
+ + 单个参数传入：
+    1. 8个基本类型加String等
+        + {{c1:: 方法的参数值直接传给SQL中唯一的#{} }}
+    2. object或map
+        + {{c1:: #{}中的参数名必须是对象的属性值或Map中的key值}}
+ + 多个参数传入：
+    + sql中引用方式：
         1. {{c1:: #{param1},#{param2},#{param3} }}
         2. {{c1:: #{arg0},#{arg1},#{arg2} }}
     + 使用@param注解

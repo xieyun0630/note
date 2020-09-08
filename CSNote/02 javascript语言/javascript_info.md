@@ -4014,12 +4014,12 @@ async function load() {
 
 ### 插入和移除节点的 node 方法： [ ](javascript_info_20200525035508024)
 
-+ `node.append(...nodes or strings)`:{{c1::在 `node` 末尾插入。}}
-+ `node.prepend(...nodes or strings)`:{{c1::在 `node` 开头插入。}}
-+ `node.before(...nodes or strings)`:{{c1::在 `node` 之前插入。}}
-+ `node.after(...nodes or strings)`:{{c1::在 `node` 之后插入。}}
-+ `node.replaceWith(...nodes or strings)`:{{c1::替换 `node`。文本字符串被“作为文本”插入。}}
-+ `node.remove()`:{{c1::移除 `node`。}}
++ {{c1:: `node.append(...nodes or strings)`:在 `node` 末尾插入。}}
++ {{c1:: `node.prepend(...nodes or strings)`:在 `node` 开头插入。}}
++ {{c1:: `node.before(...nodes or strings)`:在 `node` 之前插入。}}
++ {{c1:: `node.after(...nodes or strings)`:在 `node` 之后插入。}}
++ {{c1:: `node.replaceWith(...nodes or strings)`:替换 `node`。文本字符串被“作为文本”插入。}}
++ {{c1:: `node.remove()`:移除 `node`。}}
 
 ### “旧式”的插入和移除节点的 node 方法： [ ](javascript_info_20200525035508026)
 
