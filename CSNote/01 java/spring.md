@@ -471,13 +471,72 @@
     <!-- }} -->
   ```
 
-### 后置处理器 [	](spring_20200715110208938)
+### Bean后置处理器 [	](spring_20200715110208938)
 
 1. {{c1:: 实现 BeanPostProcessor接口 }}
 2. {{c1:: Spring的配置文件中进行配置`<bean id="myBeanPostProcessor" class="xxx.MyBeanPostProcessor"/>` }}
    +  注意：{{c1:: BeanPostProcessor会对Spring工厂中所有创建的对象进行加工。 }}
 + 运行流程图
   + {{c1::![image-20200420155053027](spring.assets/image-20200420155053027.png)}}
+
+### 容器后置处理器
++ 容器后置处理器必须实现：{{c1:: `BeanFactoryPostProcessor`接口 }}
++ 作用：{{c1:: 通常用于容器初始化后对容器的整体操作 }}
+
+
+### spring内置**属性占位符**容器后置处理器
++ 接口：{{c1:: `PropertyPlaceholderConfigurer`}}
++ 作用：{{c1:: 使用`properties`文件简化`beans.xml`的配置}}
++ 命名空间简化配置：{{c1:: `<context:property-placeholder location="classpath:db.properties" />`}}
++ 实际配置：
+  ```xml
+    <!-- {{c1:: -->
+    <bean class=
+      "org.springframework.beans.factory.config.PropertyPlaceholderConfigurer">
+      <property name="locations">
+        <list>
+          <value>dbconn.properties</value>
+        </list>
+      </property>
+    </bean>
+    <!-- 定义数据源Bean，使用C3P0数据源实现 -->
+    <bean id="dataSource" class="com.mchange.v2.c3p0.ComboPooledDataSource"
+      destroy-method="close"
+      p:driverClass="${jdbc.driverClassName}"
+      p:jdbcUrl="${jdbc.url}"
+      p:user="${jdbc.username}"
+      p:password="${jdbc.password}"/>
+    </beans>
+    <!-- }} -->
+  ```
+### spring内置**重写占位符**容器后置处理器
+
++ 接口：{{c1:: `PropertyOverrideConfigurer`}}
++ 作用：{{c1:: 使用`properties`文件覆盖`<bean ..>`的`property`}}
++ 命名空间简化配置：{{c1:: `<context:property-placeholder location="classpath:db.properties" />`}}
++ 实际配置：
+  + properties配置
+  ```yaml
+    dataSource.driverClass=com.mysql.cj.jdbc.Driver
+    dataSource.jdbcUrl=jdbc:mysql://localhost:3306/spring?serverTimezone=UTC
+    dataSource.user=root
+    dataSource.password=32147
+  ```
+  + xml配置
+  ```xml
+    <!-- {{c1:: -->
+    <bean class=
+    "org.springframework.beans.factory.config.PropertyOverrideConfigurer">
+      <property name="locations">
+        <list>
+          <value>dbconn.properties</value>
+        </list>
+      </property>
+    </bean>
+    <bean id="dataSource" class="com.mchange.v2.c3p0.ComboPooledDataSource" 
+      destroy-method="close"/>  
+      <!-- }} -->
+  ```
 
 ### singleton Bean的初始化 [	](spring_20200824063336938)
 
@@ -615,3 +674,57 @@
     4. {{c1:: `setArguments(Object[] targetClass)`:调用方法的参数 }}
 
 
+## 基于XML Schema的简化配置方式
+
+### 使用p:命名空间简化配置
+```xml
+<bean id="chinese" class="org.crazyit.app.service.impl.Chinese"
+		p:age="29" p:axe-ref="stoneAxe"/>
+```
+
+### 使用c:命名空间简化配置
++ 需配置代码：
+```java
+public class Person
+{
+	private String name;
+	private int age;
+	@ConstructorProperties({"personName", "age"})
+	public Person(String name, int age)
+	{
+		this.name = name;
+		this.age = age;
+	}
+}
+```
++ c:命名空间简化配置:
+```xml
+  <bean id="person" class="org.crazyit.app.service.Person"
+	c:age="500" c:personName="孙悟空"/>
+```
+### 使用util:命名空间简化配置
+  + `constant`：{{c1:: `<util:constant id="chin.age" static-field="java.sql.Connection.`TRANSACTION_SERIALIZABLE"/>}}
+  + `property-path`:{{c1::`获取指定bean的getter方法，peropertyPathFacrotyBean的简化配置`}}
+  + `list`：{{c1:: `<util:list id="chin.schools" list-class="java.util.LinkedList">`}}
+  + `set`：{{c1:: `<util:set id="chin.axes" set-class="java.util.HashSet">`}}
+  + `map`：{{c1:: `<util:map id="chin.scores" map-class="java.util.TreeMap">`}}
+  + `properties`：{{c1:: `<util:properties id="confTest" location="classpath:test_zh_CN.properties"/>`}}
+  + 注意：以上简化配置都有:{{c1:: `scope`属性 }}
+
+## 使用注解配置spring
+
+### 标注`bean`的注解
+
++ 标注`bean`的注解
+  1. {{c1::`@Component`：标注普通bean**类**}}
+  2. {{c1::`@Controller`：标注控制器组件**类**}}
+  3. {{c1::`@Service`：标注业务逻辑组件**类**}}
+  4. {{c1::`@Repository`：标注DAO组件**类**}}
++ 以上都可以指定bean名称：{{c1::`@Component("person")`}}
+
+### 代替`<lookup-method ../>`的注解
++ {{c1:: `@Lookup(value="beanId")`:标注执行lookup方法注入的**方法** }}
+
+### 自动扫描Bean类配置
+
++ 自动扫描指定包及其子包下的所有Bean类 ：{{c1::`<context:component-scan base-package="top.xieyun.service"/>`}}
