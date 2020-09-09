@@ -113,7 +113,7 @@
 + 作用：{{c1:: 让容器调用setter将**特定的对象**注入到实现了`xxxAware接口`的`bean`中 }}
 + 常见的`xxxAware接口`：
   + `BeanNameAware`：{{c1:: 容器会注入bean本身的id值 }}
-  + `ResourceLoaderAware`：TODO
+  + `ResourceLoaderAware`：{{c1:: 容器会注入资源访问器，如果没有自定义`ResourceLoader`,默认注入的实际上是`ResourceLoader`类型的`ctx`对象 }}
   + `ApplicationContextAware`：{{c1:: 容器会注入ctx对象 }}
 
 ### spring程序开发流程 [	](spring_20200713102713847)
@@ -720,11 +720,125 @@ public class Person
   2. {{c1::`@Controller`：标注控制器组件**类**}}
   3. {{c1::`@Service`：标注业务逻辑组件**类**}}
   4. {{c1::`@Repository`：标注DAO组件**类**}}
-+ 以上都可以指定bean名称：{{c1::`@Component("person")`}}
+  + 注意以上都可以指定bean名称：{{c1::`@Component("person")`}}
++ 指定`bean`的作用域：{{c1:: `@Scope`,标注使用注解的组件**类** }}
++ 设置`bean`初始化顺序**注解**：{{c1:: `@DependsOn`,修饰**类** }}
++ 取消`singleton bean`预初始化**注解**:{{c1:: `@Lazy`,修饰**类** }}
 
 ### 代替`<lookup-method ../>`的注解
+
 + {{c1:: `@Lookup(value="beanId")`:标注执行lookup方法注入的**方法** }}
 
-### 自动扫描Bean类配置
+### 自动扫描Bean类注解配置
 
 + 自动扫描指定包及其子包下的所有Bean类 ：{{c1::`<context:component-scan base-package="top.xieyun.service"/>`}}
++ 2个过滤器子元素:
+  1. {{c1:: `<context:include-filter type="regex" expression=".*Chinese"/>` }}
+	2. {{c1:: `<context:exclude-filter type="regex" expression=".*Axe"/>` }}
++ 过滤器类型：
+  1. {{c1:: anotation }}
+  2. {{c1:: assignable }}
+  3. {{c1:: regex }}
+  4. {{c1:: aspectj }}
+
+### 使用注解配置依赖注入
+
++ 相当于`<property .../>`元素的value属性
+  + 注解：{{c1:: `@Value`,可修饰setter,实例变量 }}
++ 相当于`<property .../>`元素的ref属性
+  + 注解：{{c1:: `@Resource`,可修饰setter,实例变量 }}
+
+### 使用注解定制生命周期行为
+
++ 相当于`<bean>`元素的`init-method`属性
+  + 注解：{{c1:: `@PostConstruct`,修饰方法 }}
++ 相当于`<bean>`元素的`destroy-method`属性
+  + 注解：{{c1:: `@PreDestroy`,修饰方法 }}
+
+### 自动装配与精准装配
+
++ 自动装配注解：{{c1:: `@Autowaired`, 可修饰方法，构造方法，成员实例变量，数组，集合,泛型变量 }}
++ 默认使用`byType`策略，出现多个相同类型的`<bean>`时
+  
+  + 指定主候选`<bean>`：{{c1::`@Primary 指定类`}}
++ 精准装配(意义不大，等价于使用`@Resource`):
+  ```java
+    //{{c1::
+    @Autowired
+    @Qualifier("steelAxe")
+    private Axe axe;
+    //}}
+  ```
+
+### 为了使用@Autowaired自动装配时找不到候选Bean时不报错，有两种解决方案：
+
+1. 指定属性：{{c1:: `@Autowired(required = false)` }}
+2. 使用注解：{{c1:: `@Nullable`,指定方法形参，成员实例变量 }}
+
+### @NonNull,@Nullable，@NonNullFields，@NonNullApi
+
++ `@NonNull`:{{c1:: 使用在**字段**，**方法参数**或**方法的返回值**。表示不能为空 }}
++ `@Nullable`:{{c1:: 使用在**字段**，**方法参数**或**方法的返回值**。表示可以为空。 }}
++ `@NonNullFields`:{{c1:: 使用在**包级别**，并且是该包下类的**字段**不能为空。 }}
+  
+  + 使用条件：{{c1:: 必须先定义一个名为`package-info.java` }}
++ `@NonNullApi`:{{c1:: 使用在**包级别**，该包下的类的**方法参数**和**返回值**不能为空 }}
+  
+  + 使用条件：{{c1:: 必须先定义一个名为`package-info.java` }}
++ `package-info.java`文件：
+  ```java
+  //{{c1::
+    @NonNullApi
+    @NonNullFields
+    package org.springframework.mail;
+    import org.springframework.lang.NonNullApi;
+    import org.springframework.lang.NonNullFields;
+  //}}
+  ```
+
+## 资源访问
+
+### Resouce的常用实现类
++ 常用的资源访问前缀：
+  1. {{c1:: `http:` }}
+  2. {{c1:: `ftp:` }}
+  3. {{c1:: `file:` }}
+  4. {{c1:: `classpath:` }}
+    + 注意：{{c1:: `classpath*:bean*.xml`可以搜索指定路径下的符合文件名的所有文件 }}
+| 实现类                 | 说明                           |
+| ---------------------- | ------------------------------ |
+| ClassPathResource      | {{c1:: 过类路径获取资源文件         }}|
+| FileSystemResource     | {{c1:: 过文件系统获取资源           }}|
+| UrlResource            | {{c1:: 过URL地址获取资源            }}|
+| ByteArrayResource      | {{c1:: 取字节数组封装的资源         }}|
+| ServletContextResource | {{c1:: 取ServletContext环境下的资源 }}|
+| InputStreamResource    | {{c1:: 取输入流封装的资源           }}|
++ 通常建议使用`ByteArrayResource`代替`ServletContextResource`
+### Resource接口
+
++ 常用方法
+  | 方法             | 说明                                                         |
+  | ---------------- | ------------------------------------------------------------ |
+  | exists()         | {{c1:: 判断资源是否存在，true表示存在。                             }}|
+  | isReadable()     | {{c1:: 判断资源的内容是否可读。需要注意的是当其结果为true的时候，其内容未必真的可读，但如果返回false，则其内容必定不可读。 }}|
+  | isOpen()         | {{c1:: 判断当前Resource代表的底层资源是否已经打开，如果返回true，则只能被读取一次然后关闭以避免资源泄露；该方法主要针对于InputStreamResource，实现类中只有它的返回结果为true，其他都为false。 }}|
+  | getURL()         | {{c1:: 返回当前资源对应的URL。如果当前资源不能解析为一个URL则会抛出异常。如ByteArrayResource就不能解析为一个URL。 }}|
+  | getURI()         | {{c1:: 返回当前资源对应的URI。如果当前资源不能解析为一个URI则会抛出异常。 }}|
+  | getFile()        | {{c1:: 返回当前资源对应的File。                                     }}|
+  | contentLength()  | {{c1:: 返回当前资源内容的长度。                                     }}|
+  | getFilename()    | {{c1:: 获取资源的文件名。                                           }}|
+  | getDescription() | {{c1:: 返回当前资源底层资源的描述符，通常就是资源的全路径（实际文件名或实际URL地址）。 }}|
+  | getInputStream() | {{c1:: 获取当前资源代表的输入流。除了InputStreamResource实现类以外，其它Resource实现类每次调用getInputStream()方法都将返回一个全新的InputStream。 }}|
+
+### `ctx.getResource(String location)`方法
+
++ 作用：{{c1:: 可以使用前缀直接访问资源 }}
++ 传给普通Bean：{{c1:: 可以使用`ResourceLoaderAware`间接将`ctx`作为`ResourceLoader`传给`Bean` }}
+
+### 使用Resource作用属性
++ 使用Resource作为普通Bean属性后可以通过资源访问前缀使用如下配置获取资源
+  ```xml
+    <!-- {{c1:: -->
+    <bean id="test" class="TestBean" p:resource="classpath:book.xml" />
+    <!-- }} -->
+  ```
