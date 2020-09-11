@@ -807,28 +807,29 @@ public class Person
     + 注意：{{c1:: `classpath*:bean*.xml`可以搜索指定路径下的符合文件名的所有文件 }}
 | 实现类                 | 说明                           |
 | ---------------------- | ------------------------------ |
-| ClassPathResource      | {{c1:: 过类路径获取资源文件         }}|
-| FileSystemResource     | {{c1:: 过文件系统获取资源           }}|
-| UrlResource            | {{c1:: 过URL地址获取资源            }}|
-| ByteArrayResource      | {{c1:: 取字节数组封装的资源         }}|
-| ServletContextResource | {{c1:: 取ServletContext环境下的资源 }}|
-| InputStreamResource    | {{c1:: 取输入流封装的资源           }}|
+| `ClassPathResource`      | {{c1:: 过类路径获取资源文件         }}|
+| `FileSystemResource`     | {{c1:: 过文件系统获取资源           }}|
+| `UrlResource`            | {{c1:: 过URL地址获取资源            }}|
+| `ByteArrayResource`      | {{c1:: 取字节数组封装的资源         }}|
+| `ServletContextResource` | {{c1:: 取ServletContext环境下的资源 }}|
+| `InputStreamResource`    | {{c1:: 取输入流封装的资源           }}|
 + 通常建议使用`ByteArrayResource`代替`ServletContextResource`
+
 ### Resource接口
 
 + 常用方法
   | 方法             | 说明                                                         |
   | ---------------- | ------------------------------------------------------------ |
-  | exists()         | {{c1:: 判断资源是否存在，true表示存在。                             }}|
-  | isReadable()     | {{c1:: 判断资源的内容是否可读。需要注意的是当其结果为true的时候，其内容未必真的可读，但如果返回false，则其内容必定不可读。 }}|
-  | isOpen()         | {{c1:: 判断当前Resource代表的底层资源是否已经打开，如果返回true，则只能被读取一次然后关闭以避免资源泄露；该方法主要针对于InputStreamResource，实现类中只有它的返回结果为true，其他都为false。 }}|
-  | getURL()         | {{c1:: 返回当前资源对应的URL。如果当前资源不能解析为一个URL则会抛出异常。如ByteArrayResource就不能解析为一个URL。 }}|
-  | getURI()         | {{c1:: 返回当前资源对应的URI。如果当前资源不能解析为一个URI则会抛出异常。 }}|
-  | getFile()        | {{c1:: 返回当前资源对应的File。                                     }}|
-  | contentLength()  | {{c1:: 返回当前资源内容的长度。                                     }}|
-  | getFilename()    | {{c1:: 获取资源的文件名。                                           }}|
-  | getDescription() | {{c1:: 返回当前资源底层资源的描述符，通常就是资源的全路径（实际文件名或实际URL地址）。 }}|
-  | getInputStream() | {{c1:: 获取当前资源代表的输入流。除了InputStreamResource实现类以外，其它Resource实现类每次调用getInputStream()方法都将返回一个全新的InputStream。 }}|
+  | `exists()`         | {{c1:: 判断资源是否存在，true表示存在。                             }}|
+  | `isReadable()`     | {{c1:: 判断资源的内容是否可读。需要注意的是当其结果为true的时候，其内容未必真的可读，但如果返回false，则其内容必定不可读。 }}|
+  | `isOpen()`         | {{c1:: 判断当前Resource代表的底层资源是否已经打开，如果返回true，则只能被读取一次然后关闭以避免资源泄露；该方法主要针对于InputStreamResource，实现类中只有它的返回结果为true，其他都为false。 }}|
+  | `getURL()`         | {{c1:: 返回当前资源对应的URL。如果当前资源不能解析为一个URL则会抛出异常。如ByteArrayResource就不能解析为一个URL。 }}|
+  | `getURI()`         | {{c1:: 返回当前资源对应的URI。如果当前资源不能解析为一个URI则会抛出异常。 }}|
+  | `getFile()`        | {{c1:: 返回当前资源对应的File。                                     }}|
+  | `contentLength()`  | {{c1:: 返回当前资源内容的长度。                                     }}|
+  | `getFilename()`    | {{c1:: 获取资源的文件名。                                           }}|
+  | `getDescription()` | {{c1:: 返回当前资源底层资源的描述符，通常就是资源的全路径（实际文件名或实际URL地址）。 }}|
+  | `getInputStream()` | {{c1:: 获取当前资源代表的输入流。除了InputStreamResource实现类以外，其它Resource实现类每次调用getInputStream()方法都将返回一个全新的InputStream。 }}|
 
 ### `ctx.getResource(String location)`方法
 
@@ -842,3 +843,97 @@ public class Person
     <bean id="test" class="TestBean" p:resource="classpath:book.xml" />
     <!-- }} -->
   ```
+
+### AOP的基本概念
+
++ `Aspect`:{{c1:: 切面，用于组织多个`Advice,Advice`在切面中定义 }}
++ `Joinpoint`:{{c1:: 程序执行中明确的点，在`spring AOP`中总是**方法的调用** }}
++ `Advice`:{{c1:: 增强处理，有`around,before,after`等类型 }}
++ `Pointcut`:{{c1:: 切入点，可以插入增强处理的连接点。 }}
++ 引入：{{c1:: 将方法或字段添加到被处理的类中 }}
++ 目标对象：{{c1:: 被增强处理的对象。 }}
+
+
+### 开启spring中AspectJ支持
+
++ 需要使用xml配置方式
+```xml
+	<!-- 启动@AspectJ支持 -->
+	<aop:aspectj-autoproxy/>
+```
++ 不需要xml配置方式
+```xml
+  <bean class= 'xxx.AnnotationAwareAspectJAutoProxyCreator' />
+```
+
+### 基于注解的AOP配置
++ 定义切面:{{c1:: `@Aspect` }}
++ 5种advice:{{c1:: `Before,AfterReturning(成功),AfterThrowing(失败),After(无论),around` }}
++ 5种advice使用例子:
+  ```java
+    //{{c1::
+    @Before("execution(* org.crazyit.app.service.impl.*.*(..))")
+    public void authority()
+    {}
+
+    @AfterReturning(returning = "rvt",
+      pointcut = "execution(* org.crazyit.app.service.impl.*.*(..))")
+    public void log(Object rvt)
+    {}
+
+    @AfterThrowing(throwing = "ex",
+      pointcut = "execution(* org.crazyit.app.service.impl.*.*(..))")
+    public void doRecoveryActions(Throwable ex)
+    {}
+
+    @After("execution(* org.crazyit.app.service.*.*(..))")
+    public void release()
+    {}
+
+    @Around("execution(* org.crazyit.app.service.impl.*.*(..))")
+    public Object processTx(ProceedingJoinPoint jp)
+      throws java.lang.Throwable
+    {}
+    //}}
+  ```
+
+### 访问目标方法方式
+
++ 定义增强处理方法时:{{c1:: 将第一个参数定义为`JoinPoint`类型 }}
+  + 注意:{{c1:: `Around`只能定义为`proceedingJoinPoint`类型 }}
++ 使用args表达式
+  ```java
+    //{{c1::
+    // 下面的args(arg0, arg1)会限制目标方法必须有2个形参
+    @AfterReturning(returning = "rvt", pointcut =
+      "execution(* org.crazyit.app.service.impl.*.*(..)) && args(arg0, arg1)")
+    // 此处指定arg0、arg1为String类型
+    // 则args(arg0, arg1)还要求目标方法的两个形参都是String类型
+    public void access(Object rvt, String arg0, String arg1)
+    {
+      System.out.println("调用目标方法第1个参数为:" + arg0);
+      System.out.println("调用目标方法第2个参数为:" + arg1);
+      System.out.println("获取目标方法返回值:" + rvt);
+      System.out.println("模拟记录日志功能...");
+    }
+    //}}
+  ```
+
+### JoinPoint对象API
+
+| 方法名                    | 功能                                                         |
+| ------------------------- | ------------------------------------------------------------ |
+|  `Signature getSignature(); `| {{c1:: 获取封装了署名信息的对象,在该对象中可以获取到目标方法名,所属类的Class等信息 }}|
+|  `Object[] getArgs();`| {{c1:: 获取传入目标方法的参数对象                                   }}|
+|  `Object getTarget();`| {{c1:: 获取被代理的对象                                             }}|
+|  `Object getThis();`| {{c1:: 获取代理对象                                                 }}|
+
+
+### 指定切面类的优先级（执行顺序）2种方法：
+
++ {{c1:: 让切面类实现Ordered接口,该接口具有一个返回整数的方法 }}
++ {{c1:: 使用@Order注解修饰一个切面类 }}
+
+
+
+### 定义切入点
