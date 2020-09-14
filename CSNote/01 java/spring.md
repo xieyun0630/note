@@ -479,12 +479,12 @@
 + 运行流程图
   + {{c1::![image-20200420155053027](spring.assets/image-20200420155053027.png)}}
 
-### 容器后置处理器
+### 容器后置处理器 [	](spring_20200911094545271)
 + 容器后置处理器必须实现：{{c1:: `BeanFactoryPostProcessor`接口 }}
 + 作用：{{c1:: 通常用于容器初始化后对容器的整体操作 }}
 
 
-### spring内置**属性占位符**容器后置处理器
+### spring内置**属性占位符**容器后置处理器 [	](spring_20200911094545273)
 + 接口：{{c1:: `PropertyPlaceholderConfigurer`}}
 + 作用：{{c1:: 使用`properties`文件简化`beans.xml`的配置}}
 + 命名空间简化配置：{{c1:: `<context:property-placeholder location="classpath:db.properties" />`}}
@@ -509,7 +509,7 @@
     </beans>
     <!-- }} -->
   ```
-### spring内置**重写占位符**容器后置处理器
+### spring内置**重写占位符**容器后置处理器 [	](spring_20200911094545275)
 
 + 接口：{{c1:: `PropertyOverrideConfigurer`}}
 + 作用：{{c1:: 使用`properties`文件覆盖`<bean ..>`的`property`}}
@@ -674,15 +674,15 @@
     4. {{c1:: `setArguments(Object[] targetClass)`:调用方法的参数 }}
 
 
-## 基于XML Schema的简化配置方式
+## 基于XML Schema的简化配置方式 [	](spring_20200911094545277)
 
-### 使用p:命名空间简化配置
+### 使用p:命名空间简化配置 [	](spring_20200911094545281)
 ```xml
 <bean id="chinese" class="org.crazyit.app.service.impl.Chinese"
 		p:age="29" p:axe-ref="stoneAxe"/>
 ```
 
-### 使用c:命名空间简化配置
+### 使用c:命名空间简化配置 [	](spring_20200911094545284)
 + 需配置代码：
 ```java
 public class Person
@@ -702,7 +702,7 @@ public class Person
   <bean id="person" class="org.crazyit.app.service.Person"
 	c:age="500" c:personName="孙悟空"/>
 ```
-### 使用util:命名空间简化配置
+### 使用util:命名空间简化配置 [	](spring_20200911094545287)
   + `constant`：{{c1:: `<util:constant id="chin.age" static-field="java.sql.Connection.`TRANSACTION_SERIALIZABLE"/>}}
   + `property-path`:{{c1::`获取指定bean的getter方法，peropertyPathFacrotyBean的简化配置`}}
   + `list`：{{c1:: `<util:list id="chin.schools" list-class="java.util.LinkedList">`}}
@@ -711,9 +711,9 @@ public class Person
   + `properties`：{{c1:: `<util:properties id="confTest" location="classpath:test_zh_CN.properties"/>`}}
   + 注意：以上简化配置都有:{{c1:: `scope`属性 }}
 
-## 使用注解配置spring
+## 使用注解配置spring [	](spring_20200911094545289)
 
-### 标注`bean`的注解
+### 标注`bean`的注解 [	](spring_20200911094545293)
 
 + 标注`bean`的注解
   1. {{c1::`@Component`：标注普通bean**类**}}
@@ -725,11 +725,11 @@ public class Person
 + 设置`bean`初始化顺序**注解**：{{c1:: `@DependsOn`,修饰**类** }}
 + 取消`singleton bean`预初始化**注解**:{{c1:: `@Lazy`,修饰**类** }}
 
-### 代替`<lookup-method ../>`的注解
+### 代替`<lookup-method ../>`的注解 [	](spring_20200911094545295)
 
 + {{c1:: `@Lookup(value="beanId")`:标注执行lookup方法注入的**方法** }}
 
-### 自动扫描Bean类注解配置
+### 自动扫描Bean类注解配置 [	](spring_20200911094545298)
 
 + 自动扫描指定包及其子包下的所有Bean类 ：{{c1::`<context:component-scan base-package="top.xieyun.service"/>`}}
 + 2个过滤器子元素:
@@ -741,21 +741,21 @@ public class Person
   3. {{c1:: regex }}
   4. {{c1:: aspectj }}
 
-### 使用注解配置依赖注入
+### 使用注解配置依赖注入 [	](spring_20200911094545301)
 
 + 相当于`<property .../>`元素的value属性
   + 注解：{{c1:: `@Value`,可修饰setter,实例变量 }}
 + 相当于`<property .../>`元素的ref属性
   + 注解：{{c1:: `@Resource`,可修饰setter,实例变量 }}
 
-### 使用注解定制生命周期行为
+### 使用注解定制生命周期行为 [	](spring_20200911094545303)
 
 + 相当于`<bean>`元素的`init-method`属性
   + 注解：{{c1:: `@PostConstruct`,修饰方法 }}
 + 相当于`<bean>`元素的`destroy-method`属性
   + 注解：{{c1:: `@PreDestroy`,修饰方法 }}
 
-### 自动装配与精准装配
+### 自动装配与精准装配 [	](spring_20200911094545306)
 
 + 自动装配注解：{{c1:: `@Autowaired`, 可修饰方法，构造方法，成员实例变量，数组，集合,泛型变量 }}
 + 默认使用`byType`策略，出现多个相同类型的`<bean>`时
@@ -770,12 +770,12 @@ public class Person
     //}}
   ```
 
-### 为了使用@Autowaired自动装配时找不到候选Bean时不报错，有两种解决方案：
+### 为了使用@Autowaired自动装配时找不到候选Bean时不报错，有两种解决方案： [	](spring_20200911094545309)
 
 1. 指定属性：{{c1:: `@Autowired(required = false)` }}
 2. 使用注解：{{c1:: `@Nullable`,指定方法形参，成员实例变量 }}
 
-### @NonNull,@Nullable，@NonNullFields，@NonNullApi
+### @NonNull,@Nullable，@NonNullFields，@NonNullApi [	](spring_20200911094545312)
 
 + `@NonNull`:{{c1:: 使用在**字段**，**方法参数**或**方法的返回值**。表示不能为空 }}
 + `@Nullable`:{{c1:: 使用在**字段**，**方法参数**或**方法的返回值**。表示可以为空。 }}
@@ -796,9 +796,9 @@ public class Person
   //}}
   ```
 
-## 资源访问
+## 资源访问 [	](spring_20200911094545315)
 
-### Resouce的常用实现类
+### Resouce的常用实现类 [	](spring_20200911094545317)
 + 常用的资源访问前缀：
   1. {{c1:: `http:` }}
   2. {{c1:: `ftp:` }}
@@ -815,7 +815,7 @@ public class Person
 | `InputStreamResource`    | {{c1:: 取输入流封装的资源           }}|
 + 通常建议使用`ByteArrayResource`代替`ServletContextResource`
 
-### Resource接口
+### Resource接口 [	](spring_20200911094545321)
 
 + 常用方法
   | 方法             | 说明                                                         |
@@ -831,12 +831,12 @@ public class Person
   | `getDescription()` | {{c1:: 返回当前资源底层资源的描述符，通常就是资源的全路径（实际文件名或实际URL地址）。 }}|
   | `getInputStream()` | {{c1:: 获取当前资源代表的输入流。除了InputStreamResource实现类以外，其它Resource实现类每次调用getInputStream()方法都将返回一个全新的InputStream。 }}|
 
-### `ctx.getResource(String location)`方法
+### `ctx.getResource(String location)`方法 [	](spring_20200911094545324)
 
 + 作用：{{c1:: 可以使用前缀直接访问资源 }}
 + 传给普通Bean：{{c1:: 可以使用`ResourceLoaderAware`间接将`ctx`作为`ResourceLoader`传给`Bean` }}
 
-### 使用Resource作用属性
+### 使用Resource作用属性 [	](spring_20200911094545327)
 + 使用Resource作为普通Bean属性后可以通过资源访问前缀使用如下配置获取资源
   ```xml
     <!-- {{c1:: -->
@@ -844,7 +844,7 @@ public class Person
     <!-- }} -->
   ```
 
-### AOP的基本概念
+### AOP的基本概念 [	](spring_20200911094545329)
 
 + `Aspect`:{{c1:: 切面，用于组织多个`Advice,Advice`在切面中定义 }}
 + `Joinpoint`:{{c1:: 程序执行中明确的点，在`spring AOP`中总是**方法的调用** }}
@@ -854,7 +854,7 @@ public class Person
 + 目标对象：{{c1:: 被增强处理的对象。 }}
 
 
-### 开启spring中AspectJ支持
+### 开启spring中AspectJ支持 [	](spring_20200911094545332)
 
 + 需要使用xml配置方式
 ```xml
@@ -866,7 +866,7 @@ public class Person
   <bean class= 'xxx.AnnotationAwareAspectJAutoProxyCreator' />
 ```
 
-### 基于注解的AOP配置
+### 基于注解的AOP配置 [	](spring_20200911094545336)
 + 定义切面:{{c1:: `@Aspect` }}
 + 5种advice:{{c1:: `Before,AfterReturning(成功),AfterThrowing(失败),After(无论),around` }}
 + 5种advice使用例子:
@@ -897,7 +897,7 @@ public class Person
     //}}
   ```
 
-### 访问目标方法方式
+### 访问目标方法方式 [	](spring_20200911094545339)
 
 + 定义增强处理方法时:{{c1:: 将第一个参数定义为`JoinPoint`类型 }}
   + 注意:{{c1:: `Around`只能定义为`proceedingJoinPoint`类型 }}
@@ -919,7 +919,7 @@ public class Person
     //}}
   ```
 
-### JoinPoint对象API
+### JoinPoint对象API [	](spring_20200911094545342)
 
 | 方法名                    | 功能                                                         |
 | ------------------------- | ------------------------------------------------------------ |
@@ -929,11 +929,11 @@ public class Person
 |  `Object getThis();`| {{c1:: 获取代理对象                                                 }}|
 
 
-### 指定切面类的优先级（执行顺序）2种方法：
+### 指定切面类的优先级（执行顺序）2种方法： [	](spring_20200911094545346)
 
 + {{c1:: 让切面类实现Ordered接口,该接口具有一个返回整数的方法 }}
 + {{c1:: 使用@Order注解修饰一个切面类 }}
 
 
 
-### 定义切入点
+### 定义切入点 [	](spring_20200911094545350)
