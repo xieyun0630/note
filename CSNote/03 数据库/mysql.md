@@ -52,7 +52,7 @@
 3. DDL：{{c1:: Data Definition Language，数据定义语言，用于创建数据结构}}
 4. DCL：{{c1:: Data Control Language，数据控制语言，用于用户权限管理}}
 5. TPL：{{c1:: Transaction Process Language，事务处理语言，辅助DML进行事务操作（因此也归属于DML） }}
-　
+
 ### 客户端需要连接认证 [	](mysql_20200824100449016)
 
 + 命令：{{c1::  `mysql -uroot -p123456` }}
@@ -146,6 +146,7 @@
     ```
     }}
 + 如果想创建一个与已有表一样的数据表，MySQL提供了一种便捷的复制模式:
+  
   + {{c1:: `create table 表名 like 数据库名字.表名` }}
 
 ### 数据引擎：`MyISAM` 和 `InnoDB` 的区别 [	](mysql_20200824100449049)
@@ -573,7 +574,7 @@ MySQL内部对象存在字符集继承：`字段 -> 表 -> 数据库 -> DBMS`
 * 子查询数据源：{{c1:: 数据来源是一个查询结果 `from (select 字段列表 from 表名) as 别名}}`
   * 数据源要求必须是{{c1:: 一个`表`}}
   * 如果是查询结果必须{{c1:: 给起一个表别名}}
- 
+
 ### 回溯统计 [	](mysql_20200914055152999)
 
 **回溯统计**：{{c1:: 在进行分组时（通常是多分组），每一次结果的回溯都进行一次汇总统计}}
@@ -866,3 +867,293 @@ MySQL内部对象存在字符集继承：`字段 -> 表 -> 数据库 -> DBMS`
   * 单库备份：{{c1:: `[--databases] 数据库` 指定数据库里的所有表（后面不要给表名） }}
   * 部分表（单表）备份：{{c1:: `数据库名字 表1[ 表2...表N]` }}
 + 复原语法：{{c1:: `source SQL文件路径;` }}
+
+
+## 账号管理 [	](mysql_20200916055246268)
+
+* MySQL中账号的组成分为两个部分：{{c1:: 用户名 @ 主机地址（root@localhost） }}
+  * 主机地址：{{c1:: 是允许账号所在客户端的访问的客户端IP（如上述root只能在服务器本机通过客户端访问）}}
+* 账号管理:
+  * 创建账号：{{c1:: `create user 用户名@主机地址 identified by '明文密码';` }}
+  * 删除账号：{{c1:: `drop user 用户名@主机地址` }}
+
+### 权限管理 [	](mysql_20200916055246271)
+
+* 赋权：{{c1:: 给账号绑定相应的权限 `grant 权限列表 on 数据库|*.数据表|* to 用户名@主机地址 `}}
+* 回收：{{c1:: 将账号已有的权限回收 `revoke 权限列表 on 数据库|*.数据表|* from 用户名@主机地址 `}}
+* 刷新权限：{{c1:: `flush privileges`}}
+* 查看权限：{{c1:: `show grants for 用户名@主机地址`}}
+
+### 角色管理 [	](mysql_20200916055246273)
+
+* 创建角色：{{c1:: `create role 角色名字1[,角色名字2,...角色名字N]`（可批量创建） }}
+* 分配权限：{{c1:: `grant 权限列表 on 数据库|*.数据表|* to 角色名字` }}
+* 绑定角色：{{c1:: `grant 角色名字 to 用户名@主机地址` }}
+* 撤销角色：{{c1:: `revoke 角色名字 from 用户名@主机地址` }}
+* 回收角色权限：{{c1:: `revoke 权限列表 on 数据库|*.数据表|* from 角色名字` }}
+* 删除角色：{{c1:: `drop role 角色名字1[,角色名字2,...角色名字N]` }}
+
+### MySQL目前提供了以下4种索引类型： [	](mysql_20200916055246275)
+
+- `BTREE 索引` ： 最常见的索引类型，大部分索引都支持 B 树索引。
+- `HASH 索引`：只有Memory引擎支持 ， 使用场景简单 。
+- `R-tree 索引`：空间索引是MyISAM引擎的一个特殊索引类型，主要用于地理空间数据类型，通常使用较少，不做特别介绍。
+- `Full-text` ：全文索引也是MyISAM的一个特殊索引类型，主要用于全文索引，InnoDB从Mysql5.6版本开始支持全文索引。
+
+#### 索引分类 [	](mysql_20200916055246276)
+
+1. 单值索引：{{c1:: 即一个索引只包含单个列，一个表可以有多个单列索引 }}
+2. 唯一索引：{{c1:: 索引列的值必须唯一，但允许有空值 }}
+3. 复合索引：{{c1:: 即一个索引包含多个列 }}
+
+#### 索引管理 [	](mysql_20200916055246278)
++ 创建索引:
+  ```SQL
+    #{{c1::
+    CREATE 	[UNIQUE|FULLTEXT|SPATIAL]  INDEX index_name 
+    [USING  index_type]
+    ON tbl_name(index_col_name,...)
+    #}}
+  ```
++ 查看索引:`show index  from  table_name;`
++ 删除索引:`drop  index  index_name  on  tbl_name;`
+
+### 使用ALTER命令创建索引 [	](mysql_20200916055246280)
++ 添加一个主键，这意味着索引值必须是唯一的，且不能为NULL：{{c1:: `alter  table  tb_name  add  primary  key(column_list); `}}
++ 创建索引的值必须是唯一的（NULL可能会出现多次）：{{c1:: `alter  table  tb_name  add  unique index_name(column_list);`}}
++ 添加普通索引， 索引值可以出现多次：{{c1:: `alter  table  tb_name  add  index index_name(column_list);`}}
++ 添加全文索引：{{c1:: `alter  table  tb_name  add  fulltext  index_name(column_list);`}}
+
+### 索引设计原则 [	](mysql_20200916055246282)
+
++ **索引创建场景**：{{c1:: 对查询频次较高，且数据量比较大的表建立索引。}}
++ **字段选择**:{{c1:: 最佳候选列应当从where子句的条件中提取，如果where子句中的组合比较多，那么应当挑选最常用、过滤效果最好的列的组合。}}
++ **唯一索引**：{{c1:: 区分度越高，使用索引的效率越高。}}
++ **性能影响**:{{c1::  注意索引对DML的性能影响}}
++ **使用短索引**:{{c1:: 假如构成索引的字段总长度比较短，那么在给定大小的存储块内可以存储更多的索引值，相应的可以有效的提升MySQL访问索引的I/O效率。}}
++ **利用最左前缀**:{{c1:: N个列组合而成的组合索引，那么相当于是创建了N个索引，如果查询时where子句中使用了组成该索引的前几个字段，那么这条查询SQL可以利用组合索引来提升查询效率。}}
+
+
+## 存储过程和函数 [	](mysql_20200916055246284)
+
++ 存储过程和函数的区别:{{c1:: 函数必须有返回值，而存储过程没有。 }}
++ 创建存储过程:
+  ```SQL
+  #{{c1::
+    delimiter $
+    CREATE PROCEDURE procedure_name ([proc_parameter[,...]])
+    begin
+      -- SQL语句
+    end ;
+    delimiter ;
+  #}}
+  ```
++ 调用存储过程:{{c1:: `call procedure_name();` }}
++ 查询db_name数据库中的所有的存储过程:{{c1:: `select name from mysql.proc where db='db_name';`}}
++ 查询存储过程的状态信息:{{c1:: `show procedure status;` }}
++ 查询某个存储过程的定义:{{c1:: `show create procedure test.pro_test1 \G;` }}
++ 删除存储过程:{{c1:: `DROP PROCEDURE  [IF EXISTS] sp_name;` }}
+
+### 函数 [	](mysql_20200916055246286)
+
++ 案例 : 定义一个存储过程, 请求满足条件的总记录数 ;
+  ```SQL
+    #{{c1::
+      delimiter $
+      create function count_city(countryId int)
+      returns int
+      begin
+        declare cnum int ;
+        select count(*) into cnum from city where country_id = countryId;
+        return cnum;
+      end$
+      delimiter ;
+    #}}
+  ```
++ 调用: {{c1:: `select count_city(1);` }}
+
+## MYSQL流程控制 [	](mysql_20200916055246287)
+
+### MYSQL流程控制：变量 [	](mysql_20200916055246289)
+
++ 声明：{{c1:: `DECLARE var_name[,...] type [DEFAULT value]` }}
++ 赋值：{{c1:: `SET var_name = expr [, var_name = expr] ...` }}
++ `into`赋值：{{c1:: `select count(*) into countnum from city;` }}
+
+### MYSQL流程控制：条件判断与传递参数 [	](mysql_20200916055246291)
+
++ 传递参数语法格式：{{c1::`create procedure procedure_name([in/out/inout] 参数名   参数类型)`}}
++ 案例：
+  ```text
+    根据定义的身高变量，判定当前身高的所属的身材类型 
+    180 及以上 ----------> 身材高挑
+    170 - 180  ---------> 标准身材
+    170 以下  ----------> 一般身材
+  ```
++ 实现：
+  ```SQL
+  #{{c1::
+    delimiter $
+    create procedure pro_test5(in height int)
+    begin
+      declare description varchar(50) default '';
+      if height >= 180 then
+        set description='身材高挑';
+      elseif height >= 170 and height < 180 then
+        set description='标准身材';
+      else
+        set description='一般身材';
+      end if;
+      select concat('身高 ', height , '对应的身材类型为:',description);
+    end$
+    delimiter ;
+  #}}
+  ```
+
+### MYSQL流程控制：case结构 [	](mysql_20200916055246293)
++ 方式一 : 
+  ```SQL
+  #{{c1::
+    CASE case_value
+      WHEN when_value THEN statement_list
+      [WHEN when_value THEN statement_list] ...
+      [ELSE statement_list]
+    END CASE;
+  #}}
+  ```
++ 方式二 : 
+  ```SQL
+  #{{c1::
+    CASE
+      WHEN search_condition THEN statement_list
+      [WHEN search_condition THEN statement_list] ...
+      [ELSE statement_list]
+    END CASE;
+  #}}
+  ```
+
+###  MYSQL流程控制：循环 [	](mysql_20200916055246295)
+
+  + 案例：计算从1加到n的值
+    + while循环：
+    ```SQL
+      #{{c1::
+        delimiter $
+        create procedure pro_test8(n int)
+        begin
+          declare total int default 0;
+          declare num int default 1;
+          while num<=n do
+            set total = total + num;
+          set num = num + 1;
+          end while;
+          select total;
+        end$
+        delimiter ;
+      #}}
+    ```
+    + repeat结构：
+    ```SQL
+      #{{c1::
+        delimiter $
+        create procedure pro_test10(n int)
+        begin
+          declare total int default 0;
+          repeat 
+            set total = total + n;
+            set n = n - 1;
+            until n=0  
+          end repeat;
+          select total ;
+        end$
+        delimiter ;
+      #}}
+    ```
+    + loop结构：
+    ```SQL
+      #{{c1::
+        delimiter $
+        CREATE PROCEDURE pro_test11(n int)
+        BEGIN
+          declare total int default 0;
+          ins: LOOP
+            IF n <= 0 then
+              leave ins;
+            END IF;
+            set total = total + n;
+            set n = n - 1;
+          END LOOP ins;
+          select total;
+        END$
+        delimiter ;
+      #}}
+    ```
+
+### 游标 [	](mysql_20200916055246296)
+
++ 作用：游标是用来存储**查询结果集**的数据类型,在存储过程和函数中可以使用光标对结果集进行循环的处理。
++ 声明光标：{{c1:: `DECLARE cursor_name CURSOR FOR select_statement ;` }}
++ OPEN 光标：{{c1:: `OPEN cursor_name ;` }}
++ FETCH 光标：{{c1:: `FETCH cursor_name INTO var_name [, var_name] ...` }}
++ CLOSE 光标：{{c1:: `CLOSE cursor_name ;` }}
++ 获取结束flag:
+  ```SQL
+    #{{c1::
+      DECLARE emp_result CURSOR FOR select * from emp;
+      DECLARE EXIT HANDLER FOR NOT FOUND set has_data = 0;
+    #}}
+  ```
+
+### 触发器 [	](mysql_20200916055246298)
+
++ 作用：{{c1:: 触发器是**与表有关**的数据库对象，指在 insert/update/delete 之前或之后，触发并执行触发器中定义的**SQL语句集合**。 }}
++ 语法结构 : 
+  ```SQL
+    #{{c1::
+    create trigger trigger_name 
+    before/after insert/update/delete
+    on table_name 
+    [ for each row ]
+    begin
+      trigger_stmt ;
+    end;
+    #}}
+  ```
++ 删除触发器:{{c1:: `drop trigger [schema_name.]trigger_name` }}
++ 查看触发器:{{c1:: `show triggers；` }}
++ oracle与mysql中`for each row`的区别：
+  + {{c1:: oracle触发器中分行级触发器和语句级触发器,可不写foreachrow,无论影响多少行都只执行一次。}}
+  + {{c1:: mysql不支持语句触发器,所以必须写foreachrow;}}
+  + NEW 和 OLD的使用 
+  | 触发器类型      | NEW 和 OLD的使用                                        |
+  | --------------- | ------------------------------------------------------- |
+  | INSERT 型触发器 | {{c1:: NEW 表示将要或者已经新增的数据                          }}|
+  | UPDATE 型触发器 | {{c1:: OLD 表示修改之前的数据 , NEW 表示将要或已经修改后的数据 }}|
+  | DELETE 型触发器 | {{c1:: OLD 表示将要或者已经删除的数据                          }}|
+
+## SQL优化 [	](mysql_20200916055246300)
+
+### 整个MySQL Server由以下组成 [	](mysql_20200916055246302)
+
+- `Connection Pool` :{{c1:: 连接池组件}}
+- `Management Services & Utilities` :{{c1:: 管理服务和工具组件}}
+- `SQL Interface` :{{c1:: SQL接口组件}}
+- `Parser` :{{c1:: 查询分析器组件}}
+- `Optimizer` :{{c1:: 优化器组件}}
+- `Caches & Buffers` :{{c1:: 缓冲池组件}}
+- `Pluggable Storage Engines` :{{c1:: 存储引擎}}
+- `File System` :{{c1:: 文件系统}}
+
+### 存储引擎 [	](mysql_20200916055246304)
+
++ 是什么：{{c1:: 存储引擎就是存储数据，建立索引，更新查询数据等等技术的实现方式 。 }}
++ mysql特点：{{c1:: Oracle，SqlServer等数据库只有一种存储引擎。MySQL提供了插件式的存储引擎架构。 }}
++ 查询当前数据库支持的存储引擎：{{c1:: `show engines` }}
++ 查看Mysql数据库默认的存储引擎:{{c1:: `show variables like '%storage_engine%'；` }}
+
+### InnoDB与MyISAM特点与区别 [	](mysql_20200916055246306)
+
++ InnoDB和MyISAM都是B+树的结构，实现方式差别：
+  + {{c1:: InnoDB是聚簇索引（叶子节点存数据），MyISAM是非聚簇索引（叶子节点存指针） }}
+  + 实现（图）：{{c1:: ![img](mysql.assets/1107494-20181127224013631-1598460643.png) }}
++ 功能差别：{{c1:: InnoDB 支持事务、行级锁, 而MyISAM都不支持 }}
