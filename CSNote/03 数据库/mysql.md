@@ -199,8 +199,8 @@
 + 删除数据：
   + 语法： {{c1:: `delete from 表名 [where条件];` }}
 
-MySQL内部对象存在字符集继承：`字段 -> 表 -> 数据库 -> DBMS`
-客户端与服务器进行交互时，需要明确告知服务器客户端自己的字符集（数据格式）:`set names 客户端字符集;`
++ MySQL内部对象存在字符集继承：{{c1:: `字段 -> 表 -> 数据库 -> DBMS`}}
++ 客户端与服务器进行交互时，需要明确告知服务器客户端自己的字符集（数据格式）:{{c1:: `set names 客户端字符集;`}}
 
 ### `set names 字符集`是一种快捷方式，本质有三个变量被修改: [	](mysql_20200911094545379)
 
@@ -217,7 +217,7 @@ MySQL内部对象存在字符集继承：`字段 -> 表 -> 数据库 -> DBMS`
   +  大小写敏感：{{c1:: `_cs，case sensitive（区分大小写）` }}
   +  二进制比较：{{c1:: `_bin，binary（区分大小写）` }}
 +  校对集是在进行数据比较的时候触发
-+ 校对规则可以在MySQL四中内部对象中设置:{{c1:: `DBMS->DB->Table->Field` }}
++ 校对规则可以在MySQL四种内部对象中设置:{{c1:: `DBMS->DB->Table->Field` }}
 + 校对集对应的数据一旦产生，那么就不可以修改数据表的校对规则
 
 ### 校对集设置语法 [	](mysql_20200911094545384)
@@ -253,7 +253,7 @@ MySQL内部对象存在字符集继承：`字段 -> 表 -> 数据库 -> DBMS`
   +  {{c1:: 字符串类型 }}
   +  {{c1:: 时间日类类型 }}
 
-  ### 整数类型 [	](mysql_20200911094545392)
+### 整数类型 [	](mysql_20200911094545392)
 
   + MySQL中为了**数据空间**的有效使用，设定了五种整数类型
   +  {{c1:: 迷你整型：`tinyint`，使用**1个字节**存储整数，最多存储256个整数（-128~127） }}
@@ -266,13 +266,13 @@ MySQL内部对象存在字符集继承：`字段 -> 表 -> 数据库 -> DBMS`
 
 ### 显示宽度 [	](mysql_20200911094545396)
 
-+ 语法:`alter table t_9 add d tinyint(2) zerofill; # 0填充只能针对正数`
-1. 显示宽度是显示整型能表示的最多符号数量
-2. 显示宽度能主动设置，但是绝对不会改变类型本身能表示的数据大小
++ 语法:{{c1:: `alter table t_9 add d tinyint(2) zerofill; # 0填充只能针对正数` }}
+1. {{c1:: 显示宽度是显示整型能表示的最多符号数量 }}
+2. {{c1:: 显示宽度能主动设置，但是绝对不会改变类型本身能表示的数据大小 }}
 
 ### `zerofill`关键字 [	](mysql_20200911094545399)
 1. 作用：{{c1:: 强制让不够宽度的数据补充前置0来达到显示宽度 }}
-2. 使用类型限制:{{c1:: 整型为无符号 }}
+2. 使用类型限制:{{c1:: 无符号整型 }}
 
 ### 小数类型（浮点型） [	](mysql_20200911094545404)
 
@@ -351,16 +351,16 @@ MySQL内部对象存在字符集继承：`字段 -> 表 -> 数据库 -> DBMS`
   | --------------- | ----------------- |
   | {{c1:: 元素1 }} | {{c1:: 00000001}} |
   | {{c1:: 元素2 }} | {{c1:: 00000010}} |
-  | {{c1:: ...   }} | {{c1Y:: ...     }} |
+  | {{c1:: ...   }} | {{c1:: ...     }} |
   | {{c1:: 元素8 }} | {{c1:: 10000000}} |
 
 ### 时间日期类型（年） [	](mysql_20200911094545420)
 
-+ MySQL中使用1个字节存储年份
-+ year的特殊值是：0000
++ MySQL中使用{{c1:: 1 }}个字节存储年份
++ year的特殊值是：{{c1:: 0000 }}
 + year类型允许使用2位数来插入，系统会自动匹配对应的年份
-* 69以前：系统加上2000
-* 69以后：系统加上1900
+* 69以前：{{c1:: 系统加上2000 }}
+* 69以后：{{c1:: 系统加上1900 }}
 
 ### 时间日期类型（时间戳） [	](mysql_20200911094545423)
 
@@ -388,7 +388,7 @@ MySQL内部对象存在字符集继承：`字段 -> 表 -> 数据库 -> DBMS`
 * 存储区间为：1000-01-01 00:00:00 到9999-12-31 23:59:59
 + 可以使用纯数字插入：`insert into t_21 values('Tom','10011212182323');`
 
-###时间日期类型（时间） [	](mysql_20200911094545430)
+### 时间日期类型（时间） [	](mysql_20200911094545430)
 **时间**作用：{{c1:: time，用来记录时间或者时间段 }}
 * 使用3个字节存储数据
 * 数据范围是 `-838:59:59` - `838:59:59`
@@ -437,13 +437,13 @@ MySQL内部对象存在字符集继承：`字段 -> 表 -> 数据库 -> DBMS`
 
 ### 主键管理 [	](mysql_20200911094545446)
 
-+ 删除主键语法：`alter table t_26 drop primary key;`
-+ 后期新增主键语法：`alter table t_26 add primary key(account,name);`
-  + 注意：如果是针对业务主键需要保证字段数据没有Null数据且没有数据重复
++ 删除主键语法：{{c1:: `alter table t_26 drop primary key;` }}
++ 后期新增主键语法：{{c1:: `alter table t_26 add primary key(account,name);` }}
+  + 注意：{{c1:: 如果是针对业务主键需要保证字段数据没有Null数据且没有数据重复 }}
 
 ### 自增长属性 [	](mysql_20200911094545448)
 **自增长**：{{c1:: `auto_increment`}}
-+ 语法：`id int primary key auto_increment`
++ 语法：{{c1:: `id int primary key auto_increment` }}
 + 必要条件：{{c1:: 自增长只能是整数类型，而且对应的字段必须是一个索引（通常逻辑主键） }}
 + 唯一性：{{c1:: 一张表只能有一个自动增长类型 }}
 + 自增长的触发:{{c1:: 通过不给值（默认值）实现自动计算 }}
@@ -900,13 +900,13 @@ MySQL内部对象存在字符集继承：`字段 -> 表 -> 数据库 -> DBMS`
 - `R-tree 索引`：空间索引是MyISAM引擎的一个特殊索引类型，主要用于地理空间数据类型，通常使用较少，不做特别介绍。
 - `Full-text` ：全文索引也是MyISAM的一个特殊索引类型，主要用于全文索引，InnoDB从Mysql5.6版本开始支持全文索引。
 
-#### 索引分类 [	](mysql_20200916055246276)
+### 索引分类 [	](mysql_20200916055246276)
 
 1. 单值索引：{{c1:: 即一个索引只包含单个列，一个表可以有多个单列索引 }}
 2. 唯一索引：{{c1:: 索引列的值必须唯一，但允许有空值 }}
 3. 复合索引：{{c1:: 即一个索引包含多个列 }}
 
-#### 索引管理 [	](mysql_20200916055246278)
+### 索引管理 [	](mysql_20200916055246278)
 + 创建索引:
   ```SQL
     #{{c1::
@@ -934,7 +934,7 @@ MySQL内部对象存在字符集继承：`字段 -> 表 -> 数据库 -> DBMS`
 + **利用最左前缀**:{{c1:: N个列组合而成的组合索引，那么相当于是创建了N个索引，如果查询时where子句中使用了组成该索引的前几个字段，那么这条查询SQL可以利用组合索引来提升查询效率。}}
 
 
-## 存储过程和函数 [	](mysql_20200916055246284)
+### 存储过程和函数 [	](mysql_20200916055246284)
 
 + 存储过程和函数的区别:{{c1:: 函数必须有返回值，而存储过程没有。 }}
 + 创建存储过程:
@@ -1157,3 +1157,227 @@ MySQL内部对象存在字符集继承：`字段 -> 表 -> 数据库 -> DBMS`
   + {{c1:: InnoDB是聚簇索引（叶子节点存数据），MyISAM是非聚簇索引（叶子节点存指针） }}
   + 实现（图）：{{c1:: ![img](mysql.assets/1107494-20181127224013631-1598460643.png) }}
 + 功能差别：{{c1:: InnoDB 支持事务、行级锁, 而MyISAM都不支持 }}
+
+### 查看MYSQL数据库中SQL执行频率
+
++ 查看服务器状态信息命令:{{c1::` show [session|global] status like 'Com_______';`}}
++ `Com_***      `:{{c1::  这些参数对于所有存储引擎的表操作都会进行累计。}}
++ `Innodb_*** `:{{c1::  这几个参数只是针对InnoDB 存储引擎的，累加的算法也略有不同。}}
++ 常见参数列表：
+| 参数                 | 含义                                                         |
+| :------------------- | ------------------------------------------------------------ |
+| Com_select           | {{c1:: 执行 select 操作的次数，一次查询只累加 1。                   }}|
+| Com_insert           | {{c1:: 执行 INSERT 操作的次数，对于批量插入的 INSERT 操作，只累加一次。 }}|
+| Com_update           | {{c1:: 执行 UPDATE 操作的次数。                                     }}|
+| Com_delete           | {{c1:: 执行 DELETE 操作的次数。                                     }}|
+| Innodb_rows_read     | {{c1:: select 查询返回的行数。                                      }}|
+| Innodb_rows_inserted | {{c1:: 执行 INSERT 操作插入的行数。                                 }}|
+| Innodb_rows_updated  | {{c1:: 执行 UPDATE 操作更新的行数。                                 }}|
+| Innodb_rows_deleted  | {{c1:: 执行 DELETE 操作删除的行数。                                 }}|
+| Connections          | {{c1:: 试图连接 MySQL 服务器的次数。                                }}|
+| Uptime               | {{c1:: 服务器工作时间。                                             }}|
+| Slow_queries         | {{c1:: 慢查询的次数。                                               }}|
+
+### 定位低效率执行SQL：`show processlist`命令
+
++ 图：![1556098544349](mysql.assets/1556098544349.png)
++ 各列含义
+  + `id列`:{{c1::用户登录mysql时，系统分配的"connection_id"，可以使用函数connection_id()查看}}
+  + `user列`:{{c1::显示当前用户。如果不是root，这个命令就只显示用户权限范围的sql语句}}
+  + `host列`:{{c1::显示这个语句是从哪个ip的哪个端口上发的，可以用来跟踪出现问题语句的用户}}
+  + `db列`:{{c1::显示这个进程目前连接的是哪个数据库}}
+  + `command列`:{{c1::显示当前连接的执行的命令，一般取值为休眠（sleep），查询（query），连接（connect）等}}
+  + `time列`:{{c1::显示这个状态持续的时间，单位是秒}}
+  + `state列`:{{c1::以查询为例，可能需要经过`copying to tmp table`、`sorting result`、`sending data`等状态才可以完成}}
+  + `info列`:{{c1::显示这个sql语句，是判断问题语句的一个重要依据}}
+
+### explain命令
++ 语法：{{c1:: `explain  select * from tb_item where title = '阿尔卡特 (OT-979) 冰川白 联通3G手机3';` }}
++ 各字段含义：
+  | 字段          | 含义                                                         |
+  | ------------- | ------------------------------------------------------------ |
+  | id            | {{c1:: select查询的序列号，是一组数字，表示的是查询中执行select子句或者是操作表的顺序。 }}|
+  | select_type   | {{c1:: 表示 SELECT 的类型，常见的取值有 SIMPLE（简单表，即不使用表连接或者子查询）、PRIMARY（主查询，即外层的查询）、UNION（UNION 中的第二个或者后面的查询语句）、SUBQUERY（子查询中的第一个 SELECT）等 }}|
+  | table         | {{c1:: 输出结果集的表                                               }}|
+  | type          | {{c1:: 表示表的连接类型，性能由好到差的连接类型为( system  --->  const  ----->  eq_ref  ------>  ref  ------->  ref_or_null---->  index_merge  --->  index_subquery  ----->  range  ----->  index  ------> all ) |
+  | possible_keys | {{c1:: 表示查询时，可能使用的索引                                   }}|
+  | key           | {{c1:: 表示实际使用的索引                                          }} |
+  | key_len       | {{c1:: 索引字段的长度                                              }} |
+  | rows          | {{c1:: 扫描行的数量                                                }} |
+  | extra         | {{c1:: 执行情况的说明和描述                                        }} |
+
+
+###  explain命令：id列
+
++ 作用：{{c1:: 表示的是查询中执行select子句或者是操作表的**顺序** }}
++ id 情况有三种 ：
+  1. {{c1:: id 相同表示加载表的顺序是从上到下。 }}
+  2. {{c1:: id 不同id值越大，优先级越高，越先被执行。  }}
+  3. {{c1:: 以上2种情况同时存在，id相同的可以认为是一组，从上往下顺序执行；在所有的组中，id的值越大，优先级越高，越先执行。 }}
+
+###  explain命令：select_type列
+
++ 常见取值
+  | select_type  | 含义                                                         |
+  | ------------ | ------------------------------------------------------------ |
+  | SIMPLE       | {{c1:: 简单的select查询，查询中不包含子查询或者UNION               }} |
+  | PRIMARY      | {{c1:: 查询中若包含任何复杂的子查询，最外层查询标记为该标识        }} |
+  | SUBQUERY     | {{c1:: 在SELECT 或 WHERE 列表中包含了子查询                         }}|
+  | DERIVED      | {{c1:: 在FROM 列表中包含的子查询，被标记为 DERIVED（衍生） MYSQL会递归执行这些子查询，把结果放在临时表中 }}|
+  | UNION        | {{c1:: 若第二个SELECT出现在UNION之后，则标记为UNION ； 若UNION包含在FROM子句的子查询中，外层SELECT将被标记为 ： DERIVED }}|
+  | UNION RESULT | {{c1:: 从UNION表获取结果的SELECT                                    }}|
+
+###  explain命令：type列
+
++ 作用：显示访问类型
++ 常见取值：
+  | type   | 含义                                                         |
+  | ------ | ------------------------------------------------------------ |
+  | NULL   | {{c1:: MySQL不访问任何表，索引，直接返回结果                        }}|
+  | system | {{c1:: 表只有一行记录(等于系统表)，这是const类型的特例，一般不会出现 }}|
+  | const  | {{c1:: 表示通过索引一次就找到了，const 用于比较primary key 或者 unique 索引。因为只匹配一行数据，所以很快。如将主键置于where列表中，MySQL 就能将该查询转换为一个常亮。const于将 "主键" 或 "唯一" 索引的所有部分与常量值进行比较 }}|
+  | eq_ref | {{c1:: 类似ref，区别在于使用的是唯一索引，使用主键的关联查询，关联查询出的记录只有一条。常见于主键或唯一索引扫描 }}|
+  | ref    | {{c1:: 非唯一性索引扫描，返回匹配某个单独值的所有行。本质上也是一种索引访问，返回所有匹配某个单独值的所有行（多个） }}|
+  | range  | {{c1:: 只检索给定返回的行，使用一个索引来选择行。 where 之后出现 between ， < , > , in 等操作。 }}|
+  | index  | {{c1:: index 与 ALL的区别为  index 类型只是遍历了索引树， 通常比ALL 快， ALL 是遍历数据文件。 }}|
+  | all    | {{c1:: 将遍历全表以找到匹配的行                                     }}|
+
++ 建议：{{c1:: 需要保证查询至少达到 range 级别， 最好达到ref  }}
+
+###  explain命令：using index列
+
+| extra            | 含义                                                         |
+| ---------------- | ------------------------------------------------------------ |
+| `using  filesort`  | {{c1:: 说明mysql会对数据使用一个外部的索引排序，而不是按照表内的索引顺序进行读取， 称为 “文件排序”, 效率低。 }}|
+| `using  temporary` | {{c1:: 使用了临时表保存中间结果，MySQL在对查询结果排序时使用临时表。常见于 order by 和 group by； 效率低 }}|
+| `using  index`     | {{c1:: 表示相应的select操作使用了覆盖索引， 避免访问表的数据行， 效率不错。 }}|
+
+### show profile分析SQL
+
++ 查看当前MySQL是否支持profile:{{c1:: `select @@have_profiling`}}
++ 通过set语句在Session级别开启profiling:{{c1:: `set profiling=1；`}}
+
++ 查看SQL语句执行的耗时：{{c1:: `show profiles `![1552489017940](mysql.assets/1552489017940.png)}}
+
++ 查看具体语句中每个线程的状态和消耗的时间：{{c1:: `show  profile for  query  query_id `![1552489053763](mysql.assets/1552489053763.png)}}
+
++ MySQL支持进一步选择all、cpu、block io 、context switch、page faults等明细类型类查看MySQL在使用什么资源上耗费了过高的时间。
+  + 例：{{c1:: `show profile for cpu query_id`}}
+
+### trace分析优化器执行计划
+
++ 作用： {{c1:: 查看mysql优化器，执行了哪些步骤 }}
++ 打开trace配置：
+  ```SQL
+    #{{c1::
+    SET optimizer_trace="enabled=on",end_markers_in_json=on;
+    SET optimizer_trace_max_mem_size=1000000;
+    #}}
+  ```
++ 执行一般的SQL语句
++ 查询优化器执行计划：{{c1:: `select * from information_schema.optimizer_trace\G;` }}
+
+## 索引的使用
+
+### 避免索引失效几种情况： 
+
+1. 全值匹配：{{c1:: 该情况下索引生效，执行效率比较高 }}
+2. 最左前缀法则：{{c1:: 查询必须包含复合索引的最左边的列，且不跳过索引中的列。 }}
+3. 注意范围查询右边的列不会走索引：
+  + 例：{{c1:: `select * from tb_seller where name='小米科技' and status > '1' and address ='北京市'`}}
+  + 其中address不会走索引
+4. 索引列上进行运算操作:{{c1:: 索引将失效。}}
+   + 例：{{c1:: `select * from tb_seller where substring(name,3,2)='科技'`}}
+5. 字符串不加单引号：{{c1:: 索引失效 }}
+6. 用or分割开的条件：{{c1:: 如果or前的条件中的列有索引，而后面的列中没有索引，那么涉及的索引**都不会**被用到。}}
+7. 以%开头的Like模糊查询：索引失效
+   - 注意：{{c1:: 以%结尾，会走索引。}}
+   - 解决方案：{{c1:: 通过在select中覆盖索引解决。}}
+8. MySQL评估使用索引比全表更慢，则不使用索引。
+   - 例：{{c1:: `select * from tb_seller where address = '北京市'` }}
+   - 发生背景：{{c1:: 表中匹配的记录占很总数的很大一部分。 }}
+9. `is  NULL` ，`is NOT NULL`**有时**索引失效。 
+   1. 发生背景：{{c1:: 与上一条类似，单种情况的记录如果占大多数则不走索引。 }}
+10. `in`与`not in` :{{c1:: in 走索引， not in 索引失效。 }}
+
+### 单列索引与复合索引的选择
+
++ 创建复合索引 ：`create index idx_name_sta_address on tb_seller(name, status, address);` 
+  + 就相当于创建了三个索引 ： 
+    1. ​	{{c1:: name }}
+    2. ​	{{c1:: name + status }}
+    3. ​	{{c1:: name + status + address }}
++ 创建单列索引 :
+  ```sql
+  create index idx_seller_name on tb_seller(name);
+  create index idx_seller_status on tb_seller(status);
+  create index idx_seller_address on tb_seller(address);
+  ```
+  + {{c1:: 数据库会选择一个最优的索引（辨识度最高索引）来使用，并不会使用全部索引  }}
+
+## SQL优化
+
+### SQL优化:当使用load 命令导入数据的时候，适当的设置可以提高导入的效率
+
++ 主键顺序插入: {{c1:: 导入文件行以主键顺序排序 }}
++ 关闭唯一性校验: {{c1:: `SET UNIQUE_CHECKS=0` }}
++ 关闭自动提交事务： {{c1:: `SET AUTOCOMMIT=0` }}
+
+### SQL优化:insert语句
+
++ 同时对一张表插入很多行数据时，使用多值插入:
+  ```sql
+    #{{c1::
+    insert into tb_test values(1,'Tom'),(2,'Cat')，(3,'Jerry');
+    #}}
+  ```
++ 在事务中进行数据插入:
+  ```sql
+    #{{c1::
+    start transaction;
+    insert into tb_test values(1,'Tom');
+    insert into tb_test values(2,'Cat');
+    insert into tb_test values(3,'Jerry');
+    commit;
+    #}}
+  ```
++ 数据有序插入:
+  ```sql
+    #{{c1::
+    insert into tb_test values(1,'Tom');
+    insert into tb_test values(2,'Cat');
+    insert into tb_test values(3,'Jerry');
+    insert into tb_test values(4,'Tim');
+    insert into tb_test values(5,'Rose');
+    #}}
+  ```
+
+### 优化order by语句
+
++ 两种排序方式：
+  + **filesort** ：{{c1:: 所有不是通过索引直接返回排序结果的排序都叫 FileSort 排序。 }}
+  +  **using index**：{{c1:: 通过有序索引顺序扫描直接返回有序数据 }}
++ 出现`filesort`主要原因：{{c1:: 本质上**覆盖索引**问题，即select后的字段需要是索引字段 }}
++ 注意点：
+  + 尽量减少额外的排序: {{c1:: 通过索引直接返回有序数据。 }}
+  + `Order by` 的顺序: {{c1:: 和索引顺序相同 }}
+  + 多个`Order by` 的字段: {{c1:: 都是升序，或者都是降序 }}
+
+### 优化order by语句：`Filesort`的优化
+
+  + 两种`Filesort`排序算法：
+    1. 两次扫描算法：可能会导致大量随机I/O操作。
+    2. 一次扫描算法：排序时内存开销较大，但是排序效率比两次扫描算法要高。
+  + `max_length_for_sort_data`,`sort_buffer_size`变量
+    + {{c1：： MySQL 通过比较系统变量 max_length_for_sort_data 的大小和Query语句取出的字段总大小， 来判定是否那种排序算法。 }}
+
+### 优化group by 语句
+
++ 执行`order by null`禁止排序:{{c1:: `explain select age,count(*) from emp group by age order by null;` }}
++ 索引：{{c1:: 在索引字段上`group by` }}
+
+###  优化嵌套查询
+
++ 优化思路：{{c1:: 如果需要嵌套查询的任务能够被替换成连接查询，那么就使用**连接查询** }}
++ 示例: `explain select * from t_user where id in (select user_id from user_role );`
++ 优化后 :`explain select * from t_user u , user_role ur where u.id = ur.user_id;`
