@@ -1289,8 +1289,8 @@
 4. 索引列上进行运算操作:{{c1:: 索引将失效。}}
    + 例：{{c1:: `select * from tb_seller where substring(name,3,2)='科技'`}}
 5. 字符串不加单引号：{{c1:: 索引失效 }}
-6. 用or分割开的条件：{{c1:: 如果or前的条件中的列有索引，而后面的列中没有索引，那么涉及的索引**都不会**被用到。}}
-7. 以%开头的Like模糊查询：索引失效
+6. 用`or`分割开的条件：{{c1:: 如果or前的条件中的列有索引，而后面的列中没有索引，那么涉及的索引**都不会**被用到。}}
+7. 以`%`开头的`Like`模糊查询：索引失效
    - 注意：{{c1:: 以%结尾，会走索引。}}
    - 解决方案：{{c1:: 通过在select中覆盖索引解决。}}
 8. MySQL评估使用索引比全表更慢，则不使用索引。
@@ -1366,8 +1366,8 @@
 ### 优化order by语句：`Filesort`的优化 [	](mysql_20200927095114676)
 
   + 两种`Filesort`排序算法：
-    1. 两次扫描算法：可能会导致大量随机I/O操作。
-    2. 一次扫描算法：排序时内存开销较大，但是排序效率比两次扫描算法要高。
+    1. 两次扫描算法：{{c1:: 可能会导致大量随机I/O操作。 }}
+    2. 一次扫描算法：{{c1:: 排序时内存开销较大，但是排序效率比两次扫描算法要高。 }}
   + `max_length_for_sort_data`,`sort_buffer_size`变量
     + {{c1：： MySQL 通过比较系统变量 max_length_for_sort_data 的大小和Query语句取出的字段总大小， 来判定是否那种排序算法。 }}
 
@@ -1381,3 +1381,94 @@
 + 优化思路：{{c1:: 如果需要嵌套查询的任务能够被替换成连接查询，那么就使用**连接查询** }}
 + 示例: `explain select * from t_user where id in (select user_id from user_role );`
 + 优化后 :`explain select * from t_user u , user_role ur where u.id = ur.user_id;`
+
+###  优化OR条件
+
++ 优化原因：{{c1:: 使用union替换or解决索引失效的问题。 }}
+
+### 优化分页查询
+
++ 问题： `limit 2000000,10`,此时需要MySQL排序前`2000010`记录，仅仅返回`2000000 - 2000010 `的记录
++ 思路一： {{c1:: `explain select * from tb_item t,(select id from tb_item order by id limit 2000000,10 a where t.id = a.id)` }}
++ 思路二： {{c1:: `explain select * from tb_item where id > 100000 limit 10` }}
+  + 必要条件： {{c1:: 比思路一效率高,适用与主键自增的表，且不能出现记录断层 }}
+
+### 使用SQL提示
+
++ USE INDEX
+  + 作用：{{c1:: 提供希望MySQL去参考的索引列表，就可以让MySQL不再考虑其他可用的索引 }}
+  + 语法：{{c1:: `explain create index idx_seller_name on tb_seller(name);`}}
++ IGNORE INDEX
+  + 作用：{{c1:: 让MySQL忽略一个或者多个索引 }}
+  + 语法：{{c1:: `explain select * from tb_seller ignore index(idx_seller_name) where name = '小米科技';`}}
++ FORCE INDEX
+  + 作用：{{c1:: 强制MySQL使用一个特定的索引 }}
+  + 语法：{{c1:: `explain create index idx_seller_address on tb_seller(address);`}}
+
+  ### MYSQL应用层的几种优化
+
+  + 使用数据库连接池
+  + 减少对MYSQL的访问
+    1. {{c1:: 能一次取出全部数据就尽量不要两次取。 }}
+    2. {{c1:: 增加cache层，如（Mybatis一级缓存，redis数据库缓存）}}
+  + 负载均衡 
+    1. {{c1:: 通过MySQL的主从复制，实现读写分离 }}
+    2. {{c1:: 采用分布式数据库架构 }}
+
+## MYSQL查询缓存
+
+###  MYSQL查询缓存配置
+
+1. 查看当前的MySQL数据库是否支持查询缓存：{{c1:: `SHOW VARIABLES LIKE 'have_query_cache';	`}}
+2. 查看当前MySQL是否开启了查询缓存 ：{{c1:: `SHOW VARIABLES LIKE 'query_cache_type';`}}
+3. 查看查询缓存的占用大小 ：{{c1:: `SHOW VARIABLES LIKE 'query_cache_size';`}}
+4. 查看查询缓存的状态变量：{{c1:: `SHOW STATUS LIKE 'Qcache%';`}}
+   + 各个变量的含义如下：
+    | 参数                    | 含义                                                         |
+    | ----------------------- | ------------------------------------------------------------ |
+    | Qcache_free_blocks      | {{c1:: 查询缓存中的可用内存块数                                     }}|
+    | Qcache_free_memory      | {{c1:: 查询缓存的可用内存量                                         }}|
+    | Qcache_hits             | {{c1:: 查询缓存命中数                                               }}|
+    | Qcache_inserts          | {{c1:: 添加到查询缓存的查询数                                       }}|
+    | Qcache_lowmen_prunes    | {{c1:: 由于内存不足而从查询缓存中删除的查询数                       }}|
+    | Qcache_not_cached       | {{c1:: 非缓存查询的数量（由于 query_cache_type 设置而无法缓存或未缓存） }}|
+    | Qcache_queries_in_cache | {{c1:: 查询缓存中注册的查询数                                       }}|
+    | Qcache_total_blocks     | {{c1:: 查询缓存中的块总数                                           }}|
+
+### 开启查询缓存
+
++ 需要手动mysql配置文件中参数：{{c1:: /my.cnf文件中`query_cache_type`参数 }}
++ 各取值含义：
+  | 值          | 含义                                                         |
+  | ----------- | ------------------------------------------------------------ |
+  | OFF 或 0    | {{c1:: 查询缓存功能关闭                                             }}|
+  | ON 或 1     | {{c1:: 查询缓存功能打开，SELECT的结果符合缓存条件即会缓存，否则，不予缓存，显式指定 SQL_NO_CACHE，不予缓存 }}|
+  | DEMAND 或 2 | {{c1:: 查询缓存功能按需进行，显式指定 SQL_CACHE 的SELECT语句才会缓存；其它均不予缓存 }}|
++ 配置完成后，重启服务
+
+### 查询缓存SELECT选项
+
++ 可以在SELECT语句中指定两个与查询缓存相关的选项 ：
+  1. {{c1:: `SQL_CACHE`,如果查询结果是可缓存的，并且 query_cache_type 系统变量的值为ON或 DEMAND ，则缓存查询结果 。 }}
+  2. {{c1:: `SQL_NO_CACHE`,服务器不使用查询缓存。它既不检查查询缓存，也不检查结果是否已缓存，也不缓存查询结果。 }}
++ 例子：
+  ```sql
+    #{{c1::
+    SELECT SQL_CACHE id, name FROM customer;
+    SELECT SQL_NO_CACHE id, name FROM customer;
+    #}}
+  ```
+
+### MYSQL查询缓存失效的情况
+
+1. SQL语句不一致的情况
+  + SQL1 : {{c1:: `select count(*) from tb_item;` }}
+  + SQL2 : {{c1:: `Select count(*) from tb_item;` }}
+2. 当查询语句中有一些不确定的时,如 ： {{c1:: `now() , current_date() , curdate() , curtime() , rand() , uuid() , user() , database()` }}
+3. 不使用任何表查询语句:{{c1:: `select 'A';` }}
+4. 查询下列数据库中的表时，不会走查询缓存。
+  + {{c1:: `mysql` }}
+  + {{c1:: `information_schema` }}
+  + {{c1:: `performance_schema`  }}
+5. 在存储的{{c1:: **函数**，**触发器**或**事件的主体** }}内执行的查询。
+6. 如果表更改，{{c1:: 插入一条数据，或者修改一条数据，该表对应所有的查询缓存皆失效 }}
