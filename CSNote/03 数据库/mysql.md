@@ -1158,7 +1158,7 @@
   + 实现（图）：{{c1:: ![img](mysql.assets/1107494-20181127224013631-1598460643.png) }}
 + 功能差别：{{c1:: InnoDB 支持事务、行级锁, 而MyISAM都不支持 }}
 
-### 查看MYSQL数据库中SQL执行频率
+### 查看MYSQL数据库中SQL执行频率 [	](mysql_20200927095114644)
 
 + 查看服务器状态信息命令:{{c1::` show [session|global] status like 'Com_______';`}}
 + `Com_***      `:{{c1::  这些参数对于所有存储引擎的表操作都会进行累计。}}
@@ -1178,7 +1178,7 @@
 | Uptime               | {{c1:: 服务器工作时间。                                             }}|
 | Slow_queries         | {{c1:: 慢查询的次数。                                               }}|
 
-### 定位低效率执行SQL：`show processlist`命令
+### 定位低效率执行SQL：`show processlist`命令 [	](mysql_20200927095114646)
 
 + 图：![1556098544349](mysql.assets/1556098544349.png)
 + 各列含义
@@ -1191,7 +1191,7 @@
   + `state列`:{{c1::以查询为例，可能需要经过`copying to tmp table`、`sorting result`、`sending data`等状态才可以完成}}
   + `info列`:{{c1::显示这个sql语句，是判断问题语句的一个重要依据}}
 
-### explain命令
+### explain命令 [	](mysql_20200927095114648)
 + 语法：{{c1:: `explain  select * from tb_item where title = '阿尔卡特 (OT-979) 冰川白 联通3G手机3';` }}
 + 各字段含义：
   | 字段          | 含义                                                         |
@@ -1207,7 +1207,7 @@
   | extra         | {{c1:: 执行情况的说明和描述                                        }} |
 
 
-###  explain命令：id列
+###  explain命令：id列 [	](mysql_20200927095114650)
 
 + 作用：{{c1:: 表示的是查询中执行select子句或者是操作表的**顺序** }}
 + id 情况有三种 ：
@@ -1215,7 +1215,7 @@
   2. {{c1:: id 不同id值越大，优先级越高，越先被执行。  }}
   3. {{c1:: 以上2种情况同时存在，id相同的可以认为是一组，从上往下顺序执行；在所有的组中，id的值越大，优先级越高，越先执行。 }}
 
-###  explain命令：select_type列
+###  explain命令：select_type列 [	](mysql_20200927095114652)
 
 + 常见取值
   | select_type  | 含义                                                         |
@@ -1227,7 +1227,7 @@
   | UNION        | {{c1:: 若第二个SELECT出现在UNION之后，则标记为UNION ； 若UNION包含在FROM子句的子查询中，外层SELECT将被标记为 ： DERIVED }}|
   | UNION RESULT | {{c1:: 从UNION表获取结果的SELECT                                    }}|
 
-###  explain命令：type列
+###  explain命令：type列 [	](mysql_20200927095114654)
 
 + 作用：显示访问类型
 + 常见取值：
@@ -1244,7 +1244,7 @@
 
 + 建议：{{c1:: 需要保证查询至少达到 range 级别， 最好达到ref  }}
 
-###  explain命令：using index列
+###  explain命令：using index列 [	](mysql_20200927095114656)
 
 | extra            | 含义                                                         |
 | ---------------- | ------------------------------------------------------------ |
@@ -1252,7 +1252,7 @@
 | `using  temporary` | {{c1:: 使用了临时表保存中间结果，MySQL在对查询结果排序时使用临时表。常见于 order by 和 group by； 效率低 }}|
 | `using  index`     | {{c1:: 表示相应的select操作使用了覆盖索引， 避免访问表的数据行， 效率不错。 }}|
 
-### show profile分析SQL
+### show profile分析SQL [	](mysql_20200927095114658)
 
 + 查看当前MySQL是否支持profile:{{c1:: `select @@have_profiling`}}
 + 通过set语句在Session级别开启profiling:{{c1:: `set profiling=1；`}}
@@ -1264,7 +1264,7 @@
 + MySQL支持进一步选择all、cpu、block io 、context switch、page faults等明细类型类查看MySQL在使用什么资源上耗费了过高的时间。
   + 例：{{c1:: `show profile for cpu query_id`}}
 
-### trace分析优化器执行计划
+### trace分析优化器执行计划 [	](mysql_20200927095114660)
 
 + 作用： {{c1:: 查看mysql优化器，执行了哪些步骤 }}
 + 打开trace配置：
@@ -1277,9 +1277,9 @@
 + 执行一般的SQL语句
 + 查询优化器执行计划：{{c1:: `select * from information_schema.optimizer_trace\G;` }}
 
-## 索引的使用
+## 索引的使用 [	](mysql_20200927095114662)
 
-### 避免索引失效几种情况： 
+### 避免索引失效几种情况：  [	](mysql_20200927095114664)
 
 1. 全值匹配：{{c1:: 该情况下索引生效，执行效率比较高 }}
 2. 最左前缀法则：{{c1:: 查询必须包含复合索引的最左边的列，且不跳过索引中的列。 }}
@@ -1300,7 +1300,7 @@
    1. 发生背景：{{c1:: 与上一条类似，单种情况的记录如果占大多数则不走索引。 }}
 10. `in`与`not in` :{{c1:: in 走索引， not in 索引失效。 }}
 
-### 单列索引与复合索引的选择
+### 单列索引与复合索引的选择 [	](mysql_20200927095114666)
 
 + 创建复合索引 ：`create index idx_name_sta_address on tb_seller(name, status, address);` 
   + 就相当于创建了三个索引 ： 
@@ -1315,15 +1315,15 @@
   ```
   + {{c1:: 数据库会选择一个最优的索引（辨识度最高索引）来使用，并不会使用全部索引  }}
 
-## SQL优化
+## SQL优化 [	](mysql_20200927095114668)
 
-### SQL优化:当使用load 命令导入数据的时候，适当的设置可以提高导入的效率
+### SQL优化:当使用load 命令导入数据的时候，适当的设置可以提高导入的效率 [	](mysql_20200927095114670)
 
 + 主键顺序插入: {{c1:: 导入文件行以主键顺序排序 }}
 + 关闭唯一性校验: {{c1:: `SET UNIQUE_CHECKS=0` }}
 + 关闭自动提交事务： {{c1:: `SET AUTOCOMMIT=0` }}
 
-### SQL优化:insert语句
+### SQL优化:insert语句 [	](mysql_20200927095114672)
 
 + 同时对一张表插入很多行数据时，使用多值插入:
   ```sql
@@ -1352,7 +1352,7 @@
     #}}
   ```
 
-### 优化order by语句
+### 优化order by语句 [	](mysql_20200927095114674)
 
 + 两种排序方式：
   + **filesort** ：{{c1:: 所有不是通过索引直接返回排序结果的排序都叫 FileSort 排序。 }}
@@ -1363,7 +1363,7 @@
   + `Order by` 的顺序: {{c1:: 和索引顺序相同 }}
   + 多个`Order by` 的字段: {{c1:: 都是升序，或者都是降序 }}
 
-### 优化order by语句：`Filesort`的优化
+### 优化order by语句：`Filesort`的优化 [	](mysql_20200927095114676)
 
   + 两种`Filesort`排序算法：
     1. 两次扫描算法：可能会导致大量随机I/O操作。
@@ -1371,12 +1371,12 @@
   + `max_length_for_sort_data`,`sort_buffer_size`变量
     + {{c1：： MySQL 通过比较系统变量 max_length_for_sort_data 的大小和Query语句取出的字段总大小， 来判定是否那种排序算法。 }}
 
-### 优化group by 语句
+### 优化group by 语句 [	](mysql_20200927095114678)
 
 + 执行`order by null`禁止排序:{{c1:: `explain select age,count(*) from emp group by age order by null;` }}
 + 索引：{{c1:: 在索引字段上`group by` }}
 
-###  优化嵌套查询
+###  优化嵌套查询 [	](mysql_20200927095114680)
 
 + 优化思路：{{c1:: 如果需要嵌套查询的任务能够被替换成连接查询，那么就使用**连接查询** }}
 + 示例: `explain select * from t_user where id in (select user_id from user_role );`
