@@ -1382,18 +1382,18 @@
 + 示例: `explain select * from t_user where id in (select user_id from user_role );`
 + 优化后 :`explain select * from t_user u , user_role ur where u.id = ur.user_id;`
 
-###  优化OR条件
+###  优化OR条件 [	](mysql_20200928050450126)
 
 + 优化原因：{{c1:: 使用union替换or解决索引失效的问题。 }}
 
-### 优化分页查询
+### 优化分页查询 [	](mysql_20200928050450129)
 
 + 问题： `limit 2000000,10`,此时需要MySQL排序前`2000010`记录，仅仅返回`2000000 - 2000010 `的记录
 + 思路一： {{c1:: `explain select * from tb_item t,(select id from tb_item order by id limit 2000000,10 a where t.id = a.id)` }}
 + 思路二： {{c1:: `explain select * from tb_item where id > 100000 limit 10` }}
   + 必要条件： {{c1:: 比思路一效率高,适用与主键自增的表，且不能出现记录断层 }}
 
-### 使用SQL提示
+### 使用SQL提示 [	](mysql_20200928050450131)
 
 + USE INDEX
   + 作用：{{c1:: 提供希望MySQL去参考的索引列表，就可以让MySQL不再考虑其他可用的索引 }}
@@ -1405,7 +1405,7 @@
   + 作用：{{c1:: 强制MySQL使用一个特定的索引 }}
   + 语法：{{c1:: `explain create index idx_seller_address on tb_seller(address);`}}
 
-  ### MYSQL应用层的几种优化
+  ### MYSQL应用层的几种优化 [	](mysql_20200928050450132)
 
   + 使用数据库连接池
   + 减少对MYSQL的访问
@@ -1415,9 +1415,9 @@
     1. {{c1:: 通过MySQL的主从复制，实现读写分离 }}
     2. {{c1:: 采用分布式数据库架构 }}
 
-## MYSQL查询缓存
+## MYSQL查询缓存 [	](mysql_20200928050450134)
 
-###  MYSQL查询缓存配置
+###  MYSQL查询缓存配置 [	](mysql_20200928050450136)
 
 1. 查看当前的MySQL数据库是否支持查询缓存：{{c1:: `SHOW VARIABLES LIKE 'have_query_cache';	`}}
 2. 查看当前MySQL是否开启了查询缓存 ：{{c1:: `SHOW VARIABLES LIKE 'query_cache_type';`}}
@@ -1435,7 +1435,7 @@
     | Qcache_queries_in_cache | {{c1:: 查询缓存中注册的查询数                                       }}|
     | Qcache_total_blocks     | {{c1:: 查询缓存中的块总数                                           }}|
 
-### 开启查询缓存
+### 开启查询缓存 [	](mysql_20200928050450138)
 
 + 需要手动mysql配置文件中参数：{{c1:: /my.cnf文件中`query_cache_type`参数 }}
 + 各取值含义：
@@ -1446,7 +1446,7 @@
   | DEMAND 或 2 | {{c1:: 查询缓存功能按需进行，显式指定 SQL_CACHE 的SELECT语句才会缓存；其它均不予缓存 }}|
 + 配置完成后，重启服务
 
-### 查询缓存SELECT选项
+### 查询缓存SELECT选项 [	](mysql_20200928050450140)
 
 + 可以在SELECT语句中指定两个与查询缓存相关的选项 ：
   1. {{c1:: `SQL_CACHE`,如果查询结果是可缓存的，并且 query_cache_type 系统变量的值为ON或 DEMAND ，则缓存查询结果 。 }}
@@ -1459,7 +1459,7 @@
     #}}
   ```
 
-### MYSQL查询缓存失效的情况
+### MYSQL查询缓存失效的情况 [	](mysql_20200928050450142)
 
 1. SQL语句不一致的情况
   + SQL1 : {{c1:: `select count(*) from tb_item;` }}

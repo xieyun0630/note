@@ -5790,3 +5790,92 @@ for (let key of keys) {
   + `url`:{{c1:: 发生数据更新的文档的 url。}}
   + `storageArea`:{{c1:: 发生数据更新的 localStorage 或 sessionStorage 对象。}}
 + 注意：{{c1:: 在所有可访问到存储对象的 window 对象上触发`window.onstorage` }}
+
+## Web components [	](javascript_info_20200928050450101)
+
+Custom elements 有两种：
++ `Autonomous custom elements` （自主自定义标签）：{{c1:: “全新的” 元素, 继承自 `HTMLElement` 抽象类. }}
++ `Customized built-in elements`（自定义内置元素）：{{c1:: 继承内置的 HTML 元素，比如自定义 `HTMLButtonElement` 等。 }}
+
+### Autonomous custom elements [	](javascript_info_20200928050450104)
+
++ extend HTMLElement
+  ```js
+    // {{c1::
+    class MyElement extends HTMLElement {
+      constructor() {
+        super();
+        // element created
+      }
+      connectedCallback() {
+        // browser calls this method when the element is added to the document
+        // (can be called many times if an element is repeatedly added/removed)
+      }
+      disconnectedCallback() {
+        // browser calls this method when the element is removed from the document
+        // (can be called many times if an element is repeatedly added/removed)
+      }
+      static get observedAttributes() {
+        return [/* array of attribute names to monitor for changes */];
+      }
+      attributeChangedCallback(name, oldValue, newValue) {
+        // called when one of attributes listed above is modified
+      }
+      adoptedCallback() {
+        // called when the element is moved to a new document
+        // (happens in document.adoptNode, very rarely used)
+      }
+      // there can be other element methods and properties
+      //}}
+   }
+  ```
++ register the element
+  ```js
+    //{{c1::
+    customElements.define("my-element", MyElement);
+    //}}
+  ```
+
+### Custom elements upgrade [	](javascript_info_20200928050450106)
+
++ Meaning：{{c1:: any `<time-formatted>` elements before customElements.define }}
++ CSS selector about custom elements
+  + Such “undefined” elements can be styled with CSS selector：{{c1:: `:not(:defined)` }}
+  + When `customElement.define` is called,They become:`{{c1:: ：defined` }}
+
+### To get the information about custom elements, there are methods: [	](javascript_info_20200928050450108)
+
++ `customElements.get(name)`:{{c1:: returns the class for a custom element with the given name }}
++ `customElements.whenDefined(name)`:{{c1:: returns a promise that resolves (without value) when a custom element with the given name becomes defined. }}
+
+### Rendering order
+
++ Let’s demonstrate that on example:
+  ```js
+    <script>
+    customElements.define('user-info', class extends HTMLElement {
+      connectedCallback() {
+        alert(`${this.id} connected.`);
+        setTimeout(() => alert(`${this.id} initialized.`));
+      }
+    });
+    </script>
+
+    <user-info id="outer">
+      <user-info id="inner"></user-info>
+    </user-info>
+  ```
++ Output order:
+    1. {{c1:: outer connected. }}
+    2. {{c1:: inner connected. }}
+    3. {{c1:: outer initialized. }}
+    4. {{c1:: inner initialized. }}
+
+### Customized built-in elements
+
++ Extend HTMLButtonElement with our class:
+  + {{c1:: `class HelloButton extends HTMLButtonElement { /* custom element methods */ }`}}
++ Provide an third argument to customElements.define, that specifies the tag:
+  + {{c1:: `customElements.define('hello-button', HelloButton, {extends: 'button'});`}}
++ At the end, to use our custom element, insert a regular `<button>`tag, but add is="hello-button" to it:
+  + {{c1:: `<button is="hello-button">...</button>`}}
