@@ -479,49 +479,22 @@ var watchExampleVM = new Vue({
   //}}
   ```
 
-### 在组件上使用 `v-model` [ ](vue_20200707060718108)
+### 在自定义组件上使用 `v-model` [ ](vue_20200707060718108)
 
-- 自定义事件也可以用于创建支持 `v-model` 的自定义输入组件。记住：
++ 自定义组件上使用 `v-model`：
   ```html
-  <input v-model="searchText" />
+  <custom-input v-model="searchText"></custom-input>
   ```
-- 等价于：
-  ```html
-  <!-- {{c1:: -->
-  <input
-    v-bind:value="searchText"
-    v-on:input="searchText = $event.target.value"
-  />
-  <!-- }} -->
-  ```
-- 当用在组件上时，`v-model` 则会这样：
-  ```html
-  <!-- {{c1:: -->
-  <custom-input
-    v-bind:value="searchText"
-    v-on:input="searchText = $event"
-  ></custom-input>
-  <!-- }} -->
-  ```
-- 为了让它正常工作，这个组件内的 `<input>` 必须：
-  - {{c1:: 将其 `value` attribute 绑定到一个名叫 `value` 的 prop 上 }}
-  - {{c1:: 在其 `input` 事件被触发时，将新的值通过自定义的 `input` 事件抛出 }}
-- 写成组件代码之后是这样的：
++ 需要的组件定义：
   ```js
-  //{{c1::
-  Vue.component("custom-input", {
+    Vue.component("custom-input", {
     props: ["value"],
     template: `
       <input
         v-bind:value="value"
         v-on:input="$emit('input', $event.target.value)">
     `,
-  });
-  //}}
-  ```
-- 现在 `v-model` 就应该可以在这个组件上完美地工作起来了：
-  ```html
-  <custom-input v-model="searchText"></custom-input>
+    });
   ```
 
 ### 动态组件 [ ](vue_20200707060718109)

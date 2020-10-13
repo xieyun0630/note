@@ -678,8 +678,10 @@
 
 ### 使用p:命名空间简化配置 [	](spring_20200911094545281)
 ```xml
+<!-- {{c1:: -->
 <bean id="chinese" class="org.crazyit.app.service.impl.Chinese"
 		p:age="29" p:axe-ref="stoneAxe"/>
+<!-- }} -->
 ```
 
 ### 使用c:命名空间简化配置 [	](spring_20200911094545284)

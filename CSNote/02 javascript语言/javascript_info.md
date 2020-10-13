@@ -4894,9 +4894,9 @@ From <input id="from" disabled> – To <input id="to" disabled>
 
 ### 用于选择的两种不同的 API: [ ](javascript_info_20200608063412731)
 
-1. {{c1:: 对于文档:`Selection` 和 `Range` 对象。}}
-2. {{c1:: 对于 `input`，`textarea`:其他方法和属性。}}
-   []
+1.  对于文档:{{c1::`Selection` 和 `Range` 对象。}}
+2.  对于 `input`，`textarea`:{{c1::其他方法和属性。}}
+
 
 ### 选择（Selection)与范围（Range) 最常用的方案一般是: [ ](javascript_info_20200608063412732)
 
@@ -5848,7 +5848,7 @@ Custom elements 有两种：
 + `customElements.get(name)`:{{c1:: returns the class for a custom element with the given name }}
 + `customElements.whenDefined(name)`:{{c1:: returns a promise that resolves (without value) when a custom element with the given name becomes defined. }}
 
-### Rendering order
+### Rendering order [	](javascript_info_20200929055547607)
 
 + Let’s demonstrate that on example:
   ```js
@@ -5871,7 +5871,7 @@ Custom elements 有两种：
     3. {{c1:: outer initialized. }}
     4. {{c1:: inner initialized. }}
 
-### Customized built-in elements
+### Customized built-in elements [	](javascript_info_20200929055547610)
 
 + Extend HTMLButtonElement with our class:
   + {{c1:: `class HelloButton extends HTMLButtonElement { /* custom element methods */ }`}}
