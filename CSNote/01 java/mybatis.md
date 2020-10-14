@@ -470,7 +470,7 @@ create sequence news_inf_seq;
 ```
 }}
 
- ### Mapper接口中方法的参数处理 [	](mybatis_20200602074442602)
+### Mapper接口中方法的参数处理 [	](mybatis_20200602074442602)
  + 单个参数传入：
     1. 8个基本类型加String等
         + {{c1:: 方法的参数值直接传给SQL中唯一的#{} }}
@@ -792,8 +792,9 @@ public class News{
 
 ### 基于多表连接查询的映射策略 [	](mybatis_20200718074811914)
 
-+ `1-1`需要的额外属性:{{c1:: `resultMap` `columnPrefix` `notNullColumn` `autoMapping`}}
++ `1-1`需要的额外属性: `resultMap` `columnPrefix` `notNullColumn` `autoMapping`
     ```xml
+    <!-- 基本使用： -->
         <!-- {{c1:: -->
 		<!-- 指定columnPrefix="rental_"，代表去掉当前多表查询列名中的前缀，通常为别名，去掉后需要与引入的resultMap列名匹配 -->
 		<association property="rentalAddr" javaType="address" columnPrefix="rental_"
@@ -801,8 +802,9 @@ public class News{
         <!-- }} -->
     ```
     + `notNullColumn="detail,zip"`属性：默认情况下，任意列不为null就会创建实体，该情况下只有当detail与zip列都不为null时，MyBatis才会创建关联实体的实例。
-+ `1-N`需要的额外属性:{{c1::  `resultMap` `columnPrefix` `notNullColumn` `autoMapping` }}`ofType`
++ `1-N`需要的额外属性:`resultMap` `columnPrefix` `notNullColumn` `autoMapping` `ofType`
     ```xml
+    <!-- 基本使用： -->
     <!-- {{c1:: -->
     <collection property="addresses" javaType="ArrayList"
                 ofType="address"

@@ -367,7 +367,7 @@
 | fixed 固定定位    | {{c1:: 是（不占有位置）}} | {{c1:: 浏览器可视区      }} | {{c1:: 常用      }} |
 | sticky 粘性定位   | {{c1:: 否 (占有位置)   }} | {{c1:: 浏览器可视区      }} | {{c1:: 当前阶段少}} |
 
- ### 定位叠放次序 [	](css_20200822070211558)
+### 定位叠放次序 [	](css_20200822070211558)
 
 + 语法:选择器 { z-index: 1; }
 + 要注意的点：
@@ -577,7 +577,7 @@
   3. 行内标签:{{c1:: 对行内标签没有效果 }}
   
 
- ### 2D 转换之旋转 rotate [	](css_20200822070211611)
+### 2D 转换之旋转 rotate [	](css_20200822070211611)
 + 语法：`transform:rotate(度数)`
 + 重点：
   + 跟度数：{{c1:: rotate里面跟度数， 单位是 deg 比如 rotate(45deg) }}
@@ -780,3 +780,217 @@
   3. 弹性伸缩盒子模型显示:{{c1:: `display: -webkit-box;` }}
   4. 限制在一个块元素显示的文本的行数:{{c1:: `-webkit-line-clamp: 2;` }}
   5. 设置或检索伸缩盒对象的子元素的排列方式:{{c1:: `-webkit-box-orient: vertical;` }}
+
+## 移动端布局:流式布局
+
+### 3种viewport
+
++ 布局(layout viewport)
++ 视觉(visual viewport)
++ 理想(ideal viewport)
+
+### 设置viewport
+
++ 标签：{{c1:: <meta name="viewport" content="width=device-width, initial-scale=1.0,maximum-scale=1.0, minimum-scale=1.0, user-scalable=no"> }}
++ 各属性含义：
+  + `width`：{{c1:: 控制 viewport 的大小，可以指定的一个值，如 600，或者特殊的值，如 + device-width 为设备的宽度（单位为缩放为 100% 时的 CSS 的像素）。}}
+  + `height`：{{c1:: 和 width 相对应，指定高度。}}
+  + `initial-scale`：{{c1:: 初始缩放比例，也即是当页面第一次 load 的时候缩放比例。}}
+  + `maximum-scale`：{{c1:: 允许用户缩放到的最大比例。}}
+  + `minimum-scale`：{{c1:: 允许用户缩放到的最小比例。}}
+  + `user-scalable`：{{c1:: 用户是否可以手动缩放。}}
+
+### 多倍图
++ 应用背景：{{c1:: 手机的分辨率清晰度造成的物理像素比会导致一倍图模糊}}
++ 实现方法：{{c1:: 放一个 100* 100 图片  然后手动的把这个图片 缩小为 50* 50}}
+  ```html
+    <!-- {{c1:: -->
+    <style>
+        img:nth-child(2) {
+            width: 50px;
+            height: 50px;
+        }
+    </style>
+      <!-- 模糊的 -->
+    <img src="images/apple50.jpg" alt="">
+    <!-- 我们采取2倍图 -->
+    <img src="images/apple100.jpg" alt="">
+    <!-- }} -->
+  ```
+
+### 背景缩放:background-size
++ 语法：{{c1:: background-size: 图片的宽度 图片的高度; }}
++ 单位：{{c1:: 像素|百分比|cover|contain; }}
+  + `cover`:{{c1:: 等比例拉伸要完全覆盖div盒子可能有部分背景图片显示不全}}
+  + `contain`:{{c1:: 高度和宽度等比例拉伸 当**宽度或者高度**铺满div盒子就不再进行拉伸了 可能有部分空白区域}}
+
+### CSS初始化
+
++ 移动端CSS初始化推荐使用：{{c1:: `normalize.css` }}
+
+### 移动端常见布局
+
++ 单独制作移动端页面（主流）
+  + {{c1:: 流式布局 }}
+  + {{c1:: flex弹性布局 }}
+  + {{c1:: less rem 媒体查询布局 }}
+  + {{c1:: 混合布局 }}
++ 响应式页面兼容移动端
+  + {{c1:: 媒体查询 }}
+  + {{c1:: bootsrap }}
+
+### 流式布局(百分比布局)
+
++ 特点：{{c1:: 通过盒子的宽度设置成百分比来根据屏幕的宽度来进行伸缩，不受固定像素的限制，内容向两侧填充 }}
++ 所使用的css属性
+  + {{c1:: `max-width` }}
+  + {{c1:: `min-width` }}
+  + {{c1:: `min-height` }}
+  + {{c1:: `min-height` }}
+
+## 移动端布局:flex布局
+
+### flex布局：常见父项属性
+
++ `flex-direction`：{{c1:: 设置主轴的方向 }}
++ `justify-content`：{{c1:: 设置主轴上的子元素排列方式 }}
++ `flex-wrap`：{{c1:: `nowrap/wrap` 设置子元素是否换行 }}
++ `align-content`：{{c1:: 设置侧轴上的子元素的排列方式（多行 }}
++ `align-items`：{{c1:: 设置侧轴上的子元素排列方式（单行） }}
++ `flex-flow`：{{c1:: 复合属性，相当于同时设置了fex-direction和fex-Wrap }}
++ 注意：{{c1:: 当父盒子设置为flex布局后，子元素的float、clear、vertical-align属性将失效 }}
+
+### flex布局父项属性：flex-direction设置主轴的方向常见属性
+
+1. {{c1::`row`： 默认值从左到右 }}
+1. {{c1::`row-reverse`： 从右到左 }}
+1. {{c1::`column`： 从上到下 }}
+1. {{c1::`column-reverse`： 从下到上 }}
+
+### `flex布局父项属性：justify-content`设置主轴上的子元素排列方式
+
+| 属性值          | 说明                                                |
+| --------------- | :-------------------------------------------------- |
+| `flex-start`    | {{c1:: 默认值从头部开始如果主轴是×,则从左到右 }}    |
+| `flex-end`      | {{c1:: 从尾部开始排列 }}                            |
+| `center`        | {{c1:: 在主轴居中对齐（如果主轴是X轴则水平居中） }} |
+| `space-around`  | {{c1:: 平分剩余空间 }}                              |
+| `space-between` | {{c1:: 先两边贴边再平分剩余空间（重要） }}          |
+
+### flex布局父项属性：设置侧轴上的子元素排列方式
+
+1. `align-items`设置侧轴上的子元素排列方式（单行）
+| 属性值       | 说明                              |
+| ------------ | :-------------------------------- |
+| `flex-start` | {{c1:: 从上到下}}                 |
+| `flex-end`   | {{c1:: 从下到上}}                 |
+| `center`     | {{c1:: 挤在一起居中（垂直居中）}} |
+| `stretch`    | {{c1:: 拉伸（默认值）}}           |
+2. `align-content`设置侧轴上的子元素的排列方式（多行）
+| 属性值          | 说明                                             |
+| --------------- | :----------------------------------------------- |
+| `flex-start`    | {{c1:: 默认值在侧轴的头部开始排列 }}             |
+| `flex-end`      | {{c1:: 在侧轴的尾部开始排列 }}                   |
+| `center`        | {{c1:: 在侧轴中间显示 }}                         |
+| `space-around`  | {{c1:: 子项在侧轴平分剩余空间 }}                 |
+| `space-between` | {{c1:: 子项在侧轴先分布在两头，再平分剩余空间 }} |
+| `stretch`       | {{c1:: 设置子项元素高度平分父元素高度 }}         |
++ 注意align-content和aign-Items区别
+
+### flex布局父项属性：flex-flow属性
+
++ 作用：{{c1:: `flex-flow`属性是`flex-direction`和`flex-wrap`属性的复合属性 }}
++ 语法：{{c1:: `flex-flow:row wrap` }}
++ | 属性值            | 说明                                                         |
+  | ----------------- | :----------------------------------------------------------- |
+  | `flex-direction`  | {{c1:: 设置主轴的方向}}                                      |
+  | `justify-content` | {{c1:: 设置主轴上的子元系列方式}}                            |
+  | `flex-wrap`       | {{c1:: 设置子元素是否换行}}                                  |
+  | `align-content`   | {{c1:: 设置侧轴上的子元素的排列方式（多行}}                  |
+  | `align-items`     | {{c1:: 设置侧轴上的子元素排列方式（单行）}}                  |
+  | `flex-flow`       | {{c1:: 复合属性，相当于同时设置了`flex-direction`和`flex-wrap`}} |
+
+
+### flex布局：常见子项属性
+
++ `flex`属性：{{c1:: fex属性定义子项目分配剩余空间，用fiex来表示占多少份数 }}
++ `align-self`属性：{{c1:: 允许单个项目有与其他项目不样的对齐方式，可覆盖align-items属性 }}
++ `order`属性：{{c1:: 自定义项目排序位置，默认为0，与z-index不同，数值越小越靠前。 }}
+
+## Rem适配布局
+
+### 媒体查询
+
++ 语法:
+  ```css
+  /* {{c1:: */
+  @media mediatype and|not|only (media feature) {
+    css-code
+  }
+  /* }} */
+  ```
++ mediatype取值：
+  | 值    | 解释说明                           |
+  | ----- | ---------------------------------- |
+  | `all`   | {{c1:: 用于所有设备                     }}|
+  | `print` | {{c1:: 用于打印机和打印预览              }}|
+  | `scree` | {{c1:: 用于电脑屏幕，平板电脑，智能手机等 }}|
++ media feature取值：
+  | 值    | 解释说明                           |
+  | ----- | ---------------------------------- |
+  |`width`|{{c1:: 定义输出设备中页面可见区域的宽度}}|
+  |`min-width`|{{c1:: 定义输出设备中页面最小可见区域宽度}}|
+  |`nax-width`|{{c1:: 定义输出设备中页面最大可见区域宽度}}|
+
+### rem单位
+
+1. `em`:{{c1:: 相对于父元素的字体大小来计算 }}
+2. `rem`:{{c1:: 相对于html元素字体大小来计算 }}
+
+### 根据媒体查询引入支援
+
+```html
+<!-- {{c1:: -->
+<link rel="stylesheet" href="style320.css" media="screen and (min-width: 320px)">
+<link rel="stylesheet" href="style640.css" media="screen and (min-width: 640px)">
+<!-- }} -->
+```
+
+## less
+
+### less变量定义
+
+```less
+  @color: pink;  
+  body {
+    background-color: @color;
+  }
+```
+
+### less嵌套
+
+1. less嵌套子元素的样式直接写到父元素里面就好了
+2. 如果有伪类、交集选择器、 伪元素选择器 我们内层选择器的前面需要加&
++ 代码：
+  ```less
+  //c1::
+  .header {
+      width: 200px;
+      height: 200px;
+      background-color: pink;
+      a {
+          color: red;
+          &:hover {
+              color: blue;
+          }
+      }
+  }
+  //}}
+  ```
+
+### less运算
+
+语法：`height: 82rem / @baseFont;`
++ 单位选择
+  1. {{c1:: 两个数参与运算  如果只有一个数有单位，则最后的结果就以这个单位为准 }}
+  2. {{c1:: 两个数参与运算，如果2个数都有单位，而且不一样的单位 最后的结果以第一个单位为准 }}

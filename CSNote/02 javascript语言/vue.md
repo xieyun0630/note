@@ -533,57 +533,54 @@ var watchExampleVM = new Vue({
 
 ### 组件注册 [ ](vue_20200707060718113)
 
-- 组件名
-  - 使用 kebab-case (建议)：{{c1:: `Vue.component('my-component-name', { /* ... */ })`}}
-  - 使用 PascalCase：{{c1:: `Vue.component('MyComponentName', { /* ... */ })`}}
-- 全局注册
+- 全局注册:{{c1::使用全局方法 }}
   ```js
-  // {{c1::
-  Vue.component("my-component-name", {
-    // ... 选项 ...
-  });
-  // }}
-  ```
-- 局部注册
-  - 通过一个普通的 JavaScript 对象来定义组件：
-    ```js
-    //{{c1::
-    var ComponentA = {
-      /* ... */
-    };
-    var ComponentB = {
-      /* ... */
-    };
-    var ComponentC = {
-      /* ... */
-    };
-    //}}
-    ```
-  - 然后在 `components` 选项中定义你想要使用的组件：
-    ```js
-    //{{c1::
-    new Vue({
-      el: "#app",
-      components: {
-        "component-a": ComponentA,
-        "component-b": ComponentB,
-      },
+    // {{c1::
+    Vue.component("my-component-name", {
+      // ... 选项 ...
     });
-    //}}
-    ```
-  - 局部注册的组件在其子组件中不可用，如果你希望 `ComponentA` 在 `ComponentB` 中可用，则你需要这样写：
+    // }}
+  ```
+- 局部注册:{{c1::使用components属性配置}}
+  1. 定义组件：
     ```js
-    //{{c1::
-    var ComponentA = {
-      /* ... */
-    };
-    var ComponentB = {
-      components: {
-        "component-a": ComponentA,
-      },
-      // ...
-    };
-    //}}
+      //{{c1::
+      var ComponentA = {
+        /* ... */
+      };
+      var ComponentB = {
+        /* ... */
+      };
+      var ComponentC = {
+        /* ... */
+      };
+      //}}
+    ```
+  2. 然后在 `components` 选项中定义你想要使用的组件：
+    ```js
+      //{{c1::
+      new Vue({
+        el: "#app",
+        components: {
+          "component-a": ComponentA,
+          "component-b": ComponentB,
+        },
+      });
+      //}}
+    ```
+  3. 局部注册的组件在其子组件中不可用，如果你希望 `ComponentA` 在 `ComponentB` 中可用，则你需要这样写：
+    ```js
+      //{{c1::
+      var ComponentA = {
+        /* ... */
+      };
+      var ComponentB = {
+        components: {
+          "component-a": ComponentA,
+        },
+        // ...
+      };
+      //}}
     ```
 
 ### 组件 Prop 的大小写注意点： [ ](vue_20200707060718114)

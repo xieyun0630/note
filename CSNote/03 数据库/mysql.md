@@ -1401,7 +1401,7 @@
   + 作用：{{c1:: 强制MySQL使用一个特定的索引 }}
   + 语法：{{c1:: `explain create index idx_seller_address on tb_seller(address);`}}
 
-  ### MYSQL应用层的几种优化 [ ](mysql_20200928050450132)
+### MYSQL应用层的几种优化 [ ](mysql_20200928050450132)
 
   + 使用数据库连接池
   + 减少对MYSQL的访问
@@ -1527,7 +1527,7 @@
 + 显式加读锁：{{c1:: `lock table table_name read;` }}
 + 显式加写锁：{{c1:: `lock table table_name write；` }}
 
- ### 查看表锁的争用情况 [	](mysql_20201012060626285)
+### 查看表锁的争用情况 [	](mysql_20201012060626285)
 + `show open tables`；
   + `In_user` : {{c1:: 表当前被查询使用的次数。如果该数为零，则表是打开的，但是当前没有被使用。 }}
   + `Name_locked`：{{c1:: 表名称是否被锁定。名称锁定用于取消表或对表进行重命名等操作。 }}
@@ -1651,8 +1651,8 @@
  + `-T, --tab=name`:{{c1:: 自动生成两个文件,.sql定义文件与.txt数据文件}}
   + 例：{{c1:: `mysqldump -uroot -p2143 -T /tmp test city` }}
 + 备份数据导入
-  + 导入txt备份文件语法:`mysqlimport -uroot -p2143 dbname /tmp/city.txt`
-  + 导入sql备份文件语法:`source /root/tb_book.sql`
+  + 导入txt备份文件语法:{{c1:: `mysqlimport -uroot -p2143 dbname /tmp/city.txt` }}
+  + 导入sql备份文件语法:{{c1:: `source /root/tb_book.sql` }}
 
 ### mysqlshow [	](mysql_20201012060626310)
 + 作用：{{c1:: 可以让我们在不连接到MySQL客户端的情况下查看MySQL的一些参数、数据库、表、列、索引等信息 }}
@@ -1703,3 +1703,35 @@
 + 查看日志：
   + `cat slow_query.log`
   + `mysqldumpslow slow_query.log` :{{c1:: 对慢查询日志进行分类汇总。 }}
+
+## Mysql复制
+
+### MYSQL主从复制:master数据库搭建
+
+1. 在master 的配置文件（/usr/my.cnf）中，配置如下内容：
+  + `server-id=1`:{{c1:: mysql 服务ID,保证整个集群环境中唯一 }}
+  + `log-bin=/var/lib/mysql/mysqlbin`:{{c1:: mysql binlog 日志的存储路径和文件名 }}
+  + `read-only=0`:{{c1:: 是否只读,1 代表只读, 0 代表读写 }}
+  + `binlog-ignore-db=mysql`:{{c1:: 忽略的数据, 指不需要同步的数据库 }}
+2. `service mysql restart;`:{{c1:: 执行完毕之后，需要重启Mysql }}
+3. 创建同步数据的账户，并且进行授权操作:
+  + `grant replication slave on *.* to 'itcast'@'192.168.192.131' identified by 'itcast';`
+  + `flush privileges;`
+4. 查看master状态:`show master status;`
+  + 字段含义：
+    + `File` :{{c1:: 从哪个日志文件开始推送日志文件  }}
+    + `Position` ：{{c1:: 从哪个位置开始推送日志 }}
+    + `Binlog_Ignore_DB` :{{c1:: 指定不需要同步的数据库 }}
+
+### MYSQL主从复制:slave数据库搭建
+
+1. 在 slave 端配置文件中，配置如下内容
+  + `server-id=2`:{{c1:: mysql服务端ID,唯一 }}
+  + `log-bin=/var/lib/mysql/mysqlbin`:{{c1:: 指定binlog日志 }}
+2. 重启Mysql:`service mysql rest;`
+3. 指定主数据库：
+    + `change master to master_host= '192.168.192.130', master_user='itcast', master_password='itcast', master_log_file='mysqlbin.000001', master_log_pos=413;`
+4. 开启同步操作
+  + `start slave;`
+  + `show slave status;`
+

@@ -783,7 +783,7 @@ alert(arr[1].name); // John
 arr[3](); // hello
 ```
 
-### pop/push, shift/unshift 方法 [ ](javascript_info_20191219101334487)
+### js数组的pop/push, shift/unshift 方法 [ ](javascript_info_20191219101334487)
 
 + `push` {{c1:: 在末端添加一个元素。}}
 + `shift` {{c1:: 取出队列最前端的一个元素，整个队列往前移，这样原先排第二的元素现在排在了第一。}}
@@ -5801,32 +5801,39 @@ Custom elements 有两种：
 
 + extend HTMLElement
   ```js
-    // {{c1::
     class MyElement extends HTMLElement {
       constructor() {
         super();
-        // element created
       }
       connectedCallback() {
+        //{{c1::
         // browser calls this method when the element is added to the document
         // (can be called many times if an element is repeatedly added/removed)
+        //}}
       }
       disconnectedCallback() {
+        //{{c1::
         // browser calls this method when the element is removed from the document
         // (can be called many times if an element is repeatedly added/removed)
+        //}}
       }
       static get observedAttributes() {
+        //{{c1::
         return [/* array of attribute names to monitor for changes */];
+        //}}
       }
       attributeChangedCallback(name, oldValue, newValue) {
+        //{{c1::
         // called when one of attributes listed above is modified
+        //}}
       }
       adoptedCallback() {
+        //{{c1::
         // called when the element is moved to a new document
         // (happens in document.adoptNode, very rarely used)
+        //}}
       }
       // there can be other element methods and properties
-      //}}
    }
   ```
 + register the element
