@@ -1704,9 +1704,9 @@
   + `cat slow_query.log`
   + `mysqldumpslow slow_query.log` :{{c1:: 对慢查询日志进行分类汇总。 }}
 
-## Mysql复制
+## Mysql复制 [	](mysql_20201014033126191)
 
-### MYSQL主从复制:master数据库搭建
+### MYSQL主从复制:master数据库搭建 [	](mysql_20201014033126193)
 
 1. 在master 的配置文件（/usr/my.cnf）中，配置如下内容：
   + `server-id=1`:{{c1:: mysql 服务ID,保证整个集群环境中唯一 }}
@@ -1723,7 +1723,7 @@
     + `Position` ：{{c1:: 从哪个位置开始推送日志 }}
     + `Binlog_Ignore_DB` :{{c1:: 指定不需要同步的数据库 }}
 
-### MYSQL主从复制:slave数据库搭建
+### MYSQL主从复制:slave数据库搭建 [	](mysql_20201014033126195)
 
 1. 在 slave 端配置文件中，配置如下内容
   + `server-id=2`:{{c1:: mysql服务端ID,唯一 }}
@@ -1734,4 +1734,3 @@
 4. 开启同步操作
   + `start slave;`
   + `show slave status;`
-
