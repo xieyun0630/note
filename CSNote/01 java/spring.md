@@ -701,8 +701,10 @@ public class Person
 ```
 + c:命名空间简化配置:
 ```xml
+<!-- {{c1:: -->
   <bean id="person" class="org.crazyit.app.service.Person"
 	c:age="500" c:personName="孙悟空"/>
+<!-- }} -->
 ```
 ### 使用util:命名空间简化配置 [	](spring_20200911094545287)
   + `constant`：{{c1:: `<util:constant id="chin.age" static-field="java.sql.Connection.`TRANSACTION_SERIALIZABLE"/>}}
@@ -861,11 +863,15 @@ public class Person
 + 需要使用xml配置方式
 ```xml
 	<!-- 启动@AspectJ支持 -->
+<!-- {{c1:: }} -->
 	<aop:aspectj-autoproxy/>
+<!-- }} -->
 ```
 + 不需要xml配置方式
 ```xml
+<!-- {{c1:: -->
   <bean class= 'xxx.AnnotationAwareAspectJAutoProxyCreator' />
+<!-- }} -->
 ```
 
 ### 基于注解的AOP配置 [	](spring_20200911094545336)
@@ -936,6 +942,48 @@ public class Person
 + {{c1:: 让切面类实现Ordered接口,该接口具有一个返回整数的方法 }}
 + {{c1:: 使用@Order注解修饰一个切面类 }}
 
+### 定义切入点
++ 定义切入点：
+```java
+  //{{c1::
+  @Pointcut("execution(* transfer(..)))
+  private void myPontcut(){}
+  //}}
+```
++ 引用已有切入点
+```java
+    //{{c1::
+    //引用本类
+    @AfterReturning(pointcut = "myPontcut()",returning = "rvt")
+    //引用其他类
+    @AfterReturning(pointcut = "SystemArchitecture.myPointcut()",returning = "rvt")
+    public void writelog(Object rvt){...}
+    //}}
+```
+
+### 切入点指示符：execution
+
++ 作用：{{c1:: 匹配执行方法的连接点 }}
++ 语法：{{c1:: `execution(modifiers-pattern? ret-type-pattern declaring-type-pattern? name-pattern(param-pattern) throws-pattern?)` }}
++ `param-pattern`中通配符的使用：
+  + `*`:{{c1:: 匹配单个任意参数 }}
+  + `..`:{{c1:: 匹配多个任意参数 }}
+  + 例:{{c1:: `(*,String)` }}
+
+### 切入点指示符：within
+
++ 作用：{{c1:: 用于匹配特定类型的连接点,spring中为方法的执行 }}
++ 例：
+  + 匹配指定包中任意连接点：{{c1:: `within(top.xieyun.service.*)` }}
+  + 匹配指定**包及其子包**中任意连接点：{{c1:: `within(top.xieyun.service..*)` }}
+
+### 切入点指示符：this target args bean
+
++ 匹配实现指定类型的目标对象所有连接点：{{c1:: `target(top.xieyun.myService)` }}
++ 匹配实现指定类型的代理对象所有连接点：{{c1:: `this(top.xieyun.myService)` }}
++ 对方法参数类型以及个数进行限制：{{c1:: `args(java.io.Serializable)` }}
++ 匹配所有名字以Service bean的连接点：{{c1:: `bean("*Service")` }}
++ 逻辑运算符：{{c1:: `&& || !` }}
 
 
-### 定义切入点 [	](spring_20200911094545350)
+## spring缓存机制
