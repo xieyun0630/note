@@ -715,7 +715,7 @@
 
 ### 外键管理 [ ](mysql_20200914055153020)
 
-* 新增外键：{{c1:: `alter table 表名 add [constraint `外建名`] foreign key(外键字段) references 表名(主键) [on 外键约束]` }}
+* 新增外键：{{c1:: `alter table 表名 add [constraint 外键名] foreign key(外键字段) references 表名(主键) [on 外键约束]` }}
   + 注意：{{c1:: 追加外键需要保证外键字段里的值要么为Null，要么在父表中都能找到 }}
 * 删除外键：{{c1:: `alter table 表名 drop foreign key 外键名;` }}
 * 更新外键：{{c1:: 先删除后新增 }}
@@ -818,34 +818,24 @@
 ## 备份与还原 [ ](mysql_20200914055153034)
 
 ### 表数据备份 [ ](mysql_20200914055153036)
-
-**表数据备份**：{{c1:: 单独针对表里的**数据部分**进行备份（数据导出） }}
-* 将数据从表中查出，按照一定格式存储到外部文件
-  * 字段格式化：{{c1::`fields`}}
-    * {{c1:: `terminated by`：字段数据结束后使用的符号，默认是空格 }}
-    * {{c1:: `enclosed by`：字段数据包裹，默认什么都没有 }}
-    * {{c1:: `escaped by`：特殊字符的处理，默认是转义 }}
-  * 行格式化：{{c1:: `lines` }}
-    * {{c1:: `terminated by`：行结束符号，默认是\n，自动换行 }}
-    * {{c1:: `starting by`：行开始符号，默认没有 }}
-  + 备份语法：
-    ```sql
-      #{{c1::
-      select 字段列表|*  into outfile 外部文件路径 
-        [fields terminated by 格式 enclosed by 格式]
-        [lines terminated by 格式 starting by 格式]
-      from 数据表;
-      #}}
-    ```
-  + 还原语法：
-    ```SQL
-      #{{c1::
-      load data infile '数据文件所在路径' into table 表名
++ 表数据备份语法：
+  ```sql
+    #{{c1::
+    select 字段列表|*  into outfile 外部文件路径 
       [fields terminated by 格式 enclosed by 格式]
       [lines terminated by 格式 starting by 格式]
-      [(字段列表)]; # 如果是部分表字段，那么必须将字段列表放到最后
-      #}}
-    ```
+    from 数据表;
+    #}}
+  ```
++ 表数据还原语法：
+  ```SQL
+    #{{c1::
+    load data infile '数据文件所在路径' into table 表名
+    [fields terminated by 格式 enclosed by 格式]
+    [lines terminated by 格式 starting by 格式]
+    [(字段列表)]; # 如果是部分表字段，那么必须将字段列表放到最后
+    #}}
+  ```
 
 ### 文件备份 [ ](mysql_20200914055153037)
 
@@ -906,8 +896,8 @@
     ON tbl_name(index_col_name,...)
     #}}
   ```
-+ 查看索引:`show index  from  table_name;`
-+ 删除索引:`drop  index  index_name  on  tbl_name;`
++ 查看索引:{{c1:: `show index  from  table_name;` }}
++ 删除索引:{{c1:: `drop  index  index_name  on  tbl_name;` }}
 
 ### 使用ALTER命令创建索引 [ ](mysql_20200916055246280)
 + 添加一个主键，这意味着索引值必须是唯一的，且不能为NULL：{{c1:: `alter  table  tb_name  add  primary  key(column_list); `}}
@@ -1095,10 +1085,9 @@
     #}}
   ```
 
-### 触发器 [ ](mysql_20200916055246298)
+### 管理触发器 [ ](mysql_20200916055246298)
 
-+ 作用：{{c1:: 触发器是**与表有关**的数据库对象，指在 insert/update/delete 之前或之后，触发并执行触发器中定义的**SQL语句集合**。 }}
-+ 语法结构 : 
++ 创建触发器语法 : 
   ```SQL
     #{{c1::
     create trigger trigger_name 
@@ -1110,12 +1099,12 @@
     end;
     #}}
   ```
-+ 删除触发器:{{c1:: `drop trigger [schema_name.]trigger_name` }}
-+ 查看触发器:{{c1:: `show triggers；` }}
++ 删除触发器语法:{{c1:: `drop trigger [schema_name.]trigger_name` }}
++ 查看触发器语法:{{c1:: `show triggers；` }}
 + oracle与mysql中`for each row`的区别：
   + {{c1:: oracle触发器中分行级触发器和语句级触发器,可不写foreachrow,无论影响多少行都只执行一次。}}
   + {{c1:: mysql不支持语句触发器,所以必须写foreachrow;}}
-  + NEW 和 OLD的使用 
++ NEW 和 OLD的使用 
   | 触发器类型      | NEW 和 OLD的使用                                        |
   | --------------- | ------------------------------------------------------- |
   | INSERT 型触发器 | {{c1:: NEW 表示将要或者已经新增的数据                          }}|
@@ -1216,7 +1205,7 @@
   | SUBQUERY     | {{c1:: 在SELECT 或 WHERE 列表中包含了子查询                         }}|
   | DERIVED      | {{c1:: 在FROM 列表中包含的子查询，被标记为 DERIVED（衍生） MYSQL会递归执行这些子查询，把结果放在临时表中 }}|
   | UNION        | {{c1:: 若第二个SELECT出现在UNION之后，则标记为UNION ； 若UNION包含在FROM子句的子查询中，外层SELECT将被标记为 ： DERIVED }}|
-  | UNION RESULT | {{c1:: 从UNION表获取结果的SELECT                                    }}|
+  | UNION RESULT | {{c1:: 从UNION(`<union1,2>`)表获取结果的SELECT                                    }}|
 
 ###  explain命令：type列 [ ](mysql_20200927095114654)
 
@@ -1239,9 +1228,9 @@
 
 | extra            | 含义                                                         |
 | ---------------- | ------------------------------------------------------------ |
-| `using  filesort`  | {{c1:: 说明mysql会对数据使用一个外部的索引排序，而不是按照表内的索引顺序进行读取， 称为 “文件排序”, 效率低。 }}|
-| `using  temporary` | {{c1:: 使用了临时表保存中间结果，MySQL在对查询结果排序时使用临时表。常见于 order by 和 group by； 效率低 }}|
-| `using  index`     | {{c1:: 表示相应的select操作使用了覆盖索引， 避免访问表的数据行， 效率不错。 }}|
+| `using filesort`  | {{c1:: 说明mysql会对数据使用一个外部的索引排序，而不是按照表内的索引顺序进行读取， 称为 “文件排序”, 效率低。 }}|
+| `using temporary` | {{c1:: 使用了临时表保存中间结果，MySQL在对查询结果排序时使用临时表。常见于 order by 和 group by； 效率低 }}|
+| `using index`     | {{c1:: 表示相应的select操作使用了覆盖索引， 避免访问表的数据行， 效率不错。 }}|
 
 ### show profile分析SQL [ ](mysql_20200927095114658)
 
@@ -1393,13 +1382,13 @@
 
 + `USE INDEX`
   + 作用：{{c1:: 提供希望MySQL去参考的索引列表，就可以让MySQL不再考虑其他可用的索引 }}
-  + 语法：{{c1:: `explain create index idx_seller_name on tb_seller(name);`}}
+  + 语法：{{c1:: `explain select * from tb_seller use index(idx_seller_name) where name = '小米科技';`}}
 + `IGNORE INDEX`
   + 作用：{{c1:: 让MySQL忽略一个或者多个索引 }}
   + 语法：{{c1:: `explain select * from tb_seller ignore index(idx_seller_name) where name = '小米科技';`}}
 + `FORCE INDEX`
   + 作用：{{c1:: 强制MySQL使用一个特定的索引 }}
-  + 语法：{{c1:: `explain create index idx_seller_address on tb_seller(address);`}}
+  + 语法：{{c1:: `explain select * from tb_seller force index(idx_seller_name) where name = '小米科技';`}}
 
 ### MYSQL应用层的几种优化 [ ](mysql_20200928050450132)
 
@@ -1611,7 +1600,7 @@
 
 ### mysql的客户端工具 [	](mysql_20201012060626304)
 
-+ 执行选项: `mysql -uroot -p2143 db01 -e "select * from tb_book";`
++ 执行选项: {{c1:: `mysql -uroot -p2143 db01 -e "select * from tb_book";` }}
 
 ### mysqladmin [	](mysql_20201012060626306)
 
@@ -1666,9 +1655,9 @@
 
 ## MYSQL中4 种不同的日志 [	](mysql_20201012060626312)
 
-### 错误日志 [	](mysql_20201012060626314)
-+ 作用：它记录了当 mysqld 启动和停止时，以及服务器在运行过程中发生任何严重错误时的相关信息。当数据库出现任何故障导致无法正常使用时，可以首先查看此日志。
-+ 查看错误日子位置：`show variables like 'log_error%';`
+### mysql错误日志 [	](mysql_20201012060626314)
++ 作用：{{c1:: 它记录了当 mysqld 启动和停止时，以及服务器在运行过程中发生任何严重错误时的相关信息。当数据库出现任何故障导致无法正常使用时，可以首先查看此日志。 }}
++ 查看错误日志位置：{{c1:: `show variables like 'log_error%';` }}
 
 ### 二进制日志（BINLOG 日志） [	](mysql_20201012060626316)
 + 作用：记录了所有的 DDL（数据定义语言）语句和 DML（数据操纵语言）语句，但是不包括**数据查询语句**，主从复制，就是通过该binlog实现，默认情况下是没有开启的

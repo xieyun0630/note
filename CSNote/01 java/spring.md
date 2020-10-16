@@ -580,7 +580,7 @@
     <!-- }} -->
   ```
 
-### `default-autowire`与`autowire`属性的值： [	](spring_20200824063336949)
+### 自动装配：`default-autowire`与`autowire`属性的值： [	](spring_20200824063336949)
 
 1. `no`：{{c1:: 不使用自动装配 }}
 2. `byName`：{{c1:: 根据setter方法查找匹配的id的`bean` }}
@@ -977,12 +977,13 @@ public class Person
   + 匹配指定包中任意连接点：{{c1:: `within(top.xieyun.service.*)` }}
   + 匹配指定**包及其子包**中任意连接点：{{c1:: `within(top.xieyun.service..*)` }}
 
-### 切入点指示符：this target args bean
+### 切入点指示符：this target args bean @annotation
 
 + 匹配实现指定类型的目标对象所有连接点：{{c1:: `target(top.xieyun.myService)` }}
 + 匹配实现指定类型的代理对象所有连接点：{{c1:: `this(top.xieyun.myService)` }}
 + 对方法参数类型以及个数进行限制：{{c1:: `args(java.io.Serializable)` }}
 + 匹配所有名字以Service bean的连接点：{{c1:: `bean("*Service")` }}
++ 匹配标注了指定注解的连接点：{{c1:: `@annotation(operateLog)` }}
 + 逻辑运算符：{{c1:: `&& || !` }}
 
 

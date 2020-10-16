@@ -3231,25 +3231,6 @@ let promise = new Promise((resolve, reject) => reject(error));
 // }}
 ```
 
-### `Promise.all`静态方法 [ ](javascript_info_20200114084259632)
-
-+ 用途:假设我想要并行执行多个 promise，并等待所有 promise 准备就绪。
-+ 它们的相对顺序是相同的。
-+ **如果任意一个 promise 为 reject，`Promise.all` 返回的 promise 就会立即 reject 这个错误。**
-+ **如果出现错误，其他 promise 就会被忽略**
-
-```javascript
-Promise.all(
-  //{{c1::
-  [
-    new Promise((resolve) => setTimeout(() => resolve(1), 3000)), // 1
-    new Promise((resolve) => setTimeout(() => resolve(2), 2000)), // 2
-    new Promise((resolve) => setTimeout(() => resolve(3), 1000)), // 3
-  ]
-  //}}
-).then(alert); // 1,2,3 当 promise 就绪：每一个 promise 即成为数组中的一员
-```
-
 ### `Promise.all(iterable)` 允许“迭代”中的非 promise（non-promise）的 “常规“ [ ](javascript_info_20200308041234742)
 
 ```javascript
@@ -4172,19 +4153,7 @@ alert(example.offsetTop); // 180
 ### Window 的大小 [ ](javascript_info_20200525035508053)
 
 + 文档可见部分的 width/height（内容区域的 width/height）：{{c1:: `document.documentElement.clientWidth/Height`}}
-+ 整个文档的 width/height，其中包括滚动出去的部分：
-  ```javascript
-  //{{c1::
-  let scrollHeight = Math.max(
-    document.body.scrollHeight,
-    document.documentElement.scrollHeight,
-    document.body.offsetHeight,
-    document.documentElement.offsetHeight,
-    document.body.clientHeight,
-    document.documentElement.clientHeight
-  );
-  //}}
-  ```
+
 
 ### Window 的滚动 [ ](javascript_info_20200525035508055)
 
@@ -5448,23 +5417,25 @@ alert(commits[0].author.login);
 
 ### Fetch：两种跨源请求：跨源简单请求和跨源其他请求 [ ](javascript_info_20200612065930966)
 
-+ 对于跨源简单请求：
-  + → 浏览器发送{{c1:: 带有源的 `Origin` header。 }}
-  + ← 对于没有凭据的请求（默认不发送），服务器应该设置：
-    1. {{c1:: `Access-Control-Allow-Origin` 为 `*` 或与 `Origin` 的值相同}}
-  + ← 对于具有凭据的请求，服务器应该设置：
-    1. {{c1:: `Access-Control-Allow-Origin` 值与 `Origin` 的相同}}
-    2. {{c1:: `Access-Control-Allow-Credentials` 为 `true`}}
-+ 要授予 JavaScript 访问任何 response header 的权限:{{c1:: 服务器应该在 header Access-Control-Expose-Headers 中列出允许的那些 header}}
-+ 对于跨源非简单请求，{{c1:: 会在请求之前发出初步“预检”请求 }}
-  + → 浏览器将具有以下 header 的{{c1:: `OPTIONS` }}请求发送到相同的 URL：
+1. 发送跨源简单请求概况：
+  + → 浏览器发送:{{c1:: 带有源的 `Origin` header。 }}
+  + ← 服务器响应：
+    1. ← 对于没有凭据的请求（默认不发送），服务器应该设置：
+      1. {{c1:: `Access-Control-Allow-Origin` 为 `*` 或与 `Origin` 的值相同}}
+    2. ← 对于具有凭据的请求，服务器应该设置：
+      1. {{c1:: `Access-Control-Allow-Origin` 值与 `Origin` 的相同}}
+      2. {{c1:: `Access-Control-Allow-Credentials` 为 `true`}}
+  + 发送简单请求概况:{{c1:: `→Origin ←Origin [Credentials]` }}
+2. 发送跨源非简单请求，{{c1:: 发出初步“预检”请求，包含要使用的请求方法与header列表，服务器返回允许的列表与缓存时间 }}
+  + → 浏览器发送:将具有以下 `header` 的{{c1:: `OPTIONS` }}请求发送到相同的 URL：
     1. {{c1:: `Access-Control-Request-Method` 有请求方法。}}
     2. {{c1:: `Access-Control-Request-Headers` 以逗号分隔的“非简单” header 列表。}}
-  + ← 服务器应该响应状态码为 200 和 header：
+  + ← 服务器响应：服务器应该响应状态码为 200 和 header：
     1. {{c1:: `Access-Control-Allow-Methods` 带有允许的方法的列表，}}
     2. {{c1:: `Access-Control-Allow-Headers` 带有允许的 header 的列表，}}
     3. {{c1:: `Access-Control-Max-Age` 带有指定缓存权限的秒数。}}
-  + 然后，{{c1:: 发出实际请求，应用先前的“简单”方案。 }}
+  + 然后，发出实际请求，应用先前的简单请求的方案。
+3. 要授予 JavaScript 访问任何 response header 的权限:{{c1:: 服务器应该在 header Access-Control-Expose-Headers 中列出允许的那些 header}}
 
 ### `fetch()`方法选项:`referrer`与`referrerPolicy` [ ](javascript_info_20200612065930967)
 
@@ -5722,6 +5693,7 @@ xhr.open("POST", "http://anywhere.com/request");
   + expires:{{c1:: 或 max-age 设置 cookie 过期时间，如果没有设置，则当浏览器关闭时 cookie 就失效了。 }}
   + secure:{{c1:: 使 cookie 仅在 HTTPS 下有效。 }}
   + samesite:{{c1:: 如果请求来自外部网站，禁止浏览器发送 cookie，这有助于防止 XSRF 攻击。 }}
++ 例：`document.cookie = "username=Bill Gates; expires=Sun, 31 Dec 2017 12:00:00 UTC; path=/";`
 + XSRF 攻击全称：{{c1:: Cross-Site Request Forgery }}
 
 ### `LocalStorage`，`sessionStorage` [ ](javascript_info_20200615060136004)

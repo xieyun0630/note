@@ -787,18 +787,14 @@ Vue.component("base-input", {
 
 ### `v-bind`指令中`.sync`修饰符 [ ](vue_20200708060208398)
 
-- 主要作用：实现双向绑定，子组件修改父组件中的值。
-
+- 主要作用：{{c1:: 实现双向绑定，子组件修改父组件中的值。 }}
 - 在一个包含 `title` prop 的假设的组件中，我们可以用以下方法表达对其赋新值的意图：
-
   ```js
   //{{c1::
   this.$emit("update:title", newTitle);
   //}}
   ```
-
 - 然后父组件可以监听那个事件并根据需要更新一个本地的数据 property。例如：
-
   ```xml
   <!-- {{c1:: -->
   <text-document
@@ -807,15 +803,12 @@ Vue.component("base-input", {
   ></text-document>
   <!-- }} -->
   ```
-
 - 为了方便起见，我们为这种模式提供一个缩写，即 `.sync` 修饰符：
-
   ```xml
   <!-- {{c1:: -->
   <text-document v-bind:title.sync="doc.title"></text-document>
   <!-- }} -->
   ```
-
 - 当我们用一个对象同时设置多个 prop 的时候，也可以将这个 `.sync` 修饰符和 `v-bind` 配合使用：
   ```xml
   <!-- {{c1:: -->
