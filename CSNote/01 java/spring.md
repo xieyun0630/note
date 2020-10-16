@@ -987,3 +987,50 @@ public class Person
 
 
 ## spring缓存机制
+
+### 启用spring缓存
++ 使用注解：{{c1::`<cache:annotation-driven cache-manager="缓存管理器ID"/>` }}
+  +  cache-manager属性默认值为:{{c1:: cacheManager }}
+
+
+### 配置spring内置缓存实现的配置
+
++ spring内置缓存管理器类:{{c1:: SimpleCacheManager }}
+  + 作为缓存区的类:{{c1:: ConcurrentMapCacheFactoryBean }}
++ 配置如下：
+  ```xml
+    <!-- 配置Spring内置的缓存管理器 -->
+	<bean id="cacheManager" class=
+		"org.springframework.cache.support.SimpleCacheManager">
+		<!-- 配置缓存区 -->
+		<property name="caches">
+			<set>
+				<!-- 下面列出多个缓存区，p:name用于为缓存区指定名字 -->
+				<bean class=
+				"org.springframework.cache.concurrent.ConcurrentMapCacheFactoryBean"
+				p:name="default"/>
+				<bean class=
+				"org.springframework.cache.concurrent.ConcurrentMapCacheFactoryBean"
+				p:name="users"/>
+			</set>
+		</property>
+	</bean>
+  ```
+
+### spring内置EhCache缓存实现的配置
+
++ 概况：{{c1:: `EhCacheCacheManager`缓存管理器包装`EhCacheManagerFactoryBean`生成的对象 }}
+```xml
+	<!-- 配置EhCache的CacheManager
+	通过configLocation指定ehcache.xml文件的位置 -->
+	<bean id="ehCacheManager"
+		class="org.springframework.cache.ehcache.EhCacheManagerFactoryBean"
+		p:configLocation="classpath:ehcache.xml"
+		p:shared="false" />
+	<!-- 配置基于EhCache的缓存管理器
+	并将EhCache的CacheManager注入该缓存管理器Bean -->
+	<bean id="cacheManager"
+		class="org.springframework.cache.ehcache.EhCacheCacheManager"
+		p:cacheManager-ref="ehCacheManager" > 
+```
+
