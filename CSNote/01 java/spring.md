@@ -73,14 +73,14 @@
 - 配置`messageSource`:
   ```xml
    <!-- {{c1:: -->
-  	<bean id="messageSource" class="xxx.ResourceBundleMessageSource">
-  		<property name="defaultEncoding" value="utf-8"/>
-  		<property name="basenames">
-  			<list>
-  				<value>message</value>
-  			</list>
-  		</property>
-  	</bean>
+    <bean id="messageSource" class="xxx.ResourceBundleMessageSource">
+      <property name="defaultEncoding" value="utf-8"/>
+      <property name="basenames">
+        <list>
+          <value>message</value>
+        </list>
+      </property>
+    </bean>
     <!-- }} -->
   ```
 - 使用：
@@ -97,9 +97,9 @@
   ```java
     //{{c1::
     var ctx = new ClassPathXmlApplicationContext("beans.xml");
-		// 创建一个ApplicationEvent对象
-		var ele = new EmailEvent("test", "spring_test@163.com", "this is a test");
-		// 发布容器事件
+    // 创建一个ApplicationEvent对象
+    var ele = new EmailEvent("test", "spring_test@163.com", "this is a test");
+    // 发布容器事件
     ctx.publishEvent(ele);
     //}}
   ```
@@ -592,9 +592,9 @@
 
 + 驱动Spring调用`exampleBean的getPerson().setName()`方法
   ```xml
-		<!-- 以"孙悟空"作为参数 -->
+    <!-- 以"孙悟空"作为参数 -->
     <!-- {{c1:: -->
-		<property name="person.name" value="孙悟空"/>
+    <property name="person.name" value="孙悟空"/>
     <!-- }} -->
   ```
 ### spring的java配置管理 [	](spring_20200824063336955)
@@ -680,7 +680,7 @@
 ```xml
 <!-- {{c1:: -->
 <bean id="chinese" class="org.crazyit.app.service.impl.Chinese"
-		p:age="29" p:axe-ref="stoneAxe"/>
+    p:age="29" p:axe-ref="stoneAxe"/>
 <!-- }} -->
 ```
 
@@ -689,21 +689,21 @@
 ```java
 public class Person
 {
-	private String name;
-	private int age;
-	@ConstructorProperties({"personName", "age"})
-	public Person(String name, int age)
-	{
-		this.name = name;
-		this.age = age;
-	}
+  private String name;
+  private int age;
+  @ConstructorProperties({"personName", "age"})
+  public Person(String name, int age)
+  {
+    this.name = name;
+    this.age = age;
+  }
 }
 ```
 + c:命名空间简化配置:
 ```xml
 <!-- {{c1:: -->
   <bean id="person" class="org.crazyit.app.service.Person"
-	c:age="500" c:personName="孙悟空"/>
+  c:age="500" c:personName="孙悟空"/>
 <!-- }} -->
 ```
 ### 使用util:命名空间简化配置 [	](spring_20200911094545287)
@@ -738,7 +738,7 @@ public class Person
 + 自动扫描指定包及其子包下的所有Bean类 ：{{c1::`<context:component-scan base-package="top.xieyun.service"/>`}}
 + 2个过滤器子元素:
   1. {{c1:: `<context:include-filter type="regex" expression=".*Chinese"/>` }}
-	2. {{c1:: `<context:exclude-filter type="regex" expression=".*Axe"/>` }}
+  2. {{c1:: `<context:exclude-filter type="regex" expression=".*Axe"/>` }}
 + 过滤器类型：
   1. {{c1:: anotation }}
   2. {{c1:: assignable }}
@@ -862,9 +862,9 @@ public class Person
 
 + 需要使用xml配置方式
 ```xml
-	<!-- 启动@AspectJ支持 -->
+  <!-- 启动@AspectJ支持 -->
 <!-- {{c1:: }} -->
-	<aop:aspectj-autoproxy/>
+  <aop:aspectj-autoproxy/>
 <!-- }} -->
 ```
 + 不需要xml配置方式
@@ -990,6 +990,7 @@ public class Person
 ## spring缓存机制
 
 ### 启用spring缓存
+
 + 使用注解：{{c1::`<cache:annotation-driven cache-manager="缓存管理器ID"/>` }}
   +  cache-manager属性默认值为:{{c1:: cacheManager }}
 
@@ -1001,37 +1002,37 @@ public class Person
 + 配置如下：
   ```xml
     <!-- 配置Spring内置的缓存管理器 -->
-	<bean id="cacheManager" class=
-		"org.springframework.cache.support.SimpleCacheManager">
-		<!-- 配置缓存区 -->
-		<property name="caches">
-			<set>
-				<!-- 下面列出多个缓存区，p:name用于为缓存区指定名字 -->
-				<bean class=
-				"org.springframework.cache.concurrent.ConcurrentMapCacheFactoryBean"
-				p:name="default"/>
-				<bean class=
-				"org.springframework.cache.concurrent.ConcurrentMapCacheFactoryBean"
-				p:name="users"/>
-			</set>
-		</property>
-	</bean>
+  <bean id="cacheManager" class=
+    "org.springframework.cache.support.SimpleCacheManager">
+    <!-- 配置缓存区 -->
+    <property name="caches">
+      <set>
+        <!-- 下面列出多个缓存区，p:name用于为缓存区指定名字 -->
+        <bean class=
+        "org.springframework.cache.concurrent.ConcurrentMapCacheFactoryBean"
+        p:name="default"/>
+        <bean class=
+        "org.springframework.cache.concurrent.ConcurrentMapCacheFactoryBean"
+        p:name="users"/>
+      </set>
+    </property>
+  </bean>
   ```
 
 ### spring内置EhCache缓存实现的配置
 
 + 概况：{{c1:: `EhCacheCacheManager`缓存管理器包装`EhCacheManagerFactoryBean`生成的对象 }}
 ```xml
-	<!-- 配置EhCache的CacheManager
-	通过configLocation指定ehcache.xml文件的位置 -->
-	<bean id="ehCacheManager"
-		class="org.springframework.cache.ehcache.EhCacheManagerFactoryBean"
-		p:configLocation="classpath:ehcache.xml"
-		p:shared="false" />
-	<!-- 配置基于EhCache的缓存管理器
-	并将EhCache的CacheManager注入该缓存管理器Bean -->
-	<bean id="cacheManager"
-		class="org.springframework.cache.ehcache.EhCacheCacheManager"
-		p:cacheManager-ref="ehCacheManager" > 
+  <!-- 配置EhCache的CacheManager
+  通过configLocation指定ehcache.xml文件的位置 -->
+  <bean id="ehCacheManager"
+    class="org.springframework.cache.ehcache.EhCacheManagerFactoryBean"
+    p:configLocation="classpath:ehcache.xml"
+    p:shared="false" />
+  <!-- 配置基于EhCache的缓存管理器
+  并将EhCache的CacheManager注入该缓存管理器Bean -->
+  <bean id="cacheManager"
+    class="org.springframework.cache.ehcache.EhCacheCacheManager"
+    p:cacheManager-ref="ehCacheManager" > 
 ```
 

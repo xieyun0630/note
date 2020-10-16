@@ -40,9 +40,9 @@
   - 用法：{{c1:: `<input v-model="message">` }}
 - `v-once`
   - 作用：执行一次性地插值，当数据改变时，插值处的内容不会更新。
-  - 用法：{{c1:: `<span v-once>这个将不会改变: {{ msg }}</span>` }}
+  - 用法：{{c1:: `<span v-once>这个将不会改变: { { msg }}</span>` }}
 - `v-html`
-  - 作用：输出真正的 HTML，`{{ msg }}`会将数据解释为普通文本
+  - 作用：输出真正的 HTML，`{ { msg }}`会将数据解释为普通文本
   - 用法: `<span v-html="rawHtml"></span>`
 - `v-bind`
   - 作用：{{c1::将`HTML attribute`绑定到**某个**data属性}}

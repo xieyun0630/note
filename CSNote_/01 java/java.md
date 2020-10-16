@@ -1,10 +1,8 @@
 
 ### MAVEN配置HTTP代理
 1. 检测本地网络是否不能直接访问Maven的远程中央仓库，
-   
     + 命令为ping repo1.maven.org
 2. 要检查代理服务器是否畅通
-   
     + 运行`telnet  192.168.10.117 3267`来检查该地址的该端口是否畅通
 3. 修改~/.m2/settings.xml
     ```xml
