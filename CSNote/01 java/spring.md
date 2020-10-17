@@ -607,6 +607,8 @@
   + `@Scope`:{{c1:: 修饰**方法**，指定bean生命周期 }}
   + `@Lazy`:{{c1:: 修饰**方法**，开启bean延时初始化 }}
   + `@DependsOn`:{{c1:: 修饰**方法**，在指定bean之后初始化当前bean }}
+  + `@EnableAspectJAutoProxy`：{{c1:: 修饰类，启用aop增强处理 }}
+  + `@EnableTransactionManagement`: {{c1:: 修饰类，开启声明式事务 }}
 + 以配置文件为主，加入java配置类，配置spring
   ```xml
   <!-- {{c1:: -->
@@ -679,7 +681,7 @@
 ### 使用p:命名空间简化配置 [	](spring_20200911094545281)
 ```xml
 <!-- {{c1:: -->
-<bean id="chinese" class="org.crazyit.app.service.impl.Chinese"
+<bean id="chinese" class="top.xieyun.service.impl.Chinese"
     p:age="29" p:axe-ref="stoneAxe"/>
 <!-- }} -->
 ```
@@ -702,7 +704,7 @@ public class Person
 + c:命名空间简化配置:
 ```xml
 <!-- {{c1:: -->
-  <bean id="person" class="org.crazyit.app.service.Person"
+  <bean id="person" class="top.xieyun.service.Person"
   c:age="500" c:personName="孙悟空"/>
 <!-- }} -->
 ```
@@ -874,31 +876,46 @@ public class Person
 <!-- }} -->
 ```
 
+
+### 基于Aspect配置文件的AOP配置 [	](spring_20200911094545336)
+```xml
+<!-- {{c1:: -->
+  <aop:config>
+    <!--切入点-->
+    <aop:pointcut id="p" expression="* top.xieyun.service.impl.*.*(..))"/>
+    <!--配置切面-->
+    <aop:aspect ref="proxyBean">
+      <!--增强作用在具体的方法上-->
+      <aop:before method="before" pointcut-ref="p"/>
+    </aop:aspect>
+  </aop:config>
+<!-- }} -->
+```
 ### 基于注解的AOP配置 [	](spring_20200911094545336)
 + 定义切面:{{c1:: `@Aspect` }}
 + 5种advice:{{c1:: `Before,AfterReturning(成功),AfterThrowing(失败),After(无论),around` }}
 + 5种advice使用例子:
   ```java
     //{{c1::
-    @Before("execution(* org.crazyit.app.service.impl.*.*(..))")
+    @Before("execution(* top.xieyun.service.impl.*.*(..))")
     public void authority()
     {}
 
     @AfterReturning(returning = "rvt",
-      pointcut = "execution(* org.crazyit.app.service.impl.*.*(..))")
+      pointcut = "execution(* top.xieyun.service.impl.*.*(..))")
     public void log(Object rvt)
     {}
 
     @AfterThrowing(throwing = "ex",
-      pointcut = "execution(* org.crazyit.app.service.impl.*.*(..))")
+      pointcut = "execution(* top.xieyun.service.impl.*.*(..))")
     public void doRecoveryActions(Throwable ex)
     {}
 
-    @After("execution(* org.crazyit.app.service.*.*(..))")
+    @After("execution(* top.xieyun.service.*.*(..))")
     public void release()
     {}
 
-    @Around("execution(* org.crazyit.app.service.impl.*.*(..))")
+    @Around("execution(* top.xieyun.service.impl.*.*(..))")
     public Object processTx(ProceedingJoinPoint jp)
       throws java.lang.Throwable
     {}
@@ -908,13 +925,14 @@ public class Person
 ### 访问目标方法方式 [	](spring_20200911094545339)
 
 + 定义增强处理方法时:{{c1:: 将第一个参数定义为`JoinPoint`类型 }}
+  
   + 注意:{{c1:: `Around`只能定义为`proceedingJoinPoint`类型 }}
 + 使用args表达式
   ```java
     //{{c1::
     // 下面的args(arg0, arg1)会限制目标方法必须有2个形参
     @AfterReturning(returning = "rvt", pointcut =
-      "execution(* org.crazyit.app.service.impl.*.*(..)) && args(arg0, arg1)")
+      "execution(* top.xieyun.service.impl.*.*(..)) && args(arg0, arg1)")
     // 此处指定arg0、arg1为String类型
     // 则args(arg0, arg1)还要求目标方法的两个形参都是String类型
     public void access(Object rvt, String arg0, String arg1)
@@ -996,18 +1014,16 @@ public class Person
 
 
 ### 配置spring内置缓存实现的配置
-
-+ spring内置缓存管理器类:{{c1:: SimpleCacheManager }}
-  + 作为缓存区的类:{{c1:: ConcurrentMapCacheFactoryBean }}
++ 概况：
+  + spring内置缓存管理器类:{{c1:: `SimpleCacheManager` }}
+  + 作为缓存区的类:{{c1:: `ConcurrentMapCacheFactoryBean` }}
 + 配置如下：
   ```xml
-    <!-- 配置Spring内置的缓存管理器 -->
+  <!-- {{c1:: -->
   <bean id="cacheManager" class=
     "org.springframework.cache.support.SimpleCacheManager">
-    <!-- 配置缓存区 -->
     <property name="caches">
       <set>
-        <!-- 下面列出多个缓存区，p:name用于为缓存区指定名字 -->
         <bean class=
         "org.springframework.cache.concurrent.ConcurrentMapCacheFactoryBean"
         p:name="default"/>
@@ -1017,22 +1033,248 @@ public class Person
       </set>
     </property>
   </bean>
+  <!-- }} -->
   ```
 
 ### spring内置EhCache缓存实现的配置
 
 + 概况：{{c1:: `EhCacheCacheManager`缓存管理器包装`EhCacheManagerFactoryBean`生成的对象 }}
 ```xml
-  <!-- 配置EhCache的CacheManager
-  通过configLocation指定ehcache.xml文件的位置 -->
+  //{{c1::
   <bean id="ehCacheManager"
     class="org.springframework.cache.ehcache.EhCacheManagerFactoryBean"
     p:configLocation="classpath:ehcache.xml"
     p:shared="false" />
-  <!-- 配置基于EhCache的缓存管理器
-  并将EhCache的CacheManager注入该缓存管理器Bean -->
   <bean id="cacheManager"
     class="org.springframework.cache.ehcache.EhCacheCacheManager"
     p:cacheManager-ref="ehCacheManager" > 
+  //}}
 ```
+
+### `@Cacheable` 与 `@Cacheput`
+
++ 作用：{{c1:: 修饰类与方法，以方法参数为key，将方法返回值放入缓存。 }}
++ 可指定属性：
+  + `value`:{{c1:: 必须属性，指定缓冲区的名字 }}
+    例：{{c1:: `@Cacheable("user")` }}
+  + `key`:指定缓存的key
+    例：{{c1:: `@Cacheable(value="user",key="#name")` }}
+  + `conditon`:{{c1:: 指定一个SpEl表达式，表达式为true时，缓存方法返回值 }}
+    例：{{c1:: `@Cacheable("user",conditon="#age>100")` }}
+  + `unless`:{{c1:: 指定一个SpEl表达式，表达式为false时，缓存方法返回值 }}
+    例：{{c1:: `@Cacheable("user",unless="#age<100")` }}
++ `@Cacheable`与`@Cacheput`的区别：{{c1:: @Cacheput不会读取缓存，每次都会将方法返回值重新放到缓存区 }}
+
+### @CacheEvict
++ 作用：{{c1: 修饰方法，可用于清除所有的缓存数据 }}
++ 可指定属性：
+  + `value`:{{c1:: 必须属性，指定缓冲区的名字 }}
+  + `allEntries`:{{c1::是否清空整个缓存区}}
+  + `beforeInvocation`:{{c1::是否在执行方法之前清除缓存数据}}
+  + `condition`:{{c1::指定一个SpEl表达式，表达式为true时，清除缓存}}
+  + `key`:{{c1::清除指定key的缓存数据}}
++ 例：
+  ```java
+    //{{c1::
+    @CacheEvict(value = "users", allEntries = true)
+    public void evictAll()
+    {
+      System.out.println("--正在清空整个缓存--");
+    }
+    //}}
+  ```
+## spring jdbcTemplate
+
+### 配置JDBCTemplate对象
+```xml
+<!-- {{c1:: -->
+<bean id="jdbcTemplate" class="org.springframework.jdbc.core.JdbcTemplate">
+  <!--注入 dataSource-->
+  <property name="dataSource" ref="dataSource"></property>
+</bean>
+<!-- }} -->
+```
+
+### jdbcTemplate操作数据库：DML操作
+
++ DML操作方法签名：{{c1:: `update(String sql,Object... args)` }}
++ 批量DML操作方法签名：{{c1:: `batchUpdate(String sql,List<Object[]> batchArgs)` }}
++ 例：
+```java
+// {{c1::
+  String sql = "insert into t_book values(?,?,?)";
+  Object[] args = {book.getUserId(), book.getUsername(), book.getUstatus()};
+  int update = jdbcTemplate.update(sql,args);
+
+  String sql = "update t_book set username=?,ustatus=? where user_id=?";
+  Object[] args = {book.getUsername(), book.getUstatus(),book.getUserId()};
+  int update = jdbcTemplate.update(sql, args);
+
+  String sql = "delete from t_book where user_id=?";
+  int update = jdbcTemplate.update(sql, id);
+
+  public void batchAddBook(List<Object[]> batchArgs) {
+  String sql = "insert into t_book values(?,?,?)";
+  int[] ints = jdbcTemplate.batchUpdate(sql, batchArgs);
+  System.out.println(Arrays.toString(ints));
+}
+//}}
+```
+
+### jdbcTemplate操作数据库：DQL操作
+
++ 返回单个值方法签名：{{c1:: `queryForObject(String sql,Class<T> requiredType)` }}
++ 返回对象方法签名：{{c1:: `queryForObject(String sql,RowMapper<T> rowMapper,Object... args)` }}
++ 返回集合方法签名：`query(String sql,RowMapper<T> rowMapper,Object... args)`
++ `RowMapper`常用实例：{{c1:: `BeanPropertyRowMapper` }}
++ 例：
+  ```java
+      //{{c1::
+      //返回单个值
+      String sql = "select count(*) from t_book";
+      Integer count = jdbcTemplate.queryForObject(sql, Integer.class);
+      //返回对象
+      String sql = "select * from t_book where user_id=?";
+      Book book = jdbcTemplate.queryForObject(sql, new BeanPropertyRowMapper<Book>(Book.class), id);
+      //返回集合
+      String sql = "select * from t_book";
+      List<Book> bookList = jdbcTemplate.query(sql, new 
+      BeanPropertyRowMapper<Book>(Book.class));
+
+      //自定义rowMapper
+      String sql = "select name, gender from test_student where name = ?";
+      Student student = this.jdbcTemplate.queryForObject(sql, new Object[]{name}, new RowMapper<Student>() {
+          @Override
+          public Student mapRow(ResultSet rs, int i) throws SQLException {
+              Student s = new Student();
+              s.setName(rs.getString("name"));
+              s.setGender(rs.getString("gender"));
+              return s;
+          }
+      });
+      //}}
+  ```
+
+## spring的事务
+
+### PlatformTransactionManager
++ 作用：{{c1:: 提供一个接口，代表事务管理器，这个接口针对不同的框架提供不同的实现类 }}
++ 继承关系图：![image-20201017163325206](spring.assets/image-20201017163325206.png)
+
+### spring注解声明式事务配置
+
+1. 创建事务管理器
+  ```xml
+  <!-- {{c1:: -->
+  <bean id="transactionManager" 
+  class="org.springframework.jdbc.datasource.DataSourceTransactionManager">
+   <property name="dataSource" ref="dataSource"></property>
+  </bean>
+  <!-- }} -->
+  ```
+2. 引入{{c1::`tx`}}命名空间
+3. 开始事务注解：{{c1:: `<tx:annotation-driven transactionManager="transactionManager"></tx:annotation-driven>` }}
+4. 使用{{c1:: `@Transactional` }}声明事务
+
+### spring XML声明式事务管理
+
++ 第一步 配置事务管理器
++ 第二步 配置通知
++ 第三步 配置切入点和切面
++ 代码：
+  ```xml
+  <!-- {{c1:: -->
+  <!--1 创建事务管理器--> 
+  <bean id="transactionManager" 
+  class="org.springframework.jdbc.datasource.DataSourceTransactionManager">
+    <!--注入数据源-->
+    <property name="dataSource" ref="dataSource"></property>
+  </bean>
+
+  <!--2 配置通知--> 
+  <tx:advice id="txadvice">
+    <!--配置事务参数-->
+    <tx:attributes>
+    <!--指定哪种规则的方法上面添加事务-->
+    <tx:method name="accountMoney" propagation="REQUIRED"/>
+    <!--<tx:method name="account*"/>-->
+    </tx:attributes>
+  </tx:advice>
+
+  <!--3 配置切入点和切面--> 
+  <aop:config>
+    <!--配置切入点-->
+    <aop:pointcut id="pt" expression="execution(* 
+    com.atguigu.spring5.service.UserService.*(..))"/>
+    <!--配置切面-->
+    <aop:advisor advice-ref="txadvice" pointcut-ref="pt"/>
+  </aop:config>
+  <!-- }} -->
+  ```
+
+### @Transactional注解
+
++ 作用：
+  + 修饰类:{{c1:: 如果把这个注解添加类上面，这个类里面所有的方法都添加事务 }}
+  + 修饰方法:{{c1:: 如果把这个注解添加方法上面，为这个方法添加事务 }}
++ 属性：
+  + `isolation`:{{c1:: 设置隔离级别}}
+  + `noRollbackFor`:{{c1:: 遇到指定的异常时不回滚事务}}
+  + `noRollbackForClassName`:{{c1:: 遇到指定的多个异常时不回滚事务}}
+  + `propagation`:{{c1:: 指定事务的传播行为}}
+  + `readOnly`:{{c1:: 是否只读}}
+  + `rollbackFor`:{{c1:: 设置出现哪些异常进行回滚}}
+  + `rollbackForClassName`:{{c1:: 设置出现哪些异常进行回滚，该属性可以指定多个}}
+  + `timeout`:{{c1:: 事务超时时间}}
+
+### spring事务管理：7种事务传播行为
++ 作用：{{c1:: 处理service层，事务方法之间的嵌套行为。 }}
+1. `PROPAGATION_REQUIRED`：{{c1:: 如果当前没有事务，就创建一个新事务，如果当前存在事务，就加入该事务，该设置是最常用的设置。 }}
+2. `PROPAGATION_SUPPORTS`：{{c1:: 支持当前事务，如果当前存在事务，就加入该事务，如果当前不存在事务，就以非事务执行。 }}
+3. `PROPAGATION_MANDATORY`：{{c1:: 支持当前事务，如果当前存在事务，就加入该事务，如果当前不存在事务，就抛出异常。 }}
+4. `PROPAGATION_REQUIRES_NEW`：{{c1:: 创建新事务，无论当前存不存在事务，都创建新事务。 }}
+5. `PROPAGATION_NOT_SUPPORTED`：{{c1:: 以非事务方式执行操作，如果当前存在事务，就把当前事务挂起。 }}
+6. `PROPAGATION_NEVER`：{{c1:: 以非事务方式执行，如果当前存在事务，则抛出异常。 }}
+7. `PROPAGATION_NESTED`：{{c1:: 如果当前存在事务，则在嵌套事务内执行。如果当前没有事务，则执行与PROPAGATION_REQUIRED类似的操作。 }}
+
+### Spring5核心容器支持函数式风格GenericApplicationContext
+```java
+ // {{c1::
+ GenericApplicationContext context = new GenericApplicationContext();
+ context.refresh();
+ context.registerBean("user1",User.class,() -> new User());
+ User user = (User)context.getBean("user1");
+//}}
+ ```
+
+### Spring5支持整合JUnit5
++ 创建spring测试类
+  ```java
+   //{{c1::
+    @ExtendWith(SpringExtension.class)
+    @ContextConfiguration("classpath:bean1.xml")
+    public class JTest5 {
+        @Autowired
+        private UserService userService;
+        @Test
+        public void test1() {
+            userService.accountMoney();
+        }
+    }
+   //}}
+  ```
++ 使用一个复合注解替代上面两个注解完成整合
+  ```java
+    //{{c1::
+    @SpringJUnitConfig(locations = "classpath:bean1.xml")
+    public class JTest5 {
+        @Autowired
+        private UserService userService;
+        @Test
+        public void test1() {
+            userService.accountMoney();
+        }
+    }
+    //}}
+  ```
 
