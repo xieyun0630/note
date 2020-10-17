@@ -960,7 +960,7 @@ public class Person
 + {{c1:: 让切面类实现Ordered接口,该接口具有一个返回整数的方法 }}
 + {{c1:: 使用@Order注解修饰一个切面类 }}
 
-### 定义切入点
+### 定义切入点 [	](spring_20201017075500728)
 + 定义切入点：
 ```java
   //{{c1::
@@ -979,7 +979,7 @@ public class Person
     //}}
 ```
 
-### 切入点指示符：execution
+### 切入点指示符：execution [	](spring_20201017075500732)
 
 + 作用：{{c1:: 匹配执行方法的连接点 }}
 + 语法：{{c1:: `execution(modifiers-pattern? ret-type-pattern declaring-type-pattern? name-pattern(param-pattern) throws-pattern?)` }}
@@ -988,14 +988,14 @@ public class Person
   + `..`:{{c1:: 匹配多个任意参数 }}
   + 例:{{c1:: `(*,String)` }}
 
-### 切入点指示符：within
+### 切入点指示符：within [	](spring_20201017075500734)
 
 + 作用：{{c1:: 用于匹配特定类型的连接点,spring中为方法的执行 }}
 + 例：
   + 匹配指定包中任意连接点：{{c1:: `within(top.xieyun.service.*)` }}
   + 匹配指定**包及其子包**中任意连接点：{{c1:: `within(top.xieyun.service..*)` }}
 
-### 切入点指示符：this target args bean @annotation
+### 切入点指示符：this target args bean @annotation [	](spring_20201017075500736)
 
 + 匹配实现指定类型的目标对象所有连接点：{{c1:: `target(top.xieyun.myService)` }}
 + 匹配实现指定类型的代理对象所有连接点：{{c1:: `this(top.xieyun.myService)` }}
@@ -1005,15 +1005,15 @@ public class Person
 + 逻辑运算符：{{c1:: `&& || !` }}
 
 
-## spring缓存机制
+## spring缓存机制 [	](spring_20201017075500740)
 
-### 启用spring缓存
+### 启用spring缓存 [	](spring_20201017075500742)
 
 + 使用注解：{{c1::`<cache:annotation-driven cache-manager="缓存管理器ID"/>` }}
   +  cache-manager属性默认值为:{{c1:: cacheManager }}
 
 
-### 配置spring内置缓存实现的配置
+### 配置spring内置缓存实现的配置 [	](spring_20201017075500744)
 + 概况：
   + spring内置缓存管理器类:{{c1:: `SimpleCacheManager` }}
   + 作为缓存区的类:{{c1:: `ConcurrentMapCacheFactoryBean` }}
@@ -1036,7 +1036,7 @@ public class Person
   <!-- }} -->
   ```
 
-### spring内置EhCache缓存实现的配置
+### spring内置EhCache缓存实现的配置 [	](spring_20201017075500746)
 
 + 概况：{{c1:: `EhCacheCacheManager`缓存管理器包装`EhCacheManagerFactoryBean`生成的对象 }}
 ```xml
@@ -1051,7 +1051,7 @@ public class Person
   //}}
 ```
 
-### `@Cacheable` 与 `@Cacheput`
+### `@Cacheable` 与 `@Cacheput` [	](spring_20201017075500748)
 
 + 作用：{{c1:: 修饰类与方法，以方法参数为key，将方法返回值放入缓存。 }}
 + 可指定属性：
@@ -1065,7 +1065,7 @@ public class Person
     例：{{c1:: `@Cacheable("user",unless="#age<100")` }}
 + `@Cacheable`与`@Cacheput`的区别：{{c1:: @Cacheput不会读取缓存，每次都会将方法返回值重新放到缓存区 }}
 
-### @CacheEvict
+### @CacheEvict [	](spring_20201017075500750)
 + 作用：{{c1: 修饰方法，可用于清除所有的缓存数据 }}
 + 可指定属性：
   + `value`:{{c1:: 必须属性，指定缓冲区的名字 }}
@@ -1083,9 +1083,9 @@ public class Person
     }
     //}}
   ```
-## spring jdbcTemplate
+## spring jdbcTemplate [	](spring_20201017075500751)
 
-### 配置JDBCTemplate对象
+### 配置JDBCTemplate对象 [	](spring_20201017075500753)
 ```xml
 <!-- {{c1:: -->
 <bean id="jdbcTemplate" class="org.springframework.jdbc.core.JdbcTemplate">
@@ -1095,7 +1095,7 @@ public class Person
 <!-- }} -->
 ```
 
-### jdbcTemplate操作数据库：DML操作
+### jdbcTemplate操作数据库：DML操作 [	](spring_20201017075500755)
 
 + DML操作方法签名：{{c1:: `update(String sql,Object... args)` }}
 + 批量DML操作方法签名：{{c1:: `batchUpdate(String sql,List<Object[]> batchArgs)` }}
@@ -1121,7 +1121,7 @@ public class Person
 //}}
 ```
 
-### jdbcTemplate操作数据库：DQL操作
+### jdbcTemplate操作数据库：DQL操作 [	](spring_20201017075500757)
 
 + 返回单个值方法签名：{{c1:: `queryForObject(String sql,Class<T> requiredType)` }}
 + 返回对象方法签名：{{c1:: `queryForObject(String sql,RowMapper<T> rowMapper,Object... args)` }}
@@ -1155,13 +1155,13 @@ public class Person
       //}}
   ```
 
-## spring的事务
+## spring的事务 [	](spring_20201017075500759)
 
-### PlatformTransactionManager
+### PlatformTransactionManager [	](spring_20201017075500761)
 + 作用：{{c1:: 提供一个接口，代表事务管理器，这个接口针对不同的框架提供不同的实现类 }}
 + 继承关系图：![image-20201017163325206](spring.assets/image-20201017163325206.png)
 
-### spring注解声明式事务配置
+### spring注解声明式事务配置 [	](spring_20201017075500764)
 
 1. 创建事务管理器
   ```xml
@@ -1176,7 +1176,7 @@ public class Person
 3. 开始事务注解：{{c1:: `<tx:annotation-driven transactionManager="transactionManager"></tx:annotation-driven>` }}
 4. 使用{{c1:: `@Transactional` }}声明事务
 
-### spring XML声明式事务管理
+### spring XML声明式事务管理 [	](spring_20201017075500766)
 
 + 第一步 配置事务管理器
 + 第二步 配置通知
@@ -1212,7 +1212,7 @@ public class Person
   <!-- }} -->
   ```
 
-### @Transactional注解
+### @Transactional注解 [	](spring_20201017075500769)
 
 + 作用：
   + 修饰类:{{c1:: 如果把这个注解添加类上面，这个类里面所有的方法都添加事务 }}
@@ -1227,7 +1227,7 @@ public class Person
   + `rollbackForClassName`:{{c1:: 设置出现哪些异常进行回滚，该属性可以指定多个}}
   + `timeout`:{{c1:: 事务超时时间}}
 
-### spring事务管理：7种事务传播行为
+### spring事务管理：7种事务传播行为 [	](spring_20201017075500772)
 + 作用：{{c1:: 处理service层，事务方法之间的嵌套行为。 }}
 1. `PROPAGATION_REQUIRED`：{{c1:: 如果当前没有事务，就创建一个新事务，如果当前存在事务，就加入该事务，该设置是最常用的设置。 }}
 2. `PROPAGATION_SUPPORTS`：{{c1:: 支持当前事务，如果当前存在事务，就加入该事务，如果当前不存在事务，就以非事务执行。 }}
@@ -1237,7 +1237,7 @@ public class Person
 6. `PROPAGATION_NEVER`：{{c1:: 以非事务方式执行，如果当前存在事务，则抛出异常。 }}
 7. `PROPAGATION_NESTED`：{{c1:: 如果当前存在事务，则在嵌套事务内执行。如果当前没有事务，则执行与PROPAGATION_REQUIRED类似的操作。 }}
 
-### Spring5核心容器支持函数式风格GenericApplicationContext
+### Spring5核心容器支持函数式风格GenericApplicationContext [	](spring_20201017075500775)
 ```java
  // {{c1::
  GenericApplicationContext context = new GenericApplicationContext();
@@ -1247,7 +1247,7 @@ public class Person
 //}}
  ```
 
-### Spring5支持整合JUnit5
+### Spring5支持整合JUnit5 [	](spring_20201017075500777)
 + 创建spring测试类
   ```java
    //{{c1::
@@ -1277,4 +1277,3 @@ public class Person
     }
     //}}
   ```
-
