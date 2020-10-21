@@ -2415,24 +2415,21 @@ f.defer(1000)(1, 2); // shows 3 after 1 sec
 
 ## 原型方法 [ ](javascript_info_20191219101334675)
 
-获取/设置原型的方式有很多，我们已知的有：
-
-+ Object.create(proto\[, descriptors\]) : {{c1::利用 `proto` 作为 `[[Prototype]]` 和可选的属性描述来创建一个空对象。}}
-+ Object.getPrototypeOf(obj) : {c1:: 返回 `obj` 对象的 `[[Prototype]]`。}}
-+ Object.setPrototypeOf(obj, proto) : {c1:: 将 `obj` 对象的 `[[Prototype]]` 设置为 `proto`。}}
-
-对原型的操作
-
++ 获取/设置原型的方式有很多，我们已知的有：
+  + `Object.create(proto[, descriptors])` : {{c1::利用 `proto` 作为 `[[Prototype]]` 和可选的属性描述来创建一个空对象。}}
+  + `Object.getPrototypeOf(obj)` : {{c1:: 返回 `obj` 对象的 `[[Prototype]]`。}}
+  + `Object.setPrototypeOf(obj, proto)` : {{c1:: 将 `obj` 对象的 `[[Prototype]]` 设置为 `proto`。}}
++ 对原型的操作
 ```javascript
-let animal = {
-  eats: true,
-};
-// 以 animal 为原型创建一个新对象
-let rabbit = Object.create(animal);
-alert(rabbit.eats); // true
-alert(Object.getPrototypeOf(rabbit) === animal); // 获取 rabbit 的原型
-Object.setPrototypeOf(rabbit, {}); // 将 rabbit 的原型更改为 {}
-```
+  let animal = {
+    eats: true,
+  };
+  // 以 animal 为原型创建一个新对象
+  let rabbit = Object.create(animal);
+  alert(rabbit.eats); // true
+  alert(Object.getPrototypeOf(rabbit) === animal); // 获取 rabbit 的原型
+  Object.setPrototypeOf(rabbit, {}); // 将 rabbit 的原型更改为 {}
+  ```
 
 ### 我们可以利用 `Object.create` 来实现比 `for..in` 循环赋值属性方式更强大的对象复制功能： [ ](javascript_info_20191219101334676)
 

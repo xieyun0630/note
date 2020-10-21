@@ -896,8 +896,8 @@
     ON tbl_name(index_col_name,...)
     #}}
   ```
-+ 查看索引:{{c1:: `show index  from  table_name;` }}
-+ 删除索引:{{c1:: `drop  index  index_name  on  tbl_name;` }}
++ 查看索引:{{c1:: `show index from table_name;` }}
++ 删除索引:{{c1:: `drop index index_name on tbl_name;` }}
 
 ### 使用ALTER命令创建索引 [ ](mysql_20200916055246280)
 + 添加一个主键，这意味着索引值必须是唯一的，且不能为NULL：{{c1:: `alter  table  tb_name  add  primary  key(column_list); `}}
@@ -1267,7 +1267,7 @@
   + 例：{{c1:: `select * from tb_seller where name='小米科技' and status > '1' and address ='北京市'`}}
   + 其中address不会走索引
 4. 索引列上进行运算操作:{{c1:: 索引将失效。}}
-   +  [oracle.md](oracle.md) 例：{{c1:: `select * from tb_seller where substring(name,3,2)='科技'`}}
+   +  例：{{c1:: `select * from tb_seller where substring(name,3,2)='科技'`}}
 5. 字符串不加单引号：{{c1:: 索引失效 }}
 6. 用`or`分割开的条件：{{c1:: 如果or前的条件中的列有索引，而后面的列中没有索引，那么涉及的索引**都不会**被用到。}}
 7. 以`%`开头的`Like`模糊查询：索引失效

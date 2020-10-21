@@ -1056,17 +1056,17 @@ public class Person
 + 作用：{{c1:: 修饰类与方法，以方法参数为key，将方法返回值放入缓存。 }}
 + 可指定属性：
   + `value`:{{c1:: 必须属性，指定缓冲区的名字 }}
-    例：{{c1:: `@Cacheable("user")` }}
-  + `key`:指定缓存的key
-    例：{{c1:: `@Cacheable(value="user",key="#name")` }}
+    + 例：{{c1:: `@Cacheable("user")` }}
+  + `key`:{{c1:: 指定缓存的key }}
+    + 例：{{c1:: `@Cacheable(value="user",key="#name")` }}
   + `conditon`:{{c1:: 指定一个SpEl表达式，表达式为true时，缓存方法返回值 }}
-    例：{{c1:: `@Cacheable("user",conditon="#age>100")` }}
+    + 例：{{c1:: `@Cacheable("user",conditon="#age>100")` }}
   + `unless`:{{c1:: 指定一个SpEl表达式，表达式为false时，缓存方法返回值 }}
-    例：{{c1:: `@Cacheable("user",unless="#age<100")` }}
+    + 例：{{c1:: `@Cacheable("user",unless="#age<100")` }}
 + `@Cacheable`与`@Cacheput`的区别：{{c1:: @Cacheput不会读取缓存，每次都会将方法返回值重新放到缓存区 }}
 
 ### @CacheEvict [	](spring_20201017075500750)
-+ 作用：{{c1: 修饰方法，可用于清除所有的缓存数据 }}
++ 作用：{{c1:: 修饰方法，可用于清除所有的缓存数据 }}
 + 可指定属性：
   + `value`:{{c1:: 必须属性，指定缓冲区的名字 }}
   + `allEntries`:{{c1::是否清空整个缓存区}}
@@ -1125,7 +1125,7 @@ public class Person
 
 + 返回单个值方法签名：{{c1:: `queryForObject(String sql,Class<T> requiredType)` }}
 + 返回对象方法签名：{{c1:: `queryForObject(String sql,RowMapper<T> rowMapper,Object... args)` }}
-+ 返回集合方法签名：`query(String sql,RowMapper<T> rowMapper,Object... args)`
++ 返回集合方法签名：{{c1:: `query(String sql,RowMapper<T> rowMapper,Object... args)`}}
 + `RowMapper`常用实例：{{c1:: `BeanPropertyRowMapper` }}
 + 例：
   ```java
