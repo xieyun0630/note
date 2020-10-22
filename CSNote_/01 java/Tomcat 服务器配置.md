@@ -526,3 +526,6 @@ JAVA_OPTS="‐server ‐Xms1024m ‐Xmx2048m ‐XX:MetaspaceSize=256m ‐XX:MaxM
 
 配置之后, 重新启动Tomcat ,访问：
 ![在这里插入图片描述](https://img-blog.csdnimg.cn/20200415110459680.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3oxNzkwNDI0NTc3,size_16,color_FFFFFF,t_70)
+
+ 
+
