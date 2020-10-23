@@ -40,6 +40,35 @@
 ### Tomcat体系结构(图) [	](javaWeb_20201022051052176)
 + {{c1:: ![img](javaWeb.assets/view) }}
 
+## 常见试题
+### Tomcat的缺省端口是多少，怎么修改
++ 到tomcat主目录下的`conf/server.xml`文件中修改
+  ```xml
+  <!-- {{c1:: -->
+    <Service name="Catalina">
+      <!-- ... -->
+      <Connector port="8080" protocol="HTTP/1.1" 
+                connectionTimeout="20000" 
+                redirectPort="8443" />
+  <!-- }} -->
+  ```
+### Tomcat 有哪几种Connector 运行模式(优化)？
+- `bio`: **传统的Java I/O操作，同步且阻塞IO。**
+- `nio`: **JDK1.4开始支持，同步阻塞或同步非阻塞IO**
+- `aio(nio.2)`: **JDK7开始支持，异步非阻塞IO**
+- `apr`: Tomcat将以JNI的形式调用Apache HTTP服务器的核心动态链接库来处理文件读取或网络传输操作，从而大大地 **提高Tomcat对静态文件的处理性能**
++ 配置Tomcat运行模式:
+  ```xml
+    <!-- {{c1:: -->
+      <Connector port="8080" protocol="org.apache.coyote.http11.Http11NioProtocol" connectionTimeout="20000" redirectPort="8443 />
+    <!-- }} -->
+  ```
+
+### Tomcat有几种部署方式
+1. {{c1:: 直接把Web项目放在webapps下，Tomcat会自动将其部署 }}
+2. {{c1:: 在server.xml文件上配置：` <Context path="/web1" docBase="D:\web1"/>` }}
+3. {{c1:: `conf\Catalina\localhost`目录下添加xml配置文件:`<Context path="/web1" docBase="D:\web1"/>`,注意：xml声明 }}
+
 ## HTTP [	](javaWeb_20201022051052178)
 
 ### HTTP1.0和HTTP1.1的区别 [	](javaWeb_20201022051052180)
@@ -450,3 +479,96 @@
 - **从跨域名上比较**
   - {{c1:: Cookie可以设置domain属性来实现跨域名 }}
   - {{c1:: Session只在当前的域名内有效，不可跨域名 }}
+
+### 常见试题
+
+### get方式和post方式有何区别：
++ 数据携带上:
+  - {{c1:: GET方式：在URL地址后附带的参数是有限制的，其数据容量通常不能超 }}过1K。
+  - {{c1:: POST方式：可以在请求的实体内容中向服务器发送数据，传送的数据量 }}无限制。
++ 请求参数的位置上:
+  - {{c1:: GET方式：请求参数放在URL地址后面，以?的方式来进行拼接 }}
+  - {{c1:: POST方式:请求参数放在HTTP请求包中 }}
++ 用途上:
+  - {{c1:: GET方式一般用来获取数据 }}
+  - {{c1:: POST方式一般用来提交数据 }}
+
+### request.getAttribute()和request.getParameter()区别
++ 用途上:
+  + {{c1:: `request.getAttribute()`一般用于获取request域对象的数据(在跳转之前把数据使用setAttribute来放到request对象上) }}
+  + {{c1:: `request.getParameter()`一般用于获取客户端提交的参数 }}
++ 存储数据上:
+  + {{c1:: `request.getAttribute()`可以获取Objcet对象}}
+  + {{c1:: `request.getParameter()`只能获取字符串(这也是为什么它一般用于获取客户端提交的参数)}}
+
+### tomcat容器是如何创建servlet类实例？用到了什么原理？
+
+1. {{c1:: 当容器启动时，会读取在webapps目录下所有的web应用中的web.xml文件，然后对 **xml文件进行解析，并读取servlet注册信息**。然后，将每个应用中注册的servlet类都进行加载，并通过 **反射的方式实例化**。（有时候也是在第一次请求时实例化） }}
+2. {{c1:: 在servlet注册时加上`<load-on-startup>1</load-on-startup>`如果为正数，则在一开始就实例化，如果不写或为负数，则第一次请求实例化。 }}
+
+## 过滤器
+
+### 实现简单的过滤器
+1. 实现Filter接口，注意过滤链的调用
+2. 在web.xml中配置`<filter>` `<filter-mapping>`
+
+### Servlet 过滤器的配置
++ `<filter>`
+  + `<filter-name>`:{{c1:: 用于为过滤器指定一个名字，该元素的内容不能为空。 }}
+  + `<filter-class>`:{{c1:: 元素用于指定过滤器的完整的限定类名。 }}
+  + `<init-param>`:{{c1:: 元素用于为过滤器指定初始化参数，它的子元素`<param-name>`指定参数的名字，`<param-value>`:{{c1:: 指定参数的值。在过滤器中，可以使用FilterConfig接口对象来访问初始化参数。 }}
++ `<filter-mapping>`
+  + `<filter-name>`:{{c1:: 子元素用于设置filter的注册名称。该值必须是在`<filter>`元素中声明过的过滤器的名字 }}
+  + `<url-pattern>`:{{c1:: 设置 filter 所拦截的请求路径(过滤器关联的URL样式) }}
+  + `<servlet-name>`:{{c1:: 指定过滤器所拦截的Servlet名称。 }}
+  + `<dispatcher>`:{{c1:: 指定过滤器所拦截的资源被 Servlet 容器调用的方式，可以是`REQUEST`,`INCLUDE`,`FORWARD`和`ERROR`之一，默认`REQUEST`。用户可以设置多个`<dispatcher>`子元素用来指定 Filter 对资源的多种调用方式进行拦截。 }}
++ 注解配置：{{c1:: `@WebFilter(filterName = "FilterDemo1",urlPatterns = "/*")` }}
++ 示例代码：
+  ```xml
+  <!-- {{c1:: -->
+    <filter>
+      <filter-name>FilterDemo1</filter-name>
+      <filter-class>FilterDemo1</filter-class>
+      <init-param>
+        <param-name>word_file</param-name>
+        <param-value>/WEB-INF/word.txt</param-value>
+      </init-param>
+    </filter>
+    <filter-mapping>
+        <filter-name>FilterDemo1</filter-name>
+        <url-pattern>/*</url-pattern>
+    </filter-mapping>
+  <!-- }} -->
+  ```
+
+### 过滤器的执行顺序
+
++ FilterChain作用：{{c1:: FilterChain接口是代表着所有的Filter，FilterChain中的doFilter()方法决定着是否放行下一个过滤器执行（如果没有过滤器了，就执行目标资源）。 }}
++ 过滤器之间的执行顺序：{{c1:: 是根据web.xml文件中**mapping**的先后顺序的，如果放在前面就先执行，放在后面就后执行！如果是通过注解的方式配置，就比较**urlPatterns的字符串优先级** }}
+
+## 监听器
+### Servle监听器
++ 监听对象的创建和销毁:{{c1:: `HttpSessionListener`、`ServletContextListener`、`ServletRequestListener`分别监控着`Session`、`Context`、`Request`对象的创建和销毁 }}
++ 监听对象属性变化:{{c1:: `ServletContextAttributeListener`、`HttpSessionAttributeListener`、`ServletRequestAttributeListener`分别监听着`Context`、`Sessio`、`Request`对象属性的变化 }}
+
+### 监听Session内的对象
++ 实现`HttpSessionBindingListener`接口:{{c1:: JavaBean 对象可以感知自己被绑定到 Session 中和从 Session 中删除的事件【和HttpSessionAttributeListener的作用是差不多的】 }}
++ 实现`HttpSessionActivationListener`接口:{{c1:: JavaBean 对象可以感知自己被活化和钝化的事件（当服务器关闭时，会将Session的内容保存在硬盘上【钝化】，当服务器开启时，会将Session的内容在硬盘式重新加载【活化】） 。 }}
++ 实现类例：
+  ```java
+  //{{c1::
+    public class User implements HttpSessionBindingListener,HttpSessionActivationListener,Serializable {
+        //...
+    }
+  //}}
+  ```
++ 要测试出Session的硬化和钝化，需要修改Tomcat的配置:
+  ```xml
+  <!-- {{c1:: -->
+    <Context>
+      <Manager className="org.apache.catalina.session.PersistentManager" maxIdleSwap="1">
+      <Store className="org.apache.catalina.session.FileStore" directory="zhongfucheng"/>
+      </Manager>
+    </Context>
+  <!-- }} -->
+  ```

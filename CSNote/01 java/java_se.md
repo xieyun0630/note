@@ -421,6 +421,8 @@ OuterClass.InnerClass innerObject = new OuterObject.InnerClass();
 
 + 匿名内部类别编译成名为`OuterClassName$n.class`的类
 
+## Java FX类库
+
 ### Labeled类与Label类 [	](java_se_20191219101334772)
 
 ![image-20191218205717224](java_se.assets/image-20191218205717224.png)
@@ -1230,3 +1232,104 @@ public class Account {
       }
     }
   ```
+
+## JDBC
+
+### JDBC使用最简示例
+
+```java
+    //加载驱动1.不灵活 不推荐，会与mysqlapi耦合，{{c1::
+    //DriverManager.registerDriver(new com.mysql.jdbc.Driver());}}
+
+    //加载驱动2{{c1::
+    Class.forName("com.mysql.jdbc.Driver");
+    //}}
+
+    //获取与数据库连接的对象-Connetcion{{c1::
+    connection = DriverManager.getConnection("jdbc:mysql://localhost:3306/zhongfucheng", "root", "root");
+    //}}
+Druid
+    //获取执行sql语句的statement对象{{c1::
+    statement = connection.createStatement();
+    //}}
+
+    //执行sql语句,拿到结果集{{c1::
+    resultSet = statement.executeQuery("SELECT * FROM users");
+    //}}
+
+    //遍历结果集，得到数据{{c1::
+    while (resultSet.next()) {
+      System.out.println(resultSet.getString(1));
+        System.out.println(resultSet.getString(2));
+    }
+    //}}
+
+```
+
+
+### Connection对象
+
++ 作用:{{c1:: 客户端与数据库所有的交互都是通过Connection来完成的。 }}
+| 常用方法                            | 说明                                             |
+| :---------------------------------- | :----------------------------------------------- |
+| `createcreateStatement()`           | {{c1:: 创建向数据库发送sql的statement对象。            }} |
+| `prepareStatement(sql)`             | {{c1:: 创建向数据库发送预编译sql的PrepareSatement对象。}} |
+| `prepareCall(sql)`                  | {{c1:: 创建执行存储过程的callableStatement对象         }} |
+| `setAutoCommit(boolean autoCommit)` | {{c1:: 设置事务自动提交                                }} |
+| `commit()`                          | {{c1:: 提交事务                                        }} |
+| `rollback()`                        | {{c1:: 回滚事务                                        }} |
+
+### Statement对象
+
++ 作用：{{c1:: `Statement对象用于向数据库发送Sql语句，对数据库的增删改查都可以通过此对象发送sql语句完成。` }}
++ | 常用方法                    | 说明                                               |
+  | :-------------------------- | :------------------------------------------------- |
+  | `executeQuery(String sql)`  | {{c1:: 查询 }}                                     |
+  | `executeUpdate(String sql)` | {{c1:: 增删改 }}                                   |
+  | `execute(String sql)`       | {c1:: 任意sql语句都可以，但是目标不明确，很少用 }} |
+  | `addBatch(String sql)`      | {{c1:: 把多条的sql语句放进同一个批处理中 }}        |
+  | `executeBatch()`            | {{c1:: 向数据库发送一批sql语句执行 }}              |
+
+### ResultSet对象
++ 作用：{{c1:: ResultSet对象代表Sql语句的执行结果ResultSet对象维护了一个数据行的游标【简单理解成指针】，调用ResultSet.next()方法，可以让游标指向具体的数据行，进行获取该行的数据}}
++ | 返回类型 | 方法               | 功能描述                                                     |
+  | -------- | ------------------ | ------------------------------------------------------------ |
+  | `boolean`  | `next()`             | {{c1:: 将光标从当前位置向下移动一行,也就是读取下一行               }} |
+  | `boolean`  | `previous()`         | {{c1:: 将光标从当前位置向上移动一行,也就是读取上一行               }} |
+  | `void`     | `close()`            | {{c1:: 关闭ResultSet对象                                           }} |
+  | `int`      | `getInt(int)`        | {{c1:: 以int的形式获取结果集,以当前行指定序号的值,以列的编号或者列的名字}} |
+  | `int`      | `getInt(String)`     | {{c1:: 其他类型以此类推                                      }} |
+  | `int`      | `getRow()`           | {{c1:: 得到光标当前所指定的行号                                    }} |
+  | `boolean`  | `absolute(int row)`  | {{c1:: 光标移动到row指定的行                                       }} |
+  | `boolean`  | `relative(int rows)` | {{c1:: 光标移动到相对于当前行的指定行,上下使用+和-表示             }} |
+
+
+
+
+
+
+### 为什么要用PreparedStatement。
+
+1. 占位符: {{c1:: Statement对象编译SQL语句时，如果SQL语句有变量，就需要使用分隔符来隔开，如果变量非常多，就会使SQL变得非常复杂。**PreparedStatement可以使用占位符，简化sql的编写** }}
+2. 预编译: {{c1:: Statement会频繁编译SQL。**PreparedStatement可对SQL进行预编译，提高效率，预编译的SQL存储在PreparedStatement对象中** }}
+3. SQL注入: {{c1:: **PreparedStatement防止SQL注入**。(Statement通过分隔符`'++'`,编写永等式，可以不需要密码就进入数据库) }}
+
+### Oracle和MySQL实现分页
+
++ MySQL实现分页: {{c1:: `SELECT * FROM 表名  LIMIT [START], length;` }}
++ Oracle实现分页
+  ```SQL
+      /*
+      {{c1::
+        Oracle分页语法：
+          @lineSize---每页显示数据行数
+          @currentPage----当前所在页
+      */
+      SELECT *FROM (
+          SELECT 列名,列名,ROWNUM rn
+          FROM 表名
+          WHERE ROWNUM<=(currentPage*lineSize)) temp
+      WHERE temp.rn>(currentPage-1)*lineSize;
+      /*}}*/
+  ```
+

@@ -1369,9 +1369,9 @@
   + 优化前：{{c1:: `explain select * from emp where id = 1 or id = 10`}}
   + 优化后：{{c1:: `explain select * from emp where id = 1 union select * from emp id =10`}}
 
-### 优化分页查询 [ ](mysql_20200928050450129)
+### 优化分页（limit)查询 [ ](mysql_20200928050450129)
 
-+ 问题： `limit 2000000,10`,此时需要MySQL排序前`2000010`记录，仅仅返回`2000000 - 2000010 `的记录
++ 问题： `limit 2000000,10`,此时需要MySQL**排序**前`2000010`记录，仅仅返回`2000000 - 2000010 `的记录
 + 思路一：{{c1:: 覆盖索引，在索引上完成排序分页操作，最后根据主键关联回原表查询所需要的其他列内容。 }}
   + 例：{{c1:: `explain select * from tb_item t,(select id from tb_item order by id limit 2000000,10 a) where t.id = a.id` }}
 + 思路二： {{c1:: 把Limit 查询转换成某个位置的查询 }}
