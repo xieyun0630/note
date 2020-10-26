@@ -40,8 +40,8 @@
 ### Tomcat体系结构(图) [	](javaWeb_20201022051052176)
 + {{c1:: ![img](javaWeb.assets/view) }}
 
-## 常见试题
-### Tomcat的缺省端口是多少，怎么修改
+## 常见试题 [	](javaWeb_20201026014023034)
+### Tomcat的缺省端口是多少，怎么修改 [	](javaWeb_20201026014023037)
 + 到tomcat主目录下的`conf/server.xml`文件中修改
   ```xml
   <!-- {{c1:: -->
@@ -52,7 +52,7 @@
                 redirectPort="8443" />
   <!-- }} -->
   ```
-### Tomcat 有哪几种Connector 运行模式(优化)？
+### Tomcat 有哪几种Connector 运行模式(优化)？ [	](javaWeb_20201026014023039)
 - `bio`: **传统的Java I/O操作，同步且阻塞IO。**
 - `nio`: **JDK1.4开始支持，同步阻塞或同步非阻塞IO**
 - `aio(nio.2)`: **JDK7开始支持，异步非阻塞IO**
@@ -64,7 +64,7 @@
     <!-- }} -->
   ```
 
-### Tomcat有几种部署方式
+### Tomcat有几种部署方式 [	](javaWeb_20201026014023041)
 1. {{c1:: 直接把Web项目放在webapps下，Tomcat会自动将其部署 }}
 2. {{c1:: 在server.xml文件上配置：` <Context path="/web1" docBase="D:\web1"/>` }}
 3. {{c1:: `conf\Catalina\localhost`目录下添加xml配置文件:`<Context path="/web1" docBase="D:\web1"/>`,注意：xml声明 }}
@@ -480,9 +480,9 @@
   - {{c1:: Cookie可以设置domain属性来实现跨域名 }}
   - {{c1:: Session只在当前的域名内有效，不可跨域名 }}
 
-### 常见试题
+### 常见试题 [	](javaWeb_20201026014023043)
 
-### get方式和post方式有何区别：
+### get方式和post方式有何区别： [	](javaWeb_20201026014023044)
 + 数据携带上:
   - {{c1:: GET方式：在URL地址后附带的参数是有限制的，其数据容量通常不能超 }}过1K。
   - {{c1:: POST方式：可以在请求的实体内容中向服务器发送数据，传送的数据量 }}无限制。
@@ -493,7 +493,7 @@
   - {{c1:: GET方式一般用来获取数据 }}
   - {{c1:: POST方式一般用来提交数据 }}
 
-### request.getAttribute()和request.getParameter()区别
+### request.getAttribute()和request.getParameter()区别 [	](javaWeb_20201026014023046)
 + 用途上:
   + {{c1:: `request.getAttribute()`一般用于获取request域对象的数据(在跳转之前把数据使用setAttribute来放到request对象上) }}
   + {{c1:: `request.getParameter()`一般用于获取客户端提交的参数 }}
@@ -501,18 +501,18 @@
   + {{c1:: `request.getAttribute()`可以获取Objcet对象}}
   + {{c1:: `request.getParameter()`只能获取字符串(这也是为什么它一般用于获取客户端提交的参数)}}
 
-### tomcat容器是如何创建servlet类实例？用到了什么原理？
+### tomcat容器是如何创建servlet类实例？用到了什么原理？ [	](javaWeb_20201026014023048)
 
 1. {{c1:: 当容器启动时，会读取在webapps目录下所有的web应用中的web.xml文件，然后对 **xml文件进行解析，并读取servlet注册信息**。然后，将每个应用中注册的servlet类都进行加载，并通过 **反射的方式实例化**。（有时候也是在第一次请求时实例化） }}
 2. {{c1:: 在servlet注册时加上`<load-on-startup>1</load-on-startup>`如果为正数，则在一开始就实例化，如果不写或为负数，则第一次请求实例化。 }}
 
-## 过滤器
+## 过滤器 [	](javaWeb_20201026014023050)
 
-### 实现简单的过滤器
+### 实现简单的过滤器 [	](javaWeb_20201026014023052)
 1. 实现Filter接口，注意过滤链的调用
 2. 在web.xml中配置`<filter>` `<filter-mapping>`
 
-### Servlet 过滤器的配置
+### Servlet 过滤器的配置 [	](javaWeb_20201026014023054)
 + `<filter>`
   + `<filter-name>`:{{c1:: 用于为过滤器指定一个名字，该元素的内容不能为空。 }}
   + `<filter-class>`:{{c1:: 元素用于指定过滤器的完整的限定类名。 }}
@@ -541,17 +541,17 @@
   <!-- }} -->
   ```
 
-### 过滤器的执行顺序
+### 过滤器的执行顺序 [	](javaWeb_20201026014023055)
 
 + FilterChain作用：{{c1:: FilterChain接口是代表着所有的Filter，FilterChain中的doFilter()方法决定着是否放行下一个过滤器执行（如果没有过滤器了，就执行目标资源）。 }}
 + 过滤器之间的执行顺序：{{c1:: 是根据web.xml文件中**mapping**的先后顺序的，如果放在前面就先执行，放在后面就后执行！如果是通过注解的方式配置，就比较**urlPatterns的字符串优先级** }}
 
-## 监听器
-### Servle监听器
+## 监听器 [	](javaWeb_20201026014023057)
+### Servle监听器 [	](javaWeb_20201026014023059)
 + 监听对象的创建和销毁:{{c1:: `HttpSessionListener`、`ServletContextListener`、`ServletRequestListener`分别监控着`Session`、`Context`、`Request`对象的创建和销毁 }}
 + 监听对象属性变化:{{c1:: `ServletContextAttributeListener`、`HttpSessionAttributeListener`、`ServletRequestAttributeListener`分别监听着`Context`、`Sessio`、`Request`对象属性的变化 }}
 
-### 监听Session内的对象
+### 监听Session内的对象 [	](javaWeb_20201026014023061)
 + 实现`HttpSessionBindingListener`接口:{{c1:: JavaBean 对象可以感知自己被绑定到 Session 中和从 Session 中删除的事件【和HttpSessionAttributeListener的作用是差不多的】 }}
 + 实现`HttpSessionActivationListener`接口:{{c1:: JavaBean 对象可以感知自己被活化和钝化的事件（当服务器关闭时，会将Session的内容保存在硬盘上【钝化】，当服务器开启时，会将Session的内容在硬盘式重新加载【活化】） 。 }}
 + 实现类例：
