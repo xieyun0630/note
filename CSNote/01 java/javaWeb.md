@@ -38,7 +38,7 @@
 + 在hosts文件下配置临时域名
 
 ### Tomcat体系结构(图) [	](javaWeb_20201022051052176)
-+ {{c1:: ![img](javaWeb.assets/view) }}
++ {{c1:: ![tomcat_1029](javaWeb.assets/tomcat_1029.png)}}
 
 ## 常见试题 [	](javaWeb_20201026014023034)
 ### Tomcat的缺省端口是多少，怎么修改 [	](javaWeb_20201026014023037)
@@ -361,7 +361,7 @@
 + `getCookies方法`:{{c1:: request接口中定义了一个getCookies方法，它用于获取客户端提交的Cookie }}
 
 ### Servlet相关的Cookie细节 [	](javaWeb_20201022051052249)
-+ 跨域名： {{ Cookie不可跨域名 }}
++ 跨域名： {{c1:: Cookie不可跨域名 }}
 + Cookie保存中文：{{c1:: 需要编码与解码 }}
   + 编码：{{c1:: `new Cookie("country", URLEncoder.encode("中文", "UTF-8"));` }}
   + 解码：{{c1:: `URLDecoder.decode(cookies[i].getValue(), "UTF-8");` }}

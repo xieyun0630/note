@@ -697,11 +697,7 @@
 
 ### 外键约束 [ ](mysql_20200914055153018)
 
-**外键约束**：当表建立外键关系后，外键就会对主表（外键指向的表）和子表（外键所在的表）里的数据产生约束效果
-* 外键约束的是写操作（默认操作）
-  * 新增：{{c1:: 子表插入的数据对应的外键必须在主表存在 }}
-  * 修改：{{c1:: 主表的记录如果在子表存在，那么主表的主键不能修改（主键不能修改） }}
-  * 删除：{{c1:: 主表的记录如果在子表存在，那么主表的主键不能删除 }}
+**外键约束**：{{c1:: 当表建立外键关系后，外键就会对主表（外键指向的表）和子表（外键所在的表）里的数据产生约束效果 }}
 * 外键约束控制：外键可以在定义时控制外键的约束作用
   * 控制类型
     * {{c1:: `on update`：父表更新时子表的表现 }}
@@ -711,7 +707,7 @@
     * {{c1:: `set null`：置空操作，父表操作后，子表关联的外键字段置空 }}
     * {{c1:: `restrict`：严格模式，不允许父表操作（默认的） }}
     * {{c1:: `no action`：子表不管 }}
-  + 约束语法：{{c1:: `foreign key(c_id) references t_50(id) on update cascade on  delete set null` }}
+  + 约束语法：{{c1:: `foreign key(c_id) references t_50(id) on update cascade on delete set null` }}
 
 ### 外键管理 [ ](mysql_20200914055153020)
 
@@ -1562,11 +1558,11 @@
 ### 查询InnoDB 行锁争用情况 [	](mysql_20201012060626293)
 
 + 命令：`show status like 'innodb_row_lock%';`
-  + `Innodb_row_lock_current_waits`:{{C1:: 当前正在等待锁定的数量 }}
-  + `Innodb_row_lock_time`:{{C1:: 从系统启动到现在锁定总时间长度 }}
-  + `Innodb_row_lock_time_avg`:{{C1:: 每次等待所花平均时长 }}
-  + `Innodb_row_lock_time_max`:{{C1:: 从系统启动到现在等待最长的一次所花的时间 }}
-  + `Innodb_row_lock_waits`:{{C1:: 系统启动后到现在总共等待的次数 }}
+  + `Innodb_row_lock_current_waits`:{{c1:: 当前正在等待锁定的数量 }}
+  + `Innodb_row_lock_time`:{{c1:: 从系统启动到现在锁定总时间长度 }}
+  + `Innodb_row_lock_time_avg`:{{c1:: 每次等待所花平均时长 }}
+  + `Innodb_row_lock_time_max`:{{c1:: 从系统启动到现在等待最长的一次所花的时间 }}
+  + `Innodb_row_lock_waits`:{{c1:: 系统启动后到现在总共等待的次数 }}
 
 ## 常用SQL技巧 [	](mysql_20201012060626294)
 
