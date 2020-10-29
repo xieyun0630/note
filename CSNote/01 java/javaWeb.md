@@ -26,16 +26,18 @@
   2. 添加xml文件：{{c1:: 进入`conf\Catalina\localhost`目录下添加xml文件:`<Context docBase="D:\web1" reloadable="true"></Context>` }}
 
 ### 设置虚拟主机 [	](javaWeb_20201022051052174)
-+ 作用：我现在开发了4个网站，有4个域名。如果我不配置虚拟主机，一个Tomcat服务器运行一个网站，我就需要4台电脑才能把4个网站运行起来。
++ 作用：{{c1:: 我现在开发了4个网站，有4个域名。如果我不配置虚拟主机，一个Tomcat服务器运行一个网站，我就需要4台电脑才能把4个网站运行起来。 }}
 + 配置虚拟主机的步骤：
-  1. 在tomcat的server.xml文件中添加主机名
+  1. {{c1:: 在tomcat的server.xml文件中添加主机名 }}
     ```xml 
+      <!-- {{c1:: -->
       <Host name="xieyun" appBase="D:\web1">
         <Context path="/web1" docBase="D:\web1"/>
       </Host>
+      <!-- }} -->
     ```
-  2. 访问虚拟主机下的web站点：xieyun:8080/web1/1.html
-+ 在hosts文件下配置临时域名
+  2. {{c1:: 访问虚拟主机下的web站点：xieyun:8080/web1/1.html }}
+  3. {{c1:: 在hosts文件下配置临时域名 }}
 
 ### Tomcat体系结构(图) [	](javaWeb_20201022051052176)
 + {{c1:: ![img](javaWeb.assets/view) }}

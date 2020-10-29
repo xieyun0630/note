@@ -362,22 +362,14 @@ git push origin dev
 
 ### 多人协作  [	](git_main_20191219101334857)
 
-```shell
-#从github上clone一个项目{{c1:: 
-git clone git@github.com：alibaba/easyExcel }}
-#默认是master分支，现在切换到dev分支{{c1:: 
-git checkout -b dev easyExcel/dev }}
-#完成修改后推送提交到远程{{c1:: 
-git push easyExcel/dev }}
-#如果推送失败，则重新拉取最新版{{c1::
-git pull }}
-#如果提示”no tracking information“则指定本地DEV分支与远程easyExcel/dev的链接{{c1:: 
-git branch --set-upstream-to=origin/remote_branch  your_branch }}
-#再次拉取{{c1:: 
-git pull }}
-#如果有冲突，解决冲突后再次推送{{c1:: 
-git push easyExcel/dev  }}
-```
++ 从github上clone一个项目: {{c1:: `git clone git@github.com：alibaba/easyExcel`}}
++ 默认是master分支，现在切换到dev分支: {{c1:: `git checkout -b dev easyExcel/dev`}}
++ 完成修改后推送提交到远程: {{c1:: `git push easyExcel/dev`}}
++ 如果推送失败，则重新拉取最新版: {{c1::`git pull`}}
++ 如果提示”no tracking information“则指定本地DEV分支与远程easyExcel/dev的链接: {{c1:: `git branch --set-upstream-to=origin/remote_branch your_local_branch`}}
++ 再次拉取: {{c1:: `git pull`}}
++ 如果有冲突，解决冲突后再次推送: {{c1:: `git push easyExcel/dev`}}
+
 
 ## 标签管理  [	](git_main_20191219101334859)
 

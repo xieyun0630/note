@@ -150,13 +150,13 @@
 ### Linux管理用户的命令 [	](linux_20200701080334287)
 
 + 用户管理：
-    + {{c1:: `useradd` }}
-    + {{c1:: `usermod` }}
-    + {{c1:: `userdel` }}
+    + 添加用户： {{c1:: `useradd` }}
+    + 修改用户： {{c1:: `usermod` }}
+    + 删除用户： {{c1:: `userdel` }}
 + 组管理：
-    + {{c1:: `groupadd` }}
-    + {{c1:: `groupmod` }}
-    + {{c1:: `groupdel` }}
+    + 添加组：{{c1:: `groupadd` }}
+    + 修改组：{{c1:: `groupmod` }}
+    + 删除组：{{c1:: `groupdel` }}
 + 批量管理用户：
     + 成批添加/更新一组账户：{{c1:: `newusers` }}
     + 成批更新用户的口令：{{c1:: `chpasswd` }}

@@ -1764,10 +1764,9 @@ const router = new VueRouter({
   };
   ```
 
-### 动态路由匹配：为组件传递参数 [ ](vue_20200713065313225)
+### 动态路由匹配：传递参数给组件 [ ](vue_20200713065313225)
 
 1. 4 种路由匹配组件时传递参数的方式:
-
    ```js
     //{{c1::
     { path: '/user/:id', component: User },
@@ -1776,9 +1775,7 @@ const router = new VueRouter({
     { path: '/user/:id', component: User, props: route => ({ uname: 'zs', age: 20, id: route.params.id })},
     //}}
    ```
-
 2. 对应的组件定义
-
    - 不带 props 属性时：
      ```js
      //{{c1::
@@ -1797,9 +1794,7 @@ const router = new VueRouter({
      };
      //}}
      ```
-
 3. 路由声明:
-
    ```html
    <!-- {{c1:: -->
    <div id="app">

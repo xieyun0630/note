@@ -590,7 +590,7 @@
 + 实现：
   ```css
   /* {{c1:: */
-    p::before {
+    p: :before {
       content: '';
       position: absolute;
       right: 20px;

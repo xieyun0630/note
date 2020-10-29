@@ -185,7 +185,7 @@ force:{{c1:: 是否强制提交或回滚。}}
     ```
     }}
 
-### 自定义对象工厂 [	](mybatis_20200520043218584)
+### 自定义Mybatis对象工厂 [	](mybatis_20200520043218584)
 
 + 首先实现{{c1::`ObjectFactory`}}接口，或者继承{{c1::`DefaultObjectFactory`}}基类,实现以下方法
     1. `T create(Class<T> type)`
@@ -276,7 +276,7 @@ force:{{c1:: 是否强制提交或回滚。}}
 
 ## 事务 [	](mybatis_20200717061050961)
 
-### 事务管理器 [	](mybatis_20200521095802607)
+### Mybatis事务管理器的配置 [	](mybatis_20200521095802607)
 
 + `<transactionManager type="JDBC"/>`:{{c1:: 使用JDBC自带的事务提交与回滚，对应类为`JdbcTransactionFactory`。}}
 + `<transactionManager type="MANAGED"/>`:{{c1:: 使用容器来管理事务的生命周期}}
