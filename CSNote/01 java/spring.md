@@ -671,9 +671,9 @@
 ### 使用spring配置文件调用，静态或者实例方法：MethodInvokingFactoryBean [	](spring_20200824063336969)
   + 常用4个property调用
     1. {{c1:: `setTargetClass(String targetClass)`:调用哪个类 }}
-    2. {{c1:: `setTargetObject(Object targetClass)`:调用哪个对象 }}
-    3. {{c1:: `setTargetMethod(Method targetClass)`:调用哪个方法 }}
-    4. {{c1:: `setArguments(Object[] targetClass)`:调用方法的参数 }}
+    2. {{c1:: `setTargetObject(Object targetObject)`:调用哪个对象 }}
+    3. {{c1:: `setTargetMethod(Method targetMethod)`:调用哪个方法 }}
+    4. {{c1:: `setArguments(Object[] arguments)`:调用方法的参数 }}
 
 
 ## 基于XML Schema的简化配置方式 [	](spring_20200911094545277)
@@ -1245,7 +1245,7 @@ public class Person
  context.registerBean("user1",User.class,() -> new User());
  User user = (User)context.getBean("user1");
 //}}
- ```
+```
 
 ### Spring5支持整合JUnit5 [	](spring_20201017075500777)
 + 创建spring测试类
@@ -1277,3 +1277,69 @@ public class Person
     }
     //}}
   ```
+
+### spring整合mybatis配置：
++ 主要思路：{{c1:: 通过配置SqlSessionFactoryBean类，加载mybaits配置文件和映射文件,替代原Mybatis工具类}}
++ 配置：
+  ```xml
+  <!-- {{c1:: -->
+    <bean id="sqlSessionFactoryBeanID" class="org.mybatis.spring.SqlSessionFactoryBean">
+        <property name="configLocation" value="classpath:mybatis.xml"/>
+        <property name="dataSource" ref="dataSource"/>
+    </bean>
+  <!-- }} -->
+  ```
+
+## Spring mvc
+
+### The configuration of DispatcherServlet*
+
++ java Conriguration
+
+  ```java
+  public class MyWebApplicationInitializer implements WebApplicationInitializer {
+  
+      @Override
+      public void onStartup(ServletContext servletContext) {
+  
+          // Load Spring web application configuration
+          AnnotationConfigWebApplicationContext context = new AnnotationConfigWebApplicationContext();
+          context.register(AppConfig.class);
+  
+          // Create and register the DispatcherServlet
+          DispatcherServlet servlet = new DispatcherServlet(context);
+          ServletRegistration.Dynamic registration = servletContext.addServlet("app", servlet);
+          registration.setLoadOnStartup(1);
+          registration.addMapping("/app/*");
+      }
+  }
+  ```
+
++ web.xml configuration
+
+  ```xml
+  <web-app>
+      <listener>
+          <listener-class>org.springframework.web.context.ContextLoaderListener</listener-class>
+      </listener>
+      <context-param>
+          <param-name>contextConfigLocation</param-name>
+          <param-value>/WEB-INF/app-context.xml</param-value>
+      </context-param>
+      <servlet>
+          <servlet-name>app</servlet-name>
+          <servlet-class>org.springframework.web.servlet.DispatcherServlet</servlet-class>
+          <init-param>
+              <param-name>contextConfigLocation</param-name>
+              <param-value></param-value>
+          </init-param>
+          <load-on-startup>1</load-on-startup>
+      </servlet>
+      <servlet-mapping>
+          <servlet-name>app</servlet-name>
+          <url-pattern>/app/*</url-pattern>
+      </servlet-mapping>
+  </web-app>
+  ```
+
+  
