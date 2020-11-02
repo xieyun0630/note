@@ -8,143 +8,143 @@
 
 第二步：导入依赖
 
-![image-20191101215636203](postman.assets/image-20191101215636203.png)
+![image-20191101215636203](https://gitee.com/xieyun714/nodeimage/raw/master/img/image-20191101215636203.png)
 
 第三步：
 
-log4j配置文件![image-20191101215709373](postman.assets/image-20191101215709373.png)
+log4j配置文件![image-20191101215709373](https://gitee.com/xieyun714/nodeimage/raw/master/img/image-20191101215709373.png)
 
 ## 第一个案例：模拟获得一个网站的页面
 
-![image-20191101220207852](postman.assets/image-20191101220207852.png)
+![image-20191101220207852](https://gitee.com/xieyun714/nodeimage/raw/master/img/image-20191101220207852.png)
 
 ### task:使用上面的方式，获取当前localhost:8080的页面信息
 
 ## 完整的获取一个页面
 
-![image-20191101221347591](postman.assets/image-20191101221347591.png)
+![image-20191101221347591](https://gitee.com/xieyun714/nodeimage/raw/master/img/image-20191101221347591.png)
 
 **注意最后关闭response，httpClient**
 
 ## 带参数的get请求
 
-![image-20191101222147200](postman.assets/image-20191101222147200.png)
+![image-20191101222147200](https://gitee.com/xieyun714/nodeimage/raw/master/img/image-20191101222147200.png)
 
 ## 发送post请求
 
 和不带参数的get请求差不多
 
-![image-20191101222407503](postman.assets/image-20191101222407503.png)
+![image-20191101222407503](https://gitee.com/xieyun714/nodeimage/raw/master/img/image-20191101222407503.png)
 
 ## 带参数（表单）的post请求
 
-![image-20191101222735272](postman.assets/image-20191101222735272.png)
+![image-20191101222735272](https://gitee.com/xieyun714/nodeimage/raw/master/img/image-20191101222735272.png)
 
 ## 使用连接池管理器发起请求
 
 第一步：创建连接池对象
 
-![image-20191101223601101](postman.assets/image-20191101223601101.png)
+![image-20191101223601101](https://gitee.com/xieyun714/nodeimage/raw/master/img/image-20191101223601101.png)
 
 第二步：使用连接池发送get请求
 
-![image-20191101223303715](postman.assets/image-20191101223303715.png)
+![image-20191101223303715](https://gitee.com/xieyun714/nodeimage/raw/master/img/image-20191101223303715.png)
 
 ## 配置请求信息RequestConfig
 
-![image-20191101224049615](postman.assets/image-20191101224049615.png)
+![image-20191101224049615](https://gitee.com/xieyun714/nodeimage/raw/master/img/image-20191101224049615.png)
 
 # jsoup工具
 
 ## 引入依赖
 
-![image-20191101224618445](postman.assets/image-20191101224618445.png)
+![image-20191101224618445](https://gitee.com/xieyun714/nodeimage/raw/master/img/image-20191101224618445.png)
 
-![image-20191101224647520](postman.assets/image-20191101224647520.png)
+![image-20191101224647520](https://gitee.com/xieyun714/nodeimage/raw/master/img/image-20191101224647520.png)
 
-![image-20191101224732354](postman.assets/image-20191101224732354.png)
+![image-20191101224732354](https://gitee.com/xieyun714/nodeimage/raw/master/img/image-20191101224732354.png)
 
 StringUtils类的依赖
 
-![image-20191101224804526](postman.assets/image-20191101224804526.png)
+![image-20191101224804526](https://gitee.com/xieyun714/nodeimage/raw/master/img/image-20191101224804526.png)
 
 ## 使用jsoup访问一个网站的title
 
-![image-20191101225240505](postman.assets/image-20191101225240505.png)
+![image-20191101225240505](https://gitee.com/xieyun714/nodeimage/raw/master/img/image-20191101225240505.png)
 
-![image-20191101225259351](postman.assets/image-20191101225259351.png)
+![image-20191101225259351](https://gitee.com/xieyun714/nodeimage/raw/master/img/image-20191101225259351.png)
 
 ## jsoup的解析
 
-![image-20191101225511946](postman.assets/image-20191101225511946.png)
+![image-20191101225511946](https://gitee.com/xieyun714/nodeimage/raw/master/img/image-20191101225511946.png)
 
-![image-20191101225643844](postman.assets/image-20191101225643844.png)
+![image-20191101225643844](https://gitee.com/xieyun714/nodeimage/raw/master/img/image-20191101225643844.png)
 
 ## jsoup使用dom的方式获取元素
 
-![image-20191101225926040](postman.assets/image-20191101225926040.png)
+![image-20191101225926040](https://gitee.com/xieyun714/nodeimage/raw/master/img/image-20191101225926040.png)
 
-![image-20191101230114503](postman.assets/image-20191101230114503.png)
+![image-20191101230114503](https://gitee.com/xieyun714/nodeimage/raw/master/img/image-20191101230114503.png)
 
-![image-20191101230713159](postman.assets/image-20191101230713159.png)
+![image-20191101230713159](https://gitee.com/xieyun714/nodeimage/raw/master/img/image-20191101230713159.png)
 
-![image-20191101230703042](postman.assets/image-20191101230703042.png)
+![image-20191101230703042](https://gitee.com/xieyun714/nodeimage/raw/master/img/image-20191101230703042.png)
 
-![image-20191101230733850](postman.assets/image-20191101230733850.png)
+![image-20191101230733850](https://gitee.com/xieyun714/nodeimage/raw/master/img/image-20191101230733850.png)
 
 ## jsoup获取元素中的内容
 
- ![image-20191101230815618](postman.assets/image-20191101230815618.png)
+ ![image-20191101230815618](https://gitee.com/xieyun714/nodeimage/raw/master/img/image-20191101230815618.png)
 
-![image-20191101231459782](postman.assets/image-20191101231459782.png)
+![image-20191101231459782](https://gitee.com/xieyun714/nodeimage/raw/master/img/image-20191101231459782.png)
 
-![image-20191101231512187](postman.assets/image-20191101231512187.png)
+![image-20191101231512187](https://gitee.com/xieyun714/nodeimage/raw/master/img/image-20191101231512187.png)
 
-![image-20191101231715868](postman.assets/image-20191101231715868.png)
+![image-20191101231715868](https://gitee.com/xieyun714/nodeimage/raw/master/img/image-20191101231715868.png)
 
 
 
 ## selector的使用
 
-![image-20191101232138264](postman.assets/image-20191101232138264.png)
+![image-20191101232138264](https://gitee.com/xieyun714/nodeimage/raw/master/img/image-20191101232138264.png)
 
-![image-20191101232623996](postman.assets/image-20191101232623996.png)
+![image-20191101232623996](https://gitee.com/xieyun714/nodeimage/raw/master/img/image-20191101232623996.png)
 
- ![image-20191101232738079](postman.assets/image-20191101232738079.png)
+ ![image-20191101232738079](https://gitee.com/xieyun714/nodeimage/raw/master/img/image-20191101232738079.png)
 
-![image-20191101232841685](postman.assets/image-20191101232841685.png)
+![image-20191101232841685](https://gitee.com/xieyun714/nodeimage/raw/master/img/image-20191101232841685.png)
 
 注意直接子元素
 
-![image-20191101233041131](postman.assets/image-20191101233041131.png)
+![image-20191101233041131](https://gitee.com/xieyun714/nodeimage/raw/master/img/image-20191101233041131.png)
 
-![image-20191101233138045](postman.assets/image-20191101233138045.png)
+![image-20191101233138045](https://gitee.com/xieyun714/nodeimage/raw/master/img/image-20191101233138045.png)
 
 # 爬虫案例：将京东的手机数据抓取下来
 
 ## 数据库表：
 
-![image-20191102192148610](postman.assets/image-20191102192148610.png)
+![image-20191102192148610](https://gitee.com/xieyun714/nodeimage/raw/master/img/image-20191102192148610.png)
 
 ## 依赖：
 
-![image-20191102192259633](postman.assets/image-20191102192259633.png)
+![image-20191102192259633](https://gitee.com/xieyun714/nodeimage/raw/master/img/image-20191102192259633.png)
 
-![image-20191102192334741](postman.assets/image-20191102192334741.png)
+![image-20191102192334741](https://gitee.com/xieyun714/nodeimage/raw/master/img/image-20191102192334741.png)
 
 ## 配置文件：
 
- ![image-20191102192411891](postman.assets/image-20191102192411891.png)
+ ![image-20191102192411891](https://gitee.com/xieyun714/nodeimage/raw/master/img/image-20191102192411891.png)
 
 ## 创建POJO：
 
-![image-20191102192531784](postman.assets/image-20191102192531784.png)
+![image-20191102192531784](https://gitee.com/xieyun714/nodeimage/raw/master/img/image-20191102192531784.png)
 
-![image-20191102192542856](postman.assets/image-20191102192542856.png)
+![image-20191102192542856](https://gitee.com/xieyun714/nodeimage/raw/master/img/image-20191102192542856.png)
 
 ## 创建DAO
 
-![image-20191102192742092](postman.assets/image-20191102192742092.png)
+![image-20191102192742092](https://gitee.com/xieyun714/nodeimage/raw/master/img/image-20191102192742092.png)
 
 JpaRepository<Item,Long>  Item是实体名，Long是主键。
 
@@ -152,51 +152,51 @@ JpaRepository<Item,Long>  Item是实体名，Long是主键。
 
 接口：
 
-![image-20191102192853895](postman.assets/image-20191102192853895.png)
+![image-20191102192853895](https://gitee.com/xieyun714/nodeimage/raw/master/img/image-20191102192853895.png)
 
-![image-20191102192910226](postman.assets/image-20191102192910226.png)
+![image-20191102192910226](https://gitee.com/xieyun714/nodeimage/raw/master/img/image-20191102192910226.png)
 
 实现：
 
-![image-20191102192947700](postman.assets/image-20191102192947700.png)
+![image-20191102192947700](https://gitee.com/xieyun714/nodeimage/raw/master/img/image-20191102192947700.png)
 
-![image-20191102192957877](postman.assets/image-20191102192957877.png)
+![image-20191102192957877](https://gitee.com/xieyun714/nodeimage/raw/master/img/image-20191102192957877.png)
 
-![image-20191102193005623](postman.assets/image-20191102193005623.png)
+![image-20191102193005623](https://gitee.com/xieyun714/nodeimage/raw/master/img/image-20191102193005623.png)
 
-![image-20191102193045798](postman.assets/image-20191102193045798.png)
+![image-20191102193045798](https://gitee.com/xieyun714/nodeimage/raw/master/img/image-20191102193045798.png)
 
 ## springBoot引导类
 
- ![image-20191102193140234](postman.assets/image-20191102193140234.png)
+ ![image-20191102193140234](https://gitee.com/xieyun714/nodeimage/raw/master/img/image-20191102193140234.png)
 
 ## 封装HttpClient
 
-![image-20191102194113501](postman.assets/image-20191102194113501.png)
+![image-20191102194113501](https://gitee.com/xieyun714/nodeimage/raw/master/img/image-20191102194113501.png)
 
-![image-20191102194100146](postman.assets/image-20191102194100146.png)
+![image-20191102194100146](https://gitee.com/xieyun714/nodeimage/raw/master/img/image-20191102194100146.png)
 
-![image-20191102193839133](postman.assets/image-20191102193839133.png)![image-20191102194013602](postman.assets/image-20191102194013602.png)
+![image-20191102193839133](https://gitee.com/xieyun714/nodeimage/raw/master/img/image-20191102194013602.png)
 
-![image-20191102194029464](postman.assets/image-20191102194029464.png) 
+![image-20191102194029464](https://gitee.com/xieyun714/nodeimage/raw/master/img/image-20191102194029464.png) 
 
-![image-20191102194229350](postman.assets/image-20191102194229350.png)
+![image-20191102194229350](https://gitee.com/xieyun714/nodeimage/raw/master/img/image-20191102194229350.png)
 
 ### 下载图片
 
-![image-20191102194416654](postman.assets/image-20191102194416654.png)
+![image-20191102194416654](https://gitee.com/xieyun714/nodeimage/raw/master/img/image-20191102194416654.png)
 
-![image-20191102204534989](postman.assets/image-20191102204534989.png)
+![image-20191102204534989](https://gitee.com/xieyun714/nodeimage/raw/master/img/image-20191102204534989.png)
 
-![image-20191102205223437](postman.assets/image-20191102205223437.png)
+![image-20191102205223437](https://gitee.com/xieyun714/nodeimage/raw/master/img/image-20191102205223437.png)
 
 # WebMagic
 
-![image-20191102214333863](postman.assets/image-20191102214333863.png)
+![image-20191102214333863](https://gitee.com/xieyun714/nodeimage/raw/master/img/image-20191102214333863.png)
 
 ## 依赖
 
-![image-20191102215517998](postman.assets/image-20191102215517998.png)
+![image-20191102215517998](https://gitee.com/xieyun714/nodeimage/raw/master/img/image-20191102215517998.png)
 
 
 

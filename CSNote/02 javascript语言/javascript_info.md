@@ -788,7 +788,7 @@ arr[3](); // hello
 + `push` {{c1:: 在末端添加一个元素。}}
 + `shift` {{c1:: 取出队列最前端的一个元素，整个队列往前移，这样原先排第二的元素现在排在了第一。}}
 + `pop` {{c1:: 从末端取出一个元素。}}
-+ `unshift` {{c1:: 在数组的前端添加元素。![1571887679989](javascript_info.assets/1571887679989.png)
++ `unshift` {{c1:: 在数组的前端添加元素。![1571887679989](https://gitee.com/xieyun714/nodeimage/raw/master/img/1571887679989.png)
   }}
 
 ### 数组误用的几种方式: [ ](javascript_info_20191219101334489)
@@ -1481,7 +1481,7 @@ let sayHi = function func(who) {
 
 **当代码试图访问一个变量时 —— 它首先会在内部词法环境中进行搜索，然后是外部环境，然后是更外部的环境，直到（词法环境）链的末尾。**
 
-![image-20191224125817435](javascript_info.assets/image-20191224125817435.png)
+![image-20191224125817435](https://gitee.com/xieyun714/nodeimage/raw/master/img/image-20191224125817435.png)
 
 ### task: 为 `counter` 添加 `set` 和 `decrease` 方法 [ ](javascript_info_20191219101334579)
 
@@ -2296,7 +2296,7 @@ Rabbit.prototype = { constructor: Rabbit };
 + `F.prototype` 属性与 `[[Prototype]]` 不同。`F.prototype` 唯一的作用是：{{c1::当 `new F()` 被调用时，它设置新对象的 `[[Prototype]]`。}}
 + `F.prototype` 的值应该是{{c1::一个对象或 null：其他值将不起作用。}}
 + Person 类的原型实例图{{c1::
-  ![image-20191226202831741](javascript_info.assets/image-20191226202831741.png)}}
+  ![image-20191226202831741](https://gitee.com/xieyun714/nodeimage/raw/master/img/image-20191226202831741.png)}}
 
 ### task:`new user.constructor('Pete')` 的工作原理是： [ ](javascript_info_20191219101334669)
 
@@ -3887,7 +3887,7 @@ async function load() {
 
 ### 每个 DOM 节点都属于一个特定的类,这些类形成层次结构如下 [ ](javascript_info_20200521062435064)
 
-{{c1:: ![image-20200521161035902](javascript_info.assets/image-20200521161035902.png)}}
+{{c1:: ![image-20200521161035902](https://gitee.com/xieyun714/nodeimage/raw/master/img/image-20200521161035902.png)}}
 
 ### “nodeType” 属性：过时获取 DOM 节点类型方法 [ ](javascript_info_20200521062435066)
 
@@ -4167,7 +4167,7 @@ alert(example.offsetTop); // 180
 
 + `pageY`{{c1:: 元素在文档中的相对坐标保持不变，从文档顶部（现在已滚动出去）开始计算。}}
 + `clientY`{{c1:: 窗口相对坐标确实发生了变化（箭头变短了），因为同一个点越来越靠近窗口顶部。}}
-  {{c1:: ![image-20200525100352412](javascript_info.assets/image-20200525100352412.png)}}
+  {{c1:: ![image-20200525100352412](https://gitee.com/xieyun714/nodeimage/raw/master/img/image-20200525100352412.png)}}
 
 ### 元素坐标：`getBoundingClientRect` [ ](javascript_info_20200525035508058)
 
@@ -4176,7 +4176,7 @@ alert(example.offsetTop); // 180
 + width/height: {{c1::矩形的 width/height（可以为负）。}}
 + top/bottom: {{c1::顶部/底部矩形边缘的 Y 坐标，}}
 + left/right: {{c1::左/右矩形边缘的 X 坐标。}}
-  {{c1::![image-20200525101421628](javascript_info.assets/image-20200525101421628.png)}}
+  {{c1::![image-20200525101421628](https://gitee.com/xieyun714/nodeimage/raw/master/img/image-20200525101421628.png)}}
 
 ### 页面上的任何点都有坐标： [ ](javascript_info_20200525035508060)
 
@@ -5475,7 +5475,7 @@ alert(commits[0].author.login);
   + base:{{c1:: 可选的 base URL：如果设置了此参数，且参数 url 只有路径，则会根据这个 base 生成 URL。}}
 + 常用属性：href,origin,host,protocol,hostname,port,pathname,search,hash.
 + 属性示意图：
-  {{c1:: ![image-20200612162953117](javascript_info.assets/image-20200612162953117.png) }}
+  {{c1:: ![image-20200612162953117](https://gitee.com/xieyun714/nodeimage/raw/master/img/image-20200612162953117.png) }}
 
 ### url.searchParams [ ](javascript_info_20200612065930971)
 

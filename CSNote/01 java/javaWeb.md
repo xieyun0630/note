@@ -40,7 +40,7 @@
   3. {{c1:: 在hosts文件下配置临时域名 }}
 
 ### Tomcat体系结构(图) [	](javaWeb_20201022051052176)
-+ {{c1:: ![tomcat_1029](javaWeb.assets/tomcat_1029.png)}}
++ {{c1:: ![tomcat_1029](https://gitee.com/xieyun714/nodeimage/raw/master/img/tomcat_1029.png)}}
 
 ## 常见试题 [	](javaWeb_20201026014023034)
 ### Tomcat的缺省端口是多少，怎么修改 [	](javaWeb_20201026014023037)
@@ -350,7 +350,7 @@
 + 传递数据的类型不同：转发的request对象可以传递各种类型的数据包括对象，重定向只能传递字符串
 
 ### `RequestDispatcher`的`include()` [	](javaWeb_20201022051052241)
-+ 作用示意图：{{c1:: ![image-20201022133020639](javaWeb.assets/image-20201022133020639.png) }}
++ 作用示意图：{{c1:: ![image-20201022133020639](https://gitee.com/xieyun714/nodeimage/raw/master/img/image-20201022133020639.png) }}
 
 ## Servlet相关Cookie [	](javaWeb_20201022051052243)
 

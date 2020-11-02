@@ -80,7 +80,7 @@
 
 ### css 实现小米侧边栏效果 [ ](css_20200722073620471)
 
-- ![image-20200722145047450](css.assets/image-20200722145047450.png)
+- ![image-20200722145047450](https://gitee.com/xieyun714/nodeimage/raw/master/img/image-20200722145047450.png)
 - CSS 主要代码：
   ```css
   /* {{c1:: */
@@ -122,7 +122,7 @@
 
 ### CSS 背景使用综合案例：五彩导航 [ ](css_20200722073620475)
 
-- 效果：![image-20200722164346692](css.assets/image-20200722164346692.png)
+- 效果：![image-20200722164346692](https://gitee.com/xieyun714/nodeimage/raw/master/img/image-20200722164346692.png)
 - 主要 CSS 代码：
   ```css
   /*{{c1::*/
@@ -179,7 +179,7 @@
   - 语法：{{c1:: `border : border-width || border-style || border-color` }}
     - border-style 常用值：{{c1:: `none` `solid` `dashed` `dotted` }}
 - 盒子模型组成图
-  - {{c1:: ![image-20200722193002516](css.assets/image-20200722193002516.png) }}
+  - {{c1:: ![image-20200722193002516](https://gitee.com/xieyun714/nodeimage/raw/master/img/image-20200722193002516.png) }}
 
 
 ### 边框(border) [	](css_20200813094652545)
@@ -221,7 +221,7 @@
 1. {{c1:: 内容和边框有了距离，添加了内边距。 }}
 2. {{c1:: 如果盒子已经有了宽度和高度，此时再指定内边框，会撑大盒子。 }}
 + 好处：如果导航栏里面的字数不一样多,可以不用给每个盒子宽度了,直接给padding最合适.
-  + 例子图：{{c1::![image-20200807230745979](css.assets/image-20200807230745979.png)}}
+  + 例子图：{{c1::![image-20200807230745979](https://gitee.com/xieyun714/nodeimage/raw/master/img/image-20200807230745979.png)}}
 
 ### 设置外边距使块级元素水平居中 [	](css_20200813094652553)
 
@@ -236,10 +236,10 @@
 
 ### 外边距合并 [	](css_20200813094652556)
 1. 相邻块元素垂直外边距的合并(图)
-  + ![image-20200808010026078](css.assets/image-20200808010026078.png)
+  + ![image-20200808010026078](https://gitee.com/xieyun714/nodeimage/raw/master/img/image-20200808010026078.png)
   + 解决方法：{{c1:: 尽量只给一个盒子添加 margin 值 }}
 2. 嵌套块元素垂直外边距的塌陷(图)
-  + ![image-20200808010036816](css.assets/image-20200808010036816.png)
+  + ![image-20200808010036816](https://gitee.com/xieyun714/nodeimage/raw/master/img/image-20200808010036816.png)
   + 解决方法：
     1. {{c1::可以为父元素定义上边框。 }}
     2. {{c1::可以为父元素定义上内边距。 }}
@@ -277,7 +277,7 @@
 
 + 盒子阴影：
   + 语法：{{c1:: `box-shadow: h-shadow v-shadow blur spread color inset;` }}
-  + 解释图：{{c1::![image-20200808011258490](css.assets/image-20200808011258490.png)}}
+  + 解释图：{{c1::![image-20200808011258490](https://gitee.com/xieyun714/nodeimage/raw/master/img/image-20200808011258490.png)}}
 + 文字阴影：
   + 语法：{{c1:: `text-shadow: h-shadow v-shadow blur color;` }}
 
@@ -310,7 +310,7 @@
 
 ### 清除浮动： [	](css_20200813094652576)
 
-+ 为什么需要清除浮动(图)？：{{c1:: ![image-20200809015603618](css.assets/image-20200809015603618.png) }}
++ 为什么需要清除浮动(图)？：{{c1:: ![image-20200809015603618](https://gitee.com/xieyun714/nodeimage/raw/master/img/image-20200809015603618.png) }}
 + 清除浮动方法:
   + 额外标签法:{{c1:: 在浮动元素末尾添加一个**空的块级元素**。例如 `<div style=”clear:both”></div>`}}
   + 父级添加:{{c1:: `overflow: hidden;` }}
@@ -405,7 +405,7 @@
   + 搜索引擎:{{c1:: 这种语义化标准主要是针对搜索引擎的  }}
   + 使用多次:{{c1:: 这些新标签页面中可以使用多次 }}
   + IE9兼容问题:{{c1:: 需要把这些元素转换为块级元素 }}
-+ 图：{{c1:: ![image-20200819222058165](css.assets/image-20200819222058165.png) }}
++ 图：{{c1:: ![image-20200819222058165](https://gitee.com/xieyun714/nodeimage/raw/master/img/image-20200819222058165.png) }}
 
 ### HTML5 视频`<video>`与音频`<audio>`使用语法 [	](css_20200822070211571)
 1. 视频:
@@ -586,7 +586,7 @@
   + 中心点设置：{{c1:: transform-origin: x y; }}
 
 ### 2D 转换之旋转 rotate：使用盒子实现三角形 [	](css_20200822070211613)
-+ 效果图：![image-20200821162510182](css.assets/image-20200821162510182.png)
++ 效果图：![image-20200821162510182](https://gitee.com/xieyun714/nodeimage/raw/master/img/image-20200821162510182.png)
 + 实现：
   ```css
   /* {{c1:: */
@@ -677,7 +677,7 @@
 
 ### 3D旋转 rotate3d 案例 [	](css_20200822070211633)
 
-- 效果![cdnTmZD93j](css.assets/cdnTmZD93j.gif)
+- 效果![cdnTmZD93j](https://gitee.com/xieyun714/nodeimage/raw/master/img/cdnTmZD93j.gif)
 + 主要代码：
   ```css
     /* {{c1:: */
@@ -760,7 +760,7 @@
   1. {{c1:: 默认基线对齐 }}
   2. {{c1:: 是一行内的多个元素同时基于一种line对齐。 }}
 + 四种线图示：
-  + {{c1:: ![image-20200821144121455](css.assets/image-20200821144121455.png) }}
+  + {{c1:: ![image-20200821144121455](https://gitee.com/xieyun714/nodeimage/raw/master/img/image-20200821144121455.png) }}
 
 ### 解决图片底部默认空白缝隙问题 [	](css_20200822070211648)
 

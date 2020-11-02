@@ -6,7 +6,7 @@
 
 图：
 
-![image-20191216221654589](java_se.assets/image-20191216221654589.png)
+![image-20191216221654589](https://gitee.com/xieyun714/nodeimage/raw/master/img/image-20191216221654589.png)
 
 ```java
 public class MyJavaFX extends Application {
@@ -32,7 +32,7 @@ public class MyJavaFX extends Application {
 
 ### 一个javaFX程序显示多个舞台 [	](java_se_20191219101334714)
 
-![image-20191216221951820](java_se.assets/image-20191216221951820.png)
+![image-20191216221951820](https://gitee.com/xieyun714/nodeimage/raw/master/img/image-20191216221951820.png)
 
 核心代码：
 
@@ -80,7 +80,7 @@ public class MyJavaFX extends Application {
 + {{c1::Shape}}与{{c1::ImageView}}继承自Node
 + {{c1::Control}}与{{c1::Pane}}继承自Parent
 
-{{c1::![image-20191216224429952](java_se.assets/image-20191216224429952.png)}}
+{{c1::![image-20191216224429952](https://gitee.com/xieyun714/nodeimage/raw/master/img/image-20191216224429952.png)}}
 
 ### Java FX的绑定属性 [	](java_se_20191219101334719)
 
@@ -143,7 +143,7 @@ public Color(double r, double g ,double b double opacity);
 
 ### java FX中Font类用法 [	](java_se_20191219101334725)
 
-![image-20191217210937741](java_se.assets/image-20191217210937741.png)
+![image-20191217210937741](https://gitee.com/xieyun714/nodeimage/raw/master/img/image-20191217210937741.png)
 
 核心代码：{{c1::
 
@@ -160,7 +160,7 @@ pane.getChildren().add(label);
 
 ### 一个图像通过面版中的三个图像视图显示 [	](java_se_20191219101334727)
 
-![image-20191217213019505](java_se.assets/image-20191217213019505.png)
+![image-20191217213019505](https://gitee.com/xieyun714/nodeimage/raw/master/img/image-20191217213019505.png)
 
 `ShowImage`类核心代码：
 
@@ -188,7 +188,7 @@ pane.getChildren().add(label);
 
 图示：
 
-![image-20191217214418469](java_se.assets/image-20191217214418469.png)
+![image-20191217214418469](https://gitee.com/xieyun714/nodeimage/raw/master/img/image-20191217214418469.png)
 
 `ShowGridPane`核心代码：
 
@@ -262,15 +262,15 @@ btn.setOnAction(event -> circlePane.enlarge());
 
 ### `MouseEvent`鼠标事件 [	](java_se_20191219101334737)
 
-![image-20191217225338016](java_se.assets/image-20191217225338016.png)
+![image-20191217225338016](https://gitee.com/xieyun714/nodeimage/raw/master/img/image-20191217225338016.png)
 
-{{c1::![image-20191217225333086](java_se.assets/image-20191217225333086.png)}}
+{{c1::![image-20191217225333086](https://gitee.com/xieyun714/nodeimage/raw/master/img/image-20191217225333086.png)}}
 
 ### 键盘事件 [	](java_se_20191219101334741)
 
-![image-20191217225457041](java_se.assets/image-20191217225457041.png)
+![image-20191217225457041](https://gitee.com/xieyun714/nodeimage/raw/master/img/image-20191217225457041.png)
 
-{{c1::![image-20191217225448723](java_se.assets/image-20191217225448723.png)}}
+{{c1::![image-20191217225448723](https://gitee.com/xieyun714/nodeimage/raw/master/img/image-20191217225448723.png)}}
 
 ### 可观察对象监听器 [	](java_se_20191219101334742)
 
@@ -294,13 +294,13 @@ public interface InvalidationListener {
 
 ### javafx.animation.Animation类 [	](java_se_20191219101334760)
 
-![image-20191217234145104](java_se.assets/image-20191217234145104.png)
+![image-20191217234145104](https://gitee.com/xieyun714/nodeimage/raw/master/img/image-20191217234145104.png)
 
-{{c1::![image-20191217234138105](java_se.assets/image-20191217234138105.png)}}
+{{c1::![image-20191217234138105](https://gitee.com/xieyun714/nodeimage/raw/master/img/image-20191217234138105.png)}}
 
 ### javafx.animation.PathTransition类的使用 [	](java_se_20191219101334761)
 
-![image-20191217234638494](java_se.assets/image-20191217234638494.png)
+![image-20191217234638494](https://gitee.com/xieyun714/nodeimage/raw/master/img/image-20191217234638494.png)
 
 PathTransitionDemo类核心代码：
 
@@ -328,7 +328,7 @@ pt.play(); // Start animation
 
 ### javafx.animation.FadeTransition类的使用 [	](java_se_20191219101334763)
 
-![image-20191217235155820](java_se.assets/image-20191217235155820.png)
+![image-20191217235155820](https://gitee.com/xieyun714/nodeimage/raw/master/img/image-20191217235155820.png)
 
 FadeTransitionDemo核心代码：
 
@@ -363,7 +363,7 @@ ellipse.setOnMouseReleased(e -> ft.play());
 ###  javafx.animation.Timeline的使用 [	](java_se_20191219101334765)
 
 + PathTransition 和 FadeTransition 定义了特定的动画。Timeline 类可以用于通过使用一个或者更多的 KeyFrame (关键帧）来编写任意动画。每个 KeyFrame 在一个给定的时间间隔内顺序执行。Timeline 继承自 Animation。
-+ ![image-20191218203918151](java_se.assets/image-20191218203918151.png)
++ ![image-20191218203918151](https://gitee.com/xieyun714/nodeimage/raw/master/img/image-20191218203918151.png)
 
 核心代码：
 
@@ -425,7 +425,7 @@ OuterClass.InnerClass innerObject = new OuterObject.InnerClass();
 
 ### Labeled类与Label类 [	](java_se_20191219101334772)
 
-![image-20191218205717224](java_se.assets/image-20191218205717224.png)
+![image-20191218205717224](https://gitee.com/xieyun714/nodeimage/raw/master/img/image-20191218205717224.png)
 
 Label类的构造方法：{{c1::`public Label(String text, Node graphic)`}}
 
@@ -433,15 +433,15 @@ Label类的构造方法：{{c1::`public Label(String text, Node graphic)`}}
 
 
 
-![image-20191218205636656](java_se.assets/image-20191218205636656.png)
+![image-20191218205636656](https://gitee.com/xieyun714/nodeimage/raw/master/img/image-20191218205636656.png)
 
-![image-20191218205747071](java_se.assets/image-20191218205747071.png)
+![image-20191218205747071](https://gitee.com/xieyun714/nodeimage/raw/master/img/image-20191218205747071.png)
 
 }}
 
 ### Button的使用 [	](java_se_20191219101334774)
 
-![image-20191218210431437](java_se.assets/image-20191218210431437.png)
+![image-20191218210431437](https://gitee.com/xieyun714/nodeimage/raw/master/img/image-20191218210431437.png)
 
 核心代码：{{c1::
 
@@ -454,7 +454,7 @@ Button btRight = new Button("Right", new ImageView("image/right.gif"));
 
 ### RadioButtion与CheckBox的使用例子 [	](java_se_20191219101334775)
 
-![image-20191218211531355](java_se.assets/image-20191218211531355.png)
+![image-20191218211531355](https://gitee.com/xieyun714/nodeimage/raw/master/img/image-20191218211531355.png)
 
 CheckBox核心代码：
 
@@ -536,7 +536,7 @@ passwordField.setActionEvent(c -> passwordField.getText());
 
 ### TextArea与ScrollPane 例子 [	](java_se_20191219101334780)
 
-![image-20191218222600951](java_se.assets/image-20191218222600951.png)
+![image-20191218222600951](https://gitee.com/xieyun714/nodeimage/raw/master/img/image-20191218222600951.png)
 
 核心代码：
 
@@ -567,7 +567,7 @@ setPadding(new Insets(5, 5, 5, 5));
 
 JavaFX 提供了⼀个静态⽅法{{c1::` FXCollections.observableArrayList ( arrayOfElements )`}}来从⼀个元素数组中创建⼀个ObservableList。
 
-例子：![image-20191218223804555](java_se.assets/image-20191218223804555.png)
+例子：![image-20191218223804555](https://gitee.com/xieyun714/nodeimage/raw/master/img/image-20191218223804555.png)
 
 核心代码：{{c1::
 
@@ -586,7 +586,7 @@ cbo.setOnAction(e -> setDisplay(items.indexOf(cbo.getValue())));
 
 ### ListViewDemo例子： [	](java_se_20191219101334784)
 
-![image-20191218224831187](java_se.assets/image-20191218224831187.png)
+![image-20191218224831187](https://gitee.com/xieyun714/nodeimage/raw/master/img/image-20191218224831187.png)
 
 核心代码：{{c1::
 
@@ -614,13 +614,13 @@ lv.getSelectionModel().selectedItemProperty().addListener(
 
 ### ScrollBar类 [	](java_se_20191219101334785)
 
-![image-20191218225024959](java_se.assets/image-20191218225024959.png)
+![image-20191218225024959](https://gitee.com/xieyun714/nodeimage/raw/master/img/image-20191218225024959.png)
 
-{{c1::![image-20191218225018747](java_se.assets/image-20191218225018747.png)}}
+{{c1::![image-20191218225018747](https://gitee.com/xieyun714/nodeimage/raw/master/img/image-20191218225018747.png)}}
 
 ### ScrollBar类使用实例 [	](java_se_20191219101334786)
 
-![image-20191218225150780](java_se.assets/image-20191218225150780.png)
+![image-20191218225150780](https://gitee.com/xieyun714/nodeimage/raw/master/img/image-20191218225150780.png)
 
 ScrollBarDemo核心代码{{c1::
 
@@ -646,13 +646,13 @@ vScrollBar.setOrientation(Orientation.VERTICAL);
 
 ### SliderDemo类 [	](java_se_20191219101334788)
 
-![image-20191218230909629](java_se.assets/image-20191218230909629.png)
+![image-20191218230909629](https://gitee.com/xieyun714/nodeimage/raw/master/img/image-20191218230909629.png)
 
-![image-20191218230903557](java_se.assets/image-20191218230903557.png)
+![image-20191218230903557](https://gitee.com/xieyun714/nodeimage/raw/master/img/image-20191218230903557.png)
 
 ### SliderDemo例子： [	](java_se_20191219101334789)
 
-![image-20191218230654239](java_se.assets/image-20191218230654239.png)
+![image-20191218230654239](https://gitee.com/xieyun714/nodeimage/raw/master/img/image-20191218230654239.png)
 
 核心代码：
 
@@ -681,35 +681,35 @@ vScrollBar.setOrientation(Orientation.VERTICAL);
 
 ### Media类 [	](java_se_20191219101334791)
 
-![image-20191218231926055](java_se.assets/image-20191218231926055.png)
+![image-20191218231926055](https://gitee.com/xieyun714/nodeimage/raw/master/img/image-20191218231926055.png)
 
 {{c1::
 
-![image-20191218231919537](java_se.assets/image-20191218231919537.png)}}
+![image-20191218231919537](https://gitee.com/xieyun714/nodeimage/raw/master/img/image-20191218231919537.png)}}
 
 ### MediaPlayer类 [	](java_se_20191219101334792)
 
-![image-20191218232016072](java_se.assets/image-20191218232016072.png)
+![image-20191218232016072](https://gitee.com/xieyun714/nodeimage/raw/master/img/image-20191218232016072.png)
 
-{{c1::![image-20191218232010780](java_se.assets/image-20191218232010780.png)}}
+{{c1::![image-20191218232010780](https://gitee.com/xieyun714/nodeimage/raw/master/img/image-20191218232010780.png)}}
 
 ### MediaView类 [	](java_se_20191219101334793)
 
-![image-20191218232054298](java_se.assets/image-20191218232054298.png)
+![image-20191218232054298](https://gitee.com/xieyun714/nodeimage/raw/master/img/image-20191218232054298.png)
 
-{{c1::![image-20191218232045835](java_se.assets/image-20191218232045835.png)}}
+{{c1::![image-20191218232045835](https://gitee.com/xieyun714/nodeimage/raw/master/img/image-20191218232045835.png)}}
 
 ### Media MediaPlayer  MediaView之间的关系 [	](java_se_20191219101334795)
 
 {{c1::
 
-![image-20191218232335953](java_se.assets/image-20191218232335953.png)
+![image-20191218232335953](https://gitee.com/xieyun714/nodeimage/raw/master/img/image-20191218232335953.png)
 
 }}
 
 ### javaFX视频与音频的例子： [	](java_se_20191219101334797)
 
-![image-20191218232438407](java_se.assets/image-20191218232438407.png)
+![image-20191218232438407](https://gitee.com/xieyun714/nodeimage/raw/master/img/image-20191218232438407.png)
 
 核心代码：
 
@@ -1179,7 +1179,7 @@ public class Account {
 + {{c1:: `DelayQueue` }}
 + {{c1:: `SynchronousQueue` }}
 
-{{c1:: ![image-20200604222338200](java_se.assets/image-20200604222338200.png) }}
+{{c1:: ![image-20200604222338200](https://gitee.com/xieyun714/nodeimage/raw/master/img/image-20200604222338200.png) }}
 
 ### 线程组 [	](java_se_20200615060135980)
 

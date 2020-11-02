@@ -1,6 +1,6 @@
 ## git常用命令展示图 [	](git_main_20191219101334804)
 
-![image-20191219213439810](git_main.assets/image-20191219213439810.png)
+![image-20191219213439810](https://gitee.com/xieyun714/nodeimage/raw/master/img/image-20191219213439810.png)
 
 ## 环境  [	](git_main_20191219101334806)
 
@@ -443,4 +443,4 @@ git config --global alias.unstage 'reset HEAD'
 git config --global alias.lg "log --color --graph --pretty=format:'%Cred%h%Creset -%C(yellow)%d%Creset %s %Cgreen(%cr) %C(bold blue)<%an>%Creset' --abbrev-commit"
 ```
 
-![image-20191120235332694](git_main.assets/image-20191120235332694.png)
+![image-20191120235332694](https://gitee.com/xieyun714/nodeimage/raw/master/img/image-20191120235332694.png)

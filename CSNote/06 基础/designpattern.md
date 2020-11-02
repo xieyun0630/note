@@ -16,9 +16,9 @@
 
 **ISP**：**Interface  Segregation Principle**
 
-反例图：{{c1:: ![image-20200629211404990](designpattern.assets/image-20200629211404990.png) }}
+反例图：{{c1:: ![image-20200629211404990](https://gitee.com/xieyun714/nodeimage/raw/master/img/image-20200629211404990.png) }}
 
-改进后接口隔离原则例图：{{c1::![image-20200629210906436](designpattern.assets/image-20200629210906436.png)}}
+改进后接口隔离原则例图：{{c1::![image-20200629210906436](https://gitee.com/xieyun714/nodeimage/raw/master/img/image-20200629210906436.png)}}
 
 ### 依赖倒转原则 [	](designpattern_20200629095419189)
 
@@ -26,8 +26,8 @@
     1. {{c1:: 上层模块不应该依赖底层模块，它们都应该依赖于抽象。}}
     2. {{c1:: 抽象不应该依赖于细节，细节应该依赖于抽象。}}
 + 披萨店例子：
-    + 反例图：{{c1:: ![image-20200629212530571](designpattern.assets/image-20200629212530571.png)}}
-    + 改进后依赖倒转原则图：{{c1:: ![image-20200629212538616](designpattern.assets/image-20200629212538616.png)}}
+    + 反例图：{{c1:: ![image-20200629212530571](https://gitee.com/xieyun714/nodeimage/raw/master/img/image-20200629212530571.png)}}
+    + 改进后依赖倒转原则图：{{c1:: ![image-20200629212538616](https://gitee.com/xieyun714/nodeimage/raw/master/img/image-20200629212538616.png)}}
 
 
 

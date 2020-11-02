@@ -14,7 +14,7 @@
 
 一定要注意浏览器与驱动之间的对应关系：
 
-![image-20191113220518189](selenium.assets/image-20191113220518189.png)
+![image-20191113220518189](https://gitee.com/xieyun714/nodeimage/raw/master/img/image-20191113220518189.png)
 
 ## hello world程序
 
@@ -35,60 +35,60 @@ public static void main(String[] args) {
 
 ## 元素定位常用操作
 
-![image-20191113223513586](selenium.assets/image-20191113223513586.png)
+![image-20191113223513586](https://gitee.com/xieyun714/nodeimage/raw/master/img/image-20191113223513586.png)
 
 **层级定位**:
 
-![image-20191113223812058](selenium.assets/image-20191113223812058.png)
+![image-20191113223812058](https://gitee.com/xieyun714/nodeimage/raw/master/img/image-20191113223812058.png)
 
 
 ### 常见元素:radio的处理
 
 **选中某个按钮**
 
-![image-20191113230503989](selenium.assets/image-20191113230503989.png)
+![image-20191113230503989](https://gitee.com/xieyun714/nodeimage/raw/master/img/image-20191113230503989.png)
 
 **获取元素的属性**
 
-![image-20191113224823958](selenium.assets/image-20191113224823958.png)
+![image-20191113224823958](https://gitee.com/xieyun714/nodeimage/raw/master/img/image-20191113224823958.png)
 
 ### 常见元素:check的处理
 
 其中clear()无效会报错
 
-![image-20191113233138306](selenium.assets/image-20191113233138306.png)
+![image-20191113233138306](https://gitee.com/xieyun714/nodeimage/raw/master/img/image-20191113233138306.png)
 
 ### 常见元素:按钮处理
 
-![image-20191113234605570](selenium.assets/image-20191113234605570.png)
+![image-20191113234605570](https://gitee.com/xieyun714/nodeimage/raw/master/img/image-20191113234605570.png)
 
 ### 常见元素:表单处理
 
 summit()方法提交的方式只是以当前页面的URL后面加上参数进行提交，所以模拟登陆时最好使用click进行操作
 
-![image-20191113235034671](selenium.assets/image-20191113235034671.png)
+![image-20191113235034671](https://gitee.com/xieyun714/nodeimage/raw/master/img/image-20191113235034671.png)
 
 ### 常见元素:上传文件处理
 
-![image-20191114000504743](selenium.assets/image-20191114000504743.png)
+![image-20191114000504743](https://gitee.com/xieyun714/nodeimage/raw/master/img/image-20191114000504743.png)
 
 ### 常见元素:下拉框处理
 
-![image-20191114000805046](selenium.assets/image-20191114000805046.png)
+![image-20191114000805046](https://gitee.com/xieyun714/nodeimage/raw/master/img/image-20191114000805046.png)
 
-![image-20191114000813834](selenium.assets/image-20191114000813834.png)
+![image-20191114000813834](https://gitee.com/xieyun714/nodeimage/raw/master/img/image-20191114000813834.png)
 
-![image-20191114000826233](selenium.assets/image-20191114000826233.png)
+![image-20191114000826233](https://gitee.com/xieyun714/nodeimage/raw/master/img/image-20191114000826233.png)
 
-![image-20191114000845482](selenium.assets/image-20191114000845482.png)
+![image-20191114000845482](https://gitee.com/xieyun714/nodeimage/raw/master/img/image-20191114000845482.png)
 
-![image-20191114000902925](selenium.assets/image-20191114000902925.png)
+![image-20191114000902925](https://gitee.com/xieyun714/nodeimage/raw/master/img/image-20191114000902925.png)
 
 
 
 ## 使用chrome快速获取XPATH
 
-![image-20191113225658368](selenium.assets/image-20191113225658368.png)
+![image-20191113225658368](https://gitee.com/xieyun714/nodeimage/raw/master/img/image-20191113225658368.png)
 
 ## 使用selenium进行登陆操作
 
@@ -236,7 +236,7 @@ WebDriver 提供了几种方法来等待元素。
 - `implicitlyWait`。识别对象时的超时时间。过了这个时间如果对象还没找到的话就会抛出NoSuchElement异常。
 - `setScriptTimeout`。异步脚本的超时时间。WebDriver可以异步执行脚本，这个是设置异步执行脚本脚本返回结果的超时时间。
 - `pageLoadTimeout`。页面加载时的超时时间。因为WebDriver会等页面加载完毕再进行后面的操作，所以如果页面超过设置时间依然没有加载完成，那么WebDriver就会抛出异常。
-- 语法：![image-20191120175741694](selenium.assets/image-20191120175741694.png)
+- 语法：![image-20191120175741694](https://gitee.com/xieyun714/nodeimage/raw/master/img/image-20191120175741694.png)
 
 
 ## 多表单切换
@@ -262,7 +262,7 @@ public static void main(String[] args){
 
  如果完成了在当前表单上的操作，则可以通过`switchTo().defaultContent()`方法跳出表单。 
 
-![image-20191115233117317](selenium.assets/image-20191115233117317.png)
+![image-20191115233117317](https://gitee.com/xieyun714/nodeimage/raw/master/img/image-20191115233117317.png)
 
 ## 多窗口切换（todo:看视频理解）
 

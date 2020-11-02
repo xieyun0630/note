@@ -1,8 +1,8 @@
 # PLSQL Developer软件使用大全
 
-[![wps4B06.tmp](PLSQL%20developer%E7%9A%84%E4%BD%BF%E7%94%A8.assets/646850-20170302233924391-1085785292.jpg)](http://images2015.cnblogs.com/blog/646850/201703/646850-20170302233922157-623698225.jpg)
+[![wps4B06.tmp](https://gitee.com/xieyun714/nodeimage/raw/master/img/646850-20170302233924391-1085785292.jpg)](http://images2015.cnblogs.com/blog/646850/201703/646850-20170302233922157-623698225.jpg)
 
-[![wps4B07.tmp](PLSQL%20developer%E7%9A%84%E4%BD%BF%E7%94%A8.assets/646850-20170302233928438-2130658850.jpg)](http://images2015.cnblogs.com/blog/646850/201703/646850-20170302233926548-1736351990.jpg) 
+[![wps4B07.tmp](https://gitee.com/xieyun714/nodeimage/raw/master/img/646850-20170302233928438-2130658850.jpg)](http://images2015.cnblogs.com/blog/646850/201703/646850-20170302233926548-1736351990.jpg) 
 
 # **第一章 PLSQL Developer特性**
 
@@ -200,7 +200,7 @@ SQL Window:Previous SQLCtrl+Up
 
 SQL Window:Next SQLCtrl+Down
 
-[![wps4B08.tmp](PLSQL%20developer%E7%9A%84%E4%BD%BF%E7%94%A8.assets/646850-20170302233932438-237439787-1566378962893.jpg)](http://images2015.cnblogs.com/blog/646850/201703/646850-20170302233930563-1357198070.jpg) 
+[![wps4B08.tmp](https://gitee.com/xieyun714/nodeimage/raw/master/img/646850-20170302233932438-237439787-1566378962893.jpg)](http://images2015.cnblogs.com/blog/646850/201703/646850-20170302233930563-1357198070.jpg) 
 
  
 
@@ -252,7 +252,7 @@ sc=SELECT COUNT(*) FROM
 
 使用方法：选中需要格式化的SQL语句，然后点击工具栏的PL/SQL beautifier按钮即可.
 
-[![wps4B19.tmp](PLSQL%20developer%E7%9A%84%E4%BD%BF%E7%94%A8.assets/646850-20170302233937298-2124187574-1566378962954.jpg)](http://images2015.cnblogs.com/blog/646850/201703/646850-20170302233936798-1927497081.jpg) 
+[![wps4B19.tmp](https://gitee.com/xieyun714/nodeimage/raw/master/img/646850-20170302233937298-2124187574-1566378962954.jpg)](http://images2015.cnblogs.com/blog/646850/201703/646850-20170302233936798-1927497081.jpg) 
 
 ## **2.8   左下角显示window list**
 
@@ -348,11 +348,11 @@ Edit data相当于新打开一个窗口,并执行select * from 表 for update。
 
 plsql 9.0及以上版本的多连接模式在实际的开发过程中容易连接错误的库导致生产事故，可以关闭这个功能，如图：
 
-[![wps4B1A.tmp](PLSQL%20developer%E7%9A%84%E4%BD%BF%E7%94%A8.assets/646850-20170302233940470-1873509860-1566378962942.jpg)](http://images2015.cnblogs.com/blog/646850/201703/646850-20170302233938938-322083381.jpg) 
+[![wps4B1A.tmp](https://gitee.com/xieyun714/nodeimage/raw/master/img/646850-20170302233940470-1873509860-1566378962942.jpg)](http://images2015.cnblogs.com/blog/646850/201703/646850-20170302233938938-322083381.jpg) 
 
  
 
-这样在窗口的最下边就不会出现这个了，[![wps4B1B.tmp](PLSQL%20developer%E7%9A%84%E4%BD%BF%E7%94%A8.assets/646850-20170302233941688-1956226112-1566378962938.jpg)](http://images2015.cnblogs.com/blog/646850/201703/646850-20170302233941079-1101741001.jpg)
+这样在窗口的最下边就不会出现这个了，[![wps4B1B.tmp](https://gitee.com/xieyun714/nodeimage/raw/master/img/646850-20170302233941688-1956226112-1566378962938.jpg)](http://images2015.cnblogs.com/blog/646850/201703/646850-20170302233941079-1101741001.jpg)
 
  
 
@@ -362,13 +362,13 @@ plsql 9.0及以上版本的多连接模式在实际的开发过程中容易连�
 
 如下图设置后的外观就有所改变：
 
-[![wps4B1C.tmp](PLSQL%20developer%E7%9A%84%E4%BD%BF%E7%94%A8.assets/646850-20170302233945345-153695778-1566378962997.jpg)](http://images2015.cnblogs.com/blog/646850/201703/646850-20170302233943610-1435387645.jpg) 
+[![wps4B1C.tmp](https://gitee.com/xieyun714/nodeimage/raw/master/img/646850-20170302233945345-153695778-1566378962997.jpg)](http://images2015.cnblogs.com/blog/646850/201703/646850-20170302233943610-1435387645.jpg) 
 
  
 
 如果连接上有所显示：
 
-[![wps4B1D.tmp](PLSQL%20developer%E7%9A%84%E4%BD%BF%E7%94%A8.assets/646850-20170302233946970-720417981-1566378962988.jpg)](http://images2015.cnblogs.com/blog/646850/201703/646850-20170302233945985-1245215169.jpg) 
+[![wps4B1D.tmp](https://gitee.com/xieyun714/nodeimage/raw/master/img/646850-20170302233946970-720417981-1566378962988.jpg)](http://images2015.cnblogs.com/blog/646850/201703/646850-20170302233945985-1245215169.jpg) 
 
  
 
@@ -376,7 +376,7 @@ plsql 9.0及以上版本的多连接模式在实际的开发过程中容易连�
 
 由于结果集中的空值和空格难以区分，所以可以进行设置颜色来区分null值。
 
-[![wps4B1E.tmp](PLSQL%20developer%E7%9A%84%E4%BD%BF%E7%94%A8.assets/646850-20170302233951626-2106076921-1566378963012.jpg)](http://images2015.cnblogs.com/blog/646850/201703/646850-20170302233949329-590777599.jpg) 
+[![wps4B1E.tmp](https://gitee.com/xieyun714/nodeimage/raw/master/img/646850-20170302233951626-2106076921-1566378963012.jpg)](http://images2015.cnblogs.com/blog/646850/201703/646850-20170302233949329-590777599.jpg) 
 
  
 
@@ -384,25 +384,25 @@ plsql 9.0及以上版本的多连接模式在实际的开发过程中容易连�
 
 ## **2.20  设置最近对象的最大值**
 
-[![wps4B1F.tmp](PLSQL%20developer%E7%9A%84%E4%BD%BF%E7%94%A8.assets/646850-20170302233954970-1154169540-1566378963038.jpg)](http://images2015.cnblogs.com/blog/646850/201703/646850-20170302233953485-1313171631.jpg) 
+[![wps4B1F.tmp](https://gitee.com/xieyun714/nodeimage/raw/master/img/646850-20170302233954970-1154169540-1566378963038.jpg)](http://images2015.cnblogs.com/blog/646850/201703/646850-20170302233953485-1313171631.jpg) 
 
 ## **2.21  重新调用语句**
 
-[![wps4B20.tmp](PLSQL%20developer%E7%9A%84%E4%BD%BF%E7%94%A8.assets/646850-20170302233958173-1276585017-1566378963060.jpg)](http://images2015.cnblogs.com/blog/646850/201703/646850-20170302233956704-2091112339.jpg) 
+[![wps4B20.tmp](https://gitee.com/xieyun714/nodeimage/raw/master/img/646850-20170302233958173-1276585017-1566378963060.jpg)](http://images2015.cnblogs.com/blog/646850/201703/646850-20170302233956704-2091112339.jpg) 
 
  
 
 ## **2.22  设置工具栏**
 
-[![wps4B21.tmp](PLSQL%20developer%E7%9A%84%E4%BD%BF%E7%94%A8.assets/646850-20170302234001563-1838777447-1566378963092.jpg)](http://images2015.cnblogs.com/blog/646850/201703/646850-20170302233959923-287226355.jpg) 
+[![wps4B21.tmp](https://gitee.com/xieyun714/nodeimage/raw/master/img/646850-20170302234001563-1838777447-1566378963092.jpg)](http://images2015.cnblogs.com/blog/646850/201703/646850-20170302233959923-287226355.jpg) 
 
 效果：
 
-[![wps4B22.tmp](PLSQL%20developer%E7%9A%84%E4%BD%BF%E7%94%A8.assets/646850-20170302234003548-1722287358-1566378963150.jpg)](http://images2015.cnblogs.com/blog/646850/201703/646850-20170302234002610-692238919.jpg) 
+[![wps4B22.tmp](https://gitee.com/xieyun714/nodeimage/raw/master/img/646850-20170302234003548-1722287358-1566378963150.jpg)](http://images2015.cnblogs.com/blog/646850/201703/646850-20170302234002610-692238919.jpg) 
 
 ## **2.23  设置代码助手**
 
-[![wps4B33.tmp](PLSQL%20developer%E7%9A%84%E4%BD%BF%E7%94%A8.assets/646850-20170302234006438-577393454-1566378963241.jpg)](http://images2015.cnblogs.com/blog/646850/201703/646850-20170302234005048-1754711147.jpg) 
+[![wps4B33.tmp](https://gitee.com/xieyun714/nodeimage/raw/master/img/646850-20170302234006438-577393454-1566378963241.jpg)](http://images2015.cnblogs.com/blog/646850/201703/646850-20170302234005048-1754711147.jpg) 
 
 当你键入数据库对象的名字时，代码助手将自动地显示关于它们的信息，这个首选项页允许你定义这个特性的行为。
 
@@ -466,13 +466,13 @@ plsql 9.0及以上版本的多连接模式在实际的开发过程中容易连�
 
 点击“Editor”项进行设置，如下图：
 
-[![wps4B34.tmp](PLSQL%20developer%E7%9A%84%E4%BD%BF%E7%94%A8.assets/646850-20170302234009704-497558514-1566378963163.jpg)](http://images2015.cnblogs.com/blog/646850/201703/646850-20170302234008063-494343256.jpg) 
+[![wps4B34.tmp](https://gitee.com/xieyun714/nodeimage/raw/master/img/646850-20170302234009704-497558514-1566378963163.jpg)](http://images2015.cnblogs.com/blog/646850/201703/646850-20170302234008063-494343256.jpg) 
 
 本次设置，为了实现长代码自动换行，勾选“wrap lines”即可。
 
 长代码自动换行了，更易于显示阅读了，如下所示：
 
-[![wps4B35.tmp](PLSQL%20developer%E7%9A%84%E4%BD%BF%E7%94%A8.assets/646850-20170302234011970-1324897013-1566378963181.jpg)](http://images2015.cnblogs.com/blog/646850/201703/646850-20170302234010798-744599362.jpg)
+[![wps4B35.tmp](https://gitee.com/xieyun714/nodeimage/raw/master/img/646850-20170302234011970-1324897013-1566378963181.jpg)](http://images2015.cnblogs.com/blog/646850/201703/646850-20170302234010798-744599362.jpg)
 
 补充上图SQL是错误的，只为演示长SQL换行，正常书写应该为：
 
@@ -490,7 +490,7 @@ Table created
 
 ## **3.1   新建命令窗口**
 
-[![wps4B36.tmp](PLSQL%20developer%E7%9A%84%E4%BD%BF%E7%94%A8.assets/646850-20170302234015391-1171345220-1566378963202.jpg)](http://images2015.cnblogs.com/blog/646850/201703/646850-20170302234013673-1855005259.jpg) 
+[![wps4B36.tmp](https://gitee.com/xieyun714/nodeimage/raw/master/img/646850-20170302234015391-1171345220-1566378963202.jpg)](http://images2015.cnblogs.com/blog/646850/201703/646850-20170302234013673-1855005259.jpg) 
 
 ## **3.2   PL\SQL 打开时出现"动态执行表不可访问，本会话的自动统计被禁止"** 
 
@@ -532,7 +532,7 @@ plsql dev在用户运行过程中，要收集用户统计信息，但是由于�
 
 这种方法应该可以叫做“鸵鸟方式”的处理方法。没有从根本上解决这个问题。
 
-[![wps4B37.tmp](PLSQL%20developer%E7%9A%84%E4%BD%BF%E7%94%A8.assets/646850-20170302234017563-1388519706-1566378963294.jpg)](http://images2015.cnblogs.com/blog/646850/201703/646850-20170302234016438-555088875.jpg) 
+[![wps4B37.tmp](https://gitee.com/xieyun714/nodeimage/raw/master/img/646850-20170302234017563-1388519706-1566378963294.jpg)](http://images2015.cnblogs.com/blog/646850/201703/646850-20170302234016438-555088875.jpg) 
 
 ### **3.2.2   第二种处理方法（可以采纳）**
 
@@ -650,11 +650,11 @@ SQL> grant select on V_$statname to public;
 
 另外，对于plsql 11中还可以看到html格式，**Plan Hash Value****或****SQL PROFILE，非常实用：**
 
-[![wps4B38.tmp](PLSQL%20developer%E7%9A%84%E4%BD%BF%E7%94%A8.assets/646850-20170302234020516-584806704-1566378963274.jpg)](http://images2015.cnblogs.com/blog/646850/201703/646850-20170302234018954-1804029790.jpg) 
+[![wps4B38.tmp](https://gitee.com/xieyun714/nodeimage/raw/master/img/646850-20170302234020516-584806704-1566378963274.jpg)](http://images2015.cnblogs.com/blog/646850/201703/646850-20170302234018954-1804029790.jpg) 
 
-[![wps4B39.tmp](PLSQL%20developer%E7%9A%84%E4%BD%BF%E7%94%A8.assets/646850-20170302234023173-785218945-1566378963310.jpg)](http://images2015.cnblogs.com/blog/646850/201703/646850-20170302234021829-85643069.jpg) 
+[![wps4B39.tmp](https://gitee.com/xieyun714/nodeimage/raw/master/img/646850-20170302234023173-785218945-1566378963310.jpg)](http://images2015.cnblogs.com/blog/646850/201703/646850-20170302234021829-85643069.jpg) 
 
-[![wps4B3A.tmp](PLSQL%20developer%E7%9A%84%E4%BD%BF%E7%94%A8.assets/646850-20170302234026329-1958735288-1566378963332.jpg)](http://images2015.cnblogs.com/blog/646850/201703/646850-20170302234024673-1356447472.jpg) 
+[![wps4B3A.tmp](https://gitee.com/xieyun714/nodeimage/raw/master/img/646850-20170302234026329-1958735288-1566378963332.jpg)](http://images2015.cnblogs.com/blog/646850/201703/646850-20170302234024673-1356447472.jpg) 
 
  
 
@@ -680,7 +680,7 @@ C:\Users\Administrator\AppData\Local\Temp
 
  
 
-[![wps4B3B.tmp](PLSQL%20developer%E7%9A%84%E4%BD%BF%E7%94%A8.assets/646850-20170302234028891-425718681-1566378963365.jpg)](http://images2015.cnblogs.com/blog/646850/201703/646850-20170302234027688-370921953.jpg) 
+[![wps4B3B.tmp](https://gitee.com/xieyun714/nodeimage/raw/master/img/646850-20170302234028891-425718681-1566378963365.jpg)](http://images2015.cnblogs.com/blog/646850/201703/646850-20170302234027688-370921953.jpg) 
 
  
 
@@ -702,21 +702,21 @@ C:\Users\Administrator\AppData\Local\Temp
 
 右键点击要调试的触发器，选择编辑，在行号位置上点击一下设置断点。
 
-[![wps4B3C.tmp](PLSQL%20developer%E7%9A%84%E4%BD%BF%E7%94%A8.assets/646850-20170302234032016-1245092314-1566378963392.jpg)](http://images2015.cnblogs.com/blog/646850/201703/646850-20170302234030501-194461417.jpg)
+[![wps4B3C.tmp](https://gitee.com/xieyun714/nodeimage/raw/master/img/646850-20170302234032016-1245092314-1566378963392.jpg)](http://images2015.cnblogs.com/blog/646850/201703/646850-20170302234030501-194461417.jpg)
 
  
 
 在菜单的新建中选择“测试窗口”，打开一个如下块，在begin和end中间添加能触发触发器的语句
 
-[![wps4B4C.tmp](PLSQL%20developer%E7%9A%84%E4%BD%BF%E7%94%A8.assets/646850-20170302234035970-274248378-1566378963373.jpg)](http://images2015.cnblogs.com/blog/646850/201703/646850-20170302234033923-1390273366.jpg)
+[![wps4B4C.tmp](https://gitee.com/xieyun714/nodeimage/raw/master/img/646850-20170302234035970-274248378-1566378963373.jpg)](http://images2015.cnblogs.com/blog/646850/201703/646850-20170302234033923-1390273366.jpg)
 
 按F9或者点击调试菜单中的开始菜单，进入运行调试状态
 
-[![wps4B4D.tmp](PLSQL%20developer%E7%9A%84%E4%BD%BF%E7%94%A8.assets/646850-20170302234039204-1202106192-1566378963431.jpg)](http://images2015.cnblogs.com/blog/646850/201703/646850-20170302234037360-1054283734.jpg)
+[![wps4B4D.tmp](https://gitee.com/xieyun714/nodeimage/raw/master/img/646850-20170302234039204-1202106192-1566378963431.jpg)](http://images2015.cnblogs.com/blog/646850/201703/646850-20170302234037360-1054283734.jpg)
 
 点击运行图标跳到触发器中断点位置
 
-[![wps4B4E.tmp](PLSQL%20developer%E7%9A%84%E4%BD%BF%E7%94%A8.assets/646850-20170302234043485-1337985341-1566378963477.jpg)](http://images2015.cnblogs.com/blog/646850/201703/646850-20170302234041251-683139281.jpg)
+[![wps4B4E.tmp](https://gitee.com/xieyun714/nodeimage/raw/master/img/646850-20170302234043485-1337985341-1566378963477.jpg)](http://images2015.cnblogs.com/blog/646850/201703/646850-20170302234041251-683139281.jpg)
 
 鼠标放到变量上可以显示变量值。
 
@@ -730,7 +730,7 @@ C:\Users\Administrator\AppData\Local\Temp
 
 然后点击--确定，重启PLSQL就OK了
 
-[![wps4B4F.tmp](PLSQL%20developer%E7%9A%84%E4%BD%BF%E7%94%A8.assets/646850-20170302234046704-855145713-1566378963514.jpg)](http://images2015.cnblogs.com/blog/646850/201703/646850-20170302234045204-1843733781.jpg) 
+[![wps4B4F.tmp](https://gitee.com/xieyun714/nodeimage/raw/master/img/646850-20170302234046704-855145713-1566378963514.jpg)](http://images2015.cnblogs.com/blog/646850/201703/646850-20170302234045204-1843733781.jpg) 
 
 ## **3.9   关联oracle官方文档**
 
@@ -738,7 +738,7 @@ C:\Users\Administrator\AppData\Local\Temp
 
  
 
-[![wps4B50.tmp](PLSQL%20developer%E7%9A%84%E4%BD%BF%E7%94%A8.assets/646850-20170302234049657-188815141-1566378963506.jpg)](http://images2015.cnblogs.com/blog/646850/201703/646850-20170302234048126-1098261839.jpg) 
+[![wps4B50.tmp](https://gitee.com/xieyun714/nodeimage/raw/master/img/646850-20170302234049657-188815141-1566378963506.jpg)](http://images2015.cnblogs.com/blog/646850/201703/646850-20170302234048126-1098261839.jpg) 
 
 **http://wenku.baidu.com/view/412b6ac208a1284ac9504304.html**
 
@@ -793,31 +793,31 @@ C:\Users\Administrator\AppData\Local\Temp
 
 **第2步 打开plsql  developer，按F1，或者打开如下界面：**
 
-[![wps4B51.tmp](PLSQL%20developer%E7%9A%84%E4%BD%BF%E7%94%A8.assets/646850-20170302234051329-122537148-1566378963554.jpg)](http://images2015.cnblogs.com/blog/646850/201703/646850-20170302234050657-237884387.jpg) 
+[![wps4B51.tmp](https://gitee.com/xieyun714/nodeimage/raw/master/img/646850-20170302234051329-122537148-1566378963554.jpg)](http://images2015.cnblogs.com/blog/646850/201703/646850-20170302234050657-237884387.jpg) 
 
  
 
 **第3步 输入官方文档的位置，点击建立按钮**
 
-[![wps4B52.tmp](PLSQL%20developer%E7%9A%84%E4%BD%BF%E7%94%A8.assets/646850-20170302234053516-418055182-1566378963562.jpg)](http://images2015.cnblogs.com/blog/646850/201703/646850-20170302234052485-1799693637.jpg) 
+[![wps4B52.tmp](https://gitee.com/xieyun714/nodeimage/raw/master/img/646850-20170302234053516-418055182-1566378963562.jpg)](http://images2015.cnblogs.com/blog/646850/201703/646850-20170302234052485-1799693637.jpg) 
 
 建立的过程有点慢，稍等。。。。。
 
 如图操作：
 
-[![wps4B53.tmp](PLSQL%20developer%E7%9A%84%E4%BD%BF%E7%94%A8.assets/646850-20170302234057126-754627942-1566378963656.jpg)](http://images2015.cnblogs.com/blog/646850/201703/646850-20170302234055095-1614516612.jpg) 
+[![wps4B53.tmp](https://gitee.com/xieyun714/nodeimage/raw/master/img/646850-20170302234057126-754627942-1566378963656.jpg)](http://images2015.cnblogs.com/blog/646850/201703/646850-20170302234055095-1614516612.jpg) 
 
  
 
 这里给个例子
 
-[![wps4B54.tmp](PLSQL%20developer%E7%9A%84%E4%BD%BF%E7%94%A8.assets/646850-20170302234059313-236961882-1566378963624.jpg)](http://images2015.cnblogs.com/blog/646850/201703/646850-20170302234058251-1968388513.jpg) 
+[![wps4B54.tmp](https://gitee.com/xieyun714/nodeimage/raw/master/img/646850-20170302234059313-236961882-1566378963624.jpg)](http://images2015.cnblogs.com/blog/646850/201703/646850-20170302234058251-1968388513.jpg) 
 
  
 
 可以查询了
 
-[![wps4B55.tmp](PLSQL%20developer%E7%9A%84%E4%BD%BF%E7%94%A8.assets/646850-20170302234102266-2086434616-1566378963602.jpg)](http://images2015.cnblogs.com/blog/646850/201703/646850-20170302234100751-1554449881.jpg) 
+[![wps4B55.tmp](https://gitee.com/xieyun714/nodeimage/raw/master/img/646850-20170302234102266-2086434616-1566378963602.jpg)](http://images2015.cnblogs.com/blog/646850/201703/646850-20170302234100751-1554449881.jpg) 
 
  
 
@@ -825,7 +825,7 @@ C:\Users\Administrator\AppData\Local\Temp
 
 或者在
 
-[![wps4B56.tmp](PLSQL%20developer%E7%9A%84%E4%BD%BF%E7%94%A8.assets/646850-20170302234105798-861964378-1566378963639.jpg)](http://images2015.cnblogs.com/blog/646850/201703/646850-20170302234105126-416173837.jpg) 
+[![wps4B56.tmp](https://gitee.com/xieyun714/nodeimage/raw/master/img/646850-20170302234105798-861964378-1566378963639.jpg)](http://images2015.cnblogs.com/blog/646850/201703/646850-20170302234105126-416173837.jpg) 
 
  
 
@@ -833,7 +833,7 @@ C:\Users\Administrator\AppData\Local\Temp
 
 需要离线的chm文件的朋友可以去小麦苗的微云下载，地址为：http://blog.itpub.net/26736162/viewspace-1624453/
 
-[![wps4B57.tmp](PLSQL%20developer%E7%9A%84%E4%BD%BF%E7%94%A8.assets/646850-20170302234106985-136822524-1566378963652.jpg)](http://images2015.cnblogs.com/blog/646850/201703/646850-20170302234106423-243792875.jpg) 
+[![wps4B57.tmp](https://gitee.com/xieyun714/nodeimage/raw/master/img/646850-20170302234106985-136822524-1566378963652.jpg)](http://images2015.cnblogs.com/blog/646850/201703/646850-20170302234106423-243792875.jpg) 
 
  
 
@@ -843,7 +843,7 @@ C:\Users\Administrator\AppData\Local\Temp
 
 新版本的PL/SQL Developer打开时总会出现如下logon窗口 
 
-[![wps4B58.tmp](PLSQL%20developer%E7%9A%84%E4%BD%BF%E7%94%A8.assets/646850-20170302234108829-280889858-1566378963694.jpg)](http://images2015.cnblogs.com/blog/646850/201703/646850-20170302234107938-56742343.jpg) 
+[![wps4B58.tmp](https://gitee.com/xieyun714/nodeimage/raw/master/img/646850-20170302234108829-280889858-1566378963694.jpg)](http://images2015.cnblogs.com/blog/646850/201703/646850-20170302234107938-56742343.jpg) 
 
 解决方法： 
 
@@ -859,23 +859,23 @@ C:\Users\Administrator\AppData\Local\Temp
 
 # **第四章 PLSQL Developer配置文件的路径**
 
-[![wps4B69.tmp](PLSQL%20developer%E7%9A%84%E4%BD%BF%E7%94%A8.assets/646850-20170302234110610-1031378538-1566378963682.jpg)](http://images2015.cnblogs.com/blog/646850/201703/646850-20170302234110001-111746362.jpg) 
+[![wps4B69.tmp](https://gitee.com/xieyun714/nodeimage/raw/master/img/646850-20170302234110610-1031378538-1566378963682.jpg)](http://images2015.cnblogs.com/blog/646850/201703/646850-20170302234110001-111746362.jpg) 
 
 C:\Users\Administrator\AppData\Roaming
 
-[![wps4B6A.tmp](PLSQL%20developer%E7%9A%84%E4%BD%BF%E7%94%A8.assets/646850-20170302234114282-389934098-1566378963703.jpg)](http://images2015.cnblogs.com/blog/646850/201703/646850-20170302234112329-1445488669.jpg) 
+[![wps4B6A.tmp](https://gitee.com/xieyun714/nodeimage/raw/master/img/646850-20170302234114282-389934098-1566378963703.jpg)](http://images2015.cnblogs.com/blog/646850/201703/646850-20170302234112329-1445488669.jpg) 
 
  
 
 还有一部分的的配置文件在安装文件夹中，如图：
 
-[![wps4B6B.tmp](PLSQL%20developer%E7%9A%84%E4%BD%BF%E7%94%A8.assets/646850-20170302234117204-476176566-1566378963712.jpg)](http://images2015.cnblogs.com/blog/646850/201703/646850-20170302234115970-905201618.jpg) 
+[![wps4B6B.tmp](https://gitee.com/xieyun714/nodeimage/raw/master/img/646850-20170302234117204-476176566-1566378963712.jpg)](http://images2015.cnblogs.com/blog/646850/201703/646850-20170302234115970-905201618.jpg) 
 
 ## **4.1  11版本支持导入配置**
 
 11版本的plsql支持把配置文件导出后再导入了，这个功能很好。
 
-[![wps4B6C.tmp](PLSQL%20developer%E7%9A%84%E4%BD%BF%E7%94%A8.assets/646850-20170302234120548-1881779788-1566378963739.jpg)](http://images2015.cnblogs.com/blog/646850/201703/646850-20170302234118766-719047634.jpg) 
+[![wps4B6C.tmp](https://gitee.com/xieyun714/nodeimage/raw/master/img/646850-20170302234120548-1881779788-1566378963739.jpg)](http://images2015.cnblogs.com/blog/646850/201703/646850-20170302234118766-719047634.jpg) 
 
  
 
@@ -883,23 +883,23 @@ C:\Users\Administrator\AppData\Roaming
 
 在如下窗口中如果找不到对应的字体可以手动进行设置，前提是系统里必须有这个字体，
 
-[![wps4B6D.tmp](PLSQL%20developer%E7%9A%84%E4%BD%BF%E7%94%A8.assets/646850-20170302234125688-1362315377-1566378963771.jpg)](http://images2015.cnblogs.com/blog/646850/201703/646850-20170302234123407-431954410.jpg) 
+[![wps4B6D.tmp](https://gitee.com/xieyun714/nodeimage/raw/master/img/646850-20170302234125688-1362315377-1566378963771.jpg)](http://images2015.cnblogs.com/blog/646850/201703/646850-20170302234123407-431954410.jpg) 
 
  
 
 收到设置的方法是找到安装路径，然后找到配置文件夹
 
-[![wps4B6E.tmp](PLSQL%20developer%E7%9A%84%E4%BD%BF%E7%94%A8.assets/646850-20170302234126501-1273576875-1566378963800.jpg)](http://images2015.cnblogs.com/blog/646850/201703/646850-20170302234126251-180729274.jpg) 
+[![wps4B6E.tmp](https://gitee.com/xieyun714/nodeimage/raw/master/img/646850-20170302234126501-1273576875-1566378963800.jpg)](http://images2015.cnblogs.com/blog/646850/201703/646850-20170302234126251-180729274.jpg) 
 
 进入后找到
 
-[![wps4B6F.tmp](PLSQL%20developer%E7%9A%84%E4%BD%BF%E7%94%A8.assets/646850-20170302234127016-920216474-1566378963802.jpg)](http://images2015.cnblogs.com/blog/646850/201703/646850-20170302234126751-1825634792.jpg) 
+[![wps4B6F.tmp](https://gitee.com/xieyun714/nodeimage/raw/master/img/646850-20170302234127016-920216474-1566378963802.jpg)](http://images2015.cnblogs.com/blog/646850/201703/646850-20170302234126751-1825634792.jpg) 
 
 进行收到配置即可。 
 
 # **第五章 一个非常实用的插件**
 
-[![wps4B70.tmp](PLSQL%20developer%E7%9A%84%E4%BD%BF%E7%94%A8.assets/646850-20170302234128470-203847747-1566378963829.jpg)](http://images2015.cnblogs.com/blog/646850/201703/646850-20170302234127845-1852277049.jpg) 
+[![wps4B70.tmp](https://gitee.com/xieyun714/nodeimage/raw/master/img/646850-20170302234128470-203847747-1566378963829.jpg)](http://images2015.cnblogs.com/blog/646850/201703/646850-20170302234127845-1852277049.jpg) 
 
  
 
@@ -947,7 +947,7 @@ Generate Word Documentation 导出当前表结构内容至Word文档（选中表
 
 我常用的功能是Expaste功能，这个功能能把复制的文本自动添加单引号，这个功能非常实用。
 
-[![wps4B71.tmp](PLSQL%20developer%E7%9A%84%E4%BD%BF%E7%94%A8.assets/646850-20170302234130532-1331622441-1566378963838.jpg)](http://images2015.cnblogs.com/blog/646850/201703/646850-20170302234129423-1442545373.jpg) 
+[![wps4B71.tmp](https://gitee.com/xieyun714/nodeimage/raw/master/img/646850-20170302234130532-1331622441-1566378963838.jpg)](http://images2015.cnblogs.com/blog/646850/201703/646850-20170302234129423-1442545373.jpg) 
 
 复制如下数字：
 
@@ -961,7 +961,7 @@ Generate Word Documentation 导出当前表结构内容至Word文档（选中表
 
 执行expaste粘贴后：
 
-[![wps4B72.tmp](PLSQL%20developer%E7%9A%84%E4%BD%BF%E7%94%A8.assets/646850-20170302234132423-666923912-1566378963845.jpg)](http://images2015.cnblogs.com/blog/646850/201703/646850-20170302234131454-283279869.jpg) 
+[![wps4B72.tmp](https://gitee.com/xieyun714/nodeimage/raw/master/img/646850-20170302234132423-666923912-1566378963845.jpg)](http://images2015.cnblogs.com/blog/646850/201703/646850-20170302234131454-283279869.jpg) 
 
 # **第六章  报错**
 
@@ -1005,7 +1005,7 @@ PLSQL Developer连接不上Win7 64位系统下安装的Oracle11g64位的解决�
 
  
 
-[![wps4B73.tmp](PLSQL%20developer%E7%9A%84%E4%BD%BF%E7%94%A8.assets/646850-20170302234134454-114928077-1566378963861.jpg)](http://images2015.cnblogs.com/blog/646850/201703/646850-20170302234133345-2074140807.jpg) 
+[![wps4B73.tmp](https://gitee.com/xieyun714/nodeimage/raw/master/img/646850-20170302234134454-114928077-1566378963861.jpg)](http://images2015.cnblogs.com/blog/646850/201703/646850-20170302234133345-2074140807.jpg) 
 
  
 
@@ -1129,15 +1129,15 @@ Windows  环境下有的时候需要设置ORACLE_HOME 的变量
 
 如下，如果角色不能选择的话，可能是OCI配置的问题：
 
-[![wps4B74.tmp](PLSQL%20developer%E7%9A%84%E4%BD%BF%E7%94%A8.assets/646850-20170302234136188-1816057655-1566378963841.jpg)](http://images2015.cnblogs.com/blog/646850/201703/646850-20170302234135345-548737038.jpg) 
+[![wps4B74.tmp](https://gitee.com/xieyun714/nodeimage/raw/master/img/646850-20170302234136188-1816057655-1566378963841.jpg)](http://images2015.cnblogs.com/blog/646850/201703/646850-20170302234135345-548737038.jpg) 
 
-[![wps4B75.tmp](PLSQL%20developer%E7%9A%84%E4%BD%BF%E7%94%A8.assets/646850-20170302234138845-506459635-1566378963874.jpg)](http://images2015.cnblogs.com/blog/646850/201703/646850-20170302234137454-646589306.jpg) 
+[![wps4B75.tmp](https://gitee.com/xieyun714/nodeimage/raw/master/img/646850-20170302234138845-506459635-1566378963874.jpg)](http://images2015.cnblogs.com/blog/646850/201703/646850-20170302234137454-646589306.jpg) 
 
  
 
 正确界面：
 
-[![wps4B86.tmp](PLSQL%20developer%E7%9A%84%E4%BD%BF%E7%94%A8.assets/646850-20170302234142173-1936764304-1566378963891.jpg)](http://images2015.cnblogs.com/blog/646850/201703/646850-20170302234141485-1599393622.jpg) 
+[![wps4B86.tmp](https://gitee.com/xieyun714/nodeimage/raw/master/img/646850-20170302234142173-1936764304-1566378963891.jpg)](http://images2015.cnblogs.com/blog/646850/201703/646850-20170302234141485-1599393622.jpg) 
 
  
 
@@ -1149,7 +1149,7 @@ D:\Program files\app\oracle\product\11.2.0.1\dbhome_1
 
 D:\Program files\app\oracle\product\11.2.0.1\dbhome_1\bin\oci.dll
 
-[![wps4B87.tmp](PLSQL%20developer%E7%9A%84%E4%BD%BF%E7%94%A8.assets/646850-20170302234144501-1827968463-1566378963887.jpg)](http://images2015.cnblogs.com/blog/646850/201703/646850-20170302234143470-1633960266.jpg) 
+[![wps4B87.tmp](https://gitee.com/xieyun714/nodeimage/raw/master/img/646850-20170302234144501-1827968463-1566378963887.jpg)](http://images2015.cnblogs.com/blog/646850/201703/646850-20170302234143470-1633960266.jpg) 
 
  
 
@@ -1159,13 +1159,13 @@ D:\Program files\app\oracle\product\11.2.0.1\dbhome_1\bin\oci.dll
 
 错误登录界面：
 
-[![wps4B88.tmp](PLSQL%20developer%E7%9A%84%E4%BD%BF%E7%94%A8.assets/646850-20170302234146407-1142946624-1566378963903.jpg)](http://images2015.cnblogs.com/blog/646850/201703/646850-20170302234145501-794833374.jpg) 
+[![wps4B88.tmp](https://gitee.com/xieyun714/nodeimage/raw/master/img/646850-20170302234146407-1142946624-1566378963903.jpg)](http://images2015.cnblogs.com/blog/646850/201703/646850-20170302234145501-794833374.jpg) 
 
  
 
 正确界面：
 
-[![wps4B89.tmp](PLSQL%20developer%E7%9A%84%E4%BD%BF%E7%94%A8.assets/646850-20170302234148657-1089576244-1566378963911.jpg)](http://images2015.cnblogs.com/blog/646850/201703/646850-20170302234147516-74074754.jpg) 
+[![wps4B89.tmp](https://gitee.com/xieyun714/nodeimage/raw/master/img/646850-20170302234148657-1089576244-1566378963911.jpg)](http://images2015.cnblogs.com/blog/646850/201703/646850-20170302234147516-74074754.jpg) 
 
  
 
@@ -1175,7 +1175,7 @@ D:\Program files\app\oracle\product\11.2.0.1\dbhome_1\bin\oci.dll
 
 TNS_ADMIN=D:\Programfiles\app\oracle\product\11.2.0.1\dbhome_1\NETWORK\ADMIN
 
-[![wps4B8A.tmp](PLSQL%20developer%E7%9A%84%E4%BD%BF%E7%94%A8.assets/646850-20170302234151001-743176523-1566378963923.jpg)](http://images2015.cnblogs.com/blog/646850/201703/646850-20170302234150141-1943734167.jpg)
+[![wps4B8A.tmp](https://gitee.com/xieyun714/nodeimage/raw/master/img/646850-20170302234151001-743176523-1566378963923.jpg)](http://images2015.cnblogs.com/blog/646850/201703/646850-20170302234150141-1943734167.jpg)
 
  
 
@@ -1183,13 +1183,13 @@ TNS_ADMIN=D:\Programfiles\app\oracle\product\11.2.0.1\dbhome_1\NETWORK\ADMIN
 
 如下，正常的有错误窗口：
 
-[![wps4B8B.tmp](PLSQL%20developer%E7%9A%84%E4%BD%BF%E7%94%A8.assets/646850-20170302234153235-1804787634-1566378963929.jpg)](http://images2015.cnblogs.com/blog/646850/201703/646850-20170302234151985-1969643355.jpg) 
+[![wps4B8B.tmp](https://gitee.com/xieyun714/nodeimage/raw/master/img/646850-20170302234153235-1804787634-1566378963929.jpg)](http://images2015.cnblogs.com/blog/646850/201703/646850-20170302234151985-1969643355.jpg) 
 
  
 
 而下边的存储过程没有错误窗口：
 
-[![wps4B8C.tmp](PLSQL%20developer%E7%9A%84%E4%BD%BF%E7%94%A8.assets/646850-20170302234155923-969218393-1566378963947.jpg)](http://images2015.cnblogs.com/blog/646850/201703/646850-20170302234154438-981102086.jpg) 
+[![wps4B8C.tmp](https://gitee.com/xieyun714/nodeimage/raw/master/img/646850-20170302234155923-969218393-1566378963947.jpg)](http://images2015.cnblogs.com/blog/646850/201703/646850-20170302234154438-981102086.jpg) 
 
  
 
@@ -1207,7 +1207,7 @@ TNS_ADMIN=D:\Programfiles\app\oracle\product\11.2.0.1\dbhome_1\NETWORK\ADMIN
 >
 > 
 >
->  [![img](PLSQL%20developer%E7%9A%84%E4%BD%BF%E7%94%A8.assets/ico_mailme_02.png)](http://mail.qq.com/cgi-bin/qm_share?t=qm_mailme&email=eRURCxscCg05CAhXGhYU)  [![DBA笔试面试讲解](PLSQL%20developer%E7%9A%84%E4%BD%BF%E7%94%A8.assets/group.png)](http://shang.qq.com/wpa/qunwpa?idkey=8bb4d1af8e3188b523227caf7f070851169e74a66ef92c2a436634de6bc0ad56)
+>  [![img](https://gitee.com/xieyun714/nodeimage/raw/master/img/group.png)](http://shang.qq.com/wpa/qunwpa?idkey=8bb4d1af8e3188b523227caf7f070851169e74a66ef92c2a436634de6bc0ad56)
 
 
 
@@ -1223,13 +1223,13 @@ TNS_ADMIN=D:\Programfiles\app\oracle\product\11.2.0.1\dbhome_1\NETWORK\ADMIN
 
 下一篇： [数据库笔试面试题库（Oracle、MySQL等）](http://blog.itpub.net/26736162/viewspace-2134706/)
 
-[![img](PLSQL%20developer%E7%9A%84%E4%BD%BF%E7%94%A8.assets/user_pic_default.png)](javascript:;)
+[![img](https://gitee.com/xieyun714/nodeimage/raw/master/img/user_pic_default.png)](javascript:;)
 
 请登录后发表评论 登录
 
 全部评论 1
 
-[![img](PLSQL%20developer%E7%9A%84%E4%BD%BF%E7%94%A8.assets/44.jpg)](http://blog.itpub.net/20893244)
+[![img](https://gitee.com/xieyun714/nodeimage/raw/master/img/44.jpg)](http://blog.itpub.net/20893244)
 
 [甲骨文技术支持](http://blog.itpub.net/20893244)回复
 

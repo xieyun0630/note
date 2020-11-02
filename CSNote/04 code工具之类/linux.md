@@ -194,11 +194,11 @@
 
 ### `ls -l`命令结果意义： [	](linux_20200701080334296)
 
-![image-20200701191716330](linux.assets/image-20200701191716330.png)
+![image-20200701191716330](https://gitee.com/xieyun714/nodeimage/raw/master/img/image-20200701191716330.png)
 
 + 结果：
-    + {{c1::![image-20200701191552229](linux.assets/image-20200701191552229.png)}}
-    + {{c1::![image-20200701191808299](linux.assets/image-20200701191808299.png)}}
+    + {{c1::![image-20200701191552229](https://gitee.com/xieyun714/nodeimage/raw/master/img/image-20200701191552229.png)}}
+    + {{c1::![image-20200701191808299](https://gitee.com/xieyun714/nodeimage/raw/master/img/image-20200701191808299.png)}}
 
 ### `chmod 754 filename` 命令的含义： [	](linux_20200701080334298)
 
@@ -236,14 +236,14 @@
 
 ### ps命令各选项意义 [	](linux_20200702035951399)
 
-+ ![image-20200702151432568](linux.assets/image-20200702151432568.png)
-+ {{c1:: ![image-20200702151410290](linux.assets/image-20200702151410290.png) }}
++ ![image-20200702151432568](https://gitee.com/xieyun714/nodeimage/raw/master/img/image-20200702151432568.png)
++ {{c1:: ![image-20200702151410290](https://gitee.com/xieyun714/nodeimage/raw/master/img/image-20200702151410290.png) }}
 
 
 ### ps命令输出说明： [	](linux_20200702035951401)
 
-+ ![image-20200702145117478](linux.assets/image-20200702145117478.png)
-+ {{c1:: ![image-20200702145053071](linux.assets/image-20200702145053071.png) }}
++ ![image-20200702145117478](https://gitee.com/xieyun714/nodeimage/raw/master/img/image-20200702145117478.png)
++ {{c1:: ![image-20200702145053071](https://gitee.com/xieyun714/nodeimage/raw/master/img/image-20200702145053071.png) }}
 
 ### linux进程常用命令 [	](linux_20200702035951402)
 

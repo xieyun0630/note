@@ -52,7 +52,7 @@
 ### 组件化例子：列表 [ ](vue_20200703080524561)
 
 - 自定义组件实现下面效果：
-  ![image-20200703145722275](vue.assets/image-20200703145722275.png)
+  ![image-20200703145722275](https://gitee.com/xieyun714/nodeimage/raw/master/img/image-20200703145722275.png)
 - 组件使用：
   ```html
   <!-- {{c1:: -->
@@ -1125,12 +1125,12 @@ Vue.component("base-input", {
 ### 过渡的 6 个类名的关系 [ ](vue_20200709073019548)
 
 - 过渡类的关系图：{{c1::
-  ![image-20200709171740953](vue.assets/image-20200709171740953.png)}}
+  ![image-20200709171740953](https://gitee.com/xieyun714/nodeimage/raw/master/img/image-20200709171740953.png)}}
 - 过渡的类名：{{c1:: 对于这些在过渡中切换的类名来说，如果你使用一个没有名字的 `<transition>`，则 `v-` 是这些类名的默认前缀。}}
 
 ### VUE 实现简单 CSS 过渡 [ ](vue_20200709073019550)
 
-- 效果：![P7pMdJjG3D](vue.assets/P7pMdJjG3D.gif)
+- 效果：![P7pMdJjG3D](https://gitee.com/xieyun714/nodeimage/raw/master/img/P7pMdJjG3D.gif)
 
 - css 样式代码：
 
@@ -1152,7 +1152,7 @@ Vue.component("base-input", {
 
 ### VUE 实现简单 CSS 动画 [ ](vue_20200709073019552)
 
-- 效果![ngmWShQWb6](vue.assets/ngmWShQWb6.gif)
+- 效果![ngmWShQWb6](https://gitee.com/xieyun714/nodeimage/raw/master/img/ngmWShQWb6.gif)
 - css 样式代码：
   ```css
   /* {{c1:: */
@@ -1281,7 +1281,7 @@ methods: {
 
 ### 列表过渡 [ ](vue_20200717061050992)
 
-- 效果：![rPw6hScs72](vue.assets/rPw6hScs72-1594812237726.gif)
+- 效果：![rPw6hScs72](https://gitee.com/xieyun714/nodeimage/raw/master/img/rPw6hScs72-1594812237726.gif)
 - html 代码：
   ```html
   <!-- {{c1:: -->
