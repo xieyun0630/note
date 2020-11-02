@@ -24,4 +24,4 @@
   + TNS_ADMIN：`..\instantclient_19_6\network\admin` (远程访问工具目录下)
   + NLS_LANG：`SIMPLIFIED CHINESE_CHINA.ZHS16GBK`
 
-7. 在PLSQL中配置connection：![image-20200413133814775](java.assets/image-20200413133814775.png)
+7. 在PLSQL中配置connection：![image-20200413133814775](https://gitee.com/xieyun714/nodeimage/raw/master/img/image-20200413133814775.png)

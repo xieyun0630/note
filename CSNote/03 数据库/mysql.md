@@ -1131,7 +1131,7 @@
 
 + InnoDB和MyISAM都是B+树的结构，实现方式差别：
   + {{c1:: InnoDB是聚簇索引（叶子节点存数据），MyISAM是非聚簇索引（叶子节点存指针） }}
-  + 实现（图）：{{c1:: ![img](mysql.assets/1107494-20181127224013631-1598460643.png) }}
+  + 实现（图）：{{c1:: ![img](https://gitee.com/xieyun714/nodeimage/raw/master/img/1107494-20181127224013631-1598460643.png) }}
 + 功能差别：{{c1:: InnoDB 支持事务、行级锁, 而MyISAM都不支持 }}
 
 ### 查看MYSQL数据库中SQL执行频率 [ ](mysql_20200927095114644)
@@ -1156,7 +1156,7 @@
 
 ### 定位低效率执行SQL：`show processlist`命令 [ ](mysql_20200927095114646)
 
-+ 图：![1556098544349](mysql.assets/1556098544349.png)
++ 图：![1556098544349](https://gitee.com/xieyun714/nodeimage/raw/master/img/1556098544349.png)
 + 各列含义
   + `id列`:{{c1::用户登录mysql时，系统分配的"connection_id"，可以使用函数connection_id()查看}}
   + `user列`:{{c1::显示当前用户。如果不是root，这个命令就只显示用户权限范围的sql语句}}
@@ -1233,9 +1233,9 @@
 + 查看当前MySQL是否支持profile:{{c1:: `select @@have_profiling`}}
 + 通过set语句在Session级别开启profiling:{{c1:: `set profiling=1；`}}
 
-+ 查看SQL语句执行的耗时：{{c1:: `show profiles `![1552489017940](mysql.assets/1552489017940.png)}}
++ 查看SQL语句执行的耗时：{{c1:: `show profiles `![1552489017940](https://gitee.com/xieyun714/nodeimage/raw/master/img/1552489017940.png)}}
 
-+ 查看具体语句中每个线程的状态和消耗的时间：{{c1:: `show  profile for  query  query_id `![1552489053763](mysql.assets/1552489053763.png)}}
++ 查看具体语句中每个线程的状态和消耗的时间：{{c1:: `show  profile for  query  query_id `![1552489053763](https://gitee.com/xieyun714/nodeimage/raw/master/img/1552489053763.png)}}
 
 + MySQL支持进一步选择all、cpu、block io 、context switch、page faults等明细类型类查看MySQL在使用什么资源上耗费了过高的时间。
   + 例：{{c1:: `show profile for cpu query_id`}}

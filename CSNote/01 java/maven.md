@@ -142,8 +142,8 @@
 
 ### 依赖范围对传递性依赖的影响 [	](maven_20200331123149442)
 
-![image-20200330173655295](maven.assets/image-20200330173655295.png)
-{{c1:: ![image-20200330173546138](maven.assets/image-20200330173546138.png) }}
+![image-20200330173655295](https://gitee.com/xieyun714/nodeimage/raw/master/img/image-20200330173655295.png)
+{{c1:: ![image-20200330173546138](https://gitee.com/xieyun714/nodeimage/raw/master/img/image-20200330173546138.png) }}
 
 ### 依赖冲突原则 [	](maven_20200331123149443)
 
@@ -163,7 +163,7 @@
 
 {{c1::
 
-![image-20200330175609321](maven.assets/image-20200330175609321.png)
+![image-20200330175609321](https://gitee.com/xieyun714/nodeimage/raw/master/img/image-20200330175609321.png)
 
 }}
 
@@ -333,7 +333,7 @@
 - url：{{c1::镜像地址}}
 - mirrorOf：{{c1::代表一个镜像的替代位置，例如central就表示代替官方的中央仓库}}
 - mirrorOf匹配语法如下：
-    + {{c1::![image-20200401164331881](maven.assets/image-20200401164331881.png)}}
+    + {{c1::![image-20200401164331881](https://gitee.com/xieyun714/nodeimage/raw/master/img/image-20200401164331881.png)}}
 
 ### 中央仓库的概念 [	](maven_20200410012359802)
 + 中央仓库是{{c1::Maven配置文件中默认的仓库地址，如果用户没有修改仓库配置，那么Maven默认会从中央仓库下载依赖。}}
@@ -351,15 +351,15 @@
 
 ### clean生命周期阶段与插件目标的绑定关系 [	](maven_20200410012359806)
 
-![image-20200401180528655](maven.assets/image-20200401180528655.png)
+![image-20200401180528655](https://gitee.com/xieyun714/nodeimage/raw/master/img/image-20200401180528655.png)
 
-{{c1::![image-20200401164755027](maven.assets/image-20200401164755027.png)}}
+{{c1::![image-20200401164755027](https://gitee.com/xieyun714/nodeimage/raw/master/img/image-20200401164755027.png)}}
 
 ### site生命周期阶段与插件目标的绑定关系 [	](maven_20200410012359808)
 
-![image-20200401180710199](maven.assets/image-20200401180710199.png)
+![image-20200401180710199](https://gitee.com/xieyun714/nodeimage/raw/master/img/image-20200401180710199.png)
 
-{{c1:: ![image-20200401180626652](maven.assets/image-20200401180626652.png) }}
+{{c1:: ![image-20200401180626652](https://gitee.com/xieyun714/nodeimage/raw/master/img/image-20200401180626652.png) }}
 
  }}
 

@@ -206,7 +206,7 @@
 
 ### webpack的loader调用过程（图） [	](buildTool_20200722073620443)
 
-{{c1::![image-20200721183448836](buildTool.assets/image-20200721183448836.png)}}
+{{c1::![image-20200721183448836](https://gitee.com/xieyun714/nodeimage/raw/master/img/image-20200721183448836.png)}}
 
 ### webpack打包样式资源配置 [	](buildTool_20200626090144143)
 

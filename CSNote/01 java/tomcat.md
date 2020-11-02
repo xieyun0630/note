@@ -23,7 +23,7 @@
 + 作用：处理Socket连接，负责网络字节流与Request和Response对象的转化。
 + 通过在Tomcat中配置多个Service，可以实现通过不同的端口号来访问同一台机器上部署的不同应用。
 + Coyote与Catalina的交互过程
-+ ![image-20201016134550413](tomcat.assets/image-20201016134550413.png)
++ ![image-20201016134550413](https://gitee.com/xieyun714/nodeimage/raw/master/img/image-20201016134550413.png)
 
 ###  Tomcat支持的IO模型 [	](tomcat_20201017075500792)
 - Tomcat 支持的IO模型（自8.5/9.0 版本起，Tomcat 移除了 对 BIO 的支持）：
@@ -38,7 +38,7 @@
 
 ### 连接器（Coyote）组件工作流程（图） [	](tomcat_20201017075500796)
 
-![image-20201016140613291](tomcat.assets/image-20201016140613291.png)
+![image-20201016140613291](https://gitee.com/xieyun714/nodeimage/raw/master/img/image-20201016140613291.png)
 - 在Tomcat中没有对应的Endpoint 接口， 但是有一个抽象类 AbstractEndpoint ，其下有三个实现类：
   - NioEndpoint
   - Nio2Endpoint
@@ -55,11 +55,11 @@
 ### 容器 - Catalina [	](tomcat_20201017075500799)
 
 + 作用：Catalina是Tomcat的servlet容器实现，是tomcat中的核心
-+ Tomcat 的模块分层结构图![image-20201016141342696](tomcat.assets/image-20201016141342696.png)
++ Tomcat 的模块分层结构图![image-20201016141342696](https://gitee.com/xieyun714/nodeimage/raw/master/img/image-20201016141342696.png)
 
 ### Catalina 的主要组件结构： [	](tomcat_20201017075500802)
 
-![image-20201016141443250](tomcat.assets/image-20201016141443250.png)
+![image-20201016141443250](https://gitee.com/xieyun714/nodeimage/raw/master/img/image-20201016141443250.png)
 
 + 各个组件的职责：
 
@@ -73,7 +73,7 @@
 
 ### Container 结构 [	](tomcat_20201017075500803)
 + Tomcat设计了4种容器，分别是Engine、Host、Context和Wrapper。
-![image-20201016142854201](tomcat.assets/image-20201016142854201.png)
+![image-20201016142854201](https://gitee.com/xieyun714/nodeimage/raw/master/img/image-20201016142854201.png)
 + 各个组件的含义 ：
 | 组件    | 职责                                                         |
 | ------- | ------------------------------------------------------------ |
@@ -84,7 +84,7 @@
 
 ### Tomcat启动流程（序列图） [	](tomcat_20201017075500806)
 
-![image-20201016143552616](tomcat.assets/image-20201016143552616.png)
+![image-20201016143552616](https://gitee.com/xieyun714/nodeimage/raw/master/img/image-20201016143552616.png)
 
 ### Lifecycle接口 [	](tomcat_20201017075500809)
 
@@ -98,8 +98,8 @@
 
 + Mapper组件作用：{{c1:: 将用户请求的URL定位到一个Servlet }}
 
-![image-20201016144731840](tomcat.assets/image-20201016144731840.png)
+![image-20201016144731840](https://gitee.com/xieyun714/nodeimage/raw/master/img/image-20201016144731840.png)
 
 + 将用户请求的URL定位到一个Servlet流程
 
-  ![image-20201016144801093](tomcat.assets/image-20201016144801093.png)
+  ![image-20201016144801093](https://gitee.com/xieyun714/nodeimage/raw/master/img/image-20201016144801093.png)

@@ -19,7 +19,7 @@
 ### 静态类实现通用工厂 [	](spring_20200713102713842)
 - 简单工厂会存在大量的代码冗余
   
-  - ![image-20200411181701143](spring.assets/image-20200411181701143.png)
+  - ![image-20200411181701143](https://gitee.com/xieyun714/nodeimage/raw/master/img/image-20200411181701143.png)
 - 通用工厂的代码
   ```java
   //{{c1::
@@ -315,7 +315,7 @@
 
 ### spring注入的总结图 [	](spring_20200715110208929)
 
-{{c1::![image-20200416155620897](spring.assets/image-20200416155620897.png)}}
+{{c1::![image-20200416155620897](https://gitee.com/xieyun714/nodeimage/raw/master/img/image-20200416155620897.png)}}
 
 ### 反转控制与依赖注入 [	](spring_20200715110208930)
 
@@ -366,7 +366,7 @@
 
 ### Spring工厂创建对象与依赖注入的流程图 [	](spring_20200715110208932)
 
-{{c1::![image-20200417152030222](spring.assets/image-20200417152030222.png)}}
+{{c1::![image-20200417152030222](https://gitee.com/xieyun714/nodeimage/raw/master/img/image-20200417152030222.png)}}
 
 ### Spring工厂创建对象的次数 [	](spring_20200715110208933)
 
@@ -477,7 +477,7 @@
 2. {{c1:: Spring的配置文件中进行配置`<bean id="myBeanPostProcessor" class="xxx.MyBeanPostProcessor"/>` }}
    +  注意：{{c1:: BeanPostProcessor会对Spring工厂中所有创建的对象进行加工。 }}
 + 运行流程图
-  + {{c1::![image-20200420155053027](spring.assets/image-20200420155053027.png)}}
+  + {{c1::![image-20200420155053027](https://gitee.com/xieyun714/nodeimage/raw/master/img/image-20200420155053027.png)}}
 
 ### 容器后置处理器 [	](spring_20200911094545271)
 + 容器后置处理器必须实现：{{c1:: `BeanFactoryPostProcessor`接口 }}
@@ -1159,7 +1159,7 @@ public class Person
 
 ### PlatformTransactionManager [	](spring_20201017075500761)
 + 作用：{{c1:: 提供一个接口，代表事务管理器，这个接口针对不同的框架提供不同的实现类 }}
-+ 继承关系图：![image-20201017163325206](spring.assets/image-20201017163325206.png)
++ 继承关系图：![image-20201017163325206](https://gitee.com/xieyun714/nodeimage/raw/master/img/image-20201017163325206.png)
 
 ### spring注解声明式事务配置 [	](spring_20201017075500764)
 

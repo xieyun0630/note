@@ -69,7 +69,7 @@ public class ComplexHeadData {
 
 复杂头写入效果：
 
-![image-20191203173533187](java%20tools.assets/image-20191203173533187.png)
+![image-20191203173533187](https://gitee.com/xieyun714/nodeimage/raw/master/img/image-20191203173533187.png)
 
 ### 重复多次写入Excel                                         
 

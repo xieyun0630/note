@@ -48,9 +48,9 @@
 
 由于添加了2种【基本料金】下面黄色部分添加了状态
 
-![image-20191114180727249](UI%20PF%E6%94%B9%E4%BF%AE.assets/image-20191114180727249.png)
+![image-20191114180727249](https://gitee.com/xieyun714/nodeimage/raw/master/img/image-20191114180727249.png)
 
-![image-20191114180732550](UI%20PF%E6%94%B9%E4%BF%AE.assets/image-20191114180732550.png)
+![image-20191114180732550](https://gitee.com/xieyun714/nodeimage/raw/master/img/image-20191114180732550.png)
 
 ## カテエネPF:画面入口
 
@@ -65,7 +65,7 @@
 
 ### 第二步：当月明细入口
 
-![image-20191114211642148](UI%20PF%E6%94%B9%E4%BF%AE.assets/image-20191114211642148.png)
+![image-20191114211642148](https://gitee.com/xieyun714/nodeimage/raw/master/img/image-20191114211642148.png)
 
 式样书上的入口：
 
@@ -79,7 +79,7 @@ http://localhost:8088/kp/syokai/tougetumeisai.do?method=doIndex
 
 如果改修以后下面画面正常显示就说明对它没有影响，其他的只是确认而已。
 
-![image-20191114211006585](UI%20PF%E6%94%B9%E4%BF%AE.assets/image-20191114211006585.png)
+![image-20191114211006585](https://gitee.com/xieyun714/nodeimage/raw/master/img/image-20191114211006585.png)
 
 ### 3种契約状态
 
@@ -108,7 +108,7 @@ http://192.168.6.12:8081/bp/list/ichiran.do
 
 ### 进入【料金実績】:
 
-![image-20191114215253645](UI%20PF%E6%94%B9%E4%BF%AE.assets/image-20191114215253645.png)
+![image-20191114215253645](https://gitee.com/xieyun714/nodeimage/raw/master/img/image-20191114215253645.png)
 
 后面2个选项卡，分别有2个download。
 
@@ -116,11 +116,11 @@ http://192.168.6.12:8081/bp/list/ichiran.do
 
 #### 问题：分别点进去就能拿到下面3个料金実績？？
 
-![image-20191114215706669](UI%20PF%E6%94%B9%E4%BF%AE.assets/image-20191114215706669.png)
+![image-20191114215706669](https://gitee.com/xieyun714/nodeimage/raw/master/img/image-20191114215706669.png)
 
 #### todo:以下的内容是只是确认的，具体如何进去，等QA之后再处理
 
-![image-20191114215954397](UI%20PF%E6%94%B9%E4%BF%AE.assets/image-20191114215954397.png)
+![image-20191114215954397](https://gitee.com/xieyun714/nodeimage/raw/master/img/image-20191114215954397.png)
 
 # 设计书与测试式样书
 
@@ -130,7 +130,7 @@ http://192.168.6.12:8081/bp/list/ichiran.do
 
 找到对应的代码改的位置然后标上颜色
 
-![image-20191114222735944](UI%20PF%E6%94%B9%E4%BF%AE.assets/image-20191114222735944.png)
+![image-20191114222735944](https://gitee.com/xieyun714/nodeimage/raw/master/img/image-20191114222735944.png)
 
 ### todo:参照一下视频最后一部分关于测试截图的几个文件的内容
 
@@ -189,7 +189,7 @@ PlatformKeiyakuKihonInfoEntity
    2. 实体对应的方法调用在：PlatformCsvDto的OUTPUT_METHODS_ELC字段
    3. CSV实体对象：PlatformCsvClumnDto
 6. 修改4个修改字段的注释：注意要将所有调用GET SET的地方都检查一边
-   ![image-20191114182420664](UI%20PF%E6%94%B9%E4%BF%AE.assets/image-20191114182420664.png)
+   ![image-20191114182420664](https://gitee.com/xieyun714/nodeimage/raw/master/img/image-20191114182420664.png)
 
 # QA管理
 
@@ -197,5 +197,5 @@ PlatformKeiyakuKihonInfoEntity
 
 ### 问题2:确认以下画面的CSV是否要改
 
-![image-20191114222057461](UI%20PF%E6%94%B9%E4%BF%AE.assets/image-20191114222057461.png)
+![image-20191114222057461](https://gitee.com/xieyun714/nodeimage/raw/master/img/image-20191114222057461.png)
 

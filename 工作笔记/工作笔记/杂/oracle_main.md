@@ -2,7 +2,7 @@
 
 ## 本部分笔记的总体结构
 
-![1567060680733](oracle_main.assets/1567060680733.png)
+![1567060680733](https://gitee.com/xieyun714/nodeimage/raw/master/img/1567060680733.png)
 
 ## pl/sql的基本的语法结构
 
@@ -147,19 +147,19 @@ END;
 
 ### 流程控制综合使用
 
-while版：![1567134776621](oracle_main.assets/1567134776621.png)
+while版：![1567134776621](https://gitee.com/xieyun714/nodeimage/raw/master/img/1567134776621.png)
 
-for版：![1567134868520](oracle_main.assets/1567134868520.png)
+for版：![1567134868520](https://gitee.com/xieyun714/nodeimage/raw/master/img/1567134868520.png)
 
-优化：![1567134957753](oracle_main.assets/1567134957753.png)
+优化：![1567134957753](https://gitee.com/xieyun714/nodeimage/raw/master/img/1567134957753.png)
 
 break功能：
 
-![1567135064116](oracle_main.assets/1567135064116.png)
+![1567135064116](https://gitee.com/xieyun714/nodeimage/raw/master/img/1567135064116.png)
 
 continure功能：
 
-![1567135159022](oracle_main.assets/1567135159022.png)
+![1567135159022](https://gitee.com/xieyun714/nodeimage/raw/master/img/1567135159022.png)
 
 ## 游标的使用
 
@@ -231,7 +231,7 @@ END;
 
 ### 游标的4种属性
 
-![1567146390212](oracle_main.assets/1567146390212.png)
+![1567146390212](https://gitee.com/xieyun714/nodeimage/raw/master/img/1567146390212.png)
 
 ### 游标的for循环
 
@@ -339,7 +339,7 @@ end;
 
 ### 自定义的异常
 
-![1567149762290](oracle_main.assets/1567149762290.png)
+![1567149762290](https://gitee.com/xieyun714/nodeimage/raw/master/img/1567149762290.png)
 
 ## 存储函数与存储过程
 
@@ -504,7 +504,7 @@ INSERT INTO USER_M(USER_ID,USER_NAME,PWD,EMAIL,SCHOOL,DEPART,GRADE) VALUES(EMP_S
 
 结果
 
-![img](oracle_main.assets/1560697-20190103112142173-348540125.png)
+![img](https://gitee.com/xieyun714/nodeimage/raw/master/img/1560697-20190103112142173-348540125.png)
 
 
 
@@ -638,5 +638,5 @@ to_char(12.45, '99V9')    ' 125'
 
 ## PL/SQL变量的命名方式
 
-![1567062326243](oracle_main.assets/1567062326243.png)
+![1567062326243](https://gitee.com/xieyun714/nodeimage/raw/master/img/1567062326243.png)
 

@@ -86,7 +86,7 @@ maven的默认编译使用的jdk版本貌似很低，使用maven-compiler-plugin
 
 方式一：搜索:java.configuration.maven，配置setting.xml路径
 
-![image-20200331122852944](java.assets/image-20200331122852944.png)
+![image-20200331122852944](https://gitee.com/xieyun714/nodeimage/raw/master/img/image-20200331122852944.png)
 
 
 ### cobertura-maven-plugin配置
