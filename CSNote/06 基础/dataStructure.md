@@ -276,6 +276,24 @@ typedef struct DNode{
 
 ### 双链表实现：插入 [	](dataStructure_20201109090319243)
 
-{{c1:: ![image-20201030151749646](https://gitee.com/xieyun714/nodeimage/raw/master/img/image-20201030151749646.png) }}
+{{c1:: ![image-20201030151749646](https://gitee.com/xieyun714/nodeimage/raw/master/img/image-20201030151749646.png) ![image-20201109170334280](https://gitee.com/xieyun714/nodeimage/raw/master/img/image-20201109170334280.png)}}
 
+### 双链表实现：删除
 
+{{c1:: ![image-20201109113854463](https://gitee.com/xieyun714/nodeimage/raw/master/img/image-20201109113854463.png)}}
+
+### 双链表实现：遍历
+
+{{c1::![image-20201109113534288](https://gitee.com/xieyun714/nodeimage/raw/master/img/image-20201109113534288.png)}}
+
+### 静态链表实现:定义
+
+{{c1::![image-20201109165218388](https://gitee.com/xieyun714/nodeimage/raw/master/img/image-20201109165218388.png)}}
+
+### 循环链表概况
+
+![image-20201109170839312](https://gitee.com/xieyun714/nodeimage/raw/master/img/image-20201109170839312.png)
+
+{{c1::![image-20201109170655284](https://gitee.com/xieyun714/nodeimage/raw/master/img/image-20201109170655284.png)}}
+
+### test
