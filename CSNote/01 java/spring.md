@@ -1278,7 +1278,7 @@ public class Person
     //}}
   ```
 
-### spring整合mybatis配置：
+### spring整合mybatis配置： [	](spring_20201109090319136)
 + 主要思路：{{c1:: 通过配置SqlSessionFactoryBean类，加载mybaits配置文件和映射文件,替代原Mybatis工具类}}
 + 配置：
   ```xml
@@ -1289,57 +1289,3 @@ public class Person
     </bean>
   <!-- }} -->
   ```
-
-## Spring mvc
-
-### The configuration of DispatcherServlet*
-
-+ java Conriguration
-
-  ```java
-  public class MyWebApplicationInitializer implements WebApplicationInitializer {
-  
-      @Override
-      public void onStartup(ServletContext servletContext) {
-  
-          // Load Spring web application configuration
-          AnnotationConfigWebApplicationContext context = new AnnotationConfigWebApplicationContext();
-          context.register(AppConfig.class);
-  
-          // Create and register the DispatcherServlet
-          DispatcherServlet servlet = new DispatcherServlet(context);
-          ServletRegistration.Dynamic registration = servletContext.addServlet("app", servlet);
-          registration.setLoadOnStartup(1);
-          registration.addMapping("/app/*");
-      }
-  }
-  ```
-
-+ web.xml configuration
-
-  ```xml
-  <web-app>
-      <listener>
-          <listener-class>org.springframework.web.context.ContextLoaderListener</listener-class>
-      </listener>
-      <context-param>
-          <param-name>contextConfigLocation</param-name>
-          <param-value>/WEB-INF/app-context.xml</param-value>
-      </context-param>
-      <servlet>
-          <servlet-name>app</servlet-name>
-          <servlet-class>org.springframework.web.servlet.DispatcherServlet</servlet-class>
-          <init-param>
-              <param-name>contextConfigLocation</param-name>
-              <param-value></param-value>
-          </init-param>
-          <load-on-startup>1</load-on-startup>
-      </servlet>
-      <servlet-mapping>
-          <servlet-name>app</servlet-name>
-          <url-pattern>/app/*</url-pattern>
-      </servlet-mapping>
-  </web-app>
-  ```
-
-  

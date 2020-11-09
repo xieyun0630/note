@@ -43,33 +43,33 @@
 + 算法的五大特性：{{c1:: 有穷，确定，可行，输入，输出 }}
 + 好算法的特质：{{c1:: 正确，可读，健壮，高效率与低存储量需求 }}
 
-### 算法的时间复杂度：概念
+### 算法的时间复杂度：概念 [	](dataStructure_20201109090319176)
 + 大O表示“同阶”，同等数量级。即：{{c1:: 当n趋近无穷时，二者之比为常数 }}
   + 如图：{{c1::![image-20201028081250811](https://gitee.com/xieyun714/nodeimage/raw/master/img/image-20201028081250811.png)}}
 + 加法规则：{{c1:: `T(n) = T1(n) + T2(n) = O(f(n)) + O(g(n)) = O(max(f(n), g(n)))` }}
 + 乘法规则: {{c1:: `T(n) = T1(n)×T2(n) = O(f(n))×O(g(n)) = O(f(n)×g(n))` }}
 + 例(图):{{c1:: ![image-20201028082144384](https://gitee.com/xieyun714/nodeimage/raw/master/img/image-20201028082144384.png) }}
 
-### 算法的时间复杂度：判断时间复杂度大小
+### 算法的时间复杂度：判断时间复杂度大小 [	](dataStructure_20201109090319179)
 + 口诀：{{c1::常对幂指阶 }}
 + 时间复杂度的几种类型，函数对比图：{{c1:: ![image-20201028082720604](https://gitee.com/xieyun714/nodeimage/raw/master/img/image-20201028082720604.png) }}
 
-### 计算代码算法的时间复杂度:计算步骤
+### 计算代码算法的时间复杂度:计算步骤 [	](dataStructure_20201109090319182)
 + 如何计算：
   1. {{c1:: 找到一个基本操作（最深层循环） }}
   2. {{c1:: 分析该基本操作的执行次数x与问题规模n的关系x=f(n) }}
   3. {{c1:: x的数量级O(x）就是算法时间复杂度T(n) }}
 
-### 计算代码算法的时间复杂度T(n):指数递增型
+### 计算代码算法的时间复杂度T(n):指数递增型 [	](dataStructure_20201109090319185)
 + C代码如图：![image-20201028083306983](https://gitee.com/xieyun714/nodeimage/raw/master/img/image-20201028083306983.png)
 + 解答：
   + {{c1:: ![image-20201028083557860](https://gitee.com/xieyun714/nodeimage/raw/master/img/image-20201028083557860.png) }}
 
-### 计算代码算法的时间复杂度T(n):搜索数字型
+### 计算代码算法的时间复杂度T(n):搜索数字型 [	](dataStructure_20201109090319189)
 + ![image-20201028084423890](https://gitee.com/xieyun714/nodeimage/raw/master/img/image-20201028084423890.png)
 + 解答：{{c1:: ![image-20201028084445848](https://gitee.com/xieyun714/nodeimage/raw/master/img/image-20201028084445848.png) }}
 
-### 计算代码算法的空间复杂度T(n):递归程序
+### 计算代码算法的空间复杂度T(n):递归程序 [	](dataStructure_20201109090319194)
 
 + 例题：![image-20201029152330813](https://gitee.com/xieyun714/nodeimage/raw/master/img/image-20201029152330813.png)
 + 解答：{{c1:: ![image-20201029152644992](https://gitee.com/xieyun714/nodeimage/raw/master/img/image-20201029152644992.png) }}
@@ -78,13 +78,13 @@
   1. {{c1:: 找到递归调用的深度x与问题规模n的关系x=f(n) }}
   2. {{c1:: x的数量级O(x）就是算法空间复杂度S(n) }}
   3. {{c1:: 注：有的算法各层函数所需存储空间不同，分析方法略有区别 }}
-## 线性表
+## 线性表 [	](dataStructure_20201109090319197)
 
-### 线性表定义(Linear List)
+### 线性表定义(Linear List) [	](dataStructure_20201109090319199)
 + 定义：{{c1:: 线性表是具有**相同类型**的n个数据元素的**有限序列** }}
 + 主要特点：{{c1:: 除第一个元素外，每个元素有且仅有一个直接前驱；除最后一个元素外，每个元素有且仅有一个直接后继 }}
 
-### 线性表的基本运算/操作定义(C++定义)
+### 线性表的基本运算/操作定义(C++定义) [	](dataStructure_20201109090319202)
 + `InitList(&L)`：{{c1:: **初始化**表。构造一个空的线性表L，**分配内存空间**。 }}
 + `DestroyList(&L)`：{{c1:: **销毁**操作。销毁线性表，并**释放**线性表L所占用的**内存空间**。 }}
 + `ListInsert(&L,i,e)`：**插入**操作。在表L中的第i个位置上插入指定元素e。
@@ -93,46 +93,53 @@
 + `GetElem(L,i)`：{{c1:: **按位查找**操作。获取表L中第i个位置的元素的值。 }}
 + 什么时候要传入引用`&`:{{c1:: 对参数的修改结果需要**带回来**}}
 
-### 顺序表（顺序结构）
+### 顺序表（顺序结构） [	](dataStructure_20201109090319204)
 
-+ 定义：用**顺序存储**的方式实现**线性表**。把**逻辑上相邻**的元素存储在**物理位置上**也**相邻**的存储单元中，元素之间的关 系由**存储单元的邻接关系**来体现。
++ 定义：{{c1:: 用**顺序存储**的方式实现**线性表**。把**逻辑上相邻**的元素存储在**物理位置上**也**相邻**的存储单元中，元素之间的关 系由**存储单元的邻接关系**来体现。}}
 
-### 顺序表实现：静态分配（数据结构定义）
+### 顺序表实现：静态分配（数据结构定义） [	](dataStructure_20201109090319207)
 
-+ 特点：静态分配的存储空间一旦确定就不可变
++ 特点：{{c1:: 静态分配的存储空间一旦确定就不可变 }}
   ```c
+  //{{c1::
   #define MaxSize 10					//定义最大长度
   typedef struct{
     ElemType data[MaxSize]; 	//用静态的“数组”存放数据元素
     int length;							  //顺序表的当前长度
   }SqList; 										//顺序表的类型定义（静态分配方式）
+  //}}
   ```
 
-### 顺序表的实现：动态分配（数据结构定义）
+### 顺序表的实现：动态分配（数据结构定义） [	](dataStructure_20201109090319209)
 
 ```c
+//{{c1::
 #define InitSize 10 //顺序表的初始长度
 typedef struct{
   ElemType *data; 	//指示动态分配数组的指针
   int MaxSize; 			//顺序表的最大容量
   int length; 			//顺序表的当前长度
 } SeqList; 					//顺序表的类型定义（动态分配方式）
+//}}
 ```
 
-### 顺序表的实现：动态分配（初始化表操作）
+### 顺序表的实现：动态分配（初始化表操作） [	](dataStructure_20201109090319212)
 
 ```c
+//{{c1::
 void initList(SeqList &L){
   	//申请内存空间
     L.data=(int *)malloc(InitSize*sizeof(int));
     L.length=0;
     L.MaxSize=InitSize;
 }
+//}}
 ```
 
-### 顺序表的实现：动态分配（增加动态数据长度操作）
+### 顺序表的实现：动态分配（增加动态数据长度操作） [	](dataStructure_20201109090319214)
 
 ```c
+//{{c1::
 void IncreaseSize(SeqList &L,int len){
     int *p =L.data;
     L.data=(int *)malloc((L.MaxSize+len)*sizeof(int));
@@ -142,11 +149,13 @@ void IncreaseSize(SeqList &L,int len){
     L.MaxSize = L.MaxSize + len;
     free(p);
 }
+//}}
 ```
 
-### 顺序表的实现：动态分配（插入操作）
+### 顺序表的实现：动态分配（插入操作） [	](dataStructure_20201109090319216)
 
 ```c
+//{{c1::
 bool ListInsert(SqList &L,int i,int e){
     if(i<1 || i>L.Length+1)  //判断i的范围
         return false;
@@ -158,29 +167,33 @@ bool ListInsert(SqList &L,int i,int e){
     L.length++;
     return true;
 }
+//}}
 ```
 
-+ 时间复杂度分析：![image-20201030131159344](https://gitee.com/xieyun714/nodeimage/raw/master/img/image-20201030131159344.png)
++ 时间复杂度分析：{{c1::![image-20201030131159344](https://gitee.com/xieyun714/nodeimage/raw/master/img/image-20201030131159344.png)}}
 
-### 顺序表的特点： 
+### 顺序表的特点：  [	](dataStructure_20201109090319218)
 
-1. **随机访问**
-2. **存储密度高**
-3. **拓展容量不方便**
-4. **插入、删除操作不方便**
+1. {{c1:: **随机访问** }}
+2. {{c1:: **存储密度高** }}
+3. {{c1:: **拓展容量不方便** }}
+4. {{c1:: **插入、删除操作不方便** }}
 
-### 单链表实现：数据结构定义
+### 单链表实现：数据结构定义 [	](dataStructure_20201109090319220)
 
 ```c
+//{{c1::
 typedef struct LNode{
     ElemType data;
     struct LNode *next;
 }LNode,*LinkList;
+//}}
 ```
 
-### 单链表实现：头插法建立单链表
+### 单链表实现：头插法建立单链表 [	](dataStructure_20201109090319222)
 
 ```c
+//{{c1::
 LinkList List_HeadInsert(LinkList &L){
     LNode *s; int x;
     L = (LinkList) malloc(sizeof(LNode));
@@ -195,15 +208,17 @@ LinkList List_HeadInsert(LinkList &L){
     }
     return L;
 }
+//}}
 ```
 
-+ 主要思路：![image-20201030151026718](https://gitee.com/xieyun714/nodeimage/raw/master/img/image-20201030151026718.png)
++ 主要思路：{{c1:: ![image-20201030151026718](https://gitee.com/xieyun714/nodeimage/raw/master/img/image-20201030151026718.png) }}
 
-### 单链表实现：初始化操作
+### 单链表实现：初始化操作 [	](dataStructure_20201109090319224)
 
 + 带头节点
 
   ```c
+  //{{c1::
   bool InitList(LinkList &L){
     L = (LNode *) malloc(sizeof(LNode));
     if(L==NULL)
@@ -211,54 +226,56 @@ LinkList List_HeadInsert(LinkList &L){
     L->next = NULL;
     return true;
   }
+  //}}
   ```
 
 + 不带头结点
 
   ```c
+  //{{c1::
   bool InitList(LinkList &L){
   	L = NULL；
   	return false;
   }
+  //}}
   ```
 
 单链表实现：按位插入
 
-+ 带头节点![image-20201030142950126](https://gitee.com/xieyun714/nodeimage/raw/master/img/image-20201030142950126.png)
-+ 不带节点
++ 带头节点:{{c1:: ![image-20201030142950126](https://gitee.com/xieyun714/nodeimage/raw/master/img/image-20201030142950126.png) }}
++ 不带节点:{{c1:: ![image-20201030143239923](https://gitee.com/xieyun714/nodeimage/raw/master/img/image-20201030143239923.png) }}
 
-![image-20201030143239923](https://gitee.com/xieyun714/nodeimage/raw/master/img/image-20201030143239923.png)
+### 单链表实现：前后插操作 [	](dataStructure_20201109090319226)
 
-### 单链表实现：前后插操作
++ 后插操作:{{c1:: ![image-20201030143428032](https://gitee.com/xieyun714/nodeimage/raw/master/img/image-20201030143428032.png) }}
 
-+ 后插操作:![image-20201030143428032](https://gitee.com/xieyun714/nodeimage/raw/master/img/image-20201030143428032.png)
++ 前插操作:{{c1:: ![image-20201030143924193](https://gitee.com/xieyun714/nodeimage/raw/master/img/image-20201030143924193.png) }}
 
-+ 前插操作：![image-20201030143924193](https://gitee.com/xieyun714/nodeimage/raw/master/img/image-20201030143924193.png)
+### 单链表实现：按位删除（带头节点） [	](dataStructure_20201109090319229)
 
-### 单链表实现：按位删除（带头节点）
+{{c1:: ![image-20201030144304774](https://gitee.com/xieyun714/nodeimage/raw/master/img/image-20201030144304774.png)  }}
 
-![image-20201030144304774](https://gitee.com/xieyun714/nodeimage/raw/master/img/image-20201030144304774.png)
+### 单链表实现：指定结点的删除 [	](dataStructure_20201109090319232)
 
-### 单链表实现：指定结点的删除
+{{c1:: ![image-20201030144510894](https://gitee.com/xieyun714/nodeimage/raw/master/img/image-20201030144510894.png)  }}
 
-![image-20201030144510894](https://gitee.com/xieyun714/nodeimage/raw/master/img/image-20201030144510894.png)
-
-### 双链表实现：数据结构
+### 双链表实现：数据结构 [	](dataStructure_20201109090319234)
 
 ```c
+//{{c1::
 typedef struct DNode{
     ElemType data;
     struct DNode *prior,*next;
 }DNode,*DLinkList;
+//}}
 ```
 
-### 双链表实现：初始化
+### 双链表实现：初始化 [	](dataStructure_20201109090319237)
 
-![image-20201030152011675](https://gitee.com/xieyun714/nodeimage/raw/master/img/image-20201030152011675.png)
+{{c1:: ![image-20201030152011675](https://gitee.com/xieyun714/nodeimage/raw/master/img/image-20201030152011675.png) }}
 
-### 双链表实现：插入
+### 双链表实现：插入 [	](dataStructure_20201109090319243)
 
-![image-20201030151749646](https://gitee.com/xieyun714/nodeimage/raw/master/img/image-20201030151749646.png)
-
+{{c1:: ![image-20201030151749646](https://gitee.com/xieyun714/nodeimage/raw/master/img/image-20201030151749646.png) }}
 
 
