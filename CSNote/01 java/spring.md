@@ -981,9 +981,15 @@ public class Person
 
 ### 切入点指示符：execution [	](spring_20201017075500732)
 
-+ 作用：{{c1:: 匹配执行方法的连接点 }}
-+ 语法：{{c1:: `execution(modifiers-pattern? ret-type-pattern declaring-type-pattern? name-pattern(param-pattern) throws-pattern?)` }}
-+ `param-pattern`中通配符的使用：
++ 表达式：`execution(* com.test.method.des..*.*(..))`
++ 解释如下：
+  1. {{c1:: `execution()`表达式的主体 }}
+  2. {{c1:: 第一个`*`符号表示返回值的类型任意 }}
+  3. {{c1:: `com.test.method.des`AOP所切的服务的包名，即，需要进行横切的业务类 }}
+  4. {{c1:: 包名后面的“..”表示当前包及子包 }}
+  5. {{c1:: 第二个`*`表示类名，`*`即所有类 }}
+  6. {{c1:: `.*(..)`表示任何方法名，括号表示参数，两个点表示任何参数类型 }}
++ 通配符的使用：
   + `*`:{{c1:: 匹配单个任意参数 }}
   + `..`:{{c1:: 匹配多个任意参数 }}
   + 例:{{c1:: `(*,String)` }}

@@ -278,22 +278,126 @@ typedef struct DNode{
 
 {{c1:: ![image-20201030151749646](https://gitee.com/xieyun714/nodeimage/raw/master/img/image-20201030151749646.png) ![image-20201109170334280](https://gitee.com/xieyun714/nodeimage/raw/master/img/image-20201109170334280.png)}}
 
-### 双链表实现：删除
+### 双链表实现：删除 [	](dataStructure_20201109051135495)
 
 {{c1:: ![image-20201109113854463](https://gitee.com/xieyun714/nodeimage/raw/master/img/image-20201109113854463.png)}}
 
-### 双链表实现：遍历
+### 双链表实现：遍历 [	](dataStructure_20201109051135498)
 
 {{c1::![image-20201109113534288](https://gitee.com/xieyun714/nodeimage/raw/master/img/image-20201109113534288.png)}}
 
-### 静态链表实现:定义
+### 静态链表实现:定义 [	](dataStructure_20201109051135500)
 
 {{c1::![image-20201109165218388](https://gitee.com/xieyun714/nodeimage/raw/master/img/image-20201109165218388.png)}}
 
-### 循环链表概况
+### 循环链表概况 [	](dataStructure_20201109051135502)
 
 ![image-20201109170839312](https://gitee.com/xieyun714/nodeimage/raw/master/img/image-20201109170839312.png)
 
 {{c1::![image-20201109170655284](https://gitee.com/xieyun714/nodeimage/raw/master/img/image-20201109170655284.png)}}
 
-### test
+### 栈（Stack):基本概念
++ 定义:{{c1:: 只允许在一端进行插入或删除操作的**线性表** }}
++ 栈的基本操作
+  + `InitStack(&S)`：{{c1:: 初始化栈。构造一个空栈 S，分配内存空间。 }}
+  + `DestroyStack(&S)`：{{c1:: 销毁栈。销毁并释放栈 S 所占用的内存空间。 }}
+  + `Push(&S,x)`：{{c1:: 进栈，若栈S未满，则将x加入使之成为新栈顶。 }}
+  + `Pop(&S,&x)`：{{c1:: 出栈，若栈S非空，则弹出栈顶元素，并用x返回。 }}
+  + `GetTop(S, &x)`：{{c1:: 读栈顶元素。若栈 S 非空，则用 x 返回栈顶元素 }}
+  + `StackEmpty(S)`：{{c1:: 判断一个栈 S 是否为空。若S为空，则返回true，否则返回false。 }}
++ 出栈元素不同排列的个数计算：{{c1:: ![image-20201111131912827](https://gitee.com/xieyun714/nodeimage/raw/master/img/image-20201111131912827.png) }}
+
+### 栈的顺序存储实现
++ 顺序存储定义
+  ```c
+  //{{c1::
+  #define Maxsize 10 //定义栈中元素的最大个数
+  typedef struct{
+    Elemtype data [Maxsize]; //静态数组存放栈中元素
+    int top; //栈顶指针
+  } Sqstack；
+  //}}
+  ```
++ 初始化操作：
+  ```c
+  //{{c1::
+  void InitStack(SqStack &S){
+      S.top=-1;
+  }
+  //}}
+  ```
+
+### 共享栈的实现
++ 顺序存储定义
+  ```c
+  //{{c1::
+  #define Maxsize 10 //定义栈中元素的最大个数
+  typedef struct{
+    Elemtype data [Maxsize]; //静态数组存放栈中元素
+    int top0; //0号栈顶指针
+    int top1; //1号栈顶指针
+  } Sqstack；
+  //}}
+  ```
++ 初始化操作：
+  ```c
+  //{{c1::
+  void InitStack(SqStack &S){
+      S.top=-1;
+      S.top1=MaxSize;
+  }
+  //}}
+  ```
++ 栈满的条件：{{c1:: `top0 + 1 == top1` }}
+
+### 队列:基本概念
++ 定义:队列（Queue）是只允许在一端进行插入，在另一端删除的线性表
++ 队列的特点：First In First Out（FIFO）
++ 基本操作:
++ `InitQueue(&Q)`：{{c1:: **初始化**队列，构造一个空队列Q。 }}
++ `DestroyQueue(&Q)`：{{c1:: **销毁**队列。销毁并释放队列Q所占用的内存空间。 }}
++ `EnQueue(&Q,x)`：{{c1:: **入队**，若队列Q未满，将x加入，使之成为新的队尾。 }}
++ `DeQueue(&Q,&x)`：{{c1:: **出队**，若队列Q非空，删除队头元素，并用x返回。 }}
++ `GetHead(Q,&x)`：{{c1:: **读队头元素**，若队列Q非空，则将队头元素赋值给x。 }}
+其他常用操作：
++ `QueueEmpty(Q)`：{{c1:: 判队列空，若队列Q为空返回true，否则返回false。 }}
+
+
+### 队列顺序存储实现
++ 顺序存储定义
+  ```c
+    //{{c1::
+    #define Maxsize 10
+    typedef struct{
+      Elemtype data[Maxsize]; //用静态数组存放队列元素
+      int front,rear; //队头指针和队尾指针
+    }SqQueue;
+    //}}
+  ```
++ 循环队列实现思路：{{c1:: 用模运算（取余）将存储空间在逻辑上变为"环状 }}
+  + 例：{{c1:: `Q.rear=(Q.rear+1)%Max Size` }}
++ 循环队列确定**判空判满**的方法:
+  1. {{c1:: 牺牲一个存储单元 }}
+  2. {{c1:: 增加siz变量记录队列长度 }}
+  3. {{c1:: 增加tag=0/1用于标记 }}
+
+
+### 队列的链式存储定义
++ 链式存储定义：
+  ```c
+    //{{c1::
+      typedef struct Linknode{//链式队列结点
+        Elemtype data;
+        struct Linknode *next;
+      }LinkNode;
+      typedef struct{       //链式队列
+        Linknode* front,*rear;//队列的队头和队尾指针
+      }LinkQueue;
+    //}}
+  ```
++ 初始化注意点:注意是否带头节点
+
+### 队列变种:双端队列
++ 双端队列：{{c1:: 允许从两端插入、两端删除的队列 }}
++ 输入受限的双端队列：{{c1:: 允许从两端刑除、从一端插入的队列 }}
++ 输出受限的双端队列：{{c1:: 允许从两端插入、从一端删刪除的队列 }}

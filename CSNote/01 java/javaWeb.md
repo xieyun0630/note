@@ -41,8 +41,30 @@
 
 ### Tomcat体系结构(图) [	](javaWeb_20201022051052176)
 + {{c1:: ![tomcat_1029](https://gitee.com/xieyun714/nodeimage/raw/master/img/tomcat_1029.png)}}
++ 各组件含义：
+  - `Server`: {{c1:: 对应的就是一个 Tomcat 实例。 }}
+  - `Service`: {{c1:: 默认只有一个，也就是一个 Tomcat 实例默认一个 Service。 }}
+  - `Connector`: {{c1:: 一个 Service 可能多个 连接器，接受不同连接协议。 }}
+  - `Container`: {{c1:: 多个连接器对应一个容器，顶层容器其实就是 Engine。 }}
++ 组件之间的关系:
+  + `Tomcat`实例: {{c1:: 比如一个`Tomcat`实例包含一个`Service` }}
+  + `Service`: {{c1:: 一个`Service` 包含多个**连接器**和一个**容器**。 }}
+  + `Container`: {{c1::一个容器包含多个`Host` }}
+  + `Host`: {{c1:: `Host`内部可能有多个`Context`容器， }}
+  + `Context`: {{c1:: 一个`Context`也会包含多个`Servlet` }}
+
+### 连接器(Connector)
+
++ 连接器的结构图：{{c1:: ![image-20201111163036592](https://gitee.com/xieyun714/nodeimage/raw/master/img/image-20201111163036592.png) }}
++ 各组件作用：
+  + `ProtocolHandler `: {{c1::主要处理**网络连接**和**应用层协议**，包含了两个重要部件`EndPoint`和`Processor`}}
+    + `ProtocolHandler`继承体系（图）：{{c1::![image-20201111165114291](https://gitee.com/xieyun714/nodeimage/raw/master/img/image-20201111165114291.png) }}
+  + `EndPoint`：{{c1:: 负责网络通信。负责提供字节流给`Processor`}}
+  + `Processor`：{{c1:: 负责应用层协议解析。负责提供`Tomcat Request`对象给`Adapter`}}
+  + `Adapter`：{{c1:: `Tomcat Request/Response`与`ServletRequest/ServletResponse`的转化。负责提供`ServletRequest`对象给容器。}}
 
 ## 常见试题 [	](javaWeb_20201026014023034)
+
 ### Tomcat的缺省端口是多少，怎么修改 [	](javaWeb_20201026014023037)
 + 到tomcat主目录下的`conf/server.xml`文件中修改
   ```xml
@@ -55,10 +77,10 @@
   <!-- }} -->
   ```
 ### Tomcat 有哪几种Connector 运行模式(优化)？ [	](javaWeb_20201026014023039)
-- `bio`: **传统的Java I/O操作，同步且阻塞IO。**
-- `nio`: **JDK1.4开始支持，同步阻塞或同步非阻塞IO**
-- `aio(nio.2)`: **JDK7开始支持，异步非阻塞IO**
-- `apr`: Tomcat将以JNI的形式调用Apache HTTP服务器的核心动态链接库来处理文件读取或网络传输操作，从而大大地 **提高Tomcat对静态文件的处理性能**
+- `bio`: {{c1:: **传统的Java I/O操作，同步且阻塞IO。** }}
+- `nio`: {{c1:: **JDK1.4开始支持，同步阻塞或同步非阻塞IO** }}
+- `aio(nio.2)`: {{c1:: **JDK7开始支持，异步非阻塞IO** }}
+- `apr`: {{c1:: Tomcat将以JNI的形式调用Apache HTTP服务器的核心动态链接库来处理文件读取或网络传输操作，从而大大地 **提高Tomcat对静态文件的处理性能** }}
 + 配置Tomcat运行模式:
   ```xml
     <!-- {{c1:: -->
