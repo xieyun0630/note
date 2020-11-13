@@ -776,9 +776,8 @@ public class Person
     //}}
   ```
 
-### 为了使用@Autowaired自动装配时找不到候选Bean时不报错，有两种解决方案： [	](spring_20200911094545309)
-
-1. 指定属性：{{c1:: `@Autowired(required = false)` }}
+### 使用@Autowaired自动装配时找不到`bean`时的解决方案： [	](spring_20200911094545309)
+1. 指定@Autowired属性：{{c1:: `@Autowired(required = false)` }}
 2. 使用注解：{{c1:: `@Nullable`,指定方法形参，成员实例变量 }}
 
 ### @NonNull,@Nullable，@NonNullFields，@NonNullApi [	](spring_20200911094545312)
@@ -981,9 +980,15 @@ public class Person
 
 ### 切入点指示符：execution [	](spring_20201017075500732)
 
-+ 作用：{{c1:: 匹配执行方法的连接点 }}
-+ 语法：{{c1:: `execution(modifiers-pattern? ret-type-pattern declaring-type-pattern? name-pattern(param-pattern) throws-pattern?)` }}
-+ `param-pattern`中通配符的使用：
++ 表达式：`execution(* com.test.method.des..*.*(..))`
++ 解释如下：
+  1. {{c1:: `execution()`表达式的主体 }}
+  2. {{c1:: 第一个`*`符号表示返回值的类型任意 }}
+  3. {{c1:: `com.test.method.des`AOP所切的服务的包名，即，需要进行横切的业务类 }}
+  4. {{c1:: 包名后面的“..”表示当前包及子包 }}
+  5. {{c1:: 第二个`*`表示类名，`*`即所有类 }}
+  6. {{c1:: `.*(..)`表示任何方法名，括号表示参数，两个点表示任何参数类型 }}
++ 通配符的使用：
   + `*`:{{c1:: 匹配单个任意参数 }}
   + `..`:{{c1:: 匹配多个任意参数 }}
   + 例:{{c1:: `(*,String)` }}
@@ -1097,8 +1102,8 @@ public class Person
 
 ### jdbcTemplate操作数据库：DML操作 [	](spring_20201017075500755)
 
-+ DML操作方法签名：{{c1:: `update(String sql,Object... args)` }}
-+ 批量DML操作方法签名：{{c1:: `batchUpdate(String sql,List<Object[]> batchArgs)` }}
++ `update(String sql,Object... args)`: {{c1:: {{c1:: DML操作方法签名 }} }}
++ `batchUpdate(String sql,List<Object[]> batchArgs)`: {{c1:: {{c1:: 批量DML操作方法签名 }} }}
 + 例：
 ```java
 // {{c1::
@@ -1123,9 +1128,9 @@ public class Person
 
 ### jdbcTemplate操作数据库：DQL操作 [	](spring_20201017075500757)
 
-+ 返回单个值方法签名：{{c1:: `queryForObject(String sql,Class<T> requiredType)` }}
-+ 返回对象方法签名：{{c1:: `queryForObject(String sql,RowMapper<T> rowMapper,Object... args)` }}
-+ 返回集合方法签名：{{c1:: `query(String sql,RowMapper<T> rowMapper,Object... args)`}}
++ `queryForObject(String sql,Class<T> requiredType)`：{{c1:: 返回单个值方法签名 }}
++ `queryForObject(String sql,RowMapper<T> rowMapper,Object... args)`：{{c1:: 返回对象方法签名 }}
++ `query(String sql,RowMapper<T> rowMapper,Object... args)`：{{c1:: 返回集合方法签名 }}
 + `RowMapper`常用实例：{{c1:: `BeanPropertyRowMapper` }}
 + 例：
   ```java
@@ -1278,7 +1283,7 @@ public class Person
     //}}
   ```
 
-### spring整合mybatis配置：
+### spring整合mybatis配置： [	](spring_20201109090319136)
 + 主要思路：{{c1:: 通过配置SqlSessionFactoryBean类，加载mybaits配置文件和映射文件,替代原Mybatis工具类}}
 + 配置：
   ```xml
@@ -1290,55 +1295,476 @@ public class Person
   <!-- }} -->
   ```
 
-## Spring mvc
+## spring MVC
 
-### The configuration of DispatcherServlet*
+### javaWeb环境中使用spring
 
-+ java Conriguration
-
-  ```java
-  public class MyWebApplicationInitializer implements WebApplicationInitializer {
-  
-      @Override
-      public void onStartup(ServletContext servletContext) {
-  
-          // Load Spring web application configuration
-          AnnotationConfigWebApplicationContext context = new AnnotationConfigWebApplicationContext();
-          context.register(AppConfig.class);
-  
-          // Create and register the DispatcherServlet
-          DispatcherServlet servlet = new DispatcherServlet(context);
-          ServletRegistration.Dynamic registration = servletContext.addServlet("app", servlet);
-          registration.setLoadOnStartup(1);
-          registration.addMapping("/app/*");
-      }
-  }
-  ```
-
-+ web.xml configuration
-
-  ```xml
-  <web-app>
-      <listener>
-          <listener-class>org.springframework.web.context.ContextLoaderListener</listener-class>
-      </listener>
++ 主要思路:{{c1:: 使用`ServletContextListener`创建`ApplicationContext`，将其存储到最大的域`servletContext`域 }}
++ 实际操作：
+  1. 在web.xml中配置`ContextLoaderListener`监听器（导入spring-web坐标）
+      ```xml
+      <!-- {{c1:: -->
+      <!--全局参数-->
       <context-param>
           <param-name>contextConfigLocation</param-name>
-          <param-value>/WEB-INF/app-context.xml</param-value>
+          <param-value>classpath:applicationContext.xml</param-value>
       </context-param>
-      <servlet>
-          <servlet-name>app</servlet-name>
-          <servlet-class>org.springframework.web.servlet.DispatcherServlet</servlet-class>
-          <init-param>
-              <param-name>contextConfigLocation</param-name>
-              <param-value></param-value>
-          </init-param>
-          <load-on-startup>1</load-on-startup>
-      </servlet>
-      <servlet-mapping>
-          <servlet-name>app</servlet-name>
-          <url-pattern>/app/*</url-pattern>
-      </servlet-mapping>
-  </web-app>
+      <!--Spring的监听器-->
+      <listener>
+        <listener-class>
+            org.springframework.web.context.ContextLoaderListener
+        </listener-class>
+      </listener>
+      <!-- }} -->
+      ```
+  2. servlet中使用`WebApplicationContextUtils`获得应用上下文对象`ApplicationContext`
+     ```java
+     //{{c1::
+      ApplicationContext ctx = WebApplicationContextUtils.getWebApplicationContext(servletContext);
+     //}}
+     ```
+
+### web.xml配置SpringMVC的核心控制器
+```xml
+<!-- {{c1:: -->
+  <servlet>
+      <servlet-name>DispatcherServlet</servlet-name>
+      <servlet-class>org.springframework.web.servlet.DispatcherServlet</servlet-class>  
+      <init-param>
+          <param-name>contextConfigLocation</param-name>
+          <param-value>classpath:spring-mvc.xml</param-value>
+      </init-param>
+    <load-on-startup>1</load-on-startup>
+  </servlet>
+  <servlet-mapping>   
+      <servlet-name>DispatcherServlet</servlet-name>
+      <url-pattern>/</url-pattern>
+  </servlet-mapping>
+<!-- }} -->
+```
+
+### @RequestMapping
+
++ 作用：{{c1:: 用于建立请求 URL 和处理请求方法之间的对应关系 }}
++ 标注位置：
+  + **类**:{{c1:: 请求URL的第一级访问目录。此处不写的话，就相当于应用的根目录 }}
+  + **方法**:{{c1:: 请求 \URL的第二级访问目录，与类上的使用`@ReqquestMapping`标注的一级目录一起组成访问虚拟路径 }}
++ 属性：
+  + `value`：{{c1:: 用于指定请求的URL。它和path属性的作用是一样的 }}
+  + `method`：{{c1:: 用于指定请求的方式 }}
+  + `params`：{{c1:: 用于指定限制请求参数的条件。它支持简单的表达式。要求请求参数的`key`和`value`必须和配置的一模一样 }}
++ 例如：
+  + `params = {"accountName"}`：{{c1:: 表示请求参数必须有accountName }}
+  + `params = {"moeny!100"}`：{{c1:: 表示请求参数中money不能是100 }}
+
+### 配置内部资源视图解析器
+
++ 注意：{{c1:: 如果不在配置文件中配置视图解析器，就会使用`DispatcherServlet.properties`中的默认配置。 }}
+```xml
+ <!-- {{c1:: -->
+  <bean class="org.springframework.web.servlet.view.InternalResourceViewResolver">
+    <property name="prefix" value="/WEB-INF/views/"></property>
+    <property name="suffix" value=".jsp"></property>
+  </bean>
+  <!-- }} -->
+```
+## SpringMVC的数据响应
+
+### SpringMVC的数据响应方式
+
+1. 页面跳转
+  + 直接返回字符串
+  + 通过ModelAndView对象返回
+2. 回写数据 
+  + 直接返回字符串
+  + 返回对象或集合
+
+### SpringMVC页面跳转：返回字符串
+
++ 作用：会将返回的字符串与视图解析器的前后缀拼接后跳转。
++ 返回带有前缀的字符串：
+  + 转发：{{`forward:index.jsp`
+  + 重定向：{{`redirect:index`
++ 例：{{c1:: ![image-20201113125111735](https://gitee.com/xieyun714/nodeimage/raw/master/img/image-20201113125111735.png) }}
+
+### SpringMVC页面跳转：返回ModelAndView对象
+
++ 主要思路：{{c1:: 使用`modelAndView.setViewName("viewName")`指定视图 }}
++ 例：
+  ```java
+    //{{c1::
+    @RequestMapping("/quick2")
+    public ModelAndView quickMethod2(){
+      ModelAndView modelAndView = new ModelAndView();
+      // modelAndView.setViewName("redirect:index.jsp");
+      modelAndView.setViewName("forward:/WEB-INF/views/index.jsp");。
+      return modelAndView;
+    }
+    //}}
+  ```
+### SpringMVC页面跳转：向request域存储数据
++ `request`方式:{{c1:: 通过SpringMVC框架注入的`request`对象`setAttribute()`方法设置 }}
++ `ModelAndView`方式：{{c1:: 通过`ModelAndView`的`addObject()`方法设置 }}
++ 例：
+  ```java
+  //{{c1::
+  @RequestMapping("/quick")
+  public String quickMethod(HttpServletRequest request){
+    request.setAttribute("name","zhangsan");
+    return "index";
+  }
+
+  @RequestMapping("/quick3")
+  public ModelAndView quickMethod3(){
+    ModelAndView modelAndView = new ModelAndView();
+    modelAndView.setViewName("forward:/WEB-INF/views/index.jsp");
+    modelAndView.addObject("name","lisi");
+    return modelAndView;
+  }
+  //}}
   ```
 
+### SpringMVC回写数据：直接返回字符串
++ 通过`response对象`:{{c1:: 通过SpringMVC框架注入的response对象，使用response.getWriter().print(“hello world”) 回写数据，此时不需要视图跳转，业务方法返回值为void。 }}
++ 通过`@ResponseBody`:{{c1:: 将需要回写的字符串直接返回，但此时需要通过@ResponseBody注解告知SpringMVC框架，方法返回的字符串不是跳转是直接在http响应体中返回。 }}
++ 例：
+  ```java
+    //{{c1::
+    @RequestMapping("/quick4")
+    public void quickMethod4(HttpServletResponse response) throws
+    IOException {
+      response.getWriter().print("hello world");
+    }
+
+    @RequestMapping("/quick5")
+    @ResponseBody
+    public String quickMethod5() throws IOException {
+      return "hello springMVC!!!";
+    }
+    //}}
+  ```
+
+### SpringMVC回写数据：返回对象或集合
+
+1. 需要开启注解驱动：{{c1:: `<mvc:annotation-driven/>` }}
+2. 将对象或集合作为返回值：
+  ```java
+    //{{c1::
+    @RequestMapping(value="/quick10")
+    @ResponseBody
+    //SpringMVC自动将User转换成json格式的字符串
+    public User save10() throws IOException {
+        User user = new User();
+        user.setUsername("lisi2");
+        user.setAge(32);
+        return user;
+    }
+  //}}
+  ```
+
+## SpringMVC的请求
++ SpringMVC处理器方法可以接收如下类型的参数：
+  + 基本类型参数：{{c1:: 参数名称要与请求参数的name一致，参数值会自动映射匹配。并且能自动做类型转换； }}
+  + POJO类型参数：{{c1:: POJO参数的属性名与请求参数的name一致，参数值会自动映射匹配。 }}
+  + 数组类型参数：{{c1:: 数组名称与请求参数的name一致，参数值会自动映射匹配。 }}
+  + 集合类型参数：
+    1. pojo参数作为集合：{{c1:: 获得集合参数时，要将集合参数包装到一个POJO中才可以 }}
+      + 例：
+        ```java
+        //{{c1::
+        // <input type="text" name="userList[0].username"><br/>
+        // <input type="text" name="userList[0].age"><br/>
+        // <input type="text" name="userList[1].username"><br/>
+        // <input type="text" name="userList[1].age"><br/>
+
+        @Data
+        public class VO {
+            private List<User> userList;
+        }
+        //...
+        @RequestMapping(value="/quick14")
+        @ResponseBody
+        public void save14(VO vo) throws IOException {
+          System.out.println(vo);
+        }
+        //}}
+        ```
+     2. `@RequestBody`使用：{{c1:: 当接受到一个json格式List数据的请求时，自动将请求体转换为相应的集合类型 }}
+        + 例：
+        ```java
+          //{{c1::
+          @RequestMapping("/quick13")
+          @ResponseBody
+          public void quickMethod13(@RequestBody List<User> userList) throws IOException {
+            System.out.println(userList);
+          }
+          //}}
+        ```
+
+### 静态资源访问的开启(应用)
+
++ 原因：{{c1:: SpringMVC的前端控制器DispatcherServlet的url-pattern配置的是/,代表对所有的资源都进行过滤操作 }}
++ 两种开启方式：
+  + `<mvc:default-servlet-handler/>`：{{c1:: 对进入DispatcherServlet没有找到资源的URL进行筛查，如果发现是静态资源的请求，就将该请求转由Web应用服务器默认的Servlet处理 }}
+  + `<mvc:resources mapping="/js/**"location="/js/"/> `：{{c1:: 由Spring MVC框架自己处理静态资源 }}
+
+### springMVC请求数据乱码问题
++ 主要思路：{{c1:: 在web.xml中配置`CharacterEncodingFilter`过滤器，作用是设置`reqeuset`与`response`对象的编码 }}
++ 配置如下：
+  ```xml
+  <filter>
+      <filter-name>CharacterEncodingFilter</filter-name>
+      <filter-class>org.springframework.web.filter.CharacterEncodingFilter</filter-class>
+      <init-param>
+          <param-name>encoding</param-name>
+          <param-value>UTF-8</param-value>
+      </init-param>
+  </filter>
+  <filter-mapping>
+      <filter-name>CharacterEncodingFilter</filter-name>
+      <url-pattern>/*</url-pattern>
+  </filter-mapping>
+  ```
+### @requestParam
+
++ 作用：{{c1:: 当请求的**参数名称**与Controller的业务**方法参数名称**不一致时，就需要通过@RequestParam注解显示的绑定 }}
++ 属性：
+  + `value`：{{c1:: 与请求参数名称 }}
+  + `required`：{{c1:: 此在指定的请求参数是否必须包括，默认是true，提交时如果没有此参数则报错 }}
+  + `defaultValue`：{{c1:: 当没有指定请求参数时，则使用指定的默认值赋值 }}
++ 例：
+  ```java
+  //{{c1::
+    // <form action="${pageContext.request.contextPath}/quick14" // method="post">
+    // <input type="text" name="name"><br>
+    // <input type="submit" value="提交"><br>
+    // </form>
+
+  @RequestMapping("/quick14")
+  @ResponseBody
+  public void quickMethod14(@RequestParam("name") String username) throws IOException {
+    System.out.println(username);
+  }
+  //}}
+  ```
+### Restful风格的参数
+
+1. {{c1:: `GET`：用于获取资源 }}
+2. {{c1:: `POST`：用于新建资源 }}
+3. {{c1:: `PUT`：用于更新资源 }}
+4. {{c1:: `DELETE`：用于删除资源 }}
++ 例如：
+  1. {{c1:: `/user/1 GET `： 得到 id = 1 的 user }}
+  2. {{c1:: `/user/1 DELETE`： 删除 id = 1 的 user }}
+  3. {{c1:: `/user/1 PUT`： 更新 id = 1 的 user }}
+  4. {{c1:: `/user POST`： 新增 user }}
+
+### @PathVariable
+
++ 作用：{{c1:: 读取指定占位符的值到请求处理方法形参。地址/user/1可以写成/user/{id}，占位符{id}对应的就是1的值。}}
++ 例：
+  ```java
+  //{{c1::
+  @RequestMapping(value="/quick17/{name}")
+  @ResponseBody
+  public void save17(@PathVariable(value="name") String username) throws IOException {
+        System.out.println(username);
+  }
+  //}}
+  ```
+
+### 自定义类型转换器
+
++ 作用：{{c1:: 映射字符串类型的请求参数到请求处理方法形参 }}
++ 开发步骤：
+  1. 定义转换器类实现Converter接口:{{c1:: `implements Converter<String, Date>` }}
+  2. 在配置文件中声明转换器类：{{c1:: `ConversionServiceFactoryBean` }}
+  3. 在`<annotation-driven>`中指定属性引用转换器:{{c1:: `conversion-service`属性 }}
++ 例：
+  1. 定义转换器类实现Converter接口
+   ```java
+   //{{c1::
+  public class DateConverter implements Converter<String, Date> {
+      public Date convert(String dateStr) {
+          //将日期字符串转换成日期对象 返回
+          SimpleDateFormat format = new SimpleDateFormat("yyyy-MM-dd");
+          Date date = null;
+          try {
+              date = format.parse(dateStr);
+          } catch (ParseException e) {
+              e.printStackTrace();
+          }
+          return date;
+      }
+  }
+  //}}
+   ```
+  2. 在配置文件中声明转换器
+  ```xml
+  <!-- {{c1:: -->
+    <bean id="converterService" class="org.springframework.context.support.ConversionServiceFactoryBean">
+      <property name="converters">
+          <list>
+              <bean class="com.itheima.converter.DateConverter" />
+          </list>
+      </property>
+    </bean>
+  <!-- }} -->
+  ```
+  3. 在`<annotation-driven>`中引用转换器:{{c1::`<mvc:annotation-driven conversion-service="converterService"/>`}}
+### 在请求处理方法获取原始ServletAPI
+
++ 主要思路：{{c1:: SpringMVC支持使用原始ServletAPI对象作为控制器方法的参数进行注入}} 
++ 常用的对象如下：
+  + {{c1:: `HttpServletRequest` }}
+  + {{c1:: `HttpServletResponse` }}
+  + {{c1:: `HttpSession` }}
+
+### @RequestHeader，@CookieValue
+
++ `@RequestHeader`
+  + 作用：修饰请求处理**方法形参**,相当于`request.getHeader(name)`
+  + 属性：
+    + `value`：{{c1:: 请求头的名称 }}
+    + `required`：{{c1:: 是否必须携带此请求头 }}
++ `@CookieValue`
+  + 作用：修饰请求处理**方法形参**,获得指定Cookie的值
+  + 属性：
+    + `value`：{{c1:: 指定cookie的名称 }}
+    + `required`：{{c1:: 是否必须携带此cookie }}
+
+### 客户端文件上传三要素
+
+1. {{c1:: 表单项`type=“file”` }}
+2. {{c1:: 表单的提交方式是`post`   }}
+3. {{c1:: 表单的`enctype`属性是多部分表单形式，及`enctype=“multipart/form-data”` }}
++ 例：
+```html
+<!-- {{c1:: -->
+  <form action="${pageContext.request.contextPath}/user/quick22" method="post" enctype="multipart/form-data">
+    名称<input type="text" name="username"><br/>
+    文件1<input type="file" name="uploadFile"><br/>
+    <input type="submit" value="提交">
+  </form>
+<!-- }} -->
+```
+
+### 文件上传原理(理解)
+
++ `request.getParameter()`失效原因?
++ `application/x-www-form-urlencoded`与`Mutilpat/form-data`的区别?
++ 解释：{{c1:: ![](https://gitee.com/xieyun714/nodeimage/raw/master/img/5.jpg) }}
+
+### springMVC文件上传步骤
+
++ 开发步骤：
+  1. 导入fileupload和io坐标：{{c1:: `commons-fileupload` `commons-io` }}
+  2. 配置文件上传解析器类：{{c1:: `CommonsMultipartResolver` }}
+  3. 编写文件上传代码：{{c1:: `MultipartFile`作为形参 }}
++ 注意多文件上传：{{c1:: 将方法参数`MultipartFile`类型修改为`MultipartFile[]`即可 }}
++ 具体实现：
+  1. 添加依赖
+  ```xml
+  <!-- {{c1:: -->
+      <dependency>
+        <groupId>commons-fileupload</groupId>
+        <artifactId>commons-fileupload</artifactId>
+        <version>1.3.1</version>
+      </dependency>
+      <dependency>
+        <groupId>commons-io</groupId>
+        <artifactId>commons-io</artifactId>
+        <version>2.3</version>
+      </dependency>
+  <!-- }} -->
+  ```
+  2. 配置文件上传解析器
+  ```xml
+  <!-- {{c1:: -->
+      <bean id="multipartResolver" class="org.springframework.web.multipart.commons.CommonsMultipartResolver">
+        <property name="defaultEncoding" value="UYF-8"/>
+          <property name="maxUploadSize" value="500000"/>
+      </bean>
+  <!-- }} -->
+  ```
+  3. 后台程序
+  ```java
+  //{{c1::
+      @RequestMapping(value="/quick22")
+      @ResponseBody
+      public void save22(String username, MultipartFile uploadFile) throws IOException {
+        System.out.println(username);
+          System.out.println(uploadFile);
+      }
+  //}}
+  ```
+
+## SpringMVC拦截器
+
+### SpringMVC拦截器和Servlet Filter的区别
+
+| 区别     | 过滤器                                                       | 拦截器                                                       |
+| :------- | :----------------------------------------------------------- | :----------------------------------------------------------- |
+| 使用范围 | {{c1:: 是 servlet 规范中的一部分，任何Java Web 工程都可以使用 }} | {{c1:: 是 SpringMVC 框架自己的，只有使用了SpringMVC 框架的工程才能用 }} |
+| 拦截范围 | {{c1:: 在 url-pattern 中配置了/*之后，可以对**所有要访问的资源**拦截 }} | {{c1:: 只会拦截**请求处理方法**，如果访问的是 `jsp，html,css,image` 或者 `js` 是不会进行拦截的 }} |
+
+### 自定义springMVC拦截器
+1. 创建拦截器类实现`HandlerInterceptor`接口
+2. 配置拦截器:
+  ```xml
+  <!-- {{c1:: -->
+    <mvc:interceptors>
+        <mvc:interceptor>
+            <!--对哪些资源执行拦截操作-->
+            <mvc:mapping path="/**"/>
+            <bean class="com.itheima.interceptor.MyInterceptor1"/>
+        </mvc:interceptor>
+    </mvc:interceptors>
+  <!-- }} -->
+  ```
+3. 拦截器的拦截效果：{{c1:: ![](https://gitee.com/xieyun714/nodeimage/raw/master/img/20201113162620.png) }}
++ 注意拦截器执行顺序：{{c1:: 多个拦截器情况下，配置在前的先执行，配置在后的后执行 }}
+
+### HandlerInterceptor接口方法
+| 方法                | 说明                                                         |
+| :------------------ | :----------------------------------------------------------- |
+| `boolean preHandle()`       | {{c1:: 方法将在请求处理之前进行调用，该方法的返回值是布尔值Boolean类型的，当它返回为false 时，表示请求结束，后续的Interceptor 和Controller 都不会再执行；当返回值为true 时就会继续调用下一个Interceptor 的preHandle 方法 }} |
+| `void postHandle()`      | {{c1:: 该方法是在当前请求进行处理之后被调用，前提是preHandle 方法的返回值为true 时才能被调用，且它会在DispatcherServlet 进行视图返回渲染之前被调用，所以我们可以在这个方法中对Controller 处理之后的ModelAndView 对象进行操作 }} |
+| `void afterCompletion()` | {{c1:: 该方法将在整个请求结束之后，也就是在DispatcherServlet 渲染了对应的视图之后执行，前提是preHandle 方法的返回值为true 时才能被调用 }} |
+
+### SpringMVC异常处理机制
++ 主要思路：{{c1:: 系统的Dao、Service、Controller出现都通过throws Exception向上抛出，最后由SpringMVC前端控制器交由异常处理器进行异常处理 }}
++ 异常处理的两种方式
+  1. {{c1:: 使用Spring MVC提供的简单异常处理器`SimpleMappingExceptionResolver` }}
+  2. {{c1:: 实现Spring的异常处理接口`HandlerExceptionResolver`然后配置成`Bean` }}
++ 例：
+  + 简单异常处理器:
+  ```xml
+  <!-- {{c1:: -->
+    <bean class=“org.springframework.web.servlet.handler.SimpleMappingExceptionResolver”>    <property name=“defaultErrorView” value=“error”/>
+        <property name=“exceptionMappings”>
+            <map>	
+                <entry key="com.itheima.exception.MyException" value="error"/>
+                <entry key="java.lang.ClassCastException" value="error"/>
+            </map>
+        </property>
+    </bean>
+  <!-- }} -->
+  ```
+  + 自定义异常处理:
+    ```java
+    //{{c1::
+      public class MyExceptionResolver implements HandlerExceptionResolver {
+        @Override
+        public ModelAndView resolveException(HttpServletRequest request, 
+            HttpServletResponse response, Object handler, Exception ex) {
+            //处理异常的代码实现
+            //创建ModelAndView对象
+            ModelAndView modelAndView = new ModelAndView(); 
+            modelAndView.setViewName("exceptionPage");
+            return modelAndView;
+        }
+      }
+      //<bean id="exceptionResolver" class="com.itheima.exception.MyExceptionResolver"/>
+    //}}
+    ```

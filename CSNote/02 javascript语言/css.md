@@ -554,28 +554,19 @@
 
 ###  CSS3 过渡 [	](css_20200822070211606)
 
-+ 语法： `transition: 要过渡的属性 花费时间 [运动曲线] [何时开始];`
-1. 属性 ：{{c1::  想要变化的 css 属性， 宽度高度 背景颜色 内外边距都可以 。如果想要所有的属性都变化过渡， 写一个all 就可以。}}
-2. 花费时间：{{c1::  单位是 秒（必须写单位） 比如 0.5s}}
-3. 运动曲线：{{c1::  默认是 ease （可以省略）}}
-4. 何时开始 ：{{c1:: 单位是 秒（必须写单位）可以设置延迟触发时间 默认是 0s （可以省略）}}
-+ 使用口诀： {{c1:: 谁做过渡给谁加 }}
-+ 分开写语法：
-  + {{c1:: `transition-property` }}
-  + {{c1:: `transition-duration` }}
-  + {{c1:: `transition-timing-function` }}
-  + {{c1:: `transition-delay` }}
++ 语法：{{c1:: `transition: 要过渡的属性 花费时间 [运动曲线] [何时开始];` }}
+  1.  `transition-property`:{{c1:: 要过渡的属性,`all`代表所有属性}}
+  2.  `transition-duration`:{{c1:: 花费时间 }}
+  3.  `transition-timing-function`:{{c1:: 运动曲线 }}
+  4.  `transition-delay`:{{c1:: 何时开始 }}
++ 使用技巧： {{c1:: 谁做过渡给谁加 }}
 
-### 2D 转换之移动 translate [	](css_20200822070211609)
+### 2D转换之移动 translate函数 [	](css_20200822070211609)
++ 作用：{{c1:: 不会影响到其他元素的位置，相对于自身元素的位置移动 }}
 + 语法:
-  1. {{c1:: `transform: translate(x,y);` }}
-  2. {{c1:: `transform: translateX(n);` }}
-  3. {{c1:: `transform: translateY(n);` }}
-+ 注意点：
-  1. translate最大的优点：{{c1:: 不会影响到其他元素的位置 }}
-  2. 百分比单位:{{c1:: translate中的百分比单位是相对于自身元素的 translate:(50%,50%); }}
-  3. 行内标签:{{c1:: 对行内标签没有效果 }}
-  
+  1. 同时XY轴：{{c1:: `transform: translate:(50%,50%);` }}
+  2. X轴：{{c1:: `transform: translateX(50%);` }}
+  3. Y轴：{{c1:: `transform: translateY(50%);` }}
 
 ### 2D 转换之旋转 rotate [	](css_20200822070211611)
 + 语法：`transform:rotate(度数)`
@@ -768,26 +759,14 @@
   1. {{c1:: 给图片添加 vertical-align:middle | top| bottom 等。 （提倡使用的） }}
   2. {{c1:: 把图片转换为块级元素 display: block; }}
 
-### 溢出的文字省略号显示 [	](css_20200822070211650)
-
-+ 单行文本溢出显示省略号--必须满足三个条件
-  1. 先强制一行内显示文本:{{c1::`white-space: nowrap; （ 默认 normal 自动换行）`}}
-  2. 超出的部分隐藏:{{c1::`overflow: hidden;`}}
-  3. 文字用省略号替代超出的部分:{{c1::`text-overflow: ellipsis;`}}
-+ 多行文本溢出显示省略号:
-  1. 超出的部分隐藏overflow:{{c1:: ` hidden;` }}
-  2. 文字用省略号替代超出的部分:{{c1:: `text-overflow: ellipsis;` }}
-  3. 弹性伸缩盒子模型显示:{{c1:: `display: -webkit-box;` }}
-  4. 限制在一个块元素显示的文本的行数:{{c1:: `-webkit-line-clamp: 2;` }}
-  5. 设置或检索伸缩盒对象的子元素的排列方式:{{c1:: `-webkit-box-orient: vertical;` }}
 
 ## 移动端布局:流式布局 [	](css_20201014033126126)
 
 ### 3种viewport [	](css_20201014033126129)
 
-+ 布局(layout viewport)
-+ 视觉(visual viewport)
-+ 理想(ideal viewport)
++ `layout viewport`:{{c1:: 布局 }}
++ `visual viewport`:{{c1:: 视觉 }}
++ `ideal viewport`:{{c1:: 理想 }}
 
 ### 设置viewport [	](css_20201014033126131)
 
@@ -849,6 +828,10 @@
   + {{c1:: `min-height` }}
 
 ## 移动端布局:flex布局 [	](css_20201014033126142)
+
+### flex布局
++ 父元素的6个样式：`flex-direction` `justify-content` `flex-wrap` `align-content` `align-items` `flex-flow`
++ 父元素的3个样式：`flex` `align-self` `order`
 
 ### flex布局：常见父项属性 [	](css_20201014033126144)
 
@@ -924,9 +907,11 @@
 + 语法:
   ```css
   /* {{c1:: */
-  @media mediatype and|not|only (media feature) {
-    css-code
-  }
+    @media screen and (max-width: 300px) {
+        body {
+            background-color:lightblue;
+        }
+    }
   /* }} */
   ```
 + mediatype取值：
@@ -934,7 +919,7 @@
   | ----- | ---------------------------------- |
   | `all`   | {{c1:: 用于所有设备                     }}|
   | `print` | {{c1:: 用于打印机和打印预览              }}|
-  | `scree` | {{c1:: 用于电脑屏幕，平板电脑，智能手机等 }}|
+  | `screen` | {{c1:: 用于电脑屏幕，平板电脑，智能手机等 }}|
 + media feature取值：
   | 值    | 解释说明                           |
   | ----- | ---------------------------------- |
@@ -947,7 +932,7 @@
 1. `em`:{{c1:: 相对于父元素的字体大小来计算 }}
 2. `rem`:{{c1:: 相对于html元素字体大小来计算 }}
 
-### 根据媒体查询引入支援 [	](css_20201014033126162)
+### 根据媒体查询引入资源 [	](css_20201014033126162)
 
 ```html
 <!-- {{c1:: -->
@@ -961,7 +946,7 @@
 ### less变量定义 [	](css_20201014033126166)
 
 ```less
-  //c1::
+  //{{c1::
   @color: pink;  
   body {
     background-color: @color;
@@ -970,18 +955,31 @@
 ```
 
 ### less嵌套 [	](css_20201014033126168)
-
-1. less嵌套子元素的样式直接写到父元素里面就好了
-2. 如果有伪类、交集选择器、 伪元素选择器 我们内层选择器的前面需要加&
++ 将以下css代码翻译成less代码
+  ```css
+  .header {
+    width: 200px;
+    height: 200px;
+    background-color: pink;
+  }
+  .header a {
+    color: red;
+  }
+  .header a:hover {
+    color: blue;
+  }
+  ```
 + 代码：
   ```less
-  //c1::
+  //{{c1::
+  //1. less嵌套子元素的样式直接写到父元素里面就好了
   .header {
       width: 200px;
       height: 200px;
       background-color: pink;
       a {
           color: red;
+          //2. 如果有伪类、交集选择器、 伪元素选择器 我们内层选择器的前面需要加&
           &:hover {
               color: blue;
           }

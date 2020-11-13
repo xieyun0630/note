@@ -41,8 +41,30 @@
 
 ### Tomcat体系结构(图) [	](javaWeb_20201022051052176)
 + {{c1:: ![tomcat_1029](https://gitee.com/xieyun714/nodeimage/raw/master/img/tomcat_1029.png)}}
++ 各组件含义：
+  - `Server`: {{c1:: 对应的就是一个 Tomcat 实例。 }}
+  - `Service`: {{c1:: 默认只有一个，也就是一个 Tomcat 实例默认一个 Service。 }}
+  - `Connector`: {{c1:: 一个 Service 可能多个 连接器，接受不同连接协议。 }}
+  - `Container`: {{c1:: 多个连接器对应一个容器，顶层容器其实就是 Engine。 }}
++ 组件之间的关系:
+  + `Tomcat`实例: {{c1:: 比如一个`Tomcat`实例包含一个`Service` }}
+  + `Service`: {{c1:: 一个`Service` 包含多个**连接器**和一个**容器**。 }}
+  + `Container`: {{c1::一个容器包含多个`Host` }}
+  + `Host`: {{c1:: `Host`内部可能有多个`Context`容器， }}
+  + `Context`: {{c1:: 一个`Context`也会包含多个`Servlet` }}
+
+### 连接器(Connector)
+
++ 连接器的结构图：{{c1:: ![image-20201111163036592](https://gitee.com/xieyun714/nodeimage/raw/master/img/image-20201111163036592.png) }}
++ 各组件作用：
+  + `ProtocolHandler `: {{c1::主要处理**网络连接**和**应用层协议**，包含了两个重要部件`EndPoint`和`Processor`}}
+    + `ProtocolHandler`继承体系（图）：{{c1::![image-20201111165114291](https://gitee.com/xieyun714/nodeimage/raw/master/img/image-20201111165114291.png) }}
+  + `EndPoint`：{{c1:: 负责网络通信。负责提供字节流给`Processor`}}
+  + `Processor`：{{c1:: 负责应用层协议解析。负责提供`Tomcat Request`对象给`Adapter`}}
+  + `Adapter`：{{c1:: `Tomcat Request/Response`与`ServletRequest/ServletResponse`的转化。负责提供`ServletRequest`对象给容器。}}
 
 ## 常见试题 [	](javaWeb_20201026014023034)
+
 ### Tomcat的缺省端口是多少，怎么修改 [	](javaWeb_20201026014023037)
 + 到tomcat主目录下的`conf/server.xml`文件中修改
   ```xml
@@ -55,10 +77,10 @@
   <!-- }} -->
   ```
 ### Tomcat 有哪几种Connector 运行模式(优化)？ [	](javaWeb_20201026014023039)
-- `bio`: **传统的Java I/O操作，同步且阻塞IO。**
-- `nio`: **JDK1.4开始支持，同步阻塞或同步非阻塞IO**
-- `aio(nio.2)`: **JDK7开始支持，异步非阻塞IO**
-- `apr`: Tomcat将以JNI的形式调用Apache HTTP服务器的核心动态链接库来处理文件读取或网络传输操作，从而大大地 **提高Tomcat对静态文件的处理性能**
+- `bio`: {{c1:: **传统的Java I/O操作，同步且阻塞IO。** }}
+- `nio`: {{c1:: **JDK1.4开始支持，同步阻塞或同步非阻塞IO** }}
+- `aio(nio.2)`: {{c1:: **JDK7开始支持，异步非阻塞IO** }}
+- `apr`: {{c1:: Tomcat将以JNI的形式调用Apache HTTP服务器的核心动态链接库来处理文件读取或网络传输操作，从而大大地 **提高Tomcat对静态文件的处理性能** }}
 + 配置Tomcat运行模式:
   ```xml
     <!-- {{c1:: -->
@@ -113,10 +135,8 @@
 3. {{c1:: 一个空行 }}
 4. {{c1:: 实体内容： 服务器向客户端回送的数据 }}
 
-### 状态行 [	](javaWeb_20201022051052192)
-+ 格式：{{c1:: HTTP版本号　状态码　原因叙述 }}
-  
-  + 例：{{c1:: HTTP/1.1 200 OK }}
+### 响应行 [	](javaWeb_20201022051052192)
++ 格式：{{c1:: `HTTP/1.1 200 OK` }}
 + | 分类 | 分类描述                                                |
   | :--- | :------------------------------------------------------ |
   | 1xx  | {{c1:: 信息，服务器收到请求，需要请求者继续执行操作  }} |
@@ -339,15 +359,15 @@
 + 提交数据能用post就用post
 
 ### 转发与重定向的区别 [	](javaWeb_20201022051052239)
-+ 实际发生位置不同，地址栏不同:
++ **实际发生位置**不同，**地址栏**不同:
   1. 发生位置:{{c1:: 转发是发生在服务器的,重定向是发生在浏览器的 }}
   2. 地址栏:{{c1:: 转发浏览器的地址栏是没有发生变化的,重定向浏览器的地址会发生变化的 }}
-+ 能够去往的URL的范围不一样:
++ **能够去往的URL的范围**不一样:
   + 转发是服务器跳转只能去往当前web应用的资源
     + 转发时"/"代表:{{c1:: 本应用程序的根目录 }}
   + 重定向是浏览器跳转，可以去往任何的资源
     + 重定向时"/"代表:{{c1:: webapps目录 }}
-+ 传递数据的类型不同：转发的request对象可以传递各种类型的数据包括对象，重定向只能传递字符串
++ **传递数据的类型不同**：转发的request对象可以传递各种类型的数据包括对象，重定向只能传递字符串
 
 ### `RequestDispatcher`的`include()` [	](javaWeb_20201022051052241)
 + 作用示意图：{{c1:: ![image-20201022133020639](https://gitee.com/xieyun714/nodeimage/raw/master/img/image-20201022133020639.png) }}
@@ -510,9 +530,9 @@
 
 ## 过滤器 [	](javaWeb_20201026014023050)
 
-### 实现简单的过滤器 [	](javaWeb_20201026014023052)
-1. 实现Filter接口，注意过滤链的调用
-2. 在web.xml中配置`<filter>` `<filter-mapping>`
+### 实现简单的过滤器步骤 [	](javaWeb_20201026014023052)
+1. {{c1:: 实现Filter接口，注意过滤链的调用 }}
+2. {{c1:: 在web.xml中配置`<filter>` `<filter-mapping>` }}
 
 ### Servlet 过滤器的配置 [	](javaWeb_20201026014023054)
 + `<filter>`

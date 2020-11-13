@@ -4058,7 +4058,7 @@ showNotification({
 });
 ```
 
-如图：![image-20200522201109343](javascript_info.assets\image-20200522201109343.png)
+如图：![image-20200522201109343](https://gitee.com/xieyun714/nodeimage/raw/master/img/image-20200522201109343.png)
 
 答案：
 {{c1::
@@ -4145,7 +4145,7 @@ alert(example.offsetTop); // 180
 + `scrollLeft/scrollTop`: {{c1::从元素的左上角开始，滚动出元素的上半部分的 width/height。}}
 + 除了{{c1:: `scrollLeft/scrollTop`}} 外，所有属性都是只读的。
 + 如图所示：
-  {{c1::![image-20200522225402747](javascript_info.assets\image-20200522225402747.png)}}
+  {{c1::![image-20200522225402747](https://gitee.com/xieyun714/nodeimage/raw/master/img/image-20200522225402747.png)}}
 
 ### Window 的大小 [ ](javascript_info_20200525035508053)
 
@@ -4343,7 +4343,7 @@ alert(example.offsetTop); // 180
 
 + 点击列表元素，只选择该元素（添加 `.selected` 类），取消选择其他所有元素。
 + 如果点击时，按键 Ctrl（在 Mac 中为 Cmd）是被按下的，则选择会被切换到被点击的元素上，但其他元素不会被改动。
-  ![image-20200604104707552](javascript_info.assets\image-20200604104707552.png)
+  ![image-20200604104707552](https://gitee.com/xieyun714/nodeimage/raw/master/img/image-20200604104707552.png)
   一种结果：
 
 ```javascript
@@ -4390,7 +4390,7 @@ function singleSelect(li) {
 ### `mouseenter/mouseleave`与 `mouseover/mouseout` 的区别 [ ](javascript_info_20200604111305683)
 
 + 事件 `mouseenter/mouseleave` 不会冒泡。
-  {{c1:: ![image-20200604113942191](javascript_info.assets\image-20200604113942191.png) }}
+  {{c1:: ![image-20200604113942191](https://gitee.com/xieyun714/nodeimage/raw/master/img/image-20200604113942191.png) }}
 
 ### 使用事件委托实现类似以下效果 [ ](javascript_info_20200604111305684)
 
@@ -4403,7 +4403,7 @@ function singleSelect(li) {
   </div>
   ```
 + 效果图：
-  ![UZkXhRLqta](javascript_info.assets\UZkXhRLqta.gif)
+  ![UZkXhRLqta](https://gitee.com/xieyun714/nodeimage/raw/master/img/UZkXhRLqta.gif)
 + 参考思路:
 
 ```javascript
@@ -4442,7 +4442,7 @@ function showTooltip(anchorElem, html) {
 
 ### 实现图中拖放一个球的算法 [ ](javascript_info_20200604111305685)
 
-![TQEN8RNhVl](javascript_info.assets\TQEN8RNhVl.gif)
+![TQEN8RNhVl](https://gitee.com/xieyun714/nodeimage/raw/master/img/TQEN8RNhVl.gif)
 
 ```javascript
 ball.onmousedown = function (event) {
@@ -4501,7 +4501,7 @@ ball.onmousedown = function (event) {
 
 ### 在下面这个示例中，当球被拖到球门上时，球门会被高亮显示。 [ ](javascript_info_20200604111305687)
 
-![image-20200604150734337](javascript_info.assets\image-20200604150734337.png)
+![image-20200604150734337](https://gitee.com/xieyun714/nodeimage/raw/master/img/image-20200604150734337.png)
 
 ```javascript
 // 当前飞过的droppable
@@ -4826,7 +4826,7 @@ loadScript("/article/script-async-defer/small.js");
 
 ### 实现选择跟踪演示效果 [ ](javascript_info_20200608063412728)
 
-![XGjhAQEjuL](javascript_info.assets\XGjhAQEjuL.gif)
+![XGjhAQEjuL](https://gitee.com/xieyun714/nodeimage/raw/master/img/XGjhAQEjuL.gif)
 代码如下:
 
 ```javascript
@@ -4915,7 +4915,7 @@ alert("code");
 
 + 顺序是从上到下，即:首先是脚本，然后是微任务，渲染等
 + 示意图:
-  {{c1:: ![image-20200608160453621](javascript_info.assets\image-20200608160453621.png) }}
+  {{c1:: ![image-20200608160453621](https://gitee.com/xieyun714/nodeimage/raw/master/img/image-20200608160453621.png) }}
 
 ## Frame 和 window [ ](javascript_info_20200609045144092)
 
@@ -5049,7 +5049,7 @@ for (let num of view) {
 ### BufferSource 术语 [ ](javascript_info_20200609045144098)
 
 + 作用：{{c1:: 指“任何类型的二进制数据” —— ArrayBuffer 或其上的视图。 }}
-+ BufferSource 体系图：{{c1:: ![image-20200609133016048](javascript_info.assets\image-20200609133016048.png) }}
++ BufferSource 体系图：{{c1:: ![image-20200609133016048](https://gitee.com/xieyun714/nodeimage/raw/master/img/image-20200609133016048.png) }}
 
 ### TextDecoder 和 TextEncoder [ ](javascript_info_20200609045144099)
 

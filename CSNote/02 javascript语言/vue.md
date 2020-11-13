@@ -249,22 +249,24 @@ var watchExampleVM = new Vue({
   })
 ```
 
-## 绑定 HTML Class [ ](vue_20200703080524571)
+## v-bind对HTML class属性取值的作用 [ ](vue_20200703080524571)
 
-### 绑定 HTML Class:对象语法 [ ](vue_20200703080524572)
-
-- 3 种`v-bind:class`的调用方式
-
-  1. 基本语法：{{c1:: `<div v-bind:class="{ active: isActive }"></div>`}}
-  2. 与已有 class 属性混合：{{c1:: `<div class="static" v-bind:class="{ active: isActive, 'text-danger': hasError }"></div>`}}
-  3. 属性对象：{{c1:: `<div v-bind:class="classObject"></div>`}}
-
-- 与计算属性结合返回对象
+### 使用v-bind将对象绑定到class属性 [ ](vue_20200703080524572)
++ `v-bind:class`的各取值类型的作用：
+  1. 对象字面量
+     + 例：`<div class="static" v-bind:class="{ active: isActive, 'text-danger': hasError }"></div>`
+     + 作用：对象的属性名代表class的css样式，值为组件变量
+  3. 组件变量
+     + 例：`<div v-bind:class="classObject"></div>`
+     + 作用：直接将组件内变量绑定到class属性，注意返回对象需要回调函数
++ 将计算属性绑定到class属性例子：
+  + html例：`<div v-bind:class="classObject"></div>`
   ```js
         data: {
         isActive: true,
         error: null
         },
+      //{{c1::
         computed: {
             classObject: function () {
                 return {
@@ -273,6 +275,7 @@ var watchExampleVM = new Vue({
                 }
             }
         }
+      //}}
   ```
 
 ### 绑定 HTML Class:数组语法 [ ](vue_20200703080524573)
@@ -408,27 +411,6 @@ var watchExampleVM = new Vue({
 - 自动将用户的输入值转为数值类型:{{c1:: `<input v-model.number="age" type="number">`  }}
 - 自动过滤用户输入的首尾空白字符:{{c1:: `<input v-model.trim="msg">`  }}
 
-### `v-model`把值绑定到 Vue 实例的一个动态 property [ ](vue_20200707060718104)
-
-```html
-<input type="checkbox" v-model="toggle" true-value="yes" false-value="no" />
-
-<select v-model="selected">
-  <option v-bind:value="{ number: 123 }">123</option>
-</select>
-<!-- {{c1:: -->
-<script>
-  // 当选中时
-  vm.toggle === 'yes'
-  // 当没有选中时
-  vm.toggle === 'no'
-  // 当选中时
-  typeof vm.selected // => 'object'
-  vm.selected.number // => 123
-  <!-- }} -->
-</script>
-```
-
 ## 组件基础 [ ](vue_20200707060718105)
 
 ### 监听子组件事件 [ ](vue_20200707060718106)
@@ -485,8 +467,9 @@ var watchExampleVM = new Vue({
   ```html
   <custom-input v-model="searchText"></custom-input>
   ```
-+ 需要的组件定义：
++ 该的组件定义code：
   ```js
+    //{{c1::
     Vue.component("custom-input", {
     props: ["value"],
     template: `
@@ -495,6 +478,7 @@ var watchExampleVM = new Vue({
         v-on:input="$emit('input', $event.target.value)">
     `,
     });
+    //}}
   ```
 
 ### 动态组件 [ ](vue_20200707060718109)
@@ -1422,7 +1406,7 @@ directives: {
 
 3. 使用：{{c1:: `<input v-focus>` }}
 
-### 自定义指令对象中的钩子函数 [ ](vue_20200717061050998)
+### 自定义指令对象的各个钩子函数 [ ](vue_20200717061050998)
 
 - 钩子函数
   - `bind`：{{c1:: 只调用一次，指令第一次绑定到元素时调用。在这里可以进行一次性的初始化设置。 }}
@@ -1430,7 +1414,7 @@ directives: {
   - `update`：{{c1:: 所在组件的 VNode 更新时调用，但是可能发生在其子 VNode 更新之前。指令的值可能发生了改变，也可能没有。但是你可以通过比较更新前后的值来忽略不必要的模板更新 (详细的钩子函数参数见下)。 }}
   - `componentUpdated`：{{c1:: 指令所在组件的 VNode 及其子 VNode 全部更新后调用。 }}
   - `unbind`：{{c1:: 只调用一次，指令与元素解绑时调用。 }}
-- 函数简写：{{c1:: 在 bind 和 update 时触发相同行为，而不关心其它的钩子 }}
+- 默认绑定的单个函数：在 bind 和 update 时触发相同行为，而不关心其它的钩子
   ```js
   //{{c1::
   Vue.directive("color-swatch", function (el, binding) {
@@ -1440,71 +1424,66 @@ directives: {
   ```
 
 ### 自定义指令对象中的钩子函数参数 [ ](vue_20200717061050999)
-
-- 指令钩子函数会被传入以下参数：
-  - `el`：{{c1:: 指令所绑定的元素，可以用来直接操作 DOM。}}
-  - `binding`：{{c1:: 一个对象，包含以下 property：}}
-    - `name`：{{c1:: 指令名，不包括 `v-` 前缀。}}
-    - `value`：{{c1:: 指令的绑定值，例如：`v-my-directive="1 + 1"` 中，绑定值为 `2`。}}
-    - `oldValue`：{{c1:: 指令绑定的前一个值，仅在 `update` 和 `componentUpdated` 钩子中可用。无论值是否改变都可用。}}
-    - `expression`：{{c1:: 字符串形式的指令表达式。例如 `v-my-directive="1 + 1"` 中，表达式为 `"1 + 1"`。}}
-    - `arg`：{{c1:: 传给指令的参数，可选。例如 `v-my-directive:foo` 中，参数为 `"foo"`。}}
-    - `modifiers`：{{c1:: 一个包含修饰符的对象。例如：`v-my-directive.foo.bar` 中，修饰符对象为 `{ foo: true, bar: true }`。}}
-  - `vnode`：{{c1:: Vue 编译生成的虚拟节点。移步 [VNode API](https://cn.vuejs.org/v2/api/#VNode-接口) 来了解更多详情。}}
-  - `oldVnode`：{{c1:: 上一个虚拟节点，仅在 `update` 和 `componentUpdated` 钩子中可用。}}
-- 对象字面量:
-  ```html
-  <!-- {{c1:: -->
-  <div v-demo="{ color: 'white', text: 'hello!' }"></div>
-  <script>
-    Vue.directive("demo", function (el, binding) {
-      console.log(binding.value.color); // => "white"
-      console.log(binding.value.text); // => "hello!"
++ 自定义指令例：
+  ```js
+    Vue.directive("demo", {
+        bind: function (el, binding, vnode) {
+          //...
+        }
     });
-  </script>
-  <!-- }} -->
   ```
-- 钩子函数以及钩子函数参数简单使用：
-  - html 代码:
-    ```html
-    <!-- {{c1:: -->
-    <div id="hook-arguments-example" v-demo:foo.a.b="message"></div>
-    <!-- }} -->
-    ```
-  - js 代码：
++ 各个参数的含义:
+  + `el`:{{c1:: 指令所绑定的元素，可以用来直接操作 DOM。}}
+  + `binding`:{{c1:: 一个对象，包含以下 property:}}
+    + `name`:{{c1:: 指令名，不包括 `v-` 前缀。}}
+    + `value`:{{c1:: 指令的绑定值，}}
+    + `oldValue`:{{c1:: 指令绑定的前一个值，仅在 `update` 和 `componentUpdated` 钩子中可用。无论值是否改变都可用。}}
+    + `expression`:{{c1:: 字符串形式的指令表达式。}}
+    + `arg`:{{c1:: 传给指令的参数，可选。}}
+    + `modifiers`:{{c1:: 一个包含修饰符的对象。}}
+  + `vnode`:{{c1:: Vue 编译生成的虚拟节点。}}
+  + `oldVnode`:{{c1:: 上一个虚拟节点，仅在 `update` 和 `componentUpdated` 钩子中可用。}}
+
+### 自定义指令并使用
+
+  + 需求：输出指令的名字，绑定值的color与text属性，表达式，修饰符,
+  + html 代码:
+  ```html
+    <div id="myDirective" v-demo:foo.a.b="{ color: 'white', text: 'hello!' }"></div>
+  ```
+  + js 代码：
     ```js
     //{{c1::
     Vue.directive("demo", {
       bind: function (el, binding, vnode) {
-        var s = JSON.stringify;
         el.innerHTML =
           "name: " +
-          s(binding.name) +
+          JSON.stringify(binding.name) +
           "<br>" +
           "value: " +
-          s(binding.value) +
+          JSON.stringify(binding.value) +
           "<br>" +
           "expression: " +
-          s(binding.expression) +
+          JSON.stringify(binding.expression) +
           "<br>" +
           // binding.arg可以获取动态指令的值：v-pin:[direction]="200"
           "argument: " +
-          s(binding.arg) +
+          JSON.stringify(binding.arg) +
           "<br>" +
           "modifiers: " +
-          s(binding.modifiers) +
+          JSON.stringify(binding.modifiers) +
           "<br>" +
           "vnode keys: " +
           Object.keys(vnode).join(", ");
       },
     });
-    //}}
     new Vue({
-      el: "#hook-arguments-example",
+      el: "#myDirective",
       data: {
         message: "hello!",
       },
     });
+    //}}
     ```
 
 ## 渲染函数 & JSX [ ](vue_20200717061051000)
@@ -1547,37 +1526,7 @@ Vue.component("anchored-heading", {
   //}}
 ```
 
-### 使用渲染函数代替 `v-model` [ ](vue_20200717061051003)
 
-```js
-//{{c1::
-props: ['value'],
-render: function (createElement) {
-  var self = this
-  return createElement('input', {
-    domProps: {
-      value: self.value
-    },
-    on: {
-      input: function (event) {
-        self.$emit('input', event.target.value)
-      },
-      '!click': this.doThisInCapturingMode,
-      '~keyup': this.doThisOnce,
-      '~!mouseover': this.doThisOnceInCapturingMode
-    }
-  })
-}
-//}}
-```
-
-- on 选项中时间修饰符
-  | 修饰符 | 前缀 |
-  | :--------------------------------- | :--- |
-  | `.passive` | {{c1:: `&` }} |
-  | `.capture` | {{c1:: `!` }} |
-  | `.once` | {{c1:: `~` }} |
-  | `.capture.once` 或 `.once.capture` | {{c1:: `~!`}} |
 
 ### vue 过滤器 [ ](vue_20200717061051004)
 
