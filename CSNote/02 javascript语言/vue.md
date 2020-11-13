@@ -1526,37 +1526,7 @@ Vue.component("anchored-heading", {
   //}}
 ```
 
-### 使用渲染函数代替 `v-model` [ ](vue_20200717061051003)
 
-```js
-//{{c1::
-props: ['value'],
-render: function (createElement) {
-  var self = this
-  return createElement('input', {
-    domProps: {
-      value: self.value
-    },
-    on: {
-      input: function (event) {
-        self.$emit('input', event.target.value)
-      },
-      '!click': this.doThisInCapturingMode,
-      '~keyup': this.doThisOnce,
-      '~!mouseover': this.doThisOnceInCapturingMode
-    }
-  })
-}
-//}}
-```
-
-- on 选项中时间修饰符
-  | 修饰符 | 前缀 |
-  | :--------------------------------- | :--- |
-  | `.passive` | {{c1:: `&` }} |
-  | `.capture` | {{c1:: `!` }} |
-  | `.once` | {{c1:: `~` }} |
-  | `.capture.once` 或 `.once.capture` | {{c1:: `~!`}} |
 
 ### vue 过滤器 [ ](vue_20200717061051004)
 

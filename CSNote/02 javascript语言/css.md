@@ -759,18 +759,6 @@
   1. {{c1:: 给图片添加 vertical-align:middle | top| bottom 等。 （提倡使用的） }}
   2. {{c1:: 把图片转换为块级元素 display: block; }}
 
-### 溢出的文字省略号显示 [	](css_20200822070211650)
-
-+ 单行文本溢出显示省略号必须满足:
-  1. `white-space: nowrap; `：{{c1:: 先强制一行内显示文本（ 默认 `normal` 自动换行）}}
-  2. `overflow: hidden;`：{{c1:: 超出的部分隐藏}}
-  3. `text-overflow: ellipsis;`：{{c1:: 文字用省略号替代超出的部分}}
-+ 多行文本溢出显示省略号必须满足:
-  1. ` hidden;`:{{c1:: 超出的部分隐藏overflow }}
-  2. `text-overflow: ellipsis;`:{{c1:: 文字用省略号替代超出的部分 }}
-  3. `display: -webkit-box;`:{{c1:: 弹性伸缩盒子模型显示 }}
-  4. `-webkit-line-clamp: 2;`:{{c1:: 限制在一个块元素显示的文本的行数 }}
-  5. `-webkit-box-orient: vertical;`:{{c1:: 设置或检索伸缩盒对象的子元素的排列方式 }}
 
 ## 移动端布局:流式布局 [	](css_20201014033126126)
 
@@ -840,6 +828,10 @@
   + {{c1:: `min-height` }}
 
 ## 移动端布局:flex布局 [	](css_20201014033126142)
+
+### flex布局
++ 父元素的6个样式：`flex-direction` `justify-content` `flex-wrap` `align-content` `align-items` `flex-flow`
++ 父元素的3个样式：`flex` `align-self` `order`
 
 ### flex布局：常见父项属性 [	](css_20201014033126144)
 
@@ -940,7 +932,7 @@
 1. `em`:{{c1:: 相对于父元素的字体大小来计算 }}
 2. `rem`:{{c1:: 相对于html元素字体大小来计算 }}
 
-### 根据媒体查询引入支援 [	](css_20201014033126162)
+### 根据媒体查询引入资源 [	](css_20201014033126162)
 
 ```html
 <!-- {{c1:: -->
@@ -963,18 +955,31 @@
 ```
 
 ### less嵌套 [	](css_20201014033126168)
-
-1. less嵌套子元素的样式直接写到父元素里面就好了
-2. 如果有伪类、交集选择器、 伪元素选择器 我们内层选择器的前面需要加&
++ 将以下css代码翻译成less代码
+  ```css
+  .header {
+    width: 200px;
+    height: 200px;
+    background-color: pink;
+  }
+  .header a {
+    color: red;
+  }
+  .header a:hover {
+    color: blue;
+  }
+  ```
 + 代码：
   ```less
   //{{c1::
+  //1. less嵌套子元素的样式直接写到父元素里面就好了
   .header {
       width: 200px;
       height: 200px;
       background-color: pink;
       a {
           color: red;
+          //2. 如果有伪类、交集选择器、 伪元素选择器 我们内层选择器的前面需要加&
           &:hover {
               color: blue;
           }

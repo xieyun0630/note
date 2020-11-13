@@ -1467,9 +1467,8 @@
 
 ### InnoDB 内存优化参数配置 [ ](mysql_20200929055547641)
 
-+ 优化背景:{{c1:: innodb用一块内存区做IO缓存池，该缓存池不仅用来缓存innodb的索引块，而且也用来缓存innodb的数据块。 }}
-+ `innodb_buffer_pool_size`:{{c1:: 该变量决定了 innodb 存储引擎表数据和索引数据的最大缓存区大小。 }}
-+ `innodb_log_buffer_size`:{{c1:: 决定了innodb重做日志缓存的大小 }}
++ `innodb_buffer_pool_size`:{{c1:: innodb用一块内存区做IO缓存池，该缓存池不仅用来缓存innodb的索引块，而且也用来缓存innodb的数据块，该变量决定了 innodb 存储引擎**表数据和索引数据**的最大缓存区大小。 }}
++ `innodb_log_buffer_size`:{{c1:: 这个参数设置 InnoDB 用来往磁盘上的**日志文件写操作**的缓冲区的大小。这有点像 Oracle 的 log_buffer ，通过内存缓冲来延缓磁盘 I/O 以提高访问的效率。 因为 MySQL 每秒都会将日志缓冲区的内容刷新到日志文件，因此无需设置超过 1 秒所需的内存空间。通常设置为 8 ～ 16MB 就足够了，默认值是 1MB 。 }}
 
 ### Mysql并发参数调整 [	](mysql_20201012060626276)
 

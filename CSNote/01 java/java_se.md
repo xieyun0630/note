@@ -947,7 +947,7 @@ MediaView mediaView = new MediaView(mediaPlayer);
 + `isAlive()`：{{c1:: 当线程处于新建与死亡状态时，返回false }}
 + 对死亡的线程调用`start()`方法,会引发{{c1:: `IllegalThreadStateException` }}异常
 + 五种线程状态转换图
-  {{c1:: ![image-20200603230326712](java_se.assets\image-20200603230326712.png) }}
+  {{c1:: ![image-20200603230326712](https://gitee.com/xieyun714/nodeimage/raw/master/img/image-20200603230326712.png) }}
 
 ### 线程之间的协助 [	](java_se_20200604111131328)
 
