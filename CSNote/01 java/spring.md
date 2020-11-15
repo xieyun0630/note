@@ -1307,9 +1307,9 @@ public class Person
 
   
 
-## spring MVC
+## spring MVC [	](spring_20201115082829623)
 
-### javaWeb环境中使用spring
+### javaWeb环境中使用spring [	](spring_20201115082829626)
 
 + 主要思路:{{c1:: 使用`ServletContextListener`创建`ApplicationContext`，将其存储到最大的域`servletContext`域 }}
 + 实际操作：
@@ -1336,7 +1336,7 @@ public class Person
      //}}
      ```
 
-### web.xml配置SpringMVC的核心控制器
+### web.xml配置SpringMVC的核心控制器 [	](spring_20201115082829628)
 ```xml
 <!-- {{c1:: -->
   <servlet>
@@ -1355,7 +1355,7 @@ public class Person
 <!-- }} -->
 ```
 
-### @RequestMapping
+### @RequestMapping [	](spring_20201115082829631)
 
 + 作用：{{c1:: 用于建立请求 URL 和处理请求方法之间的对应关系 }}
 + 标注位置：
@@ -1369,7 +1369,7 @@ public class Person
   + `params = {"accountName"}`：{{c1:: 表示请求参数必须有accountName }}
   + `params = {"moeny!100"}`：{{c1:: 表示请求参数中money不能是100 }}
 
-### 配置内部资源视图解析器
+### 配置内部资源视图解析器 [	](spring_20201115082829633)
 
 + 注意：{{c1:: 如果不在配置文件中配置视图解析器，就会使用`DispatcherServlet.properties`中的默认配置。 }}
 ```xml
@@ -1380,9 +1380,9 @@ public class Person
   </bean>
   <!-- }} -->
 ```
-## SpringMVC的数据响应
+## SpringMVC的数据响应 [	](spring_20201115082829636)
 
-### SpringMVC的数据响应方式
+### SpringMVC的数据响应方式 [	](spring_20201115082829638)
 
 1. 页面跳转
   + 直接返回字符串
@@ -1391,7 +1391,7 @@ public class Person
   + 直接返回字符串
   + 返回对象或集合
 
-### SpringMVC页面跳转：返回字符串
+### SpringMVC页面跳转：返回字符串 [	](spring_20201115082829641)
 
 + 作用：会将返回的字符串与视图解析器的前后缀拼接后跳转。
 + 返回带有前缀的字符串：
@@ -1399,7 +1399,7 @@ public class Person
   + 重定向：{{`redirect:index`
 + 例：{{c1:: ![image-20201113125111735](https://gitee.com/xieyun714/nodeimage/raw/master/img/image-20201113125111735.png) }}
 
-### SpringMVC页面跳转：返回ModelAndView对象
+### SpringMVC页面跳转：返回ModelAndView对象 [	](spring_20201115082829643)
 
 + 主要思路：{{c1:: 使用`modelAndView.setViewName("viewName")`指定视图 }}
 + 例：
@@ -1414,7 +1414,7 @@ public class Person
     }
     //}}
   ```
-### SpringMVC页面跳转：向request域存储数据
+### SpringMVC页面跳转：向request域存储数据 [	](spring_20201115082829646)
 + `request`方式:{{c1:: 通过SpringMVC框架注入的`request`对象`setAttribute()`方法设置 }}
 + `ModelAndView`方式：{{c1:: 通过`ModelAndView`的`addObject()`方法设置 }}
 + 例：
@@ -1436,7 +1436,7 @@ public class Person
   //}}
   ```
 
-### SpringMVC回写数据：直接返回字符串
+### SpringMVC回写数据：直接返回字符串 [	](spring_20201115082829649)
 + 通过`response对象`:{{c1:: 通过SpringMVC框架注入的response对象，使用response.getWriter().print(“hello world”) 回写数据，此时不需要视图跳转，业务方法返回值为void。 }}
 + 通过`@ResponseBody`:{{c1:: 将需要回写的字符串直接返回，但此时需要通过@ResponseBody注解告知SpringMVC框架，方法返回的字符串不是跳转是直接在http响应体中返回。 }}
 + 例：
@@ -1456,7 +1456,7 @@ public class Person
     //}}
   ```
 
-### SpringMVC回写数据：返回对象或集合
+### SpringMVC回写数据：返回对象或集合 [	](spring_20201115082829651)
 
 1. 需要开启注解驱动：{{c1:: `<mvc:annotation-driven/>` }}
 2. 将对象或集合作为返回值：
@@ -1474,7 +1474,7 @@ public class Person
   //}}
   ```
 
-## SpringMVC的请求
+## SpringMVC的请求 [	](spring_20201115082829654)
 + SpringMVC处理器方法可以接收如下类型的参数：
   + 基本类型参数：{{c1:: 参数名称要与请求参数的name一致，参数值会自动映射匹配。并且能自动做类型转换； }}
   + POJO类型参数：{{c1:: POJO参数的属性名与请求参数的name一致，参数值会自动映射匹配。 }}
@@ -1513,14 +1513,14 @@ public class Person
           //}}
         ```
 
-### 静态资源访问的开启(应用)
+### 静态资源访问的开启(应用) [	](spring_20201115082829657)
 
 + 原因：{{c1:: SpringMVC的前端控制器DispatcherServlet的url-pattern配置的是/,代表对所有的资源都进行过滤操作 }}
 + 两种开启方式：
   + `<mvc:default-servlet-handler/>`：{{c1:: 对进入DispatcherServlet没有找到资源的URL进行筛查，如果发现是静态资源的请求，就将该请求转由Web应用服务器默认的Servlet处理 }}
   + `<mvc:resources mapping="/js/**"location="/js/"/> `：{{c1:: 由Spring MVC框架自己处理静态资源 }}
 
-### springMVC请求数据乱码问题
+### springMVC请求数据乱码问题 [	](spring_20201115082829661)
 + 主要思路：{{c1:: 在web.xml中配置`CharacterEncodingFilter`过滤器，作用是设置`reqeuset`与`response`对象的编码 }}
 + 配置如下：
   ```xml
@@ -1537,7 +1537,7 @@ public class Person
       <url-pattern>/*</url-pattern>
   </filter-mapping>
   ```
-### @requestParam
+### @requestParam [	](spring_20201115082829664)
 
 + 作用：{{c1:: 当请求的**参数名称**与Controller的业务**方法参数名称**不一致时，就需要通过@RequestParam注解显示的绑定 }}
 + 属性：
@@ -1559,7 +1559,7 @@ public class Person
   }
   //}}
   ```
-### Restful风格的参数
+### Restful风格的参数 [	](spring_20201115082829666)
 
 1. {{c1:: `GET`：用于获取资源 }}
 2. {{c1:: `POST`：用于新建资源 }}
@@ -1571,7 +1571,7 @@ public class Person
   3. {{c1:: `/user/1 PUT`： 更新 id = 1 的 user }}
   4. {{c1:: `/user POST`： 新增 user }}
 
-### @PathVariable
+### @PathVariable [	](spring_20201115082829669)
 
 + 作用：{{c1:: 读取指定占位符的值到请求处理方法形参。地址/user/1可以写成/user/{id}，占位符{id}对应的就是1的值。}}
 + 例：
@@ -1585,7 +1585,7 @@ public class Person
   //}}
   ```
 
-### 自定义类型转换器
+### 自定义类型转换器 [	](spring_20201115082829671)
 
 + 作用：{{c1:: 映射字符串类型的请求参数到请求处理方法形参 }}
 + 开发步骤：
@@ -1624,7 +1624,7 @@ public class Person
   <!-- }} -->
   ```
   3. 在`<annotation-driven>`中引用转换器:{{c1::`<mvc:annotation-driven conversion-service="converterService"/>`}}
-### 在请求处理方法获取原始ServletAPI
+### 在请求处理方法获取原始ServletAPI [	](spring_20201115082829674)
 
 + 主要思路：{{c1:: SpringMVC支持使用原始ServletAPI对象作为控制器方法的参数进行注入}} 
 + 常用的对象如下：
@@ -1632,7 +1632,7 @@ public class Person
   + {{c1:: `HttpServletResponse` }}
   + {{c1:: `HttpSession` }}
 
-### @RequestHeader，@CookieValue
+### @RequestHeader，@CookieValue [	](spring_20201115082829676)
 
 + `@RequestHeader`
   + 作用：修饰请求处理**方法形参**,相当于`request.getHeader(name)`
@@ -1645,7 +1645,7 @@ public class Person
     + `value`：{{c1:: 指定cookie的名称 }}
     + `required`：{{c1:: 是否必须携带此cookie }}
 
-### 客户端文件上传三要素
+### 客户端文件上传三要素 [	](spring_20201115082829679)
 
 1. {{c1:: 表单项`type=“file”` }}
 2. {{c1:: 表单的提交方式是`post`   }}
@@ -1661,13 +1661,13 @@ public class Person
 <!-- }} -->
 ```
 
-### 文件上传原理(理解)
+### 文件上传原理(理解) [	](spring_20201115082829681)
 
 + `request.getParameter()`失效原因?
 + `application/x-www-form-urlencoded`与`Mutilpat/form-data`的区别?
 + 解释：{{c1:: ![](https://gitee.com/xieyun714/nodeimage/raw/master/img/5.jpg) }}
 
-### springMVC文件上传步骤
+### springMVC文件上传步骤 [	](spring_20201115082829683)
 
 + 开发步骤：
   1. 导入fileupload和io坐标：{{c1:: `commons-fileupload` `commons-io` }}
@@ -1711,16 +1711,16 @@ public class Person
   //}}
   ```
 
-## SpringMVC拦截器
+## SpringMVC拦截器 [	](spring_20201115082829686)
 
-### SpringMVC拦截器和Servlet Filter的区别
+### SpringMVC拦截器和Servlet Filter的区别 [	](spring_20201115082829689)
 
 | 区别     | 过滤器                                                       | 拦截器                                                       |
 | :------- | :----------------------------------------------------------- | :----------------------------------------------------------- |
 | 使用范围 | {{c1:: 是 servlet 规范中的一部分，任何Java Web 工程都可以使用 }} | {{c1:: 是 SpringMVC 框架自己的，只有使用了SpringMVC 框架的工程才能用 }} |
 | 拦截范围 | {{c1:: 在 url-pattern 中配置了/*之后，可以对**所有要访问的资源**拦截 }} | {{c1:: 只会拦截**请求处理方法**，如果访问的是 `jsp，html,css,image` 或者 `js` 是不会进行拦截的 }} |
 
-### 自定义springMVC拦截器
+### 自定义springMVC拦截器 [	](spring_20201115082829692)
 1. 创建拦截器类实现`HandlerInterceptor`接口
 2. 配置拦截器:
   ```xml
@@ -1737,14 +1737,14 @@ public class Person
 3. 拦截器的拦截效果：{{c1:: ![](https://gitee.com/xieyun714/nodeimage/raw/master/img/20201113162620.png) }}
 + 注意拦截器执行顺序：{{c1:: 多个拦截器情况下，配置在前的先执行，配置在后的后执行 }}
 
-### HandlerInterceptor接口方法
+### HandlerInterceptor接口方法 [	](spring_20201115082829695)
 | 方法                | 说明                                                         |
 | :------------------ | :----------------------------------------------------------- |
 | `boolean preHandle()`       | {{c1:: 方法将在请求处理之前进行调用，该方法的返回值是布尔值Boolean类型的，当它返回为false 时，表示请求结束，后续的Interceptor 和Controller 都不会再执行；当返回值为true 时就会继续调用下一个Interceptor 的preHandle 方法 }} |
 | `void postHandle()`      | {{c1:: 该方法是在当前请求进行处理之后被调用，前提是preHandle 方法的返回值为true 时才能被调用，且它会在DispatcherServlet 进行视图返回渲染之前被调用，所以我们可以在这个方法中对Controller 处理之后的ModelAndView 对象进行操作 }} |
 | `void afterCompletion()` | {{c1:: 该方法将在整个请求结束之后，也就是在DispatcherServlet 渲染了对应的视图之后执行，前提是preHandle 方法的返回值为true 时才能被调用 }} |
 
-### SpringMVC异常处理机制
+### SpringMVC异常处理机制 [	](spring_20201115082829697)
 + 主要思路：{{c1:: 系统的Dao、Service、Controller出现都通过throws Exception向上抛出，最后由SpringMVC前端控制器交由异常处理器进行异常处理 }}
 + 异常处理的两种方式
   1. {{c1:: 使用Spring MVC提供的简单异常处理器`SimpleMappingExceptionResolver` }}
@@ -1780,4 +1780,3 @@ public class Person
       //<bean id="exceptionResolver" class="com.itheima.exception.MyExceptionResolver"/>
     //}}
     ```
-

@@ -267,3 +267,5 @@
   - 默认的xinetd的主配置文件是{{c1::`/etc/xinetd.conf`}}
   - 一些**不常用**的网络守护进程是由xinetd启动的，如：telnet、 tftp等
   - xinetd本身是独立运行的守护进程
+
+### test
