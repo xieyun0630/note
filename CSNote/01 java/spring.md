@@ -876,7 +876,7 @@ public class Person
 ```
 
 
-### 基于Aspect配置文件的AOP配置 [	](spring_20200911094545336)
+### AOP配置声明  [	](spring_20201115084450644)
 ```xml
 <!-- {{c1:: -->
   <aop:config>
