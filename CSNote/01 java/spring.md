@@ -1285,7 +1285,7 @@ public class Person
 
 ### spring整合mybatis配置： [	](spring_20201109090319136)
 + 主要思路：{{c1:: 通过配置SqlSessionFactoryBean类，加载mybaits配置文件和映射文件,替代原Mybatis工具类}}
-+ 配置：
++ 配置session工厂：
   ```xml
   <!-- {{c1:: -->
     <bean id="sqlSessionFactoryBeanID" class="org.mybatis.spring.SqlSessionFactoryBean">
@@ -1294,6 +1294,18 @@ public class Person
     </bean>
   <!-- }} -->
   ```
+
++ 扫描mapper组件：
+
+  ```xml
+  <!-- {{c1:: -->
+  <bean class="org.mybatis.spring.mapper.MapperScannerConfigurer">
+    <property name="basePackage" value="org.mybatis.spring.sample.mapper" />
+  </bean>
+  <!-- }} -->
+  ```
+
+  
 
 ## spring MVC
 
@@ -1768,3 +1780,4 @@ public class Person
       //<bean id="exceptionResolver" class="com.itheima.exception.MyExceptionResolver"/>
     //}}
     ```
+

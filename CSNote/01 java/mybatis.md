@@ -1127,6 +1127,60 @@ public class News{
     <!-- }} -->
 	</plugins>
   ```
+### MyBatis PageHelper插件的使用
++ 主要思路：{{c1:: 引入pagehelper依赖，配置mybatis插件，使用`PageHelper.startPage`进行分页，`PageInfo类`获取分页信息 }}
++ {{c1::
++ 导入通用PageHelper坐标
+    ```xml
+    <!-- 分页助手 -->
+    <dependency>
+        <groupId>com.github.pagehelper</groupId>
+        <artifactId>pagehelper</artifactId>
+        <version>3.7.5</version>
+    </dependency>
+    <dependency>
+        <groupId>com.github.jsqlparser</groupId>
+        <artifactId>jsqlparser</artifactId>
+        <version>0.9.1</version>
+    </dependency>
+    ```
++ 在mybatis核心配置文件中配置PageHelper插件
+    ```xml
+    <!-- 注意：分页助手的插件  配置在通用馆mapper之前 -->
+    <plugin interceptor="com.github.pagehelper.PageHelper">
+        <!-- 指定方言 -->
+        <property name="dialect" value="mysql"/>
+    </plugin>
+    ```
++ 测试分页代码实现：
+    ```java
+    @Test
+    public void testPageHelper(){
+        //{{c1::
+        //设置分页参数
+        PageHelper.startPage(1,2);
+        //}}
+
+        List<User> select = userMapper2.select(null);
+        for(User user : select){
+            System.out.println(user);
+        }
+    }
+    ```
++ 获得分页相关的其他参数：
+    ```java
+    //{{c1::
+    //其他分页的数据
+    PageInfo<User> pageInfo = new PageInfo<User>(select);
+    System.out.println("总条数："+pageInfo.getTotal());
+    System.out.println("总页数："+pageInfo.getPages());
+    System.out.println("当前页："+pageInfo.getPageNum());
+    System.out.println("每页显示长度："+pageInfo.getPageSize());
+    System.out.println("是否第一页："+pageInfo.isIsFirstPage());
+    System.out.println("是否最后一页："+pageInfo.isIsLastPage());
+    //}}
+    ```
++ }}
 
 ### Mybatis四大对象： [	](mybatis_20200722091149295)
 
