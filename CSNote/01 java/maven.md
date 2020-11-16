@@ -239,80 +239,129 @@
     + {{c1:: 私服 }}
     + {{c1:: 其他公共库 }}
 
-### 远程仓库认证的配置 [	](maven_20200410012359797)
-{{c1::
-在settings.xml文件中配置
-```xml 
-<servers>
-<server>
-<!-- id必须与POM中需要认证的repository元素ID一致 -->
-<id>prok-releases</id>
-<username>repo-user</username>
-<password>repo-pwd</password>
-</server>
-</servers>
-```
-}}
+## maven私服  [	](maven_20201115082829579)
 
-### 远程依赖部署仓库的配置 [	](maven_20200410012359798)
-```xml
-<!-- {{c1:: -->
-<distributionManagement>
-    <repository>
-        <!-- 唯一标识符 -->
-        <id>prok-releases</id>
-        <!-- 仓库名称 -->
-        <name>Proj Release Repository</name>
-        <!-- 仓库地址 -->
-        <url>http://192.168.1.100/content/repository/proj-releases</url>
-    </repository>
-    <snapshotRepository>
-        <id>proj-snapshots</id>
-        <name>Proj Snapshot Repository</name>
-        <url>http://192.168.1.100/content/repository/proj-snapshots</url>
-    </snapshotRepository>
-</distributionManagement>
-<!-- }} -->
-```
-+ 以上配置到POM中后，配置正确的认证信息到settings.xml中
-+ 运行`mvn clean deploy`命令部署。
+### 将项目发布到maven私服 [	](maven_20200410012359797)
 
-### 远程依赖仓库以及远程插件仓库的配置 [	](maven_20200410012359800)
-
-```xml
-<!-- 远程依赖仓库 -->
-<!-- {{c1:: -->
-<repositories>
++ 背景：{{c1:: maven私服是搭建在公司局域网内的maven仓库，公司内的所有开发团队都可以使用。例如技术研发 团队开发了一个基础组件，就可以将这个基础组件打成jar包发布到私服，其他团队成员就可以从私服下载这个jar包到本地仓库并在项目中使用。 }}
++ 具体步骤如下：
+  1. 配置maven的settings.xml文件添加认证信息
+   ```xml 
+    <servers>
+        <server>
+            <id>prok-releases</id>
+            <username>repo-user</username>
+            <password>repo-pwd</password>
+        </server>
+    </servers>
+   ```
+    + 注意：{{c1:: id必须与POM中需要认证的repository元素ID一致  }}
+  2. 配置项目的pom.xml文件
+  ```xml
+    <!-- {{c1:: -->
+    <distributionManagement>
         <repository>
-            <id>maven-ali</id>
-            <url>https://maven.aliyun.com/repository/public</url>
-            <releases>
-                <enabled>true</enabled>
-            </releases>
-            <snapshots>
-                <enabled>true</enabled>
-                 <!--always（一直），daily（默认，每日），interval：X（这里X是以分钟为单位的时间间隔），或者never（从不）。 -->
-                <updatePolicy>always</updatePolicy>
-                <!-- ignore,warn,fail -->
-                <checksumPolicy>fail</checksumPolicy>
-            </snapshots>
+            <id>prok-releases</id>
+            <name>Proj Release Repository</name>
+            <url>http://192.168.1.100/content/repository/proj-releases</url>
         </repository>
-</repositories>
-<!-- }} -->
-```
-+ `<updatePolicy>`: {{c1:: 配置Maven检查更新的频率。}}
-+ `<checksumPolicy>`: {{c1:: 配置Maven检查检验和文件的策略。}}
+        <snapshotRepository>
+            <id>proj-snapshots</id>
+            <name>Proj Snapshot Repository</name>
+            <url>http://192.168.1.100/content/repository/proj-snapshots</url>
+        </snapshotRepository>
+    </distributionManagement>
+    <!-- }} -->
+  ```
+    + `<repository>`:{{c1:: 正式版本库 }}
+    + `<snapshotRepository>`:{{c1:: 快照版本库 }}
+    + `<id>`:{{c1:: 唯一标识符 }}
+    + `<name>`:{{c1:: 仓库名称 }}
+    + `<url>`:{{c1:: 仓库地址 }}
+  3. 执行命令:{{c1:: `mvn deploy` }}
 
-```xml
-<!-- 远程插件仓库 -->
-<!-- {{c1:: -->
-<pluginRepositories>
-        <pluginRepository>
-            <!-- ...与远程依赖仓库一致 -->
-        </pluginRepository>
-</pluginRepositories>
-<!-- }} -->
-```
+### 从私服下载jar到本地仓库 [	](maven_20201115082829582)
+
++ 在setting.xml文件中配置下载模板：
+    ```xml
+    <profile>
+        <id>dev</id>
+        <repositories>
+            <repository>
+                <id>nexus</id>
+                <url>http://localhost:8081/nexus/content/groups/public/</url>
+                <releases>
+                    <enabled>true</enabled>
+                </releases>
+                <snapshots>
+                    <enabled>true</enabled>
+                    <updatePolicy>always</updatePolicy>
+                    <checksumPolicy>fail</checksumPolicy>
+                </snapshots>
+            </repository>
+        </repositories>
+        <pluginRepositories>
+            <pluginRepository>
+                <id>public</id>
+                <name>Public Repositories</name>
+                <url>http://localhost:8081/nexus/content/groups/public/</url>
+            </pluginRepository>
+        </pluginRepositories>
+    </profile>
+    ```
+    + `<pluginRepositories>`:{{c1:: 插件仓库，maven的运行依赖插件，也需要从私服下载插件 }}
+    + `<url>`:{{c1:: 仓库地址，即nexus仓库组的地址 }}
+    + `<releases>`:{{c1:: 是否下载releases构件 }}
+    + `<snapshots>`:{{c1:: 是否下载snapshots构件 }}
+    + `<updatePolicy>`: {{c1::配置Maven检查更新的频率。 always（一直），daily（默认，每日），interval：X（这里X是以分钟为单位的时间间隔），或者never（从不）。 }}
+    + `<checksumPolicy>`: {{c1:: 配置Maven检查检验和文件的策略。}}
++ 在maven的settings.xml文件中配置激活下载模板
+    ```xml
+    <activeProfiles>
+        <activeProfile>dev</activeProfile>
+    </activeProfiles>
+    ```
+
+### 将第三方jar安装到本地仓库 [	](maven_20201115082829585)
+
+1. 准备所需jar包
+2. mvn install命令进行安装
+    ```
+    #{{c1:: 
+    mvn install:install-file 
+    -DgroupId=<group-id>  -DartifactId=<artifact-id>  -Dversion=<version> 
+    -Dpackaging=<packaging>  -Dfile=<path-to-thirdpart-jar-file>
+
+    mvn install:install-file  
+    -DgroupId=com.oracle -DartifactId=ojdbc14 –Dversion=10.2.0.4.0
+    -Dpackaging=jar -Dfile=ojdbc14-10.2.0.4.0.jar
+    #}}
+    ```
+3. 查看本地maven仓库，确认安装是否成功
+
+### 将第三方jar安装到maven私服 [	](maven_20201115082829587)
+
+1. 准备所需jar包
+1. 在maven的`settings.xml`配置文件中配置第三方仓库的server信息
+    ```xml
+        <server>
+            <id>thirdparty</id>
+            <username>admin</username>
+            <password>admin123</password>
+        </server>
+    ```
+1. 执行命令:
+    ```
+        #{{c1::
+        ----进入jar包所在目录运行
+        mvn deploy:deploy-file -DgroupId=com.alibaba -DartifactId=fastjson -Dversion=1.1.37 
+        -Dpackaging=jar -Dfile=fastjson-1.1.37.jar
+        -Durl=http://localhost:8081/nexus/content/repositories/thirdparty/ 
+        -DrepositoryId=thirdparty
+        #}}
+    ```
+
+## 中央仓库 [	](maven_20201115082829590)
 
 ### 配置中央仓库镜像 [	](maven_20200410012359801)
 
@@ -397,7 +446,7 @@
     <!-- 当执行 verify生命周期阶段的时候，maven-Source-plugin:jar-no-fork会得以执行，它会创建一个以 sources.Jar结尾的源码文件包。}} -->
 ```
 
-### maven中插件的配置 [	](maven_20200410012359813)
+### 配置maven插件方式 [	](maven_20200410012359813)
 
 + 命令行配置：{{c1:: `mvn install-Dmaven.test.skip=true`跳过安装配置 }}
 + 插件配置：{{c1:: 在POM中`<plugin>`的子元素`<configuration>`中配置}}

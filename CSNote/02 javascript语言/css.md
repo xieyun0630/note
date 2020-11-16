@@ -829,7 +829,7 @@
 
 ## 移动端布局:flex布局 [	](css_20201014033126142)
 
-### flex布局
+### flex布局 [	](css_20201115082829707)
 + 父元素的6个样式：`flex-direction` `justify-content` `flex-wrap` `align-content` `align-items` `flex-flow`
 + 父元素的3个样式：`flex` `align-self` `order`
 
@@ -994,5 +994,4 @@
 + 单位选择
   1. {{c1:: 两个数参与运算  如果只有一个数有单位，则最后的结果就以这个单位为准 }}
   2. {{c1:: 两个数参与运算，如果2个数都有单位，而且不一样的单位 最后的结果以第一个单位为准 }}
-
 

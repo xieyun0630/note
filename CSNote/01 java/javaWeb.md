@@ -53,7 +53,7 @@
   + `Host`: {{c1:: `Host`内部可能有多个`Context`容器， }}
   + `Context`: {{c1:: 一个`Context`也会包含多个`Servlet` }}
 
-### 连接器(Connector)
+### 连接器(Connector) [	](javaWeb_20201115082829553)
 
 + 连接器的结构图：{{c1:: ![image-20201111163036592](https://gitee.com/xieyun714/nodeimage/raw/master/img/image-20201111163036592.png) }}
 + 各组件作用：

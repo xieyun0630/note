@@ -1452,7 +1452,7 @@ directives: {
   + `vnode`:{{c1:: Vue 编译生成的虚拟节点。}}
   + `oldVnode`:{{c1:: 上一个虚拟节点，仅在 `update` 和 `componentUpdated` 钩子中可用。}}
 
-### 自定义指令并使用
+### 自定义指令并使用 [	](vue_20201115082829721)
 
   + 需求：输出指令的名字，绑定值的color与text属性，表达式，修饰符,
   + html 代码:
