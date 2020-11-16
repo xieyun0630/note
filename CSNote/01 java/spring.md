@@ -1768,3 +1768,85 @@ public class Person
       //<bean id="exceptionResolver" class="com.itheima.exception.MyExceptionResolver"/>
     //}}
     ```
+
+## Spring Boot
+
+### Spring Boot基本使用流程
+1. 创建maven工程
+2. 添加依赖:{{c1:: `spring-boot-starter-parent` `spring-boot-starter-web` }}
+3. 创建启动类
+   ```java
+   //{{c1::
+   @SpringBootApplication
+    public class App 
+    {
+        public static void main( String[] args )
+        {
+            SpringApplication.run(App.class, args);
+        }
+    }
+   //}}
+   ```
+4. 创建处理器Controller
+   ```java
+   //{{c1::
+    @RestController
+    public class HelloController {
+        @GetMapping("hello")
+        public String hello(){
+          return "hello,spring boot";
+        }
+    }
+   //}}
+   ```
+5. 测试:{{c1:: `http://localhost:8080/hello` }}
+
+
+### @PropertySource 与 @ConfigurationProperties
+
++ `@PropertySource`作用： {{c1:: 修饰**类**，引入资源文件到配置中 }}
++ `@ConfigurationProperties`作用： {{c1::修饰**类**，**bean配置方法**， 根据前缀后的属性调用对应的`setter`方法 }}
+```java
+//{{c1::
+@Configuration
+@PropertySource("classpath:jdbc.properties")
+public class JdbcConfig {
+    @Bean
+    @ConfigurationProperties(prefix = "jdbc")
+    public DataSource dataSource(){
+        return new DruidDataSource();
+    }
+}
+//}}
+```
+
+###  Yaml配置文件
+
++ yml配置文件的特征：
+  1. {{c1:: **树状层级**结构展示配置项； }}
+  2. {{c1:: 配置项之间如果有关系的话需要分行**空两格**； }}
+  3. {{c1:: 配置项如果有值的话，那么需要在`:`之后**空一格**再写配置项值； }}
++ 默认导入：{{c1:: springBoot默认导入:`application.yml`文件 }}
++ 多个Yaml配置文件需：
+  + {{c1:: 以`application-**.yml`命名 }}
+  + {{c1:: 在`application.yml`中配置项目使用激活这些配置文件：、 }}
+    ```yaml
+    #{{c1::
+    spring:
+      profiles:
+        active: abc,def
+    #}}
+    ```
++ 注入`数组`、`list`、`set`等类型的格式:
+    ```yaml
+    #{{c1::
+    key:
+      - value1
+      - value2
+    #}}
+    ```
++ 如果properties和yml文件都存在：{{c1:: 如果有重叠属性，默认以Properties优先。 }}
+### springBoot中改变自动配置的组件默认参数流程
++ 流程图：
+  {{c1:: ![image-20201116163356229](https://gitee.com/xieyun714/nodeimage/raw/master/img/image-20201116163356229.png)}}
+

@@ -85,25 +85,33 @@
   });
   //}}
   ```
+### Vue的4种类型的生命周期钩子
 
-### 生命周期钩子 [ ](vue_20200703080524562)
+1. {{c1:: `beforeCreate` `created` }}
+2. {{c1:: `beforeMount` `mounted` }}
+3. {{c1:: `beforeUpdate` `updated` }}
+4. {{c1:: `beforeDestroy` `destroyed` }}
 
-- created 钩子可以用来在一个实例被创建之后执行代码：
+### Vue各生命周期钩子特点： [ ](vue_20200703080524562)
+
++ `beforeCreate` `created`:{{c1:: 组件创建前后触发 }}
++ `beforeMount` `mounted`:{{c1:: 挂载到页面上前后触发 }}
++ `beforeUpdate` `updated`:{{c1:: 当组件内属性修改前后被触发 }}
++ `beforeDestroy` `destroyed`:{{c1:: 组件销毁前后被触发，可以使用`vm.isCreated`测试 }}
++ 绑定生命周期例：
   ```js
-  new Vue({
-    //{{c1::
-    data: {
-      a: 1,
-    },
-    created: function () {
-      // `this` 指向 vm 实例
-      console.log("a is: " + this.a);
-    },
-    //}}
-  });
+    new Vue({
+      //{{c1::
+      data: {
+        a: 1,
+      },
+      created: function () {
+        // `this` 指向 vm 实例
+        console.log("a is: " + this.a);
+      },
+      //}}
+    });
   ```
-- 也有一些其它的钩子，在实例生命周期的不同阶段被调用，如 `mounted`、`updated` 和 `destroyed`
-
 ## 模板语法 [ ](vue_20200703080524563)
 
 ### 对于所有的数据绑定，Vue.js 都提供了完全的 JavaScript 表达式支持 [ ](vue_20200703080524564)

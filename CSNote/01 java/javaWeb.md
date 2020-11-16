@@ -188,7 +188,7 @@
     <servlet-mapping>  
       <servlet-name>firstServlet</servlet-name>  
       <!-- 同一个Servlet可以被映射到多个URL上。 -->
-      <url-pattern>/servlet/firstServlet.jsp</url-pattern>  
+      <url-pattern>/servlet/firstServlet.jsp</url-pattern>   
       <url-pattern>/wocao.ppp</url-pattern>  
       <!-- Servlet映射的URL可以使用通配符 -->
       <url-pattern>/*</url-pattern>
@@ -197,7 +197,7 @@
   ```
 3. {{c1:: 配置tomcat运行Servlet }}
 
-
+  
 ### Servlet的线程安全问题 [	](javaWeb_20201022051052202)
 + 背景：{{c1:: 由于Servlet是单例的，当多个用户访问Servlet的时候，**服务器会为每个用户创建一个线程**。**当多个用户并发访问Servlet共享资源的时候就会出现线程安全问题**。 }}
 + 原则：
