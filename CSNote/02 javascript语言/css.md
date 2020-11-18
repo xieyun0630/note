@@ -624,11 +624,11 @@
   ```
 2. 声明使用：{{c1:: `animation: name duration timing-function delay iteration-count direction fill-mode;` }}
    + 各属性常见取值：
-     + timing-function：{{c1:: 速度曲线 }}
-     + delay：{{c1:: 什么时候开始 }}
-     + iteration-count：{{c1:: 1/infinite }}
-     + direction：{{c1:: normal/reverse }}
-     + fill-mode：{{c1:: forwards/backwards 指定结束的状态 }}
+     + `timing-function`：{{c1:: 速度曲线 }}
+     + `delay`：{{c1:: 什么时候开始 }}
+     + `iteration-count`：{{c1:: 1/infinite }}
+     + `direction`：{{c1:: normal/reverse }}
+     + `fill-mode`：{{c1:: forwards/backwards 指定结束的状态 }}
 
 ### CSS过渡与动画的常见速度曲线函数 [	](css_20200822070211623)
 
@@ -830,8 +830,8 @@
 ## 移动端布局:flex布局 [	](css_20201014033126142)
 
 ### flex布局 [	](css_20201115082829707)
-+ 父元素的6个样式：`flex-direction` `justify-content` `flex-wrap` `align-content` `align-items` `flex-flow`
-+ 父元素的3个样式：`flex` `align-self` `order`
++ 父元素的6个样式：{{c1:: `flex-direction` `justify-content` `flex-wrap` `align-content` `align-items` `flex-flow` }}
++ 子元素的3个样式：{{c1:: `flex` `align-self` `order` }}
 
 ### flex布局：常见父项属性 [	](css_20201014033126144)
 

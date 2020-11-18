@@ -85,7 +85,7 @@
   });
   //}}
   ```
-### Vue的4种类型的生命周期钩子
+### Vue的4种类型的生命周期钩子 [	](vue_20201116050448304)
 
 1. {{c1:: `beforeCreate` `created` }}
 2. {{c1:: `beforeMount` `mounted` }}

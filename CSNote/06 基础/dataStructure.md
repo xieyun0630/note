@@ -240,7 +240,7 @@ LinkList List_HeadInsert(LinkList &L){
   //}}
   ```
 
-单链表实现：按位插入
+### 单链表实现：按位插入
 
 + 带头节点:{{c1:: ![image-20201030142950126](https://gitee.com/xieyun714/nodeimage/raw/master/img/image-20201030142950126.png) }}
 + 不带节点:{{c1:: ![image-20201030143239923](https://gitee.com/xieyun714/nodeimage/raw/master/img/image-20201030143239923.png) }}
@@ -252,7 +252,10 @@ LinkList List_HeadInsert(LinkList &L){
 + 前插操作:{{c1:: ![image-20201030143924193](https://gitee.com/xieyun714/nodeimage/raw/master/img/image-20201030143924193.png) }}
 
 ### 单链表实现：按位删除（带头节点） [	](dataStructure_20201109090319229)
-
++ 主要思路：找到i-1的节点
++ 边际问题注意：
+  + 注意最后一个元素
+  + 注意i是否超范围
 {{c1:: ![image-20201030144304774](https://gitee.com/xieyun714/nodeimage/raw/master/img/image-20201030144304774.png)  }}
 
 ### 单链表实现：指定结点的删除 [	](dataStructure_20201109090319232)

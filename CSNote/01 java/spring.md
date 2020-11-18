@@ -1284,13 +1284,19 @@ public class Person
   ```
 
 ### spring整合mybatis配置： [	](spring_20201109090319136)
-+ 主要思路：{{c1:: 通过配置SqlSessionFactoryBean类，加载mybaits配置文件和映射文件,替代原Mybatis工具类}}
++ 主要思路：{{c1:: 通过配置SqlSessionFactoryBean类，加载mybaits配置文件，通过MapperScannerConfigurer扫描mapper组件到容器 }}
 + 配置session工厂：
   ```xml
   <!-- {{c1:: -->
-    <bean id="sqlSessionFactoryBeanID" class="org.mybatis.spring.SqlSessionFactoryBean">
+    <bean id="sqlSessionFactory" class="org.mybatis.spring.SqlSessionFactoryBean">
         <property name="configLocation" value="classpath:mybatis.xml"/>
         <property name="dataSource" ref="dataSource"/>
+    </bean>
+
+    
+    <!--SqlSessionTemplate-->
+    <bean id="sqlSession"class="org.mybatis.spring.SqlSessionTemplate">
+      <constructor-arg index="0" ref="sqlSessionFactory" />
     </bean>
   <!-- }} -->
   ```
@@ -1382,21 +1388,21 @@ public class Person
 ```
 ## SpringMVC的数据响应 [	](spring_20201115082829636)
 
-### SpringMVC的数据响应方式 [	](spring_20201115082829638)
+### SpringMVC的数据响应方式分类 [	](spring_20201115082829638)
 
 1. 页面跳转
-  + 直接返回字符串
-  + 通过ModelAndView对象返回
+  + {{c1:: 直接返回字符串 }}
+  + {{c1:: 通过`ModelAndView`对象返回 }}
 2. 回写数据 
-  + 直接返回字符串
-  + 返回对象或集合
+  + {{c1:: 直接返回字符串 }}
+  + {{c1:: 返回对象或集合 }}
 
 ### SpringMVC页面跳转：返回字符串 [	](spring_20201115082829641)
 
 + 作用：会将返回的字符串与视图解析器的前后缀拼接后跳转。
 + 返回带有前缀的字符串：
-  + 转发：{{`forward:index.jsp`
-  + 重定向：{{`redirect:index`
+  + 转发：{{c1::`forward:index.jsp`}}
+  + 重定向：{{c1::`redirect:index`}}
 + 例：{{c1:: ![image-20201113125111735](https://gitee.com/xieyun714/nodeimage/raw/master/img/image-20201113125111735.png) }}
 
 ### SpringMVC页面跳转：返回ModelAndView对象 [	](spring_20201115082829643)
@@ -1474,7 +1480,7 @@ public class Person
   //}}
   ```
 
-## SpringMVC的请求 [	](spring_20201115082829654)
+### SpringMVC的请求 [	](spring_20201115082829654)
 + SpringMVC处理器方法可以接收如下类型的参数：
   + 基本类型参数：{{c1:: 参数名称要与请求参数的name一致，参数值会自动映射匹配。并且能自动做类型转换； }}
   + POJO类型参数：{{c1:: POJO参数的属性名与请求参数的name一致，参数值会自动映射匹配。 }}
@@ -1585,7 +1591,7 @@ public class Person
   //}}
   ```
 
-### 自定义类型转换器 [	](spring_20201115082829671)
+### springMVC中自定义类型转换器 [	](spring_20201115082829671)
 
 + 作用：{{c1:: 映射字符串类型的请求参数到请求处理方法形参 }}
 + 开发步骤：
@@ -1781,9 +1787,9 @@ public class Person
     //}}
     ```
 
-## Spring Boot
+## Spring Boot [	](spring_20201116050448269)
 
-### Spring Boot基本使用流程
+### Spring Boot基本使用流程 [	](spring_20201116050448273)
 1. 创建maven工程
 2. 添加依赖:{{c1:: `spring-boot-starter-parent` `spring-boot-starter-web` }}
 3. 创建启动类
@@ -1814,7 +1820,7 @@ public class Person
 5. 测试:{{c1:: `http://localhost:8080/hello` }}
 
 
-### @PropertySource 与 @ConfigurationProperties
+### @PropertySource 与 @ConfigurationProperties [	](spring_20201116050448275)
 
 + `@PropertySource`作用： {{c1:: 修饰**类**，引入资源文件到配置中 }}
 + `@ConfigurationProperties`作用： {{c1::修饰**类**，**bean配置方法**， 根据前缀后的属性调用对应的`setter`方法 }}
@@ -1832,7 +1838,7 @@ public class JdbcConfig {
 //}}
 ```
 
-###  Yaml配置文件
+###  Yaml配置文件 [	](spring_20201116050448277)
 
 + yml配置文件的特征：
   1. {{c1:: **树状层级**结构展示配置项； }}
@@ -1858,7 +1864,6 @@ public class JdbcConfig {
     #}}
     ```
 + 如果properties和yml文件都存在：{{c1:: 如果有重叠属性，默认以Properties优先。 }}
-### springBoot中改变自动配置的组件默认参数流程
+### springBoot中改变自动配置的组件默认参数流程 [	](spring_20201116050448280)
 + 流程图：
   {{c1:: ![image-20201116163356229](https://gitee.com/xieyun714/nodeimage/raw/master/img/image-20201116163356229.png)}}
-

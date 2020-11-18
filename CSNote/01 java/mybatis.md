@@ -1129,8 +1129,7 @@ public class News{
   ```
 ### MyBatis PageHelper插件的使用 [	](mybatis_20201115082829611)
 + 主要思路：{{c1:: 引入pagehelper依赖，配置mybatis插件，使用`PageHelper.startPage`进行分页，`PageInfo类`获取分页信息 }}
-+ {{c1::
-+ 导入通用PageHelper坐标
++ 导入通用PageHelper坐标:
     ```xml
     <!-- 分页助手 -->
     <dependency>
