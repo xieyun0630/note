@@ -35,11 +35,11 @@
     #}}
     ```
 ### 查看容器命令
-+ 查看正在运行的容器:{{c1::`docker ps `
-+ 查看所有容器:{{c1::`docker ps –a `
++ 查看正在运行的容器:{{c1::`docker ps `}}
++ 查看所有容器:{{c1::`docker ps –a `}}
 
 ### 创建并启动容器命令
-+ 语法：`docker run 参数`
++ 语法：{{c1:: `docker run 参数` }}
 + 参数：
   + `-i`：{{c1:: 保持容器运行。通常与 -t 同时使用。加入it这两个参数后，容器创建后自动进入容器中，退出容器后，容器自动关闭。 }}
   + `-t`：{{c1:: 为容器重新分配一个伪输入终端，通常与 -i 同时使用。 }}
@@ -73,6 +73,7 @@
 + ![](https://gitee.com/xieyun714/nodeimage/raw/master/img/20201119212013.png)
 1. 创建启动c3数据卷容器，使用{{c1:: `–v`  }}参数 设置数据卷
    + {{c1:: `docker run –it --name=c3 –v /volume centos:7 /bin/bash` }}
+   + 注意:{{c1:: 没有指定宿主机目录会自动生成一个挂载目录，可以使用`docker inspect c3`查看`source`属性 }}
 2. 创建启动 c1 c2 容器，使用{{c1:: `–-volumes-from` }}参数 设置数据卷
    + {{c1:: `docker run –it --name=c1 --volumes-from c3 centos:7 /bin/bash` }}
    + {{c1:: `docker run –it --name=c2 --volumes-from c3 centos:7 /bin/bash` }}
@@ -151,6 +152,7 @@
 
 ### 一、安装Docker Compose
 
+1. 
 ```shell
 # Compose目前已经完全支持Linux、Mac OS和Windows，在我们安装Compose之前，需要先安装Docker。下面我 们以编译好的二进制包方式安装在Linux系统中。 
 curl -L https://github.com/docker/compose/releases/download/1.22.0/docker-compose-`uname -s`-`uname -m` -o /usr/local/bin/docker-compose
@@ -159,14 +161,14 @@ chmod +x /usr/local/bin/docker-compose
 # 查看版本信息 
 docker-compose -version
 ```
++ {{c1:: 理解 }}
 
 ### 二、卸载Docker Compose
-
 ```shell
 # 二进制包方式安装的，删除二进制文件即可
 rm /usr/local/bin/docker-compose
 ```
-
++ {{c1:: 理解 }}
 
 
 ### 三、 使用docker compose编排nginx+springboot项目
