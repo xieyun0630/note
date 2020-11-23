@@ -70,7 +70,7 @@ docker pull tomcat
 ```shell
 # 在/root目录下创建tomcat目录用于存储tomcat数据信息
 mkdir ~/tomcat
-cd ~/tomcat
+cd ~/tomca
 ```
 
 ```shell

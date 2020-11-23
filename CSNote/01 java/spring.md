@@ -1867,3 +1867,124 @@ public class JdbcConfig {
 ### springBoot中改变自动配置的组件默认参数流程 [	](spring_20201116050448280)
 + 流程图：
   {{c1:: ![image-20201116163356229](https://gitee.com/xieyun714/nodeimage/raw/master/img/image-20201116163356229.png)}}
+
+## Webflux
+
+### Webflux概要
++ 是什么：{{c1:: `Webflux`是一种**异步非阻塞**的框架，异步非阻塞的框架在 Servlet3.1 以后才支持，核心是基于 Reactor 的相关 API 实现的。 }}
++ 什么是异步非阻塞：
+  + **异步和同步**：{{c1:: 针对调用者，调用者发送请求，如果等着对方回应之后才去做其他事情就是同步，如果发送请求之后不等着对方回应就去做其他事情就是异步 }}
+  + **阻塞和非阻塞**：{{c1:: 针对被调用者，被调用者受到请求之后，做完请求任务之后才给出反馈就是阻塞，受到请求之后马上给出反馈然后再去做事情就是非阻塞 }}
+
+
+### java8提供观察者模式的两个类 Observer 和 Observable
+
+```java
+public class ObserverDemo extends Observable {
+  public static void main(String[] args) {
+    ObserverDemo observer = new ObserverDemo();
+    //添加观察者
+    observer.addObserver((o,arg)->{
+      System.out.println("发生变化");
+    });
+    observer.addObserver((o,arg)->{
+      System.out.println("手动被观察者通知，准备改变");
+    });
+    observer.setChanged(); //数据变化
+    observer.notifyObservers(); //通知
+  }
+}
+```
++ {{c1:: 理解 }}
+
+### Flux 和 Mono
++ 返回元素:{{c1:: `Flux` 对象实现发布者，返回 `N` 个元素；`Mono` 实现发布者，返回 `0` 或者 `1` 个元素 }}
++ 三种数据信号：{{c1:: **元素值，错误信号，完成信号**，错误信号和完成信号都代表终止信号，终止信号用于告诉订阅者数据流结束了，错误信号终止数据流同时把错误信息传递给订阅者}}
++ 使用例:
+  ```java
+    //{{c1::
+    Flux.just(1, 2, 3, 4).subscribe(System.out:print)
+    Mono.just(1).subscribe(System.out:print)
+    //调用 just 或者其他方法只是声明数据流，数据流并没有发出，只有进行订阅之后才会触发数据流，不订阅什么都不会发生的
+    //}}
+  ```
+
+### SpringWebflux的CRUD示例（基于注解编程模型）
+1. 引入starter依赖：{{c1:: `pring-boot-starter-webflux` }}
+2. 配置启动端口号: {{c1:: `server.port=8081` }}
+3. 创建接口定义
+  ```java
+  //{{c1::
+    //用户操作接口
+    public interface UserService {
+    //根据 id 查询用户
+    Mono<User> getUserById(int id);
+    //查询所有用户
+    Flux<User> getAllUser();
+    //添加用户
+    Mono<Void> saveUserInfo(Mono<User> user);
+    }
+  //}}
+  ```
+4. 接口实现类
+  ```java
+  //{{c1::
+  public class UserServiceImpl implements UserService {
+    //创建 map 集合存储数据
+    private final Map<Integer,User> users = new HashMap<>();
+    public UserServiceImpl() {
+      this.users.put(1,new User("lucy","nan",20));
+      this.users.put(2,new User("mary","nv",30));
+      this.users.put(3,new User("jack","nv",50));
+    }
+
+    @Override
+    public Mono<User> getUserById(int id) {
+      return Mono.justOrEmpty(this.users.get(id));
+    }
+    @Override
+    public Flux<User> getAllUser() {
+      return Flux.fromIterable(this.users.values());
+    }
+
+    @Override
+    public Mono<Void> saveUserInfo(Mono<User> userMono) {
+      return userMono.doOnNext(person -> {
+        //向map集合里面放值
+        int id = users.size()+1;
+        users.put(id,person);
+      }).thenEmpty(Mono.empty());
+    }
+  }
+  //}}
+  ```
+5. 创建 controller
+  ```java
+    //{{c1::
+    @RestController
+    public class UserController {
+      //注入 service
+      @Autowired
+      private UserService userService;
+      //id 查询
+      @GetMapping("/user/{id}")
+      public Mono<User> geetUserId(@PathVariable int id) {
+        return userService.getUserById(id);
+      }
+      //查询所有
+      @GetMapping("/user")
+      public Flux<User> getUsers() {
+        return userService.getAllUser();
+      }
+      //添加
+      @PostMapping("/saveuser")
+      public Mono<Void> saveUser(@RequestBody User user) {
+        Mono<User> userMono = Mono.just(user);
+        return userService.saveUserInfo(userMono);
+      }
+    }
+    //}}
+  ```
++ 说明：
+  + `SpringMVC`方式实现，同步阻塞的方式，基于{{c1:: `SpringMVC+Servlet+Tomcat` }}
+  + `SpringWebflux`方式实现，异步非阻塞方式，基于{{c1:: `SpringWebflux+Reactor+Netty` }}
