@@ -24,8 +24,10 @@
     1. {{c1:: `docker images` }}
     2. {{c1:: `docker images –q` # 查看所用镜像的id }}
 + 搜索镜像:从网络中查找需要的镜像
+    
     + {{c1:: `docker search` 镜像名称 }}
 + 拉取镜像:从Docker仓库下载镜像到本地，镜像名称格式为 名称:版本号，如果版本号不指定则是最新的版本。如果不知道镜像版本，可以去docker hub 搜索对应镜像查看。
+    
     + {{c1:: `docker pull 镜像名称` }}
 + 删除镜像: 删除本地镜像
     ```shell
@@ -75,7 +77,7 @@
    + {{c1:: `docker run –it --name=c3 –v /volume centos:7 /bin/bash` }}
    + 注意:{{c1:: 没有指定宿主机目录会自动生成一个挂载目录，可以使用`docker inspect c3`查看`source`属性 }}
 2. 创建启动 c1 c2 容器，使用{{c1:: `–-volumes-from` }}参数 设置数据卷
-   + {{c1:: `docker run –it --name=c1 --volumes-from c3 centos:7 /bin/bash` }}
+   + {{c1:: ps `docker run –it --name=c1 --volumes-from c3 centos:7 /bin/bash` }}
    + {{c1:: `docker run –it --name=c2 --volumes-from c3 centos:7 /bin/bash` }}
 
 
