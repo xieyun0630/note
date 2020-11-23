@@ -1269,7 +1269,7 @@ Druid
 + 作用:{{c1:: 客户端与数据库所有的交互都是通过Connection来完成的。 }}
 | 常用方法                            | 说明                                             |
 | :---------------------------------- | :----------------------------------------------- |
-| `createcreateStatement()`           | {{c1:: 创建向数据库发送sql的statement对象。            }} |
+| `createStatement()`           | {{c1:: 创建向数据库发送sql的statement对象。            }} |
 | `prepareStatement(sql)`             | {{c1:: 创建向数据库发送预编译sql的PrepareSatement对象。}} |
 | `prepareCall(sql)`                  | {{c1:: 创建执行存储过程的callableStatement对象         }} |
 | `setAutoCommit(boolean autoCommit)` | {{c1:: 设置事务自动提交                                }} |
