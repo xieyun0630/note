@@ -134,3 +134,14 @@
     1. {{c1:: `setAcl /node4 digest:itheima:qlzQzCLKhBROghkooLvb+Mlwv4A=:cdrwa`:使用密文授权 }}
     2. {{c1:: `addauth digest itheima:123456 `:使用明文登录 }}
     3. {{c1:: `get /node4`：正常获取权限 }}
++ 多种模式授权：{{c1:: `setAcl /node5 ip:192.168.60.129:cdra,auth:itcast:cdrwa,digest:itheima:qlzQzCLKhBROghkooLvb+Mlwv4A=:cdrwa` }}
+
+### acl 超级管理员配置
+1. 那么打开zookeeper目录下的/bin/zkServer.sh服务器脚本文件，找到如下一行：
+  + `nohup $JAVA "-Dzookeeper.log.dir=${ZOO_LOG_DIR}" "-Dzookeeper.root.logger=${ZOO_LOG4J_PROP}"`
+2. 需要加一个超管的配置项:
+  + `"-Dzookeeper.DigestAuthenticationProvider.uperDigest=super:xQJmxLMiHGwaqBvst5y6rkB6HQs="`
+  + 注意这里密码是md5加密后密码，可以自定义
++ 之后启动zookeeper,输入如下命令添加权限:`addauth digest super:admin`
++ 理解：{{c1::标签}}
+

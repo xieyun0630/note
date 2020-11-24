@@ -686,4 +686,4 @@
 + 指定配置文件路径启动HAproxy负载：`/usr/local/haproxy/sbin/haproxy -f /etc/haproxy/haproxy.cfg`\
 + 查看haproxy进程状态:`ps -ef | grep haproxy`
 + 访问如下地址对mq节点进行监控:`http://172.16.98.133:8100/rabbitmq-stats`
-+ 理解：{{c1:: 标签 }}
++ 理解：{{c1:: 标签 }} 
