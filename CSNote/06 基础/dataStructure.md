@@ -240,7 +240,7 @@ LinkList List_HeadInsert(LinkList &L){
   //}}
   ```
 
-### 单链表实现：按位插入
+### 单链表实现：按位插入 [	](dataStructure_20201124103028993)
 
 + 带头节点:
 + {{c1:: ![image-20201030142950126](https://gitee.com/xieyun714/nodeimage/raw/master/img/image-20201030142950126.png) }}
