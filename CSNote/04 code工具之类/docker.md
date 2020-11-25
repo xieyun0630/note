@@ -1,4 +1,4 @@
-## Docker概述
+## Docker概述 [	](docker_20201125093504113)
 
 
 ### 安装Docker [	](docker_20201124103028682)
@@ -14,7 +14,7 @@
 + 容器（Container）：{{c1:: 镜像（Image）和容器（Container）的关系，就像是面向对象程序设计中的类和对象一样，镜像是静态的定义，容器是镜像运行时的实体。容器可以被创建、启动、停止、删除、暂停等。 }}
 + 仓库（Repository）：{{c1:: 仓库可看成一个代码控制中心，用来保存镜像。 }}
 
-## Docker基本操作
+## Docker基本操作 [	](docker_20201125093504115)
 
 ### Docker进程相关命令 [	](docker_20201124103028687)
 
@@ -69,7 +69,7 @@
 + 查看容器信息：
   + {{c1:: `docker inspect 容器名称` }}
 
-## 数据卷
+## 数据卷 [	](docker_20201125093504119)
 
 ### 配置数据卷 [	](docker_20201124103028704)
 
@@ -88,7 +88,7 @@
    + {{c1:: ps `docker run –it --name=c1 --volumes-from c3 centos:7 /bin/bash` }}
    + {{c1:: `docker run –it --name=c2 --volumes-from c3 centos:7 /bin/bash` }}
 
-## Docker 镜像
+## Docker 镜像 [	](docker_20201125093504121)
 
 ### Docker 镜像原理 [	](docker_20201124103028708)
 
@@ -106,7 +106,7 @@
 + 导出镜像:{{c1:: `docker save -o 压缩文件名称 镜像名称:版本号` }}
 + 加载镜像:{{c1:: `docker load –i 压缩文件名称` }}
 
-## Dockerfile
+## Dockerfile [	](docker_20201125093504124)
 
 ### Dockerfile关键字 [	](docker_20201124103028713)
 
