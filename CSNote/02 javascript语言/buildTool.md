@@ -140,43 +140,15 @@
 
 
 + 安装webpack命令：{{c1:: `npm install webpack webpack-cli -D` }}
-
-+ 创建目录结构
-  
-    + 源代码目录: {{c1::`./src/index.js`}}
-    + 配置文件：{{c1::`./webpack.config.js`}}
-    
 + webpack的4.x版本中默认约定：
-  
-    + 打包的入口文件为:{{c1:: `./src/index.js`}}
-    + 打包的输出文件为:{{c1:: `./dist/main.js`}}
-    
+    + 打包的默认入口文件为:{{c1:: `./src/index.js`}}
+    + 打包的默认输出文件为:{{c1:: `./dist/main.js`}}
 + 配置文件中最基本配置：
-  
-    + 五大核心概念属性:{{c1:: `output output module plugins mode` }}
-    + 基本配置
-      ```js
-      //{{c1::
-      module.exports = {
-          mode:"development"
-      }
-      //}}
-      ```
-    + 修改项目中的package.json文件添加运行脚本，如下
-      ```json
-      //{{c1::
-      "scripts":{
-          "dev":"webpack"
-      }
-      //}}
-      ```
-+ 启动webpack进行项目打包命令：`npm run dev`
+    + 五大核心概念属性:{{c1:: `entry output loader plugins mode` }}
 
-### webpack自动打包功能 [	](buildTool_20200722073620438)
-+ 安装：{{c1:: `npm install webpack-dev-server -D` }}
+### webpack自动引入js块到html文件 [	](buildTool_20200722073620438)
 + 配置`html-webpack-plugin`生成预览页面：
     ```js
-    //{{c1::
     const HtmlWebpackPlugin = require('html-webpack-plugin')
     const htmlWebpackPlugin = new HtmlWebpackPlugin({
       template: './src/index.html',
@@ -184,15 +156,6 @@
     })
     //...
     plugins:[htmlPlguin]
-    //}}
-    ```
-+ `package.json`配置：
-    ```json
-    //{{c1::
-    "scripts": {
-      "dev": "webpack-dev-server --open --host 127.0.0.1 --port 8888"
-    }
-    //}}
     ```
 
 ### npm install -S -D -g 有什么区别 [	](buildTool_20200722073620441)
@@ -203,10 +166,6 @@
 - `npm install module_name`： {{c1:: 本地安装(将安装包放在`./node_modules`下) }}
 
 ## webpack开发环境配置 [	](buildTool_20200626090144141)
-
-### webpack的loader调用过程（图） [	](buildTool_20200722073620443)
-
-{{c1::![image-20200721183448836](https://gitee.com/xieyun714/nodeimage/raw/master/img/image-20200721183448836.png)}}
 
 ### webpack打包样式资源配置 [	](buildTool_20200626090144143)
 
@@ -555,57 +514,6 @@ document.getElementById('btn').onclick = function() {
 //}}
 ```
 
-### PWA [	](buildTool_20200626090144163)
-
-- PWA: {{c1:: 渐进式网络开发应用程序(离线可访问) }}
-1. 所需模块： {{c1:: workbox-webpack-plugin }}
-  ```js
-//{{c1::
-new WorkboxWebpackPlugin.GenerateSW({
-  /*
-          作用：
-          1. 帮助serviceworker快速启动
-          2. 删除旧的 serviceworker
-          生成一个 serviceworker 配置文件~
-        */  
-  clientsClaim: true,
-  skipWaiting: true
-})
-//}}
-  ```
-2. 在入口文件中，注册serviceworker配置文件
-  ```js
-  //{{c1::
-    if ('serviceWorker' in navigator) {
-      window.addEventListener('load', () => {
-        navigator.serviceWorker
-          .register('/service-worker.js')
-          .then(() => {
-            console.log('sw注册成功了~');
-          })
-          .catch(() => {
-            console.log('sw注册失败了~');
-          });
-      });
-    }
-  //}}
-  ```
-3. eslint不认识 window、navigator全局变量问题的解决：
-  ```js
-  // 解决：需要修改package.json中eslintConfig配置
-  //{{c1::
-  "eslintConfig": {
-    "extends": "airbnb-base",
-      "env": {
-        "browser": true
-      }
-  }
-  //}}{{c1::  }}
-  ```
-- serviceworker代码必须运行在服务器上:
-  1. {{c1:: `npm i serve -g` }}
-  2. {{c1:: `serve -s build` :启动服务器，将build目录下所有资源作为静态资源暴露出去 }}
-
 ### 多进程打包 [	](buildTool_20200626090144164)
 
 安装：npm i thread-loader -D
@@ -745,70 +653,4 @@ module.exports = {
       }
     ]
   },
-```
-
-###  webpack devServer [	](buildTool_20200626090144170)
-
-```js
- devServer: {
-    // 运行代码的目录
-    // {{c1::
-    contentBase: resolve(__dirname, 'build'),
-    // }}
-    // 监视 contentBase 目录下的所有文件，一旦文件变化就会 reload
-    // {{c1::
-    watchContentBase: true,
-    // }}
-    // 忽略文件
-    // {{c1::
-    watchOptions: {
-      ignored: /node_modules/
-    },
-    // }}
-    // 启动gzip压缩
-    // {{c1::
-    compress: true,
-    // }}
-    // 端口号
-    // {{c1::
-    port: 5000,
-    // }}
-    // 域名
-    // {{c1::
-    host: 'localhost',
-    // }}
-    // 自动打开浏览器
-    // {{c1::
-    open: true,
-    // }}
-    // 开启HMR功能
-    // {{c1::
-    hot: true,
-    // }}
-    // 不要显示启动服务器日志信息
-    // {{c1::
-    clientLogLevel: 'none',
-    // }}
-    // 除了一些基本启动信息以外，其他内容都不要显示
-    // {{c1::
-    quiet: true,
-    // }}
-    // 如果出错了，不要全屏提示~
-    // {{c1::
-    overlay: false,
-    // }}
-    // 服务器代理 --> 解决开发环境跨域问题.
-    // 一旦devServer(5000)服务器接受到 /api/xxx 的请求，就会把请求转发到另外一个服务器(3000)
-    //{{c1::
-    proxy: {
-      '/api': {
-        target: 'http://localhost:3000',
-        // 发送请求时，请求路径重写：将 /api/xxx --> /xxx （去掉/api）
-        pathRewrite: {
-          '^/api': ''
-        }
-      }
-    }
-    //}}
-  }
 ```

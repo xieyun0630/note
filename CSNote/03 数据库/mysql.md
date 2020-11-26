@@ -1,9 +1,5 @@
 ## mysql基本概念 [ ](mysql_20200824100448996)
 
-### 数据库的概念 [ ](mysql_20200824100448999)
-
-+ 数据库的作用：{{c1:: 高效的存储和管理数据，为编程语言提供数据支撑 }}
-+ 数据库的目的:{{c1::就是能够存储（写）和提供（读）数据 }}
 
 ### 数据库分类 [ ](mysql_20200824100449001)
 数据库分类：根据数据库的架构和数据组织原理进行分类
@@ -461,7 +457,7 @@
   ```sql
     #{{c1::
     set auto_increment_increment = 2; # 当前用户当前连接有效（局部）
-    set @@auto_increment_increment = 2; # 所有用户一直有效（全局）
+    set @@auto_increment_offset = 2; # 所有用户一直有效（全局）
     #}}
   ```
 
@@ -813,22 +809,19 @@
 ### 表数据备份 [ ](mysql_20200914055153036)
 + 表数据备份语法：
   ```sql
-    #{{c1::
     select 字段列表|*  into outfile 外部文件路径 
       [fields terminated by 格式 enclosed by 格式]
       [lines terminated by 格式 starting by 格式]
     from 数据表;
-    #}}
   ```
 + 表数据还原语法：
   ```SQL
-    #{{c1::
     load data infile '数据文件所在路径' into table 表名
     [fields terminated by 格式 enclosed by 格式]
     [lines terminated by 格式 starting by 格式]
     [(字段列表)]; # 如果是部分表字段，那么必须将字段列表放到最后
-    #}}
   ```
++ 标签：{{c1:: 理解 }}
 
 ### 文件备份 [ ](mysql_20200914055153037)
 
@@ -1357,10 +1350,10 @@
 
 ###  优化OR条件 [ ](mysql_20200928050450126)
 
-+ 优化原因：{{c1:: 使用union替换or解决索引失效的问题。 }}
++ 优化原因：使用union替换or解决索引失效的问题。
 + 例子：
-  + 优化前：{{c1:: `explain select * from emp where id = 1 or id = 10`}}
-  + 优化后：{{c1:: `explain select * from emp where id = 1 union select * from emp id =10`}}
+  + 优化前：{{c1:: `explain select * from emp where id = 1 or c_id = 10 # c_id没有索引`}}
+  + 优化后：{{c1:: `explain select * from emp where id = 1 union select * from emp c_id =10`}}
 
 ### 优化分页（limit)查询 [ ](mysql_20200928050450129)
 

@@ -736,47 +736,6 @@ Vue.component("my-component", {
   <base-checkbox v-model="lovingVue"></base-checkbox>
   ```
 
-### 将组件根元素下子元素中原生事件绑定到组件 [ ](vue_20200708060208397)
-
-```js
-Vue.component("base-input", {
-  inheritAttrs: false,
-  props: ["label", "value"],
-  computed: {
-    // 将原生事件绑定到组件,下面是主要代码
-    // {{c1::
-    inputListeners: function () {
-      var vm = this;
-      // `Object.assign` 将所有的对象合并为一个新对象
-      return Object.assign(
-        {},
-        // 我们从父级添加所有的监听器
-        this.$listeners,
-        // 然后我们添加自定义监听器，
-        // 或覆写一些监听器的行为
-        {
-          // 这里确保组件配合 `v-model` 的工作
-          input: function (event) {
-            vm.$emit("input", event.target.value);
-          },
-        }
-      );
-    },
-    //}}
-  },
-  template: `
-    <label>
-      {{ label }}
-      <input
-        v-bind="$attrs"
-        v-bind:value="value"
-        v-on="inputListeners"
-      >
-    </label>
-  `,
-});
-```
-
 ### `v-bind`指令中`.sync`修饰符 [ ](vue_20200708060208398)
 
 - 主要作用：{{c1:: 实现双向绑定，子组件修改父组件中的值。 }}
@@ -1276,17 +1235,14 @@ methods: {
 - 效果：![rPw6hScs72](https://gitee.com/xieyun714/nodeimage/raw/master/img/rPw6hScs72-1594812237726.gif)
 - html 代码：
   ```html
-  <!-- {{c1:: -->
   <transition-group name="list-complete" tag="p">
     <span v-for="item in items" v-bind:key="item" class="list-complete-item">
       {{ item }}
     </span>
   </transition-group>
-  <!-- }} -->
   ```
 - CSS 代码:
   ```css
-  /** {{c1:: */
   .list-complete-item {
     transition: all 1s;
     display: inline-block;
@@ -1300,10 +1256,9 @@ methods: {
   .list-complete-leave-active {
     position: absolute;
   }
-  /** }} */
   ```
-- 注意:{{c1:: 使用 FLIP 过渡的元素不能设置为 display: `inline` 。作为替代方案，可以设置为 `display: inline-block` 或者放置于 `flex` 中 }}
-
+- 注意:{{c1:: 使用 FLIP 过渡的元素不能设置为 `display: inline` 。作为替代方案，可以设置为 `display: inline-block` 或者放置于 `flex` 中 }}
++ 标签：{{c1:: 理解 }}
 ## 可复用性&组合 [ ](vue_20200717061050993)
 
 ### vue 对象的混入 [ ](vue_20200717061050994)
@@ -1905,16 +1860,6 @@ const Register = {
     //}}
     ```
 
-### 快速原型开发 [ ](vue_20200722073620495)
-
-- 命令安装：{{c1;: `npm install -g @vue/cli-service-global` }}
-- 发布单个文件:
-  - 命令：{{c1;: `vue serve [options] [entry]` }}
-  - 选项：
-  - `-o, --open`:{{c1:: 打开浏览器 }}
-  - `-c, --copy`:{{c1:: 将本地 URL 复制到剪切板 }}
-  - `-h, --help`:{{c1:: 输出用法信息 }}
-
 # Element-UI [ ](vue_20200713065313240)
 
 ## 基本使用 [ ](vue_20200717061051005)
@@ -1982,3 +1927,4 @@ const Register = {
   locale.use(lang);
   //}}
   ```
+

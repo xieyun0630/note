@@ -272,25 +272,6 @@ btn.setOnAction(event -> circlePane.enlarge());
 
 {{c1::![image-20191217225448723](https://gitee.com/xieyun714/nodeimage/raw/master/img/image-20191217225448723.png)}}
 
-### 可观察对象监听器 [	](java_se_20191219101334742)
-
-+ Observable的实例，使用{{c1::`addListener`与`removeListener`}}添加或删除实现{{c1::`InvalidationListener`监听器}}对象，用于监听可观察对象的添加于修改
-+ 每个绑定属性都是{{c1::Observable的实例}}
-+ Observable与InvalidationListener接口源码：
-```java
-//{{c1::
-public interface Observable {
-    void addListener(InvalidationListener listener);
-    void removeListener(InvalidationListener listener);
-}
-//}}
-
-@FunctionalInterface
-public interface InvalidationListener {
-    public void invalidated(Observable observable);
-}
-//}}
-```
 
 ### javafx.animation.Animation类 [	](java_se_20191219101334760)
 
@@ -644,40 +625,6 @@ vScrollBar.setOrientation(Orientation.VERTICAL);
 
 }}
 
-### SliderDemo类 [	](java_se_20191219101334788)
-
-![image-20191218230909629](https://gitee.com/xieyun714/nodeimage/raw/master/img/image-20191218230909629.png)
-
-![image-20191218230903557](https://gitee.com/xieyun714/nodeimage/raw/master/img/image-20191218230903557.png)
-
-### SliderDemo例子： [	](java_se_20191219101334789)
-
-![image-20191218230654239](https://gitee.com/xieyun714/nodeimage/raw/master/img/image-20191218230654239.png)
-
-核心代码：
-
-```java
-    Text text = new Text(20, 20, "JavaFX Programming");
-    
-    Slider slHorizontal = new Slider();
-    slHorizontal.setShowTickLabels(true);
-    slHorizontal.setShowTickMarks(true);    
-    
-    Slider slVertical = new Slider();
-    slVertical.setOrientation(Orientation.VERTICAL);
-    slVertical.setShowTickLabels(true);
-    slVertical.setShowTickMarks(true);
-    slVertical.setValue(100);
-
-    slHorizontal.valueProperty().addListener(ov -> 
-      text.setX(slHorizontal.getValue() * paneForText.getWidth() /
-        slHorizontal.getMax()));
-    
-    slVertical.valueProperty().addListener(ov -> 
-      text.setY((slVertical.getMax() + slVertical.getValue()) 
-        * paneForText.getHeight() / slVertical.getMax()));
-    
-```
 
 ### Media类 [	](java_se_20191219101334791)
 
@@ -1314,14 +1261,14 @@ Druid
       /*
       {{c1::
         Oracle分页语法：
-          @lineSize---每页显示数据行数
+          @pageSize---每页显示数据行数
           @currentPage----当前所在页
       */
       SELECT *FROM (
           SELECT 列名,列名,ROWNUM rn
           FROM 表名
-          WHERE ROWNUM<=(currentPage*lineSize)) temp
-      WHERE temp.rn>(currentPage-1)*lineSize;
+          WHERE ROWNUM<=(currentPage*pageSize)) temp
+      WHERE temp.rn>(currentPage-1)*pageSize;
       /*}}*/
   ```
 ### JDBC批处理 [	](java_se_20201026050823603)

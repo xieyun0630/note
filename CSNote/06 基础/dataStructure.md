@@ -54,18 +54,18 @@
 + 口诀：{{c1::常对幂指阶 }}
 + 时间复杂度的几种类型，函数对比图：{{c1:: ![image-20201028082720604](https://gitee.com/xieyun714/nodeimage/raw/master/img/image-20201028082720604.png) }}
 
-### 计算代码算法的时间复杂度:计算步骤 [	](dataStructure_20201109090319182)
+### 计算代码的时间复杂度:计算步骤 [	](dataStructure_20201109090319182)
 + 如何计算：
   1. {{c1:: 找到一个基本操作（最深层循环） }}
   2. {{c1:: 分析该基本操作的执行次数x与问题规模n的关系x=f(n) }}
   3. {{c1:: x的数量级O(x）就是算法时间复杂度T(n) }}
 
-### 计算代码算法的时间复杂度T(n):指数递增型 [	](dataStructure_20201109090319185)
+### 计算代码的时间复杂度T(n):指数递增型 [	](dataStructure_20201109090319185)
 + C代码如图：![image-20201028083306983](https://gitee.com/xieyun714/nodeimage/raw/master/img/image-20201028083306983.png)
 + 解答：
   + {{c1:: ![image-20201028083557860](https://gitee.com/xieyun714/nodeimage/raw/master/img/image-20201028083557860.png) }}
 
-### 计算代码算法的时间复杂度T(n):搜索数字型 [	](dataStructure_20201109090319189)
+### 计算代码的时间复杂度T(n):搜索数字型 [	](dataStructure_20201109090319189)
 + ![image-20201028084423890](https://gitee.com/xieyun714/nodeimage/raw/master/img/image-20201028084423890.png)
 + 解答：{{c1:: ![image-20201028084445848](https://gitee.com/xieyun714/nodeimage/raw/master/img/image-20201028084445848.png) }}
 
@@ -94,9 +94,9 @@
 + 什么时候要传入引用`&`:{{c1:: 对参数的修改结果需要**带回来**}}
 
 ### 顺序表（顺序结构） [	](dataStructure_20201109090319204)
-
-+ 定义：{{c1:: 用**顺序存储**的方式实现**线性表**。把**逻辑上相邻**的元素存储在**物理位置上**也**相邻**的存储单元中，元素之间的关 系由**存储单元的邻接关系**来体现。}}
-
++ 定义：{{c1:: 用**顺序存储**的方式实现**线性表**。}}
++ 特点：{{c1:: 把**逻辑上相邻**的元素存储在**物理位置上**也**相邻**的存储单元中 }}
++ 元素间的关系：{{c1:: 元素之间的关系由**存储单元的邻接关系**来体现。 }}
 ### 顺序表实现：静态分配（数据结构定义） [	](dataStructure_20201109090319207)
 
 + 特点：{{c1:: 静态分配的存储空间一旦确定就不可变 }}
@@ -285,7 +285,7 @@ typedef struct DNode{
 
 {{c1:: ![image-20201030151749646](https://gitee.com/xieyun714/nodeimage/raw/master/img/image-20201030151749646.png) ![image-20201109170334280](https://gitee.com/xieyun714/nodeimage/raw/master/img/image-20201109170334280.png)}}
 
-### 双链表实现：删除 [	](dataStructure_20201109051135495)
+### 双链表实现：删除后继节点 [	](dataStructure_20201109051135495)
 
 {{c1:: ![image-20201109113854463](https://gitee.com/xieyun714/nodeimage/raw/master/img/image-20201109113854463.png)}}
 
@@ -371,14 +371,13 @@ typedef struct DNode{
 
 ### 栈的应用：表达式求值 [	](dataStructure_20201115082829752)
 
-### 中缀表达式转后缀/前缀表达式的（机算） [	](dataStructure_20201115082829755)
+### 后缀/前缀表达式的计算（机算） [	](dataStructure_20201115082829755)
 + 用栈实现后缀表达式的计算：
   1. {{c1:: 从左往右扫描下一个元素，直到处理完所有元素 }}
   2. {{c1:: 若扫描到操作数则压入栈，并回到①；否则执行③ }}
   3. {{c1:: 若扫描到运算符，则弹出两个栈顶元素，执行相应运算，运算结果压回栈顶，回到① }}
   + 注意：{{c1:: 第二步，先出栈的是“右操作数” }}
 + 过程动画：
-  
   + {{c1:: ![zdXEoElMxF](dataStructure.assets/zdXEoElMxF.gif)}}
 + 用栈实现前缀表达式的计算：
   1. {{c1:: **从右往左**扫描下一个元素，直到处理完所有元素 }}
@@ -388,7 +387,6 @@ typedef struct DNode{
 ### 中缀表达式转后缀表达式（手算） [	](dataStructure_20201115082829758)
 
 + 转换成后缀表达式：
-  
   + ![](https://gitee.com/xieyun714/nodeimage/raw/master/img/20201115175721.png)
 + 手算步骤：
   1. {{c1:: 确定中缀表达式中各个运算符的**运算顺序** }}
@@ -396,7 +394,6 @@ typedef struct DNode{
   3. {{c1:: 如果还有运算符没被处理，就继续② }}
   + 左优先”原则：{{C1:: 只要左边的运算符能先计算，就优先算左边的 }}
 + 结果：
-  
   + {{c1:: ![](https://gitee.com/xieyun714/nodeimage/raw/master/img/20201115175840.png) }}
 
 ### 中缀表达式转前缀表达式（手算） [	](dataStructure_20201115082829761)
@@ -407,7 +404,6 @@ typedef struct DNode{
   3. {{c1:: 如果还有运算符没被处理，就继续② }}
   + 右优先”原则：{{C1:: 只要右边的运算符能先计算，就优先算右边的 }}
 + 结果：
-  
   + {{c1:: ![](https://gitee.com/xieyun714/nodeimage/raw/master/img/20201115195456.png) }}
 
 ## 队列 [	](dataStructure_20201115082829764)

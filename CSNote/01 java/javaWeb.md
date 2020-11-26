@@ -263,10 +263,10 @@
 
 ### servlet中读取资源文件 [	](javaWeb_20201022051052214)
 
-1. 类路径下：{{c1:: `InputStream inputStream = servletContext.getResourceAsStream("/WEB-INF/classes/zhongfucheng/web/1.png");` }}
+1. 类路径下：{{c1:: `servletContext.getResourceAsStream("/WEB-INF/classes/zhongfucheng/web/1.png");` }}
 2. 将文件放在webRoot目录下：{{c1:: `servletContext.getResourceAsStream("2.png");` }}
-3. 通过类装载器读取资源文件：{{c1:: `ServletTest.class.getClassLoader().getResourceAsStream("/zhongfucheng/web/1.png");` }}
-
+3. 通过类加载器读取资源文件：{{c1:: `ServletTest.class.getClassLoader().getResourceAsStream("/zhongfucheng/web/1.png");` }}
++ 注意三种方式路径的区别
 ## response与request [	](javaWeb_20201022051052216)
 
 ### 调用getOutputStream()方法向浏览器输出数据2个方法 [	](javaWeb_20201022051052218)

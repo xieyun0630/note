@@ -376,7 +376,7 @@ zooKeeper.close();
   ```Java
      //获取锁
     public void acquireLock() throws Exception {
-      //{{c1::}}
+      //{{c1::
         //创建锁节点
         createLock();
         //尝试获取锁
@@ -386,7 +386,7 @@ zooKeeper.close();
 
     //创建锁节点
     private void createLock() throws Exception {
-      //{{c1::}}
+      //{{c1::
         //判断Locks是否存在，不存在创建
         Stat stat = zooKeeper.exists(LOCK_ROOT_PATH, false);
         if (stat == null) {
@@ -400,7 +400,7 @@ zooKeeper.close();
 
     //监视器对象，监视上一个节点是否被删除
     Watcher watcher = new Watcher() {
-      //{{c1::}}
+      //{{c1::
         @Override
         public void process(WatchedEvent event) {
             if (event.getType() == Event.EventType.NodeDeleted) {
@@ -450,3 +450,73 @@ zooKeeper.close();
       //}}
     }
   ```
+## zookeeper集群
+### zookeeper集群搭建
+
++ 要求：单机环境下，jdk、zookeeper 安装完毕，进行zookeeper伪集群搭建，zookeeper集群中包含3个节点，节点对外提供服务端口号分别为`2181、2182、2183`
++ 基于`zookeeper-3.4.10`复制三份`zookeeper`安装好的服务器文件
+  ```shell
+    cp ‐r zookeeper‐3.4.10 zookeeper2181
+    cp ‐r zookeeper‐3.4.10 zookeeper2182
+    cp ‐r zookeeper‐3.4.10 zookeeper2183
+  ```
++ 修改zookeeper服务器conf目录下对应配置文件：`zoo.cfg`
+  ```properties
+  #服务器对应端口号
+  clientPort=2181
+  #数据快照文件所在路径
+  dataDir=/home/zookeeper/zookeeper2181/data
+  #集群配置信息
+  #server.A=B:C:D
+  #A：是一个数字，表示这个是服务器的编号
+  #B：是这个服务器的ip地址
+  #C：Zookeeper服务器之间的通信端口
+  #D：Leader选举的端口
+  server.1=192.168.60.130:2287:3387
+  server.2=192.168.60.130:2288:3388
+  server.3=192.168.60.130:2289:3389
+  ```
++ 在上一步`dataDir`指定的目录下，创建`myid`文件:
+  ```shell
+  #zookeeper2181对应的数字为1
+  #/home/zookeeper/zookeeper2181/data目录下执行命令
+  echo "1" > myid
+  ```
++ 分别启动三台服务器，检验集群状态:
+  ```
+  ./zkCli.sh ‐server 192.168.60.130:2181
+  ./zkCli.sh ‐server 192.168.60.130:2182
+  ./zkCli.sh ‐server 192.168.60.130:2183
+  ```
++ 理解：{{c1:: 标签 }}
+
+### 一致性协议:zab协议
++ 作用：{{c1:: 来保证分布式事务的最终一致性 }}
++ zab协议全称：{{c1:: `Zookeeper Atomic Broadcast`（zookeeper原子广播）。 }}
++ zookeeper集群中的角色主要有以下三类，如下表所示：{{c1:: ![](https://gitee.com/xieyun714/nodeimage/raw/master/img/20201126160334.png) }}
+
+### zab广播模式工作原理
++ 如图：![](https://gitee.com/xieyun714/nodeimage/raw/master/img/20201126160510.png)
++ 工作流程：
+  1. {{c1:: `leader`从客户端收到一个写请求 }}
+  2. {{c1:: `leader`生成一个新的事务并为这个事务生成一个唯一的`ZXID` }}
+  3. {{c1:: `leader`将这个事务提议(`propose`)发送给所有的`follows`节点 }}
+  4. {{c1:: `follower`节点将收到的事务请求加入到历史队列(`history queue`)中,并发送ack给`leader` }}
+  5. {{c1:: 当`leader`收到大多数`follower`（半数以上节点）的`ack`消息，`leader`会发送`commit`请求 }}
+  6. {{c1:: 当`follower`收到`commit`请求时，从历史队列中将事务请求`commit` }}
+
+## zookeeper的leader选举
+### zookeeper服务器4种状态
++ `looking`：{{c1:: 寻找leader状态。当服务器处于该状态时，它会认为当前集群中没有leader，因此需要进入leader选举状态。 }}
++ `leading`：{{c1::  领导者状态。表明当前服务器角色是leader。 }}
++ `following`：{{c1::  跟随者状态。表明当前服务器角色是follower。 }}
++ `observing`：{{c1:: 观察者状态。表明当前服务器角色是observer。 }}
++ 查看状态命令：{{c1:: `zkServer.sh status` }}
+
+### 服务器启动时期的leader选举
+
+
+### 服务器运行时期的Leader选举
++ 当第二台服务器server2启动时，此时两台机器可以相互通信，每台机器都
+试图找到leader，于是进入leader选举过程。选举过程如下:
+  1. 

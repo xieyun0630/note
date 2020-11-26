@@ -98,15 +98,8 @@ function hello(name) {
 ## Objects（对象）：基础知识 [》](https://zh.javascript.info/object-basics) [ ](javascript_info_20191219101334399)
 
 ### 可以用下面两种语法的任一种来创建一个空的对象（“空柜子”）： [ ](javascript_info_20191219101334400)
-
-{{c1::
-
-```javascript
-let user = new Object(); // “构造函数” 的语法
-let user = {}; // “字面量” 的语法
-```
-
-}}
++ 构造函数的语法:{{c1:: `let user = new Object();`}}
++ 字面量的语法:{{c1:: `let user = {};`}}
 
 ### 可以用多字词语来作为属性名： [ ](javascript_info_20191219101334402)
 
@@ -149,19 +142,17 @@ alert(bag.apple); // 5 如果 fruit="apple"
 
 }}
 
-### 用存在的变量当做属性名时的简写 [ ](javascript_info_20191219101334407)
+### 对象字面量属性简写 [ ](javascript_info_20191219101334407)
 
-{{c1::  
-我们可以把简写方式和正常方式混用：
++ 我们可以把简写方式和正常方式混用：
+  ```javascript
+  let user = {
+    name, // 与 name:name 相同
+    age: 30,
+  };
+  ```
++ 标签：{{c1:: 理解 }}
 
-```javascript
-let user = {
-  name, // 与 name:name 相同
-  age: 30,
-};
-```
-
-}}
 
 ### 对象的存在值检查 [ ](javascript_info_20191219101334408)
 
@@ -212,27 +203,13 @@ Object.assign(user, permissions1, permissions2);
 // 如果接收的对象（user）已经有了同样属性名的属性，{{c1:: 前面的会被覆盖}}
 ```
 
-### 按下面的要求写代码： [ ](javascript_info_20191219101334421)
+### 对象属性操作：按要求写代码： [ ](javascript_info_20191219101334421)
 
-1. 创建一个空的 `user` 对象.
-2. 为这个对象增加一个属性，键是 `name` 值是 `John`。
-3. 再增加一个属性键`surname`值 `Smith`。
-4. 把 `name` 属性的值改成 `Pete`。
-5. 从对象中删除 `name` 属性
-
----
-
-{{c1::
-
-```javascript
-let user = {};
-user.name = "John";
-user.surname = "Smith";
-user.name = "pete";
-delete user.name;
-```
-
-}}
+1. 创建一个空的 `user` 对象.：{{c1:: `let user = {};` }}
+2. 为这个对象增加一个属性，键是 `name` 值是 `John`：{{c1:: `user.name = "John";` }}
+3. 再增加一个属性键`surname`值 `Smith`：{{c1:: `user.surname = "Smith";` }}
+4. 把 `name` 属性的值改成 `Pete`：{{c1:: `user.name = "pete";` }}
+5. 从对象中删除 `name` 属性：{{c1:: `delete user.name;` }}
 
 ### Symbol 类型 [ ](javascript_info_20191219101334424)
 
@@ -749,15 +726,8 @@ alert("Midget".includes("id", 3)); // false, 位置 3 没有“id”
 ## 数组 [ ](javascript_info_20191219101334483)
 
 ### 创建一个空数组有两种语法： [ ](javascript_info_20191219101334484)
-
-{{c1::
-
-```javascript
-let arr = new Array();
-let arr = [];
-```
-
-}}
++ 字面量: {{c1:: `let arr = new Array();` }}
++ new关键字: {{c1:: `let arr = [];` }}
 
 ### 数组可以存储任何类型的元素。 [ ](javascript_info_20191219101334485)
 
@@ -919,12 +889,6 @@ alert(arr); // 1, 2, 15
 
 }}
 
-### `str.split`和`arr.join` [ ](javascript_info_20191219101334506)
-
-`str.split`: {{c1::  分割字符串为一个数组。}}
-
-`arr.join`: {{c1::  将数据拼接成字符串}}
-
 ### `arr.reduce()`与`reduceRight()` [ ](javascript_info_20191219101334508)
 
 | [reduce()](https://www.runoob.com/jsref/jsref-reduce.html)           | {{c1::将数组元素计算为一个值（从左到右）。}} |
@@ -982,42 +946,42 @@ alert(youngerUsers.length); // 2
 
 }}
 
-### 数组方法总结 [ ](javascript_info_20191219101334512)
+## 数组方法
+### 数组方法:添加/删除元素
+| 常用方法                             | 说明                                                         |
+| :----------------------------------- | :----------------------------------------------------------- |
+| `push(...items)`                     | {{c1:: 从结尾添加元素， }}                                   |
+| `pop()`                              | {{c1:: 从结尾提取元素， }}                                   |
+| `shift()`                            | {{c1:: 从开头提取元素， }}                                   |
+| `unshift(...items)`                  | {{c1:: 从开头添加元素， }}                                   |
+| `splice(pos, deleteCount, ...items)` | {{c1:: 从 `index` 开始：删除 `deleteCount` 元素并在当前位置插入元素。 }} |
+| `slice(start, end)`                  | {{c1:: 它从所有元素的开始索引 `"start"` 复制到 `"end"` (不包括 `"end"`) 返回一个新的数组。 }} |
+| `concat(...items)`                   | {{c1:: 返回一个新数组：复制当前数组的所有成员并向其中添加 `items`。如果有任何`items` 是一个数组，那么就取其元素。 }} |
+### 数组方法:查询元素
+| 常用方法                         | 说明                                                         |
+| :------------------------------- | :----------------------------------------------------------- |
+| `indexOf/lastIndexOf(item, pos)` | {{c1:: 从 `pos` 找到 `item`，则返回索引否则返回 `-1`。 }}    |
+| `includes(value)`                | {{c1:: 如果数组有 `value`，则返回 `true`，否则返回 `false`。 }} |
+| `find/filter(func)`              | {{c1:: 通过函数过滤元素，返回 `true` 条件的符合 find 函数的第一个值或符合 filter 函数的全部值。 }} |
+| `findIndex` 和 `find` 类似       | 返回索引而不是值。                                           |
 
-+ 添加/删除元素：
-  + `push(...items)` — 从结尾添加元素，
-  + `pop()` — 从结尾提取元素，
-  + `shift()` — 从开头提取元素，
-  + `unshift(...items)` — 从开头添加元素，
-  + `splice(pos, deleteCount, ...items)` — 从 `index` 开始：删除 `deleteCount` 元素并在当前位置插入元素。
-  + `slice(start, end)` — 它从所有元素的开始索引 `"start"` 复制到 `"end"` (不包括 `"end"`) 返回一个新的数组。
-  + `concat(...items)` — 返回一个新数组：复制当前数组的所有成员并向其中添加 `items`。如果有任何`items` 是一个数组，那么就取其元素。
-+ 查询元素：
-  + `indexOf/lastIndexOf(item, pos)` — 从 `pos` 找到 `item`，则返回索引否则返回 `-1`。
-  + `includes(value)` — 如果数组有 `value`，则返回 `true`，否则返回 `false`。
-  + `find/filter(func)` — 通过函数过滤元素，返回 `true` 条件的符合 find 函数的第一个值或符合 filter 函数的全部值。
-  + `findIndex` 和 `find` 类似，但返回索引而不是值。
-+ 转换数组：
-  + `map(func)` — 从每个元素调用 `func` 的结果创建一个新数组。
-  + `sort(func)` — 将数组倒序排列，然后返回。
-  + `reverse()` — 在原地颠倒数组，然后返回它。
-  + `split/join` — 将字符串转换为数组并返回。
-  + `reduce(func, initial)` — 通过为每个元素调用 `func` 计算数组上的单个值并在调用之间传递中间结果。
-+ 迭代元素：
-  + `forEach(func)` — 为每个元素调用 `func`，不返回任何东西。
-+ 其他： – `Array.isArray(arr)` 检查 `arr` 是否是一个数组。
+### 数组方法:转换数组
+| 常用方法                | 说明                                                         |
+| :---------------------- | :----------------------------------------------------------- |
+| `map(func)`             | {{c1:: 从每个元素调用 `func` 的结果创建一个新数组。 }}       |
+| `sort(func)`            | {{c1:: 将数组倒序排列，然后返回。 }}                         |
+| `reverse()`             | {{c1:: 在原地颠倒数组，然后返回它。 }}                       |
+| `split/join`            | {{c1:: 将字符串转换为数组并返回。 }}                         |
+| `reduce(func, initial)` | {{c1:: 通过为每个元素调用 `func` 计算数组上的单个值并在调用之间传递中间结果。 }} |
 
-请注意，`sort`，`reverse` 和 `splice` 方法修改数组本身。
-
-这些方法是最常用的方法，它们覆盖 99％ 的用例。但是还有其他几个：
-
-+ [arr.some(fn)](https://developer.mozilla.org/zh/docs/Web/JavaScript/Reference/Global_Objects/Array/some)/[arr.every(fn)](https://developer.mozilla.org/zh/docs/Web/JavaScript/Reference/Global_Objects/Array/every) 检查数组。
-
-  在类似于 `map` 的数组的每个元素上调用函数 `fn`。如果任何/所有结果为 `true`，则返回 `true`，否则返回 `false`。
-
-+ [arr.fill(value, start, end)](https://developer.mozilla.org/zh/docs/Web/JavaScript/Reference/Global_Objects/Array/fill) — 从 `start` 到 `end` 用 `value` 重复填充数组。
-
-+ [arr.copyWithin(target, start, end)](https://developer.mozilla.org/zh/docs/Web/JavaScript/Reference/Global_Objects/Array/copyWithin) —将其元素从 `start` 到 `end` 在 `target` 位置复制到 **本身**（覆盖现有）。
+### 数组方法:迭代元素、判断是否数组
+| 常用方法                             | 说明                                                         |
+| :----------------------------------- | :----------------------------------------------------------- |
+| `forEach(func)`                      | {{c1:: 为每个元素调用 `func`，不返回任何东西。 }}            |
+| `Array.isArray(arr)`                 | {{c1:: 检查 `arr` 是否是一个数组。                                  }}|
+| `arr.some(fn)`                       | {{c1:: 在类似于 `map` 的数组的每个元素上调用函数 `fn`。如果任何/所有结果为 `true`，则返回 `true`，否则返回 `false`。 }}|
+| `arr.fill(value, start, end)`        | {{c1:: 从 `start` 到 `end` 用 `value` 重复填充数组。                }}|
+| `arr.copyWithin(target, start, end)` | {{c1:: 将其元素从 `start` 到 `end` 在 `target` 位置复制到 **本身**（覆盖现有）。 }}|
 
 ## `Symbol.iterator`（可迭代对象） [ ](javascript_info_20191219101334513)
 
@@ -2294,9 +2258,7 @@ Rabbit.prototype = { constructor: Rabbit };
 ### 函数原型总结 [ ](javascript_info_20191219101334668)
 
 + `F.prototype` 属性与 `[[Prototype]]` 不同。`F.prototype` 唯一的作用是：{{c1::当 `new F()` 被调用时，它设置新对象的 `[[Prototype]]`。}}
-+ `F.prototype` 的值应该是{{c1::一个对象或 null：其他值将不起作用。}}
-+ Person 类的原型实例图{{c1::
-  ![image-20191226202831741](https://gitee.com/xieyun714/nodeimage/raw/master/img/image-20191226202831741.png)}}
++ Person 类的原型实例图:{{c1::![image-20191226202831741](https://gitee.com/xieyun714/nodeimage/raw/master/img/image-20191226202831741.png)}}
 
 ### task:`new user.constructor('Pete')` 的工作原理是： [ ](javascript_info_20191219101334669)
 
@@ -2429,13 +2391,10 @@ f.defer(1000)(1, 2); // shows 3 after 1 sec
   alert(rabbit.eats); // true
   alert(Object.getPrototypeOf(rabbit) === animal); // 获取 rabbit 的原型
   Object.setPrototypeOf(rabbit, {}); // 将 rabbit 的原型更改为 {}
-  ```
+```
 
-### 我们可以利用 `Object.create` 来实现比 `for..in` 循环赋值属性方式更强大的对象复制功能： [ ](javascript_info_20191219101334676)
-
+### 使用`Object.create`进行对象复制： [ ](javascript_info_20191219101334676)
 ```javascript
-// obj 对象的浅复制
-
 let clone = Object.create(
   //{{c1::
   Object.getPrototypeOf(obj),
@@ -2639,33 +2598,6 @@ rabbit.eat(); // 错误调用 super（因为这里并没有 [[HomeObject]]）
 
 + `[[HomeObject]]` 是为类和普通对象中的方法定义的。但是对于对象来说，方法必须确切指定为 `method()`，而不是 `"method: function()"`。
 + 这个差别对我们来说可能不重要，但是对 JavaScript 来说却是非常重要的。}}
-
-### JS 中的类继承 [ ](javascript_info_20191230080406379)
-
-1. 扩展类：
-
-   ```javascript
-   class Child extends Parent
-   ```
-
-   + 这就意味着{{c1:: `Child.prototype.__proto__` 将是 `Parent.prototype`}}，所以方法被继承。
-
-2. 重写构造函数：
-
-   + 在使用 `this` 之前，我们必须在{{c1::  `Child` 构造函数中将父构造函数调用为 `super()`。}}
-
-3. 重写方法：
-
-   + 我们可以在 `Child` 方法中使用{{c1::  `super.method()` }}来调用 `Parent` 方法。
-
-4. 内部工作：
-
-   + 方法在内部{{c1::  `[[HomeObject]]` }}属性中记住它们的类/对象。这就是 `super` 如何解析父类方法的。
-   + 因此，将一个带有 `super` 的方法从一个对象复制到另一个对象是不安全的。
-
-补充：
-
-+ 箭头函数没有自己的 `this` 或 `super`，所以它们能融入到就近的上下文，像透明似的。
 
 ### `class Rabbit`与`class Rabbit extends Object`声明的区别 [ ](javascript_info_20191230080406381)
 
@@ -2996,36 +2928,31 @@ let promise = new Promise(function (resolve, reject) {
 
 ### 使用 promise 示例：loadScript [ ](javascript_info_20200114084259616)
 
-```javascript
-function loadScript(src) {
-  //{{c1::
-  return new Promise(function (resolve, reject) {
-    let script = document.createElement("script");
-    script.src = src;
+  ```javascript
+  function loadScript(src) {
+    return new Promise(function (resolve, reject) {
+      let script = document.createElement("script");
+      script.src = src;
 
-    script.onload = () => resolve(script);
-    script.onerror = () => reject(new Error("Script load error: " + src));
+      script.onload = () => resolve(script);
+      script.onerror = () => reject(new Error("Script load error: " + src));
 
-    document.head.append(script);
-  });
-  //}}
-}
-```
+      document.head.append(script);
+    });
+  }
+  //使用
+  let promise = loadScript(
+    "https://cdnjs.cloudflare.com/ajax/libs/lodash.js/3.2.0/lodash.js"
+  );
 
-用法：
+  promise.then(
+    (script) => alert(`${script.src} is loaded!`),
+    (error) => alert(`Error: ${error.message}`)
+  );
 
-```javascript
-let promise = loadScript(
-  "https://cdnjs.cloudflare.com/ajax/libs/lodash.js/3.2.0/lodash.js"
-);
-
-promise.then(
-  (script) => alert(`${script.src} is loaded!`),
-  (error) => alert(`Error: ${error.message}`)
-);
-
-promise.then((script) => alert("One more handler to do something else!"));
-```
+  promise.then((script) => alert("One more handler to do something else!"));
+  ```
++ 理解：{{c1:: 标签 }}
 
 ### 基于 Promise 发送 Ajax 请求示例： [ ](javascript_info_20200713065313191)
 
@@ -3281,44 +3208,45 @@ Promise.allSettled(urls.map((url) => fetch(url))).then((results) => {
 + {{c1::`{status:"fulfilled", value:result}` 对于成功的响应。}}
 + {{c1::`{status:"rejected", reason:error}` 对于错误的响应。}}
 
-### 如果浏览器不支持 `Promise.allSettled`的，使用`promise.all`的替代方式 [ ](javascript_info_20200308041234746)
+### 使用`promise.all`的替代`Promise.allSettled`方法 [ ](javascript_info_20200308041234746)
 
-```javascript
-if (!Promise.allSettled) {
-  Promise.allSettled = function (promises) {
-    //{{c1::
-    return Promise.all(
-      promises.map((p) =>
-        Promise.resolve(p).then(
-          (v) => ({
-            state: "fulfilled",
-            value: v,
-          }),
-          (r) => ({
-            state: "rejected",
-            reason: r,
-          })
++ 主要代码
+  ```javascript
+  if (!Promise.allSettled) {
+    Promise.allSettled = function (promises) {
+      return Promise.all(
+        promises.map((p) =>
+          Promise.resolve(p).then(
+            (v) => ({
+              state: "fulfilled",
+              value: v,
+            }),
+            (r) => ({
+              state: "rejected",
+              reason: r,
+            })
+          )
         )
-      )
-    );
-    //}}
-  };
-}
-```
+      );
+    };
+  }
+  ```
++ 标签：{{c1:: 理解 }}
 
 ### `Promise.race` [ ](javascript_info_20200308041234747)
 
-+ 在第一个 promise 被解决（“赢得比赛[wins the race]”）后，所有后面的结果/错误都会被忽略。
-
-```javascript
-Promise.race([
-  new Promise((resolve, reject) => setTimeout(() => resolve(1), 1000)),
-  new Promise((resolve, reject) =>
-    setTimeout(() => reject(new Error("Whoops!")), 2000)
-  ),
-  new Promise((resolve, reject) => setTimeout(() => resolve(3), 3000)),
-]).then(alert); // 1
-```
++ 使用例：
+  ```javascript
+  Promise.race([
+    new Promise((resolve, reject) => setTimeout(() => resolve(1), 1000)),
+    new Promise((resolve, reject) =>
+      setTimeout(() => reject(new Error("Whoops!")), 2000)
+    ),
+    new Promise((resolve, reject) => setTimeout(() => resolve(3), 3000)),
+  ]).then(alert);
+  ```
++ 注意：{{c1:: 在第一个 promise 被解决（“赢得比赛[wins the race]”）后，所有后面的结果/错误都会被忽略。 }}
++ 输出：{{c1:: `1` }}
 
 ### 微任务队列（Microtasks queue） [ ](javascript_info_20200308041234749)
 
@@ -3665,42 +3593,10 @@ true
 | `next()` 返回的值是      | {{c1::任意值}}            | {{c1::`Promise`}}              |
 | 要进行循环，使用         | {{c1::`for..of`}}         | {{c1::`for await..of`}}        |
 
-+ Async iterator 例子：{{c1::
-
-```javascript
-let range = {
-  from: 1,
-  to: 5,
-  [Symbol.asyncIterator]() {
-    // (1)
-    return {
-      current: this.from,
-      last: this.to,
-      async next() {
-        await new Promise((resolve) => setTimeout(resolve, 1000)); // (3)
-        if (this.current <= this.last) {
-          return { done: false, value: this.current++ };
-        } else {
-          return { done: true };
-        }
-      },
-    };
-  },
-};
-(async () => {
-  for await (let value of range) {
-    // (4)
-    alert(value); // 1,2,3,4,5
-  }
-})();
-```
-
-}}
-### Async generator 与常规 generator 区别 [	](javascript_info_20200512080327653)
+### Async generator例子 [	](javascript_info_20200512080327653)
 + Async generator例子：
   ```js
     //对象
-    //{{c1::
     let range = {
       from: 1,
       to: 5,
@@ -3711,18 +3607,17 @@ let range = {
         }
       }
     };
-    //}}
   ```
 + 迭代Async generator：
   ```js
-    //{{c1::
     (async () => {
       for await (let value of range) {
         alert(value); // 1，然后 2，然后 3，然后 4，然后 5
       }
     })();
-    //}}
   ```
++ 标签：{{c1:: 理解 }}
+
 
 ## 模块 [ ](javascript_info_20200512080327654)
 
@@ -4001,13 +3896,12 @@ async function load() {
 
 ### “旧式”的插入和移除节点的 node 方法： [ ](javascript_info_20200525035508026)
 
-1. {{c1:: `parent.appendChild(node)`}}
-2. {{c1:: `parent.insertBefore(node, nextSibling)`}}
-3. {{c1:: `parent.removeChild(node)`}}
-4. {{c1:: `parent.replaceChild(newElem, node)`}}
-
+1.  `parent.appendChild(node)`
+2.  `parent.insertBefore(node, nextSibling)`
+3.  `parent.removeChild(node)`
+4.  `parent.replaceChild(newElem, node)`
 + 这些方法都返回 {{c1:: `node` }}。
-
++ 标签：{{c1:: 理解 }}
 ### `elem.insertAdjacentHTML/Text/Element`方法 [ ](javascript_info_20200525035508031)
 
 + 在 `html` 中给定一些 HTML，`elem.insertAdjacentHTML(where, html)` 会根据 `where` 的值来插入它：
@@ -4017,10 +3911,9 @@ async function load() {
   - `"afterend"`:{{c1::将 `html` 插入到 `elem` 后面。}}
 +  `elem.insertAdjacentText(where, text)` 和`elem.insertAdjacentElement(where, Element)`：{{c1:: 它们会插入文本字符串和元素，但很少使用。}}
 
-### 要在页面加载完成之前将 HTML 附加到页面： [ ](javascript_info_20200525035508034)
-
-+ {{c1:: `document.write(html)`}}
-  页面加载完成后，这样的调用将会擦除文档。多见于旧脚本。
+### `document.write()`特点： [ ](javascript_info_20200525035508034)
++ `document.write(html)`
++ 注意: {{c1:: 页面加载完成后，这样的调用将会擦除文档。多见于旧脚本。 }}
 
 ### 要管理 class，有两个 DOM 属性： [ ](javascript_info_20200525035508040)
 
@@ -4392,154 +4285,7 @@ function singleSelect(li) {
 + 事件 `mouseenter/mouseleave` 不会冒泡。
   {{c1:: ![image-20200604113942191](https://gitee.com/xieyun714/nodeimage/raw/master/img/image-20200604113942191.png) }}
 
-### 使用事件委托实现类似以下效果 [ ](javascript_info_20200604111305684)
 
-+ 例如：
-  ```xml
-  <div data-tooltip="Here – is the house interior" id="house">
-    <div data-tooltip="Here – is the roof" id="roof"></div>
-    ...
-    <a href="https://en.wikipedia.org/wiki/The_Three_Little_Pigs" data-tooltip="Read on…">Hover over me</a>
-  </div>
-  ```
-+ 效果图：
-  ![UZkXhRLqta](https://gitee.com/xieyun714/nodeimage/raw/master/img/UZkXhRLqta.gif)
-+ 参考思路:
-
-```javascript
-//{{c1::
-document.onmouseover = function (event) {
-  let anchorElem = event.target.closest("[data-tooltip]");
-  if (!anchorElem) return;
-  tooltip = showTooltip(anchorElem, anchorElem.dataset.tooltip);
-};
-
-document.onmouseout = function () {
-  if (tooltip) {
-    tooltip.remove();
-    tooltip = false;
-  }
-};
-function showTooltip(anchorElem, html) {
-  let tooltipElem = document.createElement("div");
-  tooltipElem.className = "tooltip";
-  tooltipElem.innerHTML = html;
-  document.body.append(tooltipElem);
-  let coords = anchorElem.getBoundingClientRect();
-  let left =
-    coords.left + (anchorElem.offsetWidth + tooltipElem.offsetWidth) / 2;
-  if (left < 0) left = 0;
-  let top = coords.top + tooltipElem.offsetHeight + 5;
-  if (top < 0) {
-    top = coords.top + anchorElem.offsetHeight + 5;
-  }
-  tooltipElem.style.left = left + "px";
-  tooltipElem.style.top = top + "px";
-  return tooltipElem;
-}
-//}}
-```
-
-### 实现图中拖放一个球的算法 [ ](javascript_info_20200604111305685)
-
-![TQEN8RNhVl](https://gitee.com/xieyun714/nodeimage/raw/master/img/TQEN8RNhVl.gif)
-
-```javascript
-ball.onmousedown = function (event) {
-  // (1) 启动处理
-  //获取光标在球内的相对位置
-  //{{c1::
-  let shiftX = event.clientX - ball.getBoundingClientRect().left;
-  let shiftY = event.clientY - ball.getBoundingClientRect().top;
-  //}}
-
-  // (2) 准备移动：确保 absolute，并通过设置 z-index 以确保球在顶部
-  //{{c1::
-  ball.style.position = "absolute";
-  ball.style.zIndex = 1000;
-  //}}
-  // 将其从当前父元素中直接移动到 body 中
-  // 以使其定位是相对于 body 的
-  //{{c1::
-  document.body.append(ball);
-  //}}
-  // ...并将绝对定位的球放在鼠标指针下方
-  //{{c1::
-  moveAt(event.pageX, event.pageY);
-  //}}
-
-  // 现在球的中心在 (pageX, pageY) 坐标上
-  //{{c1::
-  function moveAt(pageX, pageY) {
-    ball.style.left = pageX - shiftX + "px";
-    ball.style.top = pageY - shiftY + "px";
-  }
-  function onMouseMove(event) {
-    moveAt(event.pageX, event.pageY);
-  }
-  //}}
-
-  // (3) 在 mousemove 事件上移动球
-  //{{c1::
-  document.addEventListener("mousemove", onMouseMove);
-  //}}
-  // (4) 放下球，并移除不需要的处理程序
-  //{{c1::
-  ball.onmouseup = function () {
-    document.removeEventListener("mousemove", onMouseMove);
-    ball.onmouseup = null;
-  };
-  //}}
-  //(5) 禁用浏览器自己对图片和一些其他元素的拖放处理
-  //{{c1::
-  ball.ondragstart = function () {
-    return false;
-  };
-  //}}
-};
-```
-
-### 在下面这个示例中，当球被拖到球门上时，球门会被高亮显示。 [ ](javascript_info_20200604111305687)
-
-![image-20200604150734337](https://gitee.com/xieyun714/nodeimage/raw/master/img/image-20200604150734337.png)
-
-```javascript
-// 当前飞过的droppable
-//{{c1::
-let currentDroppable = null;
-//}}
-
-function onMouseMove(event) {
-  moveAt(event.pageX, event.pageY);
-
-  //将拖动中的元素隐藏，获取当前光标位置下嵌套最深的元素
-  //{{c1::
-  ball.hidden = true;
-  let elemBelow = document.elementFromPoint(event.clientX, event.clientY);
-  ball.hidden = false;
-  //}}
-
-  // 嵌套最深的元素为null时，代表光标在浏览器外
-  if (!elemBelow) return;
-
-  // 从嵌套最深的元素开始找出带有.droppable的元素
-  // 找到了，渲染颜色
-  // 没有找到，判断上一次move是否是.droppable的元素
-  // 如果是，取消效果
-  //{{c1::
-  let droppableBelow = elemBelow.closest(".droppable");
-  if (currentDroppable != droppableBelow) {
-    if (currentDroppable) {
-      leaveDroppable(currentDroppable);
-    }
-    currentDroppable = droppableBelow;
-    if (currentDroppable) {
-      enterDroppable(currentDroppable);
-    }
-  }
-  //}}
-}
-```
 
 ### 使用 keydown 事件，实现一个`<input>`,它不会接受除数字，+，() 和 + 以外的按键 [ ](javascript_info_20200604111305688)
 
@@ -4680,7 +4426,6 @@ form.submit();
     img.onload = () => log("img onload");
   </script>
   ```
-
 + 典型输出：
   1. {{c1:: [1] initial readyState:loading }}
   2. {{c1:: [2] readyState:interactive }}

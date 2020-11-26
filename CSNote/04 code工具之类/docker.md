@@ -191,21 +191,21 @@ rm /usr/local/bin/docker-compose
     cd ~/docker-compose
     ```
 2. 编写 docker-compose.yml 文件
-    ```shell
+    ```yml
     version: '3'
     services:
-    nginx:
-    image: nginx
-    ports:
-        - 80:80
-    links:
-        - app
-    volumes:
-        - ./nginx/conf.d:/etc/nginx/conf.d
-    app:
+      nginx:
+        image: nginx
+        ports:
+          - 80:80
+        links:
+          - app
+        volumes:
+          - ./nginx/conf.d:/etc/nginx/conf.d
+      app:
         image: app
         expose:
-        - "8080"
+          - "8080"
     ```
 3. 创建./nginx/conf.d目录
     ```shell
