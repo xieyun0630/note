@@ -1759,7 +1759,8 @@ public class Person
   + 简单异常处理器:
   ```xml
   <!-- {{c1:: -->
-    <bean class=“org.springframework.web.servlet.handler.SimpleMappingExceptionResolver”>    <property name=“defaultErrorView” value=“error”/>
+    <bean class=“org.springframework.web.servlet.handler.SimpleMappingExceptionResolver”>    
+        <property name=“defaultErrorView” value=“error”/>
         <property name=“exceptionMappings”>
             <map>	
                 <entry key="com.itheima.exception.MyException" value="error"/>

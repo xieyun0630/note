@@ -1217,9 +1217,3 @@ mvn archetype:generate -B \
 <!-- }} -->
 </archetype-descriptor>
 ```
-### archetype-catalog.xml文件 [	](maven_20200510104820665)
-
-+ 作用：包含需要命令行提示的archetype构建的坐标。
-+ 使用用指定的archetype-catalog.xml命令：{{c1:: `mvn archetype:generate -DarchetypeCatalog = file:// /temp/archetype-catalog.xml,local`}}
-+ 可以从5种位置指定`archetype-catalog.xml`:{{c1:: `internal`,`local`,`remote`,`file://`,`http://`}}
-+ 生成本地archetype-catalog.xml命令：{{c1:: `mvn archetype:crawl -Drepository=D:/localRepository -Dcatalog=C:/archetype-catalog.xml` }}

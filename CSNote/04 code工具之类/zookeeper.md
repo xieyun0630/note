@@ -317,7 +317,7 @@ zooKeeper.close();
 
 
 
-### watcher接口
+### watcher接口 [	](zookeeper_20201125093504164)
 
 + 作用：{{c1:: 任何实现了`Watcher`接口的类就是一个新的`Watcher`。`Watcher`内部包含了两个枚举类：`KeeperState`、`EventType` }}
 + `KeeperState`各枚举值含义：
@@ -333,18 +333,189 @@ zooKeeper.close();
   5. `NodeChildrenChanged`：{{c1:: Watcher监听的数据节点的子节点列表发生变更时 }}
 + 类结构图：{{c1:: ![](https://gitee.com/xieyun714/nodeimage/raw/master/img/20201124171834.png) }}
 
-### watcher特性
+### watcher特性 [	](zookeeper_20201125093504166)
 
 1. **一次性**:{{c1:: watcher是一次性的，一旦被触发就会移除，再次使用时需要重新注册 }}
 2. **客户端顺序回调**:{{c1:: watcher回调是顺序串行化执行的，只有回调后客户端才能看到最新的数据状态。一个watcher回调逻辑不应该太多，以免影响别的watcher执行 }}
 3. **轻量级**:{{c1:: WatchEvent是最小的通信单元，结构上只包含通知状态、事件类型和节点路径，并不会告诉数据节点变化前后的具体内容； }}
 4. **时效性**:{{c1:: watcher只有在当前session彻底失效时才会无效，若在session有效期内快速重连成功，则watcher依然存在，仍可接收到通知； }}
 
-### 注册watcher的方法以及可监听事件
+### 注册watcher的方法以及可监听事件 [	](zookeeper_20201125093504168)
 
 + `new ZooKeeper("192.168.60.130:2181", 5000, new Watcher());`：{{c1:: None }}
 + `zooKeeper.exists(String path, Watcher w)`：{{c1:: `Created` `Changed` `Deleted` }}
 + `zooKeeper.getData(String path, Watcher w, Stat stat)`：{{c1:: `Changed` `Deleted` }}
 + `zooKeeper.getChildren(String path, Watcher w)`：{{c1:: `Created`
 `Deleted` }}
+## zookeeper使用案例 [	](zookeeper_20201125093504172)
 
+### 配置中心案例 [	](zookeeper_20201125093504175)
+
++ 工作中有这样的一个场景:数据库用户名和密码信息放在一个配置文件中，应用读取该配置文件.
++ `zookeeper`保存配置信息设计思路：
+  1. {{c1:: 连接`zookeeper`服务器 }}
+  2. {{c1:: 读取`zookeeper`中的配置信息，注册`watcher`监听器，存入本地变量 }}
+  3. {{c1:: 当`zookeeper`中的配置信息发生变化时，通过`watcher`的回调方法捕获数据变化事件 }}
+  4. {{c1:: 重新获取配置信息 }}
+
+### 生成分布式唯一ID [	](zookeeper_20201125093504179)
++ 设计思路：
+  1. {{c1:: 连接zookeeper服务器 }}
+  2. {{c1:: 指定路径生成临时有序节点 }}
+  3. {{c1:: 取序列号及为分布式环境下的唯一ID }}
+
+### 分布式锁 [	](zookeeper_20201125093504181)
++ 设计思路：
+  1. {{c1:: 每个客户端往`/Locks`下创建临时有序节点`/Locks/Lock_`,创建成功后`/Locks`下面会有每个客户端对应的节点，如`/Locks/Lock_000000001` }}
+  2. {{c1:: 客户端取得`/Locks`下子节点，并进行排序，判断排在最前面的是否为自己，如果自己的锁节点在第一位，代表获取锁成功 }}
+  3. {{c1:: 如果自己的锁节点不在第一位，则监听自己前一位的锁节点。例如，自己锁节点`Lock_000000002`,那么则监听`Lock000000001` }}
+  4. {{c1:: 当前一位锁节点（`Lock_000000001`)对应的客户端执行完成，释放了锁，将会触发监听客户端（`Lock_000000002`)的逻辑 }}
+  5. {{c1:: 监听客户端重新执行第2步逻辑，判断自己是否获得了锁 }}
++ 主要代码：
+  ```Java
+     //获取锁
+    public void acquireLock() throws Exception {
+      //{{c1::
+        //创建锁节点
+        createLock();
+        //尝试获取锁
+        attemptLock();
+      //}}
+    }
+
+    //创建锁节点
+    private void createLock() throws Exception {
+      //{{c1::
+        //判断Locks是否存在，不存在创建
+        Stat stat = zooKeeper.exists(LOCK_ROOT_PATH, false);
+        if (stat == null) {
+            zooKeeper.create(LOCK_ROOT_PATH, new byte[0], ZooDefs.Ids.OPEN_ACL_UNSAFE, CreateMode.PERSISTENT);
+        }
+        // 创建临时有序节点
+        lockPath = zooKeeper.create(LOCK_ROOT_PATH + "/" + LOCK_NODE_NAME, new byte[0], ZooDefs.Ids.OPEN_ACL_UNSAFE, CreateMode.EPHEMERAL_SEQUENTIAL);
+        System.out.println("节点创建成功:" + lockPath);
+      //}}
+    }
+
+    //监视器对象，监视上一个节点是否被删除
+    Watcher watcher = new Watcher() {
+      //{{c1::
+        @Override
+        public void process(WatchedEvent event) {
+            if (event.getType() == Event.EventType.NodeDeleted) {
+                synchronized (this) {
+                    notifyAll();
+                }
+            }
+        }
+      //}}
+    };
+
+    //尝试获取锁
+    private void attemptLock() throws Exception {
+      //{{c1::
+        // 获取Locks节点下的所有子节点
+        List<String> list = zooKeeper.getChildren(LOCK_ROOT_PATH, false);
+        // 对子节点进行排序
+        Collections.sort(list);
+        // /Locks/Lock_000000001
+        int index = list.indexOf(lockPath.substring(LOCK_ROOT_PATH.length() + 1));
+        if (index == 0) {
+            System.out.println("获取锁成功!");
+            return;
+        } else {
+            // 上一个节点的路径
+            String path = list.get(index - 1);
+            Stat stat = zooKeeper.exists(LOCK_ROOT_PATH + "/" + path, watcher);
+            if (stat == null) {
+                attemptLock();
+            } else {
+                synchronized (watcher) {
+                    watcher.wait();
+                }
+                attemptLock();
+            }
+        }
+      //}}
+    }
+
+    //释放锁
+    public void releaseLock() throws Exception {
+      //{{c1::
+            //删除临时有序节点
+            zooKeeper.delete(this.lockPath,-1);
+            zooKeeper.close();
+            System.out.println("锁已经释放:"+this.lockPath);
+      //}}
+    }
+  ```
+## zookeeper集群
+### zookeeper集群搭建
+
++ 要求：单机环境下，jdk、zookeeper 安装完毕，进行zookeeper伪集群搭建，zookeeper集群中包含3个节点，节点对外提供服务端口号分别为`2181、2182、2183`
++ 基于`zookeeper-3.4.10`复制三份`zookeeper`安装好的服务器文件
+  ```shell
+    cp ‐r zookeeper‐3.4.10 zookeeper2181
+    cp ‐r zookeeper‐3.4.10 zookeeper2182
+    cp ‐r zookeeper‐3.4.10 zookeeper2183
+  ```
++ 修改zookeeper服务器conf目录下对应配置文件：`zoo.cfg`
+  ```properties
+  #服务器对应端口号
+  clientPort=2181
+  #数据快照文件所在路径
+  dataDir=/home/zookeeper/zookeeper2181/data
+  #集群配置信息
+  #server.A=B:C:D
+  #A：是一个数字，表示这个是服务器的编号
+  #B：是这个服务器的ip地址
+  #C：Zookeeper服务器之间的通信端口
+  #D：Leader选举的端口
+  server.1=192.168.60.130:2287:3387
+  server.2=192.168.60.130:2288:3388
+  server.3=192.168.60.130:2289:3389
+  ```
++ 在上一步`dataDir`指定的目录下，创建`myid`文件:
+  ```shell
+  #zookeeper2181对应的数字为1
+  #/home/zookeeper/zookeeper2181/data目录下执行命令
+  echo "1" > myid
+  ```
++ 分别启动三台服务器，检验集群状态:
+  ```
+  ./zkCli.sh ‐server 192.168.60.130:2181
+  ./zkCli.sh ‐server 192.168.60.130:2182
+  ./zkCli.sh ‐server 192.168.60.130:2183
+  ```
++ 理解：{{c1:: 标签 }}
+
+### 一致性协议:zab协议
++ 作用：{{c1:: 来保证分布式事务的最终一致性 }}
++ zab协议全称：{{c1:: `Zookeeper Atomic Broadcast`（zookeeper原子广播）。 }}
++ zookeeper集群中的角色主要有以下三类，如下表所示：{{c1:: ![](https://gitee.com/xieyun714/nodeimage/raw/master/img/20201126160334.png) }}
+
+### zab广播模式工作原理
++ 如图：![](https://gitee.com/xieyun714/nodeimage/raw/master/img/20201126160510.png)
++ 工作流程：
+  1. {{c1:: `leader`从客户端收到一个写请求 }}
+  2. {{c1:: `leader`生成一个新的事务并为这个事务生成一个唯一的`ZXID` }}
+  3. {{c1:: `leader`将这个事务提议(`propose`)发送给所有的`follows`节点 }}
+  4. {{c1:: `follower`节点将收到的事务请求加入到历史队列(`history queue`)中,并发送ack给`leader` }}
+  5. {{c1:: 当`leader`收到大多数`follower`（半数以上节点）的`ack`消息，`leader`会发送`commit`请求 }}
+  6. {{c1:: 当`follower`收到`commit`请求时，从历史队列中将事务请求`commit` }}
+
+## zookeeper的leader选举
+### zookeeper服务器4种状态
++ `looking`：{{c1:: 寻找leader状态。当服务器处于该状态时，它会认为当前集群中没有leader，因此需要进入leader选举状态。 }}
++ `leading`：{{c1::  领导者状态。表明当前服务器角色是leader。 }}
++ `following`：{{c1::  跟随者状态。表明当前服务器角色是follower。 }}
++ `observing`：{{c1:: 观察者状态。表明当前服务器角色是observer。 }}
++ 查看状态命令：{{c1:: `zkServer.sh status` }}
+
+### 服务器启动时期的leader选举
+
+
+### 服务器运行时期的Leader选举
++ 当第二台服务器server2启动时，此时两台机器可以相互通信，每台机器都
+试图找到leader，于是进入leader选举过程。选举过程如下:
+  1. 
