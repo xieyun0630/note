@@ -74,10 +74,7 @@ cd ~/tomca
 ```
 
 ```shell
-docker run -id --name=c_tomcat \
--p 8080:8080 \
--v $PWD:/usr/local/tomcat/webapps \
-tomcat 
+docker run -id --name=c_tomcat -p 8080:8080 tomcat
 ```
 
 - 参数说明：

@@ -340,7 +340,6 @@ zooKeeper.close();
 3. **轻量级**:{{c1:: WatchEvent是最小的通信单元，结构上只包含通知状态、事件类型和节点路径，并不会告诉数据节点变化前后的具体内容； }}
 4. **时效性**:{{c1:: watcher只有在当前session彻底失效时才会无效，若在session有效期内快速重连成功，则watcher依然存在，仍可接收到通知； }}
 
-
 ### 注册watcher的方法以及可监听事件
 
 + `new ZooKeeper("192.168.60.130:2181", 5000, new Watcher());`：{{c1:: None }}
@@ -348,7 +347,4 @@ zooKeeper.close();
 + `zooKeeper.getData(String path, Watcher w, Stat stat)`：{{c1:: `Changed` `Deleted` }}
 + `zooKeeper.getChildren(String path, Watcher w)`：{{c1:: `Created`
 `Deleted` }}
-
-
-
 
