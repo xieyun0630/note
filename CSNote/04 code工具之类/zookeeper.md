@@ -1,10 +1,10 @@
 ## zookeeper应用场景与安装 [	](zookeeper_20201124103028937)
 ### zookeeper应用场景 [	](zookeeper_20201124103028939)
 
-+ 维护配置信息
-+ 分布式锁服务
-+ 集群管理
-+ 生成分布式唯一ID
+1. {{c1:: 维护配置信息 }}
+2. {{c1:: 分布式锁服务 }}
+3. {{c1:: 集群管理 }}
+4. {{c1:: 生成分布式唯一ID }}
 
 ### zookeeper的linux安装 [	](zookeeper_20201124103028941)
 1. 用root用户创建zookeeper用户
@@ -57,15 +57,15 @@
 + 例：
   + 创建**持久化节点**并写入数据：`create /hadoop "123456"`
   + 创建**持久化有序节点**
-  + 特点：zookeeper会自动添加序列名称
-  1. `create -s /a "aaa"`
-  2. `create -s /b "bbb"`
-  3. `create -s /c "ccc"`
+    + 特点：zookeeper会自动添加序列名称
+    1. `create -s /a "aaa"`
+    2. `create -s /b "bbb"`
+    3. `create -s /c "ccc"`
   + 创建**临时节点**：`create -e /tmp "tmp"`
   + 创建**临时有序**节点
-  1. `create -s -e /aa "aaa"`
-  2. `create -s -e /bb "bbb"`
-  3. `create -s -e /cc "ccc"`
+    1. `create -s -e /aa "aaa"`
+    2. `create -s -e /bb "bbb"`
+    3. `create -s -e /cc "ccc"`
 
 ### 更新节点命令 [	](zookeeper_20201124103028951)
 + 语法： {{c1:: `set path data [version]` }}
@@ -77,7 +77,7 @@
 ### 删除节点命令 [	](zookeeper_20201124103028955)
 
 + 删除语法： {{c1:: `delete path [version]` }}
-+ 删除某个节点及其所有后代节点:`rmr path`
++ 删除某个节点及其所有后代节点: {{c1:: `rmr path` }}
 
 ### 查看节点列表命令 [	](zookeeper_20201124103028957)
 + 语法：{{c1:: `ls path 和 ls2 path` }}
@@ -449,8 +449,8 @@ zooKeeper.close();
       //}}
     }
   ```
-## zookeeper集群
-### zookeeper集群搭建
+## zookeeper集群 [	](zookeeper_20201126080456391)
+### zookeeper集群搭建 [	](zookeeper_20201126080456393)
 
 + 要求：单机环境下，jdk、zookeeper 安装完毕，进行zookeeper伪集群搭建，zookeeper集群中包含3个节点，节点对外提供服务端口号分别为`2181、2182、2183`
 + 基于`zookeeper-3.4.10`复制三份`zookeeper`安装好的服务器文件
@@ -489,12 +489,12 @@ zooKeeper.close();
   ```
 + 理解：{{c1:: 标签 }}
 
-### 一致性协议:zab协议
+### 一致性协议:zab协议 [	](zookeeper_20201126080456395)
 + 作用：{{c1:: 来保证分布式事务的最终一致性 }}
 + zab协议全称：{{c1:: `Zookeeper Atomic Broadcast`（zookeeper原子广播）。 }}
 + zookeeper集群中的角色主要有以下三类，如下表所示：{{c1:: ![](https://gitee.com/xieyun714/nodeimage/raw/master/img/20201126160334.png) }}
 
-### zab广播模式工作原理
+### zab广播模式工作原理 [	](zookeeper_20201126080456397)
 + 如图：![](https://gitee.com/xieyun714/nodeimage/raw/master/img/20201126160510.png)
 + 工作流程：
   1. {{c1:: `leader`从客户端收到一个写请求 }}
@@ -504,18 +504,310 @@ zooKeeper.close();
   5. {{c1:: 当`leader`收到大多数`follower`（半数以上节点）的`ack`消息，`leader`会发送`commit`请求 }}
   6. {{c1:: 当`follower`收到`commit`请求时，从历史队列中将事务请求`commit` }}
 
-## zookeeper的leader选举
-### zookeeper服务器4种状态
+## zookeeper集群的leader选举 [	](zookeeper_20201126080456401)
+### zookeeper服务器4种状态 [	](zookeeper_20201126080456404)
 + `looking`：{{c1:: 寻找leader状态。当服务器处于该状态时，它会认为当前集群中没有leader，因此需要进入leader选举状态。 }}
 + `leading`：{{c1::  领导者状态。表明当前服务器角色是leader。 }}
 + `following`：{{c1::  跟随者状态。表明当前服务器角色是follower。 }}
 + `observing`：{{c1:: 观察者状态。表明当前服务器角色是observer。 }}
 + 查看状态命令：{{c1:: `zkServer.sh status` }}
 
-### 服务器启动时期的leader选举
+### 集群leader选举 [	](zookeeper_20201126080456407)
++ 服务器启动时期的leader选举过程：
+  1. {{c1:: 每个server发出一个投票。使用(myid, zxid)来表示， }}
+  2. {{c1:: 集群中的每台服务器接收来自集群中各个服务器的投票。 }}
+  3. {{c1:: 处理投票。pk规则如下 }}
+     1. {{c1:: 优先检查zxid。zxid比较大的服务器优先作为leader。 }}
+     2. {{c1:: 如果zxid相同，那么就比较myid。myid较大的服务器作为leader服务器。 }}
+  4. {{c1:: 统计投票。 }}
+  5. {{c1:: 改变服务器状态。 }}
++ 服务器运行时期的Leader选举过程:
+  1. {{c1:: 变更状态。leader挂后，余下的服务器都会将自己的服务器状态变更为looking，然后开始进入leader选举过程。 }}
+  2. {{c1:: 每个server会发出一个投票。}}
+  3. {{c1:: 集群中的每台服务器接收来自集群中各个服务器的投票。在运行期间，每个服务器上的zxid可能不同 }}
+  4. {{c1:: 处理投票。pk规则如下 }}
+     1. {{c1:: 优先检查zxid。zxid比较大的服务器优先作为leader。 }}
+     2. {{c1:: 如果zxid相同，那么就比较myid。myid较大的服务器作为leader服务器。 }}
+  5. {{c1:: 统计投票。 }}
+  6. {{c1:: 改变服务器状态。 }}
+
+### observer角色及其配置 [	](zookeeper_20201126080456410)
++ observer角色特点：
+  + {{c1:: 不参与集群的leader选举 }}
+  + {{c1:: 不参与集群中写数据时的ack反馈 }}
++ 在任何想变成observer角色的配置文件中加入：
+  ```properties
+    peerType=observer #注意位置应该不同
+    server.3=192.168.60.130:2289:3389:observer
+  ```
+
+### zookeeperAPI连接集群 [	](zookeeper_20201126080456412)
+
++ 思路：{{c1:: 在Zookeeper对象第一个参数中罗列出集群ip即可 }}
+```java
+// {{c1::
+ZooKeeper zooKeeper=new
+ZooKeeper("192.168.60.130:2181,192.168.60.130:2182,192.168.60.130:2183",
+5000,null)
+//}}
+```
+
+## zookeeper开源客户端curator [	](zookeeper_20201127124859778)
+
+### curator的Maven依赖 [	](zookeeper_20201127124859780)
++ 主要artifactId：`curator-framework` `zookeeper` `curator-recipes`
+```xml
+    <dependency>
+        <groupId>org.apache.curator</groupId>
+        <artifactId>curator-framework</artifactId>
+        <version>2.6.0</version>
+        <type>jar</type>
+        <exclusions>
+            <exclusion>
+                <groupId>org.apache.zookeeper</groupId>
+                <artifactId>zookeeper</artifactId>
+            </exclusion>
+        </exclusions>
+    </dependency>
+    <dependency>
+        <groupId>org.apache.zookeeper</groupId>
+        <artifactId>zookeeper</artifactId>
+        <version>3.4.10</version>
+        <type>jar</type>
+    </dependency>
+    <dependency>
+        <groupId>org.apache.curator</groupId>
+        <artifactId>curator-recipes</artifactId>
+        <version>2.6.0</version>
+        <type>jar</type>
+    </dependency>
+```
++ 理解：{{c1:: 标签 }}
+### curator连接到ZooKeeper [	](zookeeper_20201127124859782)
+```java
+  // 创建连接对象
+  //{{c1::
+  CuratorFramework client= CuratorFrameworkFactory.builder()
+  //}}
+          // IP地址端口号
+          //{{c1::
+          .connectString("192.168.60.130:2181,192.168.60.130:2182,192.168.60.130:2183")
+          //}}
+          // 会话超时时间
+          //{{c1::
+          .sessionTimeoutMs(5000)
+          //}}
+          // 重连机制
+          //{{c1::
+          .retryPolicy(retryPolicy)
+          //}}
+          // 命名空间
+          //{{c1::
+          .namespace("create")
+          //}}
+          // 构建连接对象
+          //{{c1::
+          .build();
+          //}}
+  // 打开连接
+  //{{c1::
+  client.start();
+  System.out.println(client.isStarted());
+  // 关闭连接
+  client.close();
+  //}}
+```
+
+### curator的session重连策略 [	](zookeeper_20201127124859784)
++ 3秒后重连一次，只重连1次:`RetryPolicy retryPolicy = new RetryOneTime(3000);`
++ 每3秒重连一次，重连3次:`RetryPolicy retryPolicy = new RetryNTimes(3,3000);`
++ 每3秒重连一次，总等待时间超过10秒后停止重连:`RetryPolicy retryPolicy=new RetryUntilElapsed(10000,3000);`
+
+### curator新增zookeeper节点 [	](zookeeper_20201127124859785)
++ 新增节点:
+  ```java
+  //{{c1::
+    client.create()
+            // 节点的类型
+            .withMode(CreateMode.PERSISTENT)
+            // 节点的权限列表 world:anyone:cdrwa
+            .withACL(ZooDefs.Ids.OPEN_ACL_UNSAFE)
+            // arg1:节点的路径 arg2:节点的数据
+            .forPath("/node1", "node1".getBytes());
+  //}}
+  ```
+### curator的client.create()调用链常用方法解释： [	](zookeeper_20201127124859788)
++ `.creatingParentsIfNeeded()`:{{c1:: 递归创建节点树 }}
++ `.withMode(CreateMode.PERSISTENT)`:{{c1:: 指定节点的类型 }}
++ `.withACL(ZooDefs.Ids.OPEN_ACL_UNSAFE)`:{{c1:: 节点的权限列表 world:anyone:cdrwa }}
+  + 可指定自定义权限列表：
+    ```java
+      //{{c1::
+      List<ACL> list = new ArrayList<ACL>();
+      Id id = new Id("ip", "192.168.60.130");
+      list.add(new ACL(ZooDefs.Perms.ALL, id));
+      //.withACL(list)
+      //}}
+    ```
++ 异步方式创建节点：`.inBackground((client,event)-> System.out.println(event.getPath()))`
++ 指定节点的路径，与节点数据:{{c1:: `.forPath("/node1", "node1".getBytes());` }}
+
+### curator的client.setData()调用链： [	](zookeeper_20201127124859790)
++ 指定节点版本号：{{c1:: `.withVersion(2)`}}
++ 异步方式更新节点：{{c1:: `.inBackground((client,event)-> System.out.println(event.getPath()))`}}
++ 指定节点的路径，与节点数据:{{c1:: `.forPath("/node1", "node11".getBytes());`}}
 
 
-### 服务器运行时期的Leader选举
-+ 当第二台服务器server2启动时，此时两台机器可以相互通信，每台机器都
-试图找到leader，于是进入leader选举过程。选举过程如下:
-  1. 
+### curator的client.delete()调用链： [	](zookeeper_20201127124859793)
++ 删除包含子节点的节点：{{c1:: `.deletingChildrenIfNeeded()`}}
++ 指定节点版本号：{{c1:: `.withVersion(2)`}}
++ 异步方式删除节点：{{c1:: `.inBackground((client,event)-> System.out.println(event.getPath()))`}}
++ 指定需删除节点的路径:{{c1:: `.forPath("/node1");`}}
+
+### curator的client.getData()调用链： [	](zookeeper_20201127124859795)
++ 读取节点属性：{{c1:: `Stat stat = new Stat();` `.storingStatIn(stat)` }}
++ 异步方式读取节点：{{c1:: `.inBackground((client,event)-> System.out.println(event.getPath()))`}}
++ 指定需查询节点的路径:{{c1:: `.forPath("/node1");`}}
+### curator的client.getChildren()调用链： [	](zookeeper_20201127124859798)
+
++ 异步方式读取子节点：`.inBackground((curatorFramework,  curatorEvent)-> curatorEvent.getChildren())`
++ 指定需查询节点的路径:{{c1:: `.forPath("/father");`}}
+
+### curator的client.checkExists()调用链： [	](zookeeper_20201127124859801)
+
++ 异步判断节点：{{c1:: `.inBackground((client,event)-> System.out.println(event.getPath()))`}}
++ 指定需判断节点的路径:{{c1:: `.forPath("/node2");`}}
+
+### curator的两种wacher监听器 [	](zookeeper_20201127124859804)
++ 思路：{{c1:: 注意获取单个节点与子节点的差别 }}
++ NodeCache:{{c1:: 只是监听某一个特定的节点，监听节点的新增和修改 }}
+```java
+    final NodeCache nodeCache=new NodeCache(client,"/watcher1");
+    nodeCache.start();
+    nodeCache.getListenable().addListener(new NodeCacheListener() {
+      // 节点变化时回调的方法
+        public void nodeChanged() throws Exception {
+          System.out.println(nodeCache.getCurrentData().getPath());
+            System.out.println(new String(nodeCache.getCurrentData().getData()));
+        }
+    });
+    Thread.sleep(100000);
+    nodeCache.close();
+```
++ PathChildrenCache：{{c1:: 监控一个ZNode的子节点 }}
+```java
+    PathChildrenCache pathChildrenCache=new PathChildrenCache(client,"/watcher1",true);
+    pathChildrenCache.start();
+    pathChildrenCache.getListenable().addListener(new PathChildrenCacheListener() {
+      // 当子节点方法变化时回调的方法
+        public void childEvent(CuratorFramework curatorFramework, PathChildrenCacheEvent pathChildrenCacheEvent) throws Exception {
+          // 节点的事件类型
+            System.out.println(pathChildrenCacheEvent.getType());
+            // 节点的路径
+            System.out.println(pathChildrenCacheEvent.getData().getPath());
+            // 节点数据
+            System.out.println(new String(pathChildrenCacheEvent.getData().getData()));
+        }
+    });
+    Thread.sleep(100000);
+    pathChildrenCache.close();
+```
++ 理解：{{c1:: 标签 }}
+
+### curator事务的使用 [	](zookeeper_20201127124859807)
+```java
+  //{{c1::
+  client.inTransaction()
+          .create().forPath("/node1","node1".getBytes())
+          .and()
+          .create().forPath("/node2","node2".getBytes())
+          .and()
+          .commit();
+  //}}
+```
+
+### curator分布式锁 [	](zookeeper_20201127124859809)
++ 思路：{{c1:: 加锁/解锁的方式都一样，3种锁获取的方式不同 }}
++ `InterProcessLock`:{{c1:: 锁接口类 }}
++ 具有实现类：
+  + `InterProcessMutex`：{{c1:: 分布式可重入排它锁 }}
+  + `InterProcessReadWriteLock`：{{c1:: 分布式读写锁 }}
+```java
+    @Test
+    public void lock1() throws Exception {
+        // 排他锁
+        // arg1:连接对象
+        // arg2:节点路径
+        InterProcessLock interProcessLock = new InterProcessMutex(client, "/lock1");
+        System.out.println("等待获取锁对象!");
+        // 获取锁
+        interProcessLock.acquire();
+        for (int i = 1; i <= 10; i++) {
+            Thread.sleep(3000);
+            System.out.println(i);
+        }
+        // 释放锁
+        interProcessLock.release();
+        System.out.println("等待释放锁!");
+    }
+
+    @Test
+    public void lock2() throws Exception {
+        // 读写锁
+        InterProcessReadWriteLock interProcessReadWriteLock=new InterProcessReadWriteLock(client, "/lock1");
+        // 获取读锁对象
+        InterProcessLock interProcessLock=interProcessReadWriteLock.readLock();
+        System.out.println("等待获取锁对象!");
+        // 获取锁
+        interProcessLock.acquire();
+        for (int i = 1; i <= 10; i++) {
+            Thread.sleep(3000);
+            System.out.println(i);
+        }
+        // 释放锁
+        interProcessLock.release();
+        System.out.println("等待释放锁!");
+    }
+
+    @Test
+    public void lock3() throws Exception {
+        // 读写锁
+        InterProcessReadWriteLock interProcessReadWriteLock=new InterProcessReadWriteLock(client, "/lock1");
+        // 获取写锁对象
+        InterProcessLock interProcessLock=interProcessReadWriteLock.writeLock();
+        System.out.println("等待获取锁对象!");
+        // 获取锁
+        interProcessLock.acquire();
+        for (int i = 1; i <= 10; i++) {
+            Thread.sleep(3000);
+            System.out.println(i);
+        }
+        // 释放锁
+        interProcessLock.release();
+        System.out.println("等待释放锁!");
+    }
+```
++ 理解：{{c1:: 标签 }}
+
+## 工具
+
+### zookeeper四字监控命令 [	](zookeeper_20201127124859811)
+
++ 作用：{{c1:: 大多是查询命令，用来获取zooKeeper服务的当前状态及相关信息 }}
+| 命令   | 描述                                                         |
+| :----- | :----------------------------------------------------------- |
+| `conf` | {{c1:: 输出相关服务配置的详细信息。比如端口、zk数据及日志配置路径、最大连接数，session超时时间、serverId等 }} |
+| `cons` | {{c1:: 列出所有连接到这台服务器的客户端连接/会话的详细信息。包括“接受/发送”的包数量、session id 、操作延迟、最后的操作执行等信息 }} |
+| `crst` | {{c1:: 重置当前这台服务器所有连接/会话的统计信息 }}          |
+| `dump` | {{c1:: 列出未经处理的会话和临时节点 }}                       |
+| `envi` | {{c1:: 输出关于服务器的环境详细信息 }}                       |
+| `ruok` | {{c1:: 测试服务是否处于正确运行状态。如果正常返回"imok"，否则返回空 }} |
+| `stat` | {{c1:: 输出服务器的详细信息：接收/发送包数量、连接数、模式（leader/follower）、节点总数、延迟。 所有客户端的列表 }} |
+| `srst` | {{c1:: 重置server状态 }}                                     |
+| `wchs` | {{c1:: 列出服务器watches的简洁信息：连接总数、watching节点总数和watches总数 }} |
+| `wchc` | {{c1:: 通过session分组，列出watch的所有节点，它的输出是一个与watch相关的会话的节点列表 }} |
+| `mntr` | {{c1:: 列出集群的健康状态。包括“接受/发送”的包数量、操作延迟、当前服务模式（leader/follower）、节点总数、watch总数、临时节点总数 }} |
+
+### 2个zookeeper可视化工具: [	](zookeeper_20201127124859814)
+1. {{c1::`ZooInspector`： 提供一个操作zk树的UI界面}}
+2. {{c1::`taokeeper`： 监控ZK集群的状态 }}
