@@ -51,12 +51,11 @@
 
 
 ### ApplicationContext [	](spring_20200713102713846)
-
 + 作用：工厂接口
 - 主要实现类
   - 非web环境:(main junit)：{{c1::  `ClassPathXmlApplicationContext` }}
-  - web环境 ：{{c1::   `XmlWebApplicationContext` }}
-- 重量级资源含义：{{c1:: ApplicationContext工厂的对象占用大量内存，一个应用只会创建一个工厂对象，一定是线程安全的。 }}
+  - web环境 ：{{c1:: `XmlWebApplicationContext` }}
+- 重量级资源含义：{{c1:: `ApplicationContext`工厂的对象占用大量内存，一个应用只会创建一个工厂对象，一定是线程安全的。 }}
 
 ### ApplicationContext的国际化:概念 [	](spring_20200824063336928)
 
@@ -131,12 +130,12 @@
 
 ### Spring工厂的相关的方法 [	](spring_20200713102713849)
 
-+ 通过这种方式获得对象，就不需要强制类型转换:{{c1:: `Person person = ctx.getBean("person", Person.class);`}}
-+ 当前Spring的配置文件中 只能有一个`<bean class ..>`是Person类型:{{c1:: `Person person = ctx.getBean(Person.class);`}}
-+ 获取的是 Spring工厂配置文件中所有bean标签的id值:{{c1:: `String[] beanDefinitionNames = ctx.getBeanDefinitionNames();`}}
-+ 根据类型获得Spring配置文件中对应的id值:{{c1:: `String[] beanNamesForType = ctx.getBeanNamesForType(Person.class);`}}
-+ 用于判断是否存在指定id值得bean:{{c1:: `ctx.containsBeanDefinition("a")`}}
-+ 用于判断是否存在指定id值得bean:{{c1:: `ctx.containsBean("person")`}}
++ `Person person = ctx.getBean("person", Person.class);`:{{c1:: 通过这种方式获得对象，就不需要强制类型转换 }}
++ `Person person = ctx.getBean(Person.class);`:{{c1:: 当前Spring的配置文件中 只能有一个`<bean class ..>`是Person类型 }}
++ `String[] beanDefinitionNames = ctx.getBeanDefinitionNames();`:{{c1:: 获取的是 Spring工厂配置文件中所有bean标签的id值 }}
++ `String[] beanNamesForType = ctx.getBeanNamesForType(Person.class);`:{{c1:: 根据类型获得Spring配置文件中对应的id值 }}
++ `ctx.containsBeanDefinition("a")`:{{c1:: 用于判断是否存在指定id值得bean }}
++ `ctx.containsBean("person")`:{{c1:: 用于判断是否存在指定id值得bean }}
 
 ### spring配置文件细节 [	](spring_20200713102713850)
 
@@ -921,10 +920,8 @@ public class Person
     //}}
   ```
 
-### 访问目标方法方式 [	](spring_20200911094545339)
-
+### springAOP增强方法访问目标方法方式 [	](spring_20200911094545339)
 + 定义增强处理方法时:{{c1:: 将第一个参数定义为`JoinPoint`类型 }}
-  
   + 注意:{{c1:: `Around`只能定义为`proceedingJoinPoint`类型 }}
 + 使用args表达式
   ```java
@@ -1480,13 +1477,23 @@ public class Person
   //}}
   ```
 
-### SpringMVC的请求 [	](spring_20201115082829654)
-+ SpringMVC处理器方法可以接收如下类型的参数：
-  + 基本类型参数：{{c1:: 参数名称要与请求参数的name一致，参数值会自动映射匹配。并且能自动做类型转换； }}
-  + POJO类型参数：{{c1:: POJO参数的属性名与请求参数的name一致，参数值会自动映射匹配。 }}
-  + 数组类型参数：{{c1:: 数组名称与请求参数的name一致，参数值会自动映射匹配。 }}
-  + 集合类型参数：
-    1. pojo参数作为集合：{{c1:: 获得集合参数时，要将集合参数包装到一个POJO中才可以 }}
+### SpringMVC的请求处理方法可接受的参数类型 [	](spring_20201115082829654)
+1. 基本类型参数：{{c1:: 参数名称要与请求参数的name一致，参数值会自动映射匹配。并且能自动做类型转换； }}
+2. POJO类型参数：{{c1:: POJO参数的属性名与请求参数的name一致，参数值会自动映射匹配。 }}
+3. 数组类型参数：{{c1:: 数组名称与请求参数的name一致，参数值会自动映射匹配。 }}
+4. 集合类型参数：
+   1. `@RequestBody`：{{c1:: 自动将json数据注入到集合中}}
+     + 例：
+     ```java
+       //{{c1::
+       @RequestMapping("/quick13")
+       @ResponseBody
+       public void quickMethod13(@RequestBody List<User> userList) throws IOException {
+         System.out.println(userList);
+       }
+       //}}
+     ```
+    2. pojo参数作为集合：{{c1:: 获得集合参数时，要将集合参数包装到一个POJO中才可以 }}
       + 例：
         ```java
         //{{c1::
@@ -1507,17 +1514,7 @@ public class Person
         }
         //}}
         ```
-     2. `@RequestBody`使用：{{c1:: 当接受到一个json格式List数据的请求时，自动将请求体转换为相应的集合类型 }}
-        + 例：
-        ```java
-          //{{c1::
-          @RequestMapping("/quick13")
-          @ResponseBody
-          public void quickMethod13(@RequestBody List<User> userList) throws IOException {
-            System.out.println(userList);
-          }
-          //}}
-        ```
+
 
 ### 静态资源访问的开启(应用) [	](spring_20201115082829657)
 

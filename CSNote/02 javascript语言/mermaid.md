@@ -175,7 +175,7 @@ graph TB
 
 ## 类图 [	](mermaid_20200927095114624)
 
-### There are two ways to define a class:
+### There are two ways to define a class: [	](mermaid_20201202040742287)
 
 - Explicitly defining a class using keyword **class** like {{c1:: `class Animal` }}. This defines the Animal class
 - Define two classes via a **relationship** between them{{c1:: `Vehicle <|-- Car`}}.. This defines two classes Vehicle and Car along with their relationship.
@@ -184,7 +184,7 @@ graph TB
 
 
 
-### There are two ways to define the members of a class
+### There are two ways to define the members of a class [	](mermaid_20201202040742292)
 
 - Associate a member of a class using **:** (colon) followed by member name, useful to define one member at a time. For example:{{c1::` BankAccount : +String owner`}}
 
@@ -203,7 +203,7 @@ graph TB
 
   + note: Optionally you can end the method/function definition with the data type that will be returned
 
-#### Generic Types
+#### Generic Types [	](mermaid_20201202040742294)
 
 + Members can be defined using generic types, such as `List`, for fields, parameters and return types by enclosing the type within `~` (**tilde**). 
 
@@ -226,7 +226,7 @@ graph TB
   //}}
   ```
 
-### To specify the visibility of a class member:
+### To specify the visibility of a class member: [	](mermaid_20201202040742297)
 + Visibility modifier
   - Public:{{c1:: `+` }}
   - Private:{{c1:: `-` }}
@@ -237,7 +237,7 @@ graph TB
   - Static: {{c1:: `$` }} e.g.: `someStaticMethod()$`
 
 
-### Defining Relationship between classes in mermaid
+### Defining Relationship between classes in mermaid [	](mermaid_20201202040742299)
 
 + Inheritance : {{c1:: `classB1 --|> classA1 : Inheritance` }}
 + Composition : {{c1:: `classB2 --* classA2 : Composition` }}
@@ -265,7 +265,7 @@ graph TB
   + 聚合:{{c1::(Aggregation)"整体"有管理"部分"的特有的职责 }}
 
 
-### Cardinality / Multiplicity on relations
+### Cardinality / Multiplicity on relations [	](mermaid_20201202040742301)
 
 - The different cardinality options are :
   - 0..1` Zero or one
@@ -288,7 +288,7 @@ graph TB
 
   
 
-### Annotations on classes and Comments
+### Annotations on classes and Comments [	](mermaid_20201202040742303)
 + To annotate classes,there are two ways:
   + In a separate line after a class is defined. For example:{{c1::
     ```
@@ -314,7 +314,7 @@ graph TB
   + {{c1::`<<enumeration>>` : To represent an enum }}
 + Comments:{{c1：： Comments can be entered within a class diagram, which will be ignored by the parser.  Comments need to be on their own line, and must be prefaced with %% (double percent signs).  }}
 
-### Interaction in classDiagram
+### Interaction in classDiagram [	](mermaid_20201202040742305)
 + Meaning:{{c1:: It is possible to bind a click event to a node, the click can lead to either a javascript callback or to a link which will be opened in a new browser tab. }}
 + samples:
    1. callback:{{c1:: `callback Shape "callbackFunction" "This is a tooltip for a callback"` }}

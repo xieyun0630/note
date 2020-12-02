@@ -1018,7 +1018,7 @@ public class News{
   </update>
   ```
 
-### `<bind>`元素 [	](mybatis_20200718074811926)
+### mybatis动态SQL：`<bind>`元素 [	](mybatis_20200718074811926)
 + 属性：
   + `name`:{{c1:: 指定变量名 }}
   + `value`:{{c1:: 指定一个OGNL表达式 }}

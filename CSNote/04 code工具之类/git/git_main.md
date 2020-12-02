@@ -374,18 +374,11 @@ git tag -d v0.1 }}
 
 ### 远程库标签管理  [	](git_main_20191219101334863)
 
-```shell
-#推送某个标签到远程{{c1:: 
-git push origin v1.0 }}
-#一次性推送全部标签到远程{{c1:: 
-git push origin --tags }}
-#删除已经推送到远程的标签{{c1::
-#第一步：先删除本地标签
-git tag -d v0.9
-#第二步：
-git push origin :refs/tags/v0.9
-}}
-```
++ 推送某个标签到远程：{{c1:: `git push origin v1.0 `}}
++ 一次性推送全部标签到远程：{{c1:: `git push origin --tags `}}
++ 删除已经推送到远程的标签
+  + 第一步：先删除本地标签：{{c1::`git tag -d v0.9`
+  + 第二步：推送到远程：{{c1::`git push origin :refs/tags/v0.9`}}
 
 ### 如何在GitHub上参与开源项目  [	](git_main_20191219101334865)
 

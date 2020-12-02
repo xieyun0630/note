@@ -589,33 +589,26 @@ document.getElementById('btn').onclick = function() {
 module.exports = {
   entry: './src/index.js',
   output: {
-    // 文件名称（指定名称+目录）{{c1::
     filename: 'js/[name].js',
-    //}}
-    // 输出文件目录（将来所有资源输出的公共目录）{{c1::
     path: resolve(__dirname, 'build'),
-    //}}
-    // 所有资源引入公共路径前缀 --> 'imgs/a.jpg' --> '/imgs/a.jpg'{{c1::
     publicPath: '/',
-    //}}
-    // 非入口chunk的名称{{c1::
     chunkFilename: 'js/[name]_chunk.js', 
-    //}}
-    // 整个库向外暴露的变量名{{c1::
     library: '[name]', 
-    //}}
-    // 变量名添加到哪个上 browser{{c1::
-    // libraryTarget: 'window' }}
-    // 变量名添加到哪个上 node{{c1::
-    // libraryTarget: 'global' }}
-    // 指定模块标准{{c1::
-    // libraryTarget: 'commonjs'}}
+    // libraryTarget: 'window'
+    // libraryTarget: 'global'
+    // libraryTarget: 'commonjs'
   },
   plugins: [new HtmlWebpackPlugin()],
   mode: 'development'
 };
 ```
-
++ 各属性解释：
+  + `filename`: {{c1:: 文件名称（指定名称+目录） }}
+  + `path`: {{c1:: 输出文件目录}}
+  + `publicPath`: {{c1:: 所有资源引入公共路径前缀 }}
+  + `chunkFilename`: {{c1:: 非入口chunk的名称 }}
+  + `library`: {{c1:: 整个库向外暴露的变量名 }}
+  + `libraryTarget`: {{c1:: 变量名添加到哪个bom上，`'window' 'global' 'commonjs'` }}
 ### webpack module 配置 [	](buildTool_20200626090144169)
 
 ```js

@@ -368,8 +368,8 @@ channel.basicConsume(Producer.FANOUT_QUEUE_1, true, consumer);
 + 理解：{{c1:: 标签 }}
 
 ###  消息的可靠投递：`return` 退回模式的使用 [	](rabbitMQ_20201124103028897)
-+ 回退模式： 当消息发送给Exchange后，Exchange路由到Queue失败是 才会执行 ReturnCallBack
-+ 默认处理：如果消息没有路由到Queue，则丢弃消息
++ 回退模式：{{c1:: 当消息发送给Exchange后，Exchange路由到Queue失败是 才会执行 ReturnCallBack }}
++ 默认处理：{{c1:: 如果消息没有路由到Queue，则丢弃消息 }}
 1. 退回模式开启：{{c1:: `ConnectionFactory`中开启`publisher-returns="true"` }}
 2. 设置return回调函数
    ```java
@@ -396,7 +396,7 @@ channel.basicConsume(Producer.FANOUT_QUEUE_1, true, consumer);
 
 
 ### Consumer Ack [	](rabbitMQ_20201124103028901)
-+ 作用:ack指Acknowledge,确认收到。表示消费者收到消息后的确认方式 。
++ 作用: {{c1:: ack指Acknowledge,确认收到。表示消费者收到消息后的确认方式 。 }}
 + 三种确认方式：
   + 自动确认：{{c1:: `acknowledge=none` }}
     表示：一旦消息被Consumer接收到，则自动确认收到
@@ -452,8 +452,8 @@ channel.basicConsume(Producer.FANOUT_QUEUE_1, true, consumer);
   ```
 
 ### TTL配置 [	](rabbitMQ_20201124103028909)
-+ 作用：{{c1:: 全称Time To Live，当消息到达指定时间后，还没有被消费，会被自动清除掉。 }}
-+ 队列统一过期配置:{{c1::设置队列过期时间使用参数：`x-message-ttl`。单位：ms }}
++ 作用：{{c1:: 全称`Time To Live`，当消息到达指定时间后，还没有被消费，会被自动清除掉。 }}
++ 队列统一过期配置:{{c1::设置队列过期时间使用参数：`x-message-ttl`。单位：`ms` }}
   ```xml
   <!-- {{c1:: -->
   <rabbit:queue name="test_queue_ttl" id="test_queue_ttl">
@@ -492,7 +492,7 @@ channel.basicConsume(Producer.FANOUT_QUEUE_1, true, consumer);
 + 注意：{{c1:: 死信交换机与普通交换机没有任何区别 }}
 
 
-### 队列绑定死信交换机 [	](rabbitMQ_20201124103028913)
+### 给队列绑定死信交换机 [	](rabbitMQ_20201124103028913)
 + 给队列设置参数：{{c1:: `x-dead-letter-exchange` 和 `x-dead-letter-routing-key` }}
 + 配置：
   ```xml

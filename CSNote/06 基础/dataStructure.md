@@ -378,6 +378,7 @@ typedef struct DNode{
   3. {{c1:: 若扫描到运算符，则弹出两个栈顶元素，执行相应运算，运算结果压回栈顶，回到① }}
   + 注意：{{c1:: 第二步，先出栈的是“右操作数” }}
 + 过程动画：
+  
   + {{c1:: ![zdXEoElMxF](dataStructure.assets/zdXEoElMxF.gif)}}
 + 用栈实现前缀表达式的计算：
   1. {{c1:: **从右往左**扫描下一个元素，直到处理完所有元素 }}
@@ -387,6 +388,7 @@ typedef struct DNode{
 ### 中缀表达式转后缀表达式（手算） [	](dataStructure_20201115082829758)
 
 + 转换成后缀表达式：
+  
   + ![](https://gitee.com/xieyun714/nodeimage/raw/master/img/20201115175721.png)
 + 手算步骤：
   1. {{c1:: 确定中缀表达式中**各个运算符的运算顺序** }}
@@ -394,6 +396,7 @@ typedef struct DNode{
   3. {{c1:: 如果还有运算符没被处理，就继续② }}
   + 左优先”原则：{{C1:: 只要左边的运算符能先计算，就优先算左边的 }}
 + 结果：
+  
   + {{c1:: ![](https://gitee.com/xieyun714/nodeimage/raw/master/img/20201115175840.png) }}
 
 ### 中缀表达式转前缀表达式（手算） [	](dataStructure_20201115082829761)
@@ -404,9 +407,10 @@ typedef struct DNode{
   3. {{c1:: 如果还有运算符没被处理，就继续② }}
   + 右优先”原则：{{C1:: 只要右边的运算符能先计算，就优先算右边的 }}
 + 结果：
+  
   + {{c1:: ![](https://gitee.com/xieyun714/nodeimage/raw/master/img/20201115195456.png) }}
 
-### 中缀表达式转后缀表达式（机算）
+### 中缀表达式转后缀表达式（机算） [	](dataStructure_20201202040742332)
 + 初始化一个栈，用于保存暂时还不能确定运算顺序的运算符。
 + 从左到右处理各个元素，直到末尾。可能遇到三种情况：
   1. {{c1:: 遇到操作数。直接加入后缀表达式。 }}
@@ -414,7 +418,7 @@ typedef struct DNode{
   3. {{c1:: 遇到运算符。依次弹出栈中优先级**高于或等于当前**运算符的所有运算符，并加入后缀表达式，若碰到“(” 或栈空则停止。之后再把当前运算符入栈。 }}
 + 按上述方法处理完所有字符后，将栈中剩余运算符依次弹出，并加入后缀表达式。
 
-### 中缀表达式的计算（用栈实现）
+### 中缀表达式的计算（用栈实现） [	](dataStructure_20201202040742335)
 + 两个算法的结合:{{c1:: 中缀转后缀 + 后缀表达式求值 }}
 + 用栈实现中缀表达式的计算：
   + 初始化两个栈，操作数栈和运算符栈
@@ -422,7 +426,7 @@ typedef struct DNode{
   + 若扫描到运算符或界限符，则按照“中缀转后缀”相同的逻辑压入运算符栈（期间也会弹出运算符，每当弹出一个运算符时，就需要再弹出两个操作数栈的栈顶元素并执行相应运算，运算结果再压回操作数栈）
 + 例：![](https://gitee.com/xieyun714/nodeimage/raw/master/img/20201129141129.png)
 
-### 栈的递归
+### 栈的递归 [	](dataStructure_20201202040742338)
 
 ## 队列 [	](dataStructure_20201115082829764)
 
@@ -451,6 +455,7 @@ typedef struct DNode{
     //}}
   ```
 + 循环队列实现思路：{{c1:: 用模运算（取余）将存储空间在逻辑上变为"环状 }}
+  
   + 例：{{c1:: `Q.rear=(Q.rear+1)%MaxSize` }}
 + 循环队列确定**判空判满**的方法:
   1. {{c1:: 牺牲一个存储单元 }}
@@ -477,17 +482,19 @@ typedef struct DNode{
 + 输入受限的双端队列：{{c1:: 允许从两端刑除、从一端插入的队列 }}
 + 输出受限的双端队列：{{c1:: 允许从两端插入、从一端删刪除的队列 }}
 
-### 对称矩阵的压缩存储
+### 对称矩阵的压缩存储 [	](dataStructure_20201202040742340)
 + 正面：![](https://gitee.com/xieyun714/nodeimage/raw/master/img/1_back.png)
 + 回答：{{c1:: ![](https://gitee.com/xieyun714/nodeimage/raw/master/img/1.png) }}
 
-### 串的存储结构总结
+### 串的存储结构总结 [	](dataStructure_20201202040742342)
 + 正面：![](https://gitee.com/xieyun714/nodeimage/raw/master/img/%E4%B8%B22_ques.png)
 + 回答：{{c1:: ![](https://gitee.com/xieyun714/nodeimage/raw/master/img/%E4%B8%B22.png) }}
 
-### KMP算法总结
+### KMP算法总结 [	](dataStructure_20201202040742344)
 + 朴素模式匹配算法的缺点：{{c1:: 若模式串长度为m，主串长度为h，则直到匹配成功/匹配失败最多需要`（n-m+1)*m`次比较,最坏时间复杂度：`O(nm)` }}
 + KMP算法：{{c1:: 当子串和模式串不匹配时，主串指针 i 不回溯，模式串指针`j=next[j]`算法平均时间复杂度：`O(n+m)` }}
 + next数组手算方法：{{c1:: 当第j个字符匹配失败，由前 `1~j-1` 个字符组成的串记为`S`，则：**`next[j]=S`的最长相等前后缀长度+1**,特别地，`next[1]=0` }}
 + nextval数组的求法：{{c1:: ![](https://gitee.com/xieyun714/nodeimage/raw/master/img/chrome_NJPCOTCu68.png) }}
 
+
+### test [	](dataStructure_20201202040742346)

@@ -6,7 +6,7 @@
 
 询问一个问题，并返回访问者输入的内容，如果他按下「取消」则返回 `null`。
 
-+ {{c1::  confirm(question)}}7
++ {{c1::  confirm(question)}}
 
 提出一个问题，并建议在确定和取消之间进行选择。该选项以 `true/false` 形式返回。
 
@@ -3017,10 +3017,9 @@ Promise 的 `state` 和 `result` 属性是内部的。我们不能从代码中�
 + {{c1:: 原生的`Promise`的对象 }}
 + {{c1:: thenable 对象（一个具有 `.then` 方法的任意对象）}}
 
-### promises 链中,thenable 对象的概念 [ ](javascript_info_20200114084259623)
-
-+ {{c1:: JavaScript 会检查 promises链中`.then` 方法返回的对象。}}
-+ {{c1:: 如果它有一个名为 `then` 的可调用方法，那么它会调用该方法，并提供原生函数 `resolve`，`reject `作为参数（类似于 executor）并在它被调用前一直等待。}}
+### promises链中,thenable对象 [ ](javascript_info_20200114084259623)
+1. {{c1:: JavaScript会检查 promises链中`.then` 方法返回的对象。}}
+2. {{c1:: 如果它有一个名为 `then` 的可调用方法，那么它会调用该方法，并提供原生函数 `resolve`，`reject `作为参数（类似于 executor）并在它被调用前一直等待。}}
 
 ### fetch 的 promises 链调用示例 [ ](javascript_info_20200114084259624)
 
@@ -3420,30 +3419,27 @@ let results = await Promise.all([
 
 ## Generator，高级 iteration [ ](javascript_info_20200512080327643)
 
-### Generator 函数:以下代码将会输出什么？ [ ](javascript_info_20200512080327644)
-
-```javascript
-function* generateSequence() {
-  yield 1;
-  yield 2;
-  return 3;
-}
-let generator = generateSequence();
-alert(JSON.stringify(generator.next()));
-alert(JSON.stringify(generator.next()));
-alert(JSON.stringify(generator.next()));
-```
-
-结果：
-{{c1::
-
-```json
-{value: 1, done: false}
-{value: 2, done: false}
-{value: 3, done: true}
-```
-
-}}
+### Generator函数:简化迭代器 [ ](javascript_info_20200512080327644)
++ 以下代码将会输出什么？
+  ```javascript
+  function* generateSequence() {
+    yield 1;
+    yield 2;
+    return 3;
+  }
+  let generator = generateSequence();
+  alert(JSON.stringify(generator.next()));
+  alert(JSON.stringify(generator.next()));
+  alert(JSON.stringify(generator.next()));
+  ```
++ 结果：
+  ```json
+  //{{c1::
+  {value: 1, done: false}
+  {value: 2, done: false}
+  {value: 3, done: true}
+  //}}
+  ```
 
 ### 使用遍历 Generator 函数例子 [ ](javascript_info_20200512080327645)
 
@@ -3656,10 +3652,10 @@ export function sayHi(user) {
 
 ### 命名的`export`与默认的`export`区别 [ ](javascript_info_20200520043218619)
 
-| 命名的导出                         | 默认的导出                                 |
-| :--------------------------------- | :----------------------------------------- |
-| {{c1:: `export class User {...}`}} | {{c1:: `export default class User {...}`}} |
-| {{c1:: `import {User} from ...` }} | {{c1:: `import User from ...`           }} |
+|          | 命名的导出                         | 默认的导出                                 |
+| -------- | :--------------------------------- | :----------------------------------------- |
+| `export` | {{c1:: `export class User {...}`}} | {{c1:: `export default class User {...}`}} |
+| `import` | {{c1:: `import {User} from ...` }} | {{c1:: `import User from ...`           }} |
 
 ### `export` 语法总结 [ ](javascript_info_20200520043218621)
 
@@ -5113,33 +5109,30 @@ let commits = JSON.parse(result);
 alert(commits[0].author.login);
 ```
 
-### Fetch：中止（Abort） [ ](javascript_info_20200612065930963)
-
-```javascript
-  let urls = [...];
-  // 1.创建控制器
-  //{{c1::
-  let controller = new AbortController();
-  //}}
-  let ourJob = new Promise((resolve, reject) => { // 我们的任务
-    ...
-    // 2.监听终止对象
+### Fetch：中止正在异步运行的promise [ ](javascript_info_20200612065930963)
++ 主要思路：{{c1:: 使用`AbortController`，对于`promise`为`abort事件`监听器指定reject方法，对于`fetch`方法指定`signal`属性 }}
++ 例：
+  ```javascript
     //{{c1::
-    controller.signal.addEventListener('abort', reject);
-    //}}
-  });
-  // 设置批量终止fetch
-  // {{c1::
-  let fetchJobs = urls.map(url => fetch(url, { // fetches
-    signal: controller.signal
-  }));
-  //}}
+    let urls = [...];
+    // 1.创建控制器
+    let controller = new AbortController();
+    let ourJob = new Promise((resolve, reject) => {
+      // 执行任务...
+      // 2.监听终止对象
+      controller.signal.addEventListener('abort', reject);
+    });
+    // 设置批量终止fetch
+    let fetchJobs = urls.map(url => fetch(url, {
+      signal: controller.signal
+    }));
 
-  // 等待完成我们的任务和所有 fetch
-  let results = await Promise.all([...fetchJobs, ourJob]);
-  // 如果 controller.abort() 被从其他地方调用，
-  // 它将中止所有 fetch 和 ourJob
-```
+    // 等待完成我们的任务和所有 fetch
+    let results = await Promise.all([...fetchJobs, ourJob]);
+    // 如果 controller.abort() 被从其他地方调用，
+    // 它将中止所有 fetch 和 ourJob
+    //}}
+  ```
 
 ### Fetch：跨源请求 [ ](javascript_info_20200612065930964)
 

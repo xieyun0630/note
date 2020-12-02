@@ -422,8 +422,8 @@ var watchExampleVM = new Vue({
 ## 组件基础 [ ](vue_20200707060718105)
 
 ### 监听子组件事件 [ ](vue_20200707060718106)
-
-- 父级组件可以像处理 native DOM 事件一样通过 v-on 监听子组件实例的任意事件：
++ 思路：{{c1:: 父组件监听:`v-on:enlarge-text="postFontSize += 0.1"`,子组件触发事件：`v-on:click="$emit('enlarge-text')"` }}
+- 父级组件可以像处理`native DOM`事件一样通过`v-on`监听子组件实例的任意事件：
   ```xml
   <!-- {{c1:: -->
   <blog-post
@@ -432,14 +432,19 @@ var watchExampleVM = new Vue({
   ></blog-post>
   <!-- }} -->
   ```
-- 子组件可以通过调用内建的 \$emit 方法并传入事件名称来触发一个事件
-  ```xml
-  <!-- {{c1:: -->
-  <!-- 这里的button可能是在父组件的template中定义的 -->
-  <button v-on:click="$emit('enlarge-text')">
-    Enlarge text
-  </button>
-  <!-- }} -->
+- 子组件:
+  ```js
+  //{{c1::
+  {
+  //...
+    template:```
+      <button v-on:click="$emit('enlarge-text')">
+        Enlarge text
+      </button>
+    ```
+  //...
+  }
+  //}}
   ```
 
 ### 使用子组件事件抛出一个值 [ ](vue_20200707060718107)
@@ -453,7 +458,6 @@ var watchExampleVM = new Vue({
   <!-- }} -->
   ```
 - 那么这个值将会作为第一个参数对应的绑定方法：
-
   ```js
   <blog-post
     ...
@@ -633,55 +637,55 @@ var watchExampleVM = new Vue({
 <!-- }} -->
 ```
 
-### 组件的 Prop 验证 [ ](vue_20200707060718117)
-
-```js
-Vue.component("my-component", {
-  props: {
-    // 基础的类型检查 (`null` 和 `undefined` 会通过任何类型验证)
-    //{{c1::
-    //}}
-    propA: Number,
-    // 多个可能的类型
-    //{{c1::
-    propB: [String, Number],
-    //}}
-    // 必填的字符串
-    //{{c1::
-    propC: {
-      type: String,
-      required: true,
-    },
-    //}}
-    // 带有默认值的数字
-    //{{c1::
-    propD: {
-      type: Number,
-      default: 100,
-    },
-    //}}
-    // 带有默认值的对象
-    //{{c1::
-    propE: {
-      type: Object,
-      // 对象或数组默认值必须从一个工厂函数获取
-      default: function () {
-        return { message: "hello" };
+### 指定组件传入属性的数据检查 [ ](vue_20200707060718117)
++ 主要思路：{{c1:: props对象接受3种类型的值，单个类，类数组，对象 }}
+  ```js
+  Vue.component("my-component", {
+    props: {
+      // 基础的类型检查 (`null` 和 `undefined` 会通过任何类型验证)
+      //{{c1::
+      //}}
+      propA: Number,
+      // 多个可能的类型
+      //{{c1::
+      propB: [String, Number],
+      //}}
+      // 必填的字符串
+      //{{c1::
+      propC: {
+        type: String,
+        required: true,
       },
-    },
-    //}}
-    // 自定义验证函数
-    //{{c1::
-    propF: {
-      validator: function (value) {
-        // 这个值必须匹配下列字符串中的一个
-        return ["success", "warning", "danger"].indexOf(value) !== -1;
+      //}}
+      // 带有默认值的数字
+      //{{c1::
+      propD: {
+        type: Number,
+        default: 100,
       },
+      //}}
+      // 带有默认值的对象
+      //{{c1::
+      propE: {
+        type: Object,
+        // 对象或数组默认值必须从一个工厂函数获取
+        default: function () {
+          return { message: "hello" };
+        },
+      },
+      //}}
+      // 自定义验证函数
+      //{{c1::
+      propF: {
+        validator: function (value) {
+          // 这个值必须匹配下列字符串中的一个
+          return ["success", "warning", "danger"].indexOf(value) !== -1;
+        },
+      },
+      //}}
     },
-    //}}
-  },
-});
-```
+  });
+  ```
 
 - type 可以是原生构造函数中的一个`String` `Number` `Boolean` `Array` `Object` `Date` `Function` `Symbol`
 - type 还可以是一个自定义的构造函数，并且通过 instanceof 来进行检查确认
@@ -819,7 +823,7 @@ Vue.component("my-component", {
 <!-- }} -->
 ```
 
-### 作用域插槽 [ ](vue_20200708060208401)
+### 作用域插槽：template插槽引用中访问组件内变量 [ ](vue_20200708060208401)
 
 - 模板中使用作用域插槽声明：
   ```xml
@@ -1013,14 +1017,13 @@ Vue.component("my-component", {
 
 - 内联模板例子:
   ```html
-  <!-- {{c1:: -->
   <div id="x">
     <my-component inline-template>
       <div>
         <p>{{message}}</p>
       </div>
     </my-component>
-    <div>
+  <div>
       <script>
         var vm=new Vue({
           el:'#x'
@@ -1034,28 +1037,23 @@ Vue.component("my-component", {
           }
         })
       </script>
-      <!-- }} -->
     </div>
   </div>
   ```
 - X-Template
   - 定义：
   ```html
-  <!-- {{c1:: -->
   <script type="text/x-template" id="hello-world-template">
     <p>Hello hello hello</p>
   </script>
-  <!-- }} -->
   ```
   - 引用：
   ```js
-  //{{c1::
   Vue.component("hello-world", {
     template: "#hello-world-template",
   });
-  //}}
   ```
-
++ 理解：{{c1:: 标签 }}
 ## 动画 [ ](vue_20200713065313204)
 
 ### 单元素/组件的过渡例子 [ ](vue_20200709073019546)
@@ -1475,7 +1473,6 @@ Vue.component("anchored-heading", {
 ### 使用渲染函数代替 `v-if` 和 `v-for` [ ](vue_20200717061051002)
 
 ```js
-  //{{c1::
   props: ['items'],
   render: function (createElement) {
     if (this.items.length) {
@@ -1486,9 +1483,8 @@ Vue.component("anchored-heading", {
       return createElement('p', 'No items found.')
     }
   }
-  //}}
 ```
-
++ 标签：{{c1:: 理解 }}
 
 
 ### vue 过滤器 [ ](vue_20200717061051004)
@@ -1676,8 +1672,8 @@ const router = new VueRouter({
   };
   ```
 
-### 动态路由匹配：传递参数给组件 [ ](vue_20200713065313225)
-
+### 动态路由匹配：路由导航中传递参数给组件 [ ](vue_20200713065313225)
++ 思路:{{c1:: 没有props时需要访问route对象获取参数，具有props时每个参数都需组件的props中定义。 }}
 1. 4 种路由匹配组件时传递参数的方式:
    ```js
     //{{c1::

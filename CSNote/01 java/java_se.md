@@ -875,11 +875,9 @@ MediaView mediaView = new MediaView(mediaPlayer);
 1. `Thread.currentThread()`:{{c1:: 总是返回当前正在执行的线程。 }}
 2. `getName()`:{{c1:: Thread类的实例方法，常用于继承 Thread 类的线程。 }}
 
-### 多线程：Callable 接口 VS Runnable 接口 [	](java_se_20200604111131325)
-
-+ {{c1:: call()更加强大。}}
-+ {{c1:: call()方法可以有返回值。}}
-+ {{c1:: call()方法可以声明抛出异常。}}
+### 多线程：`Callable`接口与`Runnable`接口区别 [	](java_se_20200604111131325)
+1. 返回值:{{c1:: `call()`方法可以有返回值。}}
+2. 异常:{{c1:: `call()`方法可以声明抛出异常。}}
 
 ### Future接口 [	](java_se_20200604111131326)
 
