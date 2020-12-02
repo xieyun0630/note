@@ -111,12 +111,12 @@
   | `admin`  | `a`     | {{c1:: 可以设置节点访问控制列表权限    }} |
 + 例：`setAcl /test2 ip:192.168.60.130:crwda`:{{c1:: 将节点权限设置为Ip:192.168.60.130的客户端可以对节点进行增、删、改、查、管理权限 }}
 
-### 授权的相关命令命令 [	](zookeeper_20201124103028963)
+### 授权的相关命令 [	](zookeeper_20201124103028963)
 | 权限    | ACL简写 | 描述         |
 | :------ | :------ | :----------- |
 | `getAcl`  | `getAcl path`  | {{c1:: 读取ACL权限 }} |
 | `setAcl`  | `setAcl path acl` | {{c1:: 设置ACL权限 }} |
-| `addauth` | `addauth scheme auth` | {{c1:: 添加认证用户}} |
+| `addauth` | `addauth digest <user>:<password> ` | {{c1:: 添加认证用户}} |
 
 ### acl权限控制案例： [	](zookeeper_20201124103028967)
 + world授权模式：{{c1:: `setAcl <path> world:anyone:<acl>` }}
@@ -152,9 +152,7 @@
 ## zookeeper JavaAPI [	](zookeeper_20201124103028973)
 
 ### JavaAPI:连接zookeeper [	](zookeeper_20201124103028976)
-
 ```Java
-//{{c1::
 // 计数器对象
 CountDownLatch countDownLatch=new CountDownLatch(1);
 // arg1:服务器的ip和端口
@@ -174,8 +172,8 @@ countDownLatch.await();
 // 会话编号
 System.out.println(zooKeeper.getSessionId());
 zooKeeper.close();
-//}}
 ```
++ 理解：{{c1:: 标签 }}
 
 ### JavaAPI:新增节点 [	](zookeeper_20201124103028978)
 
@@ -304,17 +302,17 @@ zooKeeper.close();
 
 ### JavaAPI:查看节点 [	](zookeeper_20201124103028983)
 + 查看节点
-  + 同步方式：{{c1:: `getData(String path, boolean b, Stat stat)` }}
-  + 异步方式：{{c1:: `getData(String path, boolean b，AsyncCallback.DataCallback callBack，Object ctx)` }}
+  + 同步方式： `getData(String path, boolean b, Stat stat)` 
+  + 异步方式： `getData(String path, boolean b，AsyncCallback.DataCallback callBack，Object ctx)` 
 + 查看子节点
-  + 同步方式: {{c1:: `getChildren(String path, boolean b)` }}
-  + 异步方式: {{c1:: `getChildren(String path, boolean b,AsyncCallback.ChildrenCallback callBack,Object ctx)` }}
+  + 同步方式:  `getChildren(String path, boolean b)` 
+  + 异步方式:  `getChildren(String path, boolean b,AsyncCallback.ChildrenCallback callBack,Object ctx)` 
 + 检查节点是否存在
-  + 同步方式: {{c1:: `exists(String path, boolean b)` }}
-  + 异步方式: {{c1:: `exists(String path, boolean b，AsyncCallback.StatCallback callBack,Object ctx)` }}
+  + 同步方式:  `exists(String path, boolean b)` 
+  + 异步方式:  `exists(String path, boolean b，AsyncCallback.StatCallback callBack,Object ctx)` 
 + 参数:
   + `b`:{{c1:: 是否使用连接对象中注册的监视器。 }}
-
++ 标签：{{c1:: 理解 }}
 
 
 ### watcher接口 [	](zookeeper_20201125093504164)
@@ -329,7 +327,7 @@ zooKeeper.close();
   1. `None`：{{c1:: 无 }}
   2. `NodeCreated`：{{c1:: Watcher监听的数据节点被创建时 }}
   3. `NodeDeleted`：{{c1:: Watcher监听的数据节点被删除时 }}
-  4. `NoNodeDataChangedne`：{{c1:: Watcher监听的数据节点内容发生变更时(无论内容数据是否变化) }}
+  4. `NodeDataChanged`：{{c1:: Watcher监听的数据节点内容发生变更时(无论内容数据是否变化) }}
   5. `NodeChildrenChanged`：{{c1:: Watcher监听的数据节点的子节点列表发生变更时 }}
 + 类结构图：{{c1:: ![](https://gitee.com/xieyun714/nodeimage/raw/master/img/20201124171834.png) }}
 

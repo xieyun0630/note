@@ -333,8 +333,8 @@ channel.basicConsume(Producer.FANOUT_QUEUE_1, true, consumer);
 
 + 作用：{{c1:: 在使用 RabbitMQ 的时候，作为消息发送方希望杜绝任何消息丢失或者投递失败场景。}}
 + 两种投递可靠性模式
-  + {{c1:: `confirm` 确认模式 }}
-  + {{c1:: `return` 退回模式 }}
+  + {{c1:: 消息从 `producer`到 `exchange`则会返回个 `confirmcallback` }}
+  + {{c1:: 消息从 `exchange`--> `queue`投递失败则会返回一个 `return Callback`}}
 + 图示：{{c1:: ![](https://gitee.com/xieyun714/nodeimage/raw/master/img/20201121144245.png) }}
 
 ###  消息的可靠投递：`confirm` 确认模式的使用 [	](rabbitMQ_20201124103028894)
@@ -396,7 +396,7 @@ channel.basicConsume(Producer.FANOUT_QUEUE_1, true, consumer);
 
 
 ### Consumer Ack [	](rabbitMQ_20201124103028901)
-+ 作用:ack指Acknowledge,确认收到。表示清费诺收到消息后的确认方式 。
++ 作用:ack指Acknowledge,确认收到。表示消费者收到消息后的确认方式 。
 + 三种确认方式：
   + 自动确认：{{c1:: `acknowledge=none` }}
     表示：一旦消息被Consumer接收到，则自动确认收到
@@ -441,7 +441,7 @@ channel.basicConsume(Producer.FANOUT_QUEUE_1, true, consumer);
 ### 消费端限流机制 [	](rabbitMQ_20201124103028905)
 + 作用：{{c1:: 确保消费端最大只能同时处理有限个消息 }}
 + 开启配置：
- 1. {{c1:: 确保ack机制为手动确认。{{c1::  }}
+ 1. {{c1:: 确保ack机制为手动确认。 }}
  2. {{c1:: 配置prefetch属性：perfetch = 1,表示消费端每次从mq拉去一条消息来消费，直到手动确认消费完毕后，才会继续拉去下一条消息。 }}
   ```xml
   <!-- {{c1:: -->
@@ -572,7 +572,7 @@ channel.basicConsume(Producer.FANOUT_QUEUE_1, true, consumer);
 + 启用插件：`rabbitmq-plugins enable rabbitmq_tracing`
 
 ### 消息可靠性/与幂等性保障--消息补偿/乐观锁 [	](rabbitMQ_20201124103028924)
-+ 图示:![](https://gitee.com/xieyun714/nodeimage/raw/master/img/20201122190625.png)
++ 图示:{{c1:: ![](https://gitee.com/xieyun714/nodeimage/raw/master/img/20201122190625.png) }}
 
 ## RabbitMQ集群搭建 [	](rabbitMQ_20201124103028926)
 
