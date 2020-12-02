@@ -175,65 +175,150 @@ graph TB
 
 ## 类图 [	](mermaid_20200927095114624)
 
-### mermaid class Diagram [	](mermaid_20200927095114626)
+### There are two ways to define a class:
 
-+ 示例
+- Explicitly defining a class using keyword **class** like {{c1:: `class Animal` }}. This defines the Animal class
+- Define two classes via a **relationship** between them{{c1:: `Vehicle <|-- Car`}}.. This defines two classes Vehicle and Car along with their relationship.
+
+示例：{{c::![](https://gitee.com/xieyun714/nodeimage/raw/master/img/20201128210410.png)}}
+
+
+
+### There are two ways to define the members of a class
+
+- Associate a member of a class using **:** (colon) followed by member name, useful to define one member at a time. For example:{{c1::` BankAccount : +String owner`}}
+
+- Associate members of a class using **{}** brackets, where members are grouped within curly brackets.  Suitable for defining multiple members at once. For example:
+
+  ```text
+  //{{c1::
+  class BankAccount{
+      +String owner
+      +BigDecimal balance
+      +deposit(amount) bool
+      +withdrawl(amount)
+  }
+  //}}
+  ```
+
+  + note: Optionally you can end the method/function definition with the data type that will be returned
+
+#### Generic Types
+
++ Members can be defined using generic types, such as `List`, for fields, parameters and return types by enclosing the type within `~` (**tilde**). 
+
++ for excample:
+
++  {{c1::![](https://gitee.com/xieyun714/nodeimage/raw/master/img/20201128212907.png)}}
+  ```
+  //{{c1::
+  classDiagram
+  class Square~Shape~{
+      int id
+      List~int~ position
+      setPoints(List~int~ points)
+      getPoints() List~int~
+  }
+  
+  Square : -List~string~ messages
+  Square : +setMessages(List~string~ messages)
+  Square : +getMessages() List~string~
+  //}}
+  ```
+
+### To specify the visibility of a class member:
++ Visibility modifier
+  - Public:{{c1:: `+` }}
+  - Private:{{c1:: `-` }}
+  - Protected:{{c1:: `#` }}
+  - Package/Internal:{{c1:: `~` }}
++ additional classifiers
+  - Abstract: {{c1:: `*` }} e.g.: `someAbstractMethod()*`
+  - Static: {{c1:: `$` }} e.g.: `someStaticMethod()$`
+
+
+### Defining Relationship between classes in mermaid
+
++ Inheritance : {{c1:: `classB1 --|> classA1 : Inheritance` }}
++ Composition : {{c1:: `classB2 --* classA2 : Composition` }}
++ Aggregation : {{c1:: `classB3 --o classA3 : Aggregation` }}
++ Association : {{c1:: `classB4 --> classA4 : Association` }}
++ Link (Solid) : {{c1:: `classB5 -- classA5 : Link(Solid)` }}
++ Dependency : {{c1:: `classB6 ..> classA6 : Dependency` }}
++ Realization : {{c1:: `classB7 ..|> classA7 : Realization` }}
++ Link (Dashed) : {{c1:: `classB8 .. classA8 : Link(Dashed)` }}
++ 效果：{{c1::
   ```mermaid
   classDiagram
-      Animal <|-- Duck
-      Animal <|-- Fish
-      Animal <|-- Zebra
-      Animal : +int age
-      Animal : +String gender
-      Animal: +isMammal()
-      Animal: +mate()
-      
-      class Animal{
-        +String beakColor
-        +swim()
-        +quack()
-      }
-      
-      class Duck{
-        +String beakColor
-        +swim()
-        +quack()
-      }
-      class Fish{
-        -int sizeInFeet
-        -canEat()
-      }
-      class Zebra{
-        +bool is_wild
-        +run()
-      }
+  classB1 --|> classA1 : Inheritance
+  classB2 --* classA2 : Composition
+  classB3 --o classA3 : Aggregation
+  classB4 --> classA4 : Association
+  classB5 -- classA5 : Link(Solid)
+  classB6 ..> classA6 : Dependency
+  classB7 ..|> classA7 : Realization
+  classB8 .. classA8 : Link(Dashed)
   ```
-+ 代码：{{c1::
-  ```text
+  }}
++ 聚合与组合的区别:
+  + 组合:{{c1::(Composition)"整体"拥有"部分"的生命 }}
+  + 聚合:{{c1::(Aggregation)"整体"有管理"部分"的特有的职责 }}
+
+
+### Cardinality / Multiplicity on relations
+
+- The different cardinality options are :
+  - 0..1` Zero or one
+  - `1` Only 1
+  - `0..1` Zero or One
+  - `1..*` One or more
+  - `*` Many
+  - `n` n {where n>1}
+  - `0..n` zero to n {where n>1}
+  - `1..n` one to n {where n>1}
++ 示例:![image-20201128222454380](https://gitee.com/xieyun714/nodeimage/raw/master/img/image-20201128222454380.png)
++ 对应代码:{{c1:: 
+  ```
   classDiagram
-      Animal <|-- Duck
-      Animal <|-- Fish
-      Animal <|-- Zebra
-      Animal : +int age
-      Animal : +String gender
-      Animal: +isMammal()
-      Animal: +mate()
-      class Duck{
-        +String beakColor
-        +swim()
-        +quack()
-      }
-      class Fish{
-        -int sizeInFeet
-        -canEat()
-      }
-      class Zebra{
-        +bool is_wild
-        +run()
-      }
+      Customer "1" --> "*" Ticket
+      Student "1" --> "1..*" Course
+      Galaxy --> "many" Star : Contains
   ```
   }}
 
+  
+
+### Annotations on classes and Comments
++ To annotate classes,there are two ways:
+  + In a separate line after a class is defined. For example:{{c1::
+    ```
+    classDiagram
+    class Shape
+    <<interface>> Shape
+    ```
+    }}
+  + In a nested structure along with class definition. For example:{{c1::
+    ```
+    classDiagram
+    class Shape{
+        <<interface>>
+        noOfVertices
+        draw()
+    }
+    ```
+    }}
++ Some common annotations examples could be:
+  + {{c1::`<<Interface>>` : To represent an Interface class }}
+  + {{c1::`<<abstract>>` : To represent an abstract class }}
+  + {{c1::`<<Service>>` : To represent a service class }}
+  + {{c1::`<<enumeration>>` : To represent an enum }}
++ Comments:{{c1：： Comments can be entered within a class diagram, which will be ignored by the parser.  Comments need to be on their own line, and must be prefaced with %% (double percent signs).  }}
+
+### Interaction in classDiagram
++ Meaning:{{c1:: It is possible to bind a click event to a node, the click can lead to either a javascript callback or to a link which will be opened in a new browser tab. }}
++ samples:
+   1. callback:{{c1:: `callback Shape "callbackFunction" "This is a tooltip for a callback"` }}
+   2. link:{{c1:: `link Shape "http://www.github.com" "This is a tooltip for a link"` }}
 ## 状态图 [	](mermaid_20200927095114628)
 
 ### mermaid State Diagram [	](mermaid_20200927095114630)
