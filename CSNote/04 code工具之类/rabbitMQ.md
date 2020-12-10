@@ -254,15 +254,19 @@ channel.basicConsume(Producer.FANOUT_QUEUE_1, true, consumer);
 + 理解：{{c1:: 标签 }}
 
 ### spring配置RabbitMQ消费者 [	](rabbitMQ_20201124103028886)
++ 思路：{{c1:: 实现监听器接口，注册为Bean,传递给rabbit监听器容器 }}
 + 核心配置：
   ```xml
+  <!-- {{c1:: -->
     <bean id="springQueueListener" class="top.xieyun.rabbitmq.listener.SpringQueueListener"/>
     <rabbit:listener-container connection-factory="connectionFactory" auto-declare="true">
       <rabbit:listener ref="springQueueListener" queue-names="spring_queue"/>
     </rabbit:listener-container>
+  <!-- }} -->
   ```
 + 监听器实现:
   ```java
+  //{{c1::
   public class SpringQueueListener implements MessageListener {
     @Override
     public void onMessage(Message message) {
@@ -270,6 +274,7 @@ channel.basicConsume(Producer.FANOUT_QUEUE_1, true, consumer);
       System.out.println(new String(message.getBody()));
     }
   }
+  //}}
   ```
 + 理解：{{c1:: 标签 }}
 
