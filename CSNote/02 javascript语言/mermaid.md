@@ -260,10 +260,6 @@ graph TB
   classB8 .. classA8 : Link(Dashed)
   ```
   }}
-+ 聚合与组合的区别:
-  + 组合:{{c1::(Composition)"整体"拥有"部分"的生命 }}
-  + 聚合:{{c1::(Aggregation)"整体"有管理"部分"的特有的职责 }}
-
 
 ### Cardinality / Multiplicity on relations [	](mermaid_20201202040742301)
 
