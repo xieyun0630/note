@@ -308,7 +308,7 @@ graph TB
   + {{c1::`<<abstract>>` : To represent an abstract class }}
   + {{c1::`<<Service>>` : To represent a service class }}
   + {{c1::`<<enumeration>>` : To represent an enum }}
-+ Comments:{{c1：： Comments can be entered within a class diagram, which will be ignored by the parser.  Comments need to be on their own line, and must be prefaced with %% (double percent signs).  }}
++ Comments:{{c1:: Comments can be entered within a class diagram, which will be ignored by the parser.  Comments need to be on their own line, and must be prefaced with %% (double percent signs).  }}
 
 ### Interaction in classDiagram [	](mermaid_20201202040742305)
 + Meaning:{{c1:: It is possible to bind a click event to a node, the click can lead to either a javascript callback or to a link which will be opened in a new browser tab. }}

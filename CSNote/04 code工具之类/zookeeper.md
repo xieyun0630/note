@@ -373,17 +373,12 @@ zooKeeper.close();
   ```Java
      //获取锁
     public void acquireLock() throws Exception {
-      //{{c1::
-        //创建锁节点
         createLock();
-        //尝试获取锁
         attemptLock();
-      //}}
     }
 
     //创建锁节点
     private void createLock() throws Exception {
-      //{{c1::
         //判断Locks是否存在，不存在创建
         Stat stat = zooKeeper.exists(LOCK_ROOT_PATH, false);
         if (stat == null) {
@@ -392,12 +387,10 @@ zooKeeper.close();
         // 创建临时有序节点
         lockPath = zooKeeper.create(LOCK_ROOT_PATH + "/" + LOCK_NODE_NAME, new byte[0], ZooDefs.Ids.OPEN_ACL_UNSAFE, CreateMode.EPHEMERAL_SEQUENTIAL);
         System.out.println("节点创建成功:" + lockPath);
-      //}}
     }
 
     //监视器对象，监视上一个节点是否被删除
     Watcher watcher = new Watcher() {
-      //{{c1::
         @Override
         public void process(WatchedEvent event) {
             if (event.getType() == Event.EventType.NodeDeleted) {
@@ -406,12 +399,10 @@ zooKeeper.close();
                 }
             }
         }
-      //}}
     };
 
     //尝试获取锁
     private void attemptLock() throws Exception {
-      //{{c1::
         // 获取Locks节点下的所有子节点
         List<String> list = zooKeeper.getChildren(LOCK_ROOT_PATH, false);
         // 对子节点进行排序
@@ -434,17 +425,14 @@ zooKeeper.close();
                 attemptLock();
             }
         }
-      //}}
     }
 
     //释放锁
     public void releaseLock() throws Exception {
-      //{{c1::
             //删除临时有序节点
             zooKeeper.delete(this.lockPath,-1);
             zooKeeper.close();
             System.out.println("锁已经释放:"+this.lockPath);
-      //}}
     }
   ```
 ## zookeeper集群 [	](zookeeper_20201126080456391)

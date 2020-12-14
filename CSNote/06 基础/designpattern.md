@@ -83,11 +83,12 @@
 ### 观察者模式的定义与结构 [  ](designpattern_20201202040742369) 
 + 定义:{{c1:: 观察者模式定义了对象之间的一对多依赖，这样一来，当一个对象改变状态时，它的所有依赖者都会收到通知并自动更新。 }}
 + 结构图：{{c1:: ![](https://gitee.com/xieyun714/nodeimage/raw/master/img/20201129003828.png) }}
++ 正式版:{{c1:: ![](https://gitee.com/xieyun714/nodeimage/raw/master/img/20201203164626.png) }}
 + 气象站实例：{{c1:: ![](https://gitee.com/xieyun714/nodeimage/raw/master/img/20201129003910.png)}}
 
 ### java.util.Observable的setChanged()方法作用？  [  ](designpattern_20201202040742371) 
 
-+ 解释: {{c1:: 如果没有setChanged()方法，我们的气象站测量是如此敏锐， 以致于温度计读数每十分之一度就 会更新，这会造成WeatherData对象持续不断地通知观察者，我们并不希望看到这样的事情发生。 }}
++ 解释: {{c1:: 如果没有setChanged()方法，我们的气象站测量是如此敏锐，以致于温度计读数每十分之一度就会更新，这会造成WeatherData对象持续不断地通知观察者，我们并不希望看到这样的事情发生。 }}
 + `clearChanged()`方法:{{c1:: 将changed状态设置回false。 }}
 + `hasChanged()`方法:{{c1:: 告诉你changed标志的当前状态。 }}
 
@@ -196,8 +197,8 @@ public class SimpleFactory {
 + ![](https://gitee.com/xieyun714/nodeimage/raw/master/img/20201203013548.png)
 + 要求：你不希望在添加新产品或新风格时修改已有代码。
 + 解决方案：{{c1:: ![](https://gitee.com/xieyun714/nodeimage/raw/master/img/20201203013645.png)}}
-### 抽象工厂模式：定义与结构： [  ](designpattern_20201203022249320) 
-+ 定义：抽象工厂模式提供一个接口，用于创建相关或相互依赖对象的家族，而不需要明确指定具体类。
+### 抽象工厂模式：定义与结构 [	](designpattern_20201203022249320)
++ 定义：{{c1:: 抽象工厂模式提供一个接口，用于创建相关或相互依赖对象的家族，而不需要明确指定具体类。 }}
 + 结构：{{c1:: ![](https://gitee.com/xieyun714/nodeimage/raw/master/img/20201203013705.png) }}
 
 ### 抽象工厂模式：具体示例（理解） [  ](designpattern_20201203022249324) 

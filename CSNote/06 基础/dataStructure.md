@@ -455,12 +455,21 @@ typedef struct DNode{
     //}}
   ```
 + 循环队列实现思路：{{c1:: 用模运算（取余）将存储空间在逻辑上变为"环状 }}
-  
-  + 例：{{c1:: `Q.rear=(Q.rear+1)%MaxSize` }}
-+ 循环队列确定**判空判满**的方法:
-  1. {{c1:: 牺牲一个存储单元 }}
-  2. {{c1:: 增加`size`变量记录队列长度 }}
-  3. {{c1:: 增加`tag=0/1`用于标记 }}
+  + 队尾指针公式：{{c1:: `Q.rear=(Q.rear+1)%MaxSize` }}
+  + 队头指针公式：{{c1:: `Q.front=(Q.front+1)%MaxSize` }}
+
+### 循环队列确定判空判满的方法: [	](dataStructure_20201203041420407)
+
+  1. 牺牲一个存储单元判满：
+     1. 判满：{{c1:: `(Q.rear+1)%MaxSize==Q.front`  }}
+     2. 判空：{{c1:: `Q.rear==Q.front` }}
+     3. 注意：{{c1:: 两个指针都指向一个位置代表队列为**空** }}
+  2. 增加`size`变量记录队列长度
+     1. 判满：{{c1:: `rear = front = 0 and size = MaxSize`  }}
+     2. 判空：{{c1:: `rear = front = 0 and size = 0` }}
+  3. 增加`tag=0/1`用于表示删除/插入
+     1. 判满：{{c1:: `rear = front = 0 and tag = 1` }}
+     2. 判空：{{c1:: `rear = front = 0 and tag = 0` }}
 
 ### 队列的链式存储定义 [	](dataStructure_20201115082829774)
 + 链式存储定义：
@@ -493,8 +502,9 @@ typedef struct DNode{
 ### KMP算法总结 [	](dataStructure_20201202040742344)
 + 朴素模式匹配算法的缺点：{{c1:: 若模式串长度为m，主串长度为h，则直到匹配成功/匹配失败最多需要`（n-m+1)*m`次比较,最坏时间复杂度：`O(nm)` }}
 + KMP算法：{{c1:: 当子串和模式串不匹配时，主串指针 i 不回溯，模式串指针`j=next[j]`算法平均时间复杂度：`O(n+m)` }}
-+ next数组手算方法：{{c1:: 当第j个字符匹配失败，由前 `1~j-1` 个字符组成的串记为`S`，则：**`next[j]=S`的最长相等前后缀长度+1**,特别地，`next[1]=0` }}
++ next数组手算方法：{{c1:: 当第j个字符匹配失败，由前 `1~j-1` 个字符组成的串记为`S`，则：**next[j] = S的最长相等前后缀长度+1**,特别地，`next[1]=0` }}
 + nextval数组的求法：{{c1:: ![](https://gitee.com/xieyun714/nodeimage/raw/master/img/chrome_NJPCOTCu68.png) }}
-
+  + nextval的作用示意图：{{c1:: ![image-20201203162535480](https://gitee.com/xieyun714/nodeimage/raw/master/img/image-20201203162535480.png)}}
 
 ### test [	](dataStructure_20201202040742346)
+
