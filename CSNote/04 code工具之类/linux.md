@@ -218,7 +218,7 @@
   + 软连接大小：{{c1:: 源文件+路径 的总字节数 }}
   + 目录:{{c1:: 目录可以创建软链接 }}
 + 示例：{{c1:: `ln -s /home/a.txt a.test ` }}
-+ 注意：{{不带选项的`ln`是硬链接}}
++ 注意：{{c1::不带选项的`ln`是硬链接}}
 ### linux硬链接 [	](linux_20201124103028791)
 
 + 示例：{{c1:: ` ln hello.c hello.hard ` }}
@@ -286,8 +286,8 @@
 
 ### `gzip/gunzip`指令 [	](linux_20201214030809289)
 + 注意：当我们使用gzip对文件进行压缩/解压后，不会保留原来的文件。
-+ 案例1:gzip压缩，将/home下的hello.txt文件进行压缩:![](https://gitee.com/xieyun714/nodeimage/raw/master/img/20201212201859.png)
-+ 案例2:gunzip压缩，将/home下的hello.txt.gz文件进行解压缩:![](https://gitee.com/xieyun714/nodeimage/raw/master/img/20201212201932.png)
++ 案例1:gzip压缩，将/home下的hello.txt文件进行压缩:{{c1:: ![](https://gitee.com/xieyun714/nodeimage/raw/master/img/20201212201859.png) }}
++ 案例2:gunzip压缩，将/home下的hello.txt.gz文件进行解压缩:{{c1:: ![](https://gitee.com/xieyun714/nodeimage/raw/master/img/20201212201932.png) }}
 
 ### `zip/unzip`指令 [	](linux_20201214030809291)
 + 案例1:将/home下的所有文件进行压缩成mypackage.zip：{{c1:: ![](https://gitee.com/xieyun714/nodeimage/raw/master/img/20201212202349.png) }}
@@ -316,13 +316,13 @@
 ### Linux系统运行级别 [	](linux_20201214030809300)
 
 + 示意图：![](https://gitee.com/xieyun714/nodeimage/raw/master/img/20201212174734.png)
-+ 回答：![](https://gitee.com/xieyun714/nodeimage/raw/master/img/20201212174631.png)
++ 回答：{{c1:: ![](https://gitee.com/xieyun714/nodeimage/raw/master/img/20201212174631.png) }}
 + 查看或者修改默认级别： {{c1:: `vi /etc/inittab` }}
 
 ### 切换到指定运行级别的指令 [	](linux_20201214030809303)
 
-+ 语法：`init [012356]`
-  + 例：`init 3`
++ 语法：{{c1:: `init [012356]` }}
+  + 例：{{c1:: `init 3` }}
 + 如何找回root密码：{{c1:: 开机时进入到单用户模式，使用 passwd 指令来修改 root 密码。 }}
 
 ## 文件权限、用户、用户组 [	](linux_20201124103028798)
@@ -493,16 +493,16 @@
 ## 网络配置 [	](linux_20201214030809325)
 ### 配置linux系统的IP地址 [	](linux_20201214030809327)
 + 临时配置
-  + 查看网络IP：`ifconfig`
-  + 配置临时网络：`ifconfig eth0 192.168.1.12`
+  + 查看网络IP：{{c1:: `ifconfig` }}
+  + 配置临时网络：{{c1:: `ifconfig eth0 192.168.1.12` }}
 + 固定配置：
-  + 配置文件地址：`/etc/sysconfig/network-scripts/ifcfg-eth0`
+  + 配置文件地址：{{c1:: `/etc/sysconfig/network-scripts/ifcfg-eth0` }}
   + 修改配置文件以下项目：
     + `BOOTPROTO`:{{c1:: `BOOTPROTO=static` }}
     + `IPADDR`:{{c1:: `IPADDR=192.168.184.130` IP地址 }}
     + `GATEWAY`:{{c1:: `GATEWAY=192.168.184.2` 网关 }}
     + `DNS1`:{{c1:: `DNS1=192.168.184.2 ` 域名解析器 }}
-  + 重启网络服务:`service network restart`
+  + 重启网络服务:{{c1:: `service network restart` }}
 
 ## 进程管理 [	](linux_20201214030809329)
 
@@ -579,8 +579,8 @@
 ### chkconfig命令 [	](linux_20201214030809345)
 + 作用：{{c1:: chkconfig命令主要用来更新（启动或停止）和查询系统服务的运行级信息。 }}
 + 语法：
-  + `chkconfig [--add][--del][--list][系统服务]`
-  + `chkconfig [--level <等级代号>][系统服务][on/off/reset]`
+  + {{c1:: `chkconfig [--add][--del][--list][系统服务]` }}
+  + {{c1:: `chkconfig [--level <等级代号>][系统服务][on/off/reset]` }}
 + 选项：
   + `--add`:{{c1::增加所指定的系统服务，让chkconfig指令得以管理它，并同时在系统启动的叙述文件内增加相关数据。
   + `--del`:{{c1::删除所指定的系统服务，不再由chkconfig指令管理，并同时在系统启动的叙述文件内删除相关数据。
@@ -588,7 +588,7 @@
   + `--list`:{{c1:: 查看服务列表 }}
 
 ### top命令 [	](linux_20201214030809347)
-+ 作用：与ps命令相似，不过top是动态监控进程信息的。
++ 作用：{{c1:: 与ps命令相似，不过top是动态监控进程信息的。 }}
 + 语法：`top [选项]`
   + `-d 秒数`:{{c1:: 指定top命令每隔几秒更新。默认是3秒在top命令的交互模式当中可以执行的}}
 + 命令：
@@ -717,14 +717,19 @@
 + 查询yum服务器是否有需要安装的软件: {{c1:: `yum list|grep jdk` }}
 + 安装指定的yum包: {{c1:: `yum install jdk` }}
 
+
+## 远程登录与复制文件
+
+
+
 ## shell脚本 [	](linux_20201214030809366)
 
-### `Shell`概述 [	](linux_20201214030809368)
+### Shell概述 [	](linux_20201214030809368)
 
 + 是什么:{{c1:: `Shell`是一个命令行解释器，它为用户提供了一个向Linux内核发送请求以便运行程序的界面系统级程序，用户可以用Shell来启动、挂起、停止甚至是编写一些程序。 }}
 + `shell`脚本格式要求:
-  1) 开头:{{c1:: 脚本以`#!/bin/bash`开头 }}
-  2) 权限:{{c1:: 脚本需要有可执行权限 }}
+  +  开头:{{c1:: 脚本以`#!/bin/bash`开头 }}
+  +  权限:{{c1:: 脚本需要有可执行权限 }}
 + `shell`脚本的执行方式:
   + 直接执行（需要x权限)：{{c1:: `./helloworld.sh` }}
   + sh解释(不推荐）：{{c1:: `sh helloworld.sh` }}
@@ -802,7 +807,7 @@
 + 案例3：/root/shell/aaa.txt 目录中的文件是否存在
 + 判断语句：{{c1:: `if [ -e /root/shell/aaa.txt ]` }}
 
-### 流程控制语句 [	](linux_20201214030809387)
+### Shell流程控制语句 [	](linux_20201214030809387)
 + if判断案例：请编写一个shel程序，如果输入的参数，大于等于60,则输出"及格了",如果小于60则输出"不及格”：
   + 图示：{{c1:: ![](https://gitee.com/xieyun714/nodeimage/raw/master/img/20201214024253.png) }}
 + case语句案例：当命令行参数是1时，输出"周一",是2时，就输出”周二",其它情况输出" other

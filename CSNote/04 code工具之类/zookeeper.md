@@ -133,7 +133,6 @@
     + {{c1:: `setAcl /node3 auth:itcast:cdrwa` }}
 + Digest授权模式：{{c1:: `setAcl <path> digest:<user>:<password>:<acl>` }}
   + 这里的密码是经过SHA1及BASE64处理的密文，在SHELL中可以通过以下命令计算：
-  + `echo -n <user>:<password> | openssl dgst -binary -sha1 | openssl base64`
   + 例：
     1. {{c1:: `setAcl /node4 digest:itheima:qlzQzCLKhBROghkooLvb+Mlwv4A=:cdrwa`:使用密文授权 }}
     2. {{c1:: `addauth digest itheima:123456 `:使用明文登录 }}
@@ -364,13 +363,16 @@ zooKeeper.close();
 
 ### 分布式锁 [	](zookeeper_20201125093504181)
 + 设计思路：
-  1. {{c1:: 每个客户端往`/Locks`下创建临时有序节点`/Locks/Lock_`,创建成功后`/Locks`下面会有每个客户端对应的节点，如`/Locks/Lock_000000001` }}
-  2. {{c1:: 客户端取得`/Locks`下子节点，并进行排序，判断排在最前面的是否为自己，如果自己的锁节点在第一位，代表获取锁成功 }}
-  3. {{c1:: 如果自己的锁节点不在第一位，则监听自己前一位的锁节点。例如，自己锁节点`Lock_000000002`,那么则监听`Lock000000001` }}
-  4. {{c1:: 当前一位锁节点（`Lock_000000001`)对应的客户端执行完成，释放了锁，将会触发监听客户端（`Lock_000000002`)的逻辑 }}
-  5. {{c1:: 监听客户端重新执行第2步逻辑，判断自己是否获得了锁 }}
+  1. 每个客户端往`/Locks`下创建临时有序节点`/Locks/Lock_`,创建成功后`/Locks`下面会有每个客户端对应的节点，如`/Locks/Lock_000000001`
+  2. 客户端取得`/Locks`下子节点，并进行排序，判断排在最前面的是否为自己，如果自己的锁节点在第一位，代表获取锁成功
+  3. 如果自己的锁节点不在第一位，则监听自己前一位的锁节点。例如，自己锁节点`Lock_000000002`,那么则监听`Lock000000001`
+  4. 当前一位锁节点（`Lock_000000001`)对应的客户端执行完成，释放了锁，将会触发监听客户端（`Lock_000000002`)的逻辑
+  5. 监听客户端重新执行第2步逻辑，判断自己是否获得了锁
 + 主要代码：
   ```Java
+      //ZooKeeper配置信息
+    private static final String LOCK_ROOT_PATH = "/Locks";
+    private static final String LOCK_NODE_NAME = "Lock_";
      //获取锁
     public void acquireLock() throws Exception {
         createLock();
@@ -605,9 +607,9 @@ ZooKeeper("192.168.60.130:2181,192.168.60.130:2182,192.168.60.130:2183",
 ```
 
 ### curator的session重连策略 [	](zookeeper_20201127124859784)
-+ 3秒后重连一次，只重连1次:`RetryPolicy retryPolicy = new RetryOneTime(3000);`
-+ 每3秒重连一次，重连3次:`RetryPolicy retryPolicy = new RetryNTimes(3,3000);`
-+ 每3秒重连一次，总等待时间超过10秒后停止重连:`RetryPolicy retryPolicy=new RetryUntilElapsed(10000,3000);`
++ 3秒后重连一次，只重连1次:{{c1:: `RetryPolicy retryPolicy = new RetryOneTime(3000);` }}
++ 每3秒重连一次，重连3次:{{c1:: `RetryPolicy retryPolicy = new RetryNTimes(3,3000);` }}
++ 每3秒重连一次，总等待时间超过10秒后停止重连:{{c1:: `RetryPolicy retryPolicy=new RetryUntilElapsed(10000,3000);` }}
 
 ### curator新增zookeeper节点 [	](zookeeper_20201127124859785)
 + 新增节点:

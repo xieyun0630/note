@@ -96,6 +96,7 @@ connection.close();
 + **消息丢失**：{{c1:: **Exchange（交换机）只负责转发消息，不具备存储消息的能力**，因此如果没有任何队列与Exchange绑定，或者没有符合路由规则的队列，那么消息会丢失！ }}
 
 ### Publish/Subscribe模式：生产者/消费者 [	](rabbitMQ_20201124103028869)
++ 主要思路：{{c1:: `channel`中定义了各个`MQ`内部对象后，使用`channel.basicPublish/basicConsume`发送与消费消息。 }}
 + 核心代码示例：
 ```java
 channel.exchangeDeclare(FANOUT_EXCHAGE, BuiltinExchangeType.FANOUT);
