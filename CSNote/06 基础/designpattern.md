@@ -1,6 +1,6 @@
-## UML [  ](designpattern_20201209125527586) 
+## UML [  ](designpattern_20201209125527586)
 
-### 类图的6大关系 [  ](designpattern_20201209125527589) 
+### 类图的6大关系 [  ](designpattern_20201209125527589)
 
 1. 依赖关系:{{c1::  (Dependency)**类中用到了对方**，那么他们之间就存在依赖关系。 }}
 2. 泛化关系:{{c1:: (Generalization) 实际上就是继承关系，他是**依赖关系的特例** }}
@@ -15,9 +15,9 @@
 
 + 总结：{{c1:: 6大关系实际上都是依赖，只是具体细分了另外5种 }}
 
-## 设计原则
+## 设计原则 [ ](designpattern_20201224091851209)
 
-### 设计模式的作用 [  ](designpattern_20200629095419184) 
+### 设计模式的作用 [  ](designpattern_20200629095419184)
 
 - 代码重用性:{{c1::  (即：相同功能的代码，不用多次编写)  }}
 - 可读性 :{{c1:: (即：编程规范性, 便于其他程序员的阅读和理解) }}
@@ -25,7 +25,7 @@
 - 可靠性 :{{c1:: (即：当我们增加新的功能后，对原来的功能没有影响) }}
 - 使程序呈现{{c1:: 高内聚，低耦合 }}的特性 
 
-### S.O.L.I.D原则
+### S.O.L.I.D原则 [ ](designpattern_20201224091851215)
 
 | 简写 |                全拼                 |   中文翻译   |
 | :--: | :---------------------------------: | :----------: |
@@ -35,11 +35,11 @@
 | ISP  | {{c1:: `The Interface Segregation Principle`}} | {{c1:: `接口分离原则`}} |
 | DIP  | {{c1:: `The Dependency Inversion Principle`}}  | {{c1:: `依赖倒置原则`}} |
 
-### 单一责任原则
+### 单一责任原则 [ ](designpattern_20201224091851219)
 
 > **intent**: {{c1:: 修改一个类的原因应该只有一个。 换句话说就是让一个类只负责一件事，当这个类需要做过多事情的时候，就需要分解这个类。}}
 
-### 开放封闭原则
+### 开放封闭原则 [ ](designpattern_20201224091851222)
 
 > **intent**: {{c1:: 类应该对扩展开放，对修改关闭。 }}
 
@@ -47,21 +47,21 @@
 
 + 相应模式：{{c1:: 符合开闭原则最典型的设计模式是装饰者模式，它可以动态地将责任附加到对象上，而不用去修改类的代码。 }}
 
-### 里氏替换原则
+### 里氏替换原则 [ ](designpattern_20201224091851225)
 
 > **intent**: {{c1:: 子类对象必须能够替换掉所有父类对象。 }}
 
 + `IS-A`:{{c1:: 继承是一种 IS-A 关系，子类需要能够当成父类来使用，并且需要比父类更特殊。 }}
 
 
-### 接口分离原则
+### 接口分离原则 [ ](designpattern_20201224091851229)
 
 > **intent**: {{c1:: 不应该强迫客户依赖于它们不用的方法。因此使用多个专门的接口比使用单一的总接口要好。 }}
 
 + 反例图：{{c1:: ![image-20200629211404990](https://gitee.com/xieyun714/nodeimage/raw/master/img/image-20200629211404990.png) }}
 + 改进后接口隔离原则例图：{{c1::![image-20200629210906436](https://gitee.com/xieyun714/nodeimage/raw/master/img/image-20200629210906436.png)}}
 
-### 依赖倒置原则
+### 依赖倒置原则 [ ](designpattern_20201224091851231)
 
 > **intent**: {{c1:: 高层模块不应该依赖于低层模块，二者都应该依赖于抽象；抽象不应该依赖于细节，细节应该依赖于抽象。 }}
 
@@ -74,7 +74,7 @@
   + 反例图：{{c1:: ![image-20200629212530571](https://gitee.com/xieyun714/nodeimage/raw/master/img/image-20200629212530571.png)}}
   + 改进后依赖倒转原则图：{{c1:: ![image-20200629212538616](https://gitee.com/xieyun714/nodeimage/raw/master/img/image-20200629212538616.png)}}
 
-### S.O.L.I.D原则外，常见其他原则
+### S.O.L.I.D原则外，常见其他原则 [ ](designpattern_20201224091851234)
 
 | 简写 |               全拼                | 中文翻译     |
 | :--: | :-------------------------------: | :----------- |
@@ -84,7 +84,7 @@
 | SAP  | {{c1:: `The Stable Abstractions Principle`}} | {{c1:: `稳定抽象原则` }} |
 | SDP  | {{c1:: `The Stable Dependencies Principle`}} | {{c1:: `稳定依赖原则` }} |
 
-###  迪米特法则
+###  迪米特法则 [ ](designpattern_20201224091851237)
 
 + **intent**:{{c1:: 迪米特法则又叫作最少知识原则（Least Knowledge Principle，简写 LKP），就是说一个对象应当对其他对象有尽可能少的了解，不和陌生人说话。 }}
 + 在对象的方法内，只应该调用以下范围的方法
@@ -96,76 +96,76 @@
 + 应用例子：{{c1:: ![](https://gitee.com/xieyun714/nodeimage/raw/master/img/image-20201210001408498.png) }}
 + 别称：{{c1:: 迪米特法则（Law of Demeter） }}
 
-### 合成复用原则
+### 合成复用原则 [ ](designpattern_20201224091851239)
 
 - **intent**:{{c1:: 尽量使用对象组合，而不是通过继承来达到复用的目的。 }}
 
 
-### 共同封闭原则
+### 共同封闭原则 [ ](designpattern_20201224091851242)
 
 - **intent**:{{c1:: 一起修改的类，应该组合在一起（同一个包里）。如果必须修改应用程序里的代码，我们希望所有的修改都发生在一个包里（修改关闭），而不是遍布在很多包里。}}
 
-### 稳定抽象原则
+### 稳定抽象原则 [ ](designpattern_20201224091851244)
 
 - **intent**:{{c1:: 最稳定的包应该是最抽象的包，不稳定的包应该是具体的包，即包的抽象程度跟它的稳定性成正比。}}
 
-### 稳定依赖原则
+### 稳定依赖原则 [ ](designpattern_20201224091851247)
 
 - **intent**:{{c1:: 包之间的依赖关系都应该是稳定方向依赖的，包要依赖的包要比自己更具有稳定性。 }}
 
-# 模式
+# 模式 [ ](designpattern_20201224091851250)
 
-## 策略模式 [  ](designpattern_20201202040742359) 
+## 策略模式 [  ](designpattern_20201202040742359)
 
-### 策略设计模式的定义与结构 [  ](designpattern_20201202040742361) 
+### 策略设计模式的定义与结构 [  ](designpattern_20201202040742361)
 
 + 策略模式的定义：{{c1:: 定义一系列的算法,把它们一个个封装起来, 并且使它们可相互替换。 }}
 + 结构图：{{c1:: ![策略设计模式的结构](https://gitee.com/xieyun714/nodeimage/raw/master/img/structure.png) }}
 + Duck实例设计:{{c1::  ![M9qmQrgLOV](https://gitee.com/xieyun714/nodeimage/raw/master/img/M9qmQrgLOV.jpg)}}
 
 
-### 策略模式练习题 [  ](designpattern_20201202040742364) 
+### 策略模式练习题 [  ](designpattern_20201202040742364)
 
 + 要求：将下面动作冒险游戏中的类，根据策略模式组织起来，游戏角色的类和角色可以使用的武器行为的类。毎个角色一次只能使用一种武器
   但是可以在游戏的过程中换武器。
 + 习题：![](https://gitee.com/xieyun714/nodeimage/raw/master/img/20201128235318.png)
 + 答案：{{c1:: ![](https://gitee.com/xieyun714/nodeimage/raw/master/img/20201128235348.png) }}
 
-## 观察者模式 [  ](designpattern_20201202040742366) 
+## 观察者模式 [  ](designpattern_20201202040742366)
 
-### 观察者模式的定义与结构 [  ](designpattern_20201202040742369) 
+### 观察者模式的定义与结构 [  ](designpattern_20201202040742369)
 
 + 定义:{{c1:: 观察者模式定义了对象之间的一对多依赖，这样一来，当一个对象改变状态时，它的所有依赖者都会收到通知并自动更新。 }}
 + 结构图：{{c1:: ![](https://gitee.com/xieyun714/nodeimage/raw/master/img/20201129003828.png) }}
 + 正式版:{{c1:: ![](https://gitee.com/xieyun714/nodeimage/raw/master/img/20201203164626.png) }}
 + 气象站实例：{{c1:: ![](https://gitee.com/xieyun714/nodeimage/raw/master/img/20201129003910.png)}}
 
-### java.util.Observable的setChanged()方法作用？  [  ](designpattern_20201202040742371) 
+### java.util.Observable的setChanged()方法作用？  [  ](designpattern_20201202040742371)
 
 + 解释: {{c1:: 如果没有setChanged()方法，我们的气象站测量是如此敏锐，以致于温度计读数每十分之一度就会更新，这会造成WeatherData对象持续不断地通知观察者，我们并不希望看到这样的事情发生。 }}
 + `clearChanged()`方法:{{c1:: 将changed状态设置回false。 }}
 + `hasChanged()`方法:{{c1:: 告诉你changed标志的当前状态。 }}
 
-### java.util.Observable的缺陷 [  ](designpattern_20201202040742375) 
+### java.util.Observable的缺陷 [  ](designpattern_20201202040742375)
 
 - 是一个类:{{c1:: Observable是一个类:不是接口, 违反了面向接口编程原则,且java也没有多继承. }}
 - 具有`protected`方法:{{c1:: Observable将关键的方法保护`protected`起来:会导致只有子类能使用 }}
 
-## 装饰者模式 [  ](designpattern_20201203022249293) 
+## 装饰者模式 [  ](designpattern_20201203022249293)
 
-### 装饰模式:UML结构图 [  ](designpattern_20201203022249295) 
+### 装饰模式:UML结构图 [  ](designpattern_20201203022249295)
 + 定义：{{c1:: 通过将对象放入包含行为的特殊封装对象,动态地给一个对象添加一些额外的职责 }}
 + 严格版本:{{c1:: ![](https://gitee.com/xieyun714/nodeimage/raw/master/img/20201202215634.png) }}
 + first head版本：{{c1:: ![](https://gitee.com/xieyun714/nodeimage/raw/master/img/20201202215348.png) }}
 
-### 装饰模式:加密和压缩装饰的示例 [  ](designpattern_20201203022249297) 
+### 装饰模式:加密和压缩装饰的示例 [  ](designpattern_20201203022249297)
 
 + 程序使用一对装饰来封装数据源对象。 这两个封装器都改变了从磁盘读写数据的方式：
   + 当数据即将被**写入磁盘**前， 装饰对数据进行加密和压缩。 在原始类对改变毫无察觉的情况下， 将加密后的受保护数据写入文件。
   + 当数据刚从**磁盘读出**后， 同样通过装饰对数据进行解压和解密。 装饰和数据源类实现同一接口， 从而能在客户端代码中相互替换。
 + UML结构：{{c1:: ![](https://gitee.com/xieyun714/nodeimage/raw/master/img/20201202220046.png) }}
 
-### java.io中的装饰者模式 [  ](designpattern_20201203022249299) 
+### java.io中的装饰者模式 [  ](designpattern_20201203022249299)
 
 + 图示：![](https://gitee.com/xieyun714/nodeimage/raw/master/img/20201203021457.png)
 
@@ -192,7 +192,7 @@
    //}}
   ```
 
-### 装饰模式优缺点 [  ](designpattern_20201203022249302) 
+### 装饰模式优缺点 [  ](designpattern_20201203022249302)
 
 + 优点：
   + **无需新子类**：{{c1:: 无需创建新子类即可扩展对象的行为。 }}
@@ -204,9 +204,9 @@
   + **栈顺序影响**:{{c1:: 实现行为不受装饰栈顺序影响的装饰比较困难。 }}
   + **初始化配置**:{{c1:: 各层的初始化配置代码看上去可能会很糟糕。 }}
 
-## 工厂模式 [  ](designpattern_20201209125527591) 
+## 工厂模式 [  ](designpattern_20201209125527591)
 
-### 简单工厂模式 [  ](designpattern_20201209125527593) 
+### 简单工厂模式 [  ](designpattern_20201209125527593)
 
 + 结构：![image-20201208234527736](https://gitee.com/xieyun714/nodeimage/raw/master/img/image-20201208234527736.png)
 + 示例：
@@ -239,20 +239,20 @@ public class SimpleFactory {
 
 
 
-### 工厂方法模式定义与结构： [  ](designpattern_20201203022249306) 
+### 工厂方法模式定义与结构： [  ](designpattern_20201203022249306)
 
 + 定义：{{c1:: 工厂方法模式是一种创建型设计模式，其在父类中提供一个创建对象的方法，允许子类决定实例化对象的类型。 }}
 + 结构：
   + 正式版：{{c1:: ![](https://gitee.com/xieyun714/nodeimage/raw/master/img/20201203010112.png) }}
   + 伪代码版：{{c1:: ![](https://gitee.com/xieyun714/nodeimage/raw/master/img/20201203010542.png) }}
 
-### 工厂方法模式：问题引出 [  ](designpattern_20201203022249308) 
+### 工厂方法模式：问题引出 [  ](designpattern_20201203022249308)
 
 + 如何将父类中具体对象类型与父类解耦
 + 问题：![](https://gitee.com/xieyun714/nodeimage/raw/master/img/20201203011641.png)
 + 工厂方法模式解决方法：{{c1:: ![](https://gitee.com/xieyun714/nodeimage/raw/master/img/20201203011927.png) }}
 
-### 工厂方法模式优缺点 [  ](designpattern_20201203022249311) 
+### 工厂方法模式优缺点 [  ](designpattern_20201203022249311)
 
 + 优点
   + **避免耦合**:{{c1:: 可以避免创建者和具体产品之间的紧密耦合。}}
@@ -261,7 +261,7 @@ public class SimpleFactory {
 + 缺点：
   + **复杂性**:{{c1:: 应用工厂方法模式需要引入许多新的子类，代码可能会因此变得更复杂。最好的情况是将该模式引入创建者类的现有层次结构中。 }}
 
-### 抽象工厂模式：问题引出 [  ](designpattern_20201203022249317) 
+### 抽象工厂模式：问题引出 [  ](designpattern_20201203022249317)
 
 + ![](https://gitee.com/xieyun714/nodeimage/raw/master/img/20201203013548.png)
 + 要求：你不希望在添加新产品或新风格时修改已有代码。
@@ -272,13 +272,13 @@ public class SimpleFactory {
 + 定义：{{c1:: 抽象工厂模式提供一个接口，用于创建相关或相互依赖对象的家族，而不需要明确指定具体类。 }}
 + 结构：{{c1:: ![](https://gitee.com/xieyun714/nodeimage/raw/master/img/20201203013705.png) }}
 
-### 抽象工厂模式：具体示例（理解） [  ](designpattern_20201203022249324) 
+### 抽象工厂模式：具体示例（理解） [  ](designpattern_20201203022249324)
 
 + 披萨订购问题结构： ![](https://gitee.com/xieyun714/nodeimage/raw/master/img/20201203014323.png) 
 + 跨平台UI类示例： ![](https://gitee.com/xieyun714/nodeimage/raw/master/img/20201203015039.png)
 + 理解：{{c1:: 标签 }}
 
-### 抽象工厂模式优缺点 [  ](designpattern_20201203022249326) 
+### 抽象工厂模式优缺点 [  ](designpattern_20201203022249326)
 
 + 优点：
   + **产品相互匹配**: {{c1:: 你可以确保同一工厂生成的产品相互匹配。 }}
@@ -288,9 +288,9 @@ public class SimpleFactory {
 + 缺点：
   + **复杂性增加**: {{c1::由于采用该模式需要向应用中引入众多接口和类， 代码可能会比之前更加复杂。 }}
 
-## 单例模式 [  ](designpattern_20201209125527596) 
+## 单例模式 [  ](designpattern_20201209125527596)
 
-### 单例模式定义与结构 [  ](designpattern_20201209125527599) 
+### 单例模式定义与结构 [  ](designpattern_20201209125527599)
 
 + 单例模式定义：{{c1:: 单件模式确保一个类只有一个实例，并提供一个全局访问点。 }}
 + 结构：{{c1:: ![单例模式结构](https://gitee.com/xieyun714/nodeimage/raw/master/img/20201208202027.png) }}
@@ -299,7 +299,7 @@ public class SimpleFactory {
   2. {{c1:: 调用**获取实例方法**必须是获取单例对象的唯一方式。}}
 + JDK中`Runtime`例:{{c1:: JDK中，java.lang.Runtime就是经典的单例模式(饿汉式) }}
 
-### java的8种单例模式实现方法 [  ](designpattern_20201209125527602) 
+### java的8种单例模式实现方法 [  ](designpattern_20201209125527602)
 
 1. 饿汉
    1. {{c1:: **饿汉式（静态常量）** }}
@@ -314,7 +314,7 @@ public class SimpleFactory {
 
 + 注意：{{c1:: 推荐使用与不推荐使用 }}
 
-### 单例模式:饿汉式 [  ](designpattern_20201209125527604) 
+### 单例模式:饿汉式 [  ](designpattern_20201209125527604)
 
 + 实现
 
@@ -342,7 +342,7 @@ public class SimpleFactory {
 
 + 使用结论：{{c1:: 这种单例模式可用，可能造成内存浪费 }}
 
-### 单例模式:懒汉式（线程不安全） [  ](designpattern_20201209125527606) 
+### 单例模式:懒汉式（线程不安全） [  ](designpattern_20201209125527606)
 
 + 线程不安全懒汉式：
 
@@ -399,7 +399,7 @@ public class SimpleFactory {
   + 实现：![](https://gitee.com/xieyun714/nodeimage/raw/master/img/20201208210823.png)
   + 注意：不能使用这种方式，这种同步并不能起到线程同步的作用，假如两个线程**同时**进入了`if (singleton == null)`判断语句块，这时便会产生多个实例
 
-### 单例模式：双重检查（Double-Check) [  ](designpattern_20201209125527609) 
+### 单例模式：双重检查（Double-Check) [  ](designpattern_20201209125527609)
 
 ```java
 //{{c1::
@@ -422,7 +422,7 @@ class Singleton {
 
 + 特点：{{c1::线程安全,懒加载,保证了效率,推荐使用}}
 
-### 单例模式：静态内部类 [  ](designpattern_20201209125527611) 
+### 单例模式：静态内部类 [  ](designpattern_20201209125527611)
 
  ```java
 //{{c1::
@@ -444,7 +444,7 @@ class Singleton {
   + {{c1:: 采用了类装载的机制来保证初始化实例时只有一个线程。 }}
   + {{c1:: 静态内部类方式在Singleton类被装载时并不会立即实例化，而是在需要实例化时，调用getInstance方法，才会装载SingletonInstance类，从而完成Singleton的实例化。 }}
 
-### 单例模式：使用枚举实现 [  ](designpattern_20201209125527614) 
+### 单例模式：使用枚举实现 [  ](designpattern_20201209125527614)
 
 ```java
 //{{c1::
@@ -460,15 +460,15 @@ class Singleton {
 + 特点：{{c1:: 线程同步，防止反序列破环单例，推荐使用 }}
 + 反序列化的作用：{{c1:: 根据字节流中保存的对象状态及描述信息，通过反序列化重建对象。 }}
 
-### 单例模式使用的场景举例 [  ](designpattern_20201209125527616) 
+### 单例模式使用的场景举例 [  ](designpattern_20201209125527616)
 
 + {{c1:: 需要频繁的进行创建和销毁的对象 }}
 + {{c1:: 创建对象时耗时过多或耗费资源过多(即：重量级对象)，但又经常用到的对象、工具类对象 }}
 + {{c1:: 频繁访问数据库或文件的对象(比如数据源、session工厂等) }}
 
-## 命令模式 [  ](designpattern_20201209125527619) 
+## 命令模式 [  ](designpattern_20201209125527619)
 
-### 命令模式：问题引出 [  ](designpattern_20201209125527622) 
+### 命令模式：问题引出 [  ](designpattern_20201209125527622)
 
 + 需求:开发一款新的文字编辑器， 当前的任务是创建一个包含多个按钮的工具栏， 并让每个按钮对应编辑器的不同操作。
 + 示意图：![image-20201209003259063](https://gitee.com/xieyun714/nodeimage/raw/master/img/image-20201209003259063.png)
@@ -728,9 +728,9 @@ class Singleton {
   -  **小题大作**：{{c1:: 如果状态机只有很少的几个状态， 或者很少发生改变， 那么应用该模式可能会显得小题大作。 }}
   -  **会产生很多类**：{{c1:: 每个状态都要一个对应的类，当状态过多时会产生很多类，加大维护难度 }}
 
-## 代理模式
+## 代理模式 [ ](designpattern_20201224091851336)
 
-### 代理模式定义与结构
+### 代理模式定义与结构 [ ](designpattern_20201224091851338)
 
 + 定义：{{c1:: 为一个对象提供一个替身，以控制对这个对象的访问。即通过代理 对象访问目标对象.这样做的好处是:可以在目标对象实现的基础上,增强额外的 功能操作,即扩展目标对象的功能。 }}
 + 结构：{{c1:: ![image-20201224112429647](https://gitee.com/xieyun714/nodeimage/raw/master/img/image-20201224112429647.png) }}
@@ -740,7 +740,7 @@ class Singleton {
   3. {{c1:: Cglib代理 (可以在内存动态的创建对象，而不需要实现接口， 属于动态代理的范畴) 。 }}
 - 在AOP编程中如何选择代理模式：{{c1:: 目标对象需要实现接口，用JDK代理，目标对象不需要实现接口，用Cglib代理 }}
 
-### 代理模式实现：JDK动态代理 
+### 代理模式实现：JDK动态代理  [ ](designpattern_20201224091851341)
 
 + 主要思路：{{c1:: 代理对象,不需要实现接口，但是**目标对象要实现接口**，否则不能用动态代理。JDK实现代理只需要使用newProxyInstance方法 }}
 - 代理对象代码：
@@ -769,7 +769,7 @@ public class ProxyFactory {
 //}}
 ```
 
-### 代理模式实现：Cglib代理
+### 代理模式实现：Cglib代理 [ ](designpattern_20201224091851344)
 
 + 特点：{{c1:: Cglib代理不要求目标对象实现接口，它是在内存中构建一个子类对象从而实现对目标对象功能扩展，属于动态代理。 }}
 + 代理对象代码：
@@ -806,14 +806,14 @@ public class ProxyFactory {
   //}}
   ```
 
-## 原型模式
+## 原型模式 [ ](designpattern_20201224091851346)
 
-### 原型模式定义与结构
+### 原型模式定义与结构 [ ](designpattern_20201224091851348)
 
 + 定义：{{c1:: **原型模式**是一种创建型设计模式， 使你能够复制已有对象， 无需知道如何创建的细节。 }}
 + 基本结构：{{c1:: ![](https://gitee.com/xieyun714/nodeimage/raw/master/img/20201224125546.png) }}
 
-### 原型模式实现：浅拷贝与深拷贝
+### 原型模式实现：浅拷贝与深拷贝 [ ](designpattern_20201224091851351)
 
 + 浅拷贝与深拷贝区别：浅拷贝仅仅是值拷贝（基本类型的值，引用类型的值）。深拷贝会同时拷贝引用类型引用的对象。
 + 浅拷贝默认实现：
@@ -868,22 +868,22 @@ public class ProxyFactory {
   //}}
   ```
 
-## 建造者模式
+## 建造者模式 [ ](designpattern_20201224091851353)
 
-### 建造者模式：问题引出
+### 建造者模式：问题引出 [ ](designpattern_20201224091851357)
 
 + 问题：![](https://gitee.com/xieyun714/nodeimage/raw/master/img/20201224152005.png)
 另一种方法则无需生成子类。 你可以在 `房屋`基类中创建一个包括所有可能参数的超级构造函数， 并用它来控制房屋对象。 这种方法确实可以避免生成子类， 但它却会造成另外一个问题。
 ![](https://gitee.com/xieyun714/nodeimage/raw/master/img/20201224152827.png)
 + 解决：{{c1:: ![image-20201224153542372](https://gitee.com/xieyun714/nodeimage/raw/master/img/image-20201224153542372.png)}}
 
-### 建造者模式定义与结构
+### 建造者模式定义与结构 [ ](designpattern_20201224091851359)
 
 - **Intent**：{{c1::  封装一个对象的构造过程，并允许按步骤构造。 }}
 - 结构：{{c1:: ![image-20201224153721243](https://gitee.com/xieyun714/nodeimage/raw/master/img/image-20201224153721243.png) }}
 + 视频版结构：{{c1:: ![image-20201224181233171](https://gitee.com/xieyun714/nodeimage/raw/master/img/image-20201224181233171.png) }}
 
-### 建造者模式实现:简易版StringBuilder
+### 建造者模式实现:简易版StringBuilder [ ](designpattern_20201224091851361)
 
 ```java
 public class AbstractStringBuilder {
