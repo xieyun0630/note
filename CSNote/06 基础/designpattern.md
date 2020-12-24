@@ -2,9 +2,9 @@
 
 ### 类图的6大关系 [  ](designpattern_20201209125527589) 
 
-1. 依赖关系:{{c1:: **类中用到了对方**，那么他们之间就存在依赖关系。 }}
-2. 泛化关系:{{c1:: 实际上就是继承关系，他是**依赖关系的特例** }}
-3. 实现关系:{{c1:: 实际上就是A类实现B接口，他是**依赖关系的特例** }}
+1. 依赖关系:{{c1::  (Dependency)**类中用到了对方**，那么他们之间就存在依赖关系。 }}
+2. 泛化关系:{{c1:: (Generalization) 实际上就是继承关系，他是**依赖关系的特例** }}
+3. 实现关系:{{c1:: (Realization)实际上就是A类实现B接口，他是**依赖关系的特例** }}
 4. 关联关系：{{c1:: (Association)类与类之间的联系，他是**依赖关系的特例** }}
 
   + 具有导航性:{{c1:: 即双向关系或单向关系 }}
@@ -15,41 +15,78 @@
 
 + 总结：{{c1:: 6大关系实际上都是依赖，只是具体细分了另外5种 }}
 
-## 设计原则 [  ](designpattern_20201203022249287) 
+## 设计原则
 
-### 单一职责原则 [  ](designpattern_20200629095419186) 
+### 设计模式的作用 [  ](designpattern_20200629095419184) 
 
-**SRP**：{{c1:: Single Responsibility Principle }}
+- 代码重用性:{{c1::  (即：相同功能的代码，不用多次编写)  }}
+- 可读性 :{{c1:: (即：编程规范性, 便于其他程序员的阅读和理解) }}
+- 可扩展性:{{c1::  (即：当需要增加新的功能时，非常的方便，称为可维护) }}
+- 可靠性 :{{c1:: (即：当我们增加新的功能后，对原来的功能没有影响) }}
+- 使程序呈现{{c1:: 高内聚，低耦合 }}的特性 
 
-注意：我们应当遵守单一职责原则，只有逻辑足够简单，才可以在代码级违反单一职责原则；只有类中方法数量足够少，可以在方法级别保持单一职责原则
+### S.O.L.I.D原则
 
-### 接口隔离原则 [  ](designpattern_20200629095419187) 
+| 简写 |                全拼                 |   中文翻译   |
+| :--: | :---------------------------------: | :----------: |
+| SRP  | {{c1:: `The Single Responsibility Principle`}} | {{c1:: `单一责任原则`}} |
+| OCP  |      {{c1:: `The Open Closed Principle`}}      | {{c1:: `开放封闭原则`}} |
+| LSP  |  {{c1:: `The Liskov Substitution Principle`}}  | {{c1:: `里氏替换原则`}} |
+| ISP  | {{c1:: `The Interface Segregation Principle`}} | {{c1:: `接口分离原则`}} |
+| DIP  | {{c1:: `The Dependency Inversion Principle`}}  | {{c1:: `依赖倒置原则`}} |
 
-**ISP**：**Interface  Segregation Principle**
+### 单一责任原则
 
-反例图：{{c1:: ![image-20200629211404990](https://gitee.com/xieyun714/nodeimage/raw/master/img/image-20200629211404990.png) }}
+> **intent**: {{c1:: 修改一个类的原因应该只有一个。 换句话说就是让一个类只负责一件事，当这个类需要做过多事情的时候，就需要分解这个类。}}
 
-改进后接口隔离原则例图：{{c1::![image-20200629210906436](https://gitee.com/xieyun714/nodeimage/raw/master/img/image-20200629210906436.png)}}
+### 开放封闭原则
 
-### 依赖倒置原则 [  ](designpattern_20200629095419189) 
+> **intent**: {{c1:: 类应该对扩展开放，对修改关闭。 }}
 
-+ 定义：
-  1. {{c1:: 上层模块不应该依赖底层模块，它们都应该依赖于抽象。}}
-  2. {{c1:: 抽象不应该依赖于细节，细节应该依赖于抽象。}}
++ **扩展**:{{c1:: 就是添加新功能的意思，因此该原则要求在添加新功能时不需要修改代码。 }}
+
++ 相应模式：{{c1:: 符合开闭原则最典型的设计模式是装饰者模式，它可以动态地将责任附加到对象上，而不用去修改类的代码。 }}
+
+### 里氏替换原则
+
+> **intent**: {{c1:: 子类对象必须能够替换掉所有父类对象。 }}
+
++ `IS-A`:{{c1:: 继承是一种 IS-A 关系，子类需要能够当成父类来使用，并且需要比父类更特殊。 }}
+
+
+### 接口分离原则
+
+> **intent**: {{c1:: 不应该强迫客户依赖于它们不用的方法。因此使用多个专门的接口比使用单一的总接口要好。 }}
+
++ 反例图：{{c1:: ![image-20200629211404990](https://gitee.com/xieyun714/nodeimage/raw/master/img/image-20200629211404990.png) }}
++ 改进后接口隔离原则例图：{{c1::![image-20200629210906436](https://gitee.com/xieyun714/nodeimage/raw/master/img/image-20200629210906436.png)}}
+
+### 依赖倒置原则
+
+> **intent**: {{c1:: 高层模块不应该依赖于低层模块，二者都应该依赖于抽象；抽象不应该依赖于细节，细节应该依赖于抽象。 }}
+
++ 避免在OO设计中违反依赖倒置原则建议： [  ](designpattern_20201203022249290) 
+  + 变量不可以持有具体类的引用: {{c1:: 如果使用new，就会持有具体类的引用。你可以改用工厂来避开样的做法。 }}
+  + 不要让类派生自具体类:{{c1:: 如果派生自具体类，你就会依赖具体类。请派生自一个抽象（接口或抽类）。 }}
+  + 不要覆盖基类中已实现的方法:{{c1:: 如果覆盖基类已实现的方法。，那么你的类就不是一个真正道合被继承的抽象。基类中已实现的方法，应由所有的子类共享 }}
+  + 注意:{{c1:: 应该尽量达到这些原则，也不是一定死守规矩 }}
 + 披萨店例子：
   + 反例图：{{c1:: ![image-20200629212530571](https://gitee.com/xieyun714/nodeimage/raw/master/img/image-20200629212530571.png)}}
   + 改进后依赖倒转原则图：{{c1:: ![image-20200629212538616](https://gitee.com/xieyun714/nodeimage/raw/master/img/image-20200629212538616.png)}}
 
-### 避免在OO设计中违反依赖倒置原则建议： [  ](designpattern_20201203022249290) 
+### S.O.L.I.D原则外，常见其他原则
 
-+ 变量不可以持有具体类的引用: {{c1:: 如果使用new，就会持有具体类的引用。你可以改用工厂来避开样的做法。 }}
-+ 不要让类派生自具体类:{{c1:: 如果派生自具体类，你就会依赖具体类。请派生自一个抽象（接口或抽类）。 }}
-+ 不要覆盖基类中已实现的方法:{{c1:: 如果覆盖基类已实现的方法。，那么你的类就不是一个真正道合被继承的抽象。基类中已实现的方法，应由所有的子类共享 }}
-+ 注意:{{c1:: 应该尽量达到这些原则，也不是一定死守规矩 }}
+| 简写 |               全拼                | 中文翻译     |
+| :--: | :-------------------------------: | :----------- |
+| LOD  |        {{c1:: `The Law of Demeter`}}         | {{c1:: `迪米特法则` }} |
+| CRP  |   {{c1:: `The Composite Reuse Principle`}}   | {{c1:: `合成复用原则` }} |
+| CCP  |   {{c1:: `The Common Closure Principle`}}    | {{c1:: `共同封闭原则` }} |
+| SAP  | {{c1:: `The Stable Abstractions Principle`}} | {{c1:: `稳定抽象原则` }} |
+| SDP  | {{c1:: `The Stable Dependencies Principle`}} | {{c1:: `稳定依赖原则` }} |
 
-### 设计原则：最少知识原则 
+###  迪米特法则
 
-+ 定义：{{c1:: 每个单元对其他单元只拥有有限的知识，只了解与当前单元紧密联系的单元； }}
++ **intent**:{{c1:: 迪米特法则又叫作最少知识原则（Least Knowledge Principle，简写 LKP），就是说一个对象应当对其他对象有尽可能少的了解，不和陌生人说话。 }}
 + 在对象的方法内，只应该调用以下范围的方法
   + {{c1:: 该对象本身的方法 }}
   + {{c1:: 被当做方法的参数而传递进来的对象 }}
@@ -59,15 +96,24 @@
 + 应用例子：{{c1:: ![](https://gitee.com/xieyun714/nodeimage/raw/master/img/image-20201210001408498.png) }}
 + 别称：{{c1:: 迪米特法则（Law of Demeter） }}
 
-# FirstHead设计模式 [  ](designpattern_20201202040742352) 
+### 合成复用原则
 
-### 设计模式的目的 [  ](designpattern_20200629095419184) 
+- **intent**:{{c1:: 尽量使用对象组合，而不是通过继承来达到复用的目的。 }}
 
-- 代码重用性:{{c1::  (即：相同功能的代码，不用多次编写)  }}
-- 可读性 :{{c1:: (即：编程规范性, 便于其他程序员的阅读和理解) }}
-- 可扩展性:{{c1::  (即：当需要增加新的功能时，非常的方便，称为可维护) }}
-- 可靠性 :{{c1:: (即：当我们增加新的功能后，对原来的功能没有影响) }}
-- 使程序呈现{{c1:: 高内聚，低耦合 }}的特性 
+
+### 共同封闭原则
+
+- **intent**:{{c1:: 一起修改的类，应该组合在一起（同一个包里）。如果必须修改应用程序里的代码，我们希望所有的修改都发生在一个包里（修改关闭），而不是遍布在很多包里。}}
+
+### 稳定抽象原则
+
+- **intent**:{{c1:: 最稳定的包应该是最抽象的包，不稳定的包应该是具体的包，即包的抽象程度跟它的稳定性成正比。}}
+
+### 稳定依赖原则
+
+- **intent**:{{c1:: 包之间的依赖关系都应该是稳定方向依赖的，包要依赖的包要比自己更具有稳定性。 }}
+
+# 模式
 
 ## 策略模式 [  ](designpattern_20201202040742359) 
 
@@ -108,7 +154,7 @@
 ## 装饰者模式 [  ](designpattern_20201203022249293) 
 
 ### 装饰模式:UML结构图 [  ](designpattern_20201203022249295) 
-
++ 定义：{{c1:: 通过将对象放入包含行为的特殊封装对象,动态地给一个对象添加一些额外的职责 }}
 + 严格版本:{{c1:: ![](https://gitee.com/xieyun714/nodeimage/raw/master/img/20201202215634.png) }}
 + first head版本：{{c1:: ![](https://gitee.com/xieyun714/nodeimage/raw/master/img/20201202215348.png) }}
 
@@ -345,7 +391,7 @@ public class SimpleFactory {
   ```
 
   + 优点: {{c1:: 解决了线程不安全问题 }}
-  + 缺点: {{c1:: **效率低**，每个线程在想获得类的实例时候，执行getInstance()方法都要进行同步。而其实这个方法只执行一次实例化代码就够了，后面的想获得该类实例，直接return就行了。方法进行同步效率太低 }}
+  + 缺点: {{c1:: **效率低**，每个线程在想获得类的实例时候，执行`getInstance()`方法都要进行同步。而其实这个方法只执行一次实例化代码就够了，后面的想获得该类实例，直接`return`就行了。方法进行同步效率太低 }}
   + 结论: {{c1:: 在实际开发中，不推荐这种方式. }}
 
 + 懒汉式(同步代码块)
@@ -430,7 +476,7 @@ class Singleton {
 + 解决：{{c1:: ![image-20201209003618359](https://gitee.com/xieyun714/nodeimage/raw/master/img/image-20201209003618359.png) }}
   + {{c1:: ![](https://gitee.com/xieyun714/nodeimage/raw/master/img/20201209003956.png) }}
 
-### 命令模式定义与结构 [  ](designpattern_20201209125527624) 
+### 命令模式定义与结构 [  ](designpattern_20201209125527624)
 
 + 定义：{{c1:: 将一个请求封装成一个对象，从而使您可以用不同的请求对客户进行参数化。 }}
 + 主要目的：{{c1:: 使得请求发送者与请求接收者消除彼此之间的耦合 }}
@@ -442,7 +488,7 @@ class Singleton {
 + 实现者/接收者（Receiver）角色： {{c1:: 执行与请求相关的操作，**真正执行命令的对象** }}
 + 调用者/请求者（Invoker）角色： {{c1:: **请求的发送者**，它通常拥有很多的命令对象，并通过访问命令对象来执行相关请求，它不直接访问接收者。 }}
 
-### 命令模式：智能生活案例 
+### 命令模式：智能生活案例  [	](designpattern_20201224024146375)
 
 + 需求：![](https://gitee.com/xieyun714/nodeimage/raw/master/img/20201209214512.png)
 
@@ -471,7 +517,7 @@ class Singleton {
   //}}
   ```
 
-### 命令模式：宏命令 
+### 命令模式：宏命令  [	](designpattern_20201224024146377)
 
 + 定义：
 
@@ -520,20 +566,18 @@ class Singleton {
   //}}
   ```
 
-## 适配器模式 
+## 适配器模式  [	](designpattern_20201224024146379)
 
-### 适配器模式定义与结构 
+### 适配器模式定义与结构  [	](designpattern_20201224024146382)
 
 + 定义：{{c1:: 适配器模式将一个类的接口，转换成客户期望的另一个接口。主要目是兼容性 }}
 + 对象适配器结构：{{c1:: ![](https://gitee.com/xieyun714/nodeimage/raw/master/img/20201210003513.png) }}
 + 类适配器结构：{{c1:: ![](https://gitee.com/xieyun714/nodeimage/raw/master/img/20201210003608.png) }}
 
-### 适配器模式:类适配器 
+### 适配器模式:类适配器  [	](designpattern_20201224024146385)
 
-+ 结构：![](https://gitee.com/xieyun714/nodeimage/raw/master/img/20201211063500.png)
-
++ 结构：{{c1:: ![](https://gitee.com/xieyun714/nodeimage/raw/master/img/20201211063500.png) }}
 + client端实现：
-
   ```java
   //{{c1::
     System.out.println(" === 类适配器模式 ====");
@@ -541,19 +585,15 @@ class Singleton {
     phone.charging(new VoltageAdapter());
   //}}
   ```
-
 + 缺点： {{c1:: 使用继承，暴露了多余方法 }}
 
 + 优点: {{c1:: 可以根据需求重写source类的方法 }}
 
-### 适配器模式:对象适配器 
+### 适配器模式:对象适配器  [	](designpattern_20201224024146387)
 
-+ 结构：![](https://gitee.com/xieyun714/nodeimage/raw/master/img/20201211080620.png)
-
-+ 与类适配器的区别：将继承变成了组合
-
++ 结构：{{c1:: ![](https://gitee.com/xieyun714/nodeimage/raw/master/img/20201211080620.png) }}
++ 与类适配器的区别：{{c1:: 将继承变成了组合 }}
 + client端实现：
-
   ```java
   //{{c1::
     System.out.println(" === 对象适配器模式 ====");
@@ -562,29 +602,26 @@ class Singleton {
   //}}
   ```
 
-### 适配器模式:接口适配器模式 
+### 适配器模式:接口适配器模式  [	](designpattern_20201224024146389)
 
-+ 作用：当不需要全部实现接口提供的方法时，可先设计一个抽象类实现接口，并为该接口中每个方法提供一个默认实现（空方法），那么该抽象类的子类可有选择地覆盖父类的某些方法来实现需求
-
++ 作用：{{c1:: 当不需要全部实现接口提供的方法时，可先设计一个抽象类实现接口，并为该接口中每个方法提供一个默认实现（空方法），那么该抽象类的子类可有选择地覆盖父类的某些方法来实现需求 }}
 + 例如：
-
   ```java
+  //{{c1::
   new AnimatorListenerAdapter() {
       @Override
       public void onAnimationStart(Animator animation) {
       //xxxx具体实现
       }
   }
+  //}}
   ```
 
-### 适配器模式在SpringMVC框架应用的源码剖析 
+### 适配器模式在SpringMVC框架应用的源码剖析  [	](designpattern_20201224024146392)
 
 + 代码分析流程：![image-20201211084548546](https://gitee.com/xieyun714/nodeimage/raw/master/img/image-20201211084548546.png)
-
 + 动手写SpringMVC通过适配器设计模式获取到对应的Controller的源码![image-20201211085454077](https://gitee.com/xieyun714/nodeimage/raw/master/img/image-20201211085454077.png)
-
 + client端实现:
-
   ```java
     // 此处模拟SpringMVC从request取handler的对象，
     // 适配器可以获取到希望的Controller
@@ -596,34 +633,30 @@ class Singleton {
     // 通过适配器执行对应的controller对应方法
     adapter.handle(controller);
   ```
-
-+ 标签：理解
-
++ 标签：{{c1:: 理解 }}
 + 库索引：TODO
 
 
-## 外观模式 
+## 外观模式  [	](designpattern_20201224024146395)
 
-### 外观模式定义与结构 
+### 外观模式定义与结构  [	](designpattern_20201224024146399)
 
 + 定义：{{c1:: 外观模式提供了一个统一的接口，用来访间子系统中的一群接口。外观定义了一个高层接口，让子系统更容易使用。 }}
 + 结构：![](https://gitee.com/xieyun714/nodeimage/raw/master/img/20201210005149.png)
 + 亦称：{{c1:: 门面模式、Facade }}
 
-## 模板方法模式
+## 模板方法模式 [	](designpattern_20201224024146401)
 
-### 模板方法模式问题引出
+### 模板方法模式问题引出 [	](designpattern_20201224024146405)
 
 + 该程序的首个版本仅支持 DOC 文件。 在接下来的一个版本中， 程序能够支持 CSV 文件。 一个月后， 你 “教会” 了程序从 PDF 文件中抽取数据。![image-20201216072408062](https://gitee.com/xieyun714/nodeimage/raw/master/img/image-20201216072408062.png)
 
-+ 解决：![image-20201216072930073](https://gitee.com/xieyun714/nodeimage/raw/master/img/image-20201216072930073.png)
++ 解决：{{c1:: ![image-20201216072930073](https://gitee.com/xieyun714/nodeimage/raw/master/img/image-20201216072930073.png) }}
 + 注意：
-
   1. *抽象步骤*必须由各个子类来实现
+  2. 步骤已有一些默认实现，但仍可在需要时进行重写
 
-  2. 步骤已有一些默认实现， 但仍可在需要时进行重写
-
-### 模板方法模式定义与结构 
+### 模板方法模式定义与结构  [	](designpattern_20201224024146407)
 
 + 定义：{{c1:: 它在基类中定义了一个算法的框架， 允许子类在不修改结构的情况下重 写算法的特定步骤。 }}
 
@@ -633,47 +666,274 @@ class Singleton {
 
 + final的使用：{{c1:: 为了防止子类改变模板方法中的算法，可以将模板方法声明为 final }}
 
-### 模板方法模式与其他模式的关系
+### 模板方法模式与其他模式的关系 [	](designpattern_20201224024146410)
 
 - 与工厂方法模式的关系：{{c1:: 工厂方法模式是**模板方法模式的一种特殊形式**。 同 时， 工厂方法可以作为一个大型模板方法中的一个步骤。 }}
 - 与策略模式的关系：
   - **继承与组合**：{{c1::  策略模式和模板方法模式都封装算法，一个用组合，一个用继承。  }}
   - **静态与动态**：{{c1::  模板方法在**类层次**上运作， 因此它是**静态的**。 策略在**对象层次**上运作， 因此允许在**运行时切换行为**。 }}
 
-## 迭代器模式
+## 迭代器模式 [	](designpattern_20201224024146412)
 
-### 迭代器模式：问题引出
+### 迭代器模式：问题引出 [	](designpattern_20201224024146415)
 
 + 问题:如何遍历不同数据结构的集合（树，图，线性表,...)![image-20201217073948248](https://gitee.com/xieyun714/nodeimage/raw/master/img/image-20201217073948248.png)
-+ 解决方案：![](https://gitee.com/xieyun714/nodeimage/raw/master/img/20201217074027.png)
++ 解决方案：{{c1:: ![](https://gitee.com/xieyun714/nodeimage/raw/master/img/20201217074027.png) }}
 
-### 迭代器模式定义与结构
+### 迭代器模式定义与结构 [	](designpattern_20201224024146417)
 
 + 定义: {{c1:: **迭代器模式**是一种行为设计模式， 让你能在不暴露集合底层表现形（列表、 栈和树等） 的情况下遍历集合中所有的元素。}}
 + 结构：{{c1:: ![image-20201217074526389](https://gitee.com/xieyun714/nodeimage/raw/master/img/image-20201217074526389.png) }}
 
-### 迭代器模式优缺点
+### 迭代器模式优缺点 [	](designpattern_20201224024146419)
 
 - 优点
-  -  **单一职责原则**：通过将体积庞大的遍历算法代码抽取为独立的类， 你可对客户端代码和集合进行整理。
-  -  **开闭原则**： 你可实现新型的集合和迭代器并将其传递给现有代码， 无需修改现有代码。
-  -  **并行遍历**：你可以并行遍历同一集合， 因为每个迭代器对象都包含其自身的遍历状态。
-  -  **暂停遍历**：相似的， 你可以暂停遍历并在需要时继续。
+  -  **单一职责原则**：{{c1:: 通过将体积庞大的遍历算法代码抽取为独立的类， 你可对客户端代码和集合进行整理。 }}
+  -  **开闭原则**：{{c1::  你可实现新型的集合和迭代器并将其传递给现有代码， 无需修改现有代码。 }}
+  -  **并行遍历**：{{c1:: 你可以并行遍历同一集合， 因为每个迭代器对象都包含其自身的遍历状态。 }}
+  -  **暂停遍历**：{{c1:: 相似的， 你可以暂停遍历并在需要时继续。 }}
 - 缺点
-  -  **矫枉过正**:如果你的程序只与简单的集合进行交互， 应用该模式可能会矫枉过正。
-  - **特殊集合效率**:对于某些特殊集合， 使用迭代器可能比直接遍历的效率低。
+  -  **矫枉过正**:{{c1:: 如果你的程序只与简单的集合进行交互，应用该模式可能会矫枉过正。}}
+  - **特殊集合效率**:{{c1:: 对于某些特殊集合，使用迭代器可能比直接遍历的效率低。}}
 
-## 组合模式
+## 组合模式 [	](designpattern_20201224024146421)
 
-### 组合模式的定义与结构
+### 组合模式的定义与结构 [	](designpattern_20201224024146423)
 
-+ 定义：**组合模式**是一种结构型设计模式， 你可以使用它将对象组合成树状结构， 并且能像使用独立对象一样使用它们。
-+ 结构：![](https://gitee.com/xieyun714/nodeimage/raw/master/img/20201217081946.png)
++ 定义：**组合模式**是一种结构型设计模式，你可以使用它将对象组合成树状结构，并且能像使用独立对象一样使用它们。
++ 结构：{{c1::![](https://gitee.com/xieyun714/nodeimage/raw/master/img/20201217081946.png)}}
 + 解释：
-    1. **组件** （Component） 接口描述了树中简单项目和复杂项目所共有的操作。
+    1. **组件**：{{c1::（Component）接口描述了树中简单项目和复杂项目所共有的操作。}}
+    2. **叶节点**：{{c1::（Leaf）是树的基本结构， 它不包含子项目。}}
+    3. **容器**：{{c1::（Composite）是包含叶节点或其他容器等子项目的单位。}}
+    4. **客户端**：{{c1::（Client）通过组件接口与所有项目交互。}}
+## 状态模式 [	](designpattern_20201224024146425)
 
-    2. **叶节点** （Leaf） 是树的基本结构， 它不包含子项目。
+### 状态模式：问题引出 [	](designpattern_20201224024146427)
 
-    3. **容器** （Composite）是包含叶节点或其他容器等子项目的单位。 
++ 文档对象的几种状态：![![](https://gitee.com/xieyun714/nodeimage/raw/master/img/20201222065901.png)](https://gitee.com/xieyun714/nodeimage/raw/master/img/20201222065821.png)
++ 解决方案：{{c1:: ![](https://gitee.com/xieyun714/nodeimage/raw/master/img/20201222065901.png) }}
 
-    4. **客户端** （Client） 通过组件接口与所有项目交互。 
+### 状态模式结构与定义 [	](designpattern_20201224024146429)
+
++ 定义：{{c1:: 在一个对象的内部状态变化时改变其行为，使其看上去就像改变了自身所属的类一样。 }}
++ 结构：{{c1:: ![](https://gitee.com/xieyun714/nodeimage/raw/master/img/20201222070539.png) }}
++ 与策略模式的区别在于: {{c1:: 在状态模式中，特定状态知道其他所有状态的存在，且能触发从一个状态到另一个状态的转换；策略则几乎完全不知道其他策略的存在。 }}
+### 状态模式优缺点 [	](designpattern_20201224024146432) 
++ 优点：
+  -  **单一职责原则**：{{c1:: 将与特定状态相关的代码放在单独的类中。 }}
+  -  **开闭原则**：{{c1:: 无需修改已有状态类和上下文就能引入新状态。 }}
+  -  **消除臃肿**：{{c1:: 通过消除臃肿的状态机条件语句简化上下文代码。 }}
++ 缺点:
+  -  **小题大作**：{{c1:: 如果状态机只有很少的几个状态， 或者很少发生改变， 那么应用该模式可能会显得小题大作。 }}
+  -  **会产生很多类**：{{c1:: 每个状态都要一个对应的类，当状态过多时会产生很多类，加大维护难度 }}
+
+## 代理模式
+
+### 代理模式定义与结构
+
++ 定义：{{c1:: 为一个对象提供一个替身，以控制对这个对象的访问。即通过代理 对象访问目标对象.这样做的好处是:可以在目标对象实现的基础上,增强额外的 功能操作,即扩展目标对象的功能。 }}
++ 结构：{{c1:: ![image-20201224112429647](https://gitee.com/xieyun714/nodeimage/raw/master/img/image-20201224112429647.png) }}
+- java代理模式的形式：
+  1. {{c1:: 静态代理：代理对象与目标对象要实现相同的接口,然后通过调用相同的方法来 调用目标对象的方法。 }}
+  2. {{c1:: 动态代理 (JDK代理、接口代理) }}
+  3. {{c1:: Cglib代理 (可以在内存动态的创建对象，而不需要实现接口， 属于动态代理的范畴) 。 }}
+- 在AOP编程中如何选择代理模式：{{c1:: 目标对象需要实现接口，用JDK代理，目标对象不需要实现接口，用Cglib代理 }}
+
+### 代理模式实现：JDK动态代理 
+
++ 主要思路：{{c1:: 代理对象,不需要实现接口，但是**目标对象要实现接口**，否则不能用动态代理。JDK实现代理只需要使用newProxyInstance方法 }}
+- 代理对象代码：
+```java
+//{{c1::
+public class ProxyFactory {
+  private Object target;
+  public ProxyFactory(Object target) {
+    this.target = target;
+  } 
+  //给目标对象生成代理对象
+  public Object getProxyInstance() {
+    return Proxy.newProxyInstance(target.getClass().getClassLoader(), 
+        target.getClass().getInterfaces(), 
+        new InvocationHandler() {
+          @Override
+          public Object invoke(Object proxy, Method method, Object[] args) throws Throwable {
+            System.out.println("JDK代理开始~~");
+            Object returnVal = method.invoke(target, args);
+            System.out.println("JDK代理提交");
+            return returnVal;
+          }
+        }); 
+  }
+}
+//}}
+```
+
+### 代理模式实现：Cglib代理
+
++ 特点：{{c1:: Cglib代理不要求目标对象实现接口，它是在内存中构建一个子类对象从而实现对目标对象功能扩展，属于动态代理。 }}
++ 代理对象代码：
+  ```java
+  //{{c1::
+  public class ProxyFactory implements MethodInterceptor {
+    private Object target;
+    public ProxyFactory(Object target) {
+      this.target = target;
+    }
+  
+    //返回一个代理对象:是target对象的代理对象
+    public Object getProxyInstance() {
+      //1. 创建一个工具类
+      Enhancer enhancer = new Enhancer();
+      //2. 设置父类
+      enhancer.setSuperclass(target.getClass());
+      //3. 设置回调函数
+      enhancer.setCallback(this);
+      //4. 创建子类对象，即代理对象
+      return enhancer.create();
+    }
+    
+    //重写intercept方法，会调用目标对象的方法
+    @Override
+    public Object intercept(Object arg0, Method method, Object[] args, MethodProxy arg3) throws Throwable {
+      // TODO Auto-generated method stub
+      System.out.println("Cglib代理模式 ~~ 开始");
+      Object returnVal = method.invoke(target, args);
+      System.out.println("Cglib代理模式 ~~ 提交");
+      return returnVal;
+    }
+  }
+  //}}
+  ```
+
+## 原型模式
+
+### 原型模式定义与结构
+
++ 定义：{{c1:: **原型模式**是一种创建型设计模式， 使你能够复制已有对象， 无需知道如何创建的细节。 }}
++ 基本结构：{{c1:: ![](https://gitee.com/xieyun714/nodeimage/raw/master/img/20201224125546.png) }}
+
+### 原型模式实现：浅拷贝与深拷贝
+
++ 浅拷贝与深拷贝区别：浅拷贝仅仅是值拷贝（基本类型的值，引用类型的值）。深拷贝会同时拷贝引用类型引用的对象。
++ 浅拷贝默认实现：
+  ```java
+  //{{c1::
+  public class Sheep implements Cloneable {
+    //省略成员属性
+    @Override
+    protected Object clone()  {
+      Sheep sheep = null;
+      try {
+        sheep = (Sheep)super.clone();
+      } catch (Exception e) {
+        System.out.println(e.getMessage());
+      }
+      return sheep;
+    }
+  }
+  //}}
+  ```
+-  深拷贝实现方式1：重写clone方法来实现深拷贝 :
+  ```java
+  //{{c1::
+    @Override
+    protected Object clone() throws CloneNotSupportedException {
+      
+      Object deep = null;
+      //这里完成对基本数据类型(属性)和String的克隆
+      deep = super.clone(); 
+      //对引用类型的属性，进行单独处理
+      DeepProtoType deepProtoType = (DeepProtoType)deep;
+      deepProtoType.deepCloneableTarget  = (DeepCloneableTarget)deepCloneableTarget.clone();
+      return deepProtoType;
+    }
+  //}}
+  ```
+-  深拷贝实现方式2：通过对象序列化实现深拷贝(推荐):
+  ```java
+  //{{c1::
+    public Object deepClone() {
+        //...核心代码如下
+        bos = new ByteArrayOutputStream();
+        oos = new ObjectOutputStream(bos);
+        oos.writeObject(this);
+
+        //反序列化
+        bis = new ByteArrayInputStream(bos.toByteArray());
+        ois = new ObjectInputStream(bis);
+        DeepProtoType copyObj = (DeepProtoType)ois.readObject();
+        return copyObj;
+    }
+  //}}
+  ```
+
+## 建造者模式
+
+### 建造者模式：问题引出
+
++ 问题：![](https://gitee.com/xieyun714/nodeimage/raw/master/img/20201224152005.png)
+另一种方法则无需生成子类。 你可以在 `房屋`基类中创建一个包括所有可能参数的超级构造函数， 并用它来控制房屋对象。 这种方法确实可以避免生成子类， 但它却会造成另外一个问题。
+![](https://gitee.com/xieyun714/nodeimage/raw/master/img/20201224152827.png)
++ 解决：{{c1:: ![image-20201224153542372](https://gitee.com/xieyun714/nodeimage/raw/master/img/image-20201224153542372.png)}}
+
+### 建造者模式定义与结构
+
+- **Intent**：{{c1::  封装一个对象的构造过程，并允许按步骤构造。 }}
+- 结构：{{c1:: ![image-20201224153721243](https://gitee.com/xieyun714/nodeimage/raw/master/img/image-20201224153721243.png) }}
++ 视频版结构：{{c1:: ![image-20201224181233171](https://gitee.com/xieyun714/nodeimage/raw/master/img/image-20201224181233171.png) }}
+
+### 建造者模式实现:简易版StringBuilder
+
+```java
+public class AbstractStringBuilder {
+    protected char[] value;
+
+    protected int count;
+
+    public AbstractStringBuilder(int capacity) {
+        count = 0;
+        value = new char[capacity];
+    }
+
+    public AbstractStringBuilder append(char c) {
+        ensureCapacityInternal(count + 1);
+        value[count++] = c;
+        return this;
+    }
+
+    private void ensureCapacityInternal(int minimumCapacity) {
+        // overflow-conscious code
+        if (minimumCapacity - value.length > 0)
+            expandCapacity(minimumCapacity);
+    }
+
+    void expandCapacity(int minimumCapacity) {
+        int newCapacity = value.length * 2 + 2;
+        if (newCapacity - minimumCapacity < 0)
+            newCapacity = minimumCapacity;
+        if (newCapacity < 0) {
+            if (minimumCapacity < 0) // overflow
+                throw new OutOfMemoryError();
+            newCapacity = Integer.MAX_VALUE;
+        }
+        value = Arrays.copyOf(value, newCapacity);
+    }
+}
+```
+
+```java
+public class StringBuilder extends AbstractStringBuilder {
+    public StringBuilder() {
+        super(16);
+    }
+
+    @Override
+    public String toString() {
+        // Create a copy, don't share the array
+        return new String(value, 0, count);
+    }
+}
+```
+
++ 标签：{{c1:: 理解 }}

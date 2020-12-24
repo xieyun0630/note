@@ -1923,4 +1923,3 @@ const Register = {
   locale.use(lang);
   //}}
   ```
-

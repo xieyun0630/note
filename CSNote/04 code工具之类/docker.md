@@ -260,10 +260,8 @@ docker start registry
 ```shell
 # 1、标记镜像为私有仓库的镜像     
 docker tag centos:7 私有仓库服务器IP:5000/centos:7
- 
 # 2、上传标记的镜像     
 docker push 私有仓库服务器IP:5000/centos:7
-
 ```
 + {{c1:: 理解 }}
 

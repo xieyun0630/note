@@ -366,42 +366,6 @@ animation.play();
 // }}
 ```
 
-## 内部类 [	](java_se_20191219101334767)
-
-### 内部类的特征： [	](java_se_20191219101334768)
-
-+ 一个内部类被编译成{{c1::一个名为`OuterClassName$InnerClassName.class`的类}}
-+ 一个内部类可以引用{{c1::定义在它所在的外部类中的数据和方法。}}
-+ 和类中成员相同,内部类可以使用{{c1:可见性修饰符所定义。}}
-
-+ 可以被定义成{{c1::static}}
-
-### 创建一个内部类 [	](java_se_20191219101334769)
-
-```java
-//对象.new语法{{c1::
-OuterClass.InnerClass innerObject = outerObject.new InnerClass();
-//}}
-//如果内部类是静态的，使用以下语法{{c1::
-OuterClass.InnerClass innerObject = new OuterObject.InnerClass();
-//}}
-```
-
-### 匿名内部类 [	](java_se_20191219101334771)
-
-+ 匿名内部类一步实现定义内部类以及创建一个内部类实例。
-
-+ 语法:{{c1::
-
-  ```java 
-  new SuperClassName/InterfaceName(){
-    //...
-  }
-  //}}
-  ```
-
-+ 匿名内部类别编译成名为`OuterClassName$n.class`的类
-
 ## Java FX类库 [	](java_se_20201026014023074)
 
 ### Labeled类与Label类 [	](java_se_20191219101334772)
@@ -805,7 +769,45 @@ MediaView mediaView = new MediaView(mediaPlayer);
 
 (313) 555-1234
 
-# java多线程 [	](java_se_20200604111131318)
+# 面向对象 [	](java_se_20201224023254138)
+
+## 内部类 [	](java_se_20191219101334767)
+
+### 内部类的特征： [	](java_se_20191219101334768)
+
++ 一个内部类被编译成{{c1::一个名为`OuterClassName$InnerClassName.class`的类}}
++ 一个内部类可以引用{{c1::定义在它所在的外部类中的数据和方法。}}
++ 和类中成员相同,内部类可以使用{{c1:可见性修饰符所定义。}}
+
++ 可以被定义成{{c1::static}}
+
+### 创建一个内部类 [	](java_se_20191219101334769)
+
+```java
+//对象.new语法{{c1::
+OuterClass.InnerClass innerObject = outerObject.new InnerClass();
+//}}
+//如果内部类是静态的，使用以下语法{{c1::
+OuterClass.InnerClass innerObject = new OuterObject.InnerClass();
+//}}
+```
+
+### 匿名内部类 [	](java_se_20191219101334771)
+
++ 匿名内部类一步实现定义内部类以及创建一个内部类实例。
+
++ 语法:{{c1::
+
+  ```java 
+  new SuperClassName/InterfaceName(){
+    //...
+  }
+  //}}
+  ```
+
++ 匿名内部类别编译成名为`OuterClassName$n.class`的类
+
+# 多线程 [	](java_se_20200604111131318)
 
 ### 线程与进程概念 [	](java_se_20200604111131319)
 + 进程的特征：{{c1:: 独立性，动态性，并发性。}}

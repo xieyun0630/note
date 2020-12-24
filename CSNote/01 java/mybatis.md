@@ -208,7 +208,7 @@ force:{{c1:: 是否强制提交或回滚。}}
 ### 4种加载Mapper的方式 [	](mybatis_20200520043218586)
 1. {{c1:: `<mapper resource="top/xieyun/app/dao/NewsMapper.xml">`}}
 2. {{c1:: `<mapper url="file:///G:/abc/NewsMapper.xml">`}}
-3. {{c1:: `<mapper class="top.xieyun.app.dao.NewsMapper.xml">`}}
+3. {{c1:: `<mapper class="top.xieyun.app.dao.NewsMapper">`}}
 4. {{c1:: `<mapper package="top.xieyun.app.dao">`}}
 
 ## 类型转换器配置 [	](mybatis_20200717061050960)
@@ -797,7 +797,7 @@ public class News{
     <!-- 基本使用： -->
         <!-- {{c1:: -->
 		<!-- 指定columnPrefix="rental_"，代表去掉当前多表查询列名中的前缀，通常为别名，去掉后需要与引入的resultMap列名匹配 -->
-		<association property="rentalAddr" javaType="address" columnPrefix="rental_"
+		<association property="rentalAddr" javaType="a0ddress" columnPrefix="rental_"
 			resultMap="top.xieyun.dao.AddressMapper.addressMap"/>
         <!-- }} -->
     ```

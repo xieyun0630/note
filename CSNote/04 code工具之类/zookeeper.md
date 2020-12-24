@@ -32,7 +32,7 @@
 
 ## zookeeper常用Shell命令 [	](zookeeper_20201124103028944)
 
-### 查看节点属性/状态命令 [	](zookeeper_20201124103028946)
+### zookeeper查看节点属性/状态命令 [	](zookeeper_20201124103028946)
 + `get path`： {{c1::在zookeeper shell中使用get命令查看指定路径节点的data、stat信息 }}
 + `stat path`:{{c1:: 它的返回值和 get 命令类似，但不会返回
 节点数据 }}
@@ -49,7 +49,7 @@
   + `dataLength`： {{c1:: 数据内容的长度（字节数） }}
   + `numChildren`： {{c1:: 数据节点当前的子节点个数 }}
 
-### 新增节点命令 [	](zookeeper_20201124103028949)
+### zookeeper新增节点命令 [	](zookeeper_20201124103028949)
 
 + `create [-s] [-e] path data `
   + {{c1:: `-s`：为有序节点 }}
@@ -67,23 +67,23 @@
     2. `create -s -e /bb "bbb"`
     3. `create -s -e /cc "ccc"`
 
-### 更新节点命令 [	](zookeeper_20201124103028951)
+### zookeeper更新节点命令 [	](zookeeper_20201124103028951)
 + 语法： {{c1:: `set path data [version]` }}
 + 例：
   1. 不指定版本号：{{c1:: `set /hadoop "345"` }}
   2. 指定版本号：{{c1:: `set /hadoop "3456" 1` }}
   + 注意：{{c1:: 每修改成功一次版本号会加1 }}
 
-### 删除节点命令 [	](zookeeper_20201124103028955)
+### zookeeper删除节点命令 [	](zookeeper_20201124103028955)
 
 + 删除语法： {{c1:: `delete path [version]` }}
 + 删除某个节点及其所有后代节点: {{c1:: `rmr path` }}
 
-### 查看节点列表命令 [	](zookeeper_20201124103028957)
+### zookeeper查看节点列表命令 [	](zookeeper_20201124103028957)
 + 语法：{{c1:: `ls path 和 ls2 path` }}
 + 解释：{{c1:: 后者是前者的增强，不仅可以查看指定路径下的所有节点，还可以查看当前节点的信息 }}
 
-### 监听器命令 [	](zookeeper_20201124103028959)
+### zookeeper监听器命令 [	](zookeeper_20201124103028959)
 + `get path [watch]`: {{c1:: 使用 get path [watch] 注册的监听器能够在节点内容发生改变的时候，向客户端发出通知。 }}
 + `stat path [watch]`:{{c1:: 使用 stat path [watch] 注册的监听器能够在节点状态发生改变的时候，向客户端发出通知 }}
 + `ls\ls2 path [watch]`:{{c1:: 使用 ls path [watch] 或 ls2 path [watch] 注册的监听器能够监听该节点下所有子节点的增加和删除操作。 }}
@@ -111,7 +111,7 @@
   | `admin`  | `a`     | {{c1:: 可以设置节点访问控制列表权限    }} |
 + 例：`setAcl /test2 ip:192.168.60.130:crwda`:{{c1:: 将节点权限设置为Ip:192.168.60.130的客户端可以对节点进行增、删、改、查、管理权限 }}
 
-### 授权的相关命令 [	](zookeeper_20201124103028963)
+### zookeeper授权的相关命令 [	](zookeeper_20201124103028963)
 | 权限    | ACL简写 | 描述         |
 | :------ | :------ | :----------- |
 | `getAcl`  | `getAcl path`  | {{c1:: 读取ACL权限 }} |
@@ -523,11 +523,10 @@ zooKeeper.close();
 + observer角色特点：
   + {{c1:: 不参与集群的leader选举 }}
   + {{c1:: 不参与集群中写数据时的ack反馈 }}
-+ 在任何想变成observer角色的配置文件中加入：
-  ```properties
-    peerType=observer #注意位置应该不同
-    server.3=192.168.60.130:2289:3389:observer
-  ```
++ 在任何想变成observer角色的配置文件中加入：饰模式:UML结构图
+  1. {{c1:: `peerType=observer` }}
+    + 注意：位置应该参考sample文件
+  2. {{c1:: `server.3=192.168.60.130:2289:3389:observer` }}
 
 ### zookeeperAPI连接集群 [	](zookeeper_20201126080456412)
 

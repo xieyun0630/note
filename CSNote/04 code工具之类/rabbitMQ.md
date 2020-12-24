@@ -589,6 +589,7 @@ channel.basicConsume(Producer.FANOUT_QUEUE_1, true, consumer);
 5. 结束命令：
   + `rabbitmqctl -n rabbit1 stop`
   + `rabbitmqctl -n rabbit2 stop`
+6. 理解：{{c1:: 标签 }}
 
 ### 开启镜像代理 [	](rabbitMQ_20201124103028929)
 1. 确认RabbitMQ运行与启动：`rabbitmqctl status`

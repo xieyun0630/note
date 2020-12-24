@@ -1015,7 +1015,7 @@ public class Person
   +  cache-manager属性默认值为:{{c1:: cacheManager }}
 
 
-### 配置spring内置缓存实现的配置 [	](spring_20201017075500744)
+### 配置spring内置缓存 [	](spring_20201017075500744)
 + 概况：
   + spring内置缓存管理器类:{{c1:: `SimpleCacheManager` }}
   + 作为缓存区的类:{{c1:: `ConcurrentMapCacheFactoryBean` }}
@@ -1099,14 +1099,14 @@ public class Person
 
 ### jdbcTemplate操作数据库：DML操作 [	](spring_20201017075500755)
 
-+ `update(String sql,Object... args)`: {{c1:: {{c1:: DML操作方法签名 }} }}
-+ `batchUpdate(String sql,List<Object[]> batchArgs)`: {{c1:: {{c1:: 批量DML操作方法签名 }} }}
++ `update(String sql,Object... args)`: {{c1::  DML操作方法签名  }}
++ `batchUpdate(String sql,List<Object[]> batchArgs)`: {{c1::  批量DML操作方法签名 }}
 + 例：
 ```java
 // {{c1::
   String sql = "insert into t_book values(?,?,?)";
   Object[] args = {book.getUserId(), book.getUsername(), book.getUstatus()};
-  int update = jdbcTemplate.update(sql,args);
+  int update = jdbcTemplate.update(sql,args);基本操作
 
   String sql = "update t_book set username=?,ustatus=? where user_id=?";
   Object[] args = {book.getUsername(), book.getUstatus(),book.getUserId()};
