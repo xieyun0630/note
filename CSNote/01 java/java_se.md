@@ -1349,9 +1349,9 @@ Druid
   2. {{c1:: `ResultSetMetaData`      --结果集的元数据 }}
   3. {{c1:: `DataBaseMetaData`      --数据库的元数据 }}
 
-## 基本概念
+## 基本概念 [ ](java_se_20201227010951439)
 
-### Java语言的特点
+### Java语言的特点 [ ](java_se_20201227010951441)
 
 + 特点一：面向对象
   + 两个基本概念：{{c1:: 类、对象 }}
@@ -1362,30 +1362,32 @@ Druid
   + 跨平台性：{{c1:: 通过Java语言编写的应用程序在不同的系统平台上都可以运行。“Writeonce , Run Anywhere” }}
   + 原理：{{c1:: 只要在需要运行 java 应用程序的操作系统上，先安装一个Java虚拟机 (JVM JavaVirtual Machine) 即可。由JVM来负责Java程序在该系统中的运行。 }}
 
-### 什么是JDK，JRE
+### 什么是JDK，JRE [ ](java_se_20201227010951443)
 + **JDK**: {{c1:: (Java Development Kit Java开发工具包)JDK是提供给Java开发人员使用的，其中包含了java的开发工具，也包括了JRE。所以**安装了JDK，就不用在单独安装JRE**了。 其中的开发工具：编译工具(javac.exe) 打包工具(jar.exe)等 }}
 + **JRE**: {{c1:: (Java Runtime Environment Java运行环境)包括Java虚拟机(JVM Java Virtual Machine)和Java程序所需的核心类库等，如果想要运行一个开发好的Java程序，计算机中只需要安装JRE即可。}}
 + **JDK、JRE、JVM关系图**:{{c1:: ![](https://gitee.com/xieyun714/nodeimage/raw/master/img/20201225151034.png) }}
 + 概况：{{c1:: 使用JDK的开发工具完成的java程序，交给JRE去运行。 }}
 
 
-### 注释(comment)
+### 注释(comment) [ ](java_se_20201227010951446)
 + Java中的注释类型：
-  + 单行注释： `//注释文字`
-  + 多行注释： `/* 注释文字 */`
+  + 单行注释： {{c1:: `//注释文字` }}
+  + 多行注释： {{c1:: `/* 注释文字 */` }}
   + 文档注释(java特有):
     + 语法：
       ```java
+      //{{c1::
       /**
       @author 指定java程序的作者
       @version 指定源文件的版本
       */
+      //}}
       ```
-    + 作用：注释内容可以被JDK提供的工具 javadoc 所解，生成一套以网页文件形式体现的该程序的说明文档。
+    + 作用：{{c1:: 注释内容可以被JDK提供的工具 javadoc 所解，生成一套以网页文件形式体现的该程序的说明文档。 }}
 
-## 基本语法
+## 基本类型 [ ](java_se_20201227010951449)
 
-### 变量的分类
+### java变量的分类 [ ](java_se_20201227010951452)
 + 按数据类型分类：
   + 注意：{{c1:: 8种基本类型，3种引用类型 }}
   + 分类示意图：{{c1:: ![](https://gitee.com/xieyun714/nodeimage/raw/master/img/20201225153202.png) }}
@@ -1394,40 +1396,79 @@ Druid
   + 分类示意图：{{c1:: ![](https://gitee.com/xieyun714/nodeimage/raw/master/img/20201225153428.png) }}
   + 初始化区别：{{c1:: 局部变量除形参外，需显式初始化 }}
 
-### 基本类型特点
+### java基本类型特点 [ ](java_se_20201227010951454)
 + 整数类型特点：{{c1:: Java各整数类型有固定的**表数范围**和**字段长度** }}
 + 默认浮点型常量的类型: {{c1:: Java的浮点型常量默认为double型，声明float型常量，须后加‘f’或‘F’。}}
 + 默认整型常量的类型：{{c1:: java的整型常量默认为int型，声明long型常量须后加‘l’或‘L’}}
 + char类型的运算：{{c1:: `char+char`，`char+int`——类型均提升为int，附值char变量后，输出字符编码表中对应的字符，超出范围则报错}}
 + boolean类型数据特点：{{c1:: 只允许取值true和false，在编译之后都使用java虚拟机中的int数据类型来代替 }}
 
-### 字符型变量的三种表现形式：
+### java字符型(`char`)变量的三种字面量形式： [ ](java_se_20201227010951456)
 + 字符常量:{{c1:: `'a'` }}
 + 转义字符:{{c1:: `'\n'` }}
 + Unicode值字符型常量：{{c1:: `'\uXXXX'` }}
 
-### 基本数据类型的转换
-+ 自动类型转换：{{c1:: 容量小的类型自动转换为容量大的数据类型}}
-+ 强制类型转换:{{c1:: 自动类型转换的逆过程，将容量大的数据类型转换为容量小的数据类型。使用时要加上强制转换符：()，但可能造成精度降低或溢出,格外要注意。 }}
+### java基本数据类型的转换 [ ](java_se_20201227010951458)
 + 数据类型按容量大小排序为：{{c1:: ![](https://gitee.com/xieyun714/nodeimage/raw/master/img/20201225160947.png)}}
-+ 多种类型混合运算时：{{c1:: 系统首先自动将所有数据转换成容量最大的那种数据类型，然后再进行计算。 }}
++ 自动类型转换：{{c1:: 容量小的类型自动转换为容量大的数据类型}}
++ 强制类型转换:{{c1:: 大转小时，加上强制转换符：()，但可能造成精度降低或溢出,格外要注意。 }}
++ `+=`或者`++`运算符会执行隐式类型转换：{{c1:: `s1 += 1;`相当于`s1 = (short) (s1 + 1);` }}
++ 多种类型混合运算时的转换：{{c1:: 系统首先自动将所有数据转换成容量最大的那种数据类型，然后再进行计算。 }}
 + `byte,short,char`之间:{{c1:: 不会相互转换，他们三者在计算时首先转换为int类型。}}
 + `boolean`类型:{{c1:: 不能与其它数据类型运算。}}
 
-### 对于整数，有四种表示方式：
+### 自动装箱与拆箱 [ ](java_se_20210106110103440)
++ 概念: {{c1:: **基本类型都有**对应的**包装类型**，基本类型与其对应的包装类型之间的赋值使用自动装箱与拆箱完成。 }}
++ 装箱: {{c1:: `Integer x = 2;// 装箱 调用了 Integer.valueOf(2)` }}
++ 拆箱: {{c1:: `int y = x; // 拆箱 调用了 X.intValue()` }}
+
+### Differences between `new Integer(123)`, `Integer.valueOf(123)` and `just 123` [ ](java_se_20210106110103443)
+
++ `new Integer(123)`与`Integer.valueOf(123)`的区别：
+  
+  1. `new Integer(123)`:{{c1:: 每次都会新建一个对象； }}
+  2. `Integer.valueOf(123)`:{{c1:: 会使用缓存池中的对象，多次调用会取得同一个对象的引用。 }}
+  
++ valueOf()方法的实现思路：{{c1:: 就是先判断值是否在缓存池中，如果在的话就直接返回缓存池的内容。
+  ```java
+  public static Integer valueOf(int i) {
+      if (i >= IntegerCache.low && i <= IntegerCache.high)
+          return IntegerCache.cache[i + (-IntegerCache.low)];
+      return new Integer(i);
+  }
+  ```
+  }}
+
+### java基本类型包装类中的缓存池 [ ](java_se_20210106110103447)
+
++ 各基本类型对应缓冲池范围：
+  | 类型      | 缓存范围                           |
+  | --------- | ---------------------------------- |
+  | `boolean` | {{c1:: `boolean` values true and false     }} |
+  | `byte`    | {{c1:: all `byte` values                   }} |
+  | `short`   | {{c1:: `short` values between -128 and 127 }} |
+  | `int`     | {{c1:: `int` values between -128 and 127   }} |
+  | `char`    | {{c1:: `char` in the range \u0000 to \u007F}} |
+
++ 修改Integer缓冲池 IntegerCache 默认上限大小：{{c1:: 这个缓冲池的下界是-128，上界默认是127，但是这个上界是可调的，在启动jvm的时候，通过`-XX:AutoBoxCacheMax=<size>`来指定这个缓冲池的大小 }}
+
+## 运算 [ ](java_se_20210106110103450)
+
+### java对于整数，有四种表示方式： [ ](java_se_20201227010951461)
+
 + 二进制：{{c1:: (binary)`0,1`.以**0b**或**0B**开头。 }}
 + 十进制：{{c1:: (decimal)`0-9` }}
 + 八进制：{{c1:: (octal)`0-7` 以数字**0开头**表示。 }}
 + 十六进制：{{c1:: (hex)`0-9` `A-F` 以**0x**或**0X**开头表示。 }}
 
-### 6种逻辑运算符
+### java的6种逻辑运算符 [ ](java_se_20201227010951463)
 + `&` `|`和`&&` `||`的区别：
   + 单&时:{{c1:: 左边无论真假，右边都进行运算； }}
   + 双&时:{{c1:: 如果左边为真，右边参与运算，如果左边为假，那么右边不参与运算。 }}
   + ||表示：{{c1:: 当左边为真，右边不参与运算。 }}
 + 异或`^`与或`|`的不同之处是：{{c1:: 当左右都为true时，结果为false。 }}
 
-### 位运算符
+### 位运算符 [ ](java_se_20201227010951466)
 | 运算符 | 作用                                                         |
 | ------ | ------------------------------------------------------------ |
 | `<<`   | {{c1::空位补0，被移除的高位丢弃，空缺位补0。}}               |
@@ -1437,12 +1478,324 @@ Druid
 | `^`    | {{c1::相同二进制位进行 ^ 运算，结果是0；1^1=0 , 0^0=0不相同二进制位 ^ 运算结果是1。1^0=1 , 0^1=1}} |
 | `~`    | {{c1::正数取反，各二进制码按补码各位取反负数取反，各二进制码按补码各位取反}} |
 
-### switch语句有关规则
+### switch语句有关规则 [ ](java_se_20201227010951468)
 
-+ switch(表达式)中表达式的值必须是下述几种类型之一：byte，short，char，int，枚举 (jdk 5.0)，String (jdk 7.0)；
-+ case子句中的值必须是常量，不能是变量名或不确定的表达式值；
-+ 同一个switch语句，所有case子句中的常量值互不相同；
-+ break语句用来在执行完一个case分支后使程序跳出switch语句块；如
-果没有break，程序会顺序执行到switch结尾
-+ default子句是可任选的。同时，位置也是灵活的。当没有匹配的case时，
-执行default
++ switch(表达式)中表达式的值必须是下述5种类型之一：{{c1:: `byte`  `short`  `char`  `int`  `枚举 (jdk 5.0)`  `String (jdk 7.0)；`   switch 的设计初衷是对那些只有少数几个值的类型进行等值判断}}
+
++ 必须是常量:{{c1:: case子句中的值必须是常量，不能是变量名或不确定的表达式值； }}
+
++ 常量值互不相同：{{c1:: 同一个switch语句，所有case子句中的常量值互不相同； }}
+
++ break语句:{{c1:: 用来在执行完一个case分支后使程序跳出switch语句块；如果没有break，程序会顺序执行到switch结尾 }}
+
++ default子句:{{c1:: 是可任选的。同时，位置也是灵活的。当没有匹配的case时，执行default }}
+
+## 数组 [ ](java_se_20210106110103452)
+
+### 数组元素的默认初始化值 [ ](java_se_20210106110103456)
+
+| 数组元素类型 | 元素默认初始值              |
+| -------------- | ----------------------------- |
+| `byte`         | {{c1:: `0`}}                           |
+| `short`        | {{c1:: `0`}}                           |
+| `int`          | {{c1:: `0`}}                           |
+| `long`         | {{c1:: `0L`}}                          |
+| `float`        | {{c1:: `0.0F`}}                        |
+| `double`       | {{c1:: `0.0` }}                        |
+| `char`         | {{c1:: `0 或写为:’\u0000’(表现为空)`}} |
+| `boolean`      | {{c1:: `false`}}                       |
+| `引用类型`     | {{c1:: `null``数组元素类型`}}          |
+
+### 二维数组内存解析 [ ](java_se_20210106110103458)
+
++ 主要思路：java中实际上只有一维数组
+
++ 图示：![](https://gitee.com/xieyun714/nodeimage/raw/master/img/20201230113749.png)
+
+###  Arrays工具类的使用 [ ](java_se_20210106110103462)
+
+| 方法                                | 作用                                             |
+| ----------------------------------- | ------------------------------------------------ |
+| `boolean equals(int[] a,int[] b)`   | {{c1:: 判断两个数组是否相等。 }}                 |
+| `String toString(int[] a)`          | {{c1:: 输出数组信息。 }}                         |
+| `void fill(int[] a,int val)`        | {{c1:: 将指定值填充到数组之中。 }}               |
+| `void sort(int[] a)`                | {{c1:: 对数组进行排序。 }}                       |
+| `int binarySearch(int[] a,int key)` | {{c1:: 对排序后的数组进行二分法检索指定的值。 }} |
+
+
+## String [ ](java_se_20210106110103464)
+
+### String的内部数据类型 [ ](java_se_20210106110103466)
+
++ 在Java8中:{{c1::String内部使用char数组存储数据。
+  ```java
+  public final class String
+      implements java.io.Serializable, Comparable<String>, CharSequence {
+      /** The value is used for character storage. */
+      private final char value[];
+  }
+  ​```}}
+  ```
++ 在Java9之后:{{c1::String类的实现改用byte数组存储字符串，同时使用`coder`来标识使用了哪种编码。
+  ```java
+  public final class String
+      implements java.io.Serializable, Comparable<String>, CharSequence {
+      /** The value is used for character storage. */
+      private final byte[] value;
+      /** The identifier of the encoding used to encode the bytes in {@code value}. */
+      private final byte coder;
+  }
+  ```
+  }}
++ value数组被声明为final，这表明：{{c1:: value数组初始化之后就不能再引用其它数组。并且String内部没有改变value数组的方法，因此可以保证String不可变。 }}
+
+### String不可变的好处 [ ](java_se_20210106110103468)
+
+**1. 可以缓存 hash 值**:{{c1:: 因为 String 的 hash 值经常被使用，例如 String 用做 HashMap 的 key。不可变的特性可以使得 hash 值也不可变，因此只需要进行一次计算。}}
+**2. String Pool 的需要**:{{c1:: 如果一个 String 对象已经被创建过了，那么就会从 String Pool 中取得引用。只有 String 是不可变的，才可能使用 String Pool。![](https://gitee.com/xieyun714/nodeimage/raw/master/img/image-20191210004132894.png)}}
+
+**3. 安全性**:{{c1:: String 经常作为参数，String 不可变性可以保证参数不可变。例如在作为网络连接参数的情况下如果 String 是可变的，那么在网络连接过程中，String 被改变，改变 String 的那一方以为现在连接的是其它主机，而实际情况却不一定是。}}
+**4. 线程安全**:{{c1:: String 不可变性天生具备线程安全，可以在多个线程中安全地使用。}}
+
+### String, StringBuffer and StringBuilder区别 [ ](java_se_20210106110103471)
+
+1. **可变性角度** 
+- {{c1:: `String` 不可变 }}
+- {{c1:: `StringBuffer` 和 `StringBuilder` 可变 }}
+2. **线程安全角度**  
+- {{c1:: `String` 不可变，因此是线程安全的 }}
+- {{c1:: `StringBuilder` 不是线程安全的 }}
+- {{c1:: `StringBuffer` 是线程安全的，内部使用 `synchronized` 进行同步 }}
+
+### String Pool [ ](java_se_20210106110103474)
+
++ 概念：{{c1:: 字符串常量池（String Pool）保存着所有字符串字面量（literal strings），这些字面量在**编译时期**就确定。不仅如此，还可以使用 String 的 intern() 方法在运行过程将字符串添加到 String Pool 中。}}
+
++ 当一个字符串调用 intern() 方法时:{{c1:: 如果 String Pool 中已经存在一个字符串和该字符串值相等（使用 equals() 方法进行确定），那么就会返回 String Pool 中字符串的引用；否则，就会在 String Pool 中添加一个新的字符串，并返回这个新字符串的引用。}}
+
++ 示例：
+
+  ```java
+  //{{c1::
+  String s1 = new String("aaa");
+  String s2 = new String("aaa");
+  System.out.println(s1 == s2);           // false
+  String s3 = s1.intern();
+  String s4 = s2.intern();
+  System.out.println(s3 == s4);           // true
+  
+  String s5 = "bbb";
+  String s6 = "bbb";
+  System.out.println(s5 == s6);  // true
+  //}}
+  ```
+
+### 调用`new String("abc")`会发生什么？ [ ](java_se_20210106110103477)
++ 原理解析：
+  + {{c1:: 使用这种方式一共会创建两个字符串对象（前提是 String Pool 中还没有 "abc" 字符串对象）。 }}
+  + {{c1:: "abc" 属于字符串字面量，因此编译时期会在 String Pool 中创建一个字符串对象，指向这个 "abc" 字符串字面量； }}
+  + {{c1:: 而使用 new 的方式会在堆中创建一个字符串对象。 }}
++ `String(String original)`构造函数的源码:{{c1::
+  
+  ```java
+  public String(String original) {
+      this.value = original.value;
+      this.hash = original.hash;
+  }
+  ```
+}}
+  
+
+## 关键字 [ ](java_se_20210106110103480)
+
+### final关键字：分别作用于变量、方法、类的特点 [ ](java_se_20210106110103482)
+1. **变量**: {{c1:: 声明数据为常量，可以是编译时常量，也可以是在运行时被初始化后不能被改变的常量。 }}
+    - 对于基本类型:{{c1:: final 使数值不变； }}
+    - 对于引用类型:{{c1:: final 使引用不变，也就不能引用其它对象，但是被引用的对象本身是可以修改的。 }}
+2. **方法**: {{c1:: 声明方法不能被子类重写。 }}
+    + 关于private方法：{{c1:: private 方法隐式地被指定为 final，如果在子类中定义的方法和基类中的一个 private 方法签名相同，此时子类的方法不是重写基类方法，而是在子类中定义了一个新的方法。 }}
+3. **类**: {{c1:: 声明类不允许被继承。 }}
+
+### static关键字:作用于类各成员的特点 [ ](java_se_20210106110103485)
+
++ 静态变量：{{c1:: 又称为类变量，也就是说这个变量属于类的。 }}
+
++ 静态方法：{{c1:: 在类加载的时候就存在了，不依赖于任何实例，不能是抽象方法 }}
+  
+  + `this`和`super`关键字：{{c1:: 静态方法中不能有this和super关键字，因此这两个关键字与具体对象关联。 }}
+  
++ 静态语句块：{{c1:: 静态语句块在类初始化时运行一次。
+  ```java
+  public class A {
+      static {
+          System.out.println("123");
+      }
+  
+      public static void main(String[] args) {
+          A a1 = new A();
+          A a2 = new A();
+      }
+  }
+  ```
+  ```
+  123
+  ```
+  }}
+
++ 静态内部类：{{c1:: 非静态内部类依赖于外部类的实例，而静态内部类不需要 }}
+
++ 静态导包：{{c1::`import static com.xxx.ClassName.*`  例如打印操作System.out.println(…);就可以将其写入一个静态方法print(…)}}
+
++ 存在继承的情况下，`静态变量，静态语句块，实例变量，普通语句块，构造函数`初始化顺序为：
+  1. {{c1:: 父类（静态变量、静态语句块） }}
+  2. {{c1:: 子类（静态变量、静态语句块） }}
+  3. {{c1:: 父类（实例变量、普通语句块） }}
+  4. {{c1:: 父类（构造函数） }}
+  5. {{c1:: 子类（实例变量、普通语句块） }}
+  6. {{c1:: 子类（构造函数） }}
+
+## Object中的通用实例方法 [ ](java_se_20210106110103487)
+
+### 对象的等价关系 [ ](java_se_20210106110103490)
+
++ 两个对象具有等价关系，需要满足以下五个条件：
+  + **自反性**：{{c1:: 
+    ```java
+    x.equals(x); // true
+    ```
+    }}
+
+  + **对称性**：{{c1:: 
+    ```java
+    x.equals(y) == y.equals(x); // true
+    ```
+    }}
+
+  + **传递性**：{{c1:: 
+    ```java
+    if (x.equals(y) && y.equals(z))
+        x.equals(z); // true;
+    ```
+    }}
+    
+  + **一致性**：{{c1:: 多次调用 equals() 方法结果不变
+    ```java
+    x.equals(y) == x.equals(y); // true
+    ```
+    }}
+    
+  + **与null的比较**：{{c1:: 对任何不是 null 的对象 x 调用 x.equals(null) 结果都为 false
+    ```java
+    x.equals(null); // false;
+    ```
+    }}
++ 等价与相等
+  - 对于基本类型，== 判断：{{c1:: 两个值是否相等，基本类型没有 equals() 方法。 }}
+  - 对于引用类型，== 判断：{{c1:: 两个变量是否引用同一个对象，而 equals() 判断引用的对象是否等价。 }}
+
+### Object的实例方法：重写`equals()`思路 [ ](java_se_20210106110103494)
+
+1. {{c1:: 检查是否为同一对象引用：`if (this == o) return true;` }}
+2. {{c1:: 检查是否是同一类型：`if (this == o) return true;` }}
+3. {{c1:: 转型 }}
+4. {{c1:: 判断每个关键域是否相等 }}
+- 例：{{c1::
+  ```
+  public class EqualExample {
+  
+      private int x;
+      private int y;
+      private int z;
+  
+      public EqualExample(int x, int y, int z) {
+          this.x = x;
+          this.y = y;
+          this.z = z;
+      }
+  
+      @Override
+      public boolean equals(Object o) {
+          if (this == o) return true;
+          if (o == null || getClass() != o.getClass()) return false;
+  
+          EqualExample that = (EqualExample) o;
+  
+          if (x != that.x) return false;
+          if (y != that.y) return false;
+          return z == that.z;
+      }
+  }
+  ```
+  }}
+
+### Object的实例方法：`hashCode()` [ ](java_se_20210106110103497)
+
++ 与`equals()`实例方法的关系
+  + 哈希值与等价：{{c1:: hashCode() 返回哈希值，而 equals() 是用来判断两个对象是否等价 }}
+  + 哈希值具有随机性：{{c1:: **等价的两个对象散列值一定相同**，但是**散列值相同的两个对象不一定等价**，这是因为计算哈希值具有随机性，两个**值不同**的对象可能**计算出相同**的哈希值。 }}
+  + 同时存在：{{c1:: 在覆盖 equals() 方法时应当总是覆盖 hashCode() 方法，保证等价的两个对象哈希值也相等。 }}
+
++ 与HashSet和HashMap等类的关系:{{c1:: 因此要将对象添加到这些集合类中，需要让对应的类实现hashCode()方法,如果没有实现 hashCode() 方法，可能会造成等价而哈希值不同，最终导致集合添加了两个等价的对象。 }}
+
+### Object的实例方法：`toString()` [ ](java_se_20210106110103500)
++ 作用：{{c1:: 默认返回`ToStringExample@4554617c`这种形式，其中 @ 后面的数值为 散列码的无符号十六进制表示。 }}
+
+### Object的实例方法：`clone()` [ ](java_se_20210106110103502)
+
++ 作用：{{c1:: clone() 是 Object 的 protected 方法，它不是 public，一个类不显式去重写 clone()，其它类就不能直接去调用该类实例的 clone() 方法。 }}
++ 与Cloneable接口关系：{{c1:: 如果一个类没有实现 Cloneable 接口又调用了 clone() 方法，就会抛出 CloneNotSupportedException。 }}
+
++ clone() 的替代方案：{{c1:: 最好不要去使用 clone()，可以使用拷贝构造函数或者拷贝工厂来拷贝一个对象。 }}
+
+## 继承 [ ](java_se_20210106110103504)
+
+### 访问权限修饰符 [ ](java_se_20210106110103507)
+
++ 修饰对象：{{c1:: 类 与 类成员 }}
+
++ 4种访问权限从大到小：{{c1:: `public > protected > default(包访问权限) > private` }}
++ protected只用于修饰成员：{{c1:: 表示在继承体系中成员对于子类可见，但是这个访问修饰符对于类没有意义。 }}
++ 重写后访问权限：{{c1:: 如果子类的方法重写了父类的方法，那么子类中该方法的访问级别不允许低于父类的访问级别。这是为了满足里氏替换原则。 }}
++ 字段决不能是公有的：{{c1:: AccessExample 拥有 `String id` 公有字段，如果在未来某个时刻，我们想要使用 `int id` 字段，那么就需要修改所有的客户端代码，而使用getId()与setId()即可避免该问题。 }}
+
+### 抽象类与接口 [ ](java_se_20210106110103511)
+
+- 抽象类
+  - 定义：{{c1:: 抽象类和抽象方法都使用 abstract 关键字进行声明。如果一个类中包含抽象方法，那么这个类必须声明为抽象类。}}
+  - 抽象类和普通类最大的区别：{{c1:: 抽象类不能被实例化，只能被继承。 }}
+- 接口
+  - 定义：{{c1:: 接口是抽象类的延伸，在 Java 8 之前，它可以看成是一个完全抽象的类，也就是说它不能有任何的方法实现。 }}
+  - java8支持默认方法的原因：{{c1:: 从 Java 8 开始，接口也可以拥有默认的方法实现，这是因为不支持默认方法的接口的维护成本太高了。在 Java 8 之前，如果一个接口想要添加新的方法，那么要修改所有实现了该接口的类，让它们都实现新增的方法。}}
+  - 接口各成员的可见性：{{c1:: 接口的成员（字段 + 方法）默认都是 public 的，并且不允许定义为 private 或者 protected。从 Java 9 开始，允许将方法定义为 private，这样就能定义某些复用的代码又不会把方法暴露出去。 }}
+  - 接口中的`static`  `final`: {{c1:: 接口的字段默认都是 static 和 final 的 }}
+
+### 抽象类与接口比较 [ ](java_se_20210106110103514)
+
+- `IS-A`与`LIKE-A` ：{{c1:: 从设计层面上看，抽象类提供了一种 IS-A 关系，需要满足里式替换原则，即子类对象必须能够替换掉所有父类对象。而接口更像是一种 LIKE-A 关系，它只是提供一种方法实现契约，并不要求接口和实现接口的类具有 IS-A 关系。 }}
+- 单继承：{{c1:: 从使用上来看，一个类可以实现多个接口，但是不能继承多个抽象类。 }}
+- `static final`: {{c1:: 接口的字段只能是 static 和 final 类型的，而抽象类的字段没有这种限制。 }}
+- `public`: {{c1:: 接口的成员只能是 public 的，而抽象类的成员可以有多种访问权限。 }}
+
+### 为了满足里式替换原则，重写有以下三个限制： [ ](java_se_20210106110103516)
+
+1. {{c1:: 子类方法的访问权限必须大于等于父类方法； }}
+2. {{c1:: 子类方法的返回类型必须是父类方法返回类型或为其子类型。 }}
+3. {{c1:: 子类方法抛出的异常类型必须是父类抛出异常类型或为其子类型。 }}
++ `@Override`：{{c1:: 可以让编译器帮忙检查是否满足上面的三个限制条件。 }}
+
+### 类继承链中方法调用的顺序 [ ](java_se_20210106110103519)
+
++ 概况：{{c1:: 在调用一个方法时，先从本类中查找看是否有对应的方法，如果没有再到父类中查看，看是否从父类继承来。否则就要对参数进行转型，转成父类之后看是否有对应的方法。}}
++ 总的来说，方法调用的优先级为（注意`.`前面与后面转型目标）： 
+  + {{c1:: `this.func(this)` }}
+  + {{c1:: `super.func(this)` }}
+  + {{c1:: `this.func(super)` }}
+  + {{c1:: `super.func(super)` }}
+
+### 重写与重载 [ ](java_se_20210106110103523)
+
++ 重写：指子类实现了一个与父类在方法**声明上完全相同**的一个方法。
++ 重载：存在于同一个类中，指一个方法与已经存在的方法名称上相同，但是**参数类型、个数、顺序**至少有一个不同。
+  + 注意：{{c1:: 返回值不同，其它都相同不算是重载 }}
+
+## 反射 [ ](java_se_20210106110103527)

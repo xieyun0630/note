@@ -285,7 +285,7 @@
 ## 压缩和解压类 [	](linux_20201214030809287)
 
 ### `gzip/gunzip`指令 [	](linux_20201214030809289)
-+ 注意：当我们使用gzip对文件进行压缩/解压后，不会保留原来的文件。
++ 注意：{{c1:: 当我们使用gzip对文件进行压缩/解压后，不会保留原来的文件。}}
 + 案例1:gzip压缩，将/home下的hello.txt文件进行压缩:{{c1:: ![](https://gitee.com/xieyun714/nodeimage/raw/master/img/20201212201859.png) }}
 + 案例2:gunzip压缩，将/home下的hello.txt.gz文件进行解压缩:{{c1:: ![](https://gitee.com/xieyun714/nodeimage/raw/master/img/20201212201932.png) }}
  

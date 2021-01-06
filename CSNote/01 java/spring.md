@@ -401,13 +401,11 @@
 ### spring配置文件参数化的开发步骤 [	](spring_20200715110208936)
 
 - 提供一个小的配置文件(.properities)
-  ```properties
-  <!-- {{c1:: -->
+  ```
   jdbc.driverClassName = com.mysql.jdbc.Driver
   jdbc.url = jdbc:mysql://localhost:3306/suns?useSSL=false
   jdbc.username = root
   jdbc.password = 123456
-  <!-- }} -->
   ```
 - applicationContext.xml中配置
   ```xml

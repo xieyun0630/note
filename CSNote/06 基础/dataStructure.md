@@ -281,7 +281,7 @@ typedef struct DNode{
 
 {{c1:: ![image-20201030152011675](https://gitee.com/xieyun714/nodeimage/raw/master/img/image-20201030152011675.png) }}
 
-### 双链表实现：插入 [	](dataStructure_20201109090319243)
+### 双链表实现：指定节点后添加节点（后插操作） [	](dataStructure_20201109090319243)
 
 {{c1:: ![image-20201030151749646](https://gitee.com/xieyun714/nodeimage/raw/master/img/image-20201030151749646.png) ![image-20201109170334280](https://gitee.com/xieyun714/nodeimage/raw/master/img/image-20201109170334280.png)}}
 
@@ -362,8 +362,7 @@ typedef struct DNode{
 + 栈满的条件：{{c1:: `top0 + 1 == top1` }}
 
 ### 栈的应用：用栈实现字符串的括号匹配 [	](dataStructure_20201115082829750)
-+ 主要思路：{{c1:: 依次扫描所有字符，遇到左括号入栈，遇到右括号则弹出栈顶元素检 }}
-查是否匹配。
++ 主要思路：{{c1:: 依次扫描所有字符，遇到左括号入栈，遇到右括号则弹出栈顶元素检查是否匹配。 }}
 + 匹配失败情况：{{c1:: ①左括号单身、②右括号单身、③左右括号不匹配 }}
 + 算法实现：
   + 正面：![](https://gitee.com/xieyun714/nodeimage/raw/master/img/20201115171455.png)
@@ -379,7 +378,7 @@ typedef struct DNode{
   + 注意：{{c1:: 第二步，先出栈的是“右操作数” }}
 + 过程动画：
   
-  + {{c1:: ![zdXEoElMxF](dataStructure.assets/zdXEoElMxF.gif)}}
+  + {{c1:: ![zdXEoElMxF](dataStructure.assets/zdXEoEl1MxF.gif)}}
 + 用栈实现前缀表达式的计算：
   1. {{c1:: **从右往左**扫描下一个元素，直到处理完所有元素 }}
   2. {{c1:: 若扫描到操作数则压入栈，并回到①；否则执行③ }}
@@ -388,7 +387,6 @@ typedef struct DNode{
 ### 中缀表达式转后缀表达式（手算） [	](dataStructure_20201115082829758)
 
 + 转换成后缀表达式：
-  
   + ![](https://gitee.com/xieyun714/nodeimage/raw/master/img/20201115175721.png)
 + 手算步骤：
   1. {{c1:: 确定中缀表达式中**各个运算符的运算顺序** }}
@@ -396,7 +394,6 @@ typedef struct DNode{
   3. {{c1:: 如果还有运算符没被处理，就继续② }}
   + 左优先”原则：{{C1:: 只要左边的运算符能先计算，就优先算左边的 }}
 + 结果：
-  
   + {{c1:: ![](https://gitee.com/xieyun714/nodeimage/raw/master/img/20201115175840.png) }}
 
 ### 中缀表达式转前缀表达式（手算） [	](dataStructure_20201115082829761)
@@ -406,9 +403,7 @@ typedef struct DNode{
   2. {{c1:: 选择下一个运算符，按照**「运算符 左操作 数右操作数」**的方式组合成一个新的操作数 }}
   3. {{c1:: 如果还有运算符没被处理，就继续② }}
   + 右优先”原则：{{C1:: 只要右边的运算符能先计算，就优先算右边的 }}
-+ 结果：
-  
-  + {{c1:: ![](https://gitee.com/xieyun714/nodeimage/raw/master/img/20201115195456.png) }}
++ 结果：{{c1:: ![](https://gitee.com/xieyun714/nodeimage/raw/master/img/20201115195456.png) }}
 
 ### 中缀表达式转后缀表达式（机算） [	](dataStructure_20201202040742332)
 + 初始化一个栈，用于保存暂时还不能确定运算顺序的运算符。

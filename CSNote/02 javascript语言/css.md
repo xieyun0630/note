@@ -458,12 +458,12 @@
   + `requried`:{{c1:: 必填 }}
   + `placeholder`:{{c1:: 提示文本 }}
   + `autofocus`:{{c1:: 自动聚焦到指定表单 }}
-  + `autocomplete`:{{c1:: off/on,浏览器基于之前填入过的值自动填入 }}
+  + `autocomplete`:{{c1:: `off/on`,浏览器基于之前填入过的值自动填入 }}
   + `multiple`:{{c1:: 可以多选文件提交 }}
 + 可以通过以下设置方式修改placeholder里面的字体颜色：
   ```css
   /* {{c1:: */
-    input::placeholder {
+    input: :placeholder {
     color: pink;
     }
   /* }} */

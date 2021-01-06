@@ -119,25 +119,54 @@
 | `addauth` | `addauth digest <user>:<password> ` | {{c1:: 添加认证用户}} |
 
 ### acl权限控制案例： [	](zookeeper_20201124103028967)
-+ world授权模式：{{c1:: `setAcl <path> world:anyone:<acl>` }}
-  + 例：{{c1:: `setAcl /node1 world:anyone:cdrwa` }}
-+ IP授权模式：{{c1:: `setAcl <path> ip:<ip>:<acl>` }}
-  + 例：{{c1:: `setAcl /node2 ip:192.168.60.129:cdrwa` }}
-  + 例：{{c1:: `setAcl /node2 ip:192.168.60.129:cdrwa,ip:192.168.60.130:cdrwa` }}
-  + 注意：远程登录zookeeper命令:{{c1:: `./zkCli.sh -server ip` }}
-+ Auth授权模式：
-  + {{c1:: `addauth digest <user>:<password> #添加认证用户` }}
-  + {{c1:: `setAcl <path> auth:<user>:<acl>` }}
-  + 例：
-    + {{c1:: `addauth digest itcast:123456` }}
-    + {{c1:: `setAcl /node3 auth:itcast:cdrwa` }}
-+ Digest授权模式：{{c1:: `setAcl <path> digest:<user>:<password>:<acl>` }}
-  + 这里的密码是经过SHA1及BASE64处理的密文，在SHELL中可以通过以下命令计算：
-  + 例：
-    1. {{c1:: `setAcl /node4 digest:itheima:qlzQzCLKhBROghkooLvb+Mlwv4A=:cdrwa`:使用密文授权 }}
-    2. {{c1:: `addauth digest itheima:123456 `:使用明文登录 }}
-    3. {{c1:: `get /node4`：正常获取权限 }}
-+ 多种模式授权：{{c1:: `setAcl /node5 ip:192.168.60.129:cdra,auth:itcast:cdrwa,digest:itheima:qlzQzCLKhBROghkooLvb+Mlwv4A=:cdrwa` }}
++ world授权模式:
+  ```bash
+  #{{c1::
+  #语法
+  setAcl <path> world:anyone:<acl>
+  #例
+  setAcl /node1 world:anyone:cdrwa
+  #}}
+  ```
++ IP授权模式:
+  ```bash
+  #{{c1::
+  #语法
+  setAcl <path> ip:<ip>:<acl>
+  #例
+  setAcl /node2 ip:192.168.60.129:cdrwa
+  #}}
+  ```
++ Auth授权模式:
+  ```bash
+  #{{c1::
+  #语法
+  addauth digest <user>:<password>
+  setAcl <path> auth:<user>:<acl>
+  #例
+  addauth digest itcast:123456
+  setAcl /node3 auth:itcast:cdrwa
+  #}}
+  ```
++ Digest授权模式:
+  ```bash
+  #{{c1::
+  #语法
+  setAcl <path> digest:<user>:<password>:<acl>
+  #例
+  setAcl /node4 digest:itheima:qlzQzCLKhBROghkooLvb #这里的密码是经过SHA1及BASE64处理的密文
+  addauth digest itheima:123456 #使用明文登录
+  get /node4 #正常获取权限
+  #}}
+  ```
++ 多种模式授权:
+  ```bash
+  #{{c1::
+  setAcl /node5 ip:192.168.60.129:cdra,auth:itcast:cdrwa,digest:itheima:qlzQzCLKhBROghkooLvb+Mlwv4A=:cdrwa
+  #}}
+  ```
++ 远程登录zookeeper命令:{{c1:: `./zkCli.sh -server ip` }}
+
 
 ### zookeeper添加超级管理员 [	](zookeeper_20201124103028970)
 1. 那么打开zookeeper目录下的/bin/zkServer.sh服务器脚本文件，找到如下一行：
