@@ -1385,7 +1385,7 @@ Druid
       ```
     + 作用：{{c1:: 注释内容可以被JDK提供的工具 javadoc 所解，生成一套以网页文件形式体现的该程序的说明文档。 }}
 
-### java命令行参数
+### java命令行参数 [ ](java_se_20210107100220033)
 - 命令行参数类型是{{c1:: `String[]`数组； }}
 - 命令行参数由JVM{{c1:: 接收用户输入并传给`main`方法； }}
 - 如何解析命令行参数需要由程序自己实现。{{c1::
@@ -1404,16 +1404,16 @@ Druid
   ```
   }}
 
-### classpath和jar
+### classpath和jar [ ](java_se_20210107100220035)
 
 + `classpath`：{{c1：： JVM通过环境变量`classpath`决定搜索`class`的路径和顺序； }}
 + 设置系统环境变量`classpath`替代方案：{{c1：： 始终建议通过`-cp`命令传入； `java -cp ./hello.jar abc.xyz.Hello` }}
 + jar包：{{c1：： jar包相当于目录，可以包含很多`.class`文件，方便下载和使用； }}
 + `MANIFEST.MF文件`：{{c1：： `MANIFEST.MF`文件可以提供jar包的信息，如`Main-Class`，这样可以直接运行jar包。 }}
 
-## java9新特性
+## java9新特性 [ ](java_se_20210107100220038)
 
-### 模块
+### 模块 [ ](java_se_20210107100220040)
 
 + 出现原因：{{c1:: jar只是用于存放class的容器，它并不关心class之间的依赖。 }}
 
@@ -1465,7 +1465,7 @@ Druid
     ```
    }}
 
-### 打包JRE
+### 打包JRE [ ](java_se_20210107100220042)
 
 1. `jlink`命令：{{c1:: `jlink --module-path hello.jmod --add-modules java.base,java.xml,hello.world --output jre/` }}
     + 参数：
@@ -1474,7 +1474,7 @@ Druid
       3. {{c1::`--output`: 指定输出目录 }}
 2. 完成后，直接运行JRE: {{c1:: `jre/bin/java --module hello.world` }}
 
-### 模块中类的访问权限声明
+### 模块中类的访问权限声明 [ ](java_se_20210107100220045)
 + 如果需要使用到模块`java.xml`的一个类`javax.xml.XMLConstants`那么：{{c1:: `java.xml`的`module-info.java`中必须声明：
   ```
   module java.xml {
@@ -1656,12 +1656,12 @@ Druid
 
   
 
-### 一个不变类具有以下特点：
+### 一个不变类具有以下特点： [ ](java_se_20210107100220047)
 
 1. {{c1:: 定义class时使用`final`，无法派生子类； }}
 2. {{c1:: 每个字段使用`final`，保证创建实例后无法修改任何字段。 }}
 
-### record关键字定义不变类
+### record关键字定义不变类 [ ](java_se_20210107100220049)
 + 仔细观察`Point`的定义：`public record Point(int x, int y) {}`
 + 相当于以下代码：
   ```java
@@ -1811,7 +1811,7 @@ Druid
   ```
 }}
 
-### StringJoiner
+### StringJoiner [ ](java_se_20210107100220051)
 
 + 作用：高效拼接字符串
 + 例，使用`StringJoiner`构造一个`SELECT`语句：
@@ -1982,15 +1982,15 @@ Druid
 
 + clone() 的替代方案：{{c1:: 最好不要去使用 clone()，可以使用拷贝构造函数或者拷贝工厂来拷贝一个对象。 }}
 
-## 工具类
+## 工具类 [ ](java_se_20210107100220054)
 
-### BigInteger
+### BigInteger [ ](java_se_20210107100220056)
 
 + 作用：{{c1:: `BigInteger`用于表示任意大小的整数}}
 + 不可变：{{c1:: `BigInteger`是不变类，并且继承自`Number`}}
 + 将`BigInteger`转换成基本类型时可使用：{{c1:: `longValueExact()`等方法保证结果准确}}
 
-### BigDecimal
+### BigDecimal [ ](java_se_20210107100220059)
 + 作用：{{c1:: 表示一个任意大小且精度完全准确的浮点数。 }}
 + `BigDecimal`的比较：{{c1:: 总是使用`compareTo()`比较两个`BigDecimal`的值，不要使`用equals()`！ }}
 + 小数位数：{{c1:: `BigDecimal`用`scale()`表示小数位数 }}
@@ -2008,7 +2008,7 @@ Druid
   //}}
   ```
 
-### Java提供的常用工具类有：
+### Java提供的常用工具类有： [ ](java_se_20210107100220061)
 + `Math`：{{c1:: 数学计算 }}
 + `Random`：{{c1:: 生成伪随机数 }}
 + `SecureRandom`：{{c1:: 生成安全的随机数 }}
@@ -2064,9 +2064,9 @@ Druid
 + 重载：{{c1:: 存在于同一个类中，指一个方法与已经存在的方法名称上相同，但是**参数类型、个数、顺序**至少有一个不同。 }}
   + 注意：{{c1:: 返回值不同，其它都相同不算是重载 }}
 
-## 枚举类
+## 枚举类 [ ](java_se_20210107100220063)
 
-### 和`int`定义的常量相比，使用`enum`定义枚举有如下好处：
+### 和`int`定义的常量相比，使用`enum`定义枚举有如下好处： [ ](java_se_20210107100220066)
 
 - 首先，`enum`常量本身带有类型信息，即`Weekday.SUN`类型是`Weekday`，编译器会自动检查出类型错误。
 
@@ -2078,11 +2078,11 @@ Druid
 
 - 不同类型的枚举不能互相比较或者赋值，因为类型不符
 
-### enum实例直接使用`==`比较
+### enum实例直接使用`==`比较 [ ](java_se_20210107100220068)
 
 + 原因：{{c1::  这是因为`enum`类型的每个常量在 JVM中只有一个唯一实例，所以可以直接用`==`比较。`==`比较的是两个引用类型的变量是否是同一个对象。因此，引用类型比较，要始终使用`equals()`方法.}}
 
-### 枚举类特点
+### 枚举类特点 [ ](java_se_20210107100220071)
 
 + 与普通类的关系：{{c1:: Java使用`enum`定义枚举类型，它被编译器编译为`final class Xxx extends Enum { … }`； }}
 + `name()`：{{c1::  通过`name()`获取常量定义的字符串，注意不要使用`toString()`； }}
@@ -2091,11 +2091,11 @@ Druid
 + 构造方法：{{c1:: `enum`的构造方法要声明为`private`，字段强烈建议声明为`final`； }}
 + `switch`：{{c1:: `enum`适合用在`switch`语句中。 }}
 
-## 异常
-### java的异常类体系
+## 异常 [ ](java_se_20210107100220073)
+### java的异常类体系 [ ](java_se_20210107100220075)
 + 图：{{c1:: ![](https://gitee.com/xieyun714/nodeimage/raw/master/img/20210107155809.png) }}
 
-### java常见异常类
+### java常见异常类 [ ](java_se_20210107100220077)
 
 + `Error`：{{c1:: 表示严重的错误 }}
   + `OutOfMemoryError`：{{c1:: 内存耗尽 }}
@@ -2108,14 +2108,14 @@ Druid
   + `NullPointerException`：{{c1:: 对某个null的对象调用方法或字段 }}
   + `IndexOutOfBoundsException`：{{c1:: 数组索引越界 }}
 
-### 必须捕获的异常与不需要捕获的异常
+### 必须捕获的异常与不需要捕获的异常 [ ](java_se_20210107100220079)
 + 必须捕获的异常：{{c1:: 包括`Exception`及其子类，但不包括`RuntimeException`及其子类，这种类型的异常称为`Checked Exception`。 }}
 + 不需要捕获的异常：{{c1:: 包括`Error`及其子类，`RuntimeException`及其子类 }}
 + 注意：{{c1:: 编译器对RuntimeException及其子类不做强制捕获要求，不是指应用程序本身不应该捕获并处理RuntimeException。是否需要捕获，具体问题具体分析。 }}
 
-## Java IO
+## Java IO [ ](java_se_20210107100220081)
 
-### Java 的 I/O 大概可以分成以下几类：
+### Java 的 I/O 大概可以分成以下几类： [ ](java_se_20210107100220084)
 
 - 磁盘操作：{{c1:: `File` }}
 - 字节操作：{{c1:: `InputStream` 和 `OutputStream` }}
@@ -2124,7 +2124,7 @@ Druid
 - 网络操作：{{c1:: `Socket` }}
 - 新的输入/输出：{{c1:: `NIO` }}
 
-### 磁盘操作：File类
+### 磁盘操作：File类 [ ](java_se_20210107100220087)
 
 + 作用：{{c1:: File 类可以用于表示文件和目录的信息，但是它不表示文件的内容。 }}
 
@@ -2148,7 +2148,7 @@ Druid
   //}}
   ```
 
-### 字节操作： 使用`InputStream` 和 `OutputStream`实现文件复制
+### 字节操作： 使用`InputStream` 和 `OutputStream`实现文件复制 [ ](java_se_20210107100220090)
 
 ```java
 //{{c1::
@@ -2171,15 +2171,15 @@ public static void copyFile(String src, String dist) throws IOException {
 }
 ```
 
-### Java I/O中的装饰者模式
+### Java I/O中的装饰者模式 [ ](java_se_20210107100220092)
 
 - Java I/O 使用了装饰者模式来实现。以 InputStream 为例：{{c1:: ![](https://gitee.com/xieyun714/nodeimage/raw/master/img/9709694b-db05-4cce-8d2f-1c8b09f4d921.png) }}
 - `DataInputStream` ：{{c1:: 提供了对更多数据类型进行输入的操作 }}
 - `BufferedInputStream` ：{{c1:: 为 FileInputStream 提供缓存的功能。 }}
 
-## 字符操作
+## 字符操作 [ ](java_se_20210107100220095)
 
-### 编码与解码
+### 编码与解码 [ ](java_se_20210107100220098)
 
 + 各编码方式的中英文占比：
   + GBK 编码中:{{c1:: 中文字符占 2 个字节，英文字符占 1 个字节； }}
@@ -2201,7 +2201,7 @@ public static void copyFile(String src, String dist) throws IOException {
 
 
 
-### Reader 与 Writer
+### Reader 与 Writer [ ](java_se_20210107100220101)
 
 + 作用：{{c1:: 不管是磁盘还是网络传输，最小的存储单元都是字节，而不是字符。但是在程序中操作的通常是字符形式的数据，因此需要提供对字符进行操作的方法。 }}
 - `InputStreamReader` ：{{c1:: 实现从字节流解码成字符流； }}
@@ -2227,9 +2227,9 @@ public static void copyFile(String src, String dist) throws IOException {
   }
   ```
 
-## 对象操作
+## 对象操作 [ ](java_se_20210107100220104)
 
-### 序列化
+### 序列化 [ ](java_se_20210107100220106)
 
 + 作用：{{c1:: 序列化就是将一个对象转换成字节序列，方便存储和传输。 }}
 + 实现：
@@ -2259,5 +2259,4 @@ public static void copyFile(String src, String dist) throws IOException {
 + 不会对静态变量进行序列化：{{c1:: 因为序列化只是保存对象的状态，静态变量属于类的状态。 }}
           + Serializable接口：{{c1:: 序列化的类需要实现 Serializable 接口，它只是一个标准，没有任何方法需要实现，但是如果不去实现它的话而进行序列化，会抛出异常。 }}
 
-## java容器
-
+## java容器 [ ](java_se_20210107100220109)
