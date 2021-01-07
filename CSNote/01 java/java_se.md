@@ -1385,6 +1385,109 @@ Druid
       ```
     + 作用：{{c1:: 注释内容可以被JDK提供的工具 javadoc 所解，生成一套以网页文件形式体现的该程序的说明文档。 }}
 
+### java命令行参数
+- 命令行参数类型是{{c1:: `String[]`数组； }}
+- 命令行参数由JVM{{c1:: 接收用户输入并传给`main`方法； }}
+- 如何解析命令行参数需要由程序自己实现。{{c1::
+  ```java
+  // java Main -version
+  public class Main {
+      public static void main(String[] args) {
+          for (String arg : args) {
+              if ("-version".equals(arg)) {
+                  System.out.println("v 1.0");
+                  break;
+              }
+          }
+      }
+  }
+  ```
+  }}
+
+### classpath和jar
+
++ `classpath`：{{c1：： JVM通过环境变量`classpath`决定搜索`class`的路径和顺序； }}
++ 设置系统环境变量`classpath`替代方案：{{c1：： 始终建议通过`-cp`命令传入； `java -cp ./hello.jar abc.xyz.Hello` }}
++ jar包：{{c1：： jar包相当于目录，可以包含很多`.class`文件，方便下载和使用； }}
++ `MANIFEST.MF文件`：{{c1：： `MANIFEST.MF`文件可以提供jar包的信息，如`Main-Class`，这样可以直接运行jar包。 }}
+
+## java9新特性
+
+### 模块
+
++ 出现原因：{{c1:: jar只是用于存放class的容器，它并不关心class之间的依赖。 }}
+
++ 作用：{{c1:: 如果`a.jar`必须依赖另一个`b.jar`才能运行，那我们应该给`a.jar`加点说明啥的，让程序在编译和运行的时候能自动定位到`b.jar`，这种自带“依赖关系”的class容器就是模块。 }}
+
++ `java.base`模块：{{c1:: 所有的模块都直接或间接地依赖`java.base`模块，只有`java.base`模块不依赖任何模块，它可以被看作是“根模块” }}
+
++ 模块中的目录结构：{{c1::
+  ```
+  oop-module
+  ├── bin
+  ├── build.sh
+  └── src
+      ├── com
+      │   └── itranswarp
+      │       └── sample
+      │           ├── Greeting.java
+      │           └── Main.java
+      └── module-info.java
+  ```
+  }}
+  
++ 创建模块
+  1. 切换到`oop-module`，在当前目录下编译所有的`.java`文件，并存放到`bin`目录下:{{c1::
+    ```shell
+    javac -d bin src/module-info.java src/com/itranswarp/sample/*.java
+    ```
+    }}
+  
+  2. 把bin目录下的所有class文件先打包成jar：{{c1::
+    ```
+    jar --create --file hello.jar --main-class com.itranswarp.sample.Main -C bin .
+    ```
+    }}
+  3. 使用JDK自带的jmod命令把一个jar包转换成模块：{{c1::
+    ```
+    jmod create --class-path hello.jar hello.jmod
+    ```
+    }}
+  
+  4. 运行模块:{{c1:: `java --module-path hello.jar --module hello.world` }}
+  
++ `module-info.java`文件格式：{{c1::
+    ```java
+    module hello.world {
+      requires java.base; // 可省略
+      requires java.xml;
+    }
+    ```
+   }}
+
+### 打包JRE
+
+1. `jlink`命令：{{c1:: `jlink --module-path hello.jmod --add-modules java.base,java.xml,hello.world --output jre/` }}
+    + 参数：
+      1. {{c1::`--module-path`: 指定自己的模块 }}
+      2. {{c1::`--add-modules`: 指定了我们用到的JDK模块模块 }}
+      3. {{c1::`--output`: 指定输出目录 }}
+2. 完成后，直接运行JRE: {{c1:: `jre/bin/java --module hello.world` }}
+
+### 模块中类的访问权限声明
++ 如果需要使用到模块`java.xml`的一个类`javax.xml.XMLConstants`那么：{{c1:: `java.xml`的`module-info.java`中必须声明：
+  ```
+  module java.xml {
+      exports java.xml;
+      exports javax.xml.catalog;
+      exports javax.xml.datatype;
+      ...
+  }
+  ```
+  }}
+
+
+
 ## 基本类型 [ ](java_se_20201227010951449)
 
 ### java变量的分类 [ ](java_se_20201227010951452)
@@ -1523,7 +1626,7 @@ Druid
 | `int binarySearch(int[] a,int key)` | {{c1:: 对排序后的数组进行二分法检索指定的值。 }} |
 
 
-## String [ ](java_se_20210106110103464)
+## 字符串 [ ](java_se_20210106110103464)
 
 ### String的内部数据类型 [ ](java_se_20210106110103466)
 
@@ -1536,6 +1639,7 @@ Druid
   }
   ​```}}
   ```
+  
 + 在Java9之后:{{c1::String类的实现改用byte数组存储字符串，同时使用`coder`来标识使用了哪种编码。
   ```java
   public final class String
@@ -1547,8 +1651,109 @@ Druid
   }
   ```
   }}
+  
 + value数组被声明为final，这表明：{{c1:: value数组初始化之后就不能再引用其它数组。并且String内部没有改变value数组的方法，因此可以保证String不可变。 }}
 
+  
+
+### 一个不变类具有以下特点：
+
+1. {{c1:: 定义class时使用`final`，无法派生子类； }}
+2. {{c1:: 每个字段使用`final`，保证创建实例后无法修改任何字段。 }}
+
+### record关键字定义不变类
++ 仔细观察`Point`的定义：`public record Point(int x, int y) {}`
++ 相当于以下代码：
+  ```java
+  //{{c1::
+  public final class Point extends Record {
+    private final int x;
+    private final int y;
+
+    public Point(int x, int y) {
+      this.x = x;
+      this.y = y;
+    }
+
+    public int x() {
+      return this.x;
+    }
+
+    public int y() {
+      return this.y;
+    }
+
+    public String toString() {
+      return String.format("Point[x=%s, y=%s]", x, y);
+    }
+
+    public boolean equals(Object o) {
+      ...
+    }
+    public int hashCode() {
+      ...
+    }
+  }
+  //}}
+  ```
++ 给Point的构造方法加上检查逻辑:
+  ```java
+  //{{c1::
+  public record Point(int x, int y) {
+    public Point {
+        if (x < 0 || y < 0) {
+            throw new IllegalArgumentException();
+        }
+    }
+  }
+  //}}
+  ```
++ 编译器最终生成的构造方法如下：
+  ```java
+  //{{c1::
+  public final class Point extends Record {
+      public Point(int x, int y) {
+          // 这是我们编写的Compact Constructor:
+          if (x < 0 || y < 0) {
+              throw new IllegalArgumentException();
+          }
+          // 这是编译器继续生成的赋值代码:
+          this.x = x;
+          this.y = y;
+      }
+      ...
+  }
+  //}}
+  ```
+  ```java
+  //{{c1::
+  public final class Point extends Record {
+      public Point(int x, int y) {
+          // 这是我们编写的Compact Constructor:
+          if (x < 0 || y < 0) {
+              throw new IllegalArgumentException();
+          }
+          // 这是编译器继续生成的赋值代码:
+          this.x = x;
+          this.y = y;
+      }
+      ...
+  }
+  //}}
+  ```
++ 可以添加静态方法:
+  ```java
+  //{{c1::
+  public record Point(int x, int y) {
+      public static Point of() {
+          return new Point(0, 0);
+      }
+      public static Point of(int x, int y) {
+          return new Point(x, y);
+      }
+  }
+  //}}
+  ```
 ### String不可变的好处 [ ](java_se_20210106110103468)
 
 **1. 可以缓存 hash 值**:{{c1:: 因为 String 的 hash 值经常被使用，例如 String 用做 HashMap 的 key。不可变的特性可以使得 hash 值也不可变，因此只需要进行一次计算。}}
@@ -1595,6 +1800,7 @@ Druid
   + {{c1:: 使用这种方式一共会创建两个字符串对象（前提是 String Pool 中还没有 "abc" 字符串对象）。 }}
   + {{c1:: "abc" 属于字符串字面量，因此编译时期会在 String Pool 中创建一个字符串对象，指向这个 "abc" 字符串字面量； }}
   + {{c1:: 而使用 new 的方式会在堆中创建一个字符串对象。 }}
+  
 + `String(String original)`构造函数的源码:{{c1::
   
   ```java
@@ -1604,7 +1810,35 @@ Druid
   }
   ```
 }}
+
+### StringJoiner
+
++ 作用：高效拼接字符串
++ 例，使用`StringJoiner`构造一个`SELECT`语句：
+  ```java
+  	public static void main(String[] args) {
+  		String[] fields = { "name", "position", "salary" };
+  		String table = "employee";
+  		String select = buildSelectSql(table, fields);
+  		System.out.println("SELECT name, position, salary FROM employee".equals(select) ? "测试成功" : "测试失败");
+  	}
   
+  	static String buildSelectSql(String table, String[] fields) {
+      //{{c1::
+          StringJoiner sj=new StringJoiner(", ","SELECT "," FROM "+table);
+          for(String field:fields){
+          sj.add(field);
+          return sj.toString();
+      //}}
+  	}
+  ```
+  
++ `String.join()`：{{c1:: 在不需要指定“开头”和“结尾”的时候，用String.join()更方便
+  ```java
+  String[] names = {"Bob", "Alice", "Grace"};
+  var s = String.join(", ", names);
+  ```
+  }}
 
 ## 关键字 [ ](java_se_20210106110103480)
 
@@ -1685,6 +1919,7 @@ Druid
     }}
     
   + **与null的比较**：{{c1:: 对任何不是 null 的对象 x 调用 x.equals(null) 结果都为 false
+    
     ```java
     x.equals(null); // false;
     ```
@@ -1747,6 +1982,37 @@ Druid
 
 + clone() 的替代方案：{{c1:: 最好不要去使用 clone()，可以使用拷贝构造函数或者拷贝工厂来拷贝一个对象。 }}
 
+## 工具类
+
+### BigInteger
+
++ 作用：{{c1:: `BigInteger`用于表示任意大小的整数}}
++ 不可变：{{c1:: `BigInteger`是不变类，并且继承自`Number`}}
++ 将`BigInteger`转换成基本类型时可使用：{{c1:: `longValueExact()`等方法保证结果准确}}
+
+### BigDecimal
++ 作用：{{c1:: 表示一个任意大小且精度完全准确的浮点数。 }}
++ `BigDecimal`的比较：{{c1:: 总是使用`compareTo()`比较两个`BigDecimal`的值，不要使`用equals()`！ }}
++ 小数位数：{{c1:: `BigDecimal`用`scale()`表示小数位数 }}
++ 去掉末尾0：{{c1:: `BigDecimal`的`stripTrailingZeros()`方法，可以将一个`BigDecimal`格式化为一个相等的，但去掉了末尾`0`的`BigDecimal` }}
++ 如果一个`BigDecimal`的`scale()`返回负数:{{c1:: 例如，-2，表示这个数是个整数，并且末尾有2个0。 }}
++ **四舍五入**与**直接截断**:
+  ```java
+  //{{c1::
+    BigDecimal d1 = new BigDecimal("123.456789");
+    BigDecimal d2 = d1.setScale(4, RoundingMode.HALF_UP); // 四舍五入，123.4568
+    BigDecimal d1 = new BigDecimal("123.456");
+    BigDecimal d2 = new BigDecimal("23.456789");
+    BigDecimal d3 = d1.divide(d2, 10, RoundingMode.HALF_UP); // 保留10位小数并四舍五入
+    BigDecimal d4 = d1.divide(d2); // 报错：ArithmeticException，因为除不尽
+  //}}
+  ```
+
+### Java提供的常用工具类有：
++ `Math`：{{c1:: 数学计算 }}
++ `Random`：{{c1:: 生成伪随机数 }}
++ `SecureRandom`：{{c1:: 生成安全的随机数 }}
+
 ## 继承 [ ](java_se_20210106110103504)
 
 ### 访问权限修饰符 [ ](java_se_20210106110103507)
@@ -1794,8 +2060,204 @@ Druid
 
 ### 重写与重载 [ ](java_se_20210106110103523)
 
-+ 重写：指子类实现了一个与父类在方法**声明上完全相同**的一个方法。
-+ 重载：存在于同一个类中，指一个方法与已经存在的方法名称上相同，但是**参数类型、个数、顺序**至少有一个不同。
++ 重写：{{c1:: 指子类实现了一个与父类在方法**声明上完全相同**的一个方法。 }}
++ 重载：{{c1:: 存在于同一个类中，指一个方法与已经存在的方法名称上相同，但是**参数类型、个数、顺序**至少有一个不同。 }}
   + 注意：{{c1:: 返回值不同，其它都相同不算是重载 }}
 
-## 反射 [ ](java_se_20210106110103527)
+## 枚举类
+
+### 和`int`定义的常量相比，使用`enum`定义枚举有如下好处：
+
+- 首先，`enum`常量本身带有类型信息，即`Weekday.SUN`类型是`Weekday`，编译器会自动检查出类型错误。
+
+  ```
+  int day = 1;
+  if (day == Weekday.SUN) { // Compile error: bad operand types for binary operator '=='
+  }
+  ```
+
+- 不同类型的枚举不能互相比较或者赋值，因为类型不符
+
+### enum实例直接使用`==`比较
+
++ 原因：{{c1::  这是因为`enum`类型的每个常量在 JVM中只有一个唯一实例，所以可以直接用`==`比较。`==`比较的是两个引用类型的变量是否是同一个对象。因此，引用类型比较，要始终使用`equals()`方法.}}
+
+### 枚举类特点
+
++ 与普通类的关系：{{c1:: Java使用`enum`定义枚举类型，它被编译器编译为`final class Xxx extends Enum { … }`； }}
++ `name()`：{{c1::  通过`name()`获取常量定义的字符串，注意不要使用`toString()`； }}
++ `ordinal()`：{{c1::  通过`ordinal()`返回常量定义的顺序（无实质意义）； }}
++ 定义成员：{{c1:: 可以为`enum`编写构造方法、字段和方法 }}
++ 构造方法：{{c1:: `enum`的构造方法要声明为`private`，字段强烈建议声明为`final`； }}
++ `switch`：{{c1:: `enum`适合用在`switch`语句中。 }}
+
+## 异常
+### java的异常类体系
++ 图：{{c1:: ![](https://gitee.com/xieyun714/nodeimage/raw/master/img/20210107155809.png) }}
+
+### java常见异常类
+
++ `Error`：{{c1:: 表示严重的错误 }}
+  + `OutOfMemoryError`：{{c1:: 内存耗尽 }}
+  + `NoClassDefFoundError`：{{c1:: 无法加载某个Class }}
+  + `StackOverflowError`：{{c1:: 栈溢出 }}
++ `Exception`：{{c1:: 运行时的错误，它可以被捕获并处理理。 }}
+  + `NumberFormatException`：{{c1:: 数值类型的格式错误 }}
+  + `FileNotFoundException`：{{c1:: 未找到文件 }}
+  + `SocketException`：{{c1:: 读取网络失败 }}
+  + `NullPointerException`：{{c1:: 对某个null的对象调用方法或字段 }}
+  + `IndexOutOfBoundsException`：{{c1:: 数组索引越界 }}
+
+### 必须捕获的异常与不需要捕获的异常
++ 必须捕获的异常：{{c1:: 包括`Exception`及其子类，但不包括`RuntimeException`及其子类，这种类型的异常称为`Checked Exception`。 }}
++ 不需要捕获的异常：{{c1:: 包括`Error`及其子类，`RuntimeException`及其子类 }}
++ 注意：{{c1:: 编译器对RuntimeException及其子类不做强制捕获要求，不是指应用程序本身不应该捕获并处理RuntimeException。是否需要捕获，具体问题具体分析。 }}
+
+## Java IO
+
+### Java 的 I/O 大概可以分成以下几类：
+
+- 磁盘操作：{{c1:: `File` }}
+- 字节操作：{{c1:: `InputStream` 和 `OutputStream` }}
+- 字符操作：{{c1:: `Reader` 和 `Writer` }}
+- 对象操作：{{c1:: `Serializable` }}
+- 网络操作：{{c1:: `Socket` }}
+- 新的输入/输出：{{c1:: `NIO` }}
+
+### 磁盘操作：File类
+
++ 作用：{{c1:: File 类可以用于表示文件和目录的信息，但是它不表示文件的内容。 }}
+
++ 代替方案：{{c1:: 从 Java7 开始，可以使用 Paths 和 Files 代替 File。 }}
+
++ 使用例：递归地列出一个目录下所有文件
+  ```java
+  //{{c1::
+  public static void listAllFiles(File dir) {
+      if (dir == null || !dir.exists()) {
+          return;
+      }
+      if (dir.isFile()) {
+          System.out.println(dir.getName());
+          return;
+      }
+      for (File file : dir.listFiles()) {
+          listAllFiles(file);
+      }
+  }
+  //}}
+  ```
+
+### 字节操作： 使用`InputStream` 和 `OutputStream`实现文件复制
+
+```java
+//{{c1::
+public static void copyFile(String src, String dist) throws IOException {
+    FileInputStream in = new FileInputStream(src);
+    FileOutputStream out = new FileOutputStream(dist);
+    byte[] buffer = new byte[20 * 1024];
+    int cnt;
+
+    // read() 最多读取 buffer.length 个字节
+    // 返回的是实际读取的个数
+    // 返回 -1 的时候表示读到 eof，即文件尾
+    while ((cnt = in.read(buffer, 0, buffer.length)) != -1) {
+        out.write(buffer, 0, cnt);
+    }
+
+    in.close();
+    out.close();
+  //}}
+}
+```
+
+### Java I/O中的装饰者模式
+
+- Java I/O 使用了装饰者模式来实现。以 InputStream 为例：{{c1:: ![](https://gitee.com/xieyun714/nodeimage/raw/master/img/9709694b-db05-4cce-8d2f-1c8b09f4d921.png) }}
+- `DataInputStream` ：{{c1:: 提供了对更多数据类型进行输入的操作 }}
+- `BufferedInputStream` ：{{c1:: 为 FileInputStream 提供缓存的功能。 }}
+
+## 字符操作
+
+### 编码与解码
+
++ 各编码方式的中英文占比：
+  + GBK 编码中:{{c1:: 中文字符占 2 个字节，英文字符占 1 个字节； }}
+  + UTF-8 编码中:{{c1:: 中文字符占 3 个字节，英文字符占 1 个字节； }}
+  + UTF-16be 编码中:{{c1:: 中文字符和英文字符都占 2 个字节。 }}
++ Java 的内存编码使用：{{c1:: 双字节编码UTF-16be，双字节编码的好处是可以使用一个 char 存储中文和英文}}
+
+- String类的编码与解码：{{c1::
+
+  ```java
+  String str1 = "中文";
+  //注意：getBytes() 的默认编码方式与平台有关，一般为 UTF-8。
+  byte[] bytes = str1.getBytes("UTF-8");
+  String str2 = new String(bytes, "UTF-8");
+  System.out.println(str2);
+  ```
+  
+  }}
+
+
+
+### Reader 与 Writer
+
++ 作用：{{c1:: 不管是磁盘还是网络传输，最小的存储单元都是字节，而不是字符。但是在程序中操作的通常是字符形式的数据，因此需要提供对字符进行操作的方法。 }}
+- `InputStreamReader` ：{{c1:: 实现从字节流解码成字符流； }}
+
+- `OutputStreamWriter` ：{{c1:: 实现字符流编码成为字节流。 }}
+
+- 例:实现逐行输出文本文件的内容
+  ```java
+  public static void readFileContent(String filePath) throws IOException {
+  //{{c1::
+      FileReader fileReader = new FileReader(filePath);
+      BufferedReader bufferedReader = new BufferedReader(fileReader);
+  
+      String line;
+      while ((line = bufferedReader.readLine()) != null) {
+          System.out.println(line);
+      }
+  
+      // 装饰者模式使得 BufferedReader 组合了一个 Reader 对象
+      // 在调用 BufferedReader 的 close() 方法时会去调用 Reader 的 close() 方法因此只要一个 close() 调用即可
+      bufferedReader.close();
+  //}}
+  }
+  ```
+
+## 对象操作
+
+### 序列化
+
++ 作用：{{c1:: 序列化就是将一个对象转换成字节序列，方便存储和传输。 }}
++ 实现：
+  - 序列化核心方法：{{c1:: `ObjectOutputStream.writeObject()` }}
+  
+  - 反序列化核心方法：{{c1:: `ObjectInputStream.readObject()` }}
+  
+    ```java
+    //{{c1::
+    public static void main(String[] args) throws IOException, ClassNotFoundException {
+    
+        A a1 = new A(123, "abc");
+        String objectFile = "file/a1";
+    
+        ObjectOutputStream objectOutputStream = new ObjectOutputStream(new FileOutputStream(objectFile));
+        objectOutputStream.writeObject(a1);
+        objectOutputStream.close();
+    
+        ObjectInputStream objectInputStream = new ObjectInputStream(new FileInputStream(objectFile));
+        A a2 = (A) objectInputStream.readObject();
+        objectInputStream.close();
+        System.out.println(a2);
+    }
+    //}}
+    ```
+  
++ 不会对静态变量进行序列化：{{c1:: 因为序列化只是保存对象的状态，静态变量属于类的状态。 }}
+          + Serializable接口：{{c1:: 序列化的类需要实现 Serializable 接口，它只是一个标准，没有任何方法需要实现，但是如果不去实现它的话而进行序列化，会抛出异常。 }}
+
+## java容器
+
