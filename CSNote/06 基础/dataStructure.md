@@ -387,6 +387,7 @@ typedef struct DNode{
 ### 中缀表达式转后缀表达式（手算） [	](dataStructure_20201115082829758)
 
 + 转换成后缀表达式：
+  
   + ![](https://gitee.com/xieyun714/nodeimage/raw/master/img/20201115175721.png)
 + 手算步骤：
   1. {{c1:: 确定中缀表达式中**各个运算符的运算顺序** }}
@@ -394,6 +395,7 @@ typedef struct DNode{
   3. {{c1:: 如果还有运算符没被处理，就继续② }}
   + 左优先”原则：{{C1:: 只要左边的运算符能先计算，就优先算左边的 }}
 + 结果：
+  
   + {{c1:: ![](https://gitee.com/xieyun714/nodeimage/raw/master/img/20201115175840.png) }}
 
 ### 中缀表达式转前缀表达式（手算） [	](dataStructure_20201115082829761)
@@ -503,3 +505,4 @@ typedef struct DNode{
 
 ### test [	](dataStructure_20201202040742346)
 
+## 排序

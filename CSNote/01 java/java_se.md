@@ -2097,7 +2097,7 @@ Druid
 
 ### java常见异常类 [ ](java_se_20210107100220077)
 
-+ `Error`：{{c1:: 表示严重的错误 }}
++ `Error`：{{c1:: `Error`是无需捕获的严重错误 }}
   + `OutOfMemoryError`：{{c1:: 内存耗尽 }}
   + `NoClassDefFoundError`：{{c1:: 无法加载某个Class }}
   + `StackOverflowError`：{{c1:: 栈溢出 }}
@@ -2107,11 +2107,82 @@ Druid
   + `SocketException`：{{c1:: 读取网络失败 }}
   + `NullPointerException`：{{c1:: 对某个null的对象调用方法或字段 }}
   + `IndexOutOfBoundsException`：{{c1:: 数组索引越界 }}
+  
+  
 
 ### 必须捕获的异常与不需要捕获的异常 [ ](java_se_20210107100220079)
 + 必须捕获的异常：{{c1:: 包括`Exception`及其子类，但不包括`RuntimeException`及其子类，这种类型的异常称为`Checked Exception`。 }}
 + 不需要捕获的异常：{{c1:: 包括`Error`及其子类，`RuntimeException`及其子类 }}
 + 注意：{{c1:: 编译器对RuntimeException及其子类不做强制捕获要求，不是指应用程序本身不应该捕获并处理RuntimeException。是否需要捕获，具体问题具体分析。 }}
+
+### 使用`try ... catch ... finally`时：
+- 匹配顺序：{{c1:: 多个`catch`语句的匹配顺序非常重要，子类必须放在前面；}}
+- `finally`语句：{{c1:: 保证了有无异常都会执行，它是可选的；}}
+- 一个`catch`语句也可以匹配多个：{{c1:: 非继承关系的异常。`catch (IOException | NumberFormatException e)`}}
+- `Throwable.getSuppressed()`：{{c1:: 通过`Throwable.getSuppressed()`可以获取所有的`Suppressed Exception`。}}
+
+### 自定义异常
+
++ 抛出异常时，{{c1:: 尽量复用JDK已定义的异常类型； }}
++ 根异常: {{c1:: 自定义异常体系时，推荐从`RuntimeException`派生“根异常”，再派生出业务异常； }}
++ 构造方法: {{c1:: 自定义异常时，应该提供多种构造方法。 }}
+
+### 启用Java 14的增强异常信息来查看`NullPointerException`的详细错误信息
+
+{{c1::
+
+```bash
+java -XX:+ShowCodeDetailsInExceptionMessages Main.java
+```
+
+}}
+
+### 使用断言
++ 语法：{{c1:: `assert x >= 0 : "x must >= 0";` }}
++ 断言的特点是：{{c1:: 断言失败时会抛出`AssertionError`，导致程序结束退出。因此，断言不能用于可恢复的程序错误，只应该用于**开发**和**测试阶段**。 }}
++ 开启JVM断言参数：
++ 语法：{{c1:: `java -ea Main.java` `java -enableassertions Main.java` }}
++ 对特定地类/包启用断言参数:{{c1:: `-ea:com.itranswarp.sample...` }}
++ 注意：{{c1:: 断言很少被使用，更好的方法是编写单元测试。 }}
+
+## 日志
+
+### commons-logging
+
++ 作用：{{c1:: Commons Logging，可以作为“日志接口”来使用。默认使用jdk内置日志实现 }}
++ 与log4j的关系：
+  + {{c1:: 一个负责充当日志API，一个负责实现日志底层 }}
+  + {{c1:: 使用Log4j只需要把log4j2.xml和相关jar放入classpath； }}
+  + {{c1:: 只有扩展Log4j时，才需要引用Log4j的接口（例如，将日志加密写入数据库的功能，需要自己开发）。 }}
++ 简单使用：
+  ```java
+  //{{c1::
+  Log log = LogFactory.getLog(Main.class);
+  log.info("start...");
+  log.warn("end.");
+  try {
+      ...
+  } catch (Exception e) {
+      log.error("got exception!", e);
+  }
+  //}}
+  ```
+
+### Commons Logging定义了6个日志级别：
+
+1. {{c1:: `FATAL` }}
+2. {{c1:: `ERROR` }}
+3. {{c1:: `WARNING` }}
+4. {{c1:: `INFO` }}
+5. {{c1:: `DEBUG` }}
+6. {{c1:: `TRACE` }}
+
+### SLF4J和Logback
+
++ 作用：{{c1:: 其实SLF4J类似于Commons Logging，也是一个日志接口，而Logback类似于Log4j，是一个日志的实现。 }}
++ `Commons Logging`和`SLF4J`的接口使用区别：{{c1:: 不同之处就是Log变成了Logger，LogFactory变成了LoggerFactory。 }}
++ 配置文件：{{c1:: `logback.xml`放到`classpath`下 }}
++ 趋势：{{c1:: 越来越多的开源项目从Commons Logging加Log4j转向了SLF4J加Logback。  }}
 
 ## Java IO [ ](java_se_20210107100220081)
 
@@ -2177,8 +2248,6 @@ public static void copyFile(String src, String dist) throws IOException {
 - `DataInputStream` ：{{c1:: 提供了对更多数据类型进行输入的操作 }}
 - `BufferedInputStream` ：{{c1:: 为 FileInputStream 提供缓存的功能。 }}
 
-## 字符操作 [ ](java_se_20210107100220095)
-
 ### 编码与解码 [ ](java_se_20210107100220098)
 
 + 各编码方式的中英文占比：
@@ -2198,8 +2267,6 @@ public static void copyFile(String src, String dist) throws IOException {
   ```
   
   }}
-
-
 
 ### Reader 与 Writer [ ](java_se_20210107100220101)
 
@@ -2227,8 +2294,6 @@ public static void copyFile(String src, String dist) throws IOException {
   }
   ```
 
-## 对象操作 [ ](java_se_20210107100220104)
-
 ### 序列化 [ ](java_se_20210107100220106)
 
 + 作用：{{c1:: 序列化就是将一个对象转换成字节序列，方便存储和传输。 }}
@@ -2255,8 +2320,294 @@ public static void copyFile(String src, String dist) throws IOException {
     }
     //}}
     ```
-  
 + 不会对静态变量进行序列化：{{c1:: 因为序列化只是保存对象的状态，静态变量属于类的状态。 }}
-          + Serializable接口：{{c1:: 序列化的类需要实现 Serializable 接口，它只是一个标准，没有任何方法需要实现，但是如果不去实现它的话而进行序列化，会抛出异常。 }}
+      + `Serializable`接口：{{c1:: 序列化的类需要实现 Serializable接口，它只是一个标准，没有任何方法需要实现，但是如果不去实现它的话而进行序列化，会抛出异常。 }}
 
-## java容器 [ ](java_se_20210107100220109)
+## 反射 [ ](java_se_20210107100220109)
+
+### Class类
++ 反射作用：{{c1:: 反射是为了解决在运行期，对某个实例一无所知的情况下，如何调用其方法。 }}
++ 三种获取`Class`实例的方法
+  1. {{c1:: `Class cls = String.class;` }}
+  2. {{c1:: 通过实例变量的`getClass()`方法 }}
+  3. {{c1:: `Class.forName("java.lang.String");` }}
+- `Class`实例比较和`instanceof`的差别：{{c1:: 只有在需要精确判断一个类型是不是某个`class`的时候，我们才使用`==`判断`class`实例 }}
+- 通过`Class`实例来创建对应类型的实例：{{c1::
+  ```
+  // 获取String的Class实例:
+  Class cls = String.class;
+  // 创建一个String实例:
+  String s = (String) cls.newInstance();
+  // 注意：只能调用`public`的无参数构造方法。
+  ```
+  }}
+- 动态加载：{{c1:: `JVM`总是动态加载`class`，可以在运行期根据条件来控制加载class。 }}
+
+### 访问字段
+- `Class`类提供了以下几个方法来获取字段：
+  - `Field getField(name)`：{{c1:: 根据字段名获取某个public的field（包括父类） }}
+  - `Field getDeclaredField(name)`：{{c1:: 根据字段名获取当前类的某个field（不包括父类） }}
+  - `Field[] getFields()`：{{c1:: 获取所有public的field（包括父类） }}
+  - `Field[] getDeclaredFields()`：{{c1:: 获取当前类的所有field（不包括父类） }}
+- `Field`对象:{{c1:: 包含了一个字段的所有信息： }}
+  - `getName()`：{{c1:: 返回字段名称，例如，`"name"` }}
+  - `getType()`：{{c1:: 返回字段类型，也是一个`Class`实例，例如，`String.class` }}
+  - `getModifiers()`：{{c1:: 返回字段的修饰符，它是一个`int`，不同的bit表示不同的含义 }}
+  - `field.get(p)`:{{c1:: 获取字段的值，注意`f.setAccessible(true);`}}
+  - `field.set(Object, Object)`:{{c1:: 设置字段的值 `f.setAccessible(true); f.set(p, "Xiao Hong");` }}
+- 注意：修改非`public`字段，需要首先调用`setAccessible(true)`。
+
+### 调用方法
+
++ `Class`类提供了以下几个方法来获取`Method`：
+  - `Method getMethod(name, Class...)`：{{c1:: 获取某个`public`的`Method`（包括父类） }}
+  - `Method getDeclaredMethod(name, Class...)`：{{c1:: 获取当前类的某个`Method`（不包括父类） }}
+  - `Method[] getMethods()`：{{c1:: 获取所有`public`的`Method`（包括父类） }}
+  - `Method[] getDeclaredMethods()`：{{c1:: 获取当前类的所有`Method`（不包括父类） }}
++ `Method`对象主要方法：
+  - `getName()`：{{c1:: 返回方法名称，例如：`"getScore"`； }}
+  - `getReturnType()`：{{c1:: 返回方法返回值类型，也是一个Class实例，例如：`String.class`； }}
+  - `getParameterTypes()`：{{c1:: 返回方法的参数类型，是一个Class数组，例如：`{String.class, int.class}`； }}
+  - `getModifiers()`：{{c1:: 返回方法的修饰符，它是一个`int`，不同的bit表示不同的含义。 }}
+- 调用方法：{{c1:: `String r = (String) m.invoke(str, 6);` }}
++ 调用静态方法：{{c1:: `Integer n = (Integer) m.invoke(null, "12345");` }}
++ 调用非public方法：{{c1:: `m.setAccessible(true); m.invoke(p, "Bob"); ` }}
++ 注意：{{c1:: 通过设置`setAccessible(true)`来访问非`public`方法； }}
+
+### 调用构造方法
+
++ `Class.newInstance()`的局限是：{{c1:: 它只能调用该类的**public无参**数构造方法。 }}
++ 通过Class实例获取`Constructor`的方法如下：
+  - `getConstructor(Class...)`：{{c1:: 获取某个`public`的`Constructor`； }}
+  - `getDeclaredConstructor(Class...)`：{{c1:: 获取某个`Constructor`； }}
+  - `getConstructors()`：{{c1:: 获取所有`public`的`Constructor`； }}
+  - `getDeclaredConstructors()`：{{c1:: 获取所有`Constructor`。 }}
++ 调用构造方法：{{c1:: `newInstance(Object... parameters)`；` }}
++ 注意：{{c1:: 通过设置`setAccessible(true)`来访问非`public`方法； }}
+
+### 获取继承关系
+
+- 获取父类的Class:{{c1:: `Integer.class.getSuperclass(); //class java.lang.Number` }}
++ 获取interface :{{c1:: `Class[] is = s.getInterfaces();` }}
+  + 注意：{{c1:: `getInterfaces()`只返回当前类直接实现的接口类型，并不包括其父类实现的接口类型： }}
++ Class实例判断向上转型：{{c1:: `Object.class.isAssignableFrom(Integer.class); // true` }}
+
+## 注解
+
+### 注解
+
+- 什么是注解（Annotation）？{{c1:: 注解是放在Java源码的类、方法、字段、参数前的一种特殊“注释” }}
+- 注解的作用: {{c1:: 从JVM的角度看，注解本身对代码逻辑没有任何影响，如何使用注解完全由工具决定。 }}
+- Java的注解可以分为三类：
+  1. {{c1:: 编译器使用的注解: `@Override` `@SuppressWarnings` }}
+    - {{c1:: 这类注解不会被编译进入`.class`文件，它们在编译后就被编译器扔掉了。 }}
+  2. {{c1:: 由工具处理`.class`文件使用的注解 }}
+    - 这类注解会被编译进入`.class`文件，但加载结束后并不会存在于内存中。
+  3. {{c1:: 在程序运行期能够读取的注解 }}
+
++ 注解的配置参数
+  + 使用默认值：{{c1:: 注解可以配置参数，没有指定配置的参数使用默认值； }}
+  + 如果参数名称是`value`：{{c1:: 且只有一个参数，那么可以省略参数名称。 }}
+
+### 元注解
+
++ 是什么：{{c1:: 有一些注解可以修饰其他注解，这些注解就称为元注解（meta annotation）。 }}
++ `@Target`: {{c1:: 使用`@Target`可以定义`Annotation`能够被应用于源码的哪些位置：. }}
+  + 类或接口：{{c1:: `ElementType.TYPE`； }}
+  + 字段：{{c1:: `ElementType.FIELD`； }}
+  + 方法：{{c1:: `ElementType.METHOD`； }}
+  + 构造方法：{{c1:: `ElementType.CONSTRUCTOR`； }}
+  + 方法参数：{{c1:: `ElementType.PARAMETER`。 }}
+  + 数组写法：{{c1:: `@Target`定义的`value`是`ElementType[]`数组，只有一个元素时，可以省略数组的写法。 }}
++ `@Retention`：{{c1:: 定义了`Annotation`的生命周期 }}
+  + 仅编译期：{{c1:: `RetentionPolicy.SOURCE`； }}
+  + 仅class文件：{{c1:: `RetentionPolicy.CLASS`； }}
+  + 运行期：{{c1:: `RetentionPolicy.RUNTIME`。 }}
+  + 如果`@Retention`不存在：{{c1:: 则该`Annotation`默认为`CLASS`。 }}
++ `@Repeatable`：{{c1:: 使用`@Repeatable`这个元注解可以定义`Annotation`是否可重复。 }}
++ `@Inherited`：定义子类是否可继承父类定义的`Annotation`
+
+### 自定义`Annotation`的步骤
+1. {{c1:: 用`@interface`定义注解 }}
+2. {{c1:: 添加参数、默认值 }}
+3. {{c1:: 用元注解配置注解 }}
++ 例：
+  ```java
+  //{{c1::
+  @Target(ElementType.TYPE)
+  @Retention(RetentionPolicy.RUNTIME)
+  public @interface Report {
+      int type() default 0;
+      String level() default "info";
+      String value() default "";
+  }
+  //}}
+  ```
+
+
+### 处理注解
+
+- 判断某个注解是否存在于`Class`、`Field`、`Method`或`Constructor`：
+  - {{c1:: `class.isAnnotationPresent(Class)` }}
+  - {{c1:: `field.isAnnotationPresent(Class)` }}
+  - {{c1:: `method.isAnnotationPresent(Class)` }}
+  - {{c1:: `constructor.isAnnotationPresent(Class)` }}
+- 使用反射API读取Annotation：
+  - {{c1:: `class.getAnnotation(Class)` }}
+  - {{c1:: `field.getAnnotation(Class)` }}
+  - {{c1:: `method.getAnnotation(Class)` }}
+  - {{c1:: `constructor.getAnnotation(Class)` }}
+- 使用反射API读取`Annotation`有两种方法
+  1. {{c1:: 先判断`Annotation`是否存在，如果存在，就直接读取 }}
+  2. {{c1:: 直接读取`Annotation`，如果`Annotation`不存在，将返回`null`： }}
++ 读取方法参数的`Annotation`: {{c1:: `Annotation[][] annos = m.getParameterAnnotations();` }}
+
+## 泛型
+
+### 泛型
+
++ 作用：{{c1:: 泛型就是编写模板代码来适应任意类型；泛型的好处是使用时不必对类型进行强制转换，它通过编译器对类型进行检查；}}
++ 注意泛型的继承关系：{{c1:: 可以把`ArrayList<Integer>`向上转型为`List<Integer>`（`T`不能变！ ），但不能把`ArrayList<Integer>`向上转型为`ArrayList<Number>`（`T`不能变成父类）。}}
+- 编写泛型时，{{c1:: 需要定义泛型类型`<T>`； }}
+- 静态方法{{c1:: 不能引用泛型类型`<T>`，必须定义其他类型（例如`<K>`）来实现静态泛型方法； }}
+- 泛型可以同时定义多种类型，{{c1:: 例如`Map<K, V>`。 }}
+
+### 从泛型类派生子类的两种情况
+
+- 子类也是泛型类：{{c1:: 子类和父类的泛型类型要一致：`class ChildGeneric<T> extends Generic<T>` }}
+- 子类不是泛型类：{{c1:: 父类要明确泛型的数据类型：`class ChildGeneric extends Generic<String>` }}
+
+### “泛型”方法
++ 语法: {{c1:: `修饰符 <T，E, ...> 返回值类型 方法名(形参列表) { 方法体... }` }}
+```java
+public class Pair<T> {
+    private T first;
+    private T last;
+    public Pair(T first, T last) {
+        this.first = first;
+        this.last = last;
+    }
+    public T getFirst() { ... }
+    public T getLast() { ... }
+//{{c1::
+    // 静态泛型方法应该使用其他类型区分:
+    public static <K> Pair<K> create(K first, K last) {
+        return new Pair<K>(first, last);
+    }
+//}}
+}
+```
+
+### 擦拭法
+
+- 擦拭法：{{c1:: Java的泛型是采用擦拭法实现的； }}
+- 擦拭法决定了泛型`<T>`：
+  - 不能是基本类型，例如：{{c1:: `int`； }}
+  - 不能获取带泛型类型的`Class`，例如：{{c1:: `Pair<String>.class`； }}
+  - 不能判断带泛型类型的类型，例如：{{c1:: `x instanceof Pair<String>`； }}
+  - 不能实例化`T`类型，例如：{{c1:: `new T()`。 }}
+- 泛型方法要防止重复定义方法，例如：{{c1:: `public boolean equals(T obj)`； }}
+- 子类可以获取父类的泛型类型`<T>`。
+
+### 类型通配符
++ 类型通配符的上限: {{c1:: `类/接口<? extends 实参类型>` }}
++ 类型通配符的下限: {{c1:: `类/接口<? super 实参类型>` }}
+
+### extends通配符
+
+使用类似`<? extends Number>`通配符作为**方法参数**时表示：
+- 方法内部可以调用获取`Number`引用的方法，例如：{{c1:: `Number n = obj.getFirst();`；}}
+- 方法内部无法调用传入`Number`引用的方法（`null`除外），例如：{{c1:: `obj.setFirst(Number n);`。}}
+  + 即一句话总结：{{c1:: 使用`extends`通配符表示可以读，不能写。}}
+### 类型擦除
+
++ 无限制类型擦除：{{c1:: ![](https://gitee.com/xieyun714/nodeimage/raw/master/img/20200702221003157.png) }}
++ 有限制类型擦除：{{c1:: ![](https://gitee.com/xieyun714/nodeimage/raw/master/img/20200702221003157.png) }}
++ 擦除方法中类型定义的参数：{{c1:: ![](https://gitee.com/xieyun714/nodeimage/raw/master/img/20200702221026746.png) }}
++ 桥接方法：{{c1:: ![](https://gitee.com/xieyun714/nodeimage/raw/master/img/20200702221100946.png) }}
+
+### extends和super通配符区别
+
+- `<? extends T>`允许：{{c1:: 调用读方法`T get()`获取`T`的引用，但不允许调用写方法`set(T)`传入`T`的引用（传入`null`除外）}}
+- `<? super T>`允许：{{c1:: 调用写方法`set(T)`传入`T`的引用，但不允许调用读方法`T get()`获取`T`的引用（获取`Object`除外}}
++ 总结：{{c1:: 一个是允许读不允许写，另一个是允许写不允许读。 }}
++ 标准库例:
+  ```java
+  //{{c1::
+  public class Collections {
+      // 把src的每个元素复制到dest中:
+      public static <T> void copy(List<? super T> dest, List<? extends T> src) {
+          for (int i=0; i<src.size(); i++) {
+              T t = src.get(i);
+              dest.add(t);
+          }
+      }
+  }
+  //}}
+  ```
++ PECS原则: {{c1:: `Producer Extends Consumer Super` }}
+
+## 容器
+
+### Collection体系类图
+图示：{{c1::![](https://gitee.com/xieyun714/nodeimage/raw/master/img/image-20191208220948084.png)}}
+
+### Set接口下各类特点
+
+- `TreeSet`：{{c1:: 基于红黑树实现，支持有序性操作，例如根据一个范围查找元素的操作。但是查找效率不如 HashSet，HashSet 查找的时间复杂度为 O(1)，TreeSet 则为 O(logN)。 }}
+- `HashSet`：{{c1:: 基于哈希表实现，支持快速查找，但不支持有序性操作。并且失去了元素的插入顺序信息，也就是说使用 Iterator 遍历 HashSet 得到的结果是不确定的。 }}
+- `LinkedHashSet`：{{c1:: 具有 HashSet 的查找效率，并且内部使用双向链表维护元素的插入顺序。 }}
+
+### List接口下各类特点
+
+- `ArrayList`：{{c1:: 基于动态数组实现，支持随机访问。 }}
+- `Vector`：{{c1:: 和 ArrayList 类似，但它是线程安全的。 }}
+- `LinkedList`：{{c1:: 基于双向链表实现，只能顺序访问，但是可以快速地在链表中间插入和删除元素。不仅如此，LinkedList 还可以用作栈、队列和双向队列。 }}
+
+### Queue接口下各类特点
+
+- `LinkedList`：{{c1:: 可以用它来实现双向队列。 }}
+- `PriorityQueue`：{{c1:: 基于堆结构实现，可以用它来实现优先队列。 }}
+
+### Map体系类图
+
+图示：{{c1:: ![](https://gitee.com/xieyun714/nodeimage/raw/master/img/image-20201101234335837.png) }}
+
+### Map接口下各类特点
+
+- `TreeMap`：{{c1:: 基于红黑树实现。 }}
+- `HashMap`：{{c1:: 基于哈希表实现。 }}
+- `HashTable`：{{c1:: 和 `HashMap` 类似，但它是线程安全的，这意味着同一时刻多个线程同时写入 `HashTable` 不会导致数据不一致。它是遗留类，不应该去使用它，而是使用 `ConcurrentHashMap` 来支持线程安全，`ConcurrentHashMap` 的效率会更高，因为 `ConcurrentHashMap` 引入了分段锁。 }}
+- `LinkedHashMap`：{{c1:: 使用双向链表来维护元素的顺序，顺序为插入顺序或者最近最少使用（LRU）顺序。 }}
+
+### 容器中迭代器模式
+
++ 结构图：{{c1:: ![](https://cs-notes-1256109796.cos.ap-guangzhou.myqcloud.com/image-20191208225301973.png) }}
+
+### `Iterator`遍历`List`
+
++ 实际调用：
+  ```java
+  //{{c1::
+  List<String> list = List.of("apple", "pear", "banana");
+  for (Iterator<String> it = list.iterator(); it.hasNext(); ) {
+    String s = it.next();
+    System.out.println(s);
+  }
+  //}}
+  ```
++ 简写版
+  ```java
+  //{{c1::
+  List<String> list = List.of("apple", "pear", "banana");
+  for (String s : list) {
+    System.out.println(s);
+  }
+  //}}
+  ```
++ `for each`与`Iterable`：{{c1:: 只要实现了`Iterable`接口的集合类都可以直接用`for each`循环来遍历 }}
+
+### List和Array转换
+
++ List转换为Array：{{c1:: `Integer[] array = list.toArray(new Integer[3]);` }}
++ Array转换为List：{{c1:: `List.of(T...)`方法，注意，返回的是一个只读`List`： }}

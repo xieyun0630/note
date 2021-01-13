@@ -477,7 +477,7 @@ class Singleton {
     }
   } 
 //}}
-``` 
+```
 + 特点：{{c1:: 线程同步，防止反序列破环单例，推荐使用 }}
 + 反序列化的作用：{{c1:: 根据字节流中保存的对象状态及描述信息，通过反序列化重建对象。 }}
 
@@ -713,6 +713,24 @@ class Singleton {
 - 缺点
   -  **矫枉过正**:{{c1:: 如果你的程序只与简单的集合进行交互，应用该模式可能会矫枉过正。}}
   - **特殊集合效率**:{{c1:: 对于某些特殊集合，使用迭代器可能比直接遍历的效率低。}}
+
+## 中介者模式
+
+### 中介者模式定义与结构
+
++ intent: {{c1:: 减少对象之间混乱无序的依赖关系。该模式会限制对象之间的直接交互，迫使它们通过一个中介者对象进行合作。}}
++ 结构：{{c1:: ![image-20210112160235867](https://gitee.com/xieyun714/nodeimage/raw/master/img/image-20210112160235867.png) }}
+
+## 备忘录模式
+
+### 备忘录模式定义与结构
+
++ intent: {{c1:: 允许在不暴露对象实现细节的情况下保存和恢复对象之前的状态。 }}
++ 基于嵌套类的实现结构: {{c1::![image-20210112163353655](https://gitee.com/xieyun714/nodeimage/raw/master/img/image-20210112163353655.png)}}
++ 基于中间接口的实现: {{c1::![image-20210112163441069](https://gitee.com/xieyun714/nodeimage/raw/master/img/image-20210112163441069.png)}}
+1. **原发器** （Originator） 类可以生成自身状态的快照， 也可以在需要时通过快照恢复自身状态。
+2. **备忘录** （Memento） 是原发器状态快照的值对象 （value object）。 通常做法是将备忘录设为不可变的， 并通过构造函数一次性传递数据。
+3. **负责人** （Caretaker） 仅知道 “何时” 和 “为何” 捕捉原发器的状态， 以及何时恢复状态。
 
 ## 组合模式 [	](designpattern_20201224024146421)
 
@@ -964,7 +982,7 @@ public class StringBuilder extends AbstractStringBuilder {
 
 
 ### 桥接模式的定义与结构 [ ](designpattern_20201227010951577)
-+ intent: {{c1::  可将一个大类或一系列紧密相关的类拆分为**抽象和实现**两个独立的层次结构， 从而能在开发时分别使用。 }}
++ intent: {{c1::  将抽象与实现分离开来，使它们可以独立变化。 }}
 + 结构：{{c1:: ![](https://gitee.com/xieyun714/nodeimage/raw/master/img/20201225112217.png) }}
 + 实例：{{c1:: ![image-20201225140459028](https://gitee.com/xieyun714/nodeimage/raw/master/img/image-20201225140459028.png) }}
 
@@ -977,8 +995,25 @@ public class StringBuilder extends AbstractStringBuilder {
 
 ### 享元模式定义与实现 [ ](designpattern_20201227010951585)
 
-- intent：运用共享技术来有效地支持大量细粒度对象的复用。它通过**共享已经存在的对象**来大幅度**减少需要创建的对象数量**、避免大量相似对象的开销，从而**提高系统资源的利用率**
+- intent：{{c1:: 运用共享技术来有效地支持大量细粒度对象的复用。它通过**共享已经存在的对象**来大幅度**减少需要创建的对象数量**、避免大量相似对象的开销，从而**提高系统资源的利用率** }}
 - 享元（ Flyweight)模式中存在以下两种状态
-  - 内部状态，即不会随着环境的改变而改变的可共享部分。
-  - 外部状态，指随环境改变而改变的不可以共享的部分。享元模式的实现要领就是区分应用中的这两种状态，并将外部状态外部化。
-- 俄罗斯方块设计结构：![image-20201225142143437](https://gitee.com/xieyun714/nodeimage/raw/master/img/image-20201225142143437.png)
+  - IntrinsicState:{{c1:: 内部状态 即不会随着环境的改变而改变的可共享部分。 }}
+  - ExtrinsicState:{{c1:: 外部状态，指随环境改变而改变的不可以共享的部分。享元模式的实现要领就是区分应用中的这两种状态，并将外部状态外部化。 }}
+- 结构：{{c1:: ![](https://gitee.com/xieyun714/nodeimage/raw/master/img/5f5c22d5-9c0e-49e1-b5b0-6cc7032724d4.png) }}
+- 正式结构：{{c1:: ![image-20210113112932140](https://gitee.com/xieyun714/nodeimage/raw/master/img/image-20210113112932140.png) }}
+
+## 访问者模式
+
+### 访问者模式定义与结构
++ intent：{{c1:: 它能将算法与其所作用的对象隔离开来，为一个对象结构（比如组合结构）增加新能力。 }}
++ 结构：{{c1:: ![image-20210112165058910](https://gitee.com/xieyun714/nodeimage/raw/master/img/image-20210112165058910.png) }}
++ csnote版本结构：{{c1:: ![](https://gitee.com/xieyun714/nodeimage/raw/master/img/79c6f036-bde6-4393-85a3-ef36a0327bd2.png) }}
++ Visitor：{{c1:: 访问者，为每一个 ConcreteElement 声明一个 visit 操作}}
++ ConcreteVisitor：{{c1:: 具体访问者，存储遍历过程中的累计结果}}
++ ObjectStructure：{{c1:: 对象结构，可以是组合结构，或者是一个集合。}}
+
+## 责任链模式
+
+### 责任链模式
++ 定义：{{c1:: 允许你将请求沿着处理者链进行发送。 收到请求后， 每个处理者均可对请求进行处理， 或将其传递给链上的下个处理者。 }}
++ 结构：{{c1:: ![](https://gitee.com/xieyun714/nodeimage/raw/master/img/20210113175246.png) }}
