@@ -550,11 +550,11 @@ channel.basicConsume(Producer.FANOUT_QUEUE_1, true, consumer);
   </rabbit:topic-exchange>
 
   <rabbit:queue id="order_queue_dlx" name="order_queue_dlx"><rabbit:queue>
-    <rabbit:topic-exchange name="order_exchange_dlx">
-      <rabbit:bindings>
-        <rabbit:binding pattern="dlx.order.#" queue="order_queue_dlx"></rabbit:binding>
-      </rabbit:bindings>
-    </rabbit:topic-exchange>
+  <rabbit:topic-exchange name="order_exchange_dlx">
+    <rabbit:bindings>
+      <rabbit:binding pattern="dlx.order.#" queue="order_queue_dlx"></rabbit:binding>
+    </rabbit:bindings>
+  </rabbit:topic-exchange>
     <!-- }} -->
   ```
 

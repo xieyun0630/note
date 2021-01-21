@@ -503,6 +503,327 @@ typedef struct DNode{
 + nextval数组的求法：{{c1:: ![](https://gitee.com/xieyun714/nodeimage/raw/master/img/chrome_NJPCOTCu68.png) }}
   + nextval的作用示意图：{{c1:: ![image-20201203162535480](https://gitee.com/xieyun714/nodeimage/raw/master/img/image-20201203162535480.png)}}
 
-### test [	](dataStructure_20201202040742346)
+## 排序 [ ](dataStructure_20210113065733329)
 
-## 排序
+### 冒泡排序实现
++ 排序原理：{{c1:: ![](https://gitee.com/xieyun714/nodeimage/raw/master/img/20210114221831.png) }}
++ 实现：
+  ```java
+      //{{c1::
+      public static void sort(Comparable[] a){
+          for(int i=a.length-1;i>0;i--){
+              for(int j=0;j<i;j++){
+                  //{6,5,4,3,2,1}
+                  //比较索引j和索引j+1处的值
+                  if (greater(a[j],a[j+1])){
+                      exch(a,j,j+1);
+                  }
+              }
+          }
+      }
+      //}}
+  ```
++ 时间复杂度
+  + 在**最坏情况下**，也就是假如要排序的元素为{6,5,4,3,2,1}逆序，那么：
+      + 元素比较的次数为：{{c1:: (N-1)+(N-2)+(N-3)+...+2+1=((N-1)+1)*(N-1)/2=N^2/2-N/2; }}
+      + 元素交换的次数为：{{c1:: (N-1)+(N-2)+(N-3)+...+2+1=((N-1)+1)*(N-1)/2=N^2/2-N/2; }}
+      + 总执行次数为：{{c1:: (N^2/2-N/2)+(N^2/2-N/2)=N^2-N; }}
+  + 时间复杂度为:{{c1:: `O(N^2)` }}
++ API设计：
+  1. `public static void sort(Comparable[] a)`：{{c1:: 对数组内的元素进行排序  }}
+  2. `private static boolean greater(Comparable v,Comparable w)`:{{c1:: 判断v是否大于w  }}
+  3. `private static void exch(Comparable[] a,int i,int j)`：{{c1:: 交换a数组中，索引i和索引j处的值 }}
+
+
+### 选择排序
++ 排序原理：{{c1:: ![](https://gitee.com/xieyun714/nodeimage/raw/master/img/20210114223059.png) }}
++ 实现：
+  ```java
+      //{{c1::
+    public static void sort(Comparable[] a){
+        for(int i=0;i<=a.length-2;i++){
+            //定义一个变量，记录最小元素所在的索引，默认为参与选择排序的第一个元素所在的位置
+            int minIndex = i;
+            for(int j=i+1;j<a.length;j++){
+                //需要比较最小索引minIndex处的值和j索引处的值；
+                if (greater(a[minIndex],a[j])){
+                    minIndex=j;
+                }
+            }
+
+            //交换最小元素所在索引minIndex处的值和索引i处的值
+            exch(a,i,minIndex);
+        }
+    }
+      //}}
+  ```
++ 时间复杂度
+  + 在**最坏情况下**:
+      + 元素比较的次数为：{{c1:: ` (N-1)+(N-2)+(N-3)+...+2+1=((N-1)+1)*(N-1)/2=N^2/2-N/2;;` }}
+      + 元素交换的次数为：{{c1:: `N-1` }}
+      + 总执行次数为：{{c1:: `(N^2/2-N/2)+(N^2/2-N/2)=N^2-N;` }}
+  + 时间复杂度为:{{c1:: `N^2/2-N/2+（N-1）=N^2/2+N/2-1;`即
+ `O(N^2)` }}
+
+### 插入排序
++ 排序原理：{{c1:: ![](https://gitee.com/xieyun714/nodeimage/raw/master/img/20210114223556.png) }}
++ 实现：
+  ```java
+  //{{c1::
+      public static void sort(Comparable[] a){
+        for(int i=1;i<a.length;i++){
+            for(int j=i;j>0;j--){
+                if (greater(a[j-1],a[j])){
+                    exch(a,j-1,j);
+                }else{
+                    break;
+                }
+            }
+        }
+    }
+  //}}
+  ```
++ 时间复杂度
+  + 在**最坏情况下**:
+      + 元素比较的次数为：{{c1:: `(N-1)+(N-2)+(N-3)+...+2+1=((N-1)+1)*(N-1)/2=N^2/2-N/2;` }}
+      + 元素交换的次数为：{{c1:: `(N-1)+(N-2)+(N-3)+...+2+1=((N-1)+1)*(N-1)/2=N^2/2-N/2;` }}
+  + 时间复杂度为:{{c1:: `(N^2/2-N/2)+(N^2/2-N/2)=N^2-N`即
+`O(N^2)` }}
+
+### 希尔排序
+
++ 排序原理：{{c1:: ![](https://gitee.com/xieyun714/nodeimage/raw/master/img/20210114230547.png) }}
++ 实现：
+  ```java
+  //{{c1::
+    public static void sort(Comparable[] a){
+        //1.根据数组a的长度，确定增长量h的初始值；
+        int h = 1;
+        while(h<a.length/2){
+            h=2*h+1;
+        }
+        //2.希尔排序
+        while(h>=1){
+            //排序
+            //2.1.找到待插入的元素
+            for (int i=h;i<a.length;i++){
+                //2.2把待插入的元素插入到有序数列中
+                for (int j=i;j>=h;j-=h){
+
+                    //待插入的元素是a[j],比较a[j]和a[j-h]
+                    if (greater(a[j-h],a[j])){
+                        //交换元素
+                        exch(a,j-h,j);
+                    }else{
+                        //待插入元素已经找到了合适的位置，结束循环；
+                        break;
+                    }
+                }
+            }
+            h= h/2;
+        }
+    }
+  //}}
+  ```
++ 时间复杂度：{{c1:: `O(n^(1.3—2))` }}
+
+### 归并排序
++ 排序原理：{{c1:: ![](https://gitee.com/xieyun714/nodeimage/raw/master/img/20210114232118.png) }}
++ API设计：
+  1. `public static void sort(Comparable[] a)`：{{c1:: 对数组内的元素进行排序 }}
+  2. `private static void sort(Comparable[] a, int lo, int hi)`：{{c1:: 对数组a中从索引lo到索引hi之间的元素进 }}
+  行排序
+  3. `private static void merge(Comparable[] a, int lo, int mid, int hi)`:{{c1:: 从索引lo到所以mid为一个子组，从索引mid+1到索引hi为另一个子组，把数组a中的这两个子组的数据合并成一个有序的大组（从索引lo到索引hi） }}
+  4. `private static boolean less(Comparable v,Comparable w)`：{{c1:: 判断v是否小于w }}
+  5. `private static void exch(Comparable[] a,int i,int j)`：{{c1:: 交换a数组中，索引i和索引j处的值 }}
++ 核心实现：
+  ```java
+  //{{c1::
+    private static void sort(Comparable[] a, int lo, int hi) {
+        //做安全性校验；
+        if (hi<=lo){
+            return;
+        }
+
+        //对lo到hi之间的数据进行分为两个组
+        int mid = lo+(hi-lo)/2;//   5,9  mid=7
+
+        //分别对每一组数据进行排序
+        sort(a,lo,mid);
+        sort(a,mid+1,hi);
+
+        //再把两个组中的数据进行归并
+        merge(a,lo,mid,hi);
+    }
+
+    private static void merge(Comparable[] a, int lo, int mid, int hi) {
+        //定义三个指针
+        int i=lo;
+        int p1=lo;
+        int p2=mid+1;
+
+        while(p1<=mid && p2<=hi){
+            if (less(a[p1],a[p2])){
+                assist[i++] = a[p1++];
+            }else{
+                assist[i++]=a[p2++];
+            }
+        }
+
+        while(p1<=mid){
+            assist[i++]=a[p1++];
+        }
+        while(p2<=hi){
+            assist[i++]=a[p2++];
+        }
+        for(int index=lo;index<=hi;index++){
+            a[index]=assist[index];
+        }
+
+    }
+  //}}
+  ```
++ 时间复杂度：{{c1:: `O(n^(1.3—2))` }}
+
+### 快速排序
++ 排序原理：{{c1:: ![](https://gitee.com/xieyun714/nodeimage/raw/master/img/20210114232118.png) }}
++ API设计：
+  1. `public static void sort(Comparable[] a)`：{{c1:: 对数组内的元素进行排序 }}
+  2. `private static void sort(Comparable[] a, int lo, int hi)`：{{c1:: 对数组a中从索引lo到索引hi之间的元素进 }}
+  行排序
+  3. `public static int partition(Comparable[] a,int lo,int hi)`: {{c1:: 对数组a中，从索引 lo到索引 hi之间的元素进行分组，并返回分组界限对应的索引 }}
++ 实现：
+  ```java
+    //{{c1::
+    private static void sort(Comparable[] a, int lo, int hi) {
+        if (hi<=lo){
+            return;
+        }
+        int partition = partition(a, lo, hi);
+        sort(a,lo,partition-1);
+        sort(a,partition+1,hi);
+    }
+
+    public static int partition(Comparable[] a, int lo, int hi) {
+        Comparable key = a[lo];
+        int left=lo;
+        int right=hi+1;
+
+        while(true){
+            while(less(key,a[--right])){
+                if (right==lo){
+                    break;
+                }
+            }
+
+            while(less(a[++left],key)){
+                if (left==hi){
+                    break;
+                }
+            }
+            if (left>=right){
+                break;
+            }else{
+                exch(a,left,right);
+            }
+        }
+        exch(a,lo,right);
+       return right;
+    }
+    //}}
+  ```
+
+## 树
+
+### 树的基本概念
+
++ 树的定义：{{c1:: 树是n(n>0)个节点的有限集。当n=0时，称为空树。 }}
++ 在任意一棵非空树中应满足：
+  1. {{c1:: 有且仅有一个特定的称为根的结点。 }}
+  2. {{c1:: 当n>1时，其余节点可分为m(m>0)个互不相交的有限集T1,T2…,Tm,其中每个集合本身又是一棵树，并且称为根的子树。 }}
++ 树前驱后继的特点：
+  1. {{c1:: 树的根结点没有前驱 ， 除根结点外的所有结点有且只有一个前驱 。 }}
+  2. {{c1:: 树中所有结点可以有零个或多个后继 。 }}
++ 树的边：{{c1:: n个结点的树中有n-1条边 }}
+
+### 树的基本术语
++ 示范图：{{c1:: ![](https://gitee.com/xieyun714/nodeimage/raw/master/img/20210119204558.png) }}
++ **祖先** **子孙** **双亲** **孩子** **兄弟**：{{c1:: 考虑结点K。根A到结点K的唯一路径上的任意结点，称为结点K的祖先。如结点B是结点K的祖先，而结点K是结点B的子孙。路径上最接近结点K的结点E称为K的双亲，而K为结点E的孩子。根A是树中唯一没有双亲的结点。有相同双亲的结点称为兄弟，如结点K和结点L有相同的双亲E,即K和L为兄弟 }}
++ **结点的度** **树的度**：{{c1:: 树中一个结点的孩子个数称为该**结点的度**，树中结点的最大度数称为**树的度**。如结点B的度为2,结点D的度为3,树的度为3。 }}
++ **分支节点** **叶子节点**：{{c1:: 度大于0的结点称为分支结点（又称非终端结点）度为0（没有子女结点）的结点称为叶子结点（又称终端结点）。在分支结点中，每个结点的分支数就是该结点的度。 }}
++ 结点的**深度**、**高度**和**层次**：{{c1:: **结点的层次**从树根开始定义，根结点为第1层，它的子结点为第2层，以此类推。双亲在同一层的结点互为**堂兄弟**，图5.1中结点G与E,F,H,I,J互为堂兄弟，**结点的深度**是从根结点开始自顶向下逐层累加的。**结点的高度**是从叶结点开始自底向上逐层累加的。**树的高度**（或深度）是树中结点的最大层数。图5.1中树的高度为4。 }}
++ **有序树** **无序树**：{{c1:: 有序树和无序树。树中结点的各子树从左到右是有次序的，不能互换，称该树为有序树，否则称为无序树。假设图5.1为有序树，若将子结点位置互换，则变成一棵不同的树。 }}
++ **路径** **路径长度**：{{c1:: 路径和路径长度。树中两个结点之间的路径是由这两个结点之间所经过的结点序列构成的，而路径长度是路径上所经过的边的个数。注意路径是从上向下的。 }}
++ **森林**：{{c1:: 森林。森林是(m≥0)棵互不相交的树的集合。森林的概念与树的概念十分相近，因为只要把树的根结点删去就成了森林。反之，只要给m棵独立的树加上一个结点，并把这m棵树作为该结点的子树，则森林就变成了树 }}
+
+### 树的基本性质
+1. 树的结点数:{{c1:: 树中的结点数等于所有结点的度数加1 }}
+2. 度为m的树中第i层上:{{c1:: 至多有m<sup>i-1</sup>个结点(i≥1). }}
+3. 求树的总节点数：{{c1:: 高度为h的m又树至多有(m<sup>h</sup>-1)/(m-1)个结点°。 }}
+4. 求树的最小高度:{{c1:: 具有n个结点的m叉树的最小高度为log<sub>m</sub>(n(m-1)+1)。 }}
+
+## 二叉树
+
+### 二叉树主要特点
++ 5种基本形态: {{c1:: ![](https://gitee.com/xieyun714/nodeimage/raw/master/img/20210119212713.png) }}
++ 二叉树与度为2的有序树的区别：
+1. 结点树区别：{{c1:: 度为2的树至少有3个结点，而二又树可以为空。 }}
+2. 左右次序区别：{{c1:: 度为2的有序树的孩子的左右次序是相对于另一孩子而言的，若某个结点只有一个孩子则这个孩子就**无须区分其左右次序**，而二叉树无论其孩子数是否为2,**均需确定其左右次序**，即二又树的结点次序不是相对于另一结点而言，而是确定的。 }}
+
+### 特殊二叉树
++ **满二叉树**：{{c1:: 高度为h,含有2~h-1个结点的二叉树 }}
++ **完全二叉树**：{{c1:: 在满二叉树的基础上可去掉若干个编号更大的结点 }}
++ **二叉排序树**：{{c1:: 左子树关键字<根节点关键字<右子树关键字 }}
++ **平衡二叉树**：{{c1:: 左右子树深度差不超过1 }}
+
+### 二叉树的性质
++ **n<sub>0</sub>=n<sub>2</sub>+1**推导过程: {{c1:: ![](https://gitee.com/xieyun714/nodeimage/raw/master/img/20210119221652.png) }}
++ 第i层的结点数：
+  + 二叉树：{{c1:: 二叉树第i层至多有**2<sub>i-1</sub>** 个结点（i≥1） }}
+  + m叉树：{{c1:: m叉树第i层至多有**m<sub>i-1</sub>**个结点（i≥1） }}
++ 高度为h的树的结点数：
+  + 二叉树：{{c1:: 高度为h的二叉树至多有 **2<sub>ℎ</sub> − 1**个结点（满二叉树） }}
+  + m叉树：{{c1:: ![](https://gitee.com/xieyun714/nodeimage/raw/master/img/20210119222726.png) }}
+    + 等比数列求和公式:{{c1:: ![](https://gitee.com/xieyun714/nodeimage/raw/master/img/20210119222750.png) }}
+
+### 二叉树的顺序存储
++ 二叉树顺序存储定义：
+  ```C
+  //{{c1::
+  #define MaxSize 100
+  struct TreeNode {
+    ElemType value;
+    bool isEmpty;
+  };
+  TreeNode t[maxSize];
+  //}}
+  ```
++ 常用基本操作：{{c1:: ![](https://gitee.com/xieyun714/nodeimage/raw/master/img/20210119232317.png) }}
++ 回答：{{c1:: ![](https://gitee.com/xieyun714/nodeimage/raw/master/img/20210119232237.png) }}
+
+### 二叉树的链式存储
++ 二叉树链式存储定义：{{c1:: ![](https://gitee.com/xieyun714/nodeimage/raw/master/img/20210119233500.png) }}
++ 基本操作实现：
+  + 定义一颗空树，插入根节点：{{c1:: ![](https://gitee.com/xieyun714/nodeimage/raw/master/img/20210119233539.png) }}
+  + 插入新节点：{{c1:: ![](https://gitee.com/xieyun714/nodeimage/raw/master/img/20210119233621.png) }}
++ 二叉链表空指针域的数量：{{c1:: n个结点的二叉链表共有 n+1 个空链域 }}
+
+### 二叉树的遍历（手算练习）
++ 问题:![](https://gitee.com/xieyun714/nodeimage/raw/master/img/20210120002829.png)
++ 答案：![](https://gitee.com/xieyun714/nodeimage/raw/master/img/20210120002907.png)
+
+### 二叉树的前/中/后遍历实现
++ 前序：{{c1:: ![](https://gitee.com/xieyun714/nodeimage/raw/master/img/20210120003305.png) }}
++ 中序：{{c1:: ![](https://gitee.com/xieyun714/nodeimage/raw/master/img/20210120003208.png) }}
++ 后序：{{c1:: ![](https://gitee.com/xieyun714/nodeimage/raw/master/img/20210120003228.png) }}
+
+### 二叉树的层次遍历
++ 算法思想：{{c1:: ![](https://gitee.com/xieyun714/nodeimage/raw/master/img/20210120003914.png) }}
++ 实现：{{c1:: ![](https://gitee.com/xieyun714/nodeimage/raw/master/img/20210120003506.png) }}
+
+### 求树的深度实现（例）
++ 图示：{{c1:: ![](https://gitee.com/xieyun714/nodeimage/raw/master/img/20210120003734.png) }}
+
+### 由遍历序列构造二叉树
++ 必要条件：{{c1:: 若给出一棵二叉树的 前/中/后/层 序遍历序列中的两种，可以确定唯一二叉树 }}
++ 构造思路：{{c1:: ![](https://gitee.com/xieyun714/nodeimage/raw/master/img/20210120004440.png) }}

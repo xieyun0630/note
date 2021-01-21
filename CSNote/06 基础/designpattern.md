@@ -714,16 +714,16 @@ class Singleton {
   -  **矫枉过正**:{{c1:: 如果你的程序只与简单的集合进行交互，应用该模式可能会矫枉过正。}}
   - **特殊集合效率**:{{c1:: 对于某些特殊集合，使用迭代器可能比直接遍历的效率低。}}
 
-## 中介者模式
+## 中介者模式 [ ](designpattern_20210113065733336)
 
-### 中介者模式定义与结构
+### 中介者模式定义与结构 [ ](designpattern_20210113065733338)
 
 + intent: {{c1:: 减少对象之间混乱无序的依赖关系。该模式会限制对象之间的直接交互，迫使它们通过一个中介者对象进行合作。}}
 + 结构：{{c1:: ![image-20210112160235867](https://gitee.com/xieyun714/nodeimage/raw/master/img/image-20210112160235867.png) }}
 
-## 备忘录模式
+## 备忘录模式 [ ](designpattern_20210113065733340)
 
-### 备忘录模式定义与结构
+### 备忘录模式定义与结构 [ ](designpattern_20210113065733342)
 
 + intent: {{c1:: 允许在不暴露对象实现细节的情况下保存和恢复对象之前的状态。 }}
 + 基于嵌套类的实现结构: {{c1::![image-20210112163353655](https://gitee.com/xieyun714/nodeimage/raw/master/img/image-20210112163353655.png)}}
@@ -1002,9 +1002,9 @@ public class StringBuilder extends AbstractStringBuilder {
 - 结构：{{c1:: ![](https://gitee.com/xieyun714/nodeimage/raw/master/img/5f5c22d5-9c0e-49e1-b5b0-6cc7032724d4.png) }}
 - 正式结构：{{c1:: ![image-20210113112932140](https://gitee.com/xieyun714/nodeimage/raw/master/img/image-20210113112932140.png) }}
 
-## 访问者模式
+## 访问者模式 [ ](designpattern_20210113065733344)
 
-### 访问者模式定义与结构
+### 访问者模式定义与结构 [ ](designpattern_20210113065733347)
 + intent：{{c1:: 它能将算法与其所作用的对象隔离开来，为一个对象结构（比如组合结构）增加新能力。 }}
 + 结构：{{c1:: ![image-20210112165058910](https://gitee.com/xieyun714/nodeimage/raw/master/img/image-20210112165058910.png) }}
 + csnote版本结构：{{c1:: ![](https://gitee.com/xieyun714/nodeimage/raw/master/img/79c6f036-bde6-4393-85a3-ef36a0327bd2.png) }}
@@ -1012,8 +1012,8 @@ public class StringBuilder extends AbstractStringBuilder {
 + ConcreteVisitor：{{c1:: 具体访问者，存储遍历过程中的累计结果}}
 + ObjectStructure：{{c1:: 对象结构，可以是组合结构，或者是一个集合。}}
 
-## 责任链模式
+## 责任链模式 [ ](designpattern_20210113065733349)
 
-### 责任链模式
+### 责任链模式 [ ](designpattern_20210113065733354)
 + 定义：{{c1:: 允许你将请求沿着处理者链进行发送。 收到请求后， 每个处理者均可对请求进行处理， 或将其传递给链上的下个处理者。 }}
-+ 结构：{{c1:: ![](https://gitee.com/xieyun714/nodeimage/raw/master/img/20210113175246.png) }}
++ 结构：{{c1:: ![](https://gitee.com/xieyun714/nodeimage/raw/master/img/20210113175246.png) }} 
