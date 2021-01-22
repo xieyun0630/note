@@ -505,7 +505,7 @@ typedef struct DNode{
 
 ## 排序 [ ](dataStructure_20210113065733329)
 
-### 冒泡排序实现
+### 冒泡排序实现 [ ](dataStructure_20210121111221922)
 + 排序原理：{{c1:: ![](https://gitee.com/xieyun714/nodeimage/raw/master/img/20210114221831.png) }}
 + 实现：
   ```java
@@ -535,7 +535,7 @@ typedef struct DNode{
   3. `private static void exch(Comparable[] a,int i,int j)`：{{c1:: 交换a数组中，索引i和索引j处的值 }}
 
 
-### 选择排序
+### 选择排序 [ ](dataStructure_20210121111221927)
 + 排序原理：{{c1:: ![](https://gitee.com/xieyun714/nodeimage/raw/master/img/20210114223059.png) }}
 + 实现：
   ```java
@@ -565,7 +565,7 @@ typedef struct DNode{
   + 时间复杂度为:{{c1:: `N^2/2-N/2+（N-1）=N^2/2+N/2-1;`即
  `O(N^2)` }}
 
-### 插入排序
+### 插入排序 [ ](dataStructure_20210121111221930)
 + 排序原理：{{c1:: ![](https://gitee.com/xieyun714/nodeimage/raw/master/img/20210114223556.png) }}
 + 实现：
   ```java
@@ -590,7 +590,7 @@ typedef struct DNode{
   + 时间复杂度为:{{c1:: `(N^2/2-N/2)+(N^2/2-N/2)=N^2-N`即
 `O(N^2)` }}
 
-### 希尔排序
+### 希尔排序 [ ](dataStructure_20210121111221933)
 
 + 排序原理：{{c1:: ![](https://gitee.com/xieyun714/nodeimage/raw/master/img/20210114230547.png) }}
 + 实现：
@@ -627,7 +627,7 @@ typedef struct DNode{
   ```
 + 时间复杂度：{{c1:: `O(n^(1.3—2))` }}
 
-### 归并排序
+### 归并排序 [ ](dataStructure_20210121111221935)
 + 排序原理：{{c1:: ![](https://gitee.com/xieyun714/nodeimage/raw/master/img/20210114232118.png) }}
 + API设计：
   1. `public static void sort(Comparable[] a)`：{{c1:: 对数组内的元素进行排序 }}
@@ -685,7 +685,7 @@ typedef struct DNode{
   ```
 + 时间复杂度：{{c1:: `O(n^(1.3—2))` }}
 
-### 快速排序
+### 快速排序 [ ](dataStructure_20210121111221937)
 + 排序原理：{{c1:: ![](https://gitee.com/xieyun714/nodeimage/raw/master/img/20210114232118.png) }}
 + API设计：
   1. `public static void sort(Comparable[] a)`：{{c1:: 对数组内的元素进行排序 }}
@@ -733,9 +733,9 @@ typedef struct DNode{
     //}}
   ```
 
-## 树
+## 树 [ ](dataStructure_20210121111221939)
 
-### 树的基本概念
+### 树的基本概念 [ ](dataStructure_20210121111221941)
 
 + 树的定义：{{c1:: 树是n(n>0)个节点的有限集。当n=0时，称为空树。 }}
 + 在任意一棵非空树中应满足：
@@ -746,7 +746,7 @@ typedef struct DNode{
   2. {{c1:: 树中所有结点可以有零个或多个后继 。 }}
 + 树的边：{{c1:: n个结点的树中有n-1条边 }}
 
-### 树的基本术语
+### 树的基本术语 [ ](dataStructure_20210121111221943)
 + 示范图：{{c1:: ![](https://gitee.com/xieyun714/nodeimage/raw/master/img/20210119204558.png) }}
 + **祖先** **子孙** **双亲** **孩子** **兄弟**：{{c1:: 考虑结点K。根A到结点K的唯一路径上的任意结点，称为结点K的祖先。如结点B是结点K的祖先，而结点K是结点B的子孙。路径上最接近结点K的结点E称为K的双亲，而K为结点E的孩子。根A是树中唯一没有双亲的结点。有相同双亲的结点称为兄弟，如结点K和结点L有相同的双亲E,即K和L为兄弟 }}
 + **结点的度** **树的度**：{{c1:: 树中一个结点的孩子个数称为该**结点的度**，树中结点的最大度数称为**树的度**。如结点B的度为2,结点D的度为3,树的度为3。 }}
@@ -756,27 +756,27 @@ typedef struct DNode{
 + **路径** **路径长度**：{{c1:: 路径和路径长度。树中两个结点之间的路径是由这两个结点之间所经过的结点序列构成的，而路径长度是路径上所经过的边的个数。注意路径是从上向下的。 }}
 + **森林**：{{c1:: 森林。森林是(m≥0)棵互不相交的树的集合。森林的概念与树的概念十分相近，因为只要把树的根结点删去就成了森林。反之，只要给m棵独立的树加上一个结点，并把这m棵树作为该结点的子树，则森林就变成了树 }}
 
-### 树的基本性质
+### 树的基本性质 [ ](dataStructure_20210121111221946)
 1. 树的结点数:{{c1:: 树中的结点数等于所有结点的度数加1 }}
 2. 度为m的树中第i层上:{{c1:: 至多有m<sup>i-1</sup>个结点(i≥1). }}
 3. 求树的总节点数：{{c1:: 高度为h的m又树至多有(m<sup>h</sup>-1)/(m-1)个结点°。 }}
 4. 求树的最小高度:{{c1:: 具有n个结点的m叉树的最小高度为log<sub>m</sub>(n(m-1)+1)。 }}
 
-## 二叉树
+## 二叉树 [ ](dataStructure_20210121111221949)
 
-### 二叉树主要特点
+### 二叉树主要特点 [ ](dataStructure_20210121111221952)
 + 5种基本形态: {{c1:: ![](https://gitee.com/xieyun714/nodeimage/raw/master/img/20210119212713.png) }}
 + 二叉树与度为2的有序树的区别：
 1. 结点树区别：{{c1:: 度为2的树至少有3个结点，而二又树可以为空。 }}
 2. 左右次序区别：{{c1:: 度为2的有序树的孩子的左右次序是相对于另一孩子而言的，若某个结点只有一个孩子则这个孩子就**无须区分其左右次序**，而二叉树无论其孩子数是否为2,**均需确定其左右次序**，即二又树的结点次序不是相对于另一结点而言，而是确定的。 }}
 
-### 特殊二叉树
+### 特殊二叉树 [ ](dataStructure_20210121111221955)
 + **满二叉树**：{{c1:: 高度为h,含有2~h-1个结点的二叉树 }}
 + **完全二叉树**：{{c1:: 在满二叉树的基础上可去掉若干个编号更大的结点 }}
 + **二叉排序树**：{{c1:: 左子树关键字<根节点关键字<右子树关键字 }}
 + **平衡二叉树**：{{c1:: 左右子树深度差不超过1 }}
 
-### 二叉树的性质
+### 二叉树的性质 [ ](dataStructure_20210121111221958)
 + **n<sub>0</sub>=n<sub>2</sub>+1**推导过程: {{c1:: ![](https://gitee.com/xieyun714/nodeimage/raw/master/img/20210119221652.png) }}
 + 第i层的结点数：
   + 二叉树：{{c1:: 二叉树第i层至多有**2<sub>i-1</sub>** 个结点（i≥1） }}
@@ -786,7 +786,7 @@ typedef struct DNode{
   + m叉树：{{c1:: ![](https://gitee.com/xieyun714/nodeimage/raw/master/img/20210119222726.png) }}
     + 等比数列求和公式:{{c1:: ![](https://gitee.com/xieyun714/nodeimage/raw/master/img/20210119222750.png) }}
 
-### 二叉树的顺序存储
+### 二叉树的顺序存储 [ ](dataStructure_20210121111221960)
 + 二叉树顺序存储定义：
   ```C
   //{{c1::
@@ -801,29 +801,72 @@ typedef struct DNode{
 + 常用基本操作：{{c1:: ![](https://gitee.com/xieyun714/nodeimage/raw/master/img/20210119232317.png) }}
 + 回答：{{c1:: ![](https://gitee.com/xieyun714/nodeimage/raw/master/img/20210119232237.png) }}
 
-### 二叉树的链式存储
+### 二叉树的链式存储 [ ](dataStructure_20210121111221962)
 + 二叉树链式存储定义：{{c1:: ![](https://gitee.com/xieyun714/nodeimage/raw/master/img/20210119233500.png) }}
 + 基本操作实现：
   + 定义一颗空树，插入根节点：{{c1:: ![](https://gitee.com/xieyun714/nodeimage/raw/master/img/20210119233539.png) }}
   + 插入新节点：{{c1:: ![](https://gitee.com/xieyun714/nodeimage/raw/master/img/20210119233621.png) }}
 + 二叉链表空指针域的数量：{{c1:: n个结点的二叉链表共有 n+1 个空链域 }}
 
-### 二叉树的遍历（手算练习）
+### 二叉树的遍历（手算练习） [ ](dataStructure_20210121111221965)
 + 问题:![](https://gitee.com/xieyun714/nodeimage/raw/master/img/20210120002829.png)
 + 答案：![](https://gitee.com/xieyun714/nodeimage/raw/master/img/20210120002907.png)
 
-### 二叉树的前/中/后遍历实现
+### 二叉树的前/中/后遍历实现 [ ](dataStructure_20210121111221967)
 + 前序：{{c1:: ![](https://gitee.com/xieyun714/nodeimage/raw/master/img/20210120003305.png) }}
 + 中序：{{c1:: ![](https://gitee.com/xieyun714/nodeimage/raw/master/img/20210120003208.png) }}
 + 后序：{{c1:: ![](https://gitee.com/xieyun714/nodeimage/raw/master/img/20210120003228.png) }}
 
-### 二叉树的层次遍历
+### 二叉树的层次遍历 [ ](dataStructure_20210121111221970)
 + 算法思想：{{c1:: ![](https://gitee.com/xieyun714/nodeimage/raw/master/img/20210120003914.png) }}
 + 实现：{{c1:: ![](https://gitee.com/xieyun714/nodeimage/raw/master/img/20210120003506.png) }}
 
-### 求树的深度实现（例）
+### 求树的深度实现（例） [ ](dataStructure_20210121111221974)
 + 图示：{{c1:: ![](https://gitee.com/xieyun714/nodeimage/raw/master/img/20210120003734.png) }}
 
-### 由遍历序列构造二叉树
+### 由遍历序列构造二叉树 [ ](dataStructure_20210121111221976)
 + 必要条件：{{c1:: 若给出一棵二叉树的 前/中/后/层 序遍历序列中的两种，可以确定唯一二叉树 }}
 + 构造思路：{{c1:: ![](https://gitee.com/xieyun714/nodeimage/raw/master/img/20210120004440.png) }}
+
+### 线索二叉树
++ 作用：{{c1:: 方便从一个指定结点出发，找到其前驱、后继；方便遍历 }}
++ 存储结构定义：{{c1:: ![](https://gitee.com/xieyun714/nodeimage/raw/master/img/20210121233225.png) }}
+
+### 寻找二叉树的中序前驱实现
++ 图示：![](https://gitee.com/xieyun714/nodeimage/raw/master/img/20210121233642.png)
++ 注意：{{c1:: 最后一个结点的 rchild、rtag的处理 }}
+### 二叉树线索化:中序线索化实现
+
++ 推荐版本: {{c1:: ![](https://gitee.com/xieyun714/nodeimage/raw/master/img/20210121233842.png) }}
++ 教材版本：{{c1:: ![](https://gitee.com/xieyun714/nodeimage/raw/master/img/20210121233909.png) }}
+
+### 二叉树线索化:先序线索化实现
+
++ 推荐版本:{{c1:: ![](https://gitee.com/xieyun714/nodeimage/raw/master/img/20210121234502.png) }}
++ 教程版本:{{c1:: ![](https://gitee.com/xieyun714/nodeimage/raw/master/img/20210121234529.png) }}
++ 注意：{{c1:: 先序线索化中，注意处理爱滴隨力转圈圈问题，当tag==0时，オ能对左子树先序线索化 }}
+
+
+### 二叉树线索化:后序线索化实现
+
++ 推荐版本：{{c1:: ![](https://gitee.com/xieyun714/nodeimage/raw/master/img/20210121234608.png) }}
++ 教材版本:{{c1:: ![](https://gitee.com/xieyun714/nodeimage/raw/master/img/20210121234635.png) }}
+
+
+## 树
+
+### 树的存储结构
++ 双亲表示法(顺序存储)存储结构定义:{{c1:: ![](https://gitee.com/xieyun714/nodeimage/raw/master/img/20210121235131.png) }}
+  + 优点：{{c1:: 查指定结点的双亲很方便 }}
+  + 缺点：{{c1:: 查指定结点的孩子只能**从头遍历** }}
+  + 与二叉树的顺序存储区别:二叉树的顺序存储结点编号不仅反映了存储位置，也隐含了结点之间的逻辑关系
++ 孩子表示法（顺序+链式存储）定义：{{c1:: ![](https://gitee.com/xieyun714/nodeimage/raw/master/img/20210121235717.png) }}
+
+### 孩子兄弟表示法（链式存储）
++ 定义：{{c1:: ![](https://gitee.com/xieyun714/nodeimage/raw/master/img/20210121235853.png) }}
++ 森林与二叉树的转换思路:{{c1:: 用二叉链表存储森林一左孩子右兄弟,森林中各个树的根节点之间视为兄弟关系 }}
+
+### 树、森林、二叉树的遍历对应关系
++ 对应关系：{{c1:: ![](https://gitee.com/xieyun714/nodeimage/raw/master/img/20210122002801.png) }}
+
+### 
