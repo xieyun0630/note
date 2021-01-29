@@ -735,7 +735,7 @@ typedef struct DNode{
 
 # 树 [ ](dataStructure_20210121111221939)
 
-## 树的基本概念与术语
+## 树的基本概念与术语 [ ](dataStructure_20210129110102584)
 
 ### 树的基本概念 [ ](dataStructure_20210121111221941)
 
@@ -873,7 +873,7 @@ typedef struct DNode{
 ### 树、森林、二叉树的遍历对应关系 [ ](dataStructure_20210122105026678)
 + 对应关系：{{c1:: ![](https://gitee.com/xieyun714/nodeimage/raw/master/img/20210122002801.png) }}
 
-## 二叉树的应用
+## 二叉树的应用 [ ](dataStructure_20210129110102586)
 
 ### 二叉排序树：查找操作实现 [ ](dataStructure_20210128043003554)
 
@@ -938,7 +938,7 @@ typedef struct DNode{
 
 # 图 [ ](dataStructure_20210128043003582)
 
-## 图的基本概念与术语
+## 图的基本概念与术语 [ ](dataStructure_20210129110102590)
 
 ### 图的定义 [ ](dataStructure_20210128043003584)
 
@@ -998,13 +998,13 @@ typedef struct DNode{
 + **树**:{{c1:: 不存在回路，且连通的无向图 }}
 + **有向树**:{{c1:: 一个顶点的入度为0、其余顶点的入度均为1的有向图，称为有向树。 }}
 
-### 图的常见结论
+### 图的常见结论 [ ](dataStructure_20210129110102592)
 + 对于n个顶点的无向图G：{{c1:: ![](https://gitee.com/xieyun714/nodeimage/raw/master/img/20210128202212.png) }}
 + 对于n个顶点的有向图G：{{c1:: ![](https://gitee.com/xieyun714/nodeimage/raw/master/img/20210128202234.png) }}
 
-## 图的存储结构
+## 图的存储结构 [ ](dataStructure_20210129110102594)
 
-### 图的存储结构：邻接矩阵
+### 图的存储结构：邻接矩阵 [ ](dataStructure_20210129110102596)
 
 + 顺序结构定义：
   ```c++
@@ -1019,7 +1019,7 @@ typedef struct DNode{
   ```
 + 邻接矩阵法存储带权图：{{c1:: ![](https://gitee.com/xieyun714/nodeimage/raw/master/img/20210128204430.png) }}
 
-### 图的存储结构：邻接矩阵法求度
+### 图的存储结构：邻接矩阵法求度 [ ](dataStructure_20210129110102599)
   + 求无向图的度：
     + 第i个结点的度 ={{c1:: 第i行（或第i列）的非零元素个数 }}
   + 有向图的度：
@@ -1028,23 +1028,23 @@ typedef struct DNode{
     + 第i个结点的度 ={{c1:: 第i行、第i列的非零元素个数之和 }}
   + 邻接矩阵法求顶点的度/出度/入度的时间复杂度为:{{c1:: `O(|V|)` }}
 
-### 图的存储结构：邻接矩阵法的性能
+### 图的存储结构：邻接矩阵法的性能 [ ](dataStructure_20210129110102601)
   + 空间复杂度：{{c1:: O(|V|<sub>2</sub>) ——只和顶点数相关，和实际的边数无关 }}
   + 适合用于的图：{{c1:: 存储稠密图 }}
   + 无向图的邻接矩阵是对称矩阵，{{c1:: 可以压缩存储（只存储上三角区/下三角区） }}
 
-### 图的存储结构：邻接矩阵法的重要性质：
+### 图的存储结构：邻接矩阵法的重要性质： [ ](dataStructure_20210129110102603)
 + `A<sup>n</sup>[i][j]`表示:{{c1::设图G的邻接矩阵为A（矩阵元素为0/1），则`A<sup>n</sup>`的元素`A<sup>n</sup>[i][j]`等于由顶点i到顶点j的长度为n的路径的数目}}
 + 图解：{{c1::![](https://gitee.com/xieyun714/nodeimage/raw/master/img/20210128212658.png)}}
 
 
-### 图的存储结构：邻接表法（顺序+链式存储）定义
+### 图的存储结构：邻接表法（顺序+链式存储）定义 [ ](dataStructure_20210129110102606)
 + 可视化图：![](https://gitee.com/xieyun714/nodeimage/raw/master/img/20210128223110.png)
 + 顶点定义：![](https://gitee.com/xieyun714/nodeimage/raw/master/img/20210128222934.png)
 + “边/弧”定义：![](https://gitee.com/xieyun714/nodeimage/raw/master/img/20210128223014.png)
 + 图定义：![](https://gitee.com/xieyun714/nodeimage/raw/master/img/20210128223033.png)
 
-### 图的存储结构：邻接表VS邻接矩阵
+### 图的存储结构：邻接表VS邻接矩阵 [ ](dataStructure_20210129110102609)
 
 |                  | 邻接表                                                 | 邻接矩阵                                |
 | ---------------- | ------------------------------------------------------ | --------------------------------------- |
@@ -1054,25 +1054,25 @@ typedef struct DNode{
 | 计算度/出度/入度 | {{c1::计算有向图的度、入度不方便，其余很方便 }}        | {{c1:: 必须遍历对应行或列  }}           |
 | 找相邻的边       | {{c1:: **找有向图的入边不方便**，其余很方便}}          | {{c1:: 必须遍历对应行或列 }}            |
 
-###   图的存储结构：十字链表
+###   图的存储结构：十字链表 [ ](dataStructure_20210129110102611)
 + 弧结点结构:{{c1::![image-20210128235152298](https://gitee.com/xieyun714/nodeimage/raw/master/img/image-20210128235152298.png)}}
 + 顶点结点结构：{{c1::![image-20210128235214230](https://gitee.com/xieyun714/nodeimage/raw/master/img/image-20210128235214230.png)}}
 + 逻辑图例：{{c1::![image-20210128235319936](https://gitee.com/xieyun714/nodeimage/raw/master/img/image-20210128235319936.png)}}
 + 如何找到指定顶点的所有出边？{{c1::**顺着绿色线路找**}}
 + 如何找到指定顶点的所有入边？{{c1::**顺着橙色线路找**}}
 
-###   图的存储结构：邻接多重表
+###   图的存储结构：邻接多重表 [ ](dataStructure_20210129110102613)
 + 边结点结构:{{c1::![image-20210128235935671](https://gitee.com/xieyun714/nodeimage/raw/master/img/image-20210128235935671.png)}}
 + 顶点结点结构：{{c1::![image-20210128235942664](https://gitee.com/xieyun714/nodeimage/raw/master/img/image-20210128235942664.png)}}
 + 逻辑图例：{{c1::![image-20210128235954721](https://gitee.com/xieyun714/nodeimage/raw/master/img/image-20210128235954721.png)}}
 + 删除`A-B`后指针走向：{{c1::![image-20210129000133033](https://gitee.com/xieyun714/nodeimage/raw/master/img/image-20210129000133033.png)}}
 + 删除E结点后指针走向：{{c1::![image-20210129000242750](https://gitee.com/xieyun714/nodeimage/raw/master/img/image-20210129000242750.png)}}
 
-### 图的4种存储结构总结
+### 图的4种存储结构总结 [ ](dataStructure_20210129110102616)
 + 问：![image-20210129001224371](https://gitee.com/xieyun714/nodeimage/raw/master/img/image-20210129001224371.png)
 + 答：{{c1::![image-20210129000957867](https://gitee.com/xieyun714/nodeimage/raw/master/img/image-20210129000957867.png)}}
 
-### 图的基本操作
+### 图的基本操作 [ ](dataStructure_20210129110102620)
 + `Adjacent(G,x,y)`：判断图G是否存在边`<x, y>`或`(x, y)`。
 + `Neighbors(G,x)`：列出图G中与结点x邻接的边。
 + `InsertVertex(G,x)`：在图G中插入顶点x。
@@ -1085,9 +1085,9 @@ typedef struct DNode{
 + `Set_edge_value(G,x,y,v)`：设置图G中边`(x, y)`或`<x, y>`对应的权值为v。
 + 标签：{{c1::理解}}
 
-## 图的遍历
+## 图的遍历 [ ](dataStructure_20210129110102622)
 
-### 图的广度优先遍历
+### 图的广度优先遍历 [ ](dataStructure_20210129110102625)
 
 + ⼴度优先遍历（Breadth-First-Search, BFS）思路：
   1. {{c1:: 找到与⼀个顶点相邻的所有顶点 }}
