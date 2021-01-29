@@ -377,6 +377,7 @@ typedef struct DNode{
   3. {{c1:: 若扫描到运算符，则弹出两个栈顶元素，执行相应运算，运算结果压回栈顶，回到① }}
   + 注意：{{c1:: 第二步，先出栈的是“右操作数” }}
 + 过程动画：
+  
   + {{c1:: ![zdXEoElMxF](dataStructure.assets/zdXEoEl1MxF.gif)}}
 + 用栈实现前缀表达式的计算：
   1. {{c1:: **从右往左**扫描下一个元素，直到处理完所有元素 }}
@@ -488,6 +489,7 @@ typedef struct DNode{
 + 输出受限的双端队列：{{c1:: 允许从两端插入、从一端删刪除的队列 }}
 
 ### 对称矩阵的压缩存储 [	](dataStructure_20201202040742340)
++ 思路：{{c1::关键在于`i,j`如何映射到一维数组下标`k`}}
 + 正面：![](https://gitee.com/xieyun714/nodeimage/raw/master/img/1_back.png)
 + 回答：{{c1:: ![](https://gitee.com/xieyun714/nodeimage/raw/master/img/1.png) }}
 
@@ -688,8 +690,7 @@ typedef struct DNode{
 + 排序原理：{{c1:: ![](https://gitee.com/xieyun714/nodeimage/raw/master/img/20210114232118.png) }}
 + API设计：
   1. `public static void sort(Comparable[] a)`：{{c1:: 对数组内的元素进行排序 }}
-  2. `private static void sort(Comparable[] a, int lo, int hi)`：{{c1:: 对数组a中从索引lo到索引hi之间的元素进 }}
-  行排序
+  2. `private static void sort(Comparable[] a, int lo, int hi)`：{{c1:: 对数组a中从索引lo到索引hi之间的元素进行排序 }}
   3. `public static int partition(Comparable[] a,int lo,int hi)`: {{c1:: 对数组a中，从索引 lo到索引 hi之间的元素进行分组，并返回分组界限对应的索引 }}
 + 实现：
   ```java
@@ -732,7 +733,9 @@ typedef struct DNode{
     //}}
   ```
 
-## 树 [ ](dataStructure_20210121111221939)
+# 树 [ ](dataStructure_20210121111221939)
+
+## 树的基本概念与术语
 
 ### 树的基本概念 [ ](dataStructure_20210121111221941)
 
@@ -870,29 +873,32 @@ typedef struct DNode{
 ### 树、森林、二叉树的遍历对应关系 [ ](dataStructure_20210122105026678)
 + 对应关系：{{c1:: ![](https://gitee.com/xieyun714/nodeimage/raw/master/img/20210122002801.png) }}
 
-### 二叉排序树：查找操作实现
+## 二叉树的应用
+
+### 二叉排序树：查找操作实现 [ ](dataStructure_20210128043003554)
+
 + 查找操作实现：![](https://gitee.com/xieyun714/nodeimage/raw/master/img/20210123120538.png)
 
-### 二叉排序树：插入\构造操作实现
+### 二叉排序树：插入\构造操作实现 [ ](dataStructure_20210128043003557)
 + 插入操作实现：{{c1:: ![](https://gitee.com/xieyun714/nodeimage/raw/master/img/20210123120923.png) }}
 + 构造操作实现：{{c1:: ![](https://gitee.com/xieyun714/nodeimage/raw/master/img/20210123121046.png) }}
 
-### 二叉排序树：删除节点思路
+### 二叉排序树：删除节点思路 [ ](dataStructure_20210128043003559)
 + 实现过程思路：
   1. {{c1:: 若被删除结点z是叶结点，则直接删除，不会破坏二叉排序树的性质。 }}
   2. {{c1:: 若结点z只有一棵左子树或右子树，则让z的子树成为z父结点的子树，替代z的位置。 }}
   3. {{c1:: 若结点z有左、右两棵子树，则令z的直接后继（或直接前驱）替代z,然后从二叉排序树中删去这个直接后继（或直接前驱），这样就转换成了第一或第二种情况。 }}
 
-### 二叉排序树：查找效率分析
+### 二叉排序树：查找效率分析 [ ](dataStructure_20210128043003561)
 + 查找成功，平均查找长度：{{c1:: ![](https://gitee.com/xieyun714/nodeimage/raw/master/img/20210123122037.png) }}
 + 查找失败，平均查找长度：{{c1:: ![](https://gitee.com/xieyun714/nodeimage/raw/master/img/20210123122339.png) }}
 
-### 平衡二叉树
+### 平衡二叉树 [ ](dataStructure_20210128043003564)
 + 定义：{{c1:: 平衡二叉树（Balanced Binary Tree），简称平衡树（AVL树）——树上任一结点的左子树和右子树的高度之差不超过1。 }}
 + **平衡因子**的定义：{{c1:: 结点的平衡因子=左子树高-右子树高。 }}
   + 平衡二叉树结点的平衡因子:{{c1:: 只可能是−1、0或1,只要有任一结点的平衡因子绝对值大于1，就不是平衡二叉树 }}
 
-### 平衡二叉树的插入
+### 平衡二叉树的插入 [ ](dataStructure_20210128043003566)
 + 主要思路：{{c1:: 在插入操作中，只要将最小不平衡子树调整平衡，则其他祖先结点都会恢复平衡 }}
   + 图示：{{c1:: ![](https://gitee.com/xieyun714/nodeimage/raw/master/img/20210123123301.png) }}
 + 调整最小不平衡子树4种情况
@@ -901,20 +907,20 @@ typedef struct DNode{
   3. `LR`:{{c1:: 在A的左孩子的右子树插入导致A不平衡，将A的左孩子的右孩子先左上旋再右上旋 }}
   4. `RL`:{{c1:: 在A的右孩子的左子树插入导致A不平衡，将A的右孩子的左孩子先右上旋再左上旋 }}
 
-### 调整最小不平衡子树代码思路：左旋/右旋
+### 调整最小不平衡子树代码思路：左旋/右旋 [ ](dataStructure_20210128043003568)
 + 图示：{{c1:: ![](https://gitee.com/xieyun714/nodeimage/raw/master/img/20210123151301.png) }}
 
-### 高为h的平衡二叉树最少有几个结点,递推求解
+### 高为h的平衡二叉树最少有几个结点,递推求解 [ ](dataStructure_20210128043003571)
 + 假设以n<sub>h</sub>表示深度为h的平衡树中含有的最少结点数。则有{{c1:: n<sub>0</sub> = 0, n<sub>1</sub> = 1, n<sub>2</sub> = 2，并且有nh = n<sub>h−1</sub> + n<sub>h−2</sub> + 1 }}
 
-### 哈夫曼树定义
+### 哈夫曼树定义 [ ](dataStructure_20210128043003575)
 + 定义：{{c1:: 在含有n个带权叶结点的二叉树中，其中带权路径长度（WPL）最小的二叉树称为哈夫曼树，也称最优二叉树 }}
 + 结点的权：{{c1:: 有某种现实含义的数值（如：表示结点的重要性等） }}
 + 结点的带权路径长度：{{c1:: 从树的根到该结点的**路径长度**（经过的边数）与该结点上**权值**的**乘积** }}
 + 树的带权路径长度：{{c1:: 树中所有**叶结点**的带权路径长度之和（WPL, Weighted Path Length） }}
 
 
-### 哈夫曼树构造
+### 哈夫曼树构造 [ ](dataStructure_20210128043003577)
 + 给定n个权值分别为w1, w2,…, wn的结点，构造哈夫曼树的算法描述如下：
   1. {{c1:: 将这n个结点分别作为n棵仅含一个结点的二叉树，构成森林F。 }}
   2. {{c1:: 构造一个新结点，从F中选取两棵根结点权值最小的树作为新结点的左、右子树，并且将新结点的权值置为左、右子树上根结点的权值之和。 }}
@@ -922,7 +928,7 @@ typedef struct DNode{
   4. {{c1:: 重复步骤2）和3），直至F中只剩下一棵树为止。 }}
 + 图示步骤：{{c1:: ![](https://gitee.com/xieyun714/nodeimage/raw/master/img/20210123152905.png) }}
 
-### 哈夫曼编码
+### 哈夫曼编码 [ ](dataStructure_20210128043003579)
 
 + **固定长度编码**:{{c1:: 每个字符用相等长度的二进制位表示 }}
 + **可变长度编码**:{{c1:: 允许对不同字符用不等长的二进制位表示 }}
@@ -930,31 +936,35 @@ typedef struct DNode{
 + **哈夫曼编码**:{{c1:: 将字符频次作为字符结点权值，构造哈夫曼树，即可得哈夫曼编码，可用于数据压缩 }}
   + 图示：{{c1:: ![](https://gitee.com/xieyun714/nodeimage/raw/master/img/20210123154802.png) }}
 
-## 图
+# 图 [ ](dataStructure_20210128043003582)
 
-### 图的定义
-+ 定义：图G由顶点集V和边集E组成，记为`G=(V,E)`,其中`V(G)`表示图G中顶点的有限非空集，`E(G)`表示图G中顶点之间的关系（边）集合
+## 图的基本概念与术语
+
+### 图的定义 [ ](dataStructure_20210128043003584)
+
++ 定义：{{c1:: 图G由顶点集V和边集E组成，记为`G=(V,E)`,其中`V(G)`表示图G中顶点的有限非空集，`E(G)`表示图G中顶点之间的关系（边）集合 }}
   + `|V|`:{{c1:: 顶点数 }}
-  + `|E|`：{{c1:: 边数 }}
+  + `|E|`：{{c1:: 边数,若 `|E|>n-1`，则一定有回路}}
 + 注意：{{c1:: 线性表可以是空表，树可以是空树，但图不可以是空，即V一定是非空集 }}
   
 
-### 图的基本概念与术语
-+ **有向图**、**无向图**：![](https://gitee.com/xieyun714/nodeimage/raw/master/img/20210127212308.png)
-+ **简单图**、**多重图**：![](https://gitee.com/xieyun714/nodeimage/raw/master/img/20210127212424.png)
-### 图中顶点的度、入度、出度
-+ **无向图**：![](https://gitee.com/xieyun714/nodeimage/raw/master/img/20210127212817.png)
-+ **有向图**：![](https://gitee.com/xieyun714/nodeimage/raw/master/img/20210127212825.png)
+### 图的基本概念与术语 [ ](dataStructure_20210128043003587)
++ **有向图**、**无向图**：{{c1:: ![](https://gitee.com/xieyun714/nodeimage/raw/master/img/20210127212308.png) }}
++ **简单图**、**多重图**：{{c1:: ![](https://gitee.com/xieyun714/nodeimage/raw/master/img/20210127212424.png) }}
 
-### 图中顶点-顶点的关系描述
-+ **路径**：{{c1:: 顶点vp到顶点vq之间的一条路径是指顶点序列 ， }}
+### 图中顶点的度、入度、出度 [ ](dataStructure_20210128043003589)
++ **无向图**：{{c1:: ![](https://gitee.com/xieyun714/nodeimage/raw/master/img/20210127212817.png) }}
++ **有向图**：{{c1:: ![](https://gitee.com/xieyun714/nodeimage/raw/master/img/20210127212825.png) }}
+
+### 图中顶点-顶点的关系描述 [ ](dataStructure_20210128043003591)
++ **路径**：{{c1:: 顶点v<sub>p</sub>到顶点v<sub>q</sub>之间的一条路径是指顶点序列 ， }}
 + **回路**：{{c1:: 第一个顶点和最后一个顶点相同的路径称为回路或环 }}
 + **简单路径**：{{c1:: 在路径序列中，顶点不重复出现的路径称为简单路径。 }}
 + **简单回路**：{{c1:: 除第一个顶点和最后一个顶点外，其余顶点不重复出现的回路称为简单回路。 }}
 + **路径长度**：{{c1:: 路径上边的数目 }}
-+ **点到点的距离**：{{c1:: 从顶点u出发到顶点v的最短路径若存在，则此路径的长度称为从u到v的距离。若从u到v根本不存在路径，则记该距离为无穷（∞）。 }}
++ **距离**：{{c1:: 点到点的距离,从顶点u出发到顶点v的最短路径若存在，则此路径的长度称为从u到v的距离。若从u到v根本不存在路径，则记该距离为无穷（∞）。 }}
 
-### 连通图与强连通图
+### 连通图与强连通图 [ ](dataStructure_20210128043003593)
 + **顶点连通**: {{c1:: 无向图中，若从顶点v到顶点w有路径存在，则称v和w是连通的 }}
 + **顶点强连通**: {{c1:: 有向图中，若从顶点v到顶点w和从顶点w到顶点v之间都有路径，则称这两个顶点是强连通的 }}
 + **连通图**:{{c1:: 若图G中任意两个顶点都是连通的，则称图G为连通图，否则称为非连通图。}}
@@ -963,7 +973,7 @@ typedef struct DNode{
   + 若G是连通图，{{c1:: 则最少有 n-1 条边 }}
   + 若G是强连通图，{{c1:: 则最少有 n 条边（形成回路） }}
 
-### 子图
+### 子图 [ ](dataStructure_20210128043003595)
 + **子图**:{{c1:: ![](https://gitee.com/xieyun714/nodeimage/raw/master/img/20210127215739.png) }}
 + **生成子图**:{{c1:: ![](https://gitee.com/xieyun714/nodeimage/raw/master/img/20210127215746.png) }}
 + **极大连通子图**:{{c1:: 子图必须连通，且包含尽可能多的顶点和边 }}
@@ -972,17 +982,119 @@ typedef struct DNode{
 + **连通分量**:{{c1:: **无向图**中的**极大连通子图**称为**连通分量**。 }}
 + **强连通分量**:{{c1:: 有向图中的**极大强连通子图**称为有向图的**强连通分量** }}
 
-### 生成树 生成森林
+### 生成树 生成森林 [ ](dataStructure_20210128043003598)
 + **生成树** : {{c1:: 连通图的生成树是包含图中全部顶点的一个极小连通子图。 }}
 + **生成森林** : {{c1:: 在非连通图中，连通分量的生成树构成了非连通图的生成森林。![](https://gitee.com/xieyun714/nodeimage/raw/master/img/20210127220704.png) }}
 
-### 边的权、带权图/网
+### 边的权、带权图/网 [ ](dataStructure_20210128043003602)
 + **边的权**:{{c1:: 在一个图中，每条边都可以标上具有某种含义的数值，该数值称为该边的权值。 }}
 + **带权图/网**:{{c1:: 边上带有权值的图称为带权图，也称网。 }}
 + **带权路径长度**:{{c1:: 当图是带权图时，一条路径上所有边的权值之和，称为该路径的带权路径长度 }}
 
-
-### 特殊形态的图
-+ **无向完全图**:![](https://gitee.com/xieyun714/nodeimage/raw/master/img/20210127221155.png)
-+ **有向完全图**:![](https://gitee.com/xieyun714/nodeimage/raw/master/img/20210127221217.png)
+### 特殊形态的图 [ ](dataStructure_20210128043003604)
++ **无向完全图**:{{c1:: ![](https://gitee.com/xieyun714/nodeimage/raw/master/img/20210127221155.png) }}
++ **有向完全图**:{{c1:: ![](https://gitee.com/xieyun714/nodeimage/raw/master/img/20210127221217.png) }}
 + **稀疏图**、**稠密图**：{{c1:: ![](https://gitee.com/xieyun714/nodeimage/raw/master/img/20210127221308.png) }}
++ **树**:{{c1:: 不存在回路，且连通的无向图 }}
++ **有向树**:{{c1:: 一个顶点的入度为0、其余顶点的入度均为1的有向图，称为有向树。 }}
+
+### 图的常见结论
++ 对于n个顶点的无向图G：{{c1:: ![](https://gitee.com/xieyun714/nodeimage/raw/master/img/20210128202212.png) }}
++ 对于n个顶点的有向图G：{{c1:: ![](https://gitee.com/xieyun714/nodeimage/raw/master/img/20210128202234.png) }}
+
+## 图的存储结构
+
+### 图的存储结构：邻接矩阵
+
++ 顺序结构定义：
+  ```c++
+  //{{c1::
+  #define MaxVertexNum 100                //顶点数目的最大值
+  typedef struct{                         
+    char Vex[MaxVertexNum]                //顶点表
+    int Edge[MaxVertexNum][MaxVertexNum]  //邻接矩阵，边表
+    int vexnum,arcnum;                    //图的当前顶点数和边数/弧数
+  }MGraph;
+  //}}
+  ```
++ 邻接矩阵法存储带权图：{{c1:: ![](https://gitee.com/xieyun714/nodeimage/raw/master/img/20210128204430.png) }}
+
+### 图的存储结构：邻接矩阵法求度
+  + 求无向图的度：
+    + 第i个结点的度 ={{c1:: 第i行（或第i列）的非零元素个数 }}
+  + 有向图的度：
+    + 第i个结点的出度 ={{c1:: 第i行的非零元素个数 }}
+    + 第i个结点的入度 ={{c1:: 第i列的非零元素个数 }}
+    + 第i个结点的度 ={{c1:: 第i行、第i列的非零元素个数之和 }}
+  + 邻接矩阵法求顶点的度/出度/入度的时间复杂度为:{{c1:: `O(|V|)` }}
+
+### 图的存储结构：邻接矩阵法的性能
+  + 空间复杂度：{{c1:: O(|V|<sub>2</sub>) ——只和顶点数相关，和实际的边数无关 }}
+  + 适合用于的图：{{c1:: 存储稠密图 }}
+  + 无向图的邻接矩阵是对称矩阵，{{c1:: 可以压缩存储（只存储上三角区/下三角区） }}
+
+### 图的存储结构：邻接矩阵法的重要性质：
++ `A<sup>n</sup>[i][j]`表示:{{c1::设图G的邻接矩阵为A（矩阵元素为0/1），则`A<sup>n</sup>`的元素`A<sup>n</sup>[i][j]`等于由顶点i到顶点j的长度为n的路径的数目}}
++ 图解：{{c1::![](https://gitee.com/xieyun714/nodeimage/raw/master/img/20210128212658.png)}}
+
+
+### 图的存储结构：邻接表法（顺序+链式存储）定义
++ 可视化图：![](https://gitee.com/xieyun714/nodeimage/raw/master/img/20210128223110.png)
++ 顶点定义：![](https://gitee.com/xieyun714/nodeimage/raw/master/img/20210128222934.png)
++ “边/弧”定义：![](https://gitee.com/xieyun714/nodeimage/raw/master/img/20210128223014.png)
++ 图定义：![](https://gitee.com/xieyun714/nodeimage/raw/master/img/20210128223033.png)
+
+### 图的存储结构：邻接表VS邻接矩阵
+
+|                  | 邻接表                                                 | 邻接矩阵                                |
+| ---------------- | ------------------------------------------------------ | --------------------------------------- |
+| 空间复杂度       | {{c1:: 无向图 `O(|V| + 2|E|)` ；有向图`O(|V| + |E|)`}} | {{c1:: **O(\|V\|<sup>2</sup>)**  过高}} |
+| 适合用于         | {{c1:: 存储稀疏图}}                                    | {{c1:: 存储稠密图  }}                   |
+| 表示方式         | {{c1:: 不唯一    }}                                    | {{c1:: 唯一  }}                         |
+| 计算度/出度/入度 | {{c1::计算有向图的度、入度不方便，其余很方便 }}        | {{c1:: 必须遍历对应行或列  }}           |
+| 找相邻的边       | {{c1:: **找有向图的入边不方便**，其余很方便}}          | {{c1:: 必须遍历对应行或列 }}            |
+
+###   图的存储结构：十字链表
++ 弧结点结构:{{c1::![image-20210128235152298](https://gitee.com/xieyun714/nodeimage/raw/master/img/image-20210128235152298.png)}}
++ 顶点结点结构：{{c1::![image-20210128235214230](https://gitee.com/xieyun714/nodeimage/raw/master/img/image-20210128235214230.png)}}
++ 逻辑图例：{{c1::![image-20210128235319936](https://gitee.com/xieyun714/nodeimage/raw/master/img/image-20210128235319936.png)}}
++ 如何找到指定顶点的所有出边？{{c1::**顺着绿色线路找**}}
++ 如何找到指定顶点的所有入边？{{c1::**顺着橙色线路找**}}
+
+###   图的存储结构：邻接多重表
++ 边结点结构:{{c1::![image-20210128235935671](https://gitee.com/xieyun714/nodeimage/raw/master/img/image-20210128235935671.png)}}
++ 顶点结点结构：{{c1::![image-20210128235942664](https://gitee.com/xieyun714/nodeimage/raw/master/img/image-20210128235942664.png)}}
++ 逻辑图例：{{c1::![image-20210128235954721](https://gitee.com/xieyun714/nodeimage/raw/master/img/image-20210128235954721.png)}}
++ 删除`A-B`后指针走向：{{c1::![image-20210129000133033](https://gitee.com/xieyun714/nodeimage/raw/master/img/image-20210129000133033.png)}}
++ 删除E结点后指针走向：{{c1::![image-20210129000242750](https://gitee.com/xieyun714/nodeimage/raw/master/img/image-20210129000242750.png)}}
+
+### 图的4种存储结构总结
++ 问：![image-20210129001224371](https://gitee.com/xieyun714/nodeimage/raw/master/img/image-20210129001224371.png)
++ 答：{{c1::![image-20210129000957867](https://gitee.com/xieyun714/nodeimage/raw/master/img/image-20210129000957867.png)}}
+
+### 图的基本操作
++ `Adjacent(G,x,y)`：判断图G是否存在边`<x, y>`或`(x, y)`。
++ `Neighbors(G,x)`：列出图G中与结点x邻接的边。
++ `InsertVertex(G,x)`：在图G中插入顶点x。
++ `DeleteVertex(G,x)`：从图G中删除顶点x。
++ `AddEdge(G,x,y)`：若无向边`(x, y)`或有向边`<x, y>`不存在，则向图G中添加该边。
++ `RemoveEdge(G,x,y)`：若无向边`(x, y)`或有向边`<x, y>`存在，则从图G中删除该边。
++ `FirstNeighbor(G,x)`：求图G中顶点x的第一个邻接点，若有则返回顶点号。若x没有邻接点或图中不存在x，则返回-1。
++ `NextNeighbor(G,x,y)`：假设图G中顶点y是顶点x的一个邻接点，返回除y之外顶点x的下一个邻接点的顶点号，若y是x的最后一个邻接点，则返回-1。
++ `Get_edge_value(G,x,y)`：获取图G中边`(x, y)`或`<x, y>`对应的权值。
++ `Set_edge_value(G,x,y,v)`：设置图G中边`(x, y)`或`<x, y>`对应的权值为v。
++ 标签：{{c1::理解}}
+
+## 图的遍历
+
+### 图的广度优先遍历
+
++ ⼴度优先遍历（Breadth-First-Search, BFS）思路：
+  1. {{c1:: 找到与⼀个顶点相邻的所有顶点 }}
+  2. {{c1:: 标记哪些顶点被访问过 }}
+  3. {{c1:: 需要⼀个辅助队列 }}
++ 代码实现：{{c1:: ![](https://gitee.com/xieyun714/nodeimage/raw/master/img/20210129003031.png) }}
++ 基本操作定义：
+    + `FirstNeighbor(G,x)`：求图G中顶点x的第⼀个邻接点，若有则返回顶点号。若x没有邻接点或图中不存在x，则返回-1。
+    + `NextNeighbor(G,x,y)`：假设图G中顶点y是顶点x的⼀个邻接点，返回除y之外顶点x的下⼀个邻接点的顶点号，若y是x的最后⼀个邻接点，则返回-1。
++ 遍历序列的可变性:{{c1:: 同⼀个图的**邻接矩阵**表示⽅式唯⼀，因此⼴度优先遍历序列**唯⼀**,同⼀个图**邻接表**表示⽅式不唯⼀，因此⼴度优先遍历序列**不唯⼀** }}
