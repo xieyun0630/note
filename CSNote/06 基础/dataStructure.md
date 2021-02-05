@@ -506,7 +506,14 @@ typedef struct DNode{
 
 ## 排序 [ ](dataStructure_20210113065733329)
 
+### 排序：基本概念
++ **定义**：{{c1::将各元素按关键字递增/或递减顺序重新排列}}
++ **稳定性**：{{c1::关键字相同的元素经过排序后相对顺序是否会改变}}
++ **内部排序**：{{c1::数据都在内存中}}
++ **外部排序**：{{c1::数据太多，无法全部放入内存中 }}
+
 ### 冒泡排序实现 [ ](dataStructure_20210121111221922)
+
 + 排序原理：{{c1:: ![](https://gitee.com/xieyun714/nodeimage/raw/master/img/20210114221831.png) }}
 + 实现：
   ```java
@@ -630,6 +637,7 @@ typedef struct DNode{
 
 ### 归并排序 [ ](dataStructure_20210121111221935)
 + 排序原理：{{c1:: ![](https://gitee.com/xieyun714/nodeimage/raw/master/img/20210114232118.png) }}
+
 + API设计：
   1. `public static void sort(Comparable[] a)`：{{c1:: 对数组内的元素进行排序 }}
   2. `private static void sort(Comparable[] a, int lo, int hi)`：{{c1:: 对数组a中从索引lo到索引hi之间的元素进 }}
@@ -637,6 +645,7 @@ typedef struct DNode{
   3. `private static void merge(Comparable[] a, int lo, int mid, int hi)`:{{c1:: 从索引lo到所以mid为一个子组，从索引mid+1到索引hi为另一个子组，把数组a中的这两个子组的数据合并成一个有序的大组（从索引lo到索引hi） }}
   4. `private static boolean less(Comparable v,Comparable w)`：{{c1:: 判断v是否小于w }}
   5. `private static void exch(Comparable[] a,int i,int j)`：{{c1:: 交换a数组中，索引i和索引j处的值 }}
+  
 + 核心实现：
   ```java
   //{{c1::
@@ -684,7 +693,10 @@ typedef struct DNode{
     }
   //}}
   ```
+  
 + 时间复杂度：{{c1:: `O(n^(1.3—2))` }}
+
++ 稳定性:{{c1:: 稳定的 }}
 
 ### 快速排序 [ ](dataStructure_20210121111221937)
 + 排序原理：{{c1:: ![](https://gitee.com/xieyun714/nodeimage/raw/master/img/20210114232118.png) }}
@@ -732,6 +744,72 @@ typedef struct DNode{
     }
     //}}
   ```
+### 基数排序
++ 基数排序算法思想：{{c1::![](https://gitee.com/xieyun714/nodeimage/raw/master/img/20210205203216.png)}}
++ 辅助空间定义：{{c1::![image-20210205203002497](https://gitee.com/xieyun714/nodeimage/raw/master/img/image-20210205203002497.png)}}
++ 空间复杂度：{{c1::`O(r)`}}
++ 时间复杂度：{{c1::`O(d(n+r))`，r为基数，d为关键字个数}}
++ 基数排序擅长解決的问题
+    1. `d`的取值：{{c1::数据元素的关键字可以方便地拆分为d组，且d较小。}}
+         + 反例：{{c1::给5个人的身份证号排序}}
+    2. `r`的取值：{{c1::每组关键字的取值范围不大，即r较小。}}
+         + 反例：{{c1::给中文人名排序}}
+    3. `n`的取值：{{c1::数据元素个数n较大。}}
+         + 例如：{{c1::给十亿人的身份证号排序}}
++ 将学生信息按年齡递减排序：{{c1::![](https://gitee.com/xieyun714/nodeimage/raw/master/img/20210205204547.png)}}
+
+### 堆（Heap)：定义与建立
+
++ 堆的定义：{{c1::![image-20210204214828100](https://gitee.com/xieyun714/nodeimage/raw/master/img/image-20210204214828100.png)}}
+
++ 建立大根堆(手算）：{{c1::![image-20210204215645096](https://gitee.com/xieyun714/nodeimage/raw/master/img/image-20210204215645096.png)}}
+
++ 建立大根堆(代码)：{{c1::![image-20210204223230731](https://gitee.com/xieyun714/nodeimage/raw/master/img/image-20210204223230731.png)}}
+
+### 堆（Heap)：插入与删除元素
+
++ 插入与删除算法思路：{{c1::![image-20210204225954601](https://gitee.com/xieyun714/nodeimage/raw/master/img/image-20210204225954601.png)}}
+
++ 插入操作: {{c1::![image-20210204230050990](https://gitee.com/xieyun714/nodeimage/raw/master/img/image-20210204230050990.png)}}
++ 删除操作：{{c1::![image-20210204230101577](https://gitee.com/xieyun714/nodeimage/raw/master/img/image-20210204230101577.png)}}
+
+### 堆排序
+
++ 堆排序思路：{{c1::![image-20210204223739640](https://gitee.com/xieyun714/nodeimage/raw/master/img/image-20210204223739640.png)}}
+
++ 代码实现：{{c1::![image-20210204223935222](https://gitee.com/xieyun714/nodeimage/raw/master/img/image-20210204223935222.png)}}
+
++ 算法时间效率：
+  + 堆建立：{{c1::**O(n)**}}
+  + 堆调整：{{c1::**O(log<sub>2</sub>n)**}}
+  + 堆排序：{{c1::**O(nlog<sub>2</sub>n)**}}
+  + 堆排序空间效率：{{c1::**O(1)**}}
++ 稳定性：{{c1::**不稳定**![image-20210204225006924](https://gitee.com/xieyun714/nodeimage/raw/master/img/image-20210204225006924.png)![image-20210204225116346](https://gitee.com/xieyun714/nodeimage/raw/master/img/image-20210204225116346.png)}}
+### 外部排序
++ 外部排序原理：{{c1::![](https://gitee.com/xieyun714/nodeimage/raw/master/img/20210205205341.png)}}
++ 时间开销：{{c1::![](https://gitee.com/xieyun714/nodeimage/raw/master/img/20210205212534.png)}}
++ 优化:多路归并：{{c1::![](https://gitee.com/xieyun714/nodeimage/raw/master/img/20210205212625.png)![](https://gitee.com/xieyun714/nodeimage/raw/master/img/20210205212800.png)}}
++ 重点总结：
+  + 问：{{c1::![](https://gitee.com/xieyun714/nodeimage/raw/master/img/20210205213142.png)}}
+  + 答：{{c1::![](https://gitee.com/xieyun714/nodeimage/raw/master/img/20210205213153.png)}}
+
+### 外部排序：多路平衡归并带来的问题
++ 带来的问题：{{c1::![](https://gitee.com/xieyun714/nodeimage/raw/master/img/20210205213513.png)}}
++ 使用败者树减少对比次数:{{c1::![image-20210205225039580](https://gitee.com/xieyun714/nodeimage/raw/master/img/image-20210205225039580.png)}}
+
+### 外部排序：置换选择排序
+
++ 选择过程演示：{{c1::![image-20210205231851147](https://gitee.com/xieyun714/nodeimage/raw/master/img/image-20210205231851147.png)![image-20210205231911734](https://gitee.com/xieyun714/nodeimage/raw/master/img/image-20210205231911734.png)![image-20210205231935731](https://gitee.com/xieyun714/nodeimage/raw/master/img/image-20210205231935731.png)}}
+
+### 外部排序：最佳归并树
+
++ 归并树的性质：{{c1::![](https://gitee.com/xieyun714/nodeimage/raw/master/img/20210205232932.png)}}
++ 构造最佳归并树：
+  + 对比多路归并的情况：{{c1::![](https://gitee.com/xieyun714/nodeimage/raw/master/img/20210205233222.png)}}
+  + 多路最佳归并树：{{c1::![image-20210205233408820](https://gitee.com/xieyun714/nodeimage/raw/master/img/image-20210205233408820.png)}}
++ 添加虚段的数量：{{c1::![](https://gitee.com/xieyun714/nodeimage/raw/master/img/20210205233829.png)}}
+
+
 
 # 树 [ ](dataStructure_20210121111221939)
 
@@ -1101,7 +1179,7 @@ typedef struct DNode{
 + ⼴度优先⽣成树:{{c1::⼴度优先⽣成树由⼴度优先遍历过程确定。由于邻接表的表示⽅式不唯⼀，因此基于邻接表的⼴度优先⽣成树也不唯⼀。}}
 + ⼴度优先⽣成森林:{{c1:: 对⾮连通图的⼴度优先遍历，可得到⼴度优先⽣成森林 }}
 
-### 图的深度优先遍历
+### 图的深度优先遍历 [ ](dataStructure_20210201040317276)
 + 具体实现：{{c1::![](https://gitee.com/xieyun714/nodeimage/raw/master/img/20210130073916.png)}}
 + 复杂度分析：
   + 空间复杂度：{{c1:: 来⾃函数调⽤栈，最坏情况，递归深度为O(|V|)，最好情况，`O(1)`}}
@@ -1110,9 +1188,9 @@ typedef struct DNode{
 + 深度优先⽣成树/森林:{{c1:: 对连通图调用`DFS`才能产生深度优先生成树，否则产生的将是深度优先生成森林 }}
 + 图的遍历与图的连通性:{{c1:: ![](https://gitee.com/xieyun714/nodeimage/raw/master/img/20210130075502.png) }}
 
-## 图的应用
+## 图的应用 [ ](dataStructure_20210201040317281)
 
-### 最小生成树:概念
+### 最小生成树:概念 [ ](dataStructure_20210201040317283)
 + **生成树**：{{c1::一个连通图的生成树包含图的所有顶点，并且只含尽可能少的边。对于生成树来说，若砍去它的一条边，则会使生成树变成非连通图；若给它增加一条边，则会形成图中的一条回路。}}
 + **最小生成树**：{{c1::对于⼀个**带权连通⽆向图**G = (V, E)，⽣成树不同，每棵树的权（即树中所有边上的权值之和）也可能不同。设R为G的所有⽣成树的集合，若T为R中**边的权值之和最⼩的⽣成树**，则T称为G的**最⼩⽣成树（Minimum-Spanning-Tree, MST）。** }}
 + **最小生成树具有如下性质**
@@ -1120,29 +1198,29 @@ typedef struct DNode{
   2. 最小生成树的边的权值之和总是唯一的：{{c1:: 虽然最小生成树不唯一，但其对应的边的权值之和总是唯一的，而且是最小的。}}
   3. 最小生成树的边数为：{{c1:: 顶点数减1。}}
 
-### 求最小生成树思路：prim算法与Kruskal算法
+### 求最小生成树思路：prim算法与Kruskal算法 [ ](dataStructure_20210201040317285)
 + Kruskal算法（克鲁斯卡尔）思路：{{c1::每次选择⼀条权值最⼩的边，使这条边的两头连通（原本已经连通的就不选）直到所有结点都连通，时间复杂度：O(|V|<sup>2</sup>) 适合⽤于边稠密图
 ![](https://gitee.com/xieyun714/nodeimage/raw/master/img/20210130081950.png)}}
 + Prim 算法（普⾥姆）思路：{{c1::从某⼀个顶点开始构建⽣成树；每次将代价最⼩的新顶点纳⼊⽣成树，直到所有顶点都纳⼊为⽌。时间复杂度：O( |E|log<sup>2</sup>|E| ) 适合⽤于边稀疏图![](https://gitee.com/xieyun714/nodeimage/raw/master/img/20210130082003.png)}}
 + 构造最小生成树有多种算法，但大多数算法都利用了最小生成树的下列性质：{{c1::![](https://gitee.com/xieyun714/nodeimage/raw/master/img/20210130081913.png)}}
 
-### 最小生成树:prim算法简单实现
+### 最小生成树:prim算法简单实现 [ ](dataStructure_20210201040317290)
 + 实现：{{c1::![](https://gitee.com/xieyun714/nodeimage/raw/master/img/20210130082441.png) }}
 
-### 最小生成树:Kruskal算法简单实现
+### 最小生成树:Kruskal算法简单实现 [ ](dataStructure_20210201040317292)
 + 实现：{{c1::![](https://gitee.com/xieyun714/nodeimage/raw/master/img/20210130082520.png) }}
 
-### 最短路径：BFS求⽆权图的单源最短路径
+### 最短路径：BFS求⽆权图的单源最短路径 [ ](dataStructure_20210201040317294)
 + 代码实现：{{c1::![](https://gitee.com/xieyun714/nodeimage/raw/master/img/20210130173201.png)}}
 + 辅助数组作用：{{c1::![](https://gitee.com/xieyun714/nodeimage/raw/master/img/20210130173252.png)}}
 
-### 最短路径：Dijkstra算法
+### 最短路径：Dijkstra算法 [ ](dataStructure_20210201040317296)
 + 思路：{{c1::![](https://gitee.com/xieyun714/nodeimage/raw/master/img/20210130193520.png)}}
 + 如何使⽤数组信息？：{{c1::![](https://gitee.com/xieyun714/nodeimage/raw/master/img/20210130193639.png)}}
 + 代码实现思路：{{c1::![](https://gitee.com/xieyun714/nodeimage/raw/master/img/20210130193618.png)}}
 + 注意**负权值带权图**: {{c1::Dijkstra 算法不适⽤于有负权值的带权图}}
 
-### 最短路径：Floyd算法
+### 最短路径：Floyd算法 [ ](dataStructure_20210201040317298)
 + 计算思路：{{c1::![](https://gitee.com/xieyun714/nodeimage/raw/master/img/20210130223104.png)}}
 + 矩阵计算关键步骤
   1. {{c1:: 若 `A(k−1)[i][j]>A(k−1)[i][k]+ A(k−1)[k][j]` }}
@@ -1150,7 +1228,7 @@ typedef struct DNode{
   3. {{c1:: 否则 `A(k)` 和 `path(k)` 保持原值 }}
 + 核⼼代码：{{c1::![](https://gitee.com/xieyun714/nodeimage/raw/master/img/20210130223356.png)}}
 
-### 最短路径算法总结
+### 最短路径算法总结 [ ](dataStructure_20210201040317300)
 |                | BFS算法                                       | Dĳkstra 算法                    | Floyd 算法                            |
 | -------------- | --------------------------------------------- | ------------------------------- | ------------------------------------- |
 | ⽆权图         | {{c1::✔}}                                     | {{c1::✔}}                       | {{c1::✔}}                             |
@@ -1161,20 +1239,20 @@ typedef struct DNode{
 | 通常⽤于       | {{c1:: 求⽆权图的单源最短路径}}               | {{c1:: 求带权图的单源最短路径}} | {{c1:: 求带权图中各顶点间的最短路径}} |
 注：{{c1::也可⽤ Dijkstra 算法求所有顶点间的最短路径，重复 |V| 次即可，总的时间复杂度也是O(|V|3)}}
 
-### 有向⽆环图与拓扑排序
+### 有向⽆环图与拓扑排序 [ ](dataStructure_20210201040317302)
 + DAG：{{c1::若⼀个有向图中不存在环，则称为有向⽆环图，简称DAG图（Directed Acyclic Graph）}}
 + DAG描述表达式思路：{{c1::![](https://gitee.com/xieyun714/nodeimage/raw/master/img/20210201010440.png)}}
 + AOV网：{{c1:: AOV⽹(Activity On Vertex NetWork，⽤顶点表示活动的⽹)⽤DAG图（有向⽆环图）表示⼀个⼯程。顶点表示活动，有向边\<V<sub>i</sub>, V<sub>j</sub>\>表示活动V<sub>i</sub>必须先于活动V<sub>j</sub>进⾏}}
 + 拓扑排序: {{c1:: 拓扑排序是对**有向⽆环图**的顶点的⼀种排序，它使得若存在⼀条从顶点A到顶点B的路径，则在排序中顶点B出现在顶点A的后⾯。每个AOV⽹都有**⼀个或多个**拓扑排序序列。}}
 
-### 拓扑排序的实现
+### 拓扑排序的实现 [ ](dataStructure_20210201040317304)
 + 实现思路：
   1. {{c1::从AOV⽹中选择⼀个没有前驱的顶点并输出。}}
   2. {{c1::从⽹中删除该顶点和所有以它为起点的有向边。}}
   3. {{c1::重复①和②直到当前的AOV⽹为空或当前⽹中不存在⽆前驱的顶点为⽌。}}
 + 核心代码：{{c1::![](https://gitee.com/xieyun714/nodeimage/raw/master/img/20210201013511.png)![](https://gitee.com/xieyun714/nodeimage/raw/master/img/20210201013554.png)}}
 
-### 逆拓扑排序的实现
+### 逆拓扑排序的实现 [ ](dataStructure_20210201040317306)
 + 实现思路：
   1. {{c1::从AOV⽹中选择⼀个没有后继（出度为0）的顶点并输出。}}
   2. {{c1::从⽹中删除该顶点和所有以它为终点的有向边。}}
@@ -1182,7 +1260,7 @@ typedef struct DNode{
 + 核心代码：{{c1::![](https://gitee.com/xieyun714/nodeimage/raw/master/img/20210201014242.png)}}
 + DFS实现代码：{{c1::![](https://gitee.com/xieyun714/nodeimage/raw/master/img/20210201014444.png)}}
 
-### 关键路径概念
+### 关键路径概念 [ ](dataStructure_20210201040317308)
 + **AOE⽹**：{{c1::在带权有向图中，以**顶点表示事件**，以**有向边表示活动**，以边上的**权值**表示完成该**活动的开销**（如完成活动所需的时间），称之为⽤边表示活动的⽹络，简称AOE⽹ (Activity On Edge NetWork)![](https://gitee.com/xieyun714/nodeimage/raw/master/img/20210201020525.png)}}
 + AOE⽹具有以下两个性质：
   1. {{c1:: 只有在某顶点所代表的事件发⽣后，从该顶点出发的各有向边所代表的活动才能开始；}}
@@ -1191,7 +1269,7 @@ typedef struct DNode{
 + **结束顶点**：{{c1:: 也仅有⼀个出度为0的顶点，称为结束顶点（汇点），它表示整个⼯程的结束。 }}
 + **关键路径** **关键活动**：{{c1::从源点到汇点的有向路径可能有多条，所有路径中，具有最⼤路径⻓度的路径称为关键路径，⽽把关键路径上的活动称为关键活动}}
 
-### 求关键路径的步骤
+### 求关键路径的步骤 [ ](dataStructure_20210201040317312)
 1. {{c1::求所有**事件**的**最早**发⽣时间 `ve(k)`}}
 2. {{c1::求所有**事件**的**最迟**发⽣时间 `vl(k)`}}
 3. {{c1::求所有**活动**的**最早**发⽣时间 `e(k)`}}
@@ -1203,21 +1281,21 @@ typedef struct DNode{
   + 当缩短到一定程度时，{{c1:: 关键活动可能会变成非关键活动 }}
   + 可能有多条关键路径，{{c1:: 只提高一条关键路径上的关键活动速度井不能缩短个工程的工期，只有加快那些包括在所有关键路径上的关键活动才能达到缩短工期的目的。 }}
 
-### 关键路径：求所有事件的最早发⽣时间
+### 关键路径：求所有事件的最早发⽣时间 [ ](dataStructure_20210201040317314)
 + 问：![](https://gitee.com/xieyun714/nodeimage/raw/master/img/20210201024752.png)
 + 答：{{c1::![](https://gitee.com/xieyun714/nodeimage/raw/master/img/20210201024819.png)}}
 
-### 关键路径：求所有事件的最迟发⽣时间
+### 关键路径：求所有事件的最迟发⽣时间 [ ](dataStructure_20210201040317316)
 + 问：![](https://gitee.com/xieyun714/nodeimage/raw/master/img/20210201025127.png)
 + 答：{{c1::![](https://gitee.com/xieyun714/nodeimage/raw/master/img/20210201025200.png)}}
 
-### 关键路径：求所有活动的最早/最迟发⽣时间，时间余量，关键活动，关键路径
+### 关键路径：求所有活动的最早/最迟发⽣时间，时间余量，关键活动，关键路径 [ ](dataStructure_20210201040317318)
 + 问：![](https://gitee.com/xieyun714/nodeimage/raw/master/img/20210201025835.png)
 + 答：{{c1::![image-20210201025908681](https://gitee.com/xieyun714/nodeimage/raw/master/img/image-20210201025908681.png)}}
 
-# 查找
+# 查找 [ ](dataStructure_20210201040317320)
 
-### 查找的基本概念
+### 查找的基本概念 [ ](dataStructure_20210201040317322)
 + **查找**: {{c1::在数据集合中寻找满⾜某种条件的数据元素的过程称为查找}}
 + **查找表**: {{c1::⽤于查找的数据集合称为查找表，它由同⼀类型的数据元素（或记录）组成}}
 + **关键字**: {{c1::数据元素中唯⼀标识该元素的某个数据项的值，使⽤基于关键字的查找，查找结果应该是唯⼀的。}}
@@ -1226,9 +1304,80 @@ typedef struct DNode{
 + 查找⻓度: {{c1::在查找运算中，需要对⽐关键字的次数称为查找⻓度}}
 + ASL: {{c1::平均查找⻓度（ASL, Average Search Length） 所有查找过程中进⾏关键字的⽐较次数的平均值。通常考虑査找成功、査找失败两种情况下的ASL![](https://gitee.com/xieyun714/nodeimage/raw/master/img/20210201032351.png)}}
 
-### 折半查找
+### 折半查找 [ ](dataStructure_20210201040317324)
 + 算法思想:{{c1::折半查找，⼜称“⼆分查找”，仅适⽤于有序的顺序表。}}
 + 折半查找的实现:{{c1::![](https://gitee.com/xieyun714/nodeimage/raw/master/img/20210201033359.png)}}
 + 特点：{{c1::![](https://gitee.com/xieyun714/nodeimage/raw/master/img/20210201033918.png)}}
 
-## B树
+## B树与B+树 [ ](dataStructure_20210201040317326)
+
+### B树
++ 定义：{{c1::B树，又称**多路平衡查找树**，B树中所有结点的孩子个数的最大值称为B树的阶，通常用m表示。}}
++ 结构图（注意终端/叶子结点):{{c1::![](https://gitee.com/xieyun714/nodeimage/raw/master/img/20210202235038.png)}}
++ 特点：
+  + {{c1::非叶子结点结构：每个结点最多有M-1个key，并且以**升序排列**(类比二又查找树左<中<右)；}}
+  + {{c1::若根结点不是终端结点，则至少有两棵子树}}
+  + {{c1::结点个数：**除根结点外**的所有非叶结点**至少有**`ceil(m/2)`棵**子树**，即**至少含有**`ceil(m/2)-1`个**关键字**}}
+  + {{c1::所有的叶结点都出现在同一层次上，并且不带信息。所有**结点子树高度相同**}}
++ 核心特点：
+  + 根节点的子树数∈{{c1::[2,m]}}
+  + 关键字数∈{{c1::[1,m-1] }}
+  + 其他结点的子树数∈{{c1::[m/2,m];}}
+  + 关键字数∈{{c1::[ceil(m/2)-1,m-1]}}
++ 求最小高度：{{c1::![](https://gitee.com/xieyun714/nodeimage/raw/master/img/20210202235932.png)}}
++ 求最大高度：{{c1::![](https://gitee.com/xieyun714/nodeimage/raw/master/img/20210203000046.png)![](https://gitee.com/xieyun714/nodeimage/raw/master/img/20210203000145.png)}}
+
+### B树的插⼊与删除
++ 插入算法思想：
+  + 查找：{{c1::新元素⼀定是插⼊到最底层“终端节点”，⽤“查找”来确定插⼊位置}}
+  + 分裂：{{c1::在插⼊key后，若导致原结点关键字数超过上限，则从中间位置`ceil(m/2)`将其中的关键字**分为两部分**，左部分包含的关键字放在原结点中，右部分包含的关键字放到新结点中，中间位置`ceil(m/2)`的结点插⼊原结点的⽗结点。若此时导致其⽗结点的关键字**个数**也超过了**上限**，则**继续**进⾏这种**分裂**操作，直⾄这个过程传到根结点为⽌，进⽽导致B树⾼度增1。}}
++ 删除算法思想：{{c1::![](https://gitee.com/xieyun714/nodeimage/raw/master/img/20210203003054.png)}}
+
+### B+树
+
++ 4阶B+树图:{{c1::![](https://gitee.com/xieyun714/nodeimage/raw/master/img/20210204191127.png)}}
++ ⼀棵m阶的B+树需满⾜下列条件：
+  1. {{c1::每个分⽀结点**最多**有m棵⼦树（孩⼦结点）。}}
+  2. {{c1::**⾮叶根结点**⾄少有两棵⼦树，其他每个分⽀结点⾄少有`ceil(m/2)`棵⼦树。}}
+  3. {{c1::结点的 **⼦树个数** 与 **关键字个数** 相等。}}
+  4. {{c1::**所有叶结点**包含**全部关键字**及**指向相应记录的指针**，叶结点中将关键字按⼤⼩顺序排列，并且相邻叶结点按⼤⼩顺序相互链接起来。}}
+  5. {{c1::所有分⽀结点中仅包含它的各个⼦结点中**关键字的最⼤值**及**指向其⼦结点的指针**。}}
++ B+树的查找(特点):{{c1::![](https://gitee.com/xieyun714/nodeimage/raw/master/img/20210204191631.png)}}
+
+### B树与B+树的区别：
++ 问：![](https://gitee.com/xieyun714/nodeimage/raw/master/img/20210204192402.png)
++ 答：{{c1::![](https://gitee.com/xieyun714/nodeimage/raw/master/img/20210204192414.png)![](https://gitee.com/xieyun714/nodeimage/raw/master/img/20210204192942.png)}}
+
+## 散列表（Hash Table)
++ 特点：{{c1::数据元素的关键子与存储地址直接相关。`Addr=H(key)`，典型的空间换时间}}
++ 关键概念：
+  + **同义词**:{{c1::若不同的关键字通过散列函数映射到同⼀个值，则称它们为**同义词**}}
+  + **冲突**:{{c1::通过散列函数确定的位置已经存放了其他元素，则称这种情况为**冲突**}}
+  + **查找长度**：{{c1::在查找运算，需要对比关键字的次数称为查找长度}}
+
+### 散列表处理冲突的⽅法:拉链法
++ 拉链法：{{c1::⽤拉链法（⼜称链接法、链地址法）处理“冲突”：把所有“同义词”存储在⼀个链表中![image-20210204194216958](https://gitee.com/xieyun714/nodeimage/raw/master/img/image-20210204194216958.png)}}
+  + 计算 平均查找长度：{{c1::![image-20210204194804536](https://gitee.com/xieyun714/nodeimage/raw/master/img/image-20210204194804536.png)![image-20210204195244254](https://gitee.com/xieyun714/nodeimage/raw/master/img/image-20210204195244254.png)}}
++ 如何设计冲突更少的散列函数：
+  + 除留余数法：{{c1::`H(Key) = key % p`,散列表表长m,取一个满足`p<=m`，最大质数}}
+    + 质数:{{c1::只能被1和自身整除的整数}}
+  + 直接定址法：{{c1::![image-20210204200237185](https://gitee.com/xieyun714/nodeimage/raw/master/img/image-20210204200237185.png)}}
+  + 数字分析法：{{c1::选取数码分布较为均匀的若干位作为散列地址![image-20210204200627282](https://gitee.com/xieyun714/nodeimage/raw/master/img/image-20210204200627282.png)}}
+  + 平方取中法： {{c1::![image-20210204201318035](https://gitee.com/xieyun714/nodeimage/raw/master/img/image-20210204201318035.png)}}
++ 实际应用：{{c1::java集合 `HashMap` `HashSet` }}
+
+
+### 散列表处理冲突的⽅法:开放定址法
++ 定义：![image-20210204205817511](https://gitee.com/xieyun714/nodeimage/raw/master/img/image-20210204205817511.png)
+  + 探测方法：
+    + 线性探测法:{{c1:: d<sub>i</sub> = 0, 1, 2, 3, …, m-1；即发⽣冲突时，每次往后探测相邻的下⼀个单元是否为空}}
+      + 缺点：线性探测法很容易造成同义词、⾮同义词的“聚集（堆积）”现象，严重影响查找效率
+    + 平⽅探测法：{{c1:: ![image-20210204210434277](https://gitee.com/xieyun714/nodeimage/raw/master/img/image-20210204210434277.png) }}
+      + 平⽅探测法⼩坑：{{c1:: 散列表⻓度m必须是⼀个可以表示成4j + 3的素数，才能探测到所有位置 }}
+    + 伪随机序列法：{{c1:: d<sub>i</sub> 是⼀个伪随机序列，如 di= 0, 5, 24, 11, … }}
++ 注意使用开放定址法的删除时：{{c1::采⽤“开放定址法”时，删除结点不能简单地将被删结点的空间置为空，否则将截断在它之后填⼊散列表的同义词结点的查找路径，可以做⼀个“删除标记”，进⾏逻辑删除}}
++ 实际应用：{{c1::较少使用}}
+
+### 散列表处理冲突的⽅法:再散列法
++ 定义：{{c1::![image-20210204212622779](https://gitee.com/xieyun714/nodeimage/raw/master/img/image-20210204212622779.png)}}
+

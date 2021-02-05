@@ -1906,7 +1906,7 @@ public class ObserverDemo extends Observable {
   ```
 
 ### SpringWebflux的CRUD示例（基于注解编程模型） [	](spring_20201124103028649)
-1. 引入starter依赖：{{c1:: `pring-boot-starter-webflux` }}
+1. 引入starter依赖：{{c1:: `spring-boot-starter-webflux` }}
 2. 配置启动端口号: {{c1:: `server.port=8081` }}
 3. 创建接口定义
   ```java

@@ -458,7 +458,7 @@ print(s1, s2, s3, end='')
 + 生成器的声明：{{c1:: `f = (x ** 2 for x in range(1, 1000))` }}
   + 使用：{{c1:: `print(f)` `for val in f:` }}
 
-### python使用`yield`实现一个生成斐波拉切数列的生成器 [ ](python_20201227010951601)
+### python：使用`yield`实现一个生成斐波拉切数列的生成器 [ ](python_20201227010951601)
 + 函数定义:
     ```python
     #{{c1::
