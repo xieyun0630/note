@@ -506,7 +506,7 @@ typedef struct DNode{
 
 ## 排序 [ ](dataStructure_20210113065733329)
 
-### 排序：基本概念
+### 排序：基本概念 [ ](dataStructure_202102060revealFileInOS10825327)
 + **定义**：{{c1::将各元素按关键字递增/或递减顺序重新排列}}
 + **稳定性**：{{c1::关键字相同的元素经过排序后相对顺序是否会改变}}
 + **内部排序**：{{c1::数据都在内存中}}
@@ -744,7 +744,7 @@ typedef struct DNode{
     }
     //}}
   ```
-### 基数排序
+### 基数排序 [ ](dataStructure_20210206010825332)
 + 基数排序算法思想：{{c1::![](https://gitee.com/xieyun714/nodeimage/raw/master/img/20210205203216.png)}}
 + 辅助空间定义：{{c1::![image-20210205203002497](https://gitee.com/xieyun714/nodeimage/raw/master/img/image-20210205203002497.png)}}
 + 空间复杂度：{{c1::`O(r)`}}
@@ -758,7 +758,7 @@ typedef struct DNode{
          + 例如：{{c1::给十亿人的身份证号排序}}
 + 将学生信息按年齡递减排序：{{c1::![](https://gitee.com/xieyun714/nodeimage/raw/master/img/20210205204547.png)}}
 
-### 堆（Heap)：定义与建立
+### 堆（Heap)：定义与建立 [ ](dataStructure_20210206010825334)
 
 + 堆的定义：{{c1::![image-20210204214828100](https://gitee.com/xieyun714/nodeimage/raw/master/img/image-20210204214828100.png)}}
 
@@ -766,14 +766,14 @@ typedef struct DNode{
 
 + 建立大根堆(代码)：{{c1::![image-20210204223230731](https://gitee.com/xieyun714/nodeimage/raw/master/img/image-20210204223230731.png)}}
 
-### 堆（Heap)：插入与删除元素
+### 堆（Heap)：插入与删除元素 [ ](dataStructure_20210206010825337)
 
 + 插入与删除算法思路：{{c1::![image-20210204225954601](https://gitee.com/xieyun714/nodeimage/raw/master/img/image-20210204225954601.png)}}
 
 + 插入操作: {{c1::![image-20210204230050990](https://gitee.com/xieyun714/nodeimage/raw/master/img/image-20210204230050990.png)}}
 + 删除操作：{{c1::![image-20210204230101577](https://gitee.com/xieyun714/nodeimage/raw/master/img/image-20210204230101577.png)}}
 
-### 堆排序
+### 堆排序 [ ](dataStructure_20210206010825340)
 
 + 堆排序思路：{{c1::![image-20210204223739640](https://gitee.com/xieyun714/nodeimage/raw/master/img/image-20210204223739640.png)}}
 
@@ -785,7 +785,7 @@ typedef struct DNode{
   + 堆排序：{{c1::**O(nlog<sub>2</sub>n)**}}
   + 堆排序空间效率：{{c1::**O(1)**}}
 + 稳定性：{{c1::**不稳定**![image-20210204225006924](https://gitee.com/xieyun714/nodeimage/raw/master/img/image-20210204225006924.png)![image-20210204225116346](https://gitee.com/xieyun714/nodeimage/raw/master/img/image-20210204225116346.png)}}
-### 外部排序
+### 外部排序 [ ](dataStructure_20210206010825343)
 + 外部排序原理：{{c1::![](https://gitee.com/xieyun714/nodeimage/raw/master/img/20210205205341.png)}}
 + 时间开销：{{c1::![](https://gitee.com/xieyun714/nodeimage/raw/master/img/20210205212534.png)}}
 + 优化:多路归并：{{c1::![](https://gitee.com/xieyun714/nodeimage/raw/master/img/20210205212625.png)![](https://gitee.com/xieyun714/nodeimage/raw/master/img/20210205212800.png)}}
@@ -793,15 +793,15 @@ typedef struct DNode{
   + 问：{{c1::![](https://gitee.com/xieyun714/nodeimage/raw/master/img/20210205213142.png)}}
   + 答：{{c1::![](https://gitee.com/xieyun714/nodeimage/raw/master/img/20210205213153.png)}}
 
-### 外部排序：多路平衡归并带来的问题
+### 外部排序：多路平衡归并带来的问题 [ ](dataStructure_20210206010825345)
 + 带来的问题：{{c1::![](https://gitee.com/xieyun714/nodeimage/raw/master/img/20210205213513.png)}}
 + 使用败者树减少对比次数:{{c1::![image-20210205225039580](https://gitee.com/xieyun714/nodeimage/raw/master/img/image-20210205225039580.png)}}
 
-### 外部排序：置换选择排序
+### 外部排序：置换选择排序 [ ](dataStructure_20210206010825347)
 
 + 选择过程演示：{{c1::![image-20210205231851147](https://gitee.com/xieyun714/nodeimage/raw/master/img/image-20210205231851147.png)![image-20210205231911734](https://gitee.com/xieyun714/nodeimage/raw/master/img/image-20210205231911734.png)![image-20210205231935731](https://gitee.com/xieyun714/nodeimage/raw/master/img/image-20210205231935731.png)}}
 
-### 外部排序：最佳归并树
+### 外部排序：最佳归并树 [ ](dataStructure_20210206010825349)
 
 + 归并树的性质：{{c1::![](https://gitee.com/xieyun714/nodeimage/raw/master/img/20210205232932.png)}}
 + 构造最佳归并树：
@@ -1311,7 +1311,7 @@ typedef struct DNode{
 
 ## B树与B+树 [ ](dataStructure_20210201040317326)
 
-### B树
+### B树 [ ](dataStructure_20210206010825353)
 + 定义：{{c1::B树，又称**多路平衡查找树**，B树中所有结点的孩子个数的最大值称为B树的阶，通常用m表示。}}
 + 结构图（注意终端/叶子结点):{{c1::![](https://gitee.com/xieyun714/nodeimage/raw/master/img/20210202235038.png)}}
 + 特点：
@@ -1327,13 +1327,13 @@ typedef struct DNode{
 + 求最小高度：{{c1::![](https://gitee.com/xieyun714/nodeimage/raw/master/img/20210202235932.png)}}
 + 求最大高度：{{c1::![](https://gitee.com/xieyun714/nodeimage/raw/master/img/20210203000046.png)![](https://gitee.com/xieyun714/nodeimage/raw/master/img/20210203000145.png)}}
 
-### B树的插⼊与删除
+### B树的插⼊与删除 [ ](dataStructure_20210206010825356)
 + 插入算法思想：
   + 查找：{{c1::新元素⼀定是插⼊到最底层“终端节点”，⽤“查找”来确定插⼊位置}}
   + 分裂：{{c1::在插⼊key后，若导致原结点关键字数超过上限，则从中间位置`ceil(m/2)`将其中的关键字**分为两部分**，左部分包含的关键字放在原结点中，右部分包含的关键字放到新结点中，中间位置`ceil(m/2)`的结点插⼊原结点的⽗结点。若此时导致其⽗结点的关键字**个数**也超过了**上限**，则**继续**进⾏这种**分裂**操作，直⾄这个过程传到根结点为⽌，进⽽导致B树⾼度增1。}}
 + 删除算法思想：{{c1::![](https://gitee.com/xieyun714/nodeimage/raw/master/img/20210203003054.png)}}
 
-### B+树
+### B+树 [ ](dataStructure_20210206010825359)
 
 + 4阶B+树图:{{c1::![](https://gitee.com/xieyun714/nodeimage/raw/master/img/20210204191127.png)}}
 + ⼀棵m阶的B+树需满⾜下列条件：
@@ -1344,18 +1344,18 @@ typedef struct DNode{
   5. {{c1::所有分⽀结点中仅包含它的各个⼦结点中**关键字的最⼤值**及**指向其⼦结点的指针**。}}
 + B+树的查找(特点):{{c1::![](https://gitee.com/xieyun714/nodeimage/raw/master/img/20210204191631.png)}}
 
-### B树与B+树的区别：
+### B树与B+树的区别： [ ](dataStructure_20210206010825362)
 + 问：![](https://gitee.com/xieyun714/nodeimage/raw/master/img/20210204192402.png)
 + 答：{{c1::![](https://gitee.com/xieyun714/nodeimage/raw/master/img/20210204192414.png)![](https://gitee.com/xieyun714/nodeimage/raw/master/img/20210204192942.png)}}
 
-## 散列表（Hash Table)
+## 散列表（Hash Table) [ ](dataStructure_20210206010825365)
 + 特点：{{c1::数据元素的关键子与存储地址直接相关。`Addr=H(key)`，典型的空间换时间}}
 + 关键概念：
   + **同义词**:{{c1::若不同的关键字通过散列函数映射到同⼀个值，则称它们为**同义词**}}
   + **冲突**:{{c1::通过散列函数确定的位置已经存放了其他元素，则称这种情况为**冲突**}}
   + **查找长度**：{{c1::在查找运算，需要对比关键字的次数称为查找长度}}
 
-### 散列表处理冲突的⽅法:拉链法
+### 散列表处理冲突的⽅法:拉链法 [ ](dataStructure_20210206010825368)
 + 拉链法：{{c1::⽤拉链法（⼜称链接法、链地址法）处理“冲突”：把所有“同义词”存储在⼀个链表中![image-20210204194216958](https://gitee.com/xieyun714/nodeimage/raw/master/img/image-20210204194216958.png)}}
   + 计算 平均查找长度：{{c1::![image-20210204194804536](https://gitee.com/xieyun714/nodeimage/raw/master/img/image-20210204194804536.png)![image-20210204195244254](https://gitee.com/xieyun714/nodeimage/raw/master/img/image-20210204195244254.png)}}
 + 如何设计冲突更少的散列函数：
@@ -1367,7 +1367,7 @@ typedef struct DNode{
 + 实际应用：{{c1::java集合 `HashMap` `HashSet` }}
 
 
-### 散列表处理冲突的⽅法:开放定址法
+### 散列表处理冲突的⽅法:开放定址法 [ ](dataStructure_20210206010825370)
 + 定义：![image-20210204205817511](https://gitee.com/xieyun714/nodeimage/raw/master/img/image-20210204205817511.png)
   + 探测方法：
     + 线性探测法:{{c1:: d<sub>i</sub> = 0, 1, 2, 3, …, m-1；即发⽣冲突时，每次往后探测相邻的下⼀个单元是否为空}}
@@ -1378,6 +1378,5 @@ typedef struct DNode{
 + 注意使用开放定址法的删除时：{{c1::采⽤“开放定址法”时，删除结点不能简单地将被删结点的空间置为空，否则将截断在它之后填⼊散列表的同义词结点的查找路径，可以做⼀个“删除标记”，进⾏逻辑删除}}
 + 实际应用：{{c1::较少使用}}
 
-### 散列表处理冲突的⽅法:再散列法
+### 散列表处理冲突的⽅法:再散列法 [ ](dataStructure_20210206010825373)
 + 定义：{{c1::![image-20210204212622779](https://gitee.com/xieyun714/nodeimage/raw/master/img/image-20210204212622779.png)}}
-
