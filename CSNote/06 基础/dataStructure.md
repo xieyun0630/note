@@ -699,7 +699,7 @@ typedef struct DNode{
 + 稳定性:{{c1:: 稳定的 }}
 
 ### 快速排序 [ ](dataStructure_20210121111221937)
-+ 排序原理：{{c1:: ![](https://gitee.com/xieyun714/nodeimage/raw/master/img/20210114232118.png) }}
++ 排序原理：{{c1:: ![](https://gitee.com/xieyun714/nodeimage/raw/master/img/20210208221838.png) }}
 + API设计：
   1. `public static void sort(Comparable[] a)`：{{c1:: 对数组内的元素进行排序 }}
   2. `private static void sort(Comparable[] a, int lo, int hi)`：{{c1:: 对数组a中从索引lo到索引hi之间的元素进行排序 }}
@@ -878,7 +878,7 @@ typedef struct DNode{
   TreeNode t[maxSize];
   //}}
   ```
-+ 常用基本操作：{{c1:: ![](https://gitee.com/xieyun714/nodeimage/raw/master/img/20210119232317.png) }}
++ 常用基本操作：![](https://gitee.com/xieyun714/nodeimage/raw/master/img/20210119232317.png)
 + 回答：{{c1:: ![](https://gitee.com/xieyun714/nodeimage/raw/master/img/20210119232237.png) }}
 
 ### 二叉树的链式存储 [ ](dataStructure_20210121111221962)
@@ -1077,8 +1077,10 @@ typedef struct DNode{
 + **有向树**:{{c1:: 一个顶点的入度为0、其余顶点的入度均为1的有向图，称为有向树。 }}
 
 ### 图的常见结论 [ ](dataStructure_20210129110102592)
-+ 对于n个顶点的无向图G：{{c1:: ![](https://gitee.com/xieyun714/nodeimage/raw/master/img/20210128202212.png) }}
-+ 对于n个顶点的有向图G：{{c1:: ![](https://gitee.com/xieyun714/nodeimage/raw/master/img/20210128202234.png) }}
++ 对于n个顶点的无向图G：
+  + {{c1:: ![](https://gitee.com/xieyun714/nodeimage/raw/master/img/20210128202212.png) }}
++ 对于n个顶点的有向图G：
+  + {{c1:: ![](https://gitee.com/xieyun714/nodeimage/raw/master/img/20210128202234.png) }}
 
 ## 图的存储结构 [ ](dataStructure_20210129110102594)
 
@@ -1112,15 +1114,15 @@ typedef struct DNode{
   + 无向图的邻接矩阵是对称矩阵，{{c1:: 可以压缩存储（只存储上三角区/下三角区） }}
 
 ### 图的存储结构：邻接矩阵法的重要性质： [ ](dataStructure_20210129110102603)
-+ `A<sup>n</sup>[i][j]`表示:{{c1::设图G的邻接矩阵为A（矩阵元素为0/1），则`A<sup>n</sup>`的元素`A<sup>n</sup>[i][j]`等于由顶点i到顶点j的长度为n的路径的数目}}
++ A<sup>n</sup>[i][j]表示:{{c1::设图G的邻接矩阵为A（矩阵元素为0/1），则A<sup>n</sup>的元素A<sup>n</sup>[i][j]等于由顶点i到顶点j的长度为n的路径的数目}}
 + 图解：{{c1::![](https://gitee.com/xieyun714/nodeimage/raw/master/img/20210128212658.png)}}
 
 
 ### 图的存储结构：邻接表法（顺序+链式存储）定义 [ ](dataStructure_20210129110102606)
-+ 可视化图：![](https://gitee.com/xieyun714/nodeimage/raw/master/img/20210128223110.png)
-+ 顶点定义：![](https://gitee.com/xieyun714/nodeimage/raw/master/img/20210128222934.png)
-+ “边/弧”定义：![](https://gitee.com/xieyun714/nodeimage/raw/master/img/20210128223014.png)
-+ 图定义：![](https://gitee.com/xieyun714/nodeimage/raw/master/img/20210128223033.png)
++ 可视化图：{{c1::![](https://gitee.com/xieyun714/nodeimage/raw/master/img/20210128223110.png)}}
++ 顶点定义：{{c1::![](https://gitee.com/xieyun714/nodeimage/raw/master/img/20210128222934.png)}}
++ “边/弧”定义：{{c1::![](https://gitee.com/xieyun714/nodeimage/raw/master/img/20210128223014.png)}}
++ 图定义：{{c1::![](https://gitee.com/xieyun714/nodeimage/raw/master/img/20210128223033.png)}}
 
 ### 图的存储结构：邻接表VS邻接矩阵 [ ](dataStructure_20210129110102609)
 
