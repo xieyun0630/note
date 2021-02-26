@@ -920,6 +920,7 @@ public class Person
 
 ### springAOP增强方法访问目标方法方式 [	](spring_20200911094545339)
 + 定义增强处理方法时:{{c1:: 将第一个参数定义为`JoinPoint`类型 }}
+  
   + 注意:{{c1:: `Around`只能定义为`proceedingJoinPoint`类型 }}
 + 使用args表达式
   ```java
@@ -1783,43 +1784,176 @@ public class Person
     //}}
     ```
 
-## Spring Boot [	](spring_20201116050448269)
 
-### Spring Boot基本使用流程 [	](spring_20201116050448273)
-1. 创建maven工程
-2. 添加依赖:{{c1:: `spring-boot-starter-parent` `spring-boot-starter-web` }}
-3. 创建启动类
-   ```java
-   //{{c1::
-   @SpringBootApplication
-    public class App 
-    {
-        public static void main( String[] args )
-        {
-            SpringApplication.run(App.class, args);
-        }
+
+# OAuth 2.0
+
+### OAuth 2.0授权序列图
+
++ OAuth2.0作用：{{c1::OAuth 2.0 是一种授权机制，主要用来颁发令牌（token）。}}
++ 图示：{{c1::![](https://gitee.com/xieyun714/nodeimage/raw/master/img/20210223185717.png)}}
+
+### OAuth 2.0为用户和应用定义了如下角色
++ **资源拥有者** **资源服务器** **客户端应用** **授权服务器**
++ 角色关系图示：{{c1::![](https://gitee.com/xieyun714/nodeimage/raw/master/img/20210223190138.png)}}
+
++ 流程描述：{{c1::OAuth 引入了一个授权层，用来分离两种不同的角色：客户端和资源所有者。......**资源所有者同意以后**，资源服务器可以向客户端颁发令牌。客户端通过令牌，去请求数据。 **OAuth 的核心就是向第三方应用颁发令牌。**}}
+
+### 令牌与密码的差异
+
+1. **短期的**：{{c1::令牌是短期的，到期会自动失效，用户自己无法修改。密码一般长期有效，用户不修改，就不会发生变化。}}
+2. **可撤销**：{{c1::令牌可以被数据所有者撤销，会立即失效。以上例而言，屋主可以随时取消快递员的令牌。密码一般不允许被他人撤销。}}
+3. **有权限**：{{c1::令牌有权限范围（scope），比如只能进小区的二号门。对于网络服务来说，只读令牌就比读写令牌更安全。密码一般是完整权限。}}
+
+### OAuth 2.0 的四种授权方式
+
+- **authorization-code**：{{c1::授权码（authorization-code）**指的是第三方应用先申请一个授权码，然后再用该码获取令牌。**}}
+- 隐藏式（implicit）: {{c1::有些 Web 应用是纯前端应用，没有后端。这时就不能用上面的方式了，必须将令牌储存在前端。**这种方式没有授权码这个中间步骤，所以称为（授权码）"隐藏式"（implicit）。** 安全性差，因此有效期要短（一般为会话期有效）。}}
+- 密码式（password）：{{c1::**如果你高度信任某个应用，RFC 6749 也允许用户把用户名和密码，直接告诉该应用。该应用就使用你的密码，申请令牌，这种方式称为"密码式"（password）。**}}
+- 客户端凭证（client credentials）：{{c1::**凭证式（client credentials），适用于没有前端的命令行应用，即在命令行下请求令牌。**}}
+
+### OAuth 2.0：授权码方式的请求流程
++ 第一步：{{c1::A 网站提供一个链接，用户点击后就会跳转到 B 网站，授权用户数据给 A 网站使用。下面就是 A 网站跳转 B 网站的一个示意链接}}
+  + 请求如下：
+    ```js
+      https://b.com/oauth/authorize?
+      response_type=code&
+      client_id=CLIENT_ID&
+      redirect_uri=CALLBACK_URL&
+      scope=read
+    ```
+  + 参数解释：
+    + `response_type`：{{c1::`response_type`参数表示要求返回授权码（`code`）}}
+    + `client_id`：{{c1::`client_id`参数让 B 知道是谁在请求}}
+    + `redirect_uri`：{{c1::`redirect_uri`参数是 B 接受或拒绝请求后的跳转网址}}
+    + `scope`：{{c1::`scope`参数表示要求的授权范围（这里是只读）。}}
+  
++ 第二步：{{c1::用户跳转后，B 网站会要求用户登录，然后询问是否同意给予 A 网站授权。用户表示同意，这时 B 网站就会跳回redirect_uri参数指定的网址。跳转时，会传回一个授权码，就像下面这样。}}
+    + 请求如下：
+      ```js
+        https://a.com/callback?code=AUTHORIZATION_CODE
+      ```
+      
+    + 参数解释：
+      
+      + code：{{c1::`code`参数就是授权码。}}
+    
++ 第三步，{{c1::A 网站拿到授权码以后，就可以在后端，**向 B 网站请求令牌**。}}
+
+    + 请求如下：
+
+      ```js
+      https://b.com/oauth/token?
+      client_id=CLIENT_ID&
+      client_secret=CLIENT_SECRET&
+      grant_type=authorization_code&
+      code=AUTHORIZATION_CODE&
+      redirect_uri=CALLBACK_URL
+      ```
+    + 参数解释：
+      + `client_id`  `client_secret`：{{c1::`client_id`参数和`client_secret`参数用来让 B 确认 A 的身份（`client_secret`参数是保密的，因此只能在后端发请求）}}
+      + `grant_type`：{{c1::`grant_type`参数的值是`AUTHORIZATION_CODE`，表示采用的授权方式是授权码}}
+      + `code`：{{c1::`code`参数是上一步拿到的授权码}}
+      + `redirect_uri`：{{c1::`redirect_uri`参数是令牌颁发后的回调网址。}}
+    
++ 第四步，{{c1::B 网站收到请求以后，就会颁发令牌。具体做法是向`redirect_uri`指定的网址，发送一段 JSON 数据。}}
+
+    ```json
+    //{{c1::
+    {    
+      "access_token":"ACCESS_TOKEN",
+      "token_type":"bearer",
+      "expires_in":2592000,
+      "refresh_token":"REFRESH_TOKEN",
+      "scope":"read",
+      "uid":100101,
+      "info":{...}
     }
-   //}}
-   ```
-4. 创建处理器Controller
-   ```java
-   //{{c1::
-    @RestController
-    public class HelloController {
-        @GetMapping("hello")
-        public String hello(){
-          return "hello,spring boot";
-        }
-    }
-   //}}
-   ```
-5. 测试:{{c1:: `http://localhost:8080/hello` }}
+    //}}
+    ```
+
+### OAuth 2.0：隐藏式的请求流程
+
+- 第一步，{{c1::A 网站提供一个链接，要求用户跳转到 B 网站，授权用户数据给 A 网站使用。}}
+  ```js
+  //{{c1::
+  https://b.com/oauth/authorize?
+  response_type=token&
+  client_id=CLIENT_ID&
+  redirect_uri=CALLBACK_URL&
+  scope=read
+  //}}
+  ```
+
+- 第二步，{{c1:: 用户跳转到 B 网站，登录后同意给予 A 网站授权。这时，B 网站就会跳回`redirect_uri`参数指定的跳转网址，并且把令牌作为 URL 参数，传给 A 网站。}}
+  
+  + 请求：{{c1::`https://a.com/callback#token=ACCESS_TOKEN`}}
+  + 注意：{{c1::令牌的位置是 URL 锚点（fragment）}}
+
+### OAuth 2.0：密码式的请求流程
+
+第一步，{{c1:: A 网站要求用户提供 B 网站的用户名和密码。拿到以后，A 就直接向 B 请求令牌。}}
+  ```javascript
+  //{{c1::
+  https://oauth.b.com/token?
+  grant_type=password&
+  username=USERNAME&
+  password=PASSWORD&
+  client_id=CLIENT_ID
+  //}}
+  ```
+第二步，{{c1:: B 网站验证身份通过后，直接给出令牌。注意，这时不需要跳转，而是**把令牌放在 JSON 数据里面，作为 HTTP 回应**，A 因此拿到令牌。}}
+
+### OAuth 2.0：凭证式的请求流程
+第一步，{{c1::A 应用在命令行向 B 发出请求。}}
+  ```javascript
+  //{{c1::
+  https://oauth.b.com/token?
+  grant_type=client_credentials&
+  client_id=CLIENT_ID&
+  client_secret=CLIENT_SECRET
+  //}}
+  ```
+第二步，{{c1::B 网站验证通过以后，直接返回令牌。}}
+
+### 令牌的使用
+
++ 令牌用法：{{c1::A 网站拿到令牌以后，就可以向 B 网站的 API 请求数据了。此时，每个发到 API 的请求，都必须带有令牌。具体做法是在请求的头信息，加上一个`Authorization`字段，令牌就放在这个字段里面。}}
+
++ 例：
+
+  ```shell
+  #{{c1::
+  curl -H "Authorization: Bearer ACCESS_TOKEN" \
+  "https://api.b.com"
+  #}}
+  ```
+
+### 更新令牌
+
++ 更新原因：{{c1::令牌的有效期到了，如果让用户重新走一遍上面的流程，再申请一个新的令牌，很可能**体验不好**，而且也没有必要。OAuth 2.0 允许用户自动更新令牌。}}
++ 具体做法：{{c1::B 网站颁发令牌的时候，一次性颁发两个令牌，一个用于获取数据，另一个用于获取新的令牌（refresh token 字段）。令牌到期前，用户使用 refresh token 发一个请求，去更新令牌。}}
++ 更新请求：
+  ```javascript
+  //{{c1::
+  https://b.com/oauth/token?
+    grant_type=refresh_token&
+    client_id=CLIENT_ID&
+    client_secret=CLIENT_SECRET&
+    refresh_token=REFRESH_TOKEN
+  //}}
+  ```
+
+
+
+# Spring Boot [	](spring_20201116050448269)
 
 
 ### @PropertySource 与 @ConfigurationProperties [	](spring_20201116050448275)
 
 + `@PropertySource`作用： {{c1:: 修饰**类**，引入资源文件到配置中 }}
 + `@ConfigurationProperties`作用： {{c1::修饰**类**，**bean配置方法**， 根据前缀后的属性调用对应的`setter`方法 }}
+
 ```java
 //{{c1::
 @Configuration
@@ -1837,13 +1971,19 @@ public class JdbcConfig {
 ###  Yaml配置文件 [	](spring_20201116050448277)
 
 + yml配置文件的特征：
+
   1. {{c1:: **树状层级**结构展示配置项； }}
   2. {{c1:: 配置项之间如果有关系的话需要分行**空两格**； }}
   3. {{c1:: 配置项如果有值的话，那么需要在`:`之后**空一格**再写配置项值； }}
+
 + 默认导入：{{c1:: springBoot默认导入:`application.yml`文件 }}
+
 + 多个Yaml配置文件需：
+
   + {{c1:: 以`application-**.yml`命名 }}
+
   + {{c1:: 在`application.yml`中配置项目使用激活这些配置文件：、 }}
+
     ```yaml
     #{{c1::
     spring:
@@ -1851,22 +1991,28 @@ public class JdbcConfig {
         active: abc,def
     #}}
     ```
+
 + 注入`数组`、`list`、`set`等类型的格式:
-    ```yaml
-    #{{c1::
-    key:
-      - value1
-      - value2
-    #}}
-    ```
+
+  ```yaml
+  #{{c1::
+  key:
+    - value1
+    - value2
+  #}}
+  ```
+
 + 如果properties和yml文件都存在：{{c1:: 如果有重叠属性，默认以Properties优先。 }}
+
 ### springBoot中改变自动配置的组件默认参数流程 [	](spring_20201116050448280)
+
 + 流程图：
   {{c1:: ![image-20201116163356229](https://gitee.com/xieyun714/nodeimage/raw/master/img/image-20201116163356229.png)}}
 
 ## Webflux [	](spring_20201124103028634)
 
 ### Webflux概要 [	](spring_20201124103028638)
+
 + 是什么：{{c1:: `Webflux`是一种**异步非阻塞**的框架，异步非阻塞的框架在 Servlet3.1 以后才支持，核心是基于 Reactor 的相关 API 实现的。 }}
 + 什么是异步非阻塞：
   + **异步和同步**：{{c1:: 针对调用者，调用者发送请求，如果等着对方回应之后才去做其他事情就是同步，如果发送请求之后不等着对方回应就去做其他事情就是异步 }}
@@ -1891,12 +2037,17 @@ public class ObserverDemo extends Observable {
   }
 }
 ```
+
 + {{c1:: 理解 }}
 
 ### Flux 和 Mono [	](spring_20201124103028646)
+
 + 返回元素:{{c1:: `Flux` 对象实现发布者，返回 `N` 个元素；`Mono` 实现发布者，返回 `0` 或者 `1` 个元素 }}
+
 + 三种数据信号：{{c1:: **元素值，错误信号，完成信号**，错误信号和完成信号都代表终止信号，终止信号用于告诉订阅者数据流结束了，错误信号终止数据流同时把错误信息传递给订阅者}}
+
 + 使用例:
+
   ```java
     //{{c1::
     Flux.just(1, 2, 3, 4).subscribe(System.out:print)
@@ -1906,83 +2057,311 @@ public class ObserverDemo extends Observable {
   ```
 
 ### SpringWebflux的CRUD示例（基于注解编程模型） [	](spring_20201124103028649)
+
 1. 引入starter依赖：{{c1:: `spring-boot-starter-webflux` }}
 2. 配置启动端口号: {{c1:: `server.port=8081` }}
 3. 创建接口定义
+
   ```java
-//{{c1::
-//用户操作接口
-public interface UserService {
-  //根据 id 查询用户
-  Mono<User> getUserById(int id);
-  //查询所有用户
-  Flux<User> getAllUser();
-  //添加用户
-  Mono<Void> saveUserInfo(Mono<User> user);
-}
-//}}
+  //{{c1::
+  //用户操作接口
+  public interface UserService {
+    //根据 id 查询用户
+    Mono<User> getUserById(int id);
+    //查询所有用户
+    Flux<User> getAllUser();
+    //添加用户
+    Mono<Void> saveUserInfo(Mono<User> user);
+  }
+  //}}
   ```
+
 4. 接口实现类
+
   ```java
-//{{c1::
-public class UserServiceImpl implements UserService {
-  //创建 map 集合存储数据
-  private final Map<Integer,User> users = new HashMap<>();
-  public UserServiceImpl() {
-    this.users.put(1,new User("lucy","nan",20));
-    this.users.put(2,new User("mary","nv",30));
-    this.users.put(3,new User("jack","nv",50));
-  }
+  //{{c1::
+  public class UserServiceImpl implements UserService {
+    //创建 map 集合存储数据
+    private final Map<Integer,User> users = new HashMap<>();
+    public UserServiceImpl() {
+      this.users.put(1,new User("lucy","nan",20));
+      this.users.put(2,new User("mary","nv",30));
+      this.users.put(3,new User("jack","nv",50));
+    }
 
-  @Override
-  public Mono<User> getUserById(int id) {
-    return Mono.justOrEmpty(this.users.get(id));
-  }
-  @Override
-  public Flux<User> getAllUser() {
-    return Flux.fromIterable(this.users.values());
-  }
+    @Override
+    public Mono<User> getUserById(int id) {
+      return Mono.justOrEmpty(this.users.get(id));
+    }
+    @Override
+    public Flux<User> getAllUser() {
+      return Flux.fromIterable(this.users.values());
+    }
 
-  @Override
-  public Mono<Void> saveUserInfo(Mono<User> userMono) {
-    return userMono.doOnNext(person -> {
-      //向map集合里面放值
-      int id = users.size()+1;
-      users.put(id,person);
-    }).thenEmpty(Mono.empty());
+    @Override
+    public Mono<Void> saveUserInfo(Mono<User> userMono) {
+      return userMono.doOnNext(person -> {
+        //向map集合里面放值
+        int id = users.size()+1;
+        users.put(id,person);
+      }).thenEmpty(Mono.empty());
+    }
   }
-}
-//}}
+  //}}
   ```
+
 5. 创建 controller
+
   ```java
-//{{c1::
-@RestController
-public class UserController {
-  //注入 service
-  @Autowired
-  private UserService userService;
-  //id 查询
-  @GetMapping("/user/{id}")
-  public Mono<User> geetUserId(@PathVariable int id) {
-    return userService.getUserById(id);
+  //{{c1::
+  @RestController
+  public class UserController {
+    //注入 service
+    @Autowired
+    private UserService userService;
+    //id 查询
+    @GetMapping("/user/{id}")
+    public Mono<User> geetUserId(@PathVariable int id) {
+      return userService.getUserById(id);
+    }
+    //查询所有
+    @GetMapping("/user")
+    public Flux<User> getUsers() {
+      return userService.getAllUser();
+    }
+    //添加
+    @PostMapping("/saveuser")
+    public Mono<Void> saveUser(@RequestBody User user) {
+      Mono<User> userMono = Mono.just(user);
+      return userService.saveUserInfo(userMono);
+    }
   }
-  //查询所有
-  @GetMapping("/user")
-  public Flux<User> getUsers() {
-    return userService.getAllUser();
-  }
-  //添加
-  @PostMapping("/saveuser")
-  public Mono<Void> saveUser(@RequestBody User user) {
-    Mono<User> userMono = Mono.just(user);
-    return userService.saveUserInfo(userMono);
-  }
-}
-//}}
+  //}}
   ```
+
 + 说明：
   + `SpringMVC`方式实现，同步阻塞的方式，基于{{c1:: `SpringMVC+Servlet+Tomcat` }}
   + `SpringWebflux`方式实现，异步非阻塞方式，基于{{c1:: `SpringWebflux+Reactor+Netty` }}
-## springCloud [	](spring_20201124103028651)
 
+## springBoot概论
+
+### SpringBoot优点
+
++ Create stand-alone Spring applications
+  + {{c1::创建独立Spring应用}}
++ Embed Tomcat, Jetty or Undertow directly (no need to deploy WAR files)
+  + {{c1::内嵌web服务器}}
++ Provide opinionated 'starter' dependencies to simplify your build configuration
+  + {{c1::自动starter依赖，简化构建配置}}
++ Automatically configure Spring and 3rd party libraries whenever possible
+  + {{c1::自动配置Spring以及第三方功能}}
++ Provide production-ready features such as metrics, health checks, and externalized configuration
+  + {{c1::提供生产级别的监控、健康检查及外部化配置}}
+• Absolutely no code generation and no requirement f or XML configuration
+  + {{c1::无代码生成、无需编写XML}}
+
+### 微服务概念
+
+[James Lewis and Martin Fowler (2014)](https://martinfowler.com/articles/microservices.html)  提出微服务完整概念。https://martinfowler.com/microservices/
+
+> In short, the **microservice architectural style** is an approach to developing a single application as a **suite of small services**, each **running in its own process** and communicating with **lightweight** mechanisms, often an **HTTP** resource API. These services are **built around business capabilities** and **independently deployable** by fully **automated deployment** machinery. There is a **bare minimum of centralized management** of these services, which may be **written in different programming languages** and use different data storage technologies.-- [James Lewis and Martin Fowler (2014)](https://martinfowler.com/articles/microservices.html)
++ 重点翻译：
+- {{c1::微服务是一种架构风格}}
+- {{c1::一个应用拆分为一组小型服务}}
+- {{c1::每个服务运行在自己的进程内，也就是可独立部署和升级}}
+- {{c1::服务之间使用轻量级HTTP交互}}
+- {{c1::服务围绕业务功能拆分}}
+- {{c1::可以由全自动部署机制独立部署}}
+- {{c1::去中心化，服务自治。服务可以使用不同的语言、不同的存储技术}}
+
+### Spring Boot基本使用 [	](spring_20201116050448273)
+
+1. 创建maven工程{{c1::
+
+   - maven设置
+
+   ```xml
+   <mirrors>
+       <mirror>
+           <id>nexus-aliyun</id>
+           <mirrorOf>central</mirrorOf>
+           <name>Nexus aliyun</name>
+           <url>http://maven.aliyun.com/nexus/content/groups/public</url>
+       </mirror>
+   </mirrors>
+   
+   <profiles>
+       <profile>
+           <id>jdk-1.8</id>
+           <activation>
+               <activeByDefault>true</activeByDefault>
+               <jdk>1.8</jdk>
+           </activation>
+           <properties>
+               <maven.compiler.source>1.8</maven.compiler.source>
+               <maven.compiler.target>1.8</maven.compiler.target>
+               <maven.compiler.compilerVersion>1.8</maven.compiler.compilerVersion>
+           </properties>
+       </profile>
+   </profiles>
+   ```
+   }}
+
+2. 添加依赖:
+
+   ```xml
+   //{{c1::
+   <parent>
+       <groupId>org.springframework.boot</groupId>
+       <artifactId>spring-boot-starter-parent</artifactId>
+       <version>2.3.4.RELEASE</version>
+   </parent>
+   <dependencies>
+       <dependency>
+           <groupId>org.springframework.boot</groupId>
+           <artifactId>spring-boot-starter-web</artifactId>
+       </dependency>
+   
+   </dependencies>
+   //}}
+   ```
+
+3. 创建启动类
+
+   ```java
+   //{{c1::
+   @SpringBootApplication
+    public class App 
+    {
+        public static void main( String[] args )
+        {
+            SpringApplication.run(App.class, args);
+        }
+    }
+   //}}
+   ```
+
+4. 创建处理器Controller
+
+   ```java
+   //{{c1::
+    @RestController
+    public class HelloController {
+        @GetMapping("hello")
+        public String hello(){
+            return "hello,spring boot";
+        }
+        
+       @RequestMapping("/hello1")
+       public String handle01(){
+           return "Hello, Spring Boot 2!";
+       }
+    }
+   //}}
+   ```
+
+5. 测试:{{c1:: `http://localhost:8080/hello` }}
+6. 简化配置：{{c1::application.properities
+    ```
+    server.port=8888
+    ```
+    }}
+7. 简化部署{{c1::
+    ```
+    <build>
+            <plugins>
+                <plugin>
+                    <groupId>org.springframework.boot</groupId>
+                    <artifactId>spring-boot-maven-plugin</artifactId>
+                </plugin>
+            </plugins>
+        </build>
+    ```
+    }}
+
+## SpringBoot自动配置原理
+
+### SpringBoot自动依赖管理
+
+- 父项目做依赖管理:{{c1::
+  ```xml
+  依赖管理    
+  <parent>
+   <groupId>org.springframework.boot</groupId>
+          <artifactId>spring-boot-starter-parent</artifactId>
+          <version>2.3.4.RELEASE</version>
+  </parent>
+  他的父项目
+  <parent>
+      <groupId>org.springframework.boot</groupId>
+      <artifactId>spring-boot-dependencies</artifactId>
+      <version>2.3.4.RELEASE</version>
+    </parent>
+  几乎声明了所有开发中常用的依赖的版本号,自动版本仲裁机制
+  ```
+  }}
+  
+- 引入spring-boot-starter-*:{{c1::
+    ```xml
+        1、见到很多 spring-boot-starter-* ： *就某种场景
+        2、只要引入starter，这个场景的所有常规需要的依赖我们都自动引入
+        3、SpringBoot所有支持的场景
+        https://docs.spring.io/spring-boot/docs/current/reference/html/using-spring-boot.html#using-boot-starter
+        4、见到的  *-spring-boot-starter： 第三方为我们提供的简化开发的场景启动器。
+        5、所有场景启动器最底层的依赖
+        <dependency>
+          <groupId>org.springframework.boot</groupId>
+          <artifactId>spring-boot-starter</artifactId>
+          <version>2.3.4.RELEASE</version>
+          <scope>compile</scope>
+        </dependency>
+    ```
+  }}
+- 自动版本仲裁:
+  + {{c1::引入依赖默认都可以不写版本}}
+  + {{c1::引入非版本仲裁的jar，要写版本号。}}
+- 修改默认版本号:{{c1::
+  ```xml
+  1、查看spring-boot-dependencies里面规定当前依赖的版本 用的 key。
+  2、在当前项目里面重写配置
+  <properties>
+  <mysql.version>5.1.43</mysql.version>
+  </properties>
+  ```
+  }}
+
+### springBoot自动配置的内容
+- 自动配好Tomcat:{{c1::自动引入Tomcat依赖,配置Tomcat
+    ```xml
+    <dependency>
+        <groupId>org.springframework.boot</groupId>
+        <artifactId>spring-boot-starter-tomcat</artifactId>
+        <version>2.3.4.RELEASE</version>
+        <scope>compile</scope>
+    </dependency>
+    ```
+    }}
+- 自动配好SpringMVC: {{c1::引入SpringMVC全套组件,自动配好SpringMVC常用组件（功能）}}
+- 自动配好Web常见功能: {{c1::如：字符编码问题,SpringBoot帮我们配置好了所有web开发的常见场景}}
+- 默认的包结构：{{c1::主程序所在包及其下面的所有子包里面的组件都会被默认扫描进来,无需以前的包扫描配置}}
+  - 改变默认扫描路径，
+      ```java
+      //{{c1::
+      @SpringBootApplication(scanBasePackages=**"com.atguigu"**)
+      或者@ComponentScan 指定扫描路径
+
+      @SpringBootApplication
+      等同于
+      @SpringBootConfiguration
+      @EnableAutoConfiguration
+      @ComponentScan("com.atguigu.boot")
+      //}}
+      ```
+- 各种配置拥有默认值:
+  - 默认配置最终都是映射到某个类上，{{c1::如：MultipartProperties}}
+  - 配置文件的值最终会绑定某个类上，{{c1::这个类会在容器中创建对象}}
+- 按需加载所有自动配置项:
+  - {{c1::非常多的starter,引入了哪些场景这个场景的自动配置才会开启}}
+  - {{c1::SpringBoot所有的自动配置功能都在spring-boot-autoconfigure包里面}}
+
+## 容器功能

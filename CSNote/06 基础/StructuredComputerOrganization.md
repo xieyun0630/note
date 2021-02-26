@@ -22,7 +22,7 @@
     + **存储字长**：{{c1::存储单元中二进制代码的位数}}
     + **存储元**：{{c1::即存储二进制的电子元件，每个存储元可存`1bit`}}
   + **MAR**：{{c1::`Memory Address Register`（存储地址寄存器），MAR位数反映存储单元的个数}}
-  + **MDR**：{{c1::`Memory Data Register`（存储地址寄存器），MDR位数=存储字长}}
+  + **MDR**：{{c1::`Memory Data Register`（存储数据寄存器），MDR位数=存储字长}}
     + 图示：{{c1::![image-20210206160348355](https://gitee.com/xieyun714/nodeimage/raw/master/img/image-20210206160348355.png)}}
 
 ### 运算器与控制器各部件作用 [ ](StructuredComputerOrganization_20210208114913995)
@@ -56,15 +56,15 @@
 ### 计算机的工作过程：执行乘法指令 [ ](StructuredComputerOrganization_20210208114914004)
 + 注意理解图中各步骤操作：![image-20210206164515578](https://gitee.com/xieyun714/nodeimage/raw/master/img/image-20210206164515578.png)
 + 各步骤解释：
-    #1：{{c1::(PC)->MAR，导致(MAR)=1}} [ ](StructuredComputerOrganization_20210208114914006)
-    #3：{{c1::M(MAR)->MDR，导致(MDR)=000100 0000000110}} [ ](StructuredComputerOrganization_20210208114914008)
-    #4：{{c1::(MDR)->IR，导致(IR)= 000100 0000000110}} [ ](StructuredComputerOrganization_20210208114914010)
-    #5：{{c1::OP(IR)->CU，指令的操作码送到CU， CU分析后得知，这是“乘法”指令}} [ ](StructuredComputerOrganization_20210208114914012)
-    #6：{{c1::Ad(IR)->MAR，指令的地址码送到MAR，导致(MAR)=6}} [ ](StructuredComputerOrganization_20210208114914015)
-    #8：{{c1::M(MAR)->MDR，导致(MDR)=0000000000000011=3}} [ ](StructuredComputerOrganization_20210208114914018)
-    #9：{{c1::(MDR)->MQ，导致(MQ)=0000000000000011=3}} [ ](StructuredComputerOrganization_20210208114914022)
-    #10：{{c1::(ACC)->X，导致(X)=2}} [ ](StructuredComputerOrganization_20210208114914024)
-    #11：{{c1::(MQ)*(X)->ACC，由ALU实现乘法运算，导致(ACC)=6，如果乘积太大，则需要MQ辅助存储}} [ ](StructuredComputerOrganization_20210208114914029)
+    + #1：{{c1::(PC)->MAR，导致(MAR)=1}} [ ](StructuredComputerOrganization_20210208114914006)
+    + #3：{{c1::M(MAR)->MDR，导致(MDR)=000100 0000000110}} [ ](StructuredComputerOrganization_20210208114914008)
+    + #4：{{c1::(MDR)->IR，导致(IR)= 000100 0000000110}} [ ](StructuredComputerOrganization_20210208114914010)
+    + #5：{{c1::OP(IR)->CU，指令的操作码送到CU， CU分析后得知，这是“乘法”指令}} [ ](StructuredComputerOrganization_20210208114914012)
+    + #6：{{c1::Ad(IR)->MAR，指令的地址码送到MAR，导致(MAR)=6}} [ ](StructuredComputerOrganization_20210208114914015)
+    + #8：{{c1::M(MAR)->MDR，导致(MDR)=0000000000000011=3}} [ ](StructuredComputerOrganization_20210208114914018)
+    + #9：{{c1::(MDR)->MQ，导致(MQ)=0000000000000011=3}} [ ](StructuredComputerOrganization_20210208114914022)
+    + #10：{{c1::(ACC)->X，导致(X)=2}} [ ](StructuredComputerOrganization_20210208114914024)
+    + #11：{{c1::(MQ)*(X)->ACC，由ALU实现乘法运算，导致(ACC)=6，如果乘积太大，则需要MQ辅助存储}} [ ](StructuredComputerOrganization_20210208114914029)
 
 ### 计算机的工作过程：执行加法指令 [ ](StructuredComputerOrganization_20210208114914031)
 
@@ -99,9 +99,9 @@
 - 解释程序：{{c1::将源程序的一条语句翻译成对 应于机器语言的语句，并立即执行。紧接 着再翻译下一句（每次执行都要翻译）}}
 
 ### CPU的性能指标 [ ](StructuredComputerOrganization_20210208114914040)
-+ **CPU时钟周期** **CPU主频（时钟频率）** **CPI**：{{c1::![](https://gitee.com/xieyun714/nodeimage/raw/master/img/20210206203948.png)}}
 + Eg：某CPU主频为 1000Hz，某程序包含100条指令，平均来看指令的CPI=3。该程序在该CPU上执行需要多久？
   + {{c1::![](https://gitee.com/xieyun714/nodeimage/raw/master/img/20210206204209.png)}}
++ **CPU时钟周期** **CPU主频（时钟频率）** **CPI**：{{c1::![](https://gitee.com/xieyun714/nodeimage/raw/master/img/20210206203948.png)}}
 + **IPS** **FLOPS**：{{c1::![](https://gitee.com/xieyun714/nodeimage/raw/master/img/20210206204635.png)}}
 
 ### 系统整体的性能指标 [ ](StructuredComputerOrganization_20210208114914043)
@@ -134,14 +134,14 @@
 + 码字：{{c1::由若干位代码组成的一个字叫码字}}
 + 两个码字间的距离：{{c1::将两个码字逐位进行对比，具有不同的位的个数称为两个码字间的距离。}}
 + 码距：{{c1::一种编码方案可能有若干个合法码字，各合法码字间的最小距离称为“码距”。若码距=2,有检错能力；若码距>=3,可能还会纠错能力}}
-
++ 图示：{{c1::![](https://gitee.com/xieyun714/nodeimage/raw/master/img/20210222184322.png)}}
 
 ### 数据校验：奇偶校验码 [ ](StructuredComputerOrganization_20210208114914056)
 + 奇校验码：{{c1::整个校验码（有效信息位和校验位）中“1”的个数为奇数。}}
 + 偶校验码：{{c1::整个校验码（有效信息位和校验位）中“1”的个数为偶数。}}
 + 校验码结构：{{c1::![](https://gitee.com/xieyun714/nodeimage/raw/master/img/20210207011034.png)}}
 + 【例】 给出两个编码1001101和1010111的奇校验码和偶校验码：{{c1::![](https://gitee.com/xieyun714/nodeimage/raw/master/img/20210207010654.png)}}
-+ 偶校验的硬件实现：{{c1::各信息进行异或（模2加）运算，得到的结果即为偶校验位}}
++ 偶校验的硬件实现：{{c1::各信息进行异或（模2加）运算，得到的结果即为偶校验位![](https://gitee.com/xieyun714/nodeimage/raw/master/img/20210222185019.png)}}
 + 注意：{{c1::奇偶校验码的码距d=2,仅能检测出**奇数位错误**，**无纠错**能力}}
 
 ### 数据校验：海明码* [ ](StructuredComputerOrganization_20210208114914060)
