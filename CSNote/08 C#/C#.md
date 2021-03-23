@@ -223,7 +223,7 @@
 ### is和as运算符
 + is使用例：{{c1::![](https://gitee.com/xieyun714/nodeimage/raw/master/img/20210322175532.png)}}
 + as使用例：{{c1::![](https://gitee.com/xieyun714/nodeimage/raw/master/img/20210322175545.png)}}
-+ 体会主要区别
++ 体会主要区别:{{c1::![](https://gitee.com/xieyun714/nodeimage/raw/master/img/20210323083210.png)}}
 
 ## 第5章 泛型
 
@@ -244,13 +244,14 @@
 + `where T: new()` : {{c1:: 这是一个构造函数约東，指定类型T必须有一个默认构造函数 }}
 + `where TI: T2` : {{c1:: 这个约束也可以指定，类型T1派生自泛型类型T2 }}
 + 合并多个约束：{{c1::![](https://gitee.com/xieyun714/nodeimage/raw/master/img/20210322181413.png)}}
++ 带约束泛型方法图示：{{c1::![](https://gitee.com/xieyun714/nodeimage/raw/master/img/20210323080856.png)}}
 
 ### C# 泛型继承
 + 前提条件：{{c1::必须重复接口的泛型类型，或者必须指定基类的类型}}
   + 必须重复接口的泛型类型: {{c1:: ![](https://gitee.com/xieyun714/nodeimage/raw/master/img/20210322183019.png) }}
   + 指定基类的类型: {{c1:: ![](https://gitee.com/xieyun714/nodeimage/raw/master/img/20210322183040.png) }}
 + 部分泛型继承：{{c1::![](https://gitee.com/xieyun714/nodeimage/raw/master/img/20210322183235.png)}}
-  
+
 ### 泛型类的静态成员
 + 需注意的点:{{c1::泛型类的静态成员只能在类的一个实例中共享。}}
 + 图示:{{c1::![](https://gitee.com/xieyun714/nodeimage/raw/master/img/20210322183449.png)}}
@@ -259,4 +260,88 @@
 + 定义：{{c1::.net中**参数类型**是**抗变的**,方法**返回类型**是**协变的**。}}
 + 如果泛型类型用`in`关键字标注，{{c1:: 泛型接口就是**抗变的**。这样，接口只能把泛型类型T用作其方法的**参数**输入 }}
 + 如果泛型类型用`out`关键字标注，{{c1:: 泛型接口就是**协变的**。这也意味着**返回类型**只能是T }}
+## 第6章 运算符和类型强制转换
 
+### 带委托的泛型方法
++ 调用图示：![](https://gitee.com/xieyun714/nodeimage/raw/master/img/20210323082215.png)
++ 实现图示:{{c1:: ![](https://gitee.com/xieyun714/nodeimage/raw/master/img/20210323082140.png) }}
+
+### 溢出检查
++ checked关键字：{{c1:: ![](https://gitee.com/xieyun714/nodeimage/raw/master/img/20210323082810.png) }}
++ 全局开启与unchecked：{{c1:: ![](https://gitee.com/xieyun714/nodeimage/raw/master/img/20210323082836.png) }}
+
+### 常用运算符
++ `sizeof`：{{c1::运算符可以确定栈中值类型需要的长度（单位是字节）}}
++ `typeof`: {{c1::typeof运算符返回一个表示特定类型的 System.Type对象。}}
++ `nameof`: {{c1::该运算符接受一个符号、属性或方法，并返回其名称。![](https://gitee.com/xieyun714/nodeimage/raw/master/img/20210323083840.png)}}
++ `??`：{{c1:: ![](https://gitee.com/xieyun714/nodeimage/raw/master/img/20210323084021.png) }}
+
+
+### 空值条件运算符处理空值
++ 空值条件运算符：{{c1::![](https://gitee.com/xieyun714/nodeimage/raw/master/img/20210323131158.png)}}
++ 使用空值条件运算简化以下代码：![](https://gitee.com/xieyun714/nodeimage/raw/master/img/20210323133658.png)
+  + 简化后：{{c1::`string city = p?.HomeAddress?.City;`}}
++ 判断数组是否为空：{{c1::`int x1 = arr?[0] ?? 0;`}}
+
+### 比较对象的相等性
+1. `ReferenceEquals()`方法:{{c1::![](https://gitee.com/xieyun714/nodeimage/raw/master/img/20210323164909.png)}}
+2. `Equals()`虚方法
+3. 静态`Equals()`方法
+4. 比较运算符(`==`)
+
+### 比较运算符的重载
++ 语法：
+  ```C#
+  //{{c1::
+        public static bool operator ==(Vector left, Vector right)
+        {
+            if (ReferenceEquals(left, right)) return true;
+
+            return left.X == right.X && left.Y == right.Y && left.Z == right.Z;
+        }
+
+        public static bool operator !=(Vector lhs, Vector rhs) =>
+           !(lhs == rhs);
+  //}}
+  ```
++ 注意：
+  + {{c1:: 如果重载了`==`,也就必须重载`!=`，否则会产生编译器错误 }}
+  + {{c1:: 重写`Equals`和`Gethashcode`方法。这些方法应该总是在重写`==`运算符时进行重写，否则编译器会报错}}
+
+
+### 实现自定义的索引运算符
++ 语法：
+  ```C#
+  //{{c1::
+    public class PersonCollection
+    {
+        private Person[] _people;
+
+        public PersonCollection(params Person[] people) =>
+            _people = people.ToArray();
+
+        public Person this[int index]
+        {
+            get => _people[index];
+            set => _people[index] = value;
+        }
+
+        public IEnumerable<Person> this[DateTime birthDay] => _people.Where(p => p.Birthday == birthDay);
+    }
+  //}}
+  ```
+
+## 第7章 数组 
+
+### C#数组声明与初始化
++ 声明：{{c1::`int[] myArray;`}}
++ 几种初始化：
+  1. {{c1::`int[] myArray = new int[4];`}}
+  2. {{c1::`int[] myArray = new int[4]{1,2,3,4};`}}
+  3. {{c1::`int[] myArray = new int[]{1,2,3,4};`}}
+  4. {{c1::`int[] myArray = {1,2,3,4};`}}
+
+### 创建数组：`CreateInstance()`,`SetValue()`,`GetValue()`
+
++ 使用示例：{{c1:: ![](https://gitee.com/xieyun714/nodeimage/raw/master/img/20210323173155.png) }}
++ `setValue()`对应维数：{{c1:: ![](https://gitee.com/xieyun714/nodeimage/raw/master/img/20210323173227.png) }}
