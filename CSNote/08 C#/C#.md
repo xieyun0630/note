@@ -374,6 +374,29 @@
 + 使用示例：{{c1:: ![](https://gitee.com/xieyun714/nodeimage/raw/master/img/20210323173155.png) }}
 + `setValue()`对应维数：{{c1:: ![](https://gitee.com/xieyun714/nodeimage/raw/master/img/20210323173227.png) }}
 
+### 复制数组
++ 浅复制：{{c1::![](https://gitee.com/xieyun714/nodeimage/raw/master/img/20210323214637.png)}}
+
+### IComparable<T>与IComparer<T>区别：
++ `IComparable`数组排序：{{c1::`Array.Sort(persons,new PersonComparer(PersonCompareType.FirstName));`}}
++ `IComparer`数组排序：{{c1::`Array.Sort(persons);`}}
+
+### foreach语句调用迭代器解析
+```C#
+  foreach(var p in persons){
+    Console.WriteLine(p);
+  }
+```
++ 以上foreach语句会解析为下面的代码段:{{c1::![](https://gitee.com/xieyun714/nodeimage/raw/master/img/20210323215907.png)}}
+
+### 迭代集合的不同方式
++ 类得默认迭代：
+  + 定义迭代器：{{c1:: ![](https://gitee.com/xieyun714/nodeimage/raw/master/img/20210323221608.png) }}
+  + 调用：{{c1:: ![](https://gitee.com/xieyun714/nodeimage/raw/master/img/20210323221635.png) }}
++ 命名得迭代：
+  + 定义迭代器：{{c1:: ![](https://gitee.com/xieyun714/nodeimage/raw/master/img/20210323221741.png) }}
+  + 调用：{{c1:: ![](https://gitee.com/xieyun714/nodeimage/raw/master/img/20210323221814.png) }}
+
 ### 用 `yield return`返回枚举器
 
 + 定义迭代器：
