@@ -43,7 +43,7 @@
 
 ## 第3章 对象和类型 
 
-### C#：类与结构
+### C# 类与结构
 + 声明类语法：{{c1::![](https://gitee.com/xieyun714/nodeimage/raw/master/img/20210322130633.png)}}
 + 声明结构语法：{{c1::![](https://gitee.com/xieyun714/nodeimage/raw/master/img/20210322130654.png)}}
 + 声明实例：{{c1::对于类和结构，都使用关键字new来声明实例![](https://gitee.com/xieyun714/nodeimage/raw/master/img/20210322131019.png)}}
@@ -325,15 +325,43 @@
             get => _people[index];
             set => _people[index] = value;
         }
-
+  0
         public IEnumerable<Person> this[DateTime birthDay] => _people.Where(p => p.Birthday == birthDay);
     }
   //}}
   ```
+### 用户定义的类型强制转换
++ 定义不同结构或类的实例之间的类型强制转换是完全合法的，但有两点限制
+  1. {{c1::如果某个类派生自另一个类，就不能定义这两个类之间的类型强制转换（这些类型的强制转换已经存在）。}}
+  2. {{c1::类型强制转换必須在源数据类型或目标数据类型的内部定义。}}
++ **隐式**强制转换
+  ```C#
+  //{{c1::
+  public static implicit operator float (Currency value) =>
+    value.Dollars + (value.Cents / 100.0f);
+  //}}
+  ```
++ **显式**强制转换
+  ```C#
+  //{{c1::
+  public static explicit operator Currency(float value)
+  {
+      checked
+      {
+          uint dollars = (uint)value;
 
-## 第7章 数组 
+          ushort cents = Convert.ToUInt16((value - dollars) * 100);
+          return new Currency(dollars, cents);
+      }
+  }
+  //}}
+  ```
 
-### C#数组声明与初始化
+
+## 第7章 数组
+
+### `C#`数组声明与初始化
+
 + 声明：{{c1::`int[] myArray;`}}
 + 几种初始化：
   1. {{c1::`int[] myArray = new int[4];`}}
@@ -345,3 +373,168 @@
 
 + 使用示例：{{c1:: ![](https://gitee.com/xieyun714/nodeimage/raw/master/img/20210323173155.png) }}
 + `setValue()`对应维数：{{c1:: ![](https://gitee.com/xieyun714/nodeimage/raw/master/img/20210323173227.png) }}
+
+### 用 `yield return`返回枚举器
+
++ 定义迭代器：
+  ```C#
+  //{{c1::
+    public class GameMoves
+    {
+        private IEnumerator _cross;
+        private IEnumerator _circle;
+
+        public GameMoves()
+        {
+            _cross = Cross();
+            _circle = Circle();
+        }
+
+        private int _move = 0;
+        const int MaxMoves = 9;
+
+        public IEnumerator Cross()
+        {
+            while (true)
+            {
+                Console.WriteLine($"Cross, move {_move}");
+                if (++_move >= MaxMoves)
+                    yield break;
+                yield return _circle;
+            }
+        }
+
+        public IEnumerator Circle()
+        {
+            while (true)
+            {
+                Console.WriteLine($"Circle, move {_move}");
+                if (++_move >= MaxMoves)
+                    yield break;
+                yield return _cross;
+            }
+        }
+    }
+  //}}
+  ```
++ 调用：
+  ```C#
+  //{{c1::
+  var game = new GameMoves();
+  IEnumerator enumerator = game.Cross();
+  while (enumerator.MoveNext())
+  {
+      enumerator = enumerator.Current as IEnumerator;
+  }
+  //}}
+  ```
+### 结构比较
+
++ `IStructuralequatable`接口:{{c1::用于比较两个元组或数组是否有相同的内容}}
++ `IStructuralComparable`接口:{{c1::用于给元组或数组排序}}
+
+### 数组池
++ 创建数组池:{{c1::![](https://gitee.com/xieyun714/nodeimage/raw/master/img/20210324100721.png)}}
++ 从池中租用内存:{{c1::![](https://gitee.com/xieyun714/nodeimage/raw/master/img/20210324100832.png)}}
++ 将内存返回给池:{{c1::![](https://gitee.com/xieyun714/nodeimage/raw/master/img/20210324100847.png)}}
+
+## 第8章 委托、lambda 表达式和事件
+
+### 委托
++ 作用: {{c1:: 当要把方法传送给其他方法时，就需要使用委托。}}
++ 声明委托:![](https://gitee.com/xieyun714/nodeimage/raw/master/img/20210324102639.png)
++ 使用委托:
+  ```c#
+  //{{c1::
+    class Program
+    {
+        private delegate string GetAString();
+        static void Main()
+        {
+            int x = 40;
+            GetAString firstStringMethod = new GetAString(x.ToString);
+            Console.WriteLine($"String is {firstStringMethod()}");
+
+            var balance = new Currency(34, 50);
+            firstStringMethod = balance.ToString;
+            Console.WriteLine($"String is {firstStringMethod()}");
+
+            firstStringMethod = new GetAString(Currency.GetCurrencyUnit);
+            Console.WriteLine($"String is {firstStringMethod()}");
+        }
+    }
+  //}}
+  ```
+  + 注意：{{c1::`C#`编译器会用`firstStringMethod.Invoke()`代替`firstStringMethod()`}}
+
+### `Action<T>`和`Func<T>`委托
+
++ `Action<T>`: {{c1:: 没有泛型参数的 `Action`类可调用没有参数的方法。 `Action<in T>`调用带一个参数的方法，`Action<in T1>`,inT2>调用带两个参数的方法， `Action<in T1,in T2,in T3,in T4,in TS,in T6,in T,in T8>`调用带8个参数的方法。 }}
++ `Func<T>`: {{c1:: `Func< out Tresult>`委托类型可以调用带返回类型且无参数的方法，`Func<in T, out Tresult>`调用带一个参数的方法， `Func<in TI,in T2,in T3,in T4,out Tresult>`调用带4个参数的方法。 }}
+
+### 多播委托
+
++ 多播委托调用：
+  ```C#
+  //{{c1::
+    Action<double> operations = MathOperations.MultiplyByTwo;
+    operations += MathOperations.Square;
+
+    ProcessAndDisplayNumber(operations, 2.0);
+    ProcessAndDisplayNumber(operations, 7.94);
+    ProcessAndDisplayNumber(operations, 1.414);
+    Console.WriteLine();
+  //}}
+  ```
++ 异常导致多播委托截止问题：
+  ```C#
+    //{{c1::
+        static void One()
+        {
+            Console.WriteLine("One");
+            throw new Exception("Error in one");
+        }
+
+        static void Two()
+        {
+            Console.WriteLine("Two");
+        }
+
+        static void Main(string[] args)
+        {
+            Action d1 = One;
+            d1 += Two;
+            Delegate[] delegates = d1.GetInvocationList();
+            foreach (Action d in delegates)
+            {
+                try
+                {
+                    d();
+                }
+                catch (Exception)
+                {
+                    Console.WriteLine("Exception caught");
+                }
+            }
+        }
+  //}}
+  ```
+
+### C# 匿名方法与lambda表达式
++ 语法：
+  ```C#
+  //{{c1::
+          static void Main()
+          {
+              string mid = ", middle part,";
+
+              Func<string, string> anonDel = delegate (string param)
+              {
+                  param += mid;
+                  param += " and this was added to the string.";
+                  return param;
+              };
+              Console.WriteLine(anonDel("Start of string"));
+          }
+  //}}
+  ```
