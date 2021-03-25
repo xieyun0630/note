@@ -561,3 +561,106 @@
           }
   //}}
   ```
+
+## 第9章 字符串和正则表达式 
+
+### FormattableString
++ 作用:字符串中的插值管理
++ 图示：{{c1::![](https://gitee.com/xieyun714/nodeimage/raw/master/img/20210325115445.png)}}
+
+### C# 正则表达式调用
++ 主要名称空间:{{c1::`using System.Text.RegularExpressions;`}}
++ 例：
+  ```C#
+  //{{c1::
+        public static void Find1(string text)
+        {
+            Console.WriteLine("Find1\n");
+            const string pattern = "ion";
+            MatchCollection matches = Regex.Matches(text, pattern,
+                                                    RegexOptions.IgnoreCase |
+                                                    RegexOptions.ExplicitCapture);
+            Console.WriteLine($"Original text was: \n\n{text}\n");
+            Console.WriteLine($"No. of matches: {matches.Count}");
+
+            foreach (Match nextMatch in matches)
+            {
+                int index = nextMatch.Index;
+                string result = nextMatch.ToString();
+                int charsBefore = (index < 5) ? index : 5;
+                int fromEnd = text.Length - index - result.Length;
+                int charsAfter = (fromEnd < 5) ? fromEnd : 5;
+                int charsToDisplay = charsBefore + charsAfter + result.Length;
+
+                Console.WriteLine($"Index: {index}, \tString: {result}, \t" +
+                  $"{text.Substring(index - charsBefore, charsToDisplay)}");
+            }
+        }
+  //}}
+  ```
+
+## 第10章 集合
+
+### 列表
++ 创建列表:
+  ```C# 
+  //{{c1::
+  var intList = new List<int>();
+  var racers = new List<Racer>();
+  List<int> intList = new List<int>(10);
+  //}}
+  ```
++ 获取和设置集合的属性：{{c1::`intList.Capacity = 20;`}}
++ 获取集合元素个数：{{c1::`intList.Count`}}
++ 缩减集合空白空间：{{c1::`intList.Count`}}
++ 集合初始值设定：
+  ```C# 
+  //{{c1::
+  var intlist = new List<int>()(1, 2);
+  var stringlist = new List<string>()("one","two"):
+  //}}
+  ```
++ 添加元素：
+  ```C# 
+  //{{c1::
+  var graham = new Racer(7, "Graham", "Hill", "UK", 14);
+  var emerson = new Racer(13, "Emerson", "Fittipaldi", "Brazil", 14);
+  var mario = new Racer(16, "Mario", "Andretti", "USA", 12);
+
+  var racers = new List<Racer>(20) { graham, emerson, mario };
+  racers.Add(new Racer(24, "Michael", "Schumacher", "Germany", 91));
+  racers.Add(new Racer(27, "Mika", "Hakkinen", "Finland", 20));
+  racers.AddRange(new Racer[] {
+      new Racer(14, "Niki", "Lauda", "Austria", 25),
+      new Racer(21, "Alain", "Prost", "France", 51)});
+
+  // insert elements
+  racers.Insert(3, new Racer(6, "Phil", "Hill", "USA", 3));
+
+  // accessing elements
+  for (int i = 0; i < racers.Count; i++)
+  {
+      Console.WriteLine(racers[i]);
+  }
+
+  foreach (var r in racers)
+  {
+      Console.WriteLine(r);
+  }
+  //}}
+  ```
++ 查找元素:
+  + `IndexOf`: {{c1::`int index1 = racers.IndexOf(mario);`}}
+  + `FindIndex`: {{c1::`int index2 = racers.FindIndex(new FindCountry("Finland").FindCountryPredicate);`}}
+  + `FindIndex`: {{c1::`int index3 = racers.FindIndex(r => r.Country == "Finland");`}}
+  + `Find`: {{c1::`Racer racer = racers.Find(r => r.FirstName == "Niki");`}}
+  + `FindAll`: {{c1::`List<Racer> bigWinners = racers.FindAll(r => r.Wins > 20);`}}
++ 删除元素:
+  ```C#
+  //{{c1::
+  if (!racers.Remove(graham)){
+      Console.WriteLine("object not found in collection");
+  }
+  //}}
+  ```
+
