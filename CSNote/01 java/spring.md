@@ -1786,33 +1786,33 @@ public class Person
 
 
 
-# OAuth 2.0
+# OAuth 2.0 [ ](spring_20210327100148356)
 
-### OAuth 2.0授权序列图
+### OAuth 2.0授权序列图 [ ](spring_20210302085908249)
 
 + OAuth2.0作用：{{c1::OAuth 2.0 是一种授权机制，主要用来颁发令牌（token）。}}
 + 图示：{{c1::![](https://gitee.com/xieyun714/nodeimage/raw/master/img/20210223185717.png)}}
 
-### OAuth 2.0为用户和应用定义了如下角色
+### OAuth 2.0为用户和应用定义了如下角色 [ ](spring_20210302085908252)
 + **资源拥有者** **资源服务器** **客户端应用** **授权服务器**
 + 角色关系图示：{{c1::![](https://gitee.com/xieyun714/nodeimage/raw/master/img/20210223190138.png)}}
 
 + 流程描述：{{c1::OAuth 引入了一个授权层，用来分离两种不同的角色：客户端和资源所有者。......**资源所有者同意以后**，资源服务器可以向客户端颁发令牌。客户端通过令牌，去请求数据。 **OAuth 的核心就是向第三方应用颁发令牌。**}}
 
-### 令牌与密码的差异
+### 令牌与密码的差异 [ ](spring_20210302085908254)
 
 1. **短期的**：{{c1::令牌是短期的，到期会自动失效，用户自己无法修改。密码一般长期有效，用户不修改，就不会发生变化。}}
 2. **可撤销**：{{c1::令牌可以被数据所有者撤销，会立即失效。以上例而言，屋主可以随时取消快递员的令牌。密码一般不允许被他人撤销。}}
 3. **有权限**：{{c1::令牌有权限范围（scope），比如只能进小区的二号门。对于网络服务来说，只读令牌就比读写令牌更安全。密码一般是完整权限。}}
 
-### OAuth 2.0 的四种授权方式
+### OAuth 2.0 的四种授权方式 [ ](spring_20210302085908257)
 
 - **authorization-code**：{{c1::授权码（authorization-code）**指的是第三方应用先申请一个授权码，然后再用该码获取令牌。**}}
 - 隐藏式（implicit）: {{c1::有些 Web 应用是纯前端应用，没有后端。这时就不能用上面的方式了，必须将令牌储存在前端。**这种方式没有授权码这个中间步骤，所以称为（授权码）"隐藏式"（implicit）。** 安全性差，因此有效期要短（一般为会话期有效）。}}
 - 密码式（password）：{{c1::**如果你高度信任某个应用，RFC 6749 也允许用户把用户名和密码，直接告诉该应用。该应用就使用你的密码，申请令牌，这种方式称为"密码式"（password）。**}}
 - 客户端凭证（client credentials）：{{c1::**凭证式（client credentials），适用于没有前端的命令行应用，即在命令行下请求令牌。**}}
 
-### OAuth 2.0：授权码方式的请求流程
+### OAuth 2.0：授权码方式的请求流程 [ ](spring_20210302085908259)
 + 第一步：{{c1::A 网站提供一个链接，用户点击后就会跳转到 B 网站，授权用户数据给 A 网站使用。下面就是 A 网站跳转 B 网站的一个示意链接}}
   + 请求如下：
     ```js
@@ -1872,7 +1872,7 @@ public class Person
     //}}
     ```
 
-### OAuth 2.0：隐藏式的请求流程
+### OAuth 2.0：隐藏式的请求流程 [ ](spring_20210302085908262)
 
 - 第一步，{{c1::A 网站提供一个链接，要求用户跳转到 B 网站，授权用户数据给 A 网站使用。}}
   ```js
@@ -1890,7 +1890,7 @@ public class Person
   + 请求：{{c1::`https://a.com/callback#token=ACCESS_TOKEN`}}
   + 注意：{{c1::令牌的位置是 URL 锚点（fragment）}}
 
-### OAuth 2.0：密码式的请求流程
+### OAuth 2.0：密码式的请求流程 [ ](spring_20210302085908264)
 
 第一步，{{c1:: A 网站要求用户提供 B 网站的用户名和密码。拿到以后，A 就直接向 B 请求令牌。}}
   ```javascript
@@ -1904,7 +1904,7 @@ public class Person
   ```
 第二步，{{c1:: B 网站验证身份通过后，直接给出令牌。注意，这时不需要跳转，而是**把令牌放在 JSON 数据里面，作为 HTTP 回应**，A 因此拿到令牌。}}
 
-### OAuth 2.0：凭证式的请求流程
+### OAuth 2.0：凭证式的请求流程 [ ](spring_20210302085908266)
 第一步，{{c1::A 应用在命令行向 B 发出请求。}}
   ```javascript
   //{{c1::
@@ -1916,7 +1916,7 @@ public class Person
   ```
 第二步，{{c1::B 网站验证通过以后，直接返回令牌。}}
 
-### 令牌的使用
+### 令牌的使用 [ ](spring_20210302085908269)
 
 + 令牌用法：{{c1::A 网站拿到令牌以后，就可以向 B 网站的 API 请求数据了。此时，每个发到 API 的请求，都必须带有令牌。具体做法是在请求的头信息，加上一个`Authorization`字段，令牌就放在这个字段里面。}}
 
@@ -1929,7 +1929,7 @@ public class Person
   #}}
   ```
 
-### 更新令牌
+### 更新令牌 [ ](spring_20210302085908271)
 
 + 更新原因：{{c1::令牌的有效期到了，如果让用户重新走一遍上面的流程，再申请一个新的令牌，很可能**体验不好**，而且也没有必要。OAuth 2.0 允许用户自动更新令牌。}}
 + 具体做法：{{c1::B 网站颁发令牌的时候，一次性颁发两个令牌，一个用于获取数据，另一个用于获取新的令牌（refresh token 字段）。令牌到期前，用户使用 refresh token 发一个请求，去更新令牌。}}
@@ -2143,9 +2143,9 @@ public class ObserverDemo extends Observable {
   + `SpringMVC`方式实现，同步阻塞的方式，基于{{c1:: `SpringMVC+Servlet+Tomcat` }}
   + `SpringWebflux`方式实现，异步非阻塞方式，基于{{c1:: `SpringWebflux+Reactor+Netty` }}
 
-## springBoot概论
+## springBoot概论 [ ](spring_20210327100148382)
 
-### SpringBoot优点
+### SpringBoot优点 [ ](spring_20210327100148384)
 
 + Create stand-alone Spring applications
   + {{c1::创建独立Spring应用}}
@@ -2160,7 +2160,7 @@ public class ObserverDemo extends Observable {
 • Absolutely no code generation and no requirement f or XML configuration
   + {{c1::无代码生成、无需编写XML}}
 
-### 微服务概念
+### 微服务概念 [ ](spring_20210302085908278)
 
 [James Lewis and Martin Fowler (2014)](https://martinfowler.com/articles/microservices.html)  提出微服务完整概念。https://martinfowler.com/microservices/
 
@@ -2279,9 +2279,9 @@ public class ObserverDemo extends Observable {
     ```
     }}
 
-## SpringBoot自动配置原理
+## SpringBoot自动配置原理 [ ](spring_20210327100148389)
 
-### SpringBoot自动依赖管理
+### SpringBoot自动依赖管理 [ ](spring_20210302085908283)
 
 - 父项目做依赖管理:{{c1::
   ```xml
@@ -2330,7 +2330,7 @@ public class ObserverDemo extends Observable {
   ```
   }}
 
-### springBoot自动配置的内容
+### springBoot自动配置的内容 [ ](spring_20210302085908286)
 - 自动配好Tomcat:{{c1::自动引入Tomcat依赖,配置Tomcat
     ```xml
     <dependency>
@@ -2363,5 +2363,3 @@ public class ObserverDemo extends Observable {
 - 按需加载所有自动配置项:
   - {{c1::非常多的starter,引入了哪些场景这个场景的自动配置才会开启}}
   - {{c1::SpringBoot所有的自动配置功能都在spring-boot-autoconfigure包里面}}
-
-## 容器功能
