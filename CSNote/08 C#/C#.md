@@ -640,7 +640,8 @@
 
 ## 第10章 集合
 
-### 列表
+### `List<T>`
+
 + 创建列表:
   ```C# 
   //{{c1::
@@ -702,4 +703,905 @@
   }
   //}}
   ```
++ 只读集合：{{c1::`List<T>`集合的`AsReadOnly()`方法返回`ReadonlyCollection<T>`类型的对象}}
 
+
+### `Queue<T>`类的常用方法
++ `Count`: {{c1:: Count属性返回队列中的元素个数 }}
++ `Enqueue`: {{c1:: Enqueue方法在队列一端添加一个元素 }}
++ `Dequeue`: {{c1:: Dequeue方法在队列的头部读取和删除元素。如果在调用 Dequeue方法时，队列中不再有元素，就抛出一个 Invalidoperationexception类型的异常 }}
++ `Peek`: {{c1:: Peck()方法从队列的头部读取一个元素，但不删除它 }}
++ `TrimExcess`: {{c1:: TrimExcess方法重新设置队列的容量。 Dequeue方法从队列中删除元素，但它不会重新设置队列的容量。要从队列的头部去除空元素，应使用 TrimExcess方法 }}
+
+### `Stack<T>`类常用方法
++ `Count` : {{c1::返回栈中的元素个数}}
++ `Push` : {{c1::在栈顶添加一个元素}}
++ `Pop` : {{c1::从栈顶删除一个元素，并返回该元素。如果栈是空的，就抛出`InvalidOperationException`异常}}
++ `Peek` : {{c1::返回顶的元素，但不删除它}}
++ `Contains` : {{c1::确定某个元素是否在栈中，如果是，就返回true}}
+
+### `LinkedList<T>`
++ 作用: {{c1::`Linkedlist<T>`是一个双向链表，其元素指向它前面和后面的元素}}
++ `LinkedListNode<T>`定义了属性 : {{c1::`List`、`Next`、 `Previous`和 `Value`。}}
+
+### `SortedList<TKey, TValue>`
++ 作用: {{c1::这个类**按照键**给元素排序。这个集合中的值和键都可以使用任意类型。}}
++ 简单例子：
+  ```C#
+  //{{c1::
+    var books = new SortedList<string, string>();
+    books.Add("Professional WPF Programming", "978–0–470–04180–2");
+    books.Add("Professional ASP.NET MVC 5", "978–1–118-79475–3");
+
+    books["Beginning C# 6 Programming"] = "978-1-119-09668-9";
+    books["Professional C# 6 and .NET Core 1.0"] = "978-1-119-09660-3";
+
+    foreach (KeyValuePair<string, string> book in books)
+    {
+        Console.WriteLine($"{book.Key}, {book.Value}");
+    }
+
+    foreach (string isbn in books.Values)
+    {
+        Console.WriteLine(isbn);
+    }
+
+    foreach (string title in books.Keys)
+    {
+        Console.WriteLine(title);
+    }
+
+    {
+        string title = "Professional C# 8";
+        if (!books.TryGetValue(title, out string isbn))
+        {
+            Console.WriteLine($"{title} not found");
+        }
+    }
+  //}}
+  ```
+
+### 字典: `Dictionary<TKey, T Value>`
++ 作用：{{c1:: 字典表示一种非常复杂的数据结构，这种数据结构允许按照某个键来访问元素。字典也称为映射或散列表。字典的主要特性是能根据键快速查找值。也可以自由地添加和删除元素，这有点像`List<T>`类，但没有在内存中移动后续元素的性能开销。 }}
++ 初始化：{{c1:: ![](https://gitee.com/xieyun714/nodeimage/raw/master/img/20210326092509.png)}}
++ 字段键的限制: {{c1:: 用作字典中键的类型必须重写 `Object`类的`GetHashCode()`方法。只要字典类需要确定元素的位置，它就要调用`GetHashCode`方法。}}
++ 注意: {{c1:: 字典的性能取决于 Gethash Codeo方法的实现代码 }}
++ `Sorteddictionary.<TKey, Tvalue>`: {{c1:: 是一个二叉搜索树，其中的元素根据键排序。该键类型必须实现`Icomparable<TKey>`接口。如果键的类型不能排序，则还可以创建一个实现了`IComparer<TKey>`接口的比较器，将比较器用作有序字典的构造函数的一个参数 }}
+
+### Lookup类
+
++ 作用：{{c1:: `Dictionary<Tkey, Tvalue>`类支持每个键关联一个值。 `Lookup<Tkey, Telement>`类非常类似于`Dictionary<Tkey, Tvalue>`类，但把键映射到一个值集合上。 }}
++ 注意:{{c1:: `Lookup<Tke, Telement>`类不能像一般的字典那样创建，而必须调用`ToLookup()`方法，该方法返回一个`Lookup<TKey, Telement>`对象。 `ToLookup()`方法是一个扩展方法，它可以用于实现`IEnumerable<T>`接口的所有类。 }}
++ 使用例：
+  ```C#
+  //{{c1::
+    var racers = new List<Racer>();
+    racers.Add(new Racer(26, "Jacques", "Villeneuve", "Canada", 11));
+    racers.Add(new Racer(18, "Alan", "Jones", "Australia", 12));
+    racers.Add(new Racer(11, "Jackie", "Stewart", "United Kingdom", 27));
+    racers.Add(new Racer(15, "James", "Hunt", "United Kingdom", 10));
+    racers.Add(new Racer(5, "Jack", "Brabham", "Australia", 14));
+
+    var lookupRacers = racers.ToLookup(r => r.Country);
+
+    foreach (Racer r in lookupRacers["Australia"])
+    {
+        Console.WriteLine(r);
+    }
+  //}}
+  ```
+
+### 集：Set
++ 作用：{{c1:: .NET Core包含两个集(`Hashset<T>`和`Sortedset<T>`),它们都实现`ISet<T>`接口。`Hashset<T>`集包含不重复元素的无序列表，`Sortedset<T>`集包含不重复元素的有序列表 }}
++ 使用例：
+```C#
+//{{c1::
+  var companyTeams = new HashSet<string>() { "Ferrari", "McLaren", "Mercedes" };
+  var traditionalTeams = new HashSet<string>() { "Ferrari", "McLaren" };
+  var privateTeams = new HashSet<string>() { "Red Bull", "Lotus", "Toro Rosso", "Force India", "Sauber" };
+
+  if (privateTeams.Add("Williams"))
+      Console.WriteLine("Williams added");
+  if (!companyTeams.Add("McLaren"))
+      Console.WriteLine("McLaren was already in this set");
+
+  if (traditionalTeams.IsSubsetOf(companyTeams))
+  {
+      Console.WriteLine("traditionalTeams is subset of companyTeams");
+  }
+
+  if (companyTeams.IsSupersetOf(traditionalTeams))
+  {
+      Console.WriteLine("companyTeams is a superset of traditionalTeams");
+  }
+
+  traditionalTeams.Add("Williams");
+  if (privateTeams.Overlaps(traditionalTeams))
+  {
+      Console.WriteLine("At least one team is the same with traditional and private teams");
+  }
+
+  var allTeams = new SortedSet<string>(companyTeams);
+  allTeams.UnionWith(privateTeams);
+  allTeams.UnionWith(traditionalTeams);
+
+  Console.WriteLine();
+  Console.WriteLine("all teams");
+  foreach (var team in allTeams)
+  {
+      Console.WriteLine(team);
+  }
+
+  allTeams.ExceptWith(privateTeams);
+  Console.WriteLine();
+  Console.WriteLine("no private team left");
+  foreach (var team in allTeams)
+  {
+      Console.WriteLine(team);
+  }
+//}}
+```
+
+## 第11章 特殊的集合 
+
+### BitArray类
+
++ 常用方法:
+  + `Count Length`:{{c1:: `Count`和`Length`属性的`get`访问器返回数组中的位数。使用 Length属性还可以定义新的数组大小重新设置集合的大小 }}
+  + `Item Get Set`:{{c1:: 可以使用索引器读写数组中的位。索引器是布尔类型。除了使用素引器之外，还可以使用Get()和Set()方法访问数组中的位 }}
+  + `SetAll`: {{c1:: 根据传送给该方法的参数，`SetAll`方法设置所有位的值 }} 
+  + `Not`: {{c1:: `Not()`方法对数组中所有位的值取反 }}
+  + `And Or Xor`: {{c1:: 使用`And()`、`Or()`和`Xor()`方法，可以合并两个`Bitarray`对象 }}
++ 注意：{{c1:: 如果事先不知道需要的位数，就可以使用`Bitarray`类，它可以包含非常多的位。`BitVector32`结构是基于栈的，因此比较快。 `BitVector32`结构仅包含32位，它们存储在一个整数中。}}
++ BitArray类使用例：
+```C#
+//{{c1::
+var bits1 = new BitArray(9);
+bits1.SetAll(true);
+bits1.Set(1, false);
+bits1[5] = false;
+bits1[7] = false;
+Console.Write("initialized: ");
+Console.WriteLine(bits1.GetBitsFormat());
+Console.WriteLine("_________________________");
+
+Console.Write("not ");
+Console.Write(bits1.GetBitsFormat());
+bits1.Not();
+Console.Write(" = ");
+Console.WriteLine(bits1.GetBitsFormat());
+Console.WriteLine("_________________________");
+
+var bits2 = new BitArray(bits1);
+bits2[0] = true;
+bits2[1] = false;
+bits2[4] = true;
+Console.Write($"{bits1.GetBitsFormat()} OR {bits2.GetBitsFormat()}");
+Console.Write(" = ");
+bits1.Or(bits2);
+Console.WriteLine(bits1.GetBitsFormat());
+Console.WriteLine("_________________________");
+
+Console.Write($"{bits2.GetBitsFormat()} AND {bits1.GetBitsFormat()}");
+Console.Write(" = ");
+bits2.And(bits1);
+Console.WriteLine(bits2.GetBitsFormat());
+
+Console.WriteLine("_________________________");
+Console.Write($"{bits1.GetBitsFormat()} XOR {bits2.GetBitsFormat()}");
+bits1.Xor(bits2);
+Console.Write(" = ");
+Console.WriteLine(bits1.GetBitsFormat());
+Console.WriteLine("_________________________");
+//}}
+```
+
+### BitVector32
+
++ 作用：{{c1:: 用一个32位的数来表示数据，那么初始化BitVector32结构时必须制定一个最初值，用户可以传入一个int或者另一个已经存在的BitVector32来构造一个新的BitVector32. }}
++ 创建掩码用于设置位：
+  ```C#
+  //{{c1::
+  var bits1 = new BitVector32();
+  int bit1 = BitVector32.CreateMask();
+  int bit2 = BitVector32.CreateMask(bit1);
+  int bit3 = BitVector32.CreateMask(bit2);
+  int bit4 = BitVector32.CreateMask(bit3);
+  int bit5 = BitVector32.CreateMask(bit4);
+
+  bits1[bit1] = true;
+  bits1[bit2] = false;
+  bits1[bit3] = true;
+  bits1[bit4] = true;
+  bits1[bit5] = true;
+  Console.WriteLine(bits1);
+  //}}
+  ```
++ 创建片段用以访问位
+  ```C#
+  //{{c1::
+  int received = 0x79ab_cdef;
+  BitVector32 bits2 = new BitVector32(received);
+  Console.WriteLine(bits2);
+  BitVector32.Section sectionA = BitVector32.CreateSection(0xfff);
+  BitVector32.Section sectionB = BitVector32.CreateSection(0xff, sectionA);
+  BitVector32.Section sectionC = BitVector32.CreateSection(0xf, sectionB);
+  BitVector32.Section sectionD = BitVector32.CreateSection(0x7, sectionC);
+  BitVector32.Section sectionE = BitVector32.CreateSection(0x7, sectionD);
+  BitVector32.Section sectionF = BitVector32.CreateSection(0x3, sectionE);
+  
+  Console.WriteLine($"Section A: {bits2[sectionA].ToBinaryString()}");
+  Console.WriteLine($"Section B: {bits2[sectionB].ToBinaryString()}");
+  Console.WriteLine($"Section C: {bits2[sectionC].ToBinaryString()}");
+  Console.WriteLine($"Section D: {bits2[sectionD].ToBinaryString()}");
+  Console.WriteLine($"Section E: {bits2[sectionE].ToBinaryString()}");
+  Console.WriteLine($"Section F: {bits2[sectionF].ToBinaryString()}");
+  //}}
+  ```
+
+### 可观察的集合:`ObservableCollection<T>`
++ 主要思路： 
+  1. {{c1:: `CollectionChanged`事件的注册 }}
+  2. {{c1:: `NotifyCollectionChangedEventArgs`参数含义 }}
+```C#
+//{{c1::
+namespace ObservableCollectionSample
+{
+    class Program
+    {
+        static void Main()
+        {
+            var data = new ObservableCollection<string>();
+            
+            data.CollectionChanged += Data_CollectionChanged;
+            data.Add("One");
+            data.Add("Two");
+            data.Insert(1, "Three");
+            data.Remove("One");
+
+            data.CollectionChanged -= Data_CollectionChanged;
+
+            Console.ReadLine();
+        }
+
+        public static void Data_CollectionChanged(object sender, NotifyCollectionChangedEventArgs e)
+        {
+            Console.WriteLine($"action: {e.Action.ToString()}");
+
+            if (e.OldItems != null)
+            {
+                Console.WriteLine($"starting index for old item(s): {e.OldStartingIndex}");
+                Console.WriteLine("old item(s):");
+                foreach (var item in e.OldItems)
+                {
+                    Console.WriteLine(item);
+                }
+            }
+            if (e.NewItems != null)
+            {
+                Console.WriteLine($"starting index for new item(s): {e.NewStartingIndex}");
+                Console.WriteLine("new item(s): ");
+                foreach (var item in e.NewItems)
+                {
+                    Console.WriteLine(item);
+                }
+            }
+            Console.WriteLine();
+        }
+    }
+}
+//}}
+```
+
+### 不可变集合:ImmutableList
++ 创建不可变集合:
+```C#
+//{{c1::
+var accounts = new List<Account>() {
+    new Account("Scrooge McDuck", 667377678765m),
+    new Account("Donald Duck", -200m),
+    new Account("Ludwig von Drake", 20000m)
+};
+ImmutableList<Account> immutableAccounts = accounts.ToImmutableList();
+//}}
+```
++ 注意：{{c1::`Add、 Addrange、 Remove、 Removeat、 Removerange、 Replace`等方法，会返回一个新的不可变集合。}}
++ 使用构造器构造不可变集合:
+```C#
+//{{c1::
+  public static void UsingABuilder(ImmutableList<Account> immutableAccounts)
+  {
+      ImmutableList<Account>.Builder builder = immutableAccounts.ToBuilder();
+      for (int i = 0; i < builder.Count; i++)
+      {
+          Account a = builder[i];
+          if (a.Amount > 0)
+          {
+              builder.Remove(a);
+          }
+      }
+      ImmutableList<Account> overdrawnAccounts = builder.ToImmutable();
+      overdrawnAccounts.ForEach(a => Console.WriteLine($"{a.Name} {a.Amount}"));
+  }
+//}}
+```
+
+## 第12章 LINQ
+
+### LINQ概述
++ `LINQ`：{{c1::`Language Integrated Query`,语言集成查询}}
++ 实体查询例子：
+  ```C#
+  //{{c1::
+    static void LINQQuery()
+    {
+        var query = from r in Formula1.GetChampions()
+                    where r.Country == "Brazil"
+                    orderby r.Wins descending
+                    select r;
+
+        foreach (var r in query)
+        {
+            Console.WriteLine($"{r:A}");
+        }
+        Console.WriteLine();
+    }
+  //}}
+  ```
++ 相应的拓展方法如下：
+  ```C#
+  //{{c1::
+  static void ExtensionMethods()
+  {
+      var champions = new List<Racer>(Formula1.GetChampions());
+      IEnumerable<Racer> brazilChampions =
+          champions.Where(r => r.Country == "Brazil")
+              .OrderByDescending(r => r.Wins)
+              .Select(r => r);
+
+      foreach (Racer r in brazilChampions)
+      {
+          Console.WriteLine($"{r:A}");
+      }
+      Console.WriteLine();
+  }
+  //}}
+  ```
+  
+### LINQ 推迟查询的执行
++ 作用：{{c1::在运行期间定义查询表达式时，查询不会运行。査询只会在迭代数据项时运行。}}
+  ```C#
+  //{{c1::
+  static void DeferredQuery()
+  {
+      var names = new List<string> { "Nino", "Alberto", "Juan", "Mike", "Phil" };
+
+      var namesWithJ = from n in names
+                        where n.StartsWith("J")
+                        orderby n
+                        select n;
+
+      Console.WriteLine("First iteration");
+      foreach (string name in namesWithJ)
+      {
+          Console.WriteLine(name);
+      }
+      Console.WriteLine();
+
+      names.Add("John");
+      names.Add("Jim");
+      names.Add("Jack");
+      names.Add("Denny");
+
+      Console.WriteLine("Second iteration");
+      foreach (string name in namesWithJ)
+      {
+          Console.WriteLine(name);
+      }
+      Console.WriteLine();
+  }
+  //}}
+  ```
+
+### 标准的查询操作符
++ where的使用：
+  ```C#
+  // 找出赢得至少15场比赛的巴西和奥地利赛车手
+  //{{c1::
+  public static void Filtering()
+  {
+      var racers = from r in Formula1.GetChampions()
+                    where r.Wins > 15 && (r.Country == "Brazil" || r.Country == "Austria")
+                    select r;
+
+      foreach (var r in racers)
+      {
+          Console.WriteLine($"{r:A}");
+      }
+  }
+  //}}
+  // 使用索引返回姓氏以A开头、索引为偶数的赛车手
+  //{{c1::
+  public static void FilteringWithIndex()
+  {
+      var racers = Formula1.GetChampions()
+          .Where((r, index) => r.LastName.StartsWith("A") && index % 2 != 0);
+      foreach (var r in racers)
+      {
+          Console.WriteLine($"{r:A}");
+      }
+  }
+  //}}
+  // 拓展方法版
+  //{{c1::
+  public static void FilteringWithMethods()
+  {
+      var racers = Formula1.GetChampions()
+          .Where(r => r.Wins > 15 && (r.Country == "Brazil" || r.Country == "Austria"));
+
+      foreach (var r in racers)
+      {
+          Console.WriteLine($"{r:A}");
+      }
+  }
+  //}}
+  ```
++ OfType的使用：
+  ```C#
+  //{{c1::
+  public static void TypeFiltering()
+  {
+      object[] data = { "one", 2, 3, "four", "five", 6 };
+      var query = data.OfType<string>();
+      foreach (var s in query)
+      {
+          Console.WriteLine(s);
+      }
+  }
+  //}}
+  ```
++ 复合的from子句（SelectMany的使用）：筛选驾驶法拉利的所有冠军
+  ```C#
+    //LINQ实现
+    //{{c1::
+    public static void CompoundFrom()
+    {
+        var ferrariDrivers = from r in Formula1.GetChampions()
+                              from c in r.Cars
+                              where c == "Ferrari"
+                              orderby r.LastName
+                              select $"{r.FirstName} {r.LastName}";
+
+        foreach (var racer in ferrariDrivers)
+        {
+            Console.WriteLine(racer);
+        }
+    }
+    //}}
+
+    //拓展方法实现
+    //{{c1::
+    //SelectMany迭代序列的序列。
+    public static void CompoundFromWithMethods()
+    {
+        var ferrariDrivers = Formula1.GetChampions()
+            .SelectMany(r => r.Cars, (r1, cars) => new { Racer1 = r1, Cars1 = cars })
+            .Where(item => item.Cars1.Contains("Ferrari"))
+            .OrderBy(item => item.Racer1.LastName)
+            .Select(item => $"{item.Racer1.FirstName} {item.Racer1.LastName}");
+
+        foreach (var racer in ferrariDrivers)
+        {
+            Console.WriteLine(racer);
+        }
+    }
+    //}}
+  ```
+
+### 标准的查询操作符: `orderby`排序
++ 例子：赛车手按照赢得比赛的次数进行降序排序
+  + LINQ实现：
+    ```C#
+    //{{c1::
+    var racers = from r in Formula1.GetChampions()
+                where r.Country == "Brazil"
+                orderby r.Wins descending
+                select r;
+    //}}
+    ```
+  + 拓展方法实现：
+    ```C#
+    //{{c1::
+    var racers = Formula1.GetChampions()
+        .Where(r => r.Country == "Brazil")
+        .OrderByDescending(r => r.Wins);
+    //}}
+    ```
++ 多组排序：所有的赛车手先按照国家排序，再按照姓氏排序，最后按照名字排序,返回前10个结果
+  + LINQ实现：
+    ```C#
+    //{{c1::
+    var racers = (from r in Formula1.GetChampions()
+                  orderby r.Country, r.LastName, r.FirstName
+                  select r).Take(10);
+    //}}
+    ```
+  + 拓展方法实现：
+    ```C#
+    //{{c1::
+    var racers = Formula1.GetChampions()
+                    .OrderBy(r => r.Country)
+                    .ThenBy(r => r.LastName)
+                    .ThenBy(r => r.FirstName)
+                    .Take(10);
+    //}}
+    ```
+
+
+### 标准的查询操作符: `group`分组
+
++ 现在一级方程式冠军应按照国家分组，并列出冠军数大于2的国家。
+  + LINQ实现：
+    ```C#
+    //{{c1::
+    var countries = from r in Formula1.GetChampions()
+                group r by r.Country into g
+                orderby g.Count() descending, g.Key
+                where g.Count() >= 2
+                select new
+                {
+                    Country = g.Key,
+                    Count = g.Count()
+                };
+    //}}
+    ```
+  + 使用let的LINQ实现：
+    ```C#
+    //{{c1::
+    var countries = from r in Formula1.GetChampions()
+                    group r by r.Country into g
+                    let count = g.Count()
+                    orderby count descending, g.Key
+                    where count >= 2
+                    select new
+                    {
+                        Country = g.Key,
+                        Count = count
+                    };
+    //}}
+    ```
+  + 拓展方法实现：
+    ```C#
+    //{{c1::
+    var countries = Formula1.GetChampions()
+      .GroupBy(r => r.Country)
+      .OrderByDescending(g => g.Count())
+      .ThenBy(g => g.Key)
+      .Where(g => g.Count() >= 2)
+      .Select(g => new
+      {
+          Country = g.Key,
+          Count = g.Count()
+      });
+    //}}
+    ```
+  + 基于匿名类型的拓展方法实现：
+    ```C#
+    //{{c1::
+    var countries = Formula1.GetChampions()
+      .GroupBy(r => r.Country)
+      .Select(g => new { Group = g, Count = g.Count() })
+      .OrderByDescending(g => g.Count)
+      .ThenBy(g => g.Group.Key)
+      .Where(g => g.Count >= 2)
+      .Select(g => new
+      {
+          Country = g.Group.Key,
+          g.Count
+      });
+    //}}
+    ```
+
+### LINQ 嵌套对象分组
++ 例子：现在一级方程式冠军应按照国家分组，并列出冠军数大于2的国家，**以及赛车手的名序列**
++ LINQ实现：
+```c# 
+ //{{c1::
+  var countries = from r in Formula1.GetChampions()
+                  group r by r.Country into g
+                  let count = g.Count()
+                  orderby count descending, g.Key
+                  where count >= 2
+                  select new
+                  {
+                      Country = g.Key,
+                      Count = count,
+                      Racers = from r1 in g
+                                orderby r1.LastName
+                                select r1.FirstName + " " + r1.LastName
+                  };
+ //}}
+```
++ 拓展方法版：
+```c# 
+ //{{c1::
+  var countries = Formula1.GetChampions()
+      .GroupBy(r => r.Country)
+      .Select(g => new
+      {
+          Group = g,
+          g.Key,
+          Count = g.Count()
+      })
+      .OrderByDescending(g => g.Count)
+      .ThenBy(g => g.Key)
+      .Where(g => g.Count >= 2)
+      .Select(g => new
+      {
+          Country = g.Key,
+          g.Count,
+          Racers = g.Group.OrderBy(r => r.LastName).Select(r => r.FirstName + " " + r.LastName)
+      });
+  //}}
+```
+
+### LINQ 内连接
++ 示例：显示了在同时有了赛车手冠军和车队冠军的前10年
+  + LINQ实现：
+    ```C#
+    //{{c1::
+      var racers = from r in Formula1.GetChampions()
+                    from y in r.Years
+                    select new
+                    {
+                        Year = y,
+                        Name = r.FirstName + " " + r.LastName
+                    };
+
+      var teams = from t in Formula1.GetConstructorChampions()
+                  from y in t.Years
+                  select new
+                  {
+                      Year = y,
+                      t.Name
+                  };
+
+      var racersAndTeams =
+            (from r in racers
+              join t in teams on r.Year equals t.Year
+              orderby t.Year
+              select new
+              {
+                  r.Year,
+                  Champion = r.Name,
+                  Constructor = t.Name
+              }).Take(10);
+    //}}
+    ```
+  + 拓展方法版：
+    ```C#
+    //{{c1::
+    var racers = Formula1.GetChampions()
+    .SelectMany(r => r.Years, (r1, year) =>
+    new
+    {
+        Year = year,
+        Name = $"{r1.FirstName} {r1.LastName}"
+    });
+
+    var teams = Formula1.GetConstructorChampions()
+        .SelectMany(t => t.Years, (t, year) =>
+        new
+        {
+            Year = year,
+            t.Name
+        });
+
+    var racersAndTeams = racers.Join(
+        teams,
+        r => r.Year,
+        t => t.Year,
+        (r, t) =>
+            new
+            {
+                r.Year,
+                Champion = r.Name,
+                Constructor = t.Name
+            }).OrderBy(item => item.Year).Take(10);
+    //}}
+    ```
+
+
+### LINQ 内连接 左外连接实现：
++ LINQ实现：
+  ```C#
+  //{{c1::
+  var racersAndTeams =
+  (from r in racers
+    join t in teams on r.Year equals t.Year into rt
+    from t in rt.DefaultIfEmpty()
+    orderby r.Year
+    select new
+    {
+        r.Year,
+        Champion = r.Name,
+        Constructor = t == null ? "no constructor championship" : t.Name
+    }).Take(10);
+  //}}
+  ```
++ 拓展方法版：
+  ```C#
+  //{{c1::
+  var racersAndTeams =
+    racers.GroupJoin(
+        teams,
+        r => r.Year,
+        t => t.Year,
+        (r, ts) => new
+        {
+            Year = r.Year,
+            Champion = r.Name,
+            Constructors = ts
+        })
+        .SelectMany(
+            item => item.Constructors.DefaultIfEmpty(),
+            (r, t) => new
+            {
+                Year = r.Year,
+                Champion = r.Champion,
+                Constructor = t?.Name ?? "no constructor championship"
+            });
+  //}}
+  ```
+
+### LINQ 组连接
++ LINQ实现:
+  ```C#
+  //{{c1::
+  var racers = from cs in Formula1.GetChampionships()
+                from r in new List<(int Year, int Position, string FirstName, string LastName)>()
+                {
+                    (cs.Year, Position: 1, FirstName: cs.First.FirstName(), LastName: cs.First.LastName()),
+                    (cs.Year, Position: 2, FirstName: cs.Second.FirstName(), LastName: cs.Second.LastName()),
+                    (cs.Year, Position: 3, FirstName: cs.Third.FirstName(), LastName: cs.Third.LastName())
+                }
+                select r;
+  var q = (from r in Formula1.GetChampions()
+            join r2 in racers on
+            (
+                r.FirstName,
+                r.LastName
+            )
+            equals
+            (
+                r2.FirstName,
+                r2.LastName
+            )
+            into yearResults
+            select
+            (
+                r.FirstName,
+                r.LastName,
+                r.Wins,
+                r.Starts,
+                Results: yearResults
+            ));
+
+  foreach (var r in q)
+  {
+      Console.WriteLine($"{r.FirstName} {r.LastName}");
+      foreach (var results in r.Results)
+      {
+          Console.WriteLine($"\t{results.Year} {results.Position}");
+      }
+  }
+  //}}
+  ```
++ 拓展方法实现：
+  ```C#
+  //{{c1::
+  var racers = Formula1.GetChampionships()
+  .SelectMany(cs => new List<(int Year, int Position, string FirstName, string LastName)>
+  {
+      (cs.Year, Position: 1, FirstName: cs.First.FirstName(), LastName: cs.First.LastName()),
+      (cs.Year, Position: 2, FirstName: cs.Second.FirstName(), LastName: cs.Second.LastName()),
+      (cs.Year, Position: 3, FirstName: cs.Third.FirstName(), LastName: cs.Third.LastName())
+  });
+
+  var q = Formula1.GetChampions()
+      .GroupJoin(racers,
+          r1 => (r1.FirstName, r1.LastName),
+          r2 => (r2.FirstName, r2.LastName),
+          (r1, r2s) => (r1.FirstName, r1.LastName, r1.Wins, r1.Starts, Results: r2s));
+
+  foreach (var r in q)
+  {
+      Console.WriteLine($"{r.FirstName} {r.LastName}");
+      foreach (var results in r.Results)
+      {
+          Console.WriteLine($"{results.Year} {results.Position}");
+      }
+  }
+  //}}
+  ```
+
+### LINQ 集合操作
++ 集合操作拓展方法：{{c1::`Distinct()、Union()、Intersect()、Except()`都是集合操作}}
++ 使用例：
+  ```C#
+  //{{c1::
+  IEnumerable<Racer> racersByCar(string car) =>
+      from r in Formula1.GetChampions()
+      from c in r.Cars
+      where c == car
+      orderby r.LastName
+      select r;
+  
+  Console.WriteLine("World champion with Ferrari and McLaren");
+  foreach (var racer in racersByCar("Ferrari").Intersect(racersByCar("McLaren")))
+  {
+      Console.WriteLine(racer);
+  }
+  //}}
+  ```
+
+### LINQ合并操作
+
++ zip方法作用：{{c1::第一个集合中的第一项会与第二个集合中的第一项合并，第一个集合中的第二项会与第二个集合中的第二项合并，以此类推。如果两个序列的项数不同，`Zip()`方法就在到达较小集合的末尾时停止。}}
++ 使用例：
+  ```C#
+  //{{c1::
+  var racerNames = from r in Formula1.GetChampions()
+                  where r.Country == "Italy"
+                  orderby r.Wins descending
+                  select new
+                  {
+                      Name = r.FirstName + " " + r.LastName
+                  };
+  var racerNamesAndStarts = from r in Formula1.GetChampions()
+                            where r.Country == "Italy"
+                            orderby r.Wins descending
+                            select new
+                            {
+                                r.LastName,
+                                r.Starts
+                            };
+    var racers = racerNames.Zip(racerNamesAndStarts, (first, second) => first.Name + ", starts: " + second.Starts);
+    foreach (var r in racers)
+    {
+        Console.WriteLine(r);
+    }
+  //}}
+  ```
+
+### LINQ 使用Skip与Take实现集合分页
++ 使用例：
+```C#
+//{{c1::
+  public static void Partitioning()
+  {
+      int pageSize = 5;
+
+      int numberPages = (int)Math.Ceiling(Formula1.GetChampions().Count() /
+            (double)pageSize);
+
+      for (int page = 0; page < numberPages; page++)
+      {
+          Console.WriteLine($"Page {page}");
+
+          var racers =
+              (from r in Formula1.GetChampions()
+              orderby r.LastName, r.FirstName
+              select r.FirstName + " " + r.LastName).
+              Skip(page * pageSize).Take(pageSize);
+
+          foreach (var name in racers)
+          {
+              Console.WriteLine(name);
+          }
+          Console.WriteLine();
+      }
+  }
+//}}
+```
++ 提升：{{c1::使用`Takewhile()`和`SkipWhile()`扩展方法，还可以传递一个谓词，根据谓词的结果提取或跳过某些项。}}
