@@ -377,9 +377,10 @@
 ### 复制数组
 + 浅复制：{{c1::![](https://gitee.com/xieyun714/nodeimage/raw/master/img/20210323214637.png)}}
 
-### IComparable<T>与IComparer<T>区别：
-+ `IComparable`数组排序：{{c1::`Array.Sort(persons,new PersonComparer(PersonCompareType.FirstName));`}}
-+ `IComparer`数组排序：{{c1::`Array.Sort(persons);`}}
+### `IComparable<T>`与`IComparer<T>`区别：
++ 主要区别：{{c1::`IComparable<T>`比较方法为`CompareTo()`只有一个参数，`IComparer<T>`比较方法为`Compare`具有两个参数。类似java的`comparable`与`comparator`}}
++ `IComparer`数组排序：{{c1::`Array.Sort(persons,new PersonComparer(PersonCompareType.FirstName));`}}
++ `IComparable`数组排序：{{c1::`Array.Sort(persons);`}}
 
 ### foreach语句调用迭代器解析
 ```C#
@@ -561,6 +562,44 @@
           }
   //}}
   ```
+
+### C# 事件，发布/订阅机制（观察者模式）
+
++ 结合观察者模式，定义被观察者:
+  ```C#
+  //{{c1::
+  public class CarDealer
+  {
+      public event EventHandler<CarInfoEventArgs> NewCarInfo;
+  
+      public void NewCar(string car)
+      {
+          Console.WriteLine($"CarDealer, new car {car}");
+  
+          NewCarInfo?.Invoke(this, new CarInfoEventArgs(car));
+      }
+  }
+  //}}
+  ```
+
+  + 注意：invoke与被委托方法参数的对应。
+
++ 结合观察者模式，定义观察者：
+
+  ```C#
+  //{{c1::
+  public class Consumer
+  {
+      private string _name;
+  
+      public Consumer(string name) => _name = name;
+  
+      public void NewCarIsHere(object sender, CarInfoEventArgs e) =>
+          Console.WriteLine($"{_name}: car {e.Car} is new");
+  }
+  //}}
+  ```
+
 
 ## 第9章 字符串和正则表达式 
 
