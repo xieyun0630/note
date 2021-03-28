@@ -1006,7 +1006,7 @@ ImmutableList<Account> immutableAccounts = accounts.ToImmutableList();
   //}}
   ```
   
-### LINQ 推迟查询的执行
+### LINQ:推迟查询的执行
 + 作用：{{c1::在运行期间定义查询表达式时，查询不会运行。査询只会在迭代数据项时运行。}}
   ```C#
   //{{c1::
@@ -1240,7 +1240,7 @@ ImmutableList<Account> immutableAccounts = accounts.ToImmutableList();
     //}}
     ```
 
-### LINQ 嵌套对象分组
+### 标准的查询操作符:嵌套对象分组
 + 例子：现在一级方程式冠军应按照国家分组，并列出冠军数大于2的国家，**以及赛车手的名序列**
 + LINQ实现：
 ```c# 
@@ -1283,7 +1283,7 @@ ImmutableList<Account> immutableAccounts = accounts.ToImmutableList();
   //}}
 ```
 
-### LINQ 内连接
+### 标准的查询操作符:内连接
 + 示例：显示了在同时有了赛车手冠军和车队冠军的前10年
   + LINQ实现：
     ```C#
@@ -1350,7 +1350,7 @@ ImmutableList<Account> immutableAccounts = accounts.ToImmutableList();
     ```
 
 
-### LINQ 内连接 左外连接实现：
+### 标准的查询操作符:内连接 左外连接实现：
 + LINQ实现：
   ```C#
   //{{c1::
@@ -1392,7 +1392,7 @@ ImmutableList<Account> immutableAccounts = accounts.ToImmutableList();
   //}}
   ```
 
-### LINQ 组连接
+### 标准的查询操作符:组连接
 + LINQ实现:
   ```C#
   //{{c1::
@@ -1463,7 +1463,7 @@ ImmutableList<Account> immutableAccounts = accounts.ToImmutableList();
   //}}
   ```
 
-### LINQ 集合操作
+### 标准的查询操作符:集合操作
 + 集合操作拓展方法：{{c1::`Distinct()、Union()、Intersect()、Except()`都是集合操作}}
 + 使用例：
   ```C#
@@ -1483,7 +1483,7 @@ ImmutableList<Account> immutableAccounts = accounts.ToImmutableList();
   //}}
   ```
 
-### LINQ合并操作
+### 标准的查询操作符:并操作
 
 + zip方法作用：{{c1::第一个集合中的第一项会与第二个集合中的第一项合并，第一个集合中的第二项会与第二个集合中的第二项合并，以此类推。如果两个序列的项数不同，`Zip()`方法就在到达较小集合的末尾时停止。}}
 + 使用例：
@@ -1512,7 +1512,7 @@ ImmutableList<Account> immutableAccounts = accounts.ToImmutableList();
   //}}
   ```
 
-### LINQ 使用Skip与Take实现集合分页
+### 标准的查询操作符:使用Skip与Take实现集合分页
 + 使用例：
 ```C#
 //{{c1::
@@ -1543,3 +1543,183 @@ ImmutableList<Account> immutableAccounts = accounts.ToImmutableList();
 //}}
 ```
 + 提升：{{c1::使用`Takewhile()`和`SkipWhile()`扩展方法，还可以传递一个谓词，根据谓词的结果提取或跳过某些项。}}
+
+### 标准的查询操作符:聚合操作符
+
++ 作用：{{c1::聚合操作符(如 Count、Sum、Min、Max、 Average和 Aggregate操作符)不返回一个序列，而返回一个值。}}
++ 使用例：
+  ```C#
+  public static void AggregateSum()
+  {
+      var countries = (from c in
+                            from r in Formula1.GetChampions()
+                            group r by r.Country into c
+                            select new
+                            {
+                                Country = c.Key,
+                                Wins = (from r1 in c
+                                        select r1.Wins).Sum()
+                            }
+                        orderby c.Wins descending, c.Country
+                        select c).Take(5);
+
+      foreach (var country in countries)
+      {
+          Console.WriteLine($"{country.Country} {country.Wins}");
+      }
+  }
+
+  public static void AggregateCount()
+  {
+      var query = from r in Formula1.GetChampions()
+                  let numberYears = r.Years.Count()
+                  where numberYears >= 3
+                  orderby numberYears descending, r.LastName
+                  select new
+                  {
+                      Name = r.FirstName + " " + r.LastName,
+                      TimesChampion = numberYears
+                  };
+
+      foreach (var r in query)
+      {
+          Console.WriteLine($"{r.Name} {r.TimesChampion}");
+      }
+  }
+  ```
+
+### 标准的查询操作符:转换操作符
+
++ `ToList`示例：
+  ```C#
+  //{{c1::
+  List<Racer> racers = (from r in Formula1.GetChampions()
+                        where r.Starts > 200
+                        orderby r.Starts descending
+                        select r).ToList();
+  //}}
+  ```
+  + 注意：{{c1::调用`Tolist()`扩展方法，立即执行查询，得到的结果放在`List<T>`类中}}
++ `ToLook`示例：
+  
+  ```C#
+  //{{c1::
+  var racers = (from r in Formula1.GetChampions()
+                from c in r.Cars
+                select new
+                {
+                    Car = c,
+                    Racer = r
+                }).ToLookup(cr => cr.Car, cr => cr.Racer);
+  //}}
+  ```
+  + 注意：{{c1:: `Dictionary<TKey, Tvalue>`类只支持一个健对应一个值。在`System.Linq`名称空间的类`Lookup<TKeyElemen>`类中，一个键可以对应多个值。}}
++ `Cast<T>`示例:
+  ```C#
+  //{{c1::
+  var query = from r in list.Cast<Racer>()
+              where r.Country == "USA"
+              orderby r.Wins descending
+              select r;
+  //}}
+  ```
+  + 注意：{{c1:: 如果需要在非类型化的集合上(如 `Arraylist()`使用`LINQ`查询，就可以使用`Cast()`方法。}}
+
+### 标准的查询操作符:生成操作符
++ `Range()`:{{c1::填充一个范围的数字}}
++ `Repeat()`:{{c1::方法返回一个迭代器，该迭代器把同一个值重复特定的次数。}}
++ `Empty()`:{{c1::返回一个不返回值的迭代器}}
++ 使用例：
+  ```c#
+  //{{c1::
+  var values = Enumerable.Range(1, 20);
+  foreach (var item in values)
+  {
+      Console.Write($"{item} ", item);
+  }
+  Console.WriteLine();
+  //}}
+  ```
+
+### 标准的查询操作符:并行查询
+
++ LINQ使用：
+  ```C#
+  //{{c1::
+  static void LinqQuery(IEnumerable<int> data)
+  {
+      Console.WriteLine(nameof(LinqQuery));
+      var res = (from x in data.AsParallel()
+                 where Math.Log(x) < 4
+                 select x).Average();
+      Console.WriteLine($"result from {nameof(LinqQuery)}: {res}");
+      Console.WriteLine();
+  }
+  //}}
+  ```
+  + 注意:{{c1::`AsParallel()`的作用}}
++ 拓展方法例：
+  ```C#
+  //{{c1::
+  static void ExtensionMethods(IEnumerable<int> data)
+  {
+      Console.WriteLine(nameof(ExtensionMethods));
+      var res = data.AsParallel()
+          .Where(x => Math.Log(x) < 4)
+          .Select(x => x).Average();
+          
+      Console.WriteLine($"result from {nameof(ExtensionMethods)}: {res}");
+      Console.WriteLine();
+  }
+  //}}
+  ```
++ 分区器例：
+  ```C#
+  //{{c1::
+  static void UseAPartitioner(IList<int> data)
+  {
+      Console.WriteLine(nameof(UseAPartitioner));
+      var res = (from x in Partitioner.Create(data, loadBalance: true).AsParallel()
+                where Math.Log(x) < 4
+                select x).Average();
+          
+      Console.WriteLine($"result from {nameof(UseAPartitioner)}: {res}");
+      Console.WriteLine();
+  }
+  //}}
+  ```
+  + 注意:{{c1::`Partitioner`的作用}}
+
+### 标准的查询操作符:取消并行查询
++ 主要思路：{{c1::`CancellationTokenSource`创建`token,WithCancellation()`注册`token`，使用`CancellationTokenSource`实例`cancel()`方法}}
++ 使用例：
+  ```C#
+  //{{c1::
+  Console.WriteLine(nameof(UseCancellation));
+  var cts = new CancellationTokenSource();
+  Task.Run(() =>
+  {
+      try
+      {
+          var res = (from x in data.AsParallel().WithCancellation(cts.Token)
+                      where Math.Log(x) < 4
+                      select x).Average();
+
+          Console.WriteLine($"query finished, sum: {res}");
+      }
+      catch (OperationCanceledException ex)
+      {
+          Console.WriteLine(ex.Message);
+      }
+  });
+
+  Console.WriteLine("query started");
+  Console.Write("cancel? ");
+  string input = Console.ReadLine();
+  if (input.ToLower().Equals("y"))
+  {
+      cts.Cancel();
+  }
+  Console.WriteLine();
+  //}}
+  ```
