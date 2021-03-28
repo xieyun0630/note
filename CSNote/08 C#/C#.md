@@ -1,7 +1,7 @@
 
-## C#基础
+## C#基础 [ ](C#_20210327100148441)
 
-### .NET Core 编译命令
+### .NET Core 编译命令 [ ](C#_20210327100148444)
 + 查看模板列表: {{c1::`dotnet new`}}
 + 创建命令行应用: {{c1::`dotnet new console --output HelloWorld`}}
 + 构建应用：{{c1:: `dotnet build` }}
@@ -17,79 +17,79 @@
     //}}
     ```
 
-### 变量
+### 变量 [ ](C#_20210327100148446)
 + 类型推断var关键字：{{c1::`var someNumbyer = 0;` 等价于 `int someNumber;`}}
 + 常量声明：{{c1::`const int a = 100;`}}
 + `sbyte` `short` `int` `long` `byte` `ushort` `uint` `ulong`对应的.NET数据类型：{{c1::![](https://gitee.com/xieyun714/nodeimage/raw/master/img/20210322114223.png)}}
 
-### 字符串字面量
+### 字符串字面量 [ ](C#_20210327100148448)
 + `@`前缀：![](https://gitee.com/xieyun714/nodeimage/raw/master/img/20210322115013.png)
 + `$`前缀：![](https://gitee.com/xieyun714/nodeimage/raw/master/img/20210322115024.png)
 
-### using关键字
+### using关键字 [ ](C#_20210327100148450)
 + 作用：{{c1::为类型建立层次结构}}
 + using定义层次结构图示：{{c1::![](https://gitee.com/xieyun714/nodeimage/raw/master/img/20210322115245.png)}}
 + 名称空间别名图示：{{c1::![](https://gitee.com/xieyun714/nodeimage/raw/master/img/20210322115340.png)}}
 
-### C#的3种注释
+### C#的3种注释 [ ](C#_20210327100148453)
 + 图示：{{c1::![](https://gitee.com/xieyun714/nodeimage/raw/master/img/20210322115436.png)}}
 
-### C#预处理器指令
+### C#预处理器指令 [ ](C#_20210327100148456)
 + `#define #undef` : {{c1::相当于boolean值}}
 + `#if #elif #else #endif` :{{c1::根据`#define`所定义的常量进行判断}}
 + `#warning #error` ::{{c1:: `#warning` 编译时发出警告信息，`#error`发送错误信息且停止编译。}}
 + `#region #endregion` : {{c1::为代码区域命名}}
 + `#pragma`: {{c1::抑制或还原指定的编译警告}}
 
-## 第3章 对象和类型 
+## 第3章 对象和类型  [ ](C#_20210327100148459)
 
-### C# 类与结构
+### C# 类与结构 [ ](C#_20210327100148461)
 + 声明类语法：{{c1::![](https://gitee.com/xieyun714/nodeimage/raw/master/img/20210322130633.png)}}
 + 声明结构语法：{{c1::![](https://gitee.com/xieyun714/nodeimage/raw/master/img/20210322130654.png)}}
 + 声明实例：{{c1::对于类和结构，都使用关键字new来声明实例![](https://gitee.com/xieyun714/nodeimage/raw/master/img/20210322131019.png)}}
 + 类与结构重要区别：{{c1::类型的对象通过引用传递，结构类型的对象按值传递}}
 
-### C# 字段
+### C# 字段 [ ](C#_20210327100148463)
 + 字段声明：![](https://gitee.com/xieyun714/nodeimage/raw/master/img/20210322131344.png)
 + 字段声明：![](https://gitee.com/xieyun714/nodeimage/raw/master/img/20210322131551.png)
   + 注意：{{c1::如果只读字段是一个实例字段，就要在实例构造函数中初始化它。}}
 
-### C# 属性
+### C# 属性 [ ](C#_20210327100148465)
 + 常规语法：{{c1::![](https://gitee.com/xieyun714/nodeimage/raw/master/img/20210322132646.png)}}
 + 具有表达式体的属性访问器：{{c1::![](https://gitee.com/xieyun714/nodeimage/raw/master/img/20210322132708.png)}}
 + 自动实现的属性：{{c1::![](https://gitee.com/xieyun714/nodeimage/raw/master/img/20210322132744.png)}}
 + 属性的访问修饰符：{{c1::![](https://gitee.com/xieyun714/nodeimage/raw/master/img/20210322133005.png)}}
 
-### C# 只读属性
+### C# 只读属性 [ ](C#_20210327100148468)
 + 只读属性：{{c1:: ![](https://gitee.com/xieyun714/nodeimage/raw/master/img/20210322133101.png) }}
 + 自动实现的只读属性：{{c1::![](https://gitee.com/xieyun714/nodeimage/raw/master/img/20210322133444.png)}}
 + 表达式体属性：{{c1:: 是带有get访问器的属性，但不需要get关键字![](https://gitee.com/xieyun714/nodeimage/raw/master/img/20210322133755.png) }}
   
 
-### C# 匿名类型
+### C# 匿名类型 [ ](C#_20210327100148472)
 + 注意点：
   + 匿名类型只是一个继承自{{c1::Object且没有名称的类。}}
   + 根据字段名来区分各个类，{{c1::具有完全相同字段的两个类，类型相同。}}
   + 如果所设置的值来自于另一个对象，{{c1::则可以推断匿名类型成员的名称}}
 + 语法:{{c1::![](https://gitee.com/xieyun714/nodeimage/raw/master/img/20210322134326.png)}}
 
-### C# 方法
+### C# 方法 [ ](C#_20210327100148474)
 + 表达式体方法声明：{{c1::![](https://gitee.com/xieyun714/nodeimage/raw/master/img/20210322134906.png)}}
 + 命名的参数方法：{{c1::![](https://gitee.com/xieyun714/nodeimage/raw/master/img/20210322142022.png)}}
 + 可选参数方法：{{c1::![](https://gitee.com/xieyun714/nodeimage/raw/master/img/20210322142124.png)}}
 + 可变参数方法：{{c1:: ![](https://gitee.com/xieyun714/nodeimage/raw/master/img/20210322142307.png) }}
 
-### C# 构造函数
+### C# 构造函数 [ ](C#_20210327100148477)
 + 表达式体构造函数:{{c1::![](https://gitee.com/xieyun714/nodeimage/raw/master/img/20210322142428.png)}}
 + 从构造函数中调用其他构造函数:{{c1::![](https://gitee.com/xieyun714/nodeimage/raw/master/img/20210322142501.png)}}
 + 静态构造函数：{{c1::![](https://gitee.com/xieyun714/nodeimage/raw/master/img/20210322142548.png)}}
 
-### C# 结构
+### C# 结构 [ ](C#_20210327100148479)
 + 结构的继承体系:{{c1::每个结构派生自System.ValueType类，System.ValueType派生自System.Object类。}}
 + 结构是值类型，具体到代码上与类的区别：{{c1::![](https://gitee.com/xieyun714/nodeimage/raw/master/img/20210322143050.png)}}
 + 只读结构的声明：{{c1::![](https://gitee.com/xieyun714/nodeimage/raw/master/img/20210322143115.png)}}
 
-### C# 按值和按引用传递参数
+### C# 按值和按引用传递参数 [ ](C#_20210327100148481)
 + ref参数：
   + 图示：![](https://gitee.com/xieyun714/nodeimage/raw/master/img/20210322145201.png)
   + 传递结构：{{c1::为A添加ref关键字可以使用**引用**传递结构}}
@@ -101,13 +101,13 @@
   + 作用：{{c1:: 保证发送到方法中的数据不会更改(在传递值类型时) }}
   + 图示：{{c1:: ![](https://gitee.com/xieyun714/nodeimage/raw/master/img/20210322150647.png) }}
 
-### C# 可空类型
+### C# 可空类型 [ ](C#_20210327100148483)
 + 声明语法：{{c1:: `int? x = null;` }}
 + 注意：可空类型转换为普通类型时，{{c1:: 需要类型强制转换，如果是null会抛出异常 }}
 + HasValue与Value属性：{{c1:: `int x5 = x3.HasValue ? x3.Value : -1;` }}
 + 合并运算符结合可空类型使用：{{c1:: `int x6 = x3 ?? -1; `}}
 
-### C# 枚举类型
+### C# 枚举类型 [ ](C#_20210327100148485)
 + 默认情况下enum类型是int，改变为其他类型语法：{{c1::![](https://gitee.com/xieyun714/nodeimage/raw/master/img/20210322153339.png)}}
 + 理解[flags]在枚举中的作用：使用位进行枚举判断。
   ```c#
@@ -128,18 +128,18 @@
   ```
   + 例如给`Daysofweek`的一个变量设置值3,{{c1::结果是`Monday`,如果使用`[Flags]`属性，结果就是`Tuesday`代码}}
 
-### C# Enum类常用工具方法
+### C# Enum类常用工具方法 [ ](C#_20210327100148487)
 + Enum.TryParse:{{c1::![](https://gitee.com/xieyun714/nodeimage/raw/master/img/20210322154805.png)}}
 + Enum.GetNames:{{c1::![](https://gitee.com/xieyun714/nodeimage/raw/master/img/20210322154815.png)}}
 + Enum.GetValues:{{c1::![](https://gitee.com/xieyun714/nodeimage/raw/master/img/20210322154824.png)}}
 
-### C# 部分类
+### C# 部分类 [ ](C#_20210327100148490)
 + 作用：{{c1:: `partial`关键字允许把类、结构、方法或接口放在多个文件中。}}
 + 用法：{{c1::把 `partial`放在 `class` `struct` 或 `interface`关键字的前面。}}
 + 图示：{{c1::![](https://gitee.com/xieyun714/nodeimage/raw/master/img/20210322161219.png)}}
 + 部分方法的作用：{{c1:: 使用生成的代码调用了可能不存在的方法，可以使用部分方法避免编译错误。![](https://gitee.com/xieyun714/nodeimage/raw/master/img/20210322161448.png) }}
 
-### C# 拓展方法
+### C# 拓展方法 [ ](C#_20210327100148493)
 + 作用:{{c1::本质上是静态方法，并没有放在类的源代码中。}}
 + 注意点：
   + this关键字声明
@@ -182,36 +182,36 @@
   //}}
   ```
 
-## 第4章 继承
+## 第4章 继承 [ ](C#_20210327100148497)
 
-### 实现继承
+### 实现继承 [ ](C#_20210327100148500)
 + 类继承：{{c1::![](https://gitee.com/xieyun714/nodeimage/raw/master/img/20210322164204.png)}}
 + 结构继承（只能继承接口)：{{c1::![](https://gitee.com/xieyun714/nodeimage/raw/master/img/20210322164151.png)}}
 
-### 虚方法
+### 虚方法 [ ](C#_20210327100148502)
 + 作用：{{c1::指明基类中的方法可以被子类重写。}}
 + 图示：{{c1::![](https://gitee.com/xieyun714/nodeimage/raw/master/img/20210322164422.png)}}
 
-### 隐藏方法
+### 隐藏方法 [ ](C#_20210327100148505)
 + 定义：{{c1:: 如果签名相同的方法在基类和派生类中都进行了声明，但该方法没有分别声明为 virtual和 override,派生类方法就会隐藏基类方法 }}
  + new关键字抑制编译警告：![](https://gitee.com/xieyun714/nodeimage/raw/master/img/20210322170107.png)
 
-### 调用方法的基类版本
+### 调用方法的基类版本 [ ](C#_20210327100148508)
 + 图示：{{c1::![](https://gitee.com/xieyun714/nodeimage/raw/master/img/20210322171723.png)}}
 
-### 抽象类
+### 抽象类 [ ](C#_20210327100148511)
 + 语法：{{c1::![](https://gitee.com/xieyun714/nodeimage/raw/master/img/20210322171903.png)}}
 + 处理待定实现的抽象方法：{{c1::![](https://gitee.com/xieyun714/nodeimage/raw/master/img/20210322172005.png)}}
 
-### sealed关键字
+### sealed关键字 [ ](C#_20210327100148514)
 + 作用：{{c1::给类`sealed`，不允许创建该类的子类。给方法`sealed`，表示不能重写该类的方法。}}
 + 注意：{{c1::需要密封的方法，要声明为virtual。}}
 + 图示：{{c1::![](https://gitee.com/xieyun714/nodeimage/raw/master/img/20210322172412.png)}}
 
-### C#调用基类的构造函数
+### C#调用基类的构造函数 [ ](C#_20210327100148519)
 + 图示：{{c1::![](https://gitee.com/xieyun714/nodeimage/raw/master/img/20210322174202.png)}}
 
-### C# 访问修饰符
+### C# 访问修饰符 [ ](C#_20210327100148522)
 
 + `public`:{{c1::公有访问。不受任何限制。}}
 + `private`:{{c1::私有访问。只限于本类成员访问，子类，实例都不能访问。}}
@@ -220,22 +220,22 @@
 + `protected internal`:{{c1::内部保护访问。只限于本项目或是子类访问，其他不能访问 `protected` 或 `internal`}}
 + `private protected`:  {{c1::`private` 且 `protected`}}
 
-### is和as运算符
+### is和as运算符 [ ](C#_20210327100148525)
 + is使用例：{{c1::![](https://gitee.com/xieyun714/nodeimage/raw/master/img/20210322175532.png)}}
 + as使用例：{{c1::![](https://gitee.com/xieyun714/nodeimage/raw/master/img/20210322175545.png)}}
 + 体会主要区别:{{c1::![](https://gitee.com/xieyun714/nodeimage/raw/master/img/20210323083210.png)}}
 
-## 第5章 泛型
+## 第5章 泛型 [ ](C#_20210327100148527)
 
-### 泛型对性能的提升
+### 泛型对性能的提升 [ ](C#_20210327100148530)
 + 主要原因：{{c1::泛型可以减少装修与拆箱带来的性能损失}}
 + 图例：{{c1::![](https://gitee.com/xieyun714/nodeimage/raw/master/img/20210322180038.png)}}
 
-### C# 泛型中default关键字
+### C# 泛型中default关键字 [ ](C#_20210327100148532)
 + 作用：{{c1::将null赋予引用类型，将0赋予值类型。}}
 + 示例：{{c1::![](https://gitee.com/xieyun714/nodeimage/raw/master/img/20210322180751.png)}}
 
-### C#泛型约束
+### C#泛型约束 [ ](C#_20210327100148535)
 
 + `where T: struct` : {{c1:: 对于结构约束，类型T必须是值类型 }}
 + `where T: class` : {{c1:: 类约束指定类型T必须是引用类型 }}
@@ -246,50 +246,50 @@
 + 合并多个约束：{{c1::![](https://gitee.com/xieyun714/nodeimage/raw/master/img/20210322181413.png)}}
 + 带约束泛型方法图示：{{c1::![](https://gitee.com/xieyun714/nodeimage/raw/master/img/20210323080856.png)}}
 
-### C# 泛型继承
+### C# 泛型继承 [ ](C#_20210327100148538)
 + 前提条件：{{c1::必须重复接口的泛型类型，或者必须指定基类的类型}}
   + 必须重复接口的泛型类型: {{c1:: ![](https://gitee.com/xieyun714/nodeimage/raw/master/img/20210322183019.png) }}
   + 指定基类的类型: {{c1:: ![](https://gitee.com/xieyun714/nodeimage/raw/master/img/20210322183040.png) }}
 + 部分泛型继承：{{c1::![](https://gitee.com/xieyun714/nodeimage/raw/master/img/20210322183235.png)}}
 
-### 泛型类的静态成员
+### 泛型类的静态成员 [ ](C#_20210327100148541)
 + 需注意的点:{{c1::泛型类的静态成员只能在类的一个实例中共享。}}
 + 图示:{{c1::![](https://gitee.com/xieyun714/nodeimage/raw/master/img/20210322183449.png)}}
 
-### 协变和抗变
+### 协变和抗变 [ ](C#_20210327100148543)
 + 定义：{{c1::.net中**参数类型**是**抗变的**,方法**返回类型**是**协变的**。}}
 + 如果泛型类型用`in`关键字标注，{{c1:: 泛型接口就是**抗变的**。这样，接口只能把泛型类型T用作其方法的**参数**输入 }}
 + 如果泛型类型用`out`关键字标注，{{c1:: 泛型接口就是**协变的**。这也意味着**返回类型**只能是T }}
-## 第6章 运算符和类型强制转换
+## 第6章 运算符和类型强制转换 [ ](C#_20210327100148546)
 
-### 带委托的泛型方法
+### 带委托的泛型方法 [ ](C#_20210327100148548)
 + 调用图示：![](https://gitee.com/xieyun714/nodeimage/raw/master/img/20210323082215.png)
 + 实现图示:{{c1:: ![](https://gitee.com/xieyun714/nodeimage/raw/master/img/20210323082140.png) }}
 
-### 溢出检查
+### 溢出检查 [ ](C#_20210327100148552)
 + checked关键字：{{c1:: ![](https://gitee.com/xieyun714/nodeimage/raw/master/img/20210323082810.png) }}
 + 全局开启与unchecked：{{c1:: ![](https://gitee.com/xieyun714/nodeimage/raw/master/img/20210323082836.png) }}
 
-### 常用运算符
+### 常用运算符 [ ](C#_20210327100148556)
 + `sizeof`：{{c1::运算符可以确定栈中值类型需要的长度（单位是字节）}}
 + `typeof`: {{c1::typeof运算符返回一个表示特定类型的 System.Type对象。}}
 + `nameof`: {{c1::该运算符接受一个符号、属性或方法，并返回其名称。![](https://gitee.com/xieyun714/nodeimage/raw/master/img/20210323083840.png)}}
 + `??`：{{c1:: ![](https://gitee.com/xieyun714/nodeimage/raw/master/img/20210323084021.png) }}
 
 
-### 空值条件运算符处理空值
+### 空值条件运算符处理空值 [ ](C#_20210327100148558)
 + 空值条件运算符：{{c1::![](https://gitee.com/xieyun714/nodeimage/raw/master/img/20210323131158.png)}}
 + 使用空值条件运算简化以下代码：![](https://gitee.com/xieyun714/nodeimage/raw/master/img/20210323133658.png)
   + 简化后：{{c1::`string city = p?.HomeAddress?.City;`}}
 + 判断数组是否为空：{{c1::`int x1 = arr?[0] ?? 0;`}}
 
-### 比较对象的相等性
+### 比较对象的相等性 [ ](C#_20210327100148560)
 1. `ReferenceEquals()`方法:{{c1::![](https://gitee.com/xieyun714/nodeimage/raw/master/img/20210323164909.png)}}
 2. `Equals()`虚方法
 3. 静态`Equals()`方法
 4. 比较运算符(`==`)
 
-### 比较运算符的重载
+### 比较运算符的重载 [ ](C#_20210327100148564)
 + 语法：
   ```C#
   //{{c1::
@@ -309,7 +309,7 @@
   + {{c1:: 重写`Equals`和`Gethashcode`方法。这些方法应该总是在重写`==`运算符时进行重写，否则编译器会报错}}
 
 
-### 实现自定义的索引运算符
+### 实现自定义的索引运算符 [ ](C#_20210327100148567)
 + 语法：
   ```C#
   //{{c1::
@@ -330,7 +330,7 @@
     }
   //}}
   ```
-### 用户定义的类型强制转换
+### 用户定义的类型强制转换 [ ](C#_20210327100148570)
 + 定义不同结构或类的实例之间的类型强制转换是完全合法的，但有两点限制
   1. {{c1::如果某个类派生自另一个类，就不能定义这两个类之间的类型强制转换（这些类型的强制转换已经存在）。}}
   2. {{c1::类型强制转换必須在源数据类型或目标数据类型的内部定义。}}
@@ -358,9 +358,9 @@
   ```
 
 
-## 第7章 数组
+## 第7章 数组 [ ](C#_20210327100148573)
 
-### `C#`数组声明与初始化
+### `C#`数组声明与初始化 [ ](C#_20210327100148575)
 
 + 声明：{{c1::`int[] myArray;`}}
 + 几种初始化：
@@ -369,12 +369,36 @@
   3. {{c1::`int[] myArray = new int[]{1,2,3,4};`}}
   4. {{c1::`int[] myArray = {1,2,3,4};`}}
 
-### 创建数组：`CreateInstance()`,`SetValue()`,`GetValue()`
+### 创建数组：`CreateInstance()`,`SetValue()`,`GetValue()` [ ](C#_20210327100148577)
 
 + 使用示例：{{c1:: ![](https://gitee.com/xieyun714/nodeimage/raw/master/img/20210323173155.png) }}
 + `setValue()`对应维数：{{c1:: ![](https://gitee.com/xieyun714/nodeimage/raw/master/img/20210323173227.png) }}
 
-### 用 `yield return`返回枚举器
+### 复制数组 [ ](C#_20210327100148580)
++ 浅复制：{{c1::![](https://gitee.com/xieyun714/nodeimage/raw/master/img/20210323214637.png)}}
+
+### `IComparable<T>`与`IComparer<T>`区别： [ ](C#_20210327100148583)
++ 主要区别：{{c1::`IComparable<T>`比较方法为`CompareTo()`只有一个参数，`IComparer<T>`比较方法为`Compare`具有两个参数。类似java的`comparable`与`comparator`}}
++ `IComparer`数组排序：{{c1::`Array.Sort(persons,new PersonComparer(PersonCompareType.FirstName));`}}
++ `IComparable`数组排序：{{c1::`Array.Sort(persons);`}}
+
+### foreach语句调用迭代器解析 [ ](C#_20210327100148586)
+```C#
+  foreach(var p in persons){
+    Console.WriteLine(p);
+  }
+```
++ 以上foreach语句会解析为下面的代码段:{{c1::![](https://gitee.com/xieyun714/nodeimage/raw/master/img/20210323215907.png)}}
+
+### 迭代集合的不同方式 [ ](C#_20210327100148588)
++ 类得默认迭代：
+  + 定义迭代器：{{c1:: ![](https://gitee.com/xieyun714/nodeimage/raw/master/img/20210323221608.png) }}
+  + 调用：{{c1:: ![](https://gitee.com/xieyun714/nodeimage/raw/master/img/20210323221635.png) }}
++ 命名得迭代：
+  + 定义迭代器：{{c1:: ![](https://gitee.com/xieyun714/nodeimage/raw/master/img/20210323221741.png) }}
+  + 调用：{{c1:: ![](https://gitee.com/xieyun714/nodeimage/raw/master/img/20210323221814.png) }}
+
+### 用 `yield return`返回枚举器 [ ](C#_20210327100148590)
 
 + 定义迭代器：
   ```C#
@@ -428,19 +452,19 @@
   }
   //}}
   ```
-### 结构比较
+### 结构比较 [ ](C#_20210327100148593)
 
 + `IStructuralequatable`接口:{{c1::用于比较两个元组或数组是否有相同的内容}}
 + `IStructuralComparable`接口:{{c1::用于给元组或数组排序}}
 
-### 数组池
+### 数组池 [ ](C#_20210327100148595)
 + 创建数组池:{{c1::![](https://gitee.com/xieyun714/nodeimage/raw/master/img/20210324100721.png)}}
 + 从池中租用内存:{{c1::![](https://gitee.com/xieyun714/nodeimage/raw/master/img/20210324100832.png)}}
 + 将内存返回给池:{{c1::![](https://gitee.com/xieyun714/nodeimage/raw/master/img/20210324100847.png)}}
 
-## 第8章 委托、lambda 表达式和事件
+## 第8章 委托、lambda 表达式和事件 [ ](C#_20210327100148598)
 
-### 委托
+### 委托 [ ](C#_20210327100148600)
 + 作用: {{c1:: 当要把方法传送给其他方法时，就需要使用委托。}}
 + 声明委托:![](https://gitee.com/xieyun714/nodeimage/raw/master/img/20210324102639.png)
 + 使用委托:
@@ -467,12 +491,12 @@
   ```
   + 注意：{{c1::`C#`编译器会用`firstStringMethod.Invoke()`代替`firstStringMethod()`}}
 
-### `Action<T>`和`Func<T>`委托
+### `Action<T>`和`Func<T>`委托 [ ](C#_20210327100148602)
 
 + `Action<T>`: {{c1:: 没有泛型参数的 `Action`类可调用没有参数的方法。 `Action<in T>`调用带一个参数的方法，`Action<in T1>`,inT2>调用带两个参数的方法， `Action<in T1,in T2,in T3,in T4,in TS,in T6,in T,in T8>`调用带8个参数的方法。 }}
 + `Func<T>`: {{c1:: `Func< out Tresult>`委托类型可以调用带返回类型且无参数的方法，`Func<in T, out Tresult>`调用带一个参数的方法， `Func<in TI,in T2,in T3,in T4,out Tresult>`调用带4个参数的方法。 }}
 
-### 多播委托
+### 多播委托 [ ](C#_20210327100148605)
 
 + 多播委托调用：
   ```C#
@@ -520,7 +544,7 @@
   //}}
   ```
 
-### C# 匿名方法与lambda表达式
+### C# 匿名方法与lambda表达式 [ ](C#_20210327100148609)
 + 语法：
   ```C#
   //{{c1::
@@ -539,13 +563,51 @@
   //}}
   ```
 
-## 第9章 字符串和正则表达式 
+### C# 事件，发布/订阅机制（观察者模式） [ ](C#_20210327100148611)
 
-### FormattableString
++ 结合观察者模式，定义被观察者:
+  ```C#
+  //{{c1::
+  public class CarDealer
+  {
+      public event EventHandler<CarInfoEventArgs> NewCarInfo;
+  
+      public void NewCar(string car)
+      {
+          Console.WriteLine($"CarDealer, new car {car}");
+  
+          NewCarInfo?.Invoke(this, new CarInfoEventArgs(car));
+      }
+  }
+  //}}
+  ```
+
+  + 注意：invoke与被委托方法参数的对应。
+
++ 结合观察者模式，定义观察者：
+
+  ```C#
+  //{{c1::
+  public class Consumer
+  {
+      private string _name;
+  
+      public Consumer(string name) => _name = name;
+  
+      public void NewCarIsHere(object sender, CarInfoEventArgs e) =>
+          Console.WriteLine($"{_name}: car {e.Car} is new");
+  }
+  //}}
+  ```
+
+
+## 第9章 字符串和正则表达式  [ ](C#_20210327100148613)
+
+### FormattableString [ ](C#_20210327100148615)
 + 作用:字符串中的插值管理
 + 图示：{{c1::![](https://gitee.com/xieyun714/nodeimage/raw/master/img/20210325115445.png)}}
 
-### C# 正则表达式调用
+### C# 正则表达式调用 [ ](C#_20210327100148619)
 + 主要名称空间:{{c1::`using System.Text.RegularExpressions;`}}
 + 例：
   ```C#
@@ -576,9 +638,9 @@
   //}}
   ```
 
-## 第10章 集合
+## 第10章 集合 [ ](C#_20210327100148621)
 
-### `List<T>`
+### `List<T>` [ ](C#_20210327100148624)
 
 + 创建列表:
   ```C# 
@@ -644,25 +706,25 @@
 + 只读集合：{{c1::`List<T>`集合的`AsReadOnly()`方法返回`ReadonlyCollection<T>`类型的对象}}
 
 
-### `Queue<T>`类的常用方法
+### `Queue<T>`类的常用方法 [ ](C#_20210327100148626)
 + `Count`: {{c1:: Count属性返回队列中的元素个数 }}
 + `Enqueue`: {{c1:: Enqueue方法在队列一端添加一个元素 }}
 + `Dequeue`: {{c1:: Dequeue方法在队列的头部读取和删除元素。如果在调用 Dequeue方法时，队列中不再有元素，就抛出一个 Invalidoperationexception类型的异常 }}
 + `Peek`: {{c1:: Peck()方法从队列的头部读取一个元素，但不删除它 }}
 + `TrimExcess`: {{c1:: TrimExcess方法重新设置队列的容量。 Dequeue方法从队列中删除元素，但它不会重新设置队列的容量。要从队列的头部去除空元素，应使用 TrimExcess方法 }}
 
-### `Stack<T>`类常用方法
+### `Stack<T>`类常用方法 [ ](C#_20210327100148628)
 + `Count` : {{c1::返回栈中的元素个数}}
 + `Push` : {{c1::在栈顶添加一个元素}}
 + `Pop` : {{c1::从栈顶删除一个元素，并返回该元素。如果栈是空的，就抛出`InvalidOperationException`异常}}
 + `Peek` : {{c1::返回顶的元素，但不删除它}}
 + `Contains` : {{c1::确定某个元素是否在栈中，如果是，就返回true}}
 
-### `LinkedList<T>`
+### `LinkedList<T>` [ ](C#_20210327100148630)
 + 作用: {{c1::`Linkedlist<T>`是一个双向链表，其元素指向它前面和后面的元素}}
 + `LinkedListNode<T>`定义了属性 : {{c1::`List`、`Next`、 `Previous`和 `Value`。}}
 
-### `SortedList<TKey, TValue>`
+### `SortedList<TKey, TValue>` [ ](C#_20210327100148632)
 + 作用: {{c1::这个类**按照键**给元素排序。这个集合中的值和键都可以使用任意类型。}}
 + 简单例子：
   ```C#
@@ -699,14 +761,14 @@
   //}}
   ```
 
-### 字典: `Dictionary<TKey, T Value>`
+### 字典: `Dictionary<TKey, T Value>` [ ](C#_20210327100148636)
 + 作用：{{c1:: 字典表示一种非常复杂的数据结构，这种数据结构允许按照某个键来访问元素。字典也称为映射或散列表。字典的主要特性是能根据键快速查找值。也可以自由地添加和删除元素，这有点像`List<T>`类，但没有在内存中移动后续元素的性能开销。 }}
 + 初始化：{{c1:: ![](https://gitee.com/xieyun714/nodeimage/raw/master/img/20210326092509.png)}}
 + 字段键的限制: {{c1:: 用作字典中键的类型必须重写 `Object`类的`GetHashCode()`方法。只要字典类需要确定元素的位置，它就要调用`GetHashCode`方法。}}
 + 注意: {{c1:: 字典的性能取决于 Gethash Codeo方法的实现代码 }}
 + `Sorteddictionary.<TKey, Tvalue>`: {{c1:: 是一个二叉搜索树，其中的元素根据键排序。该键类型必须实现`Icomparable<TKey>`接口。如果键的类型不能排序，则还可以创建一个实现了`IComparer<TKey>`接口的比较器，将比较器用作有序字典的构造函数的一个参数 }}
 
-### Lookup类
+### Lookup类 [ ](C#_20210327100148638)
 
 + 作用：{{c1:: `Dictionary<Tkey, Tvalue>`类支持每个键关联一个值。 `Lookup<Tkey, Telement>`类非常类似于`Dictionary<Tkey, Tvalue>`类，但把键映射到一个值集合上。 }}
 + 注意:{{c1:: `Lookup<Tke, Telement>`类不能像一般的字典那样创建，而必须调用`ToLookup()`方法，该方法返回一个`Lookup<TKey, Telement>`对象。 `ToLookup()`方法是一个扩展方法，它可以用于实现`IEnumerable<T>`接口的所有类。 }}
@@ -729,7 +791,7 @@
   //}}
   ```
 
-### 集：Set
+### 集：Set [ ](C#_20210327100148641)
 + 作用：{{c1:: .NET Core包含两个集(`Hashset<T>`和`Sortedset<T>`),它们都实现`ISet<T>`接口。`Hashset<T>`集包含不重复元素的无序列表，`Sortedset<T>`集包含不重复元素的有序列表 }}
 + 使用例：
 ```C#
@@ -780,9 +842,9 @@
 //}}
 ```
 
-## 第11章 特殊的集合 
+## 第11章 特殊的集合  [ ](C#_20210327100148643)
 
-### BitArray类
+### BitArray类 [ ](C#_20210327100148645)
 
 + 常用方法:
   + `Count Length`:{{c1:: `Count`和`Length`属性的`get`访问器返回数组中的位数。使用 Length属性还可以定义新的数组大小重新设置集合的大小 }}
@@ -834,7 +896,7 @@ Console.WriteLine("_________________________");
 //}}
 ```
 
-### BitVector32
+### BitVector32 [ ](C#_20210327100148647)
 
 + 作用：{{c1:: 用一个32位的数来表示数据，那么初始化BitVector32结构时必须制定一个最初值，用户可以传入一个int或者另一个已经存在的BitVector32来构造一个新的BitVector32. }}
 + 创建掩码用于设置位：
@@ -877,7 +939,7 @@ Console.WriteLine("_________________________");
   //}}
   ```
 
-### 可观察的集合:`ObservableCollection<T>`
+### 可观察的集合:`ObservableCollection<T>` [ ](C#_20210327100148649)
 + 主要思路： 
   1. {{c1:: `CollectionChanged`事件的注册 }}
   2. {{c1:: `NotifyCollectionChangedEventArgs`参数含义 }}
@@ -931,7 +993,7 @@ namespace ObservableCollectionSample
 //}}
 ```
 
-### 不可变集合:ImmutableList
+### 不可变集合:ImmutableList [ ](C#_20210327100148652)
 + 创建不可变集合:
 ```C#
 //{{c1::
@@ -964,9 +1026,9 @@ ImmutableList<Account> immutableAccounts = accounts.ToImmutableList();
 //}}
 ```
 
-## 第12章 LINQ
+## 第12章 LINQ [ ](C#_20210327100148654)
 
-### LINQ概述
+### LINQ概述 [ ](C#_20210327100148656)
 + `LINQ`：{{c1::`Language Integrated Query`,语言集成查询}}
 + 实体查询例子：
   ```C#
@@ -1006,7 +1068,7 @@ ImmutableList<Account> immutableAccounts = accounts.ToImmutableList();
   //}}
   ```
   
-### LINQ:推迟查询的执行
+### LINQ 推迟查询的执行 [ ](C#_20210327100148659)
 + 作用：{{c1::在运行期间定义查询表达式时，查询不会运行。査询只会在迭代数据项时运行。}}
   ```C#
   //{{c1::
@@ -1041,7 +1103,7 @@ ImmutableList<Account> immutableAccounts = accounts.ToImmutableList();
   //}}
   ```
 
-### 标准的查询操作符
+### 标准的查询操作符 [ ](C#_20210327100148661)
 + where的使用：
   ```C#
   // 找出赢得至少15场比赛的巴西和奥地利赛车手
@@ -1136,7 +1198,7 @@ ImmutableList<Account> immutableAccounts = accounts.ToImmutableList();
     //}}
   ```
 
-### 标准的查询操作符: `orderby`排序
+### 标准的查询操作符: `orderby`排序 [ ](C#_20210327100148663)
 + 例子：赛车手按照赢得比赛的次数进行降序排序
   + LINQ实现：
     ```C#
@@ -1176,7 +1238,7 @@ ImmutableList<Account> immutableAccounts = accounts.ToImmutableList();
     ```
 
 
-### 标准的查询操作符: `group`分组
+### 标准的查询操作符: `group`分组 [ ](C#_20210327100148666)
 
 + 现在一级方程式冠军应按照国家分组，并列出冠军数大于2的国家。
   + LINQ实现：
@@ -1240,7 +1302,7 @@ ImmutableList<Account> immutableAccounts = accounts.ToImmutableList();
     //}}
     ```
 
-### 标准的查询操作符:嵌套对象分组
+### LINQ 嵌套对象分组 [ ](C#_20210327100148668)
 + 例子：现在一级方程式冠军应按照国家分组，并列出冠军数大于2的国家，**以及赛车手的名序列**
 + LINQ实现：
 ```c# 
@@ -1283,7 +1345,7 @@ ImmutableList<Account> immutableAccounts = accounts.ToImmutableList();
   //}}
 ```
 
-### 标准的查询操作符:内连接
+### LINQ 内连接 [ ](C#_20210327100148670)
 + 示例：显示了在同时有了赛车手冠军和车队冠军的前10年
   + LINQ实现：
     ```C#
@@ -1350,7 +1412,7 @@ ImmutableList<Account> immutableAccounts = accounts.ToImmutableList();
     ```
 
 
-### 标准的查询操作符:内连接 左外连接实现：
+### LINQ 内连接 左外连接实现： [ ](C#_20210327100148673)
 + LINQ实现：
   ```C#
   //{{c1::
@@ -1392,7 +1454,7 @@ ImmutableList<Account> immutableAccounts = accounts.ToImmutableList();
   //}}
   ```
 
-### 标准的查询操作符:组连接
+### LINQ 组连接 [ ](C#_20210327100148676)
 + LINQ实现:
   ```C#
   //{{c1::
@@ -1463,7 +1525,7 @@ ImmutableList<Account> immutableAccounts = accounts.ToImmutableList();
   //}}
   ```
 
-### 标准的查询操作符:集合操作
+### LINQ 集合操作 [ ](C#_20210327100148678)
 + 集合操作拓展方法：{{c1::`Distinct()、Union()、Intersect()、Except()`都是集合操作}}
 + 使用例：
   ```C#
@@ -1483,7 +1545,7 @@ ImmutableList<Account> immutableAccounts = accounts.ToImmutableList();
   //}}
   ```
 
-### 标准的查询操作符:并操作
+### LINQ合并操作 [ ](C#_20210327100148680)
 
 + zip方法作用：{{c1::第一个集合中的第一项会与第二个集合中的第一项合并，第一个集合中的第二项会与第二个集合中的第二项合并，以此类推。如果两个序列的项数不同，`Zip()`方法就在到达较小集合的末尾时停止。}}
 + 使用例：
@@ -1512,7 +1574,7 @@ ImmutableList<Account> immutableAccounts = accounts.ToImmutableList();
   //}}
   ```
 
-### 标准的查询操作符:使用Skip与Take实现集合分页
+### LINQ 使用Skip与Take实现集合分页 [ ](C#_20210327100148682)
 + 使用例：
 ```C#
 //{{c1::
@@ -1544,11 +1606,13 @@ ImmutableList<Account> immutableAccounts = accounts.ToImmutableList();
 ```
 + 提升：{{c1::使用`Takewhile()`和`SkipWhile()`扩展方法，还可以传递一个谓词，根据谓词的结果提取或跳过某些项。}}
 
+
 ### 标准的查询操作符:聚合操作符
 
 + 作用：{{c1::聚合操作符(如 Count、Sum、Min、Max、 Average和 Aggregate操作符)不返回一个序列，而返回一个值。}}
 + 使用例：
   ```C#
+  //{{c1::
   public static void AggregateSum()
   {
       var countries = (from c in
@@ -1586,6 +1650,7 @@ ImmutableList<Account> immutableAccounts = accounts.ToImmutableList();
           Console.WriteLine($"{r.Name} {r.TimesChampion}");
       }
   }
+  //}}
   ```
 
 ### 标准的查询操作符:转换操作符
