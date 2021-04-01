@@ -228,7 +228,7 @@
 ## 第5章 泛型 [ ](C#_20210327100148527)
 
 ### 泛型对性能的提升 [ ](C#_20210327100148530)
-+ 主要原因：{{c1::泛型可以减少装修与拆箱带来的性能损失}}
++ 主要因素：{{c1::泛型可以减少装箱与拆箱带来的性能损失}}
 + 图例：{{c1::![](https://gitee.com/xieyun714/nodeimage/raw/master/img/20210322180038.png)}}
 
 ### C# 泛型中default关键字 [ ](C#_20210327100148532)
@@ -1103,7 +1103,7 @@ ImmutableList<Account> immutableAccounts = accounts.ToImmutableList();
   //}}
   ```
 
-### 标准的查询操作符 [ ](C#_20210327100148661)
+### 标准的查询操作符LINQ：`where` `OfType` `from`  [ ](C#_20210327100148661)
 + where的使用：
   ```C#
   // 找出赢得至少15场比赛的巴西和奥地利赛车手
@@ -1198,7 +1198,7 @@ ImmutableList<Account> immutableAccounts = accounts.ToImmutableList();
     //}}
   ```
 
-### 标准的查询操作符: `orderby`排序 [ ](C#_20210327100148663)
+### 标准的查询操作符LINQ： `orderby`排序 [ ](C#_20210327100148663)
 + 例子：赛车手按照赢得比赛的次数进行降序排序
   + LINQ实现：
     ```C#
@@ -1238,7 +1238,7 @@ ImmutableList<Account> immutableAccounts = accounts.ToImmutableList();
     ```
 
 
-### 标准的查询操作符: `group`分组 [ ](C#_20210327100148666)
+### 标准的查询操作符LINQ： `group`分组 [ ](C#_20210327100148666)
 
 + 现在一级方程式冠军应按照国家分组，并列出冠军数大于2的国家。
   + LINQ实现：
@@ -1302,7 +1302,7 @@ ImmutableList<Account> immutableAccounts = accounts.ToImmutableList();
     //}}
     ```
 
-### LINQ 嵌套对象分组 [ ](C#_20210327100148668)
+### 标准的查询操作符LINQ：嵌套对象分组 [ ](C#_20210327100148668)
 + 例子：现在一级方程式冠军应按照国家分组，并列出冠军数大于2的国家，**以及赛车手的名序列**
 + LINQ实现：
 ```c# 
@@ -1345,7 +1345,7 @@ ImmutableList<Account> immutableAccounts = accounts.ToImmutableList();
   //}}
 ```
 
-### LINQ 内连接 [ ](C#_20210327100148670)
+### 标准的查询操作符LINQ：内连接 [ ](C#_20210327100148670)
 + 示例：显示了在同时有了赛车手冠军和车队冠军的前10年
   + LINQ实现：
     ```C#
@@ -1412,7 +1412,7 @@ ImmutableList<Account> immutableAccounts = accounts.ToImmutableList();
     ```
 
 
-### LINQ 内连接 左外连接实现： [ ](C#_20210327100148673)
+### 标准的查询操作符LINQ：内连接 左外连接实现： [ ](C#_20210327100148673)
 + LINQ实现：
   ```C#
   //{{c1::
@@ -1454,7 +1454,7 @@ ImmutableList<Account> immutableAccounts = accounts.ToImmutableList();
   //}}
   ```
 
-### LINQ 组连接 [ ](C#_20210327100148676)
+### 标准的查询操作符LINQ：组连接 [ ](C#_20210327100148676)
 + LINQ实现:
   ```C#
   //{{c1::
@@ -1525,7 +1525,7 @@ ImmutableList<Account> immutableAccounts = accounts.ToImmutableList();
   //}}
   ```
 
-### LINQ 集合操作 [ ](C#_20210327100148678)
+### 标准的查询操作符LINQ：集合操作 [ ](C#_20210327100148678)
 + 集合操作拓展方法：{{c1::`Distinct()、Union()、Intersect()、Except()`都是集合操作}}
 + 使用例：
   ```C#
@@ -1545,7 +1545,7 @@ ImmutableList<Account> immutableAccounts = accounts.ToImmutableList();
   //}}
   ```
 
-### LINQ合并操作 [ ](C#_20210327100148680)
+### 标准的查询操作符LINQ：合并操作 [ ](C#_20210327100148680)
 
 + zip方法作用：{{c1::第一个集合中的第一项会与第二个集合中的第一项合并，第一个集合中的第二项会与第二个集合中的第二项合并，以此类推。如果两个序列的项数不同，`Zip()`方法就在到达较小集合的末尾时停止。}}
 + 使用例：
@@ -1574,7 +1574,7 @@ ImmutableList<Account> immutableAccounts = accounts.ToImmutableList();
   //}}
   ```
 
-### LINQ 使用Skip与Take实现集合分页 [ ](C#_20210327100148682)
+### 标准的查询操作符LINQ：使用Skip与Take实现集合分页 [ ](C#_20210327100148682)
 + 使用例：
 ```C#
 //{{c1::
@@ -1607,7 +1607,7 @@ ImmutableList<Account> immutableAccounts = accounts.ToImmutableList();
 + 提升：{{c1::使用`Takewhile()`和`SkipWhile()`扩展方法，还可以传递一个谓词，根据谓词的结果提取或跳过某些项。}}
 
 
-### 标准的查询操作符:聚合操作符
+### 标准的查询操作符LINQ：聚合操作符
 
 + 作用：{{c1::聚合操作符(如 Count、Sum、Min、Max、 Average和 Aggregate操作符)不返回一个序列，而返回一个值。}}
 + 使用例：
@@ -1653,7 +1653,7 @@ ImmutableList<Account> immutableAccounts = accounts.ToImmutableList();
   //}}
   ```
 
-### 标准的查询操作符:转换操作符
+### 标准的查询操作符LINQ：转换操作符
 
 + `ToList`示例：
   ```C#
@@ -1690,7 +1690,7 @@ ImmutableList<Account> immutableAccounts = accounts.ToImmutableList();
   ```
   + 注意：{{c1:: 如果需要在非类型化的集合上(如 `Arraylist()`使用`LINQ`查询，就可以使用`Cast()`方法。}}
 
-### 标准的查询操作符:生成操作符
+### 标准的查询操作符LINQ：生成操作符
 + `Range()`:{{c1::填充一个范围的数字}}
 + `Repeat()`:{{c1::方法返回一个迭代器，该迭代器把同一个值重复特定的次数。}}
 + `Empty()`:{{c1::返回一个不返回值的迭代器}}
@@ -1706,7 +1706,7 @@ ImmutableList<Account> immutableAccounts = accounts.ToImmutableList();
   //}}
   ```
 
-### 标准的查询操作符:并行查询
+### 标准的查询操作符LINQ：并行查询
 
 + LINQ使用：
   ```C#
@@ -1755,7 +1755,7 @@ ImmutableList<Account> immutableAccounts = accounts.ToImmutableList();
   ```
   + 注意:{{c1::`Partitioner`的作用}}
 
-### 标准的查询操作符:取消并行查询
+### 标准的查询操作符LINQ：取消并行查询
 + 主要思路：{{c1::`CancellationTokenSource`创建`token,WithCancellation()`注册`token`，使用`CancellationTokenSource`实例`cancel()`方法}}
 + 使用例：
   ```C#
@@ -1788,3 +1788,221 @@ ImmutableList<Account> immutableAccounts = accounts.ToImmutableList();
   Console.WriteLine();
   //}}
   ```
+
+## 第13章 C#函数式编程
+
+### 实际例子：高阶函数以函数作为参数，或者返回一个函数，或者返回两个函数。在处理函数时，可以将两个函数合并到一个函数中。
++ 定义：
+  ```C#
+  //{{c1::
+  public static Func<T1, TResult> Compose<T1, T2, TResult>(Func<T1, T2> f1, 
+      Func<T2, TResult> f2) =>
+      a => f2(f1(a));
+  //}}
+  ```
++ 调用：
+  ```C#
+  //{{c1::
+  Func<int, int> f1 = x => x + 1;
+  Func<int, int> f2 = x => x + 2;
+  Func<int, int> f3 = Compose(f1, f2);
+  var x1 = f3(39);
+  WriteLine(x1);  //42
+  //}}
+  ```
+
+### 本地函数  
++ 与lambda相比，本地函数语法更加简洁，例:
+  ```C#
+    //{{c1::
+    //lambda实现：
+    private static void IntroWithLambdaExpression()
+    {
+        Func<int, int, int> add = (x, y) =>
+        {
+            return x + y;
+        };
+        int result = add(37, 5);
+        Console.WriteLine(result);
+    }
+    //本地函数实现：
+    private static void IntroWithLocalFunctionsWithExpressionBodies()
+    {
+        int add(int x, int y) => x + y;
+
+        int result = add(37, 5);
+        Console.WriteLine(result);
+    }
+    //}}
+  ```
++ 由于`yield`延迟执行问题，对空值的检查被延迟了，问题例：
+  ```C# 
+  //{{c1::
+  public static IEnumerable<T> Where1<T>(this IEnumerable<T> source, Func<T, bool> predicate)
+  {
+      if (source == null) throw new ArgumentNullException(nameof(source));
+      if (predicate == null) throw new ArgumentNullException(nameof(predicate));
+
+      foreach (T item in source)
+      {
+          if (predicate(item))
+          {
+              yield return item;
+          }
+      }
+  }
+
+  private static void YieldSampleSimple()
+  {
+  #line 1000
+      Console.WriteLine(nameof(YieldSampleSimple));
+      try
+      {
+          string[] names = { "James", "Niki", "John", "Gerhard", "Jack" };
+          var q = names.Where1(null);
+
+          foreach (var n in q)  // callstack position for exception
+          {
+              Console.WriteLine(n);
+          }
+      }
+      catch (ArgumentNullException ex)
+      {
+          Console.WriteLine(ex);
+      }
+      Console.WriteLine();
+  }
+  //}}
+  ```
++ 由于`yield`延迟执行问题，对空值的检查被延迟了，本地函数解决例：
+  ```C#
+  //{{c1::
+  public static IEnumerable<T> Where3<T>(this IEnumerable<T> source, Func<T, bool> predicate)
+  {
+      if (source == null) throw new ArgumentNullException(nameof(source));
+      if (predicate == null) throw new ArgumentNullException(nameof(predicate));
+
+      return Iterator();
+
+      IEnumerable<T> Iterator()
+      {
+          foreach (T item in source)
+          {
+              if (predicate(item))
+              {
+                  yield return item;
+              }
+          }
+      }
+  }
+
+  private static void YieldSampleWithPrivateMethod()
+  {
+      Console.WriteLine(nameof(YieldSampleWithPrivateMethod));
+      try
+      {
+          string[] names = { "James", "Niki", "John", "Gerhard", "Jack" };
+          var q = names.Where3(null);  // callstack position for exception
+
+          foreach (var n in q)
+          {
+              Console.WriteLine(n);
+          }
+      }
+      catch (ArgumentNullException ex)
+      {
+          Console.WriteLine(ex);
+      }
+      Console.WriteLine();
+  }
+  //}}
+  ```
+
+### 递归本地函数:实现快速排序
+  ```C#
+  //{{c1::
+  public static void QuickSort<T>(T[] elements) where T : IComparable<T>
+  {
+      void Sort(int start, int end)
+      {
+          int i = start, j = end;
+          var pivot = elements[(start + end) / 2];
+
+          while (i <= j)
+          {
+              while (elements[i].CompareTo(pivot) < 0) i++;
+              while (elements[j].CompareTo(pivot) > 0) j--;
+              if (i <= j)
+              {
+                  T tmp = elements[i];
+                  elements[i] = elements[j];
+                  elements[j] = tmp;
+                  i++;
+                  j--;
+              }
+          }
+          if (start < j) Sort(start, j);
+          if (i < end) Sort(i, end);
+      }
+      Sort(0, elements.Length - 1);
+  }
+  //}}
+  ```
+### 元组
++ 定义：{{c1::使用数组可以组合相同类型的对象，而元组能够组合**不同类型**的对象。}}
++ 元组有助于减少以下2个需求
+  1. {{c1::定义自定义类或结构，以返回多个值}}
+  2. {{c1::定义参数，从方法中返回多个值}}
+
+### 元组的声明和初始化
++ 完整声明：
+  ```c#
+  //{{c1::
+  (string s, int i, Person p) t = ("magic", 42, new Person("Matthias", "Nagel"));
+  Console.WriteLine($"s: {t.s}, i: {t.i}, p: {t.p}");
+  //}}
+  ```
++ 类型推断：
+  ```c#
+  //{{c1::
+  var t2 = ("magic", 42, new Person("Matthias", "Nagel"));
+  Console.WriteLine($"string: {t2.Item1}, int: {t2.Item2}, person: {t2.Item3}");
+  //}}
+  ```
++ 类型推断加别名：
+  ```c#
+  //{{c1::
+  var t3 = (s: "magic", i: 42, p: new Person("Matthias", "Nagel"));
+  Console.WriteLine($"s: {t3.s}, i: {t3.i}, p: {t3.p}");
+  //}}
+  ```
++ 元组类型转换：
+  ```c#
+  //{{c1::
+  (string astring, int anumber, Person aperson) t4 = t3;
+  Console.WriteLine($"s: {t4.astring}, i: {t4.anumber}, p: {t4.aperson}");
+  //}}
+  ```
+
+### 元组解构
++ 完整解构：
+  ```c#
+  //{{c1::
+  (string s, int i, Person p) = ("magic", 42, new Person("Stephanie", "Nagel"));
+  Console.WriteLine($"s: {s}, i: {i}, p: {p}");
+  //}}
+  ```
++ 类型推断解构：
+  ```c#
+  //{{c1::
+  (var s1, var i1, var p1) = ("magic", 42, new Person("Stephanie", "Nagel"));
+  Console.WriteLine($"s: {s1}, i: {i1}, p: {p1}");
+
+            string s2;
+            int i2;
+            Person p2;
+            (s2, i2, p2) = ("magic", 42, new Person("Katharina", "Nagel"));
+            Console.WriteLine($"s: {s2}, i: {i2}, p: {p2}");
+  //}}
+  ```
+
