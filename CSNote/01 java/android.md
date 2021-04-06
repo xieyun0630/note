@@ -255,3 +255,50 @@ Toast.makeText(Firstactivity.this,"You clicked Button 1",Toast.LENGTH_SHORT).sho
 + 定义标题栏布局文件：{{c1::![](https://gitee.com/xieyun714/nodeimage/raw/master/img/20210402205120.png)![](https://gitee.com/xieyun714/nodeimage/raw/master/img/20210402205131.png)}}
 + 定义自定义控件类：{{c1::![](https://gitee.com/xieyun714/nodeimage/raw/master/img/20210402211157.png)![](https://gitee.com/xieyun714/nodeimage/raw/master/img/20210402211208.png)}}
 + 布局文件中添加控件：{{c1::![](https://gitee.com/xieyun714/nodeimage/raw/master/img/20210402211237.png)}}
+
+### Listview使用实例
+
++ MainActivity核心代码
+  ```java
+  @Override
+  protected void onCreate(Bundle savedInstanceState) {
+      super.onCreate(savedInstanceState);
+      setContentView(R.layout.activity_main);
+      initFruits(); // 初始化数据
+      FruitAdapter adapter = new FruitAdapter(MainActivity.this, R.layout.fruit_item, fruitList);
+      ListView listView = (ListView) findViewById(R.id.list_view);
+      listView.setAdapter(adapter);
+      listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+          @Override
+          public void onItemClick(AdapterView<?> parent, View view,
+                                  int position, long id) {
+              Fruit fruit = fruitList.get(position);
+              Toast.makeText(MainActivity.this, fruit.getName(), Toast.LENGTH_SHORT).show();
+          }
+      });
+  }
+  ```
++ FruitAdapter核心代码
+  ```java
+  @Override
+  public View getView(int position, View convertView, ViewGroup parent) {
+      Fruit fruit = getItem(position); // 获取当前项的Fruit实例
+      View view;
+      ViewHolder viewHolder;
+      if (convertView == null) {
+          view = LayoutInflater.from(getContext()).inflate(resourceId, parent, false);
+          viewHolder = new ViewHolder();
+          viewHolder.fruitImage = (ImageView) view.findViewById (R.id.fruit_image);
+          viewHolder.fruitName = (TextView) view.findViewById (R.id.fruit_name);
+          view.setTag(viewHolder); // 将ViewHolder存储在View中
+      } else {
+          view = convertView;
+          viewHolder = (ViewHolder) view.getTag(); // 重新获取ViewHolder
+      }
+      viewHolder.fruitImage.setImageResource(fruit.getImageId());
+      viewHolder.fruitName.setText(fruit.getName());
+      return view;
+  }
+  ```
++ 提升 Listview的运行效率主要思路：{{c1::`getView()`方法中还有一个 `convertView`参数，这个参数用于将之前加载好的布局进行缓存，以便之后可以进行重用}}
+

@@ -2006,3 +2006,84 @@ ImmutableList<Account> immutableAccounts = accounts.ToImmutableList();
   //}}
   ```
 
+### 元组的返回
++ 方法定义：
+  ```C#
+  //{{c1::
+  static (int result, int remainder) Divide(int dividend, int divisor)
+  {
+      int result = dividend / divisor;
+      int remainder = dividend % divisor;
+      return (result, remainder);
+  }
+  //}}
+  ```
++ 调用：
+  ```C#
+  //{{c1::
+  private static void ReturningTuples()
+  {
+      (int result, int remainder) = Divide(7, 2);
+      Console.WriteLine($"7 / 2 - result: {result}, remainder: {remainder}");
+  }
+  //}}
+  ```
+
+### 任意类型的元组解构定义
++ 任意类型元组解构**调用**：
+  ```C#
+    private static void Deconstruct()
+    {
+        var p1 = new Person("Katharina", "Nagel");
+
+        (var first, var last) = p1;
+        Console.WriteLine($"{first} {last}");
+    }
+  ```
++ 任意类型元组解构**普通定义**：
+  ```C#
+  //{{c1::
+    public class Person
+    {
+        public Person(string firstName, string lastName)
+        {
+            FirstName = firstName;
+            LastName = lastName;
+        }
+        public string FirstName { get; }
+        public string LastName { get; }
+
+        public override string ToString() => $"{FirstName} {LastName}";
+
+        public void Deconstruct(out string firstName, out string lastName)
+        {
+            firstName = FirstName;
+            lastName = LastName;
+        }
+    }
+  //}}
+  ```
++ 任意类型元组解构**元组定义**：
+  ```C#
+  //{{c1::
+  public static class RacerExtensions
+  {
+      public static void Deconstruct(this Racer r, out string firstName, out string lastName, out int starts, out int wins)
+      {
+          firstName = r.FirstName;
+          lastName = r.LastName;
+          starts = r.Starts;
+          wins = r.Wins;
+      }
+  }
+
+  //调用
+  static void DeconstructWithExtensionsMethods()
+  {
+      var racer = Formula1.GetChampions().Where(r => r.LastName == "Lauda").First();
+      //下面的代码片段将 Racer分解为变量 first和 last. Starts和wins被忽略
+      (string first, string last, _, _) = racer;
+      Console.WriteLine($"{first} {last}");
+  }
+  //}}
+  ```
