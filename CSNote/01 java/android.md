@@ -12,6 +12,7 @@
 3. 在`app/src/main/res`下添加`layout/first_layout.xml`布局文件。
 
    ```xml
+   <!-- {{c1:: -->
    <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
        android:orientation="vertical" android:layout_width="match_parent"
        android:layout_height="match_parent">
@@ -21,10 +22,12 @@
            android:layout_height="wrap_content"
            android:text="start normal activity" />
    </LinearLayout>
+   <!-- }} -->
    ```
 
 4. 在对应Activity中添加相应关联:
    ```java
+   //{{c1::
    @Override
    protected void onCreate(Bundle savedInstanceState) {
        super.onCreate(savedInstanceState);
@@ -34,24 +37,31 @@
            startActivity(intent);
        });
    }
+   //}}
    ```
    + 注意：{{c1::项目中添加的任何资源都会在R文件中生成一个相应的资源id}}
 
 5. 在 `Android Manifest`文件中注册:
    ```xml
+   <!-- {{c1:: -->
    <activity android:name=".ActivityTest"></activity>
+   <!-- }} -->
    ```
 
 6. 配置主活动:
    ```xml
+   <!-- {{c1:: -->
    <activity android:name=".DialogActivity" android:theme="@android:style/Theme.Dialog"></activity>
    <activity android:name=".NormalActivity" />
+   <!-- }} -->
    ```
 
 ### 安卓Toast的使用
 
 ```java
+//{{c1::
 Toast.makeText(Firstactivity.this,"You clicked Button 1",Toast.LENGTH_SHORT).show()
+//}}
 ```
 + 第一个参数：{{c1::是 Context,也就是 Toast要求的上下文，由于活动本身就是一个 Context对象，因此这里直 接传人 `Firstactivity.this`即可。}}
 + 第二个参数：{{c1::是 Toast显示的文本内容}}
@@ -61,6 +71,7 @@ Toast.makeText(Firstactivity.this,"You clicked Button 1",Toast.LENGTH_SHORT).sho
 
 1. 创建`res/menu/main.xml`文件
    ```xml
+   <!-- {{c1:: -->
    <?xml version="1.0" encoding="utf-8"?>
    <menu xmlns:android="http://schemas.android.com/apk/res/android">
        <item
@@ -70,9 +81,11 @@ Toast.makeText(Firstactivity.this,"You clicked Button 1",Toast.LENGTH_SHORT).sho
            android:id="@+id/remove_item"
            android:title="Remove"/>
    </menu>
+   <!-- }} -->
    ```
 2. 在Activity重写`onOptionsItemSelected`方法
    ```java
+   //{{c1::
    @Override
    public boolean onOptionsItemSelected(MenuItem item) {
        switch (item.getItemId()) {
@@ -86,6 +99,7 @@ Toast.makeText(Firstactivity.this,"You clicked Button 1",Toast.LENGTH_SHORT).sho
        }
        return true;
    }
+   //}}
    ```
 + 理解：{{c1::标签}}
 
@@ -260,6 +274,7 @@ Toast.makeText(Firstactivity.this,"You clicked Button 1",Toast.LENGTH_SHORT).sho
 
 + MainActivity核心代码
   ```java
+  //{{c1::
   @Override
   protected void onCreate(Bundle savedInstanceState) {
       super.onCreate(savedInstanceState);
@@ -277,9 +292,11 @@ Toast.makeText(Firstactivity.this,"You clicked Button 1",Toast.LENGTH_SHORT).sho
           }
       });
   }
+  //}}
   ```
 + FruitAdapter核心代码
   ```java
+  //{{c1::
   @Override
   public View getView(int position, View convertView, ViewGroup parent) {
       Fruit fruit = getItem(position); // 获取当前项的Fruit实例
@@ -299,6 +316,301 @@ Toast.makeText(Firstactivity.this,"You clicked Button 1",Toast.LENGTH_SHORT).sho
       viewHolder.fruitName.setText(fruit.getName());
       return view;
   }
+  //}}
   ```
 + 提升 Listview的运行效率主要思路：{{c1::`getView()`方法中还有一个 `convertView`参数，这个参数用于将之前加载好的布局进行缓存，以便之后可以进行重用}}
+
+### RecyclerView使用
++ 导入依赖：![](https://gitee.com/xieyun714/nodeimage/raw/master/img/20210407083331.png)
++ 在layout中声明：![](https://gitee.com/xieyun714/nodeimage/raw/master/img/20210407083420.png)
++ 定义Adapter步骤：
+  1. 继承对应Adapter:{{c1::`RecyclerView.Adapter<FruitAdapter.ViewHolder>`}}
+  2. 重写`onCreateViewHolder(ViewGroup parent, int viewType)`：{{c1::用于创建 Viewholder实例的，我们在这个方法中将布局加载进来，然后创建一个 `ViewHolder`实例，并把加载出来的布局传入到构造函数当中，最后将`Viewholder`的实例返回。相应**点击事件**也在该方法内定义}}
+  3. 重写`onBindViewHolder(ViewHolder holder, int position)`：{{c1::会在每个子项被滚动到屏幕内的时候执行，这里我们通过 position参数得到当前项的 Fruit实例，然后再将数据设置到 Viewholder的 Image View和 Text View当中即可。}}
+  4. 重写`getItemCount()`：{{c1::它用于告诉 Recycler Viewー共有多少子项，直接返回数据源的长度就可以了。}}
+  + Adapter实例：
+    ```java
+    //{{c1::
+    public class FruitAdapter extends RecyclerView.Adapter<FruitAdapter.ViewHolder>{
+
+        private List<Fruit> mFruitList;
+
+        static class ViewHolder extends RecyclerView.ViewHolder {
+            View fruitView;
+            ImageView fruitImage;
+            TextView fruitName;
+
+            public ViewHolder(View view) {
+                super(view);
+                fruitView = view;
+                fruitImage = (ImageView) view.findViewById(R.id.fruit_image);
+                fruitName = (TextView) view.findViewById(R.id.fruit_name);
+            }
+        }
+
+        public FruitAdapter(List<Fruit> fruitList) {
+            mFruitList = fruitList;
+        }
+
+        @Override
+        public ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
+            View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.fruit_item, parent, false);
+            final ViewHolder holder = new ViewHolder(view);
+            holder.fruitView.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    int position = holder.getAdapterPosition();
+                    Fruit fruit = mFruitList.get(position);
+                    Toast.makeText(v.getContext(), "you clicked view " + fruit.getName(), Toast.LENGTH_SHORT).show();
+                }
+            });
+            holder.fruitImage.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    int position = holder.getAdapterPosition();
+                    Fruit fruit = mFruitList.get(position);
+                    Toast.makeText(v.getContext(), "you clicked image " + fruit.getName(), Toast.LENGTH_SHORT).show();
+                }
+            });
+            return holder;
+        }
+
+        @Override
+        public void onBindViewHolder(ViewHolder holder, int position) {
+            Fruit fruit = mFruitList.get(position);
+            holder.fruitImage.setImageResource(fruit.getImageId());
+            holder.fruitName.setText(fruit.getName());
+        }
+
+        @Override
+        public int getItemCount() {
+            return mFruitList.size();
+        }
+    }
+    //}}
+    ```
++ 在Activity中调用：
+  ```java
+  //{{c1::
+  @Override
+  protected void onCreate(Bundle savedInstanceState) {
+      super.onCreate(savedInstanceState);
+      setContentView(R.layout.activity_main);
+      initFruits();
+      RecyclerView recyclerView = (RecyclerView) findViewById(R.id.recycler_view);
+      // 注意有多种布局管理器
+      StaggeredGridLayoutManager layoutManager = new
+              StaggeredGridLayoutManager(3, StaggeredGridLayoutManager.VERTICAL);
+      recyclerView.setLayoutManager(layoutManager);
+      FruitAdapter adapter = new FruitAdapter(fruitList);
+      recyclerView.setAdapter(adapter);
+  }
+  //}}
+  ```
+
+## 第4章 碎片
+
+### 简单使用碎片
++ 运行效果：{{c1:: ![](https://gitee.com/xieyun714/nodeimage/raw/master/img/20210407093552.png)}}
++ activity_main.xml声明碎片：{{c1:: ![](https://gitee.com/xieyun714/nodeimage/raw/master/img/20210407093331.png)}}
++ 定义对应的碎片类：{{c1:: ![](https://gitee.com/xieyun714/nodeimage/raw/master/img/20210407093423.png)}}
++ 定义碎片类的布局文件：{{c1:: ![](https://gitee.com/xieyun714/nodeimage/raw/master/img/20210407093526.png)}}
+
+
+### 动态添加碎片
++ 新建碎片类，在活动中声明FrameLayout：{{c1:: ![](https://gitee.com/xieyun714/nodeimage/raw/master/img/20210407094909.png)![](https://gitee.com/xieyun714/nodeimage/raw/master/img/20210407094210.png)}}
++ 修改活动代码，在FrameLayout中添加内容：{{c1:: ![](https://gitee.com/xieyun714/nodeimage/raw/master/img/20210407094732.png)}}
+  + 动态添加碎片主要分为5步：{{c1:: ![](https://gitee.com/xieyun714/nodeimage/raw/master/img/20210407094832.png)}}
++ 在碎片中模拟返回栈：{{c1:: ![](https://gitee.com/xieyun714/nodeimage/raw/master/img/20210407100425.png)}}
+  + 注意：{{c1:: `addtobackstack()`方法，可以用于将一个事务添加到返回栈中}}
+
+### 碎片和活动之间进行通信
+
++ 在活动中调用碎片的方法：{{c1::![](https://gitee.com/xieyun714/nodeimage/raw/master/img/20210407101101.png)}}
++ 在碎片中调用活动的方法：{{c1::![](https://gitee.com/xieyun714/nodeimage/raw/master/img/20210407101201.png)}}
+
+### 碎片的生命周期
+
++ 碎片附加的回调方法：
+  + `onAttach()`：{{c1::当碎片和活动建立关联的时候调用。}}
+  + `onCreateView()`：{{c1::为碎片创建视图（加载布局）时调用。}}
+  + `onActivityCreated()`：{{c1::确保与碎片相关联的活动一定已经创建完毕的时候调用。}}
+  + `ondDestroyView()`：{{c1::当与碎片关联的视图被移除的时候调用。}}
+  + `onDetach()`：{{c1::当碎片和活动解除关联的时候调用。}}
++ 碎片的生命周期示意图:{{c1::![](https://gitee.com/xieyun714/nodeimage/raw/master/img/20210407102915.png)}}
+
+### 动态加载布局的技巧
+
++ 使用限定词：
+  + `res/layout-large/activity_main.xml`
+  + `res/layout/activity_main.xml`
+  + 注意：{{c1:: 其中large为限定词，程序自动判断读取哪个文件夹的布局。}}
++ 常见限定词：
+  + {{c1::![](https://gitee.com/xieyun714/nodeimage/raw/master/img/20210407105328.png)![](https://gitee.com/xieyun714/nodeimage/raw/master/img/20210407105339.png)}}
++ 最小宽度限定词：{{c1::`res/layout-sw600dp/activity_main.xml`}}
+  + 解释：{{c1:: 当程序运行在屏幕宽度大于600dp的设备上时，会加载 `res/layout-sw600dp/activity_main.xml`布局，当程序运行在屏幕宽度小于600dp的设备上时，则仍然加载默认的 `layout/activityMain`布局。}}
+
+## 第五章 广播
+
+### 接收系统广播：动态注册
++ AndroidManifest.xml中声明网络权限:{{c1::
+  ```xml
+     <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
+  ​```}}
+  ```
++ 动态**注册**监听网络变化:{{c1::
+  ```java
+  public class MainActivity extends AppCompatActivity {
+     private IntentFilter intentFilter;
+     private NetworkChangeReceiver networkChangeReceiver;
+
+      @Override
+      protected void onCreate(Bundle savedInstanceState) {
+          super.onCreate(savedInstanceState);
+          setContentView(R.layout.activity_main);
+          intentFilter = new IntentFilter();
+          intentFilter.addAction("android.net.conn.CONNECTIVITY_CHANGE");
+          networkChangeReceiver = new NetworkChangeReceiver();
+          //注册
+          registerReceiver(networkChangeReceiver,intentFilter);
+      }
+
+      @Override
+      protected void onDestroy() {
+          super.onDestroy();
+          //取消注册
+          unregisterReceiver(networkChangeReceiver);
+      }
+
+     class NetworkChangeReceiver extends BroadcastReceiver {
+         @Override
+         public void onReceive(Context context, Intent intent) {
+             ConnectivityManager connectionManager = (ConnectivityManager)
+                     getSystemService(Context.CONNECTIVITY_SERVICE);
+             NetworkInfo networkInfo = connectionManager.getActiveNetworkInfo();
+             if (networkInfo != null && networkInfo.isAvailable()) {
+                 Toast.makeText(context, "network is available",
+                         Toast.LENGTH_SHORT).show();
+             } else {
+                 Toast.makeText(context, "network is unavailable",
+                         Toast.LENGTH_SHORT).show();
+             }
+         }
+     }
+  }
+  ​```}}
+  ```
+
+
+### 接收系统广播：静态注册
+
++ 在AndroidManifest.xml进行**静态注册**以及**权限配置**：
+  ```xml
+  <!-- {{c1:: -->
+    <!-- .... -->
+    <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
+    <uses-permission android:name="android.permission.RECEIVE_BOOT_COMPLETED" />
+    <!-- .... -->
+        <receiver
+            android:name=".BootCompleteReceiver"
+            android:enabled="true"
+            android:exported="true">
+            <intent-filter>
+                <action android:name="android.intent.action.BOOT_COMPLETED" />
+            </intent-filter>
+        </receiver>
+    <!-- .... -->
+  <!-- }} -->
+  ```
++ 广播接受器类定义：
+  ```java
+  //{{c1::
+  public class BootCompleteReceiver extends BroadcastReceiver {
+    @Override
+    public void onReceive(Context context, Intent intent) {
+        Toast.makeText(context, "Boot Complete", Toast.LENGTH_LONG).show();
+    }
+  }
+  //}}
+  ```
+
+### 自定义广播：发送标准广播
++ `AndroidManifest.xml`中定义广播接收器：{{c1::
+  ```xml
+  <receiver
+      android:name=".MyBroadcastReceiver"
+      android:enabled="true"
+      android:exported="true">
+      <intent-filter android:priority="100">
+          <action android:name="com.example.broadcasttest.MY_BROADCAST"/>
+      </intent-filter>
+  </receiver>
+  ```
+  }}
++ 定义接收器类：{{c1::
+  ```java
+  public class MyBroadcastReceiver extends BroadcastReceiver {
+      @Override
+      public void onReceive(Context context, Intent intent) {
+          Toast.makeText(context, "received in MyBroadcastReceiver", Toast.LENGTH_SHORT).show();
+          abortBroadcast();
+      }
+  }
+  ```
+  }}
++ 在活动中发送广播：{{c1::![](https://gitee.com/xieyun714/nodeimage/raw/master/img/20210407143942.png)}}
+
+### 自定义广播：发送有序广播
++ Activity中发送有序广播:{{c1::![](https://gitee.com/xieyun714/nodeimage/raw/master/img/20210407144941.png)}}
++ 利用优先级定义接受广播的顺序:{{c1::![](https://gitee.com/xieyun714/nodeimage/raw/master/img/20210407145034.png)}}
++ 在广播接受器中戒断广播:{{c1::![](https://gitee.com/xieyun714/nodeimage/raw/master/img/20210407145128.png)}}
+
+### 自定义广播：发送本地广播
++ 使用LocalBroadcastManager对广播进行管理
+  ```java
+  //{{c1::
+  public class MainActivity extends AppCompatActivity {
+      private IntentFilter intentFilter;
+      private LocalReceiver localReceiver;
+      private LocalBroadcastManager localBroadcastManager;
+      @Override
+      protected void onCreate(Bundle savedInstanceState) {
+          super.onCreate(savedInstanceState);
+          setContentView(R.layout.activity_main);
+          localBroadcastManager = LocalBroadcastManager.getInstance(this); // 获取实例
+          Button button = (Button) findViewById(R.id.button);
+          button.setOnClickListener(new View.OnClickListener() {
+              @Override
+              public void onClick(View v) {
+                  Intent intent = new Intent("com.example.broadcasttest.LOCAL_BROADCAST");
+                  localBroadcastManager.sendBroadcast(intent); // 发送本地广播
+              }
+          });
+          intentFilter = new IntentFilter();
+          intentFilter.addAction("com.example.broadcasttest.LOCAL_BROADCAST");
+          localReceiver = new LocalReceiver();
+          localBroadcastManager.registerReceiver(localReceiver, intentFilter); // 注册本地广播监听器
+      }
+      @Override
+      protected void onDestroy() {
+          super.onDestroy();
+          localBroadcastManager.unregisterReceiver(localReceiver);
+      }
+      class LocalReceiver extends BroadcastReceiver {
+          @Override
+          public void onReceive(Context context, Intent intent) {
+              Toast.makeText(context, "received local broadcast", Toast.LENGTH_SHORT).show();
+          }
+      }
+  }
+  //}}
+  ```
+
+## 第六章 持久化技术
+
+### 文件存储
++ `Context`类`openFileOutput()`方法
+  + 作用：可以用于将数据存储到指定的文件中。
+  + 第一个参数：{{c1:: 指定文件创建时的名称，可以不保护路径，默认路径为`/data/data/<package-name>/files/` }}
+  + 第二个参数：{{c1:: 文件操作模式，`MODE_PRIMARY`模式，文件已存在覆盖文件， `MODE_APPEND`文件已存在时，在末尾追加文件。}}
 

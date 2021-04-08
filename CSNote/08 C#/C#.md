@@ -2030,6 +2030,7 @@ ImmutableList<Account> immutableAccounts = accounts.ToImmutableList();
   ```
 
 ### 任意类型的元组解构定义
+
 + 任意类型元组解构**调用**：
   ```C#
     private static void Deconstruct()
@@ -2087,3 +2088,32 @@ ImmutableList<Account> immutableAccounts = accounts.ToImmutableList();
   }
   //}}
   ```
+
+## 第14章 错误与异常
+
+### C#异常继承体系图
++ 图示：{{c1::![](https://gitee.com/xieyun714/nodeimage/raw/master/img/20210408203549.png)}}
+
+### System.Exception类属性：
+
++ `Data`:{{c1:: 这个属性可以给异常添加键/值语句，以提供关于异常的额外信息 }}
++ `Helplink`:{{c1:: 链接到一个帮助文件上，以提供关于该异常的更多信息 }}
++ `InnerException`:{{c1:: 如果此异常是在 catch块中抛出的，它就会包含把代码发送 }}到 catch块中的异常对象
++ `Message`:{{c1:: 描述错误情况的文本 }}
++ `Source`:{{c1:: 导致异常的应用程序名或对象名 }}
++ `StackTrace`:{{c1:: 栈上方法调用的详细信息，它有助于跟踪抛出异常的方法 }}
++ `HResult`:{{c1:: 分配给异常的一个数值 }}
++ `TargetSite`:{{c1:: NET反射对象，描述了抛出异常的方法 }}
++ 使用示例：![](https://gitee.com/xieyun714/nodeimage/raw/master/img/20210408204132.png)
+
+### 异常过滤器
++ 作用：{{c1::catch块仅在过滤器返回true时执行。捕获不同的异常类型时，可以有行为不同的 catch块。}}
++ 使用示例：{{c1::![](https://gitee.com/xieyun714/nodeimage/raw/master/img/20210408204712.png)}}
+
+### 重新抛出异常用法示例：
++ 不改变异常直接抛出：{{c1::![](https://gitee.com/xieyun714/nodeimage/raw/master/img/20210408211406.png)}}
++ 改变异常再抛出：{{c1::![](https://gitee.com/xieyun714/nodeimage/raw/master/img/20210408211439.png)}}
++ 不改变异常直接抛出简写：{{c1::![](https://gitee.com/xieyun714/nodeimage/raw/master/img/20210408211516.png)}}
++ 使用过滤器添加功能：{{c1::![](https://gitee.com/xieyun714/nodeimage/raw/master/img/20210408211546.png)}}
+  + 注意:{{c1::异常过滤器也可以用于其他效果，比如写入日志信息。}}
+
