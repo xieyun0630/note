@@ -1427,7 +1427,7 @@ ImmutableList<Account> immutableAccounts = accounts.ToImmutableList();
         Champion = r.Name,
         Constructor = t == null ? "no constructor championship" : t.Name
     }).Take(10);
-  //}}
+  //}}	
   ```
 + 拓展方法版：
   ```C#
@@ -2116,4 +2116,3 @@ ImmutableList<Account> immutableAccounts = accounts.ToImmutableList();
 + 不改变异常直接抛出简写：{{c1::![](https://gitee.com/xieyun714/nodeimage/raw/master/img/20210408211516.png)}}
 + 使用过滤器添加功能：{{c1::![](https://gitee.com/xieyun714/nodeimage/raw/master/img/20210408211546.png)}}
   + 注意:{{c1::异常过滤器也可以用于其他效果，比如写入日志信息。}}
-
