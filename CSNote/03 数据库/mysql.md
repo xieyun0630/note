@@ -675,6 +675,22 @@
   + `some`：{{c1:: 满足任意条件（与any完全一样）  }}
 + 例：{{c1:: `select * from t_40 where age = some(select age from t_42);` }}
 
+### MYSQL行转列
+
++ 典型示例：
+    ```sql
+    #{{c1::
+    SELECT name,
+    MAX(case date when '12-31' THEN span ELSE 0 END) as '12-31',
+    MAX(case date when '12-30' THEN span ELSE 0 END) as '12-30'
+    FROM daka_pro5
+    group by name
+#}}
+    ```
+    
+    
+    
++ 解释加Max时的意义：{{c1::![](https://gitee.com/xieyun714/nodeimage/raw/master/img/20210507130843.png)}}
 
 ## 安全管理 [ ](mysql_20200914055153015)
 
@@ -940,6 +956,18 @@
 
 ## MYSQL流程控制 [ ](mysql_20200916055246287)
 
+### MYSQL流程控制：创建虚拟表
+
+```sql
+#{{c1::
+create temporary table if not exists tmpTable
+(
+  `name` varchar(255) DEFAULT NULL,
+  `date` datetime DEFAULT NULL ON UPDATE CURRENT_TIMESTAMP
+);
+#}}
+```
+
 ### MYSQL流程控制：变量 [ ](mysql_20200916055246289)
 
 + 声明：{{c1:: `DECLARE var_name[,...] type [DEFAULT value]` }}
@@ -1069,6 +1097,48 @@
       DECLARE EXIT HANDLER FOR NOT FOUND set has_data = 0;
     #}}
   ```
+
++ 使用游标案例：
+
+  ```sql
+  #{{c1::
+  create table student(
+      stuId int primary key auto_increment,
+      stuName varchar(20),
+      stuSex varchar(2),
+      stuAge int
+  )default charset=utf8;
+  
+  insert into student(stuName,stuSex,stuAge) values
+  ('小明','男',20),
+  ('小花','女',19),
+  ('大赤','男',20),
+  ('可乐','男',19),
+  ('莹莹','女',19);
+  
+  delimiter //
+  create procedure p1()
+  begin
+      declare id int;
+      declare name varchar(100) character set utf8;
+      declare done int default 0;
+      -- 声明游标
+      declare mc cursor for select stuId,stuName from student where stuAge >19;
+      declare continue handler for not found set done = 1;
+      -- 打开游标
+      open mc;
+      -- 获取结果
+      fetch mc into id,name;
+      -- 这里是为了显示获取结果
+      select id,name;
+      -- 关闭游标
+      close mc;
+  end //
+  delimiter ;
+  #}}
+  ```
+
+  
 
 ### 管理触发器 [ ](mysql_20200916055246298)
 
