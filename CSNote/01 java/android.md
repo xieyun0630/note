@@ -1,16 +1,13 @@
-## 第二章 活动
+## 第二章 活动 [ ](android_20210425024133088)
 
-### 活动
-+ 定义：活动( Activity)是最容易吸引用户的地方，它是一种可以包含用户界面的组件，主要用于和用户进行交互。
+### 活动 [ ](android_20210425024133091)
++ 定义：{{c1::活动( Activity)是最容易吸引用户的地方，它是一种可以包含用户界面的组件，主要用于和用户进行交互。}}
 
-### 手动创建活动过程
+### 手动创建活动过程 [ ](android_20210425024133094)
 
 1. 创建`add no Activity` 空项目
-
 2. 添加第一个Activity,注意不要生成layout，设置主Activity.
-
 3. 在`app/src/main/res`下添加`layout/first_layout.xml`布局文件。
-
    ```xml
    <!-- {{c1:: -->
    <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
@@ -24,7 +21,6 @@
    </LinearLayout>
    <!-- }} -->
    ```
-
 4. 在对应Activity中添加相应关联:
    ```java
    //{{c1::
@@ -40,23 +36,25 @@
    //}}
    ```
    + 注意：{{c1::项目中添加的任何资源都会在R文件中生成一个相应的资源id}}
-
 5. 在 `Android Manifest`文件中注册:
    ```xml
    <!-- {{c1:: -->
    <activity android:name=".ActivityTest"></activity>
    <!-- }} -->
    ```
-
 6. 配置主活动:
    ```xml
    <!-- {{c1:: -->
-   <activity android:name=".DialogActivity" android:theme="@android:style/Theme.Dialog"></activity>
-   <activity android:name=".NormalActivity" />
+    <activity android:name=".ActivityTest">
+      <intent-filter>
+        <action android:name="android.intent.action.MAIN" />
+        <category android:name="android.intent.category.LAUNCHER" />
+      </intent-filter>
+    </activity>
    <!-- }} -->
    ```
 
-### 安卓Toast的使用
+### 安卓Toast的使用 [ ](android_20210425024133096)
 
 ```java
 //{{c1::
@@ -67,7 +65,7 @@ Toast.makeText(Firstactivity.this,"You clicked Button 1",Toast.LENGTH_SHORT).sho
 + 第二个参数：{{c1::是 Toast显示的文本内容}}
 + 第三个参数：{{c1::是 Toast 显示的时长}}
 
-### 在活动中使用Menu
+### 在活动中使用Menu [ ](android_20210425024133098)
 
 1. 创建`res/menu/main.xml`文件
    ```xml
@@ -104,12 +102,12 @@ Toast.makeText(Firstactivity.this,"You clicked Button 1",Toast.LENGTH_SHORT).sho
 + 理解：{{c1::标签}}
 
 
-### 销毁一个安卓活动
+### 销毁一个安卓活动 [ ](android_20210425024133100)
 + 图示：{{c1::![image-20210401192805190](D:\books\note\CSNote\01 java\android.assets\image-20210401192805190.png)}}
 
 
 
-### Android中Intent概述
+### Android中Intent概述 [ ](android_20210425024133103)
 
 + 作用：{{c1::启动其他Activity或者Service，包含要启动对象所需信息。}}
 + 显式Intent:
@@ -120,7 +118,7 @@ Toast.makeText(Firstactivity.this,"You clicked Button 1",Toast.LENGTH_SHORT).sho
   + 配置活动以响应**隐式Intent**:{{c1::![](https://gitee.com/xieyun714/nodeimage/raw/master/img/20210401201644.png)}}
   + 启动Intent:{{c1::![](https://gitee.com/xieyun714/nodeimage/raw/master/img/20210401201657.png)}}
 
-### Intent启动其他程序的活动
+### Intent启动其他程序的活动 [ ](android_20210425024133106)
 
 + Intent创建：{{c1::![](https://gitee.com/xieyun714/nodeimage/raw/master/img/20210401202150.png)}}
 + Intent的Data属性:
@@ -134,12 +132,12 @@ Toast.makeText(Firstactivity.this,"You clicked Button 1",Toast.LENGTH_SHORT).sho
     + 示例：{{c1::![](https://gitee.com/xieyun714/nodeimage/raw/master/img/20210401202629.png)}}
 + 除了http协议外，我们还可以指定很多其他协议，比如geo表示显示地理位置、tel表示拨打电话:{{c1::![](https://gitee.com/xieyun714/nodeimage/raw/master/img/20210401202840.png)}}
 
-### 向Intent的目标活动传递数据
+### 向Intent的目标活动传递数据 [ ](android_20210425024133109)
 + 主要思路：{{c1::`Intent`中提供了一系列`putExtra()`方法的重载，可以把我们想要传递的数据暂存在`Intent`中}}
 + 放数据示例：{{c1::![](https://gitee.com/xieyun714/nodeimage/raw/master/img/20210401203125.png)}}
 + 取数据示例：{{c1::![](https://gitee.com/xieyun714/nodeimage/raw/master/img/20210401203139.png)}}
 
-### 返回数据给上一个活动
+### 返回数据给上一个活动 [ ](android_20210425024133112)
 + 主要思路:  {{c1:: FirstActivity使用`startActivityForResult()`启动SecondActivity,SecondActivity通过无意图Intent返回数据，FirstActivity再使用OnActivityResult接受数据。}}
 + 示例：
   + 启动SecondActivity：{{c1::![](https://gitee.com/xieyun714/nodeimage/raw/master/img/20210401204624.png)}}
@@ -148,7 +146,7 @@ Toast.makeText(Firstactivity.this,"You clicked Button 1",Toast.LENGTH_SHORT).sho
     + 返回键返回：{{c1::![](https://gitee.com/xieyun714/nodeimage/raw/master/img/20210401211351.png)}}
   + FirstActivity接收数据：{{c1::![](https://gitee.com/xieyun714/nodeimage/raw/master/img/20210401205039.png)}}
 
-### 活动的生命周期
+### 活动的生命周期 [ ](android_20210425024133116)
 + 返回栈：{{c1::Android是使用任务(Task)来管理活动的，一个任务就是一组存放在栈里的活动的集合}}
 + 活动的4种状态：
   + **运行状态**：{{c1::当一个活动**位于**返回栈的**栈顶**时，这时活动就处于运行状态}}
@@ -161,7 +159,7 @@ Toast.makeText(Firstactivity.this,"You clicked Button 1",Toast.LENGTH_SHORT).sho
   + **前台生存期**：{{c1::活动在 `onResume()`方法和 `onPause()`方法之间所经历的就是前台生存期。在前台生存期内，活动总是处于运行状态的，此时的活动是可以和用户进行交互的，我们平时看到和接触最多的也就是这个状态下的活动。}}
 + 活动的生命周期：{{c1::![](https://gitee.com/xieyun714/nodeimage/raw/master/img/20210401211901.png)}}
 
-### 活动被垃圾回收，可能造成的数据丢失情况处理
+### 活动被垃圾回收，可能造成的数据丢失情况处理 [ ](android_20210425024133120)
 
 + 原因：{{c1::活动进入到了停止状态，是有可能被系统回收的}}
 + `OnSaveInstanceState()`：{{c1::Activity方法，保证在活动被回收之前一定会被调用，因此我们可以通过这个方法来解决活动被回收时临时数据得不到保存的问题。}}
@@ -169,7 +167,7 @@ Toast.makeText(Firstactivity.this,"You clicked Button 1",Toast.LENGTH_SHORT).sho
   + 保持临时数据：{{c1::![](https://gitee.com/xieyun714/nodeimage/raw/master/img/20210401213058.png)}}
   + 恢复数据：{{c1::![](https://gitee.com/xieyun714/nodeimage/raw/master/img/20210401213217.png)}}
 
-### 活动的4种启动模式
+### 活动的4种启动模式 [ ](android_20210425024133123)
 + 指定启动模式配置：{{c1::![](https://gitee.com/xieyun714/nodeimage/raw/master/img/20210402085244.png)}}
 + `standard`：{{c1::standard是活动默认的启动模式，系统不会在乎这个活动是否已经在返回栈中存在，每次启动都会创建该活动的一个新的实例。}}
   + 示例：{{c1::![](https://gitee.com/xieyun714/nodeimage/raw/master/img/20210402084132.png)}}
@@ -179,7 +177,7 @@ Toast.makeText(Firstactivity.this,"You clicked Button 1",Toast.LENGTH_SHORT).sho
 + `singleInstance`:{{c1::不管是哪个应用程序来访问这个活动，都共用的同一个返回栈，也就解决了共享活动实例的问题。}}
   + 示意图：{{c1::![](https://gitee.com/xieyun714/nodeimage/raw/master/img/20210402090745.png)}}
 
-### 活动最佳实践
+### 活动最佳实践 [ ](android_20210425024133126)
 + 知晓当前是在哪一个活动：
   + 主要思路：{{c1:: 创建一个BaseActivity基类 }}
   + 示例：{{c1:: ![](https://gitee.com/xieyun714/nodeimage/raw/master/img/20210402093117.png) }}
@@ -190,9 +188,9 @@ Toast.makeText(Firstactivity.this,"You clicked Button 1",Toast.LENGTH_SHORT).sho
   + 主要思路：{{c1:: 在目标活动中，创建静态启动方法，通过Context反向创建Intent }}
   + 示例：{{c1:: ![](https://gitee.com/xieyun714/nodeimage/raw/master/img/20210402093445.png) }}
 
-## 第三章 界面
+## 第三章 界面 [ ](android_20210425024133128)
 
-### android控件常用属性
+### android控件常用属性 [ ](android_20210425024133131)
 + `layout width`: {{c1:: 组件的宽度 }}
 + `layout height`: {{c1:: 组件的高度 }}
 + `id`: {{c1:: 为`Text View`设置一个组件id }}
@@ -207,21 +205,21 @@ Toast.makeText(Firstactivity.this,"You clicked Button 1",Toast.LENGTH_SHORT).sho
 + `hint`: {{c1:: `EditText`的属性，类似`html` `placeholder`属性。 }}
 + `maxLines`：{{c1:: `EditText`的属性，设置最大行数。 }}
 
-### android注册监听器的2种方法
+### android注册监听器的2种方法 [ ](android_20210425024133135)
 + 匿名类注册:{{c1::![](https://gitee.com/xieyun714/nodeimage/raw/master/img/20210402112654.png)}}
 + 实现接口方式:{{c1::![](https://gitee.com/xieyun714/nodeimage/raw/master/img/20210402112717.png)}}
 
 
-### 示例：通过点击按钮来获取EditText中输入的内容
+### 示例：通过点击按钮来获取EditText中输入的内容 [ ](android_20210425024133137)
 + 代码：{{c1::![](https://gitee.com/xieyun714/nodeimage/raw/master/img/20210402115335.png)}}
 + 效果：![](https://gitee.com/xieyun714/nodeimage/raw/master/img/20210402115408.png)
 
-### `ProgressBar`的使用
+### `ProgressBar`的使用 [ ](android_20210425024133139)
 
 + 是否可见设置：{{c1::![](https://gitee.com/xieyun714/nodeimage/raw/master/img/20210402184734.png)}}
 + 动态进度条使用：{{c1::![](https://gitee.com/xieyun714/nodeimage/raw/master/img/20210402184836.png)}}
 
-### Dialog
+### Dialog [ ](android_20210425024133141)
 
 + `AlertDialog`
   + 主要作用：{{c1:: `AlertDialog`可以在当前的界面弹出一个对话框，这个对话框是**置顶于所有界面元素之上**的， 能够屏蔽掉其他控件的交互能力，因此 `AlertDialog`一般都是用于提示一些**非常重要**的内容或者警告信息。 }}
@@ -230,47 +228,47 @@ Toast.makeText(Firstactivity.this,"You clicked Button 1",Toast.LENGTH_SHORT).sho
   + 主要作用：{{c1:: `ProgressDialog`会在对话框中显示一个进度条，一般用于表示当前操作比较耗时，让用户耐心地等待。 }}
   + 使用示例：{{c1:: ![](https://gitee.com/xieyun714/nodeimage/raw/master/img/20210402185555.png)![](https://gitee.com/xieyun714/nodeimage/raw/master/img/20210402185623.png)}}
 
-### android线性布局：layout_gravity属性示例
+### android线性布局：layout_gravity属性示例 [ ](android_20210425024133144)
 + 效果图：![](https://gitee.com/xieyun714/nodeimage/raw/master/img/20210402194956.png)
 + 代码：{{c1::![](https://gitee.com/xieyun714/nodeimage/raw/master/img/20210402195027.png)}}
 
-### android线性布局：layout_weight属性示例
+### android线性布局：layout_weight属性示例 [ ](android_20210425024133147)
 + `layout_weight`作用：{{c1::`layout_weight`属性允许我们使用比例的方式来指定控件的大小}}
 + 效果图：![](https://gitee.com/xieyun714/nodeimage/raw/master/img/20210402195245.png)
 + 代码：{{c1:: ![](https://gitee.com/xieyun714/nodeimage/raw/master/img/20210402195352.png) }}
 + 效果图：![](https://gitee.com/xieyun714/nodeimage/raw/master/img/20210402195245.png)
 + 代码：{{c1:: ![](https://gitee.com/xieyun714/nodeimage/raw/master/img/20210402195807.png) }}
 
-### android相对布局:相对于父布局定位示例
+### android相对布局:相对于父布局定位示例 [ ](android_20210425024133151)
 + 效果图：![](https://gitee.com/xieyun714/nodeimage/raw/master/img/20210402200151.png)
 + 代码：{{c1:: ![](https://gitee.com/xieyun714/nodeimage/raw/master/img/20210402200233.png)![](https://gitee.com/xieyun714/nodeimage/raw/master/img/20210402200317.png) }}
 
 
-### android相对布局:相对于控件定位的效果示例
+### android相对布局:相对于控件定位的效果示例 [ ](android_20210425024133153)
 + 效果图：![](https://gitee.com/xieyun714/nodeimage/raw/master/img/20210402201028.png)
 + 代码：{{c1:: ![](https://gitee.com/xieyun714/nodeimage/raw/master/img/20210402200918.png)![](https://gitee.com/xieyun714/nodeimage/raw/master/img/20210402200951.png) }}
 
 
-### android百分比布局示例
+### android百分比布局示例 [ ](android_20210425024133155)
 + 效果图：![](https://gitee.com/xieyun714/nodeimage/raw/master/img/20210402202838.png)
 + 代码：{{c1::![](https://gitee.com/xieyun714/nodeimage/raw/master/img/20210402203354.png)![](https://gitee.com/xieyun714/nodeimage/raw/master/img/20210402203416.png)![](https://gitee.com/xieyun714/nodeimage/raw/master/img/20210402203424.png)}}
 
-### 控件和布局的继承结构
+### 控件和布局的继承结构 [ ](android_20210425024133157)
 + 图示：{{c1::![](https://gitee.com/xieyun714/nodeimage/raw/master/img/20210402204104.png)}}
 
-### 引入布局：引入自定义标题栏布局示例
+### 引入布局：引入自定义标题栏布局示例 [ ](android_20210425024133160)
 + 定义标题栏布局文件：{{c1::![](https://gitee.com/xieyun714/nodeimage/raw/master/img/20210402205120.png)![](https://gitee.com/xieyun714/nodeimage/raw/master/img/20210402205131.png)}}
 + 引入标题栏布局文件：{{c1:: ![](https://gitee.com/xieyun714/nodeimage/raw/master/img/20210402205234.png) }}
 + 将系统自带的标题栏隐藏掉:{{c1::![](https://gitee.com/xieyun714/nodeimage/raw/master/img/20210402205303.png)}}
 
-### 自定义控件:自定义标题栏控件示例
+### 自定义控件:自定义标题栏控件示例 [ ](android_20210425024133162)
 + 自定义控件主要解决的问题：{{c1::引入布局的技巧确实解决了重复编写布局代码的问题，但是如果布局中有一些控件要求能够响应事件，我们还是需要在每个活动中为这些控件单独编写一次事件注册的代码。}}
 + `LayoutInflater.from(context).inflate(R.layout.title, this);`解释：![](https://gitee.com/xieyun714/nodeimage/raw/master/img/20210402211455.png)
 + 定义标题栏布局文件：{{c1::![](https://gitee.com/xieyun714/nodeimage/raw/master/img/20210402205120.png)![](https://gitee.com/xieyun714/nodeimage/raw/master/img/20210402205131.png)}}
 + 定义自定义控件类：{{c1::![](https://gitee.com/xieyun714/nodeimage/raw/master/img/20210402211157.png)![](https://gitee.com/xieyun714/nodeimage/raw/master/img/20210402211208.png)}}
 + 布局文件中添加控件：{{c1::![](https://gitee.com/xieyun714/nodeimage/raw/master/img/20210402211237.png)}}
 
-### Listview使用实例
+### Listview使用实例 [ ](android_20210425024133165)
 
 + MainActivity核心代码
   ```java
@@ -320,7 +318,7 @@ Toast.makeText(Firstactivity.this,"You clicked Button 1",Toast.LENGTH_SHORT).sho
   ```
 + 提升 Listview的运行效率主要思路：{{c1::`getView()`方法中还有一个 `convertView`参数，这个参数用于将之前加载好的布局进行缓存，以便之后可以进行重用}}
 
-### RecyclerView使用
+### RecyclerView使用 [ ](android_20210425024133169)
 + 导入依赖：![](https://gitee.com/xieyun714/nodeimage/raw/master/img/20210407083331.png)
 + 在layout中声明：![](https://gitee.com/xieyun714/nodeimage/raw/master/img/20210407083420.png)
 + 定义Adapter步骤：
@@ -408,28 +406,28 @@ Toast.makeText(Firstactivity.this,"You clicked Button 1",Toast.LENGTH_SHORT).sho
   //}}
   ```
 
-## 第4章 碎片
+## 第4章 碎片 [ ](android_20210425024133172)
 
-### 简单使用碎片
+### 简单使用碎片 [ ](android_20210425024133174)
 + 运行效果：{{c1:: ![](https://gitee.com/xieyun714/nodeimage/raw/master/img/20210407093552.png)}}
 + activity_main.xml声明碎片：{{c1:: ![](https://gitee.com/xieyun714/nodeimage/raw/master/img/20210407093331.png)}}
 + 定义对应的碎片类：{{c1:: ![](https://gitee.com/xieyun714/nodeimage/raw/master/img/20210407093423.png)}}
 + 定义碎片类的布局文件：{{c1:: ![](https://gitee.com/xieyun714/nodeimage/raw/master/img/20210407093526.png)}}
 
 
-### 动态添加碎片
+### 动态添加碎片 [ ](android_20210425024133176)
 + 新建碎片类，在活动中声明FrameLayout：{{c1:: ![](https://gitee.com/xieyun714/nodeimage/raw/master/img/20210407094909.png)![](https://gitee.com/xieyun714/nodeimage/raw/master/img/20210407094210.png)}}
 + 修改活动代码，在FrameLayout中添加内容：{{c1:: ![](https://gitee.com/xieyun714/nodeimage/raw/master/img/20210407094732.png)}}
   + 动态添加碎片主要分为5步：{{c1:: ![](https://gitee.com/xieyun714/nodeimage/raw/master/img/20210407094832.png)}}
 + 在碎片中模拟返回栈：{{c1:: ![](https://gitee.com/xieyun714/nodeimage/raw/master/img/20210407100425.png)}}
   + 注意：{{c1:: `addtobackstack()`方法，可以用于将一个事务添加到返回栈中}}
 
-### 碎片和活动之间进行通信
+### 碎片和活动之间进行通信 [ ](android_20210425024133178)
 
 + 在活动中调用碎片的方法：{{c1::![](https://gitee.com/xieyun714/nodeimage/raw/master/img/20210407101101.png)}}
 + 在碎片中调用活动的方法：{{c1::![](https://gitee.com/xieyun714/nodeimage/raw/master/img/20210407101201.png)}}
 
-### 碎片的生命周期
+### 碎片的生命周期 [ ](android_20210425024133180)
 
 + 碎片附加的回调方法：
   + `onAttach()`：{{c1::当碎片和活动建立关联的时候调用。}}
@@ -439,7 +437,7 @@ Toast.makeText(Firstactivity.this,"You clicked Button 1",Toast.LENGTH_SHORT).sho
   + `onDetach()`：{{c1::当碎片和活动解除关联的时候调用。}}
 + 碎片的生命周期示意图:{{c1::![](https://gitee.com/xieyun714/nodeimage/raw/master/img/20210407102915.png)}}
 
-### 动态加载布局的技巧
+### 动态加载布局的技巧 [ ](android_20210425024133183)
 
 + 使用限定词：
   + `res/layout-large/activity_main.xml`
@@ -450,9 +448,9 @@ Toast.makeText(Firstactivity.this,"You clicked Button 1",Toast.LENGTH_SHORT).sho
 + 最小宽度限定词：{{c1::`res/layout-sw600dp/activity_main.xml`}}
   + 解释：{{c1:: 当程序运行在屏幕宽度大于600dp的设备上时，会加载 `res/layout-sw600dp/activity_main.xml`布局，当程序运行在屏幕宽度小于600dp的设备上时，则仍然加载默认的 `layout/activityMain`布局。}}
 
-## 第五章 广播
+## 第五章 广播 [ ](android_20210425024133185)
 
-### 接收系统广播：动态注册
+### 接收系统广播：动态注册 [ ](android_20210425024133189)
 + AndroidManifest.xml中声明网络权限:{{c1::
   ```xml
      <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
@@ -502,7 +500,7 @@ Toast.makeText(Firstactivity.this,"You clicked Button 1",Toast.LENGTH_SHORT).sho
   ```
 
 
-### 接收系统广播：静态注册
+### 接收系统广播：静态注册 [ ](android_20210425024133192)
 
 + 在AndroidManifest.xml进行**静态注册**以及**权限配置**：
   ```xml
@@ -534,7 +532,7 @@ Toast.makeText(Firstactivity.this,"You clicked Button 1",Toast.LENGTH_SHORT).sho
   //}}
   ```
 
-### 自定义广播：发送标准广播
+### 自定义广播：发送标准广播 [ ](android_20210425024133195)
 + `AndroidManifest.xml`中定义广播接收器：{{c1::
   ```xml
   <receiver
@@ -560,12 +558,12 @@ Toast.makeText(Firstactivity.this,"You clicked Button 1",Toast.LENGTH_SHORT).sho
   }}
 + 在活动中发送广播：{{c1::![](https://gitee.com/xieyun714/nodeimage/raw/master/img/20210407143942.png)}}
 
-### 自定义广播：发送有序广播
+### 自定义广播：发送有序广播 [ ](android_20210425024133197)
 + Activity中发送有序广播:{{c1::![](https://gitee.com/xieyun714/nodeimage/raw/master/img/20210407144941.png)}}
 + 利用优先级定义接受广播的顺序:{{c1::![](https://gitee.com/xieyun714/nodeimage/raw/master/img/20210407145034.png)}}
 + 在广播接受器中戒断广播:{{c1::![](https://gitee.com/xieyun714/nodeimage/raw/master/img/20210407145128.png)}}
 
-### 自定义广播：发送本地广播
+### 自定义广播：发送本地广播 [ ](android_20210425024133199)
 + 使用LocalBroadcastManager对广播进行管理
   ```java
   //{{c1::
@@ -606,11 +604,10 @@ Toast.makeText(Firstactivity.this,"You clicked Button 1",Toast.LENGTH_SHORT).sho
   //}}
   ```
 
-## 第六章 持久化技术
+## 第六章 持久化技术 [ ](android_20210425024133201)
 
-### 文件存储
+### 文件存储 [ ](android_20210425024133203)
 + `Context`类`openFileOutput()`方法
   + 作用：可以用于将数据存储到指定的文件中。
   + 第一个参数：{{c1:: 指定文件创建时的名称，可以不保护路径，默认路径为`/data/data/<package-name>/files/` }}
   + 第二个参数：{{c1:: 文件操作模式，`MODE_PRIMARY`模式，文件已存在覆盖文件， `MODE_APPEND`文件已存在时，在末尾追加文件。}}
-

@@ -492,19 +492,22 @@
 + **关键字**：{{c1::属性下加下划线}}
 + **联系**：{{c1::菱形框表示，也可以将菱形框省略而直接以联系名来替代}}
 
-### IDEF1x对E-R图概念的细分 [ ](DatabaseSystem_20210217061915532)
+## IDEF1x图
+
+### IDEF1x对E-R图重要概念概况划分[ ](DatabaseSystem_20210217061915532)
+
 + 实体(Entity)
-  + {{c1::独立标识符实体/独立实体Identifier-IndependentEntity)--强实体}}
-  + {{c1::从属标识符实体/从属实体Identifier-dependentEntity)--弱实体}}
+  + 独立实体：{c1:: 独立标识符实体/独立实体Identifier-IndependentEntity)--强实体 }}
+  + 从属实体：{c1:: 从属标识符实体/从属实体Identifier-dependentEntity)--弱实体 }}
 + 联系(Relationship)
-  + {{c1::可标定连接联系(IdentifyingConnectionRelationship)}}
-  + {{c1::非标定连接联系(Non-IdentifyingConnectionRelationship)}}
-  + {{c1::分类联系(CategorizationRelationship)}}
-  + {{c1::非确定联系(Non-SpecificRelationship)}}
+  + 标定联系：{{c1:: 可标定连接联系(IdentifyingConnectionRelationship) }}
+  + 非标定连接联系：{{c1:: 非标定连接联系(Non-IdentifyingConnectionRelationship) }}
+  + 分类联系：{{c1::分类联系(CategorizationRelationship)}}
+  + 非确定联系：{{c1::非确定联系(Non-SpecificRelationship)}}
 + 属性/关键字(Attribute/Key)
-  + 主关键字：{{c1::主关键字/主码(PrimaryKeys)--主属性}}
-  + 次关键字：{{c1::次关键字/候选码(AlternateKeys)}}
-  + 外来关键字：{{c1::是其他实体的关键字}}
+  + 主关键字：{{c1:: 主关键字/**主码**(PrimaryKeys)--主属性 }}
+  + 次关键字：{{c1:: 次关键字/**候选码**(AlternateKeys)}}
+  + 外来关键字：{{c1:: **外码**，是其他实体的关键字 }}
 
 ### IDEF1x-两种实体的区分 [ ](DatabaseSystem_20210217061915535)
 + 实体(Entity):{{c1::}} 一个“实体”表示一个现实和抽象事物的集合，这些事物必须具有相同的属性和特征。这个集合的一个元素就是该实体的一个实例}}
