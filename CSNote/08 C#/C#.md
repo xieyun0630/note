@@ -1427,7 +1427,7 @@ ImmutableList<Account> immutableAccounts = accounts.ToImmutableList();
         Champion = r.Name,
         Constructor = t == null ? "no constructor championship" : t.Name
     }).Take(10);
-  //}}
+  //}}	
   ```
 + 拓展方法版：
   ```C#

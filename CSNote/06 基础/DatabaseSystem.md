@@ -27,6 +27,7 @@
 ## 数据库系统的结构抽象 [ ](DatabaseSystem_20210210110450198)
 
 ### 数据库系统的标准结构：DBMS管理数据的三个层次 [ ](DatabaseSystem_20210210110450201)
+
 + **External Level**: {{c1:: **User Level** 某一用户能够看到与处理的数据,   全局数据中的某一部分}}
 + **Conceptual Level**: {{c1:: **Logic level** 从全局角度理解/管理的数据, 含相应的关联约束}}
 + **Internal Level**: {{c1:: **Physical level** 存储在介质上的数据，含存储路径、存储方式 、索引方式等}}
@@ -240,6 +241,7 @@
 + 详：{{c1::![](https://gitee.com/xieyun714/nodeimage/raw/master/img/20210214075752.png)}}
 
 ### 关系元组演算例子：全都学过 [ ](DatabaseSystem_20210217061915434)
+
 + 题：![](https://gitee.com/xieyun714/nodeimage/raw/master/img/20210214074234.png)
 + 答：
   + 关系代数：{{c1::![](https://gitee.com/xieyun714/nodeimage/raw/master/img/20210214074322.png)}}
@@ -247,6 +249,7 @@
 
 
 ### 关系元组演算例子：全没学过 [ ](DatabaseSystem_20210217061915436)
+
 + 题：![](https://gitee.com/xieyun714/nodeimage/raw/master/img/20210214074451.png)
 + 答：
   + 关系代数：{{c1::![](https://gitee.com/xieyun714/nodeimage/raw/master/img/20210214074459.png)}}
@@ -254,30 +257,35 @@
 
 
 ### 关系元组演算例子：至少有一学过 [ ](DatabaseSystem_20210217061915439)
+
 + 题：![](https://gitee.com/xieyun714/nodeimage/raw/master/img/20210214074612.png)
 + 答：
   + 关系代数：{{c1::![](https://gitee.com/xieyun714/nodeimage/raw/master/img/20210214074626.png)}}
   + 关系元组演算：{{c1::![](https://gitee.com/xieyun714/nodeimage/raw/master/img/20210214074633.png)}}
 
 ### 关系元组演算例子：至少有一没学过 [ ](DatabaseSystem_20210217061915442)
+
 + 题：![](https://gitee.com/xieyun714/nodeimage/raw/master/img/20210214074854.png)
 + 答：
   + 关系代数：{{c1::![](https://gitee.com/xieyun714/nodeimage/raw/master/img/20210214074909.png)}}
   + 关系元组演算：{{c1::![](https://gitee.com/xieyun714/nodeimage/raw/master/img/20210214074918.png)}}
 
 ### 关系代数转换为元组演算 [ ](DatabaseSystem_20210217061915445)
+
 + 问：![](https://gitee.com/xieyun714/nodeimage/raw/master/img/20210214075126.png)
 + 答：{{c1::![](https://gitee.com/xieyun714/nodeimage/raw/master/img/20210214075530.png)}}
 
 ## 关系域演算 [ ](DatabaseSystem_20210217061915447)
 
 ### 关系域演算例子 [ ](DatabaseSystem_20210217061915451)
+
 + 问：![](https://gitee.com/xieyun714/nodeimage/raw/master/img/20210214080340.png)
 + 答：{{c1::![](https://gitee.com/xieyun714/nodeimage/raw/master/img/20210214080437.png)}}
 
 ## 关系运算总结 [ ](DatabaseSystem_20210217061915453)
 
 ### 关系运算的安全性 [ ](DatabaseSystem_20210217061915456)
+
 + 定义：{{c1::“不产生无限关系和无穷验证的运算被称为是安全的}}
 + 各运算的安全性：
   + 关系代数：{{c1::关系代数是一种集合运算，是安全的}}
@@ -298,38 +306,45 @@
 ## SQL语言 [ ](DatabaseSystem_20210217061915462)
 
 ### SQL语言的功能概述 [ ](DatabaseSystem_20210217061915465)
+
 + DDL语句引导词：{{c1::Create(建立),Alter(修改),Drop(撤消)}}
 + DML语句引导词：{{c1::Insert ,Delete, Update, Select}}
 + DCL语句引导词：{{c1::Grant,Revoke}}
 + 交互式SQL->嵌入式SQL->动态SQL等
 
 ### SQL语言:结果唯一性问题 [ ](DatabaseSystem_20210217061915467)
+
 + 问题引出：关系模型不允许出现重复元组。但现实DBMS，却允许出现重复元组，但也允许无重复元组。
 + 解决：{{c1::在**Table**中要求无重复元组是通过定义**Primary key**或**Unique**来保证的;而在检索结果中要求无重复元组, 是通过**DISTINCT**保留字的使用来实现的。}}
 
 ### `not in` `some` `all` 联系与区别 [ ](DatabaseSystem_20210217061915469)
+
 + 问：![image-20210217051138257](https://gitee.com/xieyun714/nodeimage/raw/master/img/image-20210217051138257.png)![](https://gitee.com/xieyun714/nodeimage/raw/master/img/20210217051201.png)
 + 答：{{c1::注意`<>some`的语义,some等价于any,any由于语义问题被弃用.}}
 
 ### EXISTS 子查询 [ ](DatabaseSystem_20210217061915471)
+
 + 语义：{{c1::子查询结果中有无元组存在}}
 + 示例：检索选修了赵三老师主讲课程的所有同学的姓名:{{c1::![](https://gitee.com/xieyun714/nodeimage/raw/master/img/20210214090753.png)}}
 
 ## SQL语言实现关系代数操作 [ ](DatabaseSystem_20210217061915473)
 
 ### SQL语言:并-交-差的处理 [ ](DatabaseSystem_20210217061915477)
+
 + **SQL语言**：{{c1::并运算 UNION, 交运算INTERSECT, 差运算EXCEPT}}
 + **基本语法形式**：{{c1::子查询 `{ Union [ALL] | Intersect [ALL] | Except [ALL] 子查询 }` }}
 + **通常情况下自动删除重复元组**：{{c1::不带ALL。若要保留重复的元组，则要带ALL。}}
 + 注意：{{c1::有些DBMS不支持INTERSECT,EXCEPT}}
 
 ### SQL语言:现行DBMS的空值处理小结 [ ](DatabaseSystem_20210217061915479)
+
 +  `where`中: {{c1:: 除is[not]null之外，空值不满足任何查找条件}}
 +  如果null参与算术运算，{{c1::则该算术表达式的值为null}}
 +  如果null参与比较运算，{{c1::则结果可视为false。在SQL-92中可看成unknown}}
 +  如果null参与聚集运算，{{c1::则除count(*)之外其它聚集函数都忽略null}}
 
 ### SQL视图更新 [ ](DatabaseSystem_20210217061915481)
+
 + 原则：{{c1::视图更新要保证原有表的实体完整性。}}
 + 视图不更新的几种情况：
   1. 聚集函数：{{c1::如果视图的select目标列包含聚集函数，则不能更新}}
@@ -341,6 +356,7 @@
 ## 数据库完整性和安全性 [ ](DatabaseSystem_20210217061915483)
 
 ### 数据库完整性 [ ](DatabaseSystem_20210217061915486)
+
 + 为什么会引发数据库完整性的问题: {{c1::不正当的数据库操作，如输入错误、操作失误、程序处理失误等}}
 + DBMS怎样自动保证完整性呢？
   + {{c1::DBMS允许用户定义一些完整性约束规则(用SQL-DDL来定义)}}
@@ -351,8 +367,11 @@
 ### SQL语言实现约束的方法-断言 [ ](DatabaseSystem_20210217061915489)
 
 + 语法形式为：{{c1::`CREATE ASSERTION <assertion-name> CHECK <predicate>`}}
+
 + 注意：{{c1::断言测试增加了数据库维护的负担，要小心使用复杂的断言。}}
+
 + 示例：“每笔贷款,要求至少一位借款者账户中存有最低数目的余额，例如1000元”
+
   ```sql
   #{{c1::
   create assertion balance_constraint check
@@ -367,28 +386,34 @@
         and account.balance >= 1000)))
   #}}
   ```
+
 ### 触发器Trigger [ ](DatabaseSystem_20210217061915491)
+
 + 作用：Create Table中的表约束和列约束基本上都是静态的约束，也基本上都是对单一列或单一元组的约束(尽管有参照完整性)，为实现动态约束以及多个元组之间的完整性约束，就需要触发器技术Trigger
 + 示例：设计一个触发器当进行Teacher表更新元组时, 使其工资只能升不能降：{{c1::![image-20210215165016404](https://gitee.com/xieyun714/nodeimage/raw/master/img/image-20210215165016404.png)}}
 
 ### 数据库安全性 [ ](DatabaseSystem_20210217061915494)
+
 + 作用：{{c1::数据库安全性是指DBMS应该保证的数据库的一种特性(机制或手段)：免受非法、非授权用户的使用、泄漏、更改或破坏}}
 + 数据的安全级别: {{c1::绝密(Top Secret), 机密(Secret),可信(Confidential)和无分类(Unclassified) }}
 + 数据库系统DBS的安全级别：{{c1::物理控制、网络控制、操作系统控制、DBMS控制}}
 
 ### 自主安全性 [ ](DatabaseSystem_20210217061915497)
+
 + 数据库自主安全性访问规则：{{c1::![](https://gitee.com/xieyun714/nodeimage/raw/master/img/20210217051032.png)![](https://gitee.com/xieyun714/nodeimage/raw/master/img/20210217051049.png)}}
 + 自主安全性的实现方式:
   + 存储矩阵:{{c1::![image-20210215170039634](https://gitee.com/xieyun714/nodeimage/raw/master/img/image-20210215170039634.png)}}
   + 视图:{{c1::![image-20210215170046269](https://gitee.com/xieyun714/nodeimage/raw/master/img/image-20210215170046269.png)}}
 
 ### 自主安全性的授权过程及其问题 [ ](DatabaseSystem_20210217061915500)
+
 + 授权过程:{{c1::![image-20210215210903945](https://gitee.com/xieyun714/nodeimage/raw/master/img/image-20210215210903945.png)}}
 + 传播范围包括两个方面：
 + 水平传播数量: {{c1::是授权者的再授权用户数目(树的广度)}}
 + 垂直传播数量: {{c1::是授权者传播给被授权者，再被传播给另一个被授权者, …传播的深度(树的深度)}}
 
 ### 嵌入式SQL语言 [ ](DatabaseSystem_20210217061915502)
+
 + 需解决的8大问题：
   1. **连接处理**： {{c1::如何与数据库连接和断开连接}}
   2. **变量传递**： {{c1::如何将宿主程序的变量传递给SQL语句}}
@@ -401,39 +426,45 @@
 + 知识结构：{{c1::![image-20210215212409893](https://gitee.com/xieyun714/nodeimage/raw/master/img/image-20210215212409893.png)}}
   + 需解决问题图示：{{c1::![](https://gitee.com/xieyun714/nodeimage/raw/master/img/20210217050803.png)![](https://gitee.com/xieyun714/nodeimage/raw/master/img/20210217050841.png)}}
 
-## 数据库建模 [ ](DatabaseSystem_20210217061915504)
+## 数据库建模E-R模型 [ ](DatabaseSystem_20210217061915504)
 
 ### 数据模型与概念模型 [ ](DatabaseSystem_20210217061915507)
+
 + 数据模型: {{c1:: 表达计算机世界的模型称数据模型； }}
 + 概念模型: {{c1:: 表达信息世界的模型称概念数据模型，简称概念模型，信息世界是对现实世界的理解与抽象 }}
-+ 图示：{{c1::![image-20210215214823019](https://gitee.com/xieyun714/nodeimage/raw/master/img/image-20210215214823019.png)}}
++ 现实世界、概念模型、数据模型之间关系图示：{{c1::![image-20210215214823019](https://gitee.com/xieyun714/nodeimage/raw/master/img/image-20210215214823019.png)![](https://gitee.com/xieyun714/nodeimage/raw/master/img/20210509132706.png)}}
 
 ### 怎样抽象—理解-区分-命名-表达? [ ](DatabaseSystem_20210217061915510)
+
 + 现实世界需要**理解**：{{c1::现实中的卡片、单据、表格、报表… …}}
 + 理解的标志是**区分**：{{c1::表与表的区分，表内数据项的区分，数据项之间关系的区分，表之间关系的区分？}}
 + 区分的标志是**命名**：{{c1::命名表、命名数据项、命名表之间的联系}}
 + 抽象的最终结果是正确的**表达**：{{c1::用其他人能理解的表达方法来表达(E-R图/Crow's Foot/IDEF1X)}}
 
 
-### E-R模型 [ ](DatabaseSystem_20210217061915513)
+### E-R模型：基本概念 [ ](DatabaseSystem_20210217061915513)
+
 + E-R模型：{{c1::**Entity-Relationship Model**。1976年，P.P.S.Chen提出E-R模型，用E-R图来描述概念模型。}}
 + E-R模型的基本观点：{{c1::世界是由一组称作**实体**的基本对象和这些对象之间的**联系**构成的}}
 + E-R模型4个基本概念：{{c1::![](https://gitee.com/xieyun714/nodeimage/raw/master/img/20210215221521.png)}}
 
 ### E-R模型：实体/属性/关键字 [ ](DatabaseSystem_20210217061915516)
+
 + 实体：{{c1::客观存在并可相互区分的事物}}
 + 属性：{{c1::属性，实体所具有的某一方面特性}}
-+ 实体与实例的差别：{{c1::![](https://gitee.com/xieyun714/nodeimage/raw/master/img/20210215222444.png)}}
++ **实体**与**实例**的差别：{{c1::![](https://gitee.com/xieyun714/nodeimage/raw/master/img/20210215222444.png)}}
++ 使用属性来刻画实体的两种方式：{{c1::![](https://gitee.com/xieyun714/nodeimage/raw/master/img/20210509133919.png)}}
 + 属性的分类
-  + **单一属性**与**复合属性**：{{c1::复合属性示例： 家庭住址：省份, 详细住址}}
-  + **单值属性**和**多值属性**：{{c1::多值属性示例：电话号码，一个人可能有多个电话号码}}
+  + **单一属性**与**复合属性**：{{c1::复合属性示例： 家庭住址：省份, 详细住址，**复合属性一定要转化为单一属性(关系的第1范式)**}}
+  + **单值属性**和**多值属性**：{{c1::多值属性示例：电话号码，一个人可能有多个电话号码，**多值属性一定要转化为单值属性(关系的第1范式)**}}
   + **可空值属性**和**非空值属性**：{{c1::每个实例的该属性值可以是或不能是空值}}
   + **导出属性**：{{c1::由其他属性计算而得，例如由“出生年份” 可以得出“年龄}}
 + **关键字/码**：{{c1::实体中能够用其值唯一区分开每一实例的属性或属性组合}}
 
 ### E-R模型：联系 [ ](DatabaseSystem_20210217061915519)
+
 + **联系**：{{c1:: 指一个实体的实例和其他实体实例之间所可能发生的联系，联系是要表达的要素。无联系的实体是没有意义的}}
-+ **度**或**元**：{{c1:: 参与发生联系的实体的数目，称为联系的度或元。}}
++ 联系的**度**或**元**：{{c1:: 参与发生联系的实体的数目，称为联系的度或元。}}
   + **一元联系**：{{c1:: ![image-20210217050615124](https://gitee.com/xieyun714/nodeimage/raw/master/img/image-20210217050615124.png)![](https://gitee.com/xieyun714/nodeimage/raw/master/img/20210217050642.png)}}
   + **二元联系**：{{c1:: ![](https://gitee.com/xieyun714/nodeimage/raw/master/img/20210215230405.png)}}
   + **多元联系**：{{c1:: ![](https://gitee.com/xieyun714/nodeimage/raw/master/img/20210217050429.png)![](https://gitee.com/xieyun714/nodeimage/raw/master/img/20210217050455.png)}}
@@ -442,97 +473,130 @@
 + 常见的映射基数如：{{c1:: 一对一的（1:1），一对多的（1:m），多对多的（m:n）几种情况}}
 + **完全参与联系**：{{c1:: 即该端实例至少有一个参与到联系中,最小基数为1(1..m)}}
 + **部分参与联系**：{{c1:: 即该端实例可以不参与联系，最小基数为0(0..m)}}
-+ 示例：完全参与联系和部分参与联系：{{c1::![image-20210217050137288](https://gitee.com/xieyun714/nodeimage/raw/master/img/image-20210217050137288.png)![](https://gitee.com/xieyun714/nodeimage/raw/master/img/20210217050201.png)![](https://gitee.com/xieyun714/nodeimage/raw/master/img/20210215232143.png)}}
 
-### E-R模型:Chen方法的基本图元及其含义 [ ](DatabaseSystem_20210217061915522)
+## E-R模型表达方法：Chen方法
+
+### E-R模型:Chen方法的基本图元 [ ](DatabaseSystem_20210217061915522)
+
 + 图示结构（根据以下图元填充）：{{c1::![](https://gitee.com/xieyun714/nodeimage/raw/master/img/20210216000500.png)}}
-+ **实体**：{{c1::矩形框}}
-+ **属性**：{{c1::椭圆}}
-  + **多值属性**：{{c1::双线椭圆}}
-  + **导出属性**：{{c1::虚线椭圆}}
-+ **关键字/码**：{{c1::下划线}}
-+ **连接实体和属性**：{{c1::直线}}
-+ **联系**：{{c1::菱形框}}
-+ **连接实体与联系**：{{c1::直线}}
-+ **连接联系和属性**：{{c1::直线}}
-+ **复合关键字**：{{c1::标有相同数字}}
-+ **多组关键字**：{{c1::标有不同数字}}
-+ 注意：{{c1::每个实体至少要给出关键字实体的关键字要作为联系的属性}}
++ 各图元解释：{{c1::![](https://gitee.com/xieyun714/nodeimage/raw/master/img/20210509140131.png)}}
 
-### E-R模型:Chen方法中不同“联系”的区分方法 [ ](DatabaseSystem_20210217061915525)
+### Chen方法中联系的表达（3大联系，2种参与） [ ](DatabaseSystem_20210217061915525)
+
 + 图示结构（根据以下图元填充）：{{c1::![](https://gitee.com/xieyun714/nodeimage/raw/master/img/20210216000844.png)}}
++ 图示结构（基数表示法）:{{c1::![](https://gitee.com/xieyun714/nodeimage/raw/master/img/20210216001008.png)}}
 + **1:1联系**：{{c1::箭头直线，由联系指向实体}}
 + **1:m联系**：{{c1::指向1端为箭头直线，指向多端为无箭头直线}}
 + **m:n联系**：{{c1::无箭头直线}}
 + **完全参与联系**：{{c1::双直线}}
 + **部分参与联系**：{{c1::单直线}}
-+ `1:1, 1:m, m:n`的联系也可以如下区分:{{c1::![](https://gitee.com/xieyun714/nodeimage/raw/master/img/20210216001008.png)}}
-    + 注意：{{c1::最小基数0的为部分参与联系}}
+  + 注意：{{c1::最小基数0的为部分参与联系}}
 
-### 示例：仓储管理的E-R Diagram [ ](DatabaseSystem_20210217061915528)
-+ 需求理解：
-  + 管理零件
-  + 管理零件的来源—哪些零件来自于哪些供应商
-  + 管理零件的去向—哪个零件供应给哪一个项目使用
-  + 管理多个仓库---哪个零件存在哪个仓库中
-  + 管理职工---哪个职工管理哪个仓库
-+ 运用E-R模型理解需求并建模的步骤:
-  1. {{c1::理解需求，寻找实体}}
-  2. {{c1::用属性刻画每一个实体}}
-  3. {{c1::确定每一个实体的关键字/码}}
-  4. {{c1::数据建模的重点是分析实体之间的联系}}
-  5. {{c1::检查是否覆盖了需求}}
-+ 结果示例(Chen方法)：{{c1::![20210216002056](https://gitee.com/xieyun714/nodeimage/raw/master/img/20210216002056.png)}}
-+ 结果示例(Crow’s foot方法)：{{c1::![20210216010623](https://gitee.com/xieyun714/nodeimage/raw/master/img/20210216010623.png)}}
+### Chen方法：图书管理的E-R Diagram
 
-### E-R模型:Crow’s foot方法的基本图元及其含义 [ ](DatabaseSystem_20210217061915530)
-+ 图示结构（根据以下图元填充）：{{c1::![](https://gitee.com/xieyun714/nodeimage/raw/master/img/20210216010326.png)![](https://gitee.com/xieyun714/nodeimage/raw/master/img/20210216010427.png)}}
-+ **实体**：{{c1::矩形框，实体的名称写在横线上面}}
-+ **属性**：{{c1::实体框横线的下面}}
-+ **关键字**：{{c1::属性下加下划线}}
-+ **联系**：{{c1::菱形框表示，也可以将菱形框省略而直接以联系名来替代}}
++ 注意：图书、读者、书架，三大实体联系的表达
++ 联系也需要通过命名来区分。
++ 图示：{{c1::![](https://gitee.com/xieyun714/nodeimage/raw/master/img/20210509141124.png)}}
 
-## IDEF1x图
+### Chen方法示例：仓储管理的E-R Diagram
 
-### IDEF1x对E-R图重要概念概况划分[ ](DatabaseSystem_20210217061915532)
++ 需求描述：![](https://gitee.com/xieyun714/nodeimage/raw/master/img/20210509144113.png)
++ 建模结果：{{c1::  ![](https://gitee.com/xieyun714/nodeimage/raw/master/img/20210509144240.png)  }}
 
-+ 实体(Entity)
-  + 独立实体：{c1:: 独立标识符实体/独立实体Identifier-IndependentEntity)--强实体 }}
-  + 从属实体：{c1:: 从属标识符实体/从属实体Identifier-dependentEntity)--弱实体 }}
-+ 联系(Relationship)
-  + 标定联系：{{c1:: 可标定连接联系(IdentifyingConnectionRelationship) }}
-  + 非标定连接联系：{{c1:: 非标定连接联系(Non-IdentifyingConnectionRelationship) }}
-  + 分类联系：{{c1::分类联系(CategorizationRelationship)}}
-  + 非确定联系：{{c1::非确定联系(Non-SpecificRelationship)}}
-+ 属性/关键字(Attribute/Key)
-  + 主关键字：{{c1:: 主关键字/**主码**(PrimaryKeys)--主属性 }}
-  + 次关键字：{{c1:: 次关键字/**候选码**(AlternateKeys)}}
-  + 外来关键字：{{c1:: **外码**，是其他实体的关键字 }}
 
-### IDEF1x-两种实体的区分 [ ](DatabaseSystem_20210217061915535)
-+ 实体(Entity):{{c1::}} 一个“实体”表示一个现实和抽象事物的集合，这些事物必须具有相同的属性和特征。这个集合的一个元素就是该实体的一个实例}}
-+ 实体被区分为:{{c1::**独立实体**和**从属实体**；在扩展E-R图中，独立实体又称**强实体**，从属实体又称**弱实体**。}}
-+ **独立实体**：{{c1::一个实体的实例都被唯一的标识而不决定于它与其他实体的联系}}
-  + IDEF1x独立实体描述方法图：{{c1::![](https://gitee.com/xieyun714/nodeimage/raw/master/img/20210216154857.png)}}
-+ **从属实体**：{{c1::一个实体的实例的唯一标识需要依赖于该实体与其他实体的联系}}
-  + IDEF1X从属实体描述方法图：{{c1::![](https://gitee.com/xieyun714/nodeimage/raw/master/img/20210216155424.png)}}
-+ **独立实体/从属实体**的图示规则：{{c1::![](https://gitee.com/xieyun714/nodeimage/raw/master/img/20210216155852.png)![](https://gitee.com/xieyun714/nodeimage/raw/master/img/20210216155906.png)}}。
 
-### IDEF1x的标定联系与非标定联系 [ ](DatabaseSystem_20210217061915538)
-+ **标定联系**：{{c1::子实体的实例都是由它与父实体的联系而确定。**父实体的主关键字是子实体主关键字的一部分，一对一联系**![](https://gitee.com/xieyun714/nodeimage/raw/master/img/20210217032711.png)}}
-+ **非标定联系**：{{c1::子实体的实例能够被唯一标识而无需依赖与其实体的联系。**父实体的主关键字不是子实体的主关键字。一对多联系**![](https://gitee.com/xieyun714/nodeimage/raw/master/img/20210217032844.png)}}
-+ 关于标定联系和非标定联系的规则：工程化的要求
-+ **虚直线**：{{c1::标定联系用实直线表示，非标定联系用虚直线表示}}
-+ **直线**：{{c1::在子实体一侧有圆圈，联系名标注在直线旁}}
+## E-R模型表达方法:Crow’s foot方法
 
-### IDEF1x的非确定联系 [ ](DatabaseSystem_20210217061915541)
-+ **非确定联系**：{{c1::即实体之间的**多对多**的联系，**非确定联系必须分解为若干个一对多的联系来表达**，非确定联系通过引入相交实体(Intersection Entity)或者称相关实体(Associative Entity)来分解为若干个一对多的联系来表达。![](https://gitee.com/xieyun714/nodeimage/raw/master/img/20210217040432.png)}}
+### Crow’s foot方法：表达（实体/属性/关键字）
 
-### IDEF1x的分类联系 [ ](DatabaseSystem_20210217061915543)
++ 注意：与Chen方法的区别
 
-+ **分类联系**：{{c1::一个实体实例是由一个**一般实体实例**及多个**分类实体实例**构成的。![](https://gitee.com/xieyun714/nodeimage/raw/master/img/20210217044216.png)}}
-+ **属性继承**：{{c1::高层实体的属性被低层实体自动继承，低层实体特有的性质仅适用于某个特定的低层实例}}
-+ **完全分类联系**与**非完全分类联系**：{{c1::![](https://gitee.com/xieyun714/nodeimage/raw/master/img/20210217050025.png)![](https://gitee.com/xieyun714/nodeimage/raw/master/img/20210217050040.png)}}
-  + 注意：{{c1::分类实体必须有特有的属性，否则分类没有意义}}
-+ E-R图中的分类联系示例：{{c1::![](https://gitee.com/xieyun714/nodeimage/raw/master/img/20210217044421.png)}}
-+ Crow's foot表达分类联系的符号：{{c1::![](https://gitee.com/xieyun714/nodeimage/raw/master/img/20210217044444.png)}}
++ 图示：{{c1::![](https://gitee.com/xieyun714/nodeimage/raw/master/img/20210509142351.png)}}
+
+### Crow’s foot方法：表达联系
+
++ 联系：菱形框表示，也可以将菱形框省略而直接以联系名来替代
++ 图示：{{c1:: ![](https://gitee.com/xieyun714/nodeimage/raw/master/img/20210509143057.png) }}
++ 注意与chen方法的区别：{{c1:: ![](https://gitee.com/xieyun714/nodeimage/raw/master/img/20210509143123.png) }}
+
+### Crow’s foot方法：表达联系的基数
+
++ 图示：{{c1::![](https://gitee.com/xieyun714/nodeimage/raw/master/img/20210509143455.png)}}
++ 与chen方法的区别：{{c1::![](https://gitee.com/xieyun714/nodeimage/raw/master/img/20210509143515.png)}}
++ 使用示例：{{c1::![](https://gitee.com/xieyun714/nodeimage/raw/master/img/20210509143829.png)}}
+
+### Crow’s foot方法示例：仓储管理的E-R Diagram
+
++ 需求描述：![](https://gitee.com/xieyun714/nodeimage/raw/master/img/20210509144113.png)
++ 建模结果：{{c1:: ![](https://gitee.com/xieyun714/nodeimage/raw/master/img/20210509144025.png) }}
+
+## E-R模型表达方法:IDEF1x方法
+
+### IDEF1x方法：表达实体（两种实体的区分）
+
++ **独立实体**概念：{{c1::一个实体的实例都被唯一的标识而**不决定于**它与其他实体的**联系**}}
++ 图示：{{c1::![](https://gitee.com/xieyun714/nodeimage/raw/master/img/20210509150838.png)}}
++ **从属实体**概念：{{c1::一个实体的实例的唯一标识需要依赖于该实体与其他实体的联系，**从属实体的关键字属性包含继承自其它实体的属性**}}
+  + 图示例：{{c1::![](https://gitee.com/xieyun714/nodeimage/raw/master/img/20210509150954.png)}}
++ **独立实体/从属实体的图示规则**：{{c1::![](https://gitee.com/xieyun714/nodeimage/raw/master/img/20210509151802.png)}}
+
+### IDEF1x方法：对联系的分类
+
++ 连接联系：{{c1::又称**父子联系**或**依存联系**}}
+  + {{c1::标定联系}}
+  + {{c1::非标定联系}}
++ {{c1::分类联系}}
++ {{c1::非确定联系}}
+
+### IDEF1x方法：表达联系（标定联系\非标定联系）
+
++ 注意：具体的E-R图画法
++ 标定联系(图)：{{c1::![](https://gitee.com/xieyun714/nodeimage/raw/master/img/20210509152519.png)}}
++ 非标定联系(图)：{{c1::![](https://gitee.com/xieyun714/nodeimage/raw/master/img/20210509153159.png)}}
++ 注意E-R图中具体要求：
+  + **实直线**:{{c1::标定联系用实直线表示}}
+  + **虚直线**:{{c1::非标定联系用虚直线表示}}
+  + **子实体**:{{c1::在子实体一侧有圆圈}}
+  + **联系名**:{{c1::联系名标注在直线旁}}
+
+### IDEF1x方法：表达联系（非确定联系）
++ **非确定联系**：{{c1::即实体之间的多对多的联系,**非确定联系必须分解为若干个一对多的联系来表达**}}
++ **怎样处理非确定联系**图示:{{c1:: ![](https://gitee.com/xieyun714/nodeimage/raw/master/img/20210509175311.png) }}
++ **IDEF1x对联系的两种处理机制**图示：{{c1::![](https://gitee.com/xieyun714/nodeimage/raw/master/img/20210509175529.png)}}
+
+### IDEF1x方法：表达联系（分类联系概念）
+
++ 分类联系：{{c1:: 一个实体实例是由一个**一般实体**实例及多个**分类实体**实例构成的 }}
++ **完全分类联系**与**非完全分类联系**：{{c1:: ![](https://gitee.com/xieyun714/nodeimage/raw/master/img/20210509182245.png)![](https://gitee.com/xieyun714/nodeimage/raw/master/img/20210509182319.png) }}
+
+
+### IDEF1x方法：表达联系（分类联系）
++ IDEF1x方法的分类联系示例：{{c1::![](https://gitee.com/xieyun714/nodeimage/raw/master/img/20210509181648.png)}}
++ E-R图中的分类联系示例：{{c1::![](https://gitee.com/xieyun714/nodeimage/raw/master/img/20210509181903.png)}}
++ Crow's foot表达分类联系示例：{{c1::![](https://gitee.com/xieyun714/nodeimage/raw/master/img/20210509181932.png)}}
+
+## 数据库设计过程
+
+### 数据库设计的四个过程
++ 图示：{{c1::![](https://gitee.com/xieyun714/nodeimage/raw/master/img/20210509184753.png)}}
+
+### 数据库设计过程：需求分析
++ 需求分析过程：{{c1::![](https://gitee.com/xieyun714/nodeimage/raw/master/img/20210509191016.png)}}
++ 需求分析成果物：{{c1::形成数据库设计的“源”清单和“属性”清单以及相关的详细描述,尤其是注意业务规则与属性处理规则}}
++ 源清单示例：{{c1::![](https://gitee.com/xieyun714/nodeimage/raw/master/img/20210509191615.png)}}
++ “属性”清单示例：{{c1:: ![](https://gitee.com/xieyun714/nodeimage/raw/master/img/20210509191744.png) }}
++ “属性”定义表:{{c1:: ![](https://gitee.com/xieyun714/nodeimage/raw/master/img/20210509192343.png) }}
+
+### 数据库设计过程：概念数据库设计过程
++ 概念数据库设计过程：{{c1::![](https://gitee.com/xieyun714/nodeimage/raw/master/img/20210509195156.png)}}
+
+### 数据库设计过程：概念数据库设计的可能冲突
++ 属性冲突：{{c1::![](https://gitee.com/xieyun714/nodeimage/raw/master/img/20210509194702.png)}}
++ 结构冲突：{{c1::![](https://gitee.com/xieyun714/nodeimage/raw/master/img/20210509194711.png)}}
++ 命名冲突：{{c1::![](https://gitee.com/xieyun714/nodeimage/raw/master/img/20210509194722.png)}}
++ 全局E-R模式优化过程：![](https://gitee.com/xieyun714/nodeimage/raw/master/img/20210509194821.png)
+
+### 数据库设计过程：概念数据库设计成果物
++ “实体”清单示例：{{c1::![](https://gitee.com/xieyun714/nodeimage/raw/master/img/20210509194938.png)}}
++ “实体”定义表：{{c1::![](https://gitee.com/xieyun714/nodeimage/raw/master/img/20210509195030.png)}}
++ “实体-联系”矩阵：{{c1::![](https://gitee.com/xieyun714/nodeimage/raw/master/img/20210509195054.png)![](https://gitee.com/xieyun714/nodeimage/raw/master/img/20210509195112.png)}}

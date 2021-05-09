@@ -441,10 +441,13 @@ var watchExampleVM = new Vue({
       <button v-on:click="$emit('enlarge-text')">
         Enlarge text
       </button>
-    ```
+  ```
   //...
   }
   //}}
+  
+  ```
+  
   ```
 
 ### 使用子组件事件抛出一个值 [ ](vue_20200707060718107)
