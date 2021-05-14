@@ -567,7 +567,8 @@
 ### IDEF1x方法：表达联系（分类联系概念） [ ](DatabaseSystem_20210509093451693)
 
 + 分类联系：{{c1:: 一个实体实例是由一个**一般实体**实例及多个**分类实体**实例构成的 }}
-+ **完全分类联系**与**非完全分类联系**：{{c1:: ![](https://gitee.com/xieyun714/nodeimage/raw/master/img/20210509182245.png)![](https://gitee.com/xieyun714/nodeimage/raw/master/img/20210509182319.png) }}
++ 注意：两种ER图的画法
++ **完全分类联系**与**；非完全分类联系**：{{c1:: ![](https://gitee.com/xieyun714/nodeimage/raw/master/img/20210509182245.png)![](https://gitee.com/xieyun714/nodeimage/raw/master/img/20210509182319.png) }}
 
 
 ### IDEF1x方法：表达联系（分类联系） [ ](DatabaseSystem_20210509093451696)
@@ -590,13 +591,92 @@
 ### 数据库设计过程：概念数据库设计过程 [ ](DatabaseSystem_20210509093451705)
 + 概念数据库设计过程：{{c1::![](https://gitee.com/xieyun714/nodeimage/raw/master/img/20210509195156.png)}}
 
-### 数据库设计过程：概念数据库设计的可能冲突 [ ](DatabaseSystem_20210509093451707)
+### 数据库设计过程：概念数据库设计可能的冲突 [ ](DatabaseSystem_20210509093451707)
 + 属性冲突：{{c1::![](https://gitee.com/xieyun714/nodeimage/raw/master/img/20210509194702.png)}}
 + 结构冲突：{{c1::![](https://gitee.com/xieyun714/nodeimage/raw/master/img/20210509194711.png)}}
 + 命名冲突：{{c1::![](https://gitee.com/xieyun714/nodeimage/raw/master/img/20210509194722.png)}}
 + 全局E-R模式优化过程：![](https://gitee.com/xieyun714/nodeimage/raw/master/img/20210509194821.png)
 
-### 数据库设计过程：概念数据库设计成果物 [ ](DatabaseSystem_20210509093451709)
+### 数据库设计过程：概念数据库设计报告 [ ](DatabaseSystem_20210509093451709)
 + “实体”清单示例：{{c1::![](https://gitee.com/xieyun714/nodeimage/raw/master/img/20210509194938.png)}}
 + “实体”定义表：{{c1::![](https://gitee.com/xieyun714/nodeimage/raw/master/img/20210509195030.png)}}
 + “实体-联系”矩阵：{{c1::![](https://gitee.com/xieyun714/nodeimage/raw/master/img/20210509195054.png)![](https://gitee.com/xieyun714/nodeimage/raw/master/img/20210509195112.png)}}
+
+### 数据库设计过程：逻辑数据库设计过程 [ ](DatabaseSystem_20210511102843609)
++ 图示：{{c1::![](https://gitee.com/xieyun714/nodeimage/raw/master/img/20210511200956.png)}}
+
+### E-R图/IDEF1X图向关系模式的转换：基本转换 [ ](DatabaseSystem_20210511102843613)
++ **基本转换规则**：![](https://gitee.com/xieyun714/nodeimage/raw/master/img/20210511201440.png)
+- **复合属性的转换**：![](https://gitee.com/xieyun714/nodeimage/raw/master/img/20210511201540.png)
+- **多值属性的转换**：![](https://gitee.com/xieyun714/nodeimage/raw/master/img/20210511201618.png)
+
+### E-R图/IDEF1X图向关系模式的转换：一对一，一对多，多对多 [ ](DatabaseSystem_20210511102843616)
++ 联系的转换
+- **一对一联系**：![](https://gitee.com/xieyun714/nodeimage/raw/master/img/20210511201730.png)
+- **一对多联系**：![](https://gitee.com/xieyun714/nodeimage/raw/master/img/20210511201911.png)
+- **多对多联系**：![](https://gitee.com/xieyun714/nodeimage/raw/master/img/20210511201959.png)
+
+
+### E-R图/IDEF1X图向关系模式的转换：弱实体，泛化与具体化实体，多元联系 [ ](DatabaseSystem_20210511102843619)
++ **弱实体的转换**：{{c1::![](https://gitee.com/xieyun714/nodeimage/raw/master/img/20210511202507.png)}}
++ **泛化与具体化实体的转换**：{{c1::![](https://gitee.com/xieyun714/nodeimage/raw/master/img/20210511202633.png)![](https://gitee.com/xieyun714/nodeimage/raw/master/img/20210511202735.png)}}
++ **多元联系的转换**：{{c1::![](https://gitee.com/xieyun714/nodeimage/raw/master/img/20210511203118.png)}}
+
+### 不正确设计数据库引发的问题 [ ](DatabaseSystem_20210511102843623)
++ **非受控冗余**：{{c1::![](https://gitee.com/xieyun714/nodeimage/raw/master/img/20210511203343.png)}}
++ **受控冗余**：{{c1::![](https://gitee.com/xieyun714/nodeimage/raw/master/img/20210511203357.png)}}
++ **插入异常/删除异常**：{{c1::![](https://gitee.com/xieyun714/nodeimage/raw/master/img/20210511203705.png![](https://gitee.com/xieyun714/nodeimage/raw/master/img/20210511203755.png)}}
++ **如何避免?**：{{c1::![](https://gitee.com/xieyun714/nodeimage/raw/master/img/20210511203856.png)}}
+
+### 数据库设计过程：物理数据库设计过程 [ ](DatabaseSystem_20210511102843626)
++ 图示：{{c1::![](https://gitee.com/xieyun714/nodeimage/raw/master/img/20210511204104.png)}}
+
+## 数据依赖理论 [ ](DatabaseSystem_20210511102843629)
+
+### 函数依赖 [ ](DatabaseSystem_20210514093242051)
++ 函数依赖定义：{{c1::![](https://gitee.com/xieyun714/nodeimage/raw/master/img/20210514182757.png)}}
++ 例题：![](https://gitee.com/xieyun714/nodeimage/raw/master/img/20210514183556.png)
++ 答：{{c1::![](https://gitee.com/xieyun714/nodeimage/raw/master/img/20210514183649.png)}}
+
+### 函数依赖的特性 [ ](DatabaseSystem_20210514093242053)
++ **非平凡的函数依赖**：{{c1::![](https://gitee.com/xieyun714/nodeimage/raw/master/img/20210514183857.png)}}
++ **决定因素**：{{c1::![](https://gitee.com/xieyun714/nodeimage/raw/master/img/20210514183918.png)}}
++ **恒成立**：{{c1::![](https://gitee.com/xieyun714/nodeimage/raw/master/img/20210514184025.png)}}
++ 练习：![](https://gitee.com/xieyun714/nodeimage/raw/master/img/20210514184109.png)
++ 答：{{c1::![](https://gitee.com/xieyun714/nodeimage/raw/master/img/20210514184124.png)}}
+
+### 部分或完全函数依赖 [ ](DatabaseSystem_20210514093242056)
++ 部分函数依赖与完全函数依赖的定义：{{c1::![](https://gitee.com/xieyun714/nodeimage/raw/master/img/20210514185712.png)}}
++ 练习：![](https://gitee.com/xieyun714/nodeimage/raw/master/img/20210514185742.png)
++ 答：{{c1::![](https://gitee.com/xieyun714/nodeimage/raw/master/img/20210514185755.png)}}
+
+### 传递函数依赖 [ ](DatabaseSystem_20210514093242059)
++ 传递函数依赖的定义：{{c1::![](https://gitee.com/xieyun714/nodeimage/raw/master/img/20210514190838.png)}}
++ 练习：![](https://gitee.com/xieyun714/nodeimage/raw/master/img/20210514190915.png)
++ 答：{{c1::![](https://gitee.com/xieyun714/nodeimage/raw/master/img/20210514190926.png)}}
+
+### 函数依赖相关的几个重要概念 [ ](DatabaseSystem_20210514093242062)
++ 候选键定义：{{c1::![](https://gitee.com/xieyun714/nodeimage/raw/master/img/20210514191411.png)}}
++ 外来键的定义：{{c1::![](https://gitee.com/xieyun714/nodeimage/raw/master/img/20210514191435.png)}}
++ 逻辑蕴涵的定义：{{c1::![](https://gitee.com/xieyun714/nodeimage/raw/master/img/20210514201739.png)}}
++ 闭包的定义：{{c1::![](https://gitee.com/xieyun714/nodeimage/raw/master/img/20210514201814.png)}}
+
+### 函数依赖的Armstrong公理 [ ](DatabaseSystem_20210514093242064)
++ 作用：由一些给定的函数依赖，推导隐含的函数依赖
++ **自反律** **增广律** **传递律**：{{c1::![](https://gitee.com/xieyun714/nodeimage/raw/master/img/20210514210830.png)}}
++ 由Armstrong‘s Axiom可推出如下结论：
+  + **合并律** **伪传递律** **分解律**：{{c1::![](https://gitee.com/xieyun714/nodeimage/raw/master/img/20210514210929.png)}}
++ 重要引理：{{c1::![](https://gitee.com/xieyun714/nodeimage/raw/master/img/20210514211048.png)}}
+
+### 函数依赖:属性闭包 [ ](DatabaseSystem_20210514093242066)
++ 属性闭包定义：{{c1::![](https://gitee.com/xieyun714/nodeimage/raw/master/img/20210514211142.png)}}
+
+
+### 函数依赖集的最小覆盖：覆盖、属性闭包的计算算法 [ ](DatabaseSystem_20210514093242068)
++ 覆盖的定义：{{c1::![](https://gitee.com/xieyun714/nodeimage/raw/master/img/20210514211259.png)}}
++ 属性闭包的计算算法：{{c1::![](https://gitee.com/xieyun714/nodeimage/raw/master/img/20210514211554.png)}}
++ 函数依赖集的性质：{{c1::![](https://gitee.com/xieyun714/nodeimage/raw/master/img/20210514212100.png)}}
+
+### 函数依赖集的最小覆盖 [ ](DatabaseSystem_20210514093242070)
+
++ 定义：{{c1::![](https://gitee.com/xieyun714/nodeimage/raw/master/img/20210514212803.png)}}
