@@ -588,6 +588,16 @@ alert((123456).toString(36)); // 2n9c
 
 删除小数点后的所有内容而不舍入：`3.1` 变成 `3`，`-1.1` 变成 `-1`。}}
 
+### javascript 取整：取小数点后一位
+
+```javascript
+//{{c1::
+Math.floor(row.difference / row.ProdStandardQty * 10) / 10
+//}}
+```
+
+
+
 ### `num.toFixed(n)`方法 [ ](javascript_info_20191219101334465)
 
 {{c1::函数 [toFixed(n)](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Number/toFixed) 将点数后的数字**四舍五入到 `n` 个数字**并返回结果的**字符串**表示。}}
