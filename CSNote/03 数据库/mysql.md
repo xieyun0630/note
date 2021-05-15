@@ -675,7 +675,7 @@
   + `some`：{{c1:: 满足任意条件（与any完全一样）  }}
 + 例：{{c1:: `select * from t_40 where age = some(select age from t_42);` }}
 
-### MYSQL行转列
+### MYSQL行转列 [ ](mysql_20210509093451636)
 
 + 典型示例：
     ```sql
@@ -956,7 +956,7 @@
 
 ## MYSQL流程控制 [ ](mysql_20200916055246287)
 
-### MYSQL流程控制：创建虚拟表
+### MYSQL流程控制：创建虚拟表 [ ](mysql_20210509093451639)
 
 ```sql
 #{{c1::

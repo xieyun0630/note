@@ -510,7 +510,7 @@
     Console.WriteLine();
   //}}
   ```
-+ 异常导致多播委托截止问题：
++ 解决异常导致多播委托截止问题：
   ```C#
     //{{c1::
         static void One()
@@ -1607,7 +1607,7 @@ ImmutableList<Account> immutableAccounts = accounts.ToImmutableList();
 + 提升：{{c1::使用`Takewhile()`和`SkipWhile()`扩展方法，还可以传递一个谓词，根据谓词的结果提取或跳过某些项。}}
 
 
-### 标准的查询操作符LINQ：聚合操作符
+### 标准的查询操作符LINQ：聚合操作符 [ ](C#_20210425024133277)
 
 + 作用：{{c1::聚合操作符(如 Count、Sum、Min、Max、 Average和 Aggregate操作符)不返回一个序列，而返回一个值。}}
 + 使用例：
@@ -1653,7 +1653,7 @@ ImmutableList<Account> immutableAccounts = accounts.ToImmutableList();
   //}}
   ```
 
-### 标准的查询操作符LINQ：转换操作符
+### 标准的查询操作符LINQ：转换操作符 [ ](C#_20210425024133280)
 
 + `ToList`示例：
   ```C#
@@ -1690,7 +1690,7 @@ ImmutableList<Account> immutableAccounts = accounts.ToImmutableList();
   ```
   + 注意：{{c1:: 如果需要在非类型化的集合上(如 `Arraylist()`使用`LINQ`查询，就可以使用`Cast()`方法。}}
 
-### 标准的查询操作符LINQ：生成操作符
+### 标准的查询操作符LINQ：生成操作符 [ ](C#_20210425024133284)
 + `Range()`:{{c1::填充一个范围的数字}}
 + `Repeat()`:{{c1::方法返回一个迭代器，该迭代器把同一个值重复特定的次数。}}
 + `Empty()`:{{c1::返回一个不返回值的迭代器}}
@@ -1706,7 +1706,7 @@ ImmutableList<Account> immutableAccounts = accounts.ToImmutableList();
   //}}
   ```
 
-### 标准的查询操作符LINQ：并行查询
+### 标准的查询操作符LINQ：并行查询 [ ](C#_20210425024133288)
 
 + LINQ使用：
   ```C#
@@ -1755,7 +1755,7 @@ ImmutableList<Account> immutableAccounts = accounts.ToImmutableList();
   ```
   + 注意:{{c1::`Partitioner`的作用}}
 
-### 标准的查询操作符LINQ：取消并行查询
+### 标准的查询操作符LINQ：取消并行查询 [ ](C#_20210425024133292)
 + 主要思路：{{c1::`CancellationTokenSource`创建`token,WithCancellation()`注册`token`，使用`CancellationTokenSource`实例`cancel()`方法}}
 + 使用例：
   ```C#
@@ -1789,9 +1789,9 @@ ImmutableList<Account> immutableAccounts = accounts.ToImmutableList();
   //}}
   ```
 
-## 第13章 C#函数式编程
+## 第13章 C#函数式编程 [ ](C#_20210425024133294)
 
-### 实际例子：高阶函数以函数作为参数，或者返回一个函数，或者返回两个函数。在处理函数时，可以将两个函数合并到一个函数中。
+### 实际例子：高阶函数以函数作为参数，或者返回一个函数，或者返回两个函数。在处理函数时，可以将两个函数合并到一个函数中。 [ ](C#_20210425024133296)
 + 定义：
   ```C#
   //{{c1::
@@ -1811,7 +1811,7 @@ ImmutableList<Account> immutableAccounts = accounts.ToImmutableList();
   //}}
   ```
 
-### 本地函数  
+### 本地函数   [ ](C#_20210425024133300)
 + 与lambda相比，本地函数语法更加简洁，例:
   ```C#
     //{{c1::
@@ -1918,7 +1918,7 @@ ImmutableList<Account> immutableAccounts = accounts.ToImmutableList();
   //}}
   ```
 
-### 递归本地函数:实现快速排序
+### 递归本地函数:实现快速排序 [ ](C#_20210425024133304)
   ```C#
   //{{c1::
   public static void QuickSort<T>(T[] elements) where T : IComparable<T>
@@ -1948,13 +1948,14 @@ ImmutableList<Account> immutableAccounts = accounts.ToImmutableList();
   }
   //}}
   ```
-### 元组
+### 元组 [ ](C#_20210425024133307)
 + 定义：{{c1::使用数组可以组合相同类型的对象，而元组能够组合**不同类型**的对象。}}
 + 元组有助于减少以下2个需求
   1. {{c1::定义自定义类或结构，以返回多个值}}
   2. {{c1::定义参数，从方法中返回多个值}}
 
-### 元组的声明和初始化
+### 元组的声明和初始化 [ ](C#_20210425024133310)
+
 + 完整声明：
   ```c#
   //{{c1::
@@ -1984,7 +1985,8 @@ ImmutableList<Account> immutableAccounts = accounts.ToImmutableList();
   //}}
   ```
 
-### 元组解构
+### 元组解构 [ ](C#_20210425024133313)
+
 + 完整解构：
   ```c#
   //{{c1::
@@ -2006,7 +2008,8 @@ ImmutableList<Account> immutableAccounts = accounts.ToImmutableList();
   //}}
   ```
 
-### 元组的返回
+### 元组的返回 [ ](C#_20210425024133315)
+
 + 方法定义：
   ```C#
   //{{c1::
@@ -2029,7 +2032,7 @@ ImmutableList<Account> immutableAccounts = accounts.ToImmutableList();
   //}}
   ```
 
-### 任意类型的元组解构定义
+### 任意类型的元组解构定义 [ ](C#_20210425024133317)
 
 + 任意类型元组解构**调用**：
   ```C#
@@ -2089,12 +2092,12 @@ ImmutableList<Account> immutableAccounts = accounts.ToImmutableList();
   //}}
   ```
 
-## 第14章 错误与异常
+## 第14章 错误与异常 [ ](C#_20210425024133320)
 
-### C#异常继承体系图
+### C#异常继承体系图 [ ](C#_20210425024133324)
 + 图示：{{c1::![](https://gitee.com/xieyun714/nodeimage/raw/master/img/20210408203549.png)}}
 
-### System.Exception类属性：
+### System.Exception类属性 [ ](C#_20210425024133327)
 
 + `Data`:{{c1:: 这个属性可以给异常添加键/值语句，以提供关于异常的额外信息 }}
 + `Helplink`:{{c1:: 链接到一个帮助文件上，以提供关于该异常的更多信息 }}
@@ -2106,13 +2109,265 @@ ImmutableList<Account> immutableAccounts = accounts.ToImmutableList();
 + `TargetSite`:{{c1:: NET反射对象，描述了抛出异常的方法 }}
 + 使用示例：![](https://gitee.com/xieyun714/nodeimage/raw/master/img/20210408204132.png)
 
-### 异常过滤器
+### 异常过滤器 [ ](C#_20210425024133329)
+
 + 作用：{{c1::catch块仅在过滤器返回true时执行。捕获不同的异常类型时，可以有行为不同的 catch块。}}
 + 使用示例：{{c1::![](https://gitee.com/xieyun714/nodeimage/raw/master/img/20210408204712.png)}}
 
-### 重新抛出异常用法示例：
+### 重新抛出异常用法示例 [ ](C#_20210425024133331)
+
 + 不改变异常直接抛出：{{c1::![](https://gitee.com/xieyun714/nodeimage/raw/master/img/20210408211406.png)}}
 + 改变异常再抛出：{{c1::![](https://gitee.com/xieyun714/nodeimage/raw/master/img/20210408211439.png)}}
 + 不改变异常直接抛出简写：{{c1::![](https://gitee.com/xieyun714/nodeimage/raw/master/img/20210408211516.png)}}
 + 使用过滤器添加功能：{{c1::![](https://gitee.com/xieyun714/nodeimage/raw/master/img/20210408211546.png)}}
   + 注意:{{c1::异常过滤器也可以用于其他效果，比如写入日志信息。}}
+
+### 方法调用者信息的可选参数 [ ](C#_20210425024133333)
++ 作用： {{c1:: 由编译器直接传入方法的相关调用信息。 }}
++ 参数:
+  + `[CallerLineNumber]`: {{c1:: 传入调用行 }}
+  + `[CallerFilePath]`: {{c1:: 传入调用文件路径 }}
+  + `[CallerMemberName]`: {{c1:: 传入调用方法名 }}
++ 声明例：
+  ```C#
+  //{{c1::
+  public void Log([CallerLineNumber] int line = -1,
+    [CallerFilePath] string path = null,
+    [CallerMemberName] string name = null)
+  {
+      Console.WriteLine((line < 0) ? "No line" : "Line " + line);
+      Console.WriteLine((path == null) ? "No file path" : path);
+      Console.WriteLine((name == null) ? "No member name" : name);
+      Console.WriteLine();
+  }
+  //}}
+  ```
+
+## 第15章异步编程 [ ](C#_20210425024133335)
+
+### `async`和`awalt`关键字的优势 [ ](C#_20210425024133337)
++ 与同步方式的区别：
+  + 调用方式区别：{{c1:: 使程序与同步编程一样的顺序调用执行。 }}
+  + 阻塞：{{c1:: `awalt`关键字会解除线程的阻塞。 }}
++ `async` `awalt`使用示例：
+  ```c#
+  //{{c1::
+  private static async Task TaskBasedAsyncPatternAsync()
+  {
+      Console.WriteLine(nameof(TaskBasedAsyncPatternAsync));
+      using (var client = new WebClient())
+      {
+          string content = await client.DownloadStringTaskAsync(url);
+          Console.WriteLine(content.Substring(0, 100));
+          Console.WriteLine();
+      }
+  }
+  //}}
+  ```
+
+### C# 定义异步方法 [ ](C#_20210425024133340)
++ 定义异步方法：
+  ```C#
+  //{{c1::
+  static Task<string> GreetingAsync(string name) =>
+    Task.Run(() =>
+    {
+        TraceThreadAndTask($"running {nameof(GreetingAsync)}");
+        return Greeting(name);
+    });
+  //}}
+  ```
+
+### C#中使用Awaiter异步任务 [ ](C#_20210425024133343)
+
++ 转换使用await关键字代码为使用Awaiter类的代码：
+  ```C#
+  private static async void CallerWithAsync()
+  {
+      TraceThreadAndTask($"started {nameof(CallerWithAsync)}");
+      string result = await GreetingAsync("Stephanie");
+      Console.WriteLine(result);
+      TraceThreadAndTask($"ended {nameof(CallerWithAsync)}");
+  }
+  ```
++ 等价的Awaiter版:
+  ```C#
+  //{{c1::
+  private static void CallerWithAwaiter()
+  {
+      TraceThreadAndTask($"starting {nameof(CallerWithAwaiter)}");
+      TaskAwaiter<string> awaiter = GreetingAsync("Matthias").GetAwaiter();
+      awaiter.OnCompleted(OnCompleteAwaiter);
+      void OnCompleteAwaiter()
+      {
+          Console.WriteLine(awaiter.GetResult());
+          TraceThreadAndTask($"ended {nameof(CallerWithAwaiter)}");
+      }
+  }
+  //}}
+  ```
+
+### C# 异步任务：延续任务示例 [ ](C#_20210425024133346)
+
++ 主要思路: {{c1::`Task`类的`ContinueWith`方法定义了任务完成后就调用的代码。}}
++ 示例：
+  ```C#
+  //{{c1::
+  private static void CallerWithContinuationTask()
+  {
+      TraceThreadAndTask($"started {nameof(CallerWithContinuationTask)}");
+
+      var t1 = GreetingAsync("Stephanie");
+
+      t1.ContinueWith(t =>
+      {
+          string result = t.Result;
+          Console.WriteLine(result);
+          TraceThreadAndTask($"ended {nameof(CallerWithContinuationTask)}");
+      });
+  }
+  //}}
+  ```
+
+### 多个异步方法的调用 [ ](C#_20210425024133348)
+
++ 独立异步任务顺序调用示例：
+  ```C#
+  private static async void MultipleAsyncMethods()
+  {
+      string s1 = await GreetingAsync("Stephanie");
+      string s2 = await GreetingAsync("Matthias");
+      Console.WriteLine($"Finished both methods.{Environment.NewLine} Result 1: {s1}{Environment.NewLine} Result 2: {s2}");
+  }
+  ```
++ 使用`Task.WhenAll`提升性能示例：
+  ```C#
+  //{{c1::
+  private static async void MultipleAsyncMethodsWithCombinators1()
+  {
+      Task<string> t1 = GreetingAsync("Stephanie");
+      Task<string> t2 = GreetingAsync("Matthias");
+      await Task.WhenAll(t1, t2);
+      Console.WriteLine($"Finished both methods.{Environment.NewLine} Result 1: {t1.Result}{Environment.NewLine} Result 2: {t2.Result}");
+      //以下为优化
+      string[] result = await Task.WhenAll(t1, t2);
+      Console.WriteLine($"Finished both methods.{Environment.NewLine} Result 1: {result[0]}{Environment.NewLine} Result 2: {result[1]}");
+  }
+  //}}
+  ```
+### C#: 异步任务：ValueTasks结构示例 [ ](C#_20210425024133350)
+
++ 主要思路: {{c1:: ValueTask是一个结构具有性能优势,await可以等待任务提供GetAwaiter方法的对象 }}
++ 使用`await`与不使用两种版本示例:
+  ```C#
+  //{{c1::
+    private readonly static Dictionary<string, string> names = new Dictionary<string, string>();
+
+    static async ValueTask<string> GreetingValueTaskAsync(string name)
+    {
+        if (names.TryGetValue(name, out string result))
+        {
+            return result;
+        }
+        else
+        {
+            result = await GreetingAsync(name);
+            names.Add(name, result);
+            return result;                
+        }
+    }
+
+    static ValueTask<string> GreetingValueTask2Async(string name)
+    {
+        if (names.TryGetValue(name, out string result))
+        {
+            return new ValueTask<string>(result);
+        }
+        else
+        {
+            Task<string> t1 =  GreetingAsync(name);
+            
+            TaskAwaiter<string> awaiter = t1.GetAwaiter();
+            awaiter.OnCompleted(OnCompletion);
+            return new ValueTask<string>(t1);
+
+            void OnCompletion()
+            {
+                names.Add(name, awaiter.GetResult());
+            }
+        }
+    }
+  //}}
+  ```
+
+### 将C#传统异步模式转换为基于任务的异步模式 [ ](C#_20210425024133352)
+
++ 主要思路：{{c1::使用`Task.Factory.FromAsync<ResultT>()`,该方法第一个参数**接收**一个`IAsyncResult`,然后将该参数**传递给**第二个参数的委托方法。}}
++ 示例:
+  ```C#
+  //{{c1::
+  private static async void ConvertingAsyncPattern()
+  {
+      HttpWebRequest request = WebRequest.Create("http://www.microsoft.com") as HttpWebRequest;
+
+      using (WebResponse response = await Task.Factory.FromAsync<WebResponse>(request.BeginGetResponse(null, null), request.EndGetResponse))
+      {
+          Stream stream = response.GetResponseStream();
+          using (var reader = new StreamReader(stream))
+          {
+              string content = reader.ReadToEnd();
+              Console.WriteLine(content.Substring(0, 100));
+          }
+      }
+  }
+  //}}
+  ```
+
+### 异步任务的异常处理 [ ](C#_20210425024133354)
+
++ 主要问题及解决：{{c1::对于使用`await`立即执行的单个异常任务可以`catch`到单个异常，对应多个并行任务，普通`catch`方式只能`catch`到第一个发生异常的任务的异常。使用`AggregateException`可以处理所有并行任务的异常。}}
++ 并行任务异常处理示例：
+  ```C#  
+  //{{c1::
+  private async static void StartTwoTasksParallel()
+  {
+      Task t1 = null;
+      try
+      {
+          t1 = ThrowAfter(2000, "first");
+          Task t2 = ThrowAfter(1000, "second");
+          await Task.WhenAll(t1, t2);
+      }
+      catch (Exception ex)
+      {
+          // just display the exception information of the first task that is awaited within WhenAll
+          Console.WriteLine($"handled {ex.Message}");
+      }
+  }
+  //}}
+  ```
++ 使用`AggregateException`处理所有异常示例：
+  ```C#
+  //{{c1::
+  private static async void ShowAggregatedException()
+  {
+      Task taskResult = null;
+      try
+      {
+          Task t1 = ThrowAfter(2000, "first");
+          Task t2 = ThrowAfter(1000, "second");
+          await (taskResult = Task.WhenAll(t1, t2));
+      }
+      catch (Exception ex)
+      {
+          // just display the exception information of the first task that is awaited within WhenAll
+          Console.WriteLine($"handled {ex.Message}");
+          foreach (var ex1 in taskResult.Exception.InnerExceptions)
+          {
+              Console.WriteLine($"inner exception {ex1.Message} from task {ex1.Source}");
+          }
+      }
+  }
+  //}}
+  ```
+
