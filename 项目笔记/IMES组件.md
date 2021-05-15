@@ -1,4 +1,153 @@
+## 部署命令
+
+```
+npm run build:prod
+```
+
+
+
+## Excel模板下载
+
+**按钮注册**
+
+```html
+<el-button v-if="printBtnShow" type="primary" @click="handleExcelPrint">打印内箱标签(Excel)</el-button>
+```
+
+**按钮函数**
+
+```
+    /** 打印内箱标签 */
+    handleExcelPrint() {
+      const that = this
+      GetLabelExcelByERPNO(this.postForm.erpno, this.postForm.lotNo, this.total).then((res) => {
+        const blob = new Blob([res], {
+          type: 'application/vnd.ms-excel'
+        })
+        const fileName = 'InnerLabel.xlsx'
+        const linkNode = document.createElement('a')
+
+        linkNode.download = fileName // a标签的download属性规定下载文件的名称
+        linkNode.style.display = 'none'
+        linkNode.href = URL.createObjectURL(blob) // 生成一个Blob URL
+        document.body.appendChild(linkNode)
+        linkNode.click() // 模拟在按钮上的一次鼠标单击
+
+        URL.revokeObjectURL(linkNode.href) // 释放URL 对象
+        document.body.removeChild(linkNode)
+
+        that.$notify({
+          message: '下载成功',
+          type: 'success',
+          duration: 2000
+        })
+      }).finally(_ => (that.loading = false))
+    }
+```
+
+**模板下载请求**
+
+```
+export function GetLabelExcelByERPNO(erpno, lotNo, total, start, end) {
+  return request({
+    url: '/api/SectList/GetLabelExcelByERPNO',
+    method: 'post',
+    params: { erpno, lotNo, total, start, end },
+    responseType: 'blob'
+  })
+}
+```
+
+**后端代码**
+
+```c#
+        [HttpPost]
+        public async Task<FileResult> GetLabelExcelByERPNO(string erpno, string lotNo, string total,string start,string end)
+        {
+            var entity = (await _sectlistRepository.Query(x => x.ERPNO == erpno.Trim())).FirstOrDefault();
+            var labelDto = new InnerBoxDto();
+            labelDto.customerType = entity.CustomerName;
+            labelDto.mpn = entity.ERPNO;
+            labelDto.partNumber = entity.SectNo;
+            labelDto.dateCode = string.IsNullOrWhiteSpace(start)?DateTime.Now.ToString("yyyyMMdd"):start;
+            labelDto.expDate = string.IsNullOrWhiteSpace(end)?DateTime.Now.AddYears(1).AddDays(-1).ToString("yyyyMMdd"):end;
+            labelDto.lotNo = lotNo;
+            labelDto.vendor = entity.vendor;
+            labelDto.qty = total;
+            var barcode = (entity.CustomerName ?? "") + ","
+                + (labelDto.mpn ?? "") + ","
+                + (entity.SectNo ?? "") + ","
+                + (labelDto.dateCode ?? "") + ","
+                + (labelDto.expDate ?? "") + ","
+                + (labelDto.qty ?? "") + ","
+                + (labelDto.lotNo ?? "") + ","
+                + (labelDto.vendor ?? "") ;
+            labelDto.barcode = barcode;
+
+            //模板文件  
+            var tempFileFullPath = Path.Combine(_webHostEnvironment.WebRootPath, "excelTemplate", "InnerLabel.xlsx");
+
+            //下载文件
+            var newFilePath = Path.Combine(_webHostEnvironment.WebRootPath, "excelDownLoad", DateTime.Now.ToString("yyyyMMddHHmmss") + ".xlsx");
+
+            var newFilePathPdf = Path.Combine(_webHostEnvironment.WebRootPath, "excelDownLoad", DateTime.Now.ToString("yyyyMMddHHmmss") + ".xlsx");
+            //excel文件赋值
+            ExcelPackage.LicenseContext = LicenseContext.NonCommercial;//5.0以上一定要指明非商业证书
+            FileInfo fileInfo = new FileInfo(newFilePath);
+            FileInfo file = new FileInfo(newFilePath);
+            System.IO.File.Copy(tempFileFullPath, newFilePath, true);
+            using (var package = new ExcelPackage(fileInfo))
+            {
+                var sheet1 = package.Workbook.Worksheets[0];
+                
+                //二维码图片
+                // 读图片
+                var qrImage = GetQRCodeImg.Get(labelDto.barcode); //把字符串转成图片
+
+                var picture = sheet1.Drawings.AddPicture($"image_{DateTime.Now.Ticks}", qrImage);
+                var cell = sheet1.Cells[8, 3];
+                // int cellColumnWidthInPix = ExcelHelper.GetWidthInPixels(cell);
+                // int cellRowHeightInPix = ExcelHelper.GetHeightInPixels(cell);
+                int cellColumnWidthInPix = 100;
+                int cellRowHeightInPix = 100;
+                int adjustImageWidthInPix = cellColumnWidthInPix;
+                int adjustImageHeightInPix = cellRowHeightInPix;
+
+
+                //图片尺寸适应单元格
+                var adjustImageSize = ExcelHelper.GetAdjustImageSize(qrImage, cellColumnWidthInPix, cellRowHeightInPix);
+                adjustImageWidthInPix = adjustImageSize.Item1;
+                adjustImageHeightInPix = adjustImageSize.Item2;
+
+                //设置为居中显示
+                int columnOffsetPixels = (int)((cellColumnWidthInPix - adjustImageWidthInPix) / 2.0);
+                int rowOffsetPixels = (int)((cellRowHeightInPix - adjustImageHeightInPix) / 2.0);
+                picture.SetSize(adjustImageWidthInPix, adjustImageHeightInPix);
+                picture.SetPosition(7,10,2,0);
+
+                sheet1.Cells[3, 2].Value = labelDto.customerType;
+                sheet1.Cells[4, 2].Value = labelDto.mpn;
+                sheet1.Cells[5, 2].Value = labelDto.partNumber;
+
+                sheet1.Cells[6, 2].Value = labelDto.dateCode;
+                sheet1.Cells[7, 2].Value = labelDto.expDate;
+                sheet1.Cells[8, 2].Value = labelDto.qty;
+
+                sheet1.Cells[9, 2].Value = labelDto.lotNo;
+                sheet1.Cells[10, 2].Value = labelDto.vendor;
+                package.Save();
+            }
+            var stream = System.IO.File.OpenRead(newFilePath);
+            return File(stream, "application/vnd.android.package-archive", DateTime.Now.ToString("yyyyMMddHHmmss") + ".xlsx");
+        }
+```
+
+
+
+
+
 ## C# 正则表达式式使用
+
 ```C#
 for(var i = 0; i< elist.Count;i++){
 

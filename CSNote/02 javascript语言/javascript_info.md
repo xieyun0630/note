@@ -187,20 +187,23 @@ alert(String(Math.trunc(Number("1.2")))); // "1"，不同于 "1.2" ⇒ 不是整
 
 }}
 
-### `Object.assign()`的使用 [ ](javascript_info_20191219101334415)
+### `Object.assign()`的使用 
+
++ 作用：{{c1::`Object.assign()` 方法用于将所有可枚举属性的值从一个或多个源对象分配到目标对象。它将返回目标对象。}}
 
 ```javascript
-let user = { name: "John" };
-
-let permissions1 = { canView: true };
-let permissions2 = { canEdit: true };
-
-// 把 permissions1 和 permissions2 的所有属性都拷贝给 user
 //{{c1::
-Object.assign(user, permissions1, permissions2);
- }}
-// 现在 user = { name: "John", canView: true, canEdit: true }
-// 如果接收的对象（user）已经有了同样属性名的属性，{{c1:: 前面的会被覆盖}}
+const target = { a: 1, b: 2 };
+const source = { b: 4, c: 5 };
+
+const returnedTarget = Object.assign(target, source);
+
+console.log(target);
+// expected output: Object { a: 1, b: 4, c: 5 }
+
+console.log(returnedTarget);
+// expected output: Object { a: 1, b: 4, c: 5 }
+//}}
 ```
 
 ### 对象属性操作：按要求写代码： [ ](javascript_info_20191219101334421)
