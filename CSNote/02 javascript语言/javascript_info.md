@@ -794,6 +794,16 @@ arr[3](); // hello
 
 所以，清空数组最好的方法就是： {{c1::  ``arr.length = 0;``   }}。
 
+### js数组求并集，交集和差集
+
++ 主要思路：{{c1::使用数组的`Filter`与`include`}}
++ 示例:
+  并集: {{c1::`let union = a.concat(b.filter(v => !a.includes(v))) // [1,2,3,4,5]`}}
+  交集: {{c1::`let intersection = a.filter(v => b.includes(v)) // [2]`}}
+  差集: {{c1::`let difference = a.concat(b).filter(v => a.includes(v) && !b.includes(v)) // [1,3]`}}
+
+
+
 ## 数组方法 [ ](javascript_info_20191219101334493)
 
 ### `arr.splice(index[, deleteCount, elem1, ..., elemN])` [ ](javascript_info_20191219101334495)

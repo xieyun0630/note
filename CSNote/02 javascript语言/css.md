@@ -770,7 +770,7 @@
 
 ### 设置viewport [	](css_20201014033126131)
 
-+ 标签：{{c1:: <meta name="viewport" content="width=device-width, initial-scale=1.0,maximum-scale=1.0, minimum-scale=1.0, user-scalable=no"> }}
++ 标签：{{c1:: `<meta name="viewport" content="width=device-width, initial-scale=1.0,maximum-scale=1.0, minimum-scale=1.0, user-scalable=no">`}}
 + 各属性含义：
   + `width`：{{c1:: 控制 viewport 的大小，可以指定的一个值，如 600，或者特殊的值，如 + device-width 为设备的宽度（单位为缩放为 100% 时的 CSS 的像素）。}}
   + `height`：{{c1:: 和 width 相对应，指定高度。}}
