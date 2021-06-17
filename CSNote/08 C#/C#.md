@@ -23,8 +23,8 @@
 + `sbyte` `short` `int` `long` `byte` `ushort` `uint` `ulong`对应的.NET数据类型：{{c1::![](https://gitee.com/xieyun714/nodeimage/raw/master/img/20210322114223.png)}}
 
 ### 字符串字面量 [ ](C#_20210327100148448)
-+ `@`前缀：![](https://gitee.com/xieyun714/nodeimage/raw/master/img/20210322115013.png)
-+ `$`前缀：![](https://gitee.com/xieyun714/nodeimage/raw/master/img/20210322115024.png)
++ `@`前缀：{{c1::![](https://gitee.com/xieyun714/nodeimage/raw/master/img/20210322115013.png)}}
++ `$`前缀：{{c1::![](https://gitee.com/xieyun714/nodeimage/raw/master/img/20210322115024.png)}}
 
 ### using关键字 [ ](C#_20210327100148450)
 + 作用：{{c1::为类型建立层次结构}}
@@ -1605,6 +1605,45 @@ ImmutableList<Account> immutableAccounts = accounts.ToImmutableList();
 //}}
 ```
 + 提升：{{c1::使用`Takewhile()`和`SkipWhile()`扩展方法，还可以传递一个谓词，根据谓词的结果提取或跳过某些项。}}
+
+# C#中`IEnumerable<T>.Aggregate()`的简单使用
+
+```c#
+static void Main(string[] args)
+{
+    List<Phone> PhoneLists = new List<Phone>()
+    {
+        new Phone { Country = "中国", City = "北京", Name = "小米" },
+        new Phone { Country = "中国",City = "北京",Name = "华为"},
+        new Phone { Country = "中国",City = "北京",Name = "联想"},
+        new Phone { Country = "中国",City = "台北",Name = "魅族"},
+        new Phone { Country = "日本",City = "东京",Name = "索尼"},
+        new Phone { Country = "日本",City = "大阪",Name = "夏普"},
+        new Phone { Country = "日本",City = "东京",Name = "松下"},
+        new Phone { Country = "美国",City = "加州",Name = "苹果"},
+        new Phone { Country = "美国",City = "华盛顿",Name = "三星"},
+        new Phone { Country = "美国",City = "华盛顿",Name = "HTC"}
+
+    };
+	//{{c1::
+    Phone phone = PhoneLists.Aggregate((next, now) =>
+    {
+        if (now.Country.Equals("美国"))
+        {
+            next.City += now.City;
+            return next;
+        }
+        else
+        {
+            return now;
+        }
+    });
+    //}}
+    Console.WriteLine($"{phone.Country} - {phone.City} - {phone.Name}");
+    Console.Read();
+}
+```
+
 
 
 ### 标准的查询操作符LINQ：聚合操作符 [ ](C#_20210425024133277)

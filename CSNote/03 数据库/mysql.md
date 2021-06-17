@@ -558,9 +558,9 @@
   * 数据安全：{{c1:: 对外提供数据不使用真实字段名字 }}
 + 字段别名不能在where中使用
 
-### 数据源 [ ](mysql_20200914055152997)
+### from的数据源 [ ](mysql_20200914055152997)
 
-**数据源**：{{c1:: from关键字之后，数据的来源。只要最终结果是一个二维表，都可以当做数据}}源 
+**from的数据源**：{{c1:: from关键字之后，数据的来源。只要最终结果是一个二维表，都可以当做数据源 }}
 * 单表数据源：{{c1:: 数据源就是一张表  `from 表名`}}
 * 多表数据源：{{c1:: 数据来源是多张表（逗号分隔） `from  表名1,表名2,...表名N`}}
 * 子查询数据源：{{c1:: 数据来源是一个查询结果 `from (select 字段列表 from 表名) as 别名}}`
@@ -685,11 +685,12 @@
     MAX(case date when '12-30' THEN span ELSE 0 END) as '12-30'
     FROM daka_pro5
     group by name
-#}}
+    #}}
     ```
-    
-    
-    
+
+
+​    
+​    
 + 解释加Max时的意义：{{c1::![](https://gitee.com/xieyun714/nodeimage/raw/master/img/20210507130843.png)}}
 
 ## 安全管理 [ ](mysql_20200914055153015)
@@ -1414,8 +1415,25 @@ create temporary table if not exists tmpTable
 ###  优化嵌套查询 [ ](mysql_20200927095114680)
 
 + 优化思路：{{c1:: 如果需要嵌套查询的任务能够被替换成连接查询，那么就使用**连接查询** }}
-+ 示例: `explain select * from t_user where id in (select user_id from user_role );`
-+ 优化后 :`explain select * from t_user u , user_role ur where u.id = ur.user_id;`
++ 示例: 
+  ```sql
+  SELECT
+    *
+  FROM
+    t_user
+  WHERE
+    id IN (SELECT user_id FROM user_role);
+  ```
++ 优化后 :
+  ```sql
+  SELECT
+    *
+  FROM
+    t_user u,
+    user_role ur
+  WHERE
+    u.id = ur.user_id;
+  ```
 
 ###  优化OR条件 [ ](mysql_20200928050450126)
 

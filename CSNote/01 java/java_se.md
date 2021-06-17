@@ -1211,7 +1211,7 @@ Druid
 ```
 
 
-### Connection对象 [	](java_se_20201026014023081)
+### JDBC:Connection对象 [	](java_se_20201026014023081)
 
 + 作用:{{c1:: 客户端与数据库所有的交互都是通过Connection来完成的。 }}
 | 常用方法                            | 说明                                             |
@@ -1223,7 +1223,7 @@ Druid
 | `commit()`                          | {{c1:: 提交事务                                        }} |
 | `rollback()`                        | {{c1:: 回滚事务                                        }} |
 
-### Statement对象 [	](java_se_20201026014023083)
+### JDBC:Statement对象 [	](java_se_20201026014023083)
 
 + 作用：{{c1:: `Statement对象用于向数据库发送Sql语句，对数据库的增删改查都可以通过此对象发送sql语句完成。` }}
 + | 常用方法                    | 说明                                               |
@@ -1234,7 +1234,7 @@ Druid
   | `addBatch(String sql)`      | {{c1:: 把多条的sql语句放进同一个批处理中 }}        |
   | `executeBatch()`            | {{c1:: 向数据库发送一批sql语句执行 }}              |
 
-### ResultSet对象 [	](java_se_20201026014023085)
+### JDBC:ResultSet对象 [	](java_se_20201026014023085)
 + 作用：{{c1:: ResultSet对象代表Sql语句的执行结果ResultSet对象维护了一个数据行的游标【简单理解成指针】，调用ResultSet.next()方法，可以让游标指向具体的数据行，进行获取该行的数据}}
 + | 返回类型 | 方法               | 功能描述                                                     |
   | -------- | ------------------ | ------------------------------------------------------------ |
@@ -1322,7 +1322,7 @@ Druid
     // }}
 ```
 
-### 调用数据库的存储过程 [	](java_se_20201026050823610)
+### JDBC调用数据库的存储过程 [	](java_se_20201026050823610)
 + 调用存储过程的语法：{{c1:: `{call <procedure-name>[(<arg1>,<arg2>, ...)]}` }}
 + 调用函数的语法：{{c1:: `{?= call <procedure-name>[(<arg1>,<arg2>, ...)]}` }}
 + JDBC调用：
@@ -1406,10 +1406,10 @@ Druid
 
 ### classpath和jar [ ](java_se_20210107100220035)
 
-+ `classpath`：{{c1：： JVM通过环境变量`classpath`决定搜索`class`的路径和顺序； }}
-+ 设置系统环境变量`classpath`替代方案：{{c1：： 始终建议通过`-cp`命令传入； `java -cp ./hello.jar abc.xyz.Hello` }}
-+ jar包：{{c1：： jar包相当于目录，可以包含很多`.class`文件，方便下载和使用； }}
-+ `MANIFEST.MF文件`：{{c1：： `MANIFEST.MF`文件可以提供jar包的信息，如`Main-Class`，这样可以直接运行jar包。 }}
++ `classpath`：{{c1:: JVM通过环境变量`classpath`决定搜索`class`的路径和顺序； }}
++ 设置系统环境变量`classpath`替代方案：{{c1:: 始终建议通过`-cp`命令传入； `java -cp ./hello.jar abc.xyz.Hello` }}
++ jar包：{{c1:: jar包相当于目录，可以包含很多`.class`文件，方便下载和使用； }}
++ `MANIFEST.MF文件`：{{c1:: `MANIFEST.MF`文件可以提供jar包的信息，如`Main-Class`，这样可以直接运行jar包。 }}
 
 ## java9新特性 [ ](java_se_20210107100220038)
 

@@ -187,20 +187,23 @@ alert(String(Math.trunc(Number("1.2")))); // "1"，不同于 "1.2" ⇒ 不是整
 
 }}
 
-### `Object.assign()`的使用 [ ](javascript_info_20191219101334415)
+### `Object.assign()`的使用 
+
++ 作用：{{c1::`Object.assign()` 方法用于将所有可枚举属性的值从一个或多个源对象分配到目标对象。它将返回目标对象。}}
 
 ```javascript
-let user = { name: "John" };
-
-let permissions1 = { canView: true };
-let permissions2 = { canEdit: true };
-
-// 把 permissions1 和 permissions2 的所有属性都拷贝给 user
 //{{c1::
-Object.assign(user, permissions1, permissions2);
- }}
-// 现在 user = { name: "John", canView: true, canEdit: true }
-// 如果接收的对象（user）已经有了同样属性名的属性，{{c1:: 前面的会被覆盖}}
+const target = { a: 1, b: 2 };
+const source = { b: 4, c: 5 };
+
+const returnedTarget = Object.assign(target, source);
+
+console.log(target);
+// expected output: Object { a: 1, b: 4, c: 5 }
+
+console.log(returnedTarget);
+// expected output: Object { a: 1, b: 4, c: 5 }
+//}}
 ```
 
 ### 对象属性操作：按要求写代码： [ ](javascript_info_20191219101334421)
@@ -588,6 +591,16 @@ alert((123456).toString(36)); // 2n9c
 
 删除小数点后的所有内容而不舍入：`3.1` 变成 `3`，`-1.1` 变成 `-1`。}}
 
+### javascript 取整：取小数点后一位
+
+```javascript
+//{{c1::
+Math.floor(row.difference / row.ProdStandardQty * 10) / 10
+//}}
+```
+
+
+
 ### `num.toFixed(n)`方法 [ ](javascript_info_20191219101334465)
 
 {{c1::函数 [toFixed(n)](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Number/toFixed) 将点数后的数字**四舍五入到 `n` 个数字**并返回结果的**字符串**表示。}}
@@ -780,6 +793,16 @@ arr[3](); // hello
 + {{c1::且自动更新。}}
 
 所以，清空数组最好的方法就是： {{c1::  ``arr.length = 0;``   }}。
+
+### js数组求并集，交集和差集
+
++ 主要思路：{{c1::使用数组的`Filter`与`include`}}
++ 示例:
+  并集: {{c1::`let union = a.concat(b.filter(v => !a.includes(v))) // [1,2,3,4,5]`}}
+  交集: {{c1::`let intersection = a.filter(v => b.includes(v)) // [2]`}}
+  差集: {{c1::`let difference = a.concat(b).filter(v => a.includes(v) && !b.includes(v)) // [1,3]`}}
+
+
 
 ## 数组方法 [ ](javascript_info_20191219101334493)
 
