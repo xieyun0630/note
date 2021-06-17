@@ -1711,7 +1711,7 @@ create temporary table if not exists tmpTable
 + 整体删除:{{c1:: `Reset Master` }}
 + 删除指定序号前的日志:{{c1:: `purge  master logs to 'mysqlbin.******` }}
 + 删除指定日期前的日志:{{c1:: `purge master logs before 'yyyy-mm-dd hh24:mi:ss'` }}
-+ 指定日志过期天数:{{c1:: 设置参数`expire_logs_days=#`  }}
++ 指定日志过期天数:{{c1:: 设置参数`expire_logs_days=#`}}
 
 ### 查询日志 [	](mysql_20201012060626320)
 + 作用：{{c1:: 记录了客户端的所有操作语句，而二进制日志不包含查询数据的SQL语句。 }}
