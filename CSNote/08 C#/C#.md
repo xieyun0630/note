@@ -1606,7 +1606,7 @@ ImmutableList<Account> immutableAccounts = accounts.ToImmutableList();
 ```
 + 提升：{{c1::使用`Takewhile()`和`SkipWhile()`扩展方法，还可以传递一个谓词，根据谓词的结果提取或跳过某些项。}}
 
-# C#中`IEnumerable<T>.Aggregate()`的简单使用
+# C#中`IEnumerable<T>.Aggregate()`的简单使用 [ ](C#_20210620101056247)
 
 ```c#
 static void Main(string[] args)
@@ -2409,4 +2409,3 @@ static void Main(string[] args)
   }
   //}}
   ```
-

@@ -187,7 +187,7 @@ alert(String(Math.trunc(Number("1.2")))); // "1"，不同于 "1.2" ⇒ 不是整
 
 }}
 
-### `Object.assign()`的使用 
+### `Object.assign()`的使用  [ ](javascript_info_20210620101056126)
 
 + 作用：{{c1::`Object.assign()` 方法用于将所有可枚举属性的值从一个或多个源对象分配到目标对象。它将返回目标对象。}}
 
@@ -591,7 +591,7 @@ alert((123456).toString(36)); // 2n9c
 
 删除小数点后的所有内容而不舍入：`3.1` 变成 `3`，`-1.1` 变成 `-1`。}}
 
-### javascript 取整：取小数点后一位
+### javascript 取整：取小数点后一位 [ ](javascript_info_20210620101056129)
 
 ```javascript
 //{{c1::
@@ -794,7 +794,7 @@ arr[3](); // hello
 
 所以，清空数组最好的方法就是： {{c1::  ``arr.length = 0;``   }}。
 
-### js数组求并集，交集和差集
+### js数组求并集，交集和差集 [ ](javascript_info_20210620101056131)
 
 + 主要思路：{{c1::使用数组的`Filter`与`include`}}
 + 示例:
