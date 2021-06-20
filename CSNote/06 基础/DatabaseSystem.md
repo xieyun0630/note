@@ -634,6 +634,7 @@
 ## 数据依赖理论 [ ](DatabaseSystem_20210511102843629)
 
 ### 函数依赖 [ ](DatabaseSystem_20210514093242051)
++ 思考提炼：{{c1:: 不满足（X的属性相等，Y的属性值不等）这个条件，而不是X的两 个元组相等，Y就必须相等 }}
 + 函数依赖定义：{{c1::![](https://gitee.com/xieyun714/nodeimage/raw/master/img/20210514182757.png)}}
 + 例题：![](https://gitee.com/xieyun714/nodeimage/raw/master/img/20210514183556.png)
 + 答：{{c1::![](https://gitee.com/xieyun714/nodeimage/raw/master/img/20210514183649.png)}}
@@ -646,6 +647,7 @@
 + 答：{{c1::![](https://gitee.com/xieyun714/nodeimage/raw/master/img/20210514184124.png)}}
 
 ### 部分或完全函数依赖 [ ](DatabaseSystem_20210514093242056)
++ 思考提炼：去掉一个属性函数依赖不成立就是完全依赖
 + 部分函数依赖与完全函数依赖的定义：{{c1::![](https://gitee.com/xieyun714/nodeimage/raw/master/img/20210514185712.png)}}
 + 练习：![](https://gitee.com/xieyun714/nodeimage/raw/master/img/20210514185742.png)
 + 答：{{c1::![](https://gitee.com/xieyun714/nodeimage/raw/master/img/20210514185755.png)}}
@@ -657,24 +659,29 @@
 
 ### 函数依赖相关的几个重要概念 [ ](DatabaseSystem_20210514093242062)
 + 候选键定义：{{c1::![](https://gitee.com/xieyun714/nodeimage/raw/master/img/20210514191411.png)}}
-+ 外来键的定义：{{c1::![](https://gitee.com/xieyun714/nodeimage/raw/master/img/20210514191435.png)}}
++ 外来键的定义：{{c1:: ![](https://gitee.com/xieyun714/nodeimage/raw/master/img/20210514191435.png)}}
 + 逻辑蕴涵的定义：{{c1::![](https://gitee.com/xieyun714/nodeimage/raw/master/img/20210514201739.png)}}
 + 闭包的定义：{{c1::![](https://gitee.com/xieyun714/nodeimage/raw/master/img/20210514201814.png)}}
 
-### 函数依赖的Armstrong公理 [ ](DatabaseSystem_20210514093242064)
-+ 作用：由一些给定的函数依赖，推导隐含的函数依赖
+### 函数依赖的Armstrong Axioms A1 A2 A3公理 [ ](DatabaseSystem_20210514093242064)
++ 作用：{{c1:: 由一些给定的函数依赖，推导隐含的函数依赖 }}
 + **自反律** **增广律** **传递律**：{{c1::![](https://gitee.com/xieyun714/nodeimage/raw/master/img/20210514210830.png)}}
-+ 由Armstrong‘s Axiom可推出如下结论：
-  + **合并律** **伪传递律** **分解律**：{{c1::![](https://gitee.com/xieyun714/nodeimage/raw/master/img/20210514210929.png)}}
-+ 重要引理：{{c1::![](https://gitee.com/xieyun714/nodeimage/raw/master/img/20210514211048.png)}}
++ **合并律** **伪传递律** **分解律**：{{c1::![](https://gitee.com/xieyun714/nodeimage/raw/master/img/20210514210929.png)}}
++ 关于属性组合的函数依赖与单一属性的函数依赖有什么关系？：{{c1::![](https://gitee.com/xieyun714/nodeimage/raw/master/img/20210514211048.png)}}
 
 ### 函数依赖:属性闭包 [ ](DatabaseSystem_20210514093242066)
++ 属性闭包作用（思考）: {{c1:: 求某个关系属性闭包，再求Y是否属于属性闭包。从而判断函数依赖 }}
 + 属性闭包定义：{{c1::![](https://gitee.com/xieyun714/nodeimage/raw/master/img/20210514211142.png)}}
 
++ 求属性闭包问题:![](https://gitee.com/xieyun714/nodeimage/raw/master/img/20210617222329.png)
+
++ 答：{{c1:: ![](https://gitee.com/xieyun714/nodeimage/raw/master/img/20210514211554.png) }}
 
 ### 函数依赖集的最小覆盖：覆盖、属性闭包的计算算法 [ ](DatabaseSystem_20210514093242068)
+
++ 问题：如何证明一个函数依赖被一个函数依赖集所蕴含
 + 覆盖的定义：{{c1::![](https://gitee.com/xieyun714/nodeimage/raw/master/img/20210514211259.png)}}
-+ 属性闭包的计算算法：{{c1::![](https://gitee.com/xieyun714/nodeimage/raw/master/img/20210514211554.png)}}
++ 属性闭包严重函数依赖集之间的等价：{{c1:: ![](https://gitee.com/xieyun714/nodeimage/raw/master/img/20210617222728.png) }}
 + 函数依赖集的性质：{{c1::![](https://gitee.com/xieyun714/nodeimage/raw/master/img/20210514212100.png)}}
 
 ### 函数依赖集的最小覆盖 [ ](DatabaseSystem_20210514093242070)
