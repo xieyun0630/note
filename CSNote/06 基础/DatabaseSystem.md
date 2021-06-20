@@ -606,15 +606,15 @@
 + 图示：{{c1::![](https://gitee.com/xieyun714/nodeimage/raw/master/img/20210511200956.png)}}
 
 ### E-R图/IDEF1X图向关系模式的转换：基本转换 [ ](DatabaseSystem_20210511102843613)
-+ **基本转换规则**：![](https://gitee.com/xieyun714/nodeimage/raw/master/img/20210511201440.png)
-- **复合属性的转换**：![](https://gitee.com/xieyun714/nodeimage/raw/master/img/20210511201540.png)
-- **多值属性的转换**：![](https://gitee.com/xieyun714/nodeimage/raw/master/img/20210511201618.png)
++ **基本转换规则**：{{c1::![](https://gitee.com/xieyun714/nodeimage/raw/master/img/20210511201440.png)}}
+- **复合属性的转换**：{{c1::![](https://gitee.com/xieyun714/nodeimage/raw/master/img/20210511201540.png)}}
+- **多值属性的转换**：{{c1::![](https://gitee.com/xieyun714/nodeimage/raw/master/img/20210511201618.png)}}
 
 ### E-R图/IDEF1X图向关系模式的转换：一对一，一对多，多对多 [ ](DatabaseSystem_20210511102843616)
 + 联系的转换
-- **一对一联系**：![](https://gitee.com/xieyun714/nodeimage/raw/master/img/20210511201730.png)
-- **一对多联系**：![](https://gitee.com/xieyun714/nodeimage/raw/master/img/20210511201911.png)
-- **多对多联系**：![](https://gitee.com/xieyun714/nodeimage/raw/master/img/20210511201959.png)
+- **一对一联系**：{{c1::![](https://gitee.com/xieyun714/nodeimage/raw/master/img/20210511201730.png)}}
+- **一对多联系**：{{c1::![](https://gitee.com/xieyun714/nodeimage/raw/master/img/20210511201911.png)}}
+- **多对多联系**：{{c1::![](https://gitee.com/xieyun714/nodeimage/raw/master/img/20210511201959.png)}}
 
 
 ### E-R图/IDEF1X图向关系模式的转换：弱实体，泛化与具体化实体，多元联系 [ ](DatabaseSystem_20210511102843619)

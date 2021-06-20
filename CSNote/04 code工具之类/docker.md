@@ -59,7 +59,7 @@
 
 ### Docker 容器相关命令 [	](docker_20201124103028700)
 + 进入容器：
-  + {{c1:: `docker exec 参数 # 退出容器，容器不会关闭` }}
+  + {{c1:: `docker exec -it 69d1 /bin/bash #退出容器，容器不会关闭` }}
 + 停止容器：
   + {{c1:: `docker stop 容器名称` }}
 + 启动容器：
@@ -272,3 +272,51 @@ docker push 私有仓库服务器IP:5000/centos:7
 docker pull 私有仓库服务器ip:5000/centos:7
 ```
 + {{c1:: 理解 }}
+
+## 使用实例
+
+### docker实例：容器中安装vim
++ 更新安装包获取源
+  ```bash
+  # {{c1::
+  mv /etc/apt/sources.list /etc/apt/sources.list.bak && \
+  echo "deb http://mirrors.163.com/debian/ jessie main non-free contrib" >/etc/apt/sources.list && \
+  echo "deb http://mirrors.163.com/debian/ jessie-proposed-updates main non-free contrib" >>/etc/apt/sources.list && \
+  echo "deb-src http://mirrors.163.com/debian/ jessie main non-free contrib" >>/etc/apt/sources.list && \
+  echo "deb-src http://mirrors.163.com/debian/ jessie-proposed-updates main non-free contrib" >>/etc/apt/sources
+  # }}
+  ```
++ 安装
+  ```bash
+  # {{c1::
+  apt-get update
+  apt-get install vim
+  # }}
+  ```
+
+### docker实例：docker安装mysql
+
++ 创建临时容器，取配置文件到主机：
+  ```bash
+  # {{c1::
+  docker run --rm --name mysqlTemp -it -v /usr/local/mysql/:/var/lib/mysql -e MYSQL_ROOT_PASSWORD=123456  mysql /bin/bash
+  # -- rm 退出后就删除该容器
+  cp /etc/mysql/my.cnf /var/lib/mysql
+  #}}
+  ```
+- 正式创建容器：
+  ```bash
+  # {{c1::
+  docker run --name mysql -p 3306:3306 -e MYSQL_ROOT_PASSWORD=123456 -v /usr/local/mysql/data:/var/lib/mysql -v /usr/local/mysql/my.cnf:/etc/mysql/my.cnf  -d mysql:5.7 --lower_case_table_names=1
+  #}}
+  ```
++ mysql授权配置：
+  ```mysql
+  # {{c1::
+  docker exec -it mysql /bin/bash
+  mysql -uroot -p123456
+  grant all privileges on *.* to root@'122.227.165.6' identified by '123456' with grant option;
+  flush privileges;
+  #}}
+  ```
+

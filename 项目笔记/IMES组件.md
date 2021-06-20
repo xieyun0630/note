@@ -1,10 +1,55 @@
+## 常用正则表达式
+
+### 识别时间：去掉多余打卡
+
+```
+(\d\d:\d\d).+(\d\d:\d\d)$
+```
+
+匹配中文字符的正则表达式：` [\u4e00-\u9fa5]`
+
+日期匹配
+
+```
+(\d{1,4}[-]\d{1,2}[-]\d{1,2})
+```
+
+时间匹配
+
+```
+(\d{1,2}:\d{1,2})
+```
+
+无打卡的数据
+
+```
+^[\u4e00-\u9fa5 ]{1,6}	\d{4}[\\-]\d{2}[\\-]\d{2}	$
+```
+
+只打一次卡的数据
+
+```
+^[\u4e00-\u9fa5 ]{1,6}	\d{4}[\\-]\d{2}[\\-]\d{2}	(\d{1,2}:\d{1,2})$
+```
+
+```
+^([\u4e00-\u9fa5 ]{1,6}	\d{4}[\\-]\d{2}[\\-]\d{2})	(\d{1,2}:\d{1,2}) (\d{1,2}:\d{1,2})
+```
+
+```
+#替换
+^([\u4e00-\u9fa5 ]{1,6}	\d{4}[\\-]\d{2}[\\-]\d{2})\n	(\d{1,2}:\d{1,2}) (\d{1,2}:\d{1,2})
+
+$1 $2\n$1 $3
+```
+
+
+
 ## 部署命令
 
 ```
 npm run build:prod
 ```
-
-
 
 ## Excel模板下载
 
@@ -16,7 +61,7 @@ npm run build:prod
 
 **按钮函数**
 
-```
+```javascript
     /** 打印内箱标签 */
     handleExcelPrint() {
       const that = this
@@ -47,7 +92,7 @@ npm run build:prod
 
 **模板下载请求**
 
-```
+```javascript
 export function GetLabelExcelByERPNO(erpno, lotNo, total, start, end) {
   return request({
     url: '/api/SectList/GetLabelExcelByERPNO',
@@ -61,7 +106,9 @@ export function GetLabelExcelByERPNO(erpno, lotNo, total, start, end) {
 **后端代码**
 
 ```c#
-        [HttpPost]
+        private readonly IWebHostEnvironment _webHostEnvironment;
+
+		[HttpPost]
         public async Task<FileResult> GetLabelExcelByERPNO(string erpno, string lotNo, string total,string start,string end)
         {
             var entity = (await _sectlistRepository.Query(x => x.ERPNO == erpno.Trim())).FirstOrDefault();
@@ -146,7 +193,7 @@ export function GetLabelExcelByERPNO(erpno, lotNo, total, start, end) {
 
 
 
-## C# 正则表达式式使用
+## C# 正则表达式使用
 
 ```C#
 for(var i = 0; i< elist.Count;i++){
@@ -167,6 +214,14 @@ for(var i = 0; i< elist.Count;i++){
         break;
     }
 }
+```
+
+
+
+## C#截取字符串后几位
+
+```C#
+moldno = (dict["lotNo"] ?? "").Trim().Reverse().Take(3).Reverse().ToString(),
 ```
 
 
@@ -495,6 +550,36 @@ data() {
 
 
 
+## 时间框
+
+```html
+            <el-col :span="8">
+              <el-row>
+                <el-time-select
+                  v-model="searchForm.StartWorkDate"
+                  placeholder="起始时间"
+                  :picker-options="{
+                    start: '00:00',
+                    step: '01:00',
+                    end: '24:00'
+                  }"
+                />
+                <el-time-select
+                  v-model="searchForm.EndWorkDate"
+                  placeholder="结束时间"
+                  :picker-options="{
+                    start: '00:00',
+                    step: '01:00',
+                    end: '24:00',
+                    minTime: searchForm.StartWorkDate
+                  }"
+                />
+              </el-row>
+            </el-col>
+```
+
+
+
 ## 日期框
 
 ![](https://gitee.com/xieyun714/nodeimage/raw/master/img/20210510113907.png)
@@ -515,11 +600,30 @@ data() {
 ### 后端
 
 ```c#
-if(input.StartCreationDate.HasValue && input.EndCreationDate.HasValue){
-    where = where.And(x => x.CreationDate >= input.StartCreationDate);
-    where = where.And(x => x.CreationDate < input.EndCreationDate);
+if (input.boxTimeFm.HasValue)
+{
+    where = where.And(x => x.boxTime >= input.boxTimeFm.Value.Add(TimeZoneInfo.Local.BaseUtcOffset));
+}
+if (input.boxTimeTo.HasValue)
+{
+    where = where.And(x => x.boxTime <= input.boxTimeTo.Value.Add(TimeZoneInfo.Local.BaseUtcOffset));
 }
 ```
+
+
+
+## 前端，获取TOKEN以及当前用户信息
+
+```javascript
+import { getInfo } from '@/api/login'
+import { getToken } from '@/utils/auth'
+
+getInfo(getToken()).then(r => {
+    that.postForm.packer = r.userInfo.LoginAccount
+})
+```
+
+
 
 ## 表格单元格条件格式
 
@@ -579,3 +683,139 @@ cellStyle({ row, columnIndex }) {
 </el-table-column>
 ```
 
+
+
+
+
+
+
+```
+/**
+ * Macro1 Macro
+ * 宏由 xiexy 录制，时间: 2021/05/22
+ */
+
+function Macro1()
+{
+	
+	let range = Range("A2:AF56")
+	const rowsCount = range.Rows.Count + 1
+	const colsCount = range.Columns.Count
+	for(let row = 2;row <= rowsCount;row++){
+		//当前行数组
+		let currentArray = []
+		//当前行实际出勤
+		let total = Worksheets.Item(1).Cells.Item(row, colsCount + 1).Value2
+		//读取当前行数据
+		for(let col=2;col<=colsCount;col++){
+			currentArray.push(Worksheets.Item(1).Cells.Item(row, col).Value2)
+		}
+		
+		Console.log(currentArray.toString())
+		// 当前总数
+		let sum = currentArray.reduce((previousValue, item) => item + previousValue, 0)
+		let i = 0
+		for()
+		
+	}
+}
+```
+
+![image-20210527132109099](D:\books\note\项目笔记\IMES组件.assets\image-20210527132109099.png)
+
+![image-20210527132835551](D:\books\note\项目笔记\IMES组件.assets\image-20210527132835551.png)
+
+### 报产数据与内外箱表关系
+
+![](https://gitee.com/xieyun714/nodeimage/raw/master/img/20210527111902.png)
+
+### 根据报产查询内箱号
+
+SELECT
+dbo.ManufactureRecord.RecordID,
+dbo.ManufactureRecord.ERPNO,
+dbo.ManufactureRecord.ProjectNo,
+dbo.ManufactureRecord.Department,
+dbo.boxInfo.boxCode,
+dbo.packageInfo.packCode,
+dbo.packageInfo.toolCavity,
+dbo.packageInfo.finalNumber,
+dbo.ManufactureRecord.Worker,
+dbo.ManufactureRecord.WorkDate
+FROM
+dbo.ManufactureRecord
+LEFT JOIN dbo.manuBatch ON dbo.manuBatch.recordID = dbo.ManufactureRecord.RecordID
+LEFT JOIN dbo.boxInfo ON dbo.boxInfo.boxCode = dbo.manuBatch.orgBatch
+LEFT JOIN dbo.boxList ON dbo.boxList.boxCode = dbo.boxInfo.boxCode
+LEFT JOIN dbo.packageInfo ON dbo.packageInfo.packCode = dbo.boxList.packCode
+WHERE
+ManufactureRecord.RecordID = '25900'
+
+
+
+
+
+
+
+![image-20210529101821467](D:\books\note\项目笔记\IMES组件.assets\image-20210529101821467.png)
+
+
+
+
+
+# 标签修改
+
+![](https://gitee.com/xieyun714/nodeimage/raw/master/img/20210531131648.png)
+
+![image-20210531131733065](D:\books\note\项目笔记\IMES组件.assets\image-20210531131733065.png)
+
+```
+            var p = (from r in sectList
+                     select new LabDtoDPBUOuterBox()
+                     {
+                         customerPN = "3MOS00250A",
+                         apn = "817-06676",
+                         mcoRevision = "04",
+                         project = "Banff",
+                         description = "Housing",
+                         stage = "MP",
+                         vendor = "CYV",
+                         saa = "CFC337-12-0VT-C-RA",
+                         lotCode = LotCode.ObjToString().Trim(),                        
+                         qty = finalQty.ObjToString().Trim() + " PCS",
+                         toolCavity_1 = strTC1.ObjToString().Trim(),
+                         toolCavity_2 = strTC2.ObjToString().Trim(),
+                         toolCavity_3 = strTC3.ObjToString().Trim(),
+                         toolCavity_4 = strTC4.ObjToString().Trim(),
+                         boxNumber = boxCode.ObjToString().Trim(),
+                         mfgDate = boxMFGDate,
+                         expDate = boxEXPDate,
+                     }).ToList();
+```
+
+```
+                     select new LabDtoLGOuterBox()
+                     {                                                
+                         customerPN = "3MOS00250A",
+                         qty = finalQty.ObjToString().Trim() + " PCS",
+                         lotCode = LotCode.ObjToString().Trim(),
+                         codeInfo = r.MaterialCode.ObjToString().Trim() 
+                         + "/"+ finalQty.ObjToString().Trim()
+                         + "/" + LotCode.ObjToString().Trim(),
+                         apn = "817-06676",
+                         mcoRevision = "04",
+                         project = "Banff",
+                         description = "Housing",
+                         stage = "MP",
+                         vendor = "CYV",
+                         saa = "CFC337-12-0VT-C-RA",
+                         toolCavity_1 = strTC1.ObjToString().Trim(),
+                         toolCavity_2 = strTC2.ObjToString().Trim(),
+                         toolCavity_3 = strTC3.ObjToString().Trim(),
+                         toolCavity_4 = strTC4.ObjToString().Trim(),
+                         boxNumber = boxCode.ObjToString().Trim(),
+                         mfgDate = boxMFGDate,
+                         expDate = boxEXPDate,
+```
+
+![image-20210619105726482](D:\books\note\项目笔记\IMES组件.assets\image-20210619105726482.png)
