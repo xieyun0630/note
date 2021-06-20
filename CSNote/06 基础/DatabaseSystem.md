@@ -634,7 +634,8 @@
 ## 数据依赖理论 [ ](DatabaseSystem_20210511102843629)
 
 ### 函数依赖 [ ](DatabaseSystem_20210514093242051)
-+ 思考提炼：{{c1:: 不满足（X的属性相等，Y的属性值不等）这个条件，而不是X的两 个元组相等，Y就必须相等 }}
++ 思考提炼1：{{c1:: 不满足（X的属性相等，Y的属性值不等）这个条件，而不是X的两个元组相等，Y就必须相等。}}
++ 思考提炼2：{{c1:: 对于每一个X值有唯一的Y值与之对应。}}
 + 函数依赖定义：{{c1::![](https://gitee.com/xieyun714/nodeimage/raw/master/img/20210514182757.png)}}
 + 例题：![](https://gitee.com/xieyun714/nodeimage/raw/master/img/20210514183556.png)
 + 答：{{c1::![](https://gitee.com/xieyun714/nodeimage/raw/master/img/20210514183649.png)}}
@@ -681,9 +682,140 @@
 
 + 问题：如何证明一个函数依赖被一个函数依赖集所蕴含
 + 覆盖的定义：{{c1::![](https://gitee.com/xieyun714/nodeimage/raw/master/img/20210514211259.png)}}
-+ 属性闭包严重函数依赖集之间的等价：{{c1:: ![](https://gitee.com/xieyun714/nodeimage/raw/master/img/20210617222728.png) }}
++ 属性闭包证明函数依赖集之间的等价：{{c1:: ![](https://gitee.com/xieyun714/nodeimage/raw/master/img/20210617222728.png) ![](https://gitee.com/xieyun714/nodeimage/raw/master/img/20210514211142.png)}}
 + 函数依赖集的性质：{{c1::![](https://gitee.com/xieyun714/nodeimage/raw/master/img/20210514212100.png)}}
 
 ### 函数依赖集的最小覆盖 [ ](DatabaseSystem_20210514093242070)
 
++ 作用：{{c1:: 用于模式分解 }}
 + 定义：{{c1::![](https://gitee.com/xieyun714/nodeimage/raw/master/img/20210514212803.png)}}
+
+## 关系范式理论
+
+### 1FN
++ 全称：{{c1::First Normal Form}}
++ 定义：{{c1::![](https://gitee.com/xieyun714/nodeimage/raw/master/img/20210618183638.png)}}
+
+### 2NF
++ 定义：{{c1:: ![](https://gitee.com/xieyun714/nodeimage/raw/master/img/20210619201701.png) }}
++ 作用：{{c1::第二范式消除了非主属性对候选键的部分依赖。}}
+
+### 2NF练习
+
++ 题目：![](https://gitee.com/xieyun714/nodeimage/raw/master/img/20210619220651.png)
++ 答：{{c1::![](https://gitee.com/xieyun714/nodeimage/raw/master/img/20210619220715.png)}}
+
+### 3NF
+
++ 定义:{{c1:: ![](https://gitee.com/xieyun714/nodeimage/raw/master/img/20210619221520.png) }}
++ 作用：{{c1:: 第3范式消除了非主属性对侯选键的**传递函数依赖** }}
+
+### 关系模式分解成3NF
++ 模式分解简单例：{{c1:: ![](https://gitee.com/xieyun714/nodeimage/raw/master/img/20210619223806.png) }}
+
+### 3NF练习
+
++ 题目：![](https://gitee.com/xieyun714/nodeimage/raw/master/img/20210619221841.png)
++ 答：{{c1::![](https://gitee.com/xieyun714/nodeimage/raw/master/img/20210619221908.png)}}
+
+### BCNF
+
++ 理解点:{{c1::要符合BCNF，关系的每个函数依赖必定包含候选键。}}
++ 定义：{{c1::![](https://gitee.com/xieyun714/nodeimage/raw/master/img/20210619224524.png)}}
+
+### 关系模式分解成BCNF
++ 问：![](https://gitee.com/xieyun714/nodeimage/raw/master/img/20210619224850.png)
++ 答：{{c1::![](https://gitee.com/xieyun714/nodeimage/raw/master/img/20210619224901.png)}}
+
+### 4NF
++ 定义：{{c1::![](https://gitee.com/xieyun714/nodeimage/raw/master/img/20210620093227.png)}}
++ 多值依赖定义：{{c1::![](https://gitee.com/xieyun714/nodeimage/raw/master/img/20210620095443.png)}}
++ 与BCNF关系(定理):{{c1::![](https://gitee.com/xieyun714/nodeimage/raw/master/img/20210620093356.png)}}
+
+## 模式分解理论
+
+### 模式分解存在的问题
++ 模式分解的3条规则：{{c1::![](https://gitee.com/xieyun714/nodeimage/raw/master/img/20210620105157.png)}}
++ 模式分解需要考虑的2个问题：
+  1. {{c1::分解后的关系的连接与分解前关系的等价性}}
+  2. {{c1::分解前的约束（函数依赖）在分解后是否仍然保持}}
+  + 图示：{{c1::![](https://gitee.com/xieyun714/nodeimage/raw/master/img/20210620105545.png)}}
+
+### 无损连接分解
++ 定义：{{c1::无损联接分解是将一个关系模式分解成若干个关系模式后，通过自然联接和投影等运算仍能还原到原来的关系模式，则称这种分解为无损联接分解。}}
++ 无损连接性检验算法：{{c1::![](https://gitee.com/xieyun714/nodeimage/raw/master/img/20210620124906.png)![](https://gitee.com/xieyun714/nodeimage/raw/master/img/20210620124940.png)}}
+
+### 无损连接分解检验算法的应用示例
++ 示例：![](https://gitee.com/xieyun714/nodeimage/raw/master/img/20210620125028.png)
++ 解：{{c1::![](https://gitee.com/xieyun714/nodeimage/raw/master/img/20210620125047.png)![](https://gitee.com/xieyun714/nodeimage/raw/master/img/20210620125057.png)![](https://gitee.com/xieyun714/nodeimage/raw/master/img/20210620125116.png)}}
+
+### 分解成两个关系模式的无损连接检验算法
++ 图示: {{c1:: ![](https://gitee.com/xieyun714/nodeimage/raw/master/img/20210620151036.png) }}
+
+### 保持依赖分解的检验算法应用示例
+
++ 题：![](https://gitee.com/xieyun714/nodeimage/raw/master/img/20210620152127.png)
++ 答：{{c1::![](https://gitee.com/xieyun714/nodeimage/raw/master/img/20210620152149.png)}}
+
+### 数据库设计知识体系图
+
++ 图示：{{c1::![](https://gitee.com/xieyun714/nodeimage/raw/master/img/20210620154234.png)}}
+
+### 数据库设计理论要解决的根本问题
+
++ 哪些属性被组织成一个关系? 
++ 是一个大关系模式呢，还是若干小关系模式? 
++ 大关系模式存在什么问题?
++ 答（图示)：{{c1::![](https://gitee.com/xieyun714/nodeimage/raw/master/img/20210620154422.png)}}
+
+## 数据库物理存储
+
+### 计算机系统的存储体系图
++ 存储体系：{{c1::![](https://gitee.com/xieyun714/nodeimage/raw/master/img/20210620164002.png)}}
+
+### 操作系统对数据的组织：FAT-目录(文件夹)-磁盘块/簇
++ 图示：![](https://gitee.com/xieyun714/nodeimage/raw/master/img/20210620164255.png)
+
+### 操作系统对内存-缓冲区的管理
++ 图示：![](https://gitee.com/xieyun714/nodeimage/raw/master/img/20210620164414.png)
+
+### 磁盘的结构与特性
++ 磁盘及磁盘的容量：![](https://gitee.com/xieyun714/nodeimage/raw/master/img/20210620164547.png)
++ 磁盘数据读写时间：![](https://gitee.com/xieyun714/nodeimage/raw/master/img/20210620164635.png)
++ 物理存取算法考虑的关键: 
+  + {{c1::降低I/O次数}}
+  + {{c1::降低排队等待时间}}
+  + {{c1::降低寻道/旋转延迟时间：}}
+    + {{c1::同一磁道连续块存储}}
+    + {{c1::同一柱面不同磁道并行块存储}}
+    + {{c1::多个磁盘并行块存储}}
+
+### 数据存储与查询实现的基本框架
+
++ 图示：{{c1::![image-20210620192058842](https://gitee.com/xieyun714/nodeimage/raw/master/img/image-20210620192058842.png)}}
+
+### 表/记录与磁盘块的映射
++ 数据库-记录在磁盘上的存储：
+  + **定长与变长**：定长记录，还是变长记录(靠分隔符区分开始与结束
+  + **跨块/非跨块**：记录是非跨块存储，还是跨块存储(靠指针连接)![](https://gitee.com/xieyun714/nodeimage/raw/master/img/20210620201520.png)
++ 数据库-表所占磁盘块的分配方法：
+  + **连续分配**: {{c1::数据块被分配到连续的磁盘块上(**会存在扩展困难问题**)}}
+  + **链接分配**: {{c1::数据块中包含指向下一数据块的指针(**访问速度问题**)}}
+  + **按簇分配**: {{c1::按簇分配，簇是若干连续的磁盘块，**簇之间靠指针连接;簇有时也称片段Segment或盘区extent**}}
+  + **索引分配**: {{c1::索引块中存放指向实际数据块的指针![](https://gitee.com/xieyun714/nodeimage/raw/master/img/20210620202210.png)}}
+
+### 数据库的文件组织方法
++ **文件组织**：{{c1::(File Organization)指的是数据组织成记录、块和访问结构的方式，包括把记录和块存储在磁盘上的方式，以及记录和块之间相互联系的方法}}
++ **存取方法**：{{c1::(Access Method)指的是对文件所采取的存取操作方法，一种文件组织可以采取多种存取方法进行访问}}
++ 总结：{{c1::文件组织相当与数据结构，存取方法相当于作用于数据结构的各种操作算法。}}
+
+### 数据库文件组织方法总结
++ 增删改时如何快速“存”,检索查询时如何快速“取”?
++ 图示:{{c1::![](https://gitee.com/xieyun714/nodeimage/raw/master/img/20210620220654.png)}}
+
+### 数据库的4种文件组织方法
++ 注意各个组织方法的**特点**，**数据库重组**。
++ 无序文件组织：{{c1::![](https://gitee.com/xieyun714/nodeimage/raw/master/img/20210620220137.png)![](https://gitee.com/xieyun714/nodeimage/raw/master/img/20210620220156.png)}}
++ 有序记录文件：{{c1::![](https://gitee.com/xieyun714/nodeimage/raw/master/img/20210620220221.png)![](https://gitee.com/xieyun714/nodeimage/raw/master/img/20210620220252.png)![](https://gitee.com/xieyun714/nodeimage/raw/master/img/20210620220320.png)}}
++ 散列文件：{{c1:: ![](https://gitee.com/xieyun714/nodeimage/raw/master/img/20210620220407.png) }}
++ 聚簇文件：{{c1::![](https://gitee.com/xieyun714/nodeimage/raw/master/img/20210620220553.png)}}
