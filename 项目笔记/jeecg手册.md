@@ -131,3 +131,27 @@
     + 其中前端组件配置相对src/views/目录下的 目录名+文件名：{{c1::例如页面src/views/jeecg/helloworld.vue 前端组件配置 jeecg/helloworld}}
 + 用户角色授权【系统管理】-【角色管理】-授权
 
+## 部署
+### 正式环境部署
++ 主要流程：通过jeecg-boot-parent打包项目。jeecg-boot-module-system作为启动项目。
++ 修改`application-prod.yml`配置
+  1. {{c1::修改数据库连接}}
+  2. {{c1::修改缓存redis配置}}
+  3. {{c1::修改上传附件配置}}
+1. 切换maven的Profiles为正式环境：
+   
+   + 图示：{{c1::![](https://gitee.com/xieyun714/nodeimage/raw/master/img/a68768ca5981c98b14654ae1a0837347_258x133.png)}}
+   
+2. 服务器上启动：
+
+   ```bash
+   Window启动命令：
+   java -jar D:\jeecg-boot-module-system-2.0.0.jar
+   
+   Linux下后台进程启动命令：
+   nohup java -jar jeecg-boot-module-system-2.0.0.jar >catalina.out 2>&1 &
+   
+   关掉项目：
+   ps -ef|grep java
+   kill 进程号 
+   ```

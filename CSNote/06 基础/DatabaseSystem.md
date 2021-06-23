@@ -774,14 +774,14 @@
 + 存储体系：{{c1::![](https://gitee.com/xieyun714/nodeimage/raw/master/img/20210620164002.png)}}
 
 ### 操作系统对数据的组织：FAT-目录(文件夹)-磁盘块/簇 [ ](DatabaseSystem_20210620101056206)
-+ 图示：![](https://gitee.com/xieyun714/nodeimage/raw/master/img/20210620164255.png)
++ 图示：{{c1:: ![](https://gitee.com/xieyun714/nodeimage/raw/master/img/20210620164255.png) }}
 
 ### 操作系统对内存-缓冲区的管理 [ ](DatabaseSystem_20210620101056208)
-+ 图示：![](https://gitee.com/xieyun714/nodeimage/raw/master/img/20210620164414.png)
++ 图示：{{c1::![](https://gitee.com/xieyun714/nodeimage/raw/master/img/20210620164414.png)}}
 
 ### 磁盘的结构与特性 [ ](DatabaseSystem_20210620101056211)
 + 磁盘及磁盘的容量：![](https://gitee.com/xieyun714/nodeimage/raw/master/img/20210620164547.png)
-+ 磁盘数据读写时间：![](https://gitee.com/xieyun714/nodeimage/raw/master/img/20210620164635.png)
++ 磁盘数据读写时间：![](https://gitee.com/xieyun714/nodeimage/raw/master/img/20210622134315.png)
 + 物理存取算法考虑的关键: 
   + {{c1::降低I/O次数}}
   + {{c1::降低排队等待时间}}
@@ -796,8 +796,8 @@
 
 ### 表/记录与磁盘块的映射 [ ](DatabaseSystem_20210620101056215)
 + 数据库-记录在磁盘上的存储：
-  + **定长与变长**：定长记录，还是变长记录(靠分隔符区分开始与结束
-  + **跨块/非跨块**：记录是非跨块存储，还是跨块存储(靠指针连接)![](https://gitee.com/xieyun714/nodeimage/raw/master/img/20210620201520.png)
+  + **定长与变长**：{{c1::定长记录，还是变长记录(靠分隔符区分开始与结束}}
+  + **跨块/非跨块**：{{c1::记录是非跨块存储，还是跨块存储(靠指针连接)![](https://gitee.com/xieyun714/nodeimage/raw/master/img/20210620201520.png)}}
 + 数据库-表所占磁盘块的分配方法：
   + **连续分配**: {{c1::数据块被分配到连续的磁盘块上(**会存在扩展困难问题**)}}
   + **链接分配**: {{c1::数据块中包含指向下一数据块的指针(**访问速度问题**)}}

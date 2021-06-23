@@ -93,6 +93,35 @@
 + 显示当前月日历:{{c1:: `cal` }}
 + 显示某一年的日历:{{c1:: `cal 2020` }}
 
+### 重定向符号
+
++ 文件描述符`0 1 2`概念：{{c1::
+  | 名称                 | 代码 | 操作符           | Java中表示 |
+  | -------------------- | ---- | ---------------- | ---------- |
+  | 标准输入(stdin)      | 0    | < 或 <<          | System.in  |
+  | 标准输出(stdout)     | 1    | >, >>, 1> 或 1>> | System.out |
+  | 标准错误输出(stderr) | 2    | 2> 或 2>>        | System.err |}}
++ 重定向符号：
+  | 命令            | 说明                                               |
+  | :-------------- | :------------------------------------------------- |
+  | command > file  | {{c1:: 将输出重定向到 file。}}                              |
+  | command < file  | {{c1:: 将输入重定向到 file。}}                              |
+  | command >> file | {{c1:: 将输出以追加的方式重定向到 file。}}                  |
+  | n > file        | {{c1:: 将文件描述符为 n 的文件重定向到 file。}}             |
+  | n >> file       | {{c1:: 将文件描述符为 n 的文件以追加的方式重定向到 file。}} |
+  | n >& m          | {{c1:: 将输出文件 m 和 n 合并。 将输出文件n的指针设置为m }}                          |
+  | n <& m          | {{c1:: 将输入文件 m 和 n 合并。  将输入文件n的指针设置为m }}                          |
++ springBoot jar包运行命令示例：{{c1:: `nohup java -jar jeecg-boot-module-system-2.0.0.jar >catalina.out 2>&1 &` }}
+### nohup命令
+
++ 作用：{{c1::全称 no hang up（不挂起），用于在系统后台不挂断地运行命令，退出终端不会影响程序的运行。}}
++ 默认输出文件：{{c1::**nohup** 命令，在默认情况下（非重定向时），会输出一个名叫 nohup.out 的文件到当前目录下，如果当前目录的 nohup.out 文件不可写，输出重定向到 **$HOME/nohup.out** 文件中。}}
++ 语法格式：{{c1::` nohup Command [ Arg … ] [　& ]`}}
++ 参数说明：
+  + {{c1::**Command**：要执行的命令。}}
+  + {{c1::**Arg**：一些参数，可以指定输出文件。}}
+  + {{c1::**&**：让命令在后台执行，终端退出后命令仍旧执行。}}
+
 ## 文件和目录操作 [	](linux_20201124103028767)
 
 ### 文件或目录颜色一般情况 [	](linux_20201124103028770)
@@ -288,7 +317,7 @@
 + 注意：{{c1:: 当我们使用gzip对文件进行压缩/解压后，不会保留原来的文件。}}
 + 案例1:gzip压缩，将/home下的hello.txt文件进行压缩:{{c1:: ![](https://gitee.com/xieyun714/nodeimage/raw/master/img/20201212201859.png) }}
 + 案例2:gunzip压缩，将/home下的hello.txt.gz文件进行解压缩:{{c1:: ![](https://gitee.com/xieyun714/nodeimage/raw/master/img/20201212201932.png) }}
- 
+
 ### `zip/unzip`指令 [	](linux_20201214030809291)
 + 案例1:将/home下的所有文件进行压缩成mypackage.zip：{{c1:: ![](https://gitee.com/xieyun714/nodeimage/raw/master/img/20201212202349.png) }}
 + 案例2:将mypackge.zip解压到/opt/tmp目录下：{{c1:: ![](https://gitee.com/xieyun714/nodeimage/raw/master/img/20201212202449.png) }}
@@ -570,6 +599,7 @@
   | 开机时不启动图形界面             | `systemctl set-default multi-user.target`          |
   | 开机时启动图形界面               | `systemctl set-default graphical.target`           |
 + service管理：{{c1:: `service 服务名 [start | stop | restart | reload | status]` }}
+  
   + 查看防火墙状态：{{c1::`service iptables status` }}
 
 ### 服务相关命令 [	](linux_20201214030809342)
