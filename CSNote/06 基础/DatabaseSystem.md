@@ -819,3 +819,12 @@
 + 有序记录文件：{{c1::![](https://gitee.com/xieyun714/nodeimage/raw/master/img/20210620220221.png)![](https://gitee.com/xieyun714/nodeimage/raw/master/img/20210620220252.png)![](https://gitee.com/xieyun714/nodeimage/raw/master/img/20210620220320.png)}}
 + 散列文件：{{c1:: ![](https://gitee.com/xieyun714/nodeimage/raw/master/img/20210620220407.png) }}
 + 聚簇文件：{{c1::![](https://gitee.com/xieyun714/nodeimage/raw/master/img/20210620220553.png)}}
+
+## 数据库索引
+
+### 索引的概念
++ 定义：{{c1::索引是定义在存储表(Table)基础之上，有助于无需检查所有记录而快速定位所需记录的一种辅助存储结构，由一系列存储在磁盘上的索引项(indexentries)组成}}
++ 索引项由两部分构成：
+  + **索引字段**：{{c1::由Table中某些列(通常是一列)中的值串接而成。索引中通 常存储索引字段的每一个值(也有不是这样的)。索引字段类似于词典中的词条}}
+  + **行指针**：{{c1::指向Table中包含索引字段值的记录在磁盘上的存储位置。行指针类似于词条在书籍、词典中出现的页码。}}
++ **索引文件** **主文件**：{{c1::存储索引项的文件为索引文件，相对应，存储表又称为主文件![](https://gitee.com/xieyun714/nodeimage/raw/master/img/20210620223042.png)}}
