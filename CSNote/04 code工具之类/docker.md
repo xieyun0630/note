@@ -273,9 +273,9 @@ docker pull 私有仓库服务器ip:5000/centos:7
 ```
 + {{c1:: 理解 }}
 
-## 使用实例
+## 使用实例 [ ](docker_20210623112904925)
 
-### docker实例：容器中安装vim
+### docker实例：容器中安装vim [ ](docker_20210623112904927)
 + 更新安装包获取源
   ```bash
   # {{c1::
@@ -294,7 +294,7 @@ docker pull 私有仓库服务器ip:5000/centos:7
   # }}
   ```
 
-### docker实例：docker安装mysql
+### docker实例：docker安装mysql [ ](docker_20210623112904930)
 
 + 创建临时容器，取配置文件到主机：
   ```bash
@@ -311,30 +311,28 @@ docker pull 私有仓库服务器ip:5000/centos:7
   #}}
   ```
 + mysql授权配置：
-  ```mysql
+  ```bash
   # {{c1::
   docker exec -it mysql /bin/bash
   mysql -uroot -p123456
   grant all privileges on *.* to root@'122.227.165.6' identified by '123456' with grant option;
   flush privileges;
   #}}
-  
-  grant all privileges on *.* to root@'81.69.43.171' identified by '123456' with grant option;
-  flush privileges;
   ```
 
-### docker实例：容器中安装jdk
-
-```
-docker run -id --name=openjdk8 -p 8080:8080 -v /root/dockerData/openjdk8:/usr/openjdk8 8ebb1f93
-```
-
-```
-docker exec -it openjdk8 /bin/bash
-```
-
-### docker实例：安装Nginx
-
-- 安装最新nginx：`docker pull nginx:latest`
-- 创建并启动容器：`docker run --name nginx -p 80:80 -d nginx`
-
+### docker实例：容器中安装jdk [ ](docker_20210623112904932)
++ 创建并进入容器：
+  ```bash
+  # {{c1::
+  docker run -id --name=openjdk8 -p 8080:8080 -v /root/dockerData/openjdk8:/usr/openjdk8 8ebb1f93
+  #}}
+  ```
++ 进入容器:
+  ```bash
+  # {{c1::
+  docker exec -it openjdk8 /bin/bash
+  #}}
+  ```
+### docker实例：安装Nginx [ ](docker_20210623112904936)
+- 安装最新nginx：{{c1::`docker pull nginx:latest`}}
+- 创建并启动容器：{{c1::`docker run --name nginx -p 80:80 -d nginx`}}
