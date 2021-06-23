@@ -798,9 +798,9 @@ arr[3](); // hello
 
 + 主要思路：{{c1::使用数组的`Filter`与`include`}}
 + 示例:
-  并集: {{c1::`let union = a.concat(b.filter(v => !a.includes(v))) // [1,2,3,4,5]`}}
-  交集: {{c1::`let intersection = a.filter(v => b.includes(v)) // [2]`}}
-  差集: {{c1::`let difference = a.concat(b).filter(v => a.includes(v) && !b.includes(v)) // [1,3]`}}
+  + 并集: {{c1::`let union = a.concat(b.filter(v => !a.includes(v))) // [1,2,3,4,5]`}}
+  + 交集: {{c1::`let intersection = a.filter(v => b.includes(v)) // [2]`}}
+  + 差集: {{c1::`let difference = a.concat(b).filter(v => a.includes(v) && !b.includes(v)) // [1,3]`}}
 
 
 
@@ -5616,3 +5616,4 @@ Custom elements 有两种：
   + {{c1:: `customElements.define('hello-button', HelloButton, {extends: 'button'});`}}
 + At the end, to use our custom element, insert a regular `<button>`tag, but add is="hello-button" to it:
   + {{c1:: `<button is="hello-button">...</button>`}}
+
