@@ -919,11 +919,84 @@
       + **线性散列索引**：{{c1::桶数量按照条件保持线性增长}}
 + **网格索引(Gridfile)**：{{c1::使用多索引字段进行交叉联合定位与检索![](https://gitee.com/xieyun714/nodeimage/raw/master/img/20210623213601.png)}}
 
+## 查询实现算法 [ ](DatabaseSystem_20210624110429808)
+
 ### 数据库查询实现算法概述 [ ](DatabaseSystem_20210623112904978)
+
 + 实现数据库查询的基本思想：{{c1::![](https://gitee.com/xieyun714/nodeimage/raw/master/img/20210623221736.png)}}
 + **逻辑查询优化**与**物理查询优化**关系:{{c1::![](https://gitee.com/xieyun714/nodeimage/raw/master/img/20210623222442.png)}}
 
-### 数据库的三大类操作 [ ](DatabaseSystem_20210623112904981)
-+ 一次单一元组的一元操作（2个）：{{c1::![](https://gitee.com/xieyun714/nodeimage/raw/master/img/20210623222759.png)}}
-+ 整个关系的一元操作（3个）：{{c1::![](https://gitee.com/xieyun714/nodeimage/raw/master/img/20210623222821.png)}}
+### 数据库的三大类操作：查询实现算法总览 [ ](DatabaseSystem_20210623112904981)
++ 一次单一元组的一元操作：{{c1:: 选择，投影}} }}
++ 整个关系的一元操作：{{c1:: 去重，分组，排序 }}
 + 整个关系的二元操作：{{c1::并，交，差，积，连接}}
++ 图示：{{c1::![](https://gitee.com/xieyun714/nodeimage/raw/master/img/20210624191102.png)}}
+
+### 连接操作的实现算法：逻辑实现算法 [ ](DatabaseSystem_20210624110429810)
++ 连接操作的逻辑实现算法：{{c1::![](https://gitee.com/xieyun714/nodeimage/raw/master/img/20210624205258.png)}}
++ 物理算法需要考虑:
+  + 问：![](https://gitee.com/xieyun714/nodeimage/raw/master/img/20210624205522.png)
+  + 关系R X S所占磁盘块数：{{c1::![](https://gitee.com/xieyun714/nodeimage/raw/master/img/20210624210220.png)}}
+  + 答：{{c1::![](https://gitee.com/xieyun714/nodeimage/raw/master/img/20210624205537.png)}}
+
+### 连接操作的物理实现算法 [ ](DatabaseSystem_20210624110429812)
++ 基本实现算法：{{c1::![](https://gitee.com/xieyun714/nodeimage/raw/master/img/20210624210353.png)}}
++ 全主存实现算法:{{c1::![](https://gitee.com/xieyun714/nodeimage/raw/master/img/20210624210446.png)}}
++ 半主存实现算法：{{c1::![](https://gitee.com/xieyun714/nodeimage/raw/master/img/20210624210523.png)}}
++ 大关系实现算法：{{c1::![](https://gitee.com/xieyun714/nodeimage/raw/master/img/20210624210615.png)}}
+
+### 连接操作的各物理实现算法特点与时间复杂度 [ ](DatabaseSystem_20210624110429815)
++ 基本实现算法的**特点**与**时间复杂度**:{{c1::![](https://gitee.com/xieyun714/nodeimage/raw/master/img/20210624211414.png)}}
++ 全主存实现算法的**特点**与**时间复杂度**:{{c1::![](https://gitee.com/xieyun714/nodeimage/raw/master/img/20210624211425.png)}}
++ 半主存实现算法的**特点**与**时间复杂度**:{{c1::![](https://gitee.com/xieyun714/nodeimage/raw/master/img/20210624211434.png)}}
++ 大关系实现算法的**特点**与**时间复杂度**:{{c1::![](https://gitee.com/xieyun714/nodeimage/raw/master/img/20210624211447.png)}}
+
+### 迭代器算法的提出 [ ](DatabaseSystem_20210624110429817)
++ **物化计算策略**与**流水线计算策略**区别:{{c1::![](https://gitee.com/xieyun714/nodeimage/raw/master/img/20210624215950.png)}}
+
+### 迭代器构造查询实现算法：迭代器实现`Union(R,S)` [ ](DatabaseSystem_20210624110429819)
++ 迭代器实现`Union(R,S)`  **并操作**：{{c1::![](https://gitee.com/xieyun714/nodeimage/raw/master/img/20210624220320.png)}}
+
+### 迭代器构造查询实现算法：迭代器实现`SELECTION(R)` [ ](DatabaseSystem_20210624110429821)
++ 迭代器实现`SELECTION(R)`  **选择操作**：{{c1::![](https://gitee.com/xieyun714/nodeimage/raw/master/img/20210624222617.png)}}
+
+### 迭代器构造查询实现算法：迭代器实现`PROJECTION(SELECTION(R))` [ ](DatabaseSystem_20210624110429823)
++ 迭代器实现`PROJECTION(SELECTION(R))` **选择与投影操作**：{{c1::![](https://gitee.com/xieyun714/nodeimage/raw/master/img/20210624222932.png)}}
++ 
+### 迭代器构造查询实现算法：迭代器实现`Join(R,S)`  [ ](DatabaseSystem_20210624110429825)
++ 迭代器实现`Join(R,S)` **连接操作**：{{c1::![](https://gitee.com/xieyun714/nodeimage/raw/master/img/20210624223404.png)}}
+
+### 关系/表数据的读取---完整地读取一个关系 [ ](DatabaseSystem_20210625113159439)
++ 注意：各个算法的基于I/O的时间复杂度
++ 聚簇关系—关系的元组集中存放(一个块中仅是一个关系中的元组):  
+  + `TableScan(R)` ---表空间扫描算法 ：{{c1::扫描结果未排序:`B(R)`}}
+  + `SortTableScan(R)` ：{{c1::扫描结果排序:`3B(R)`}}
+  + `IndexScan(R)`---索引扫描算法 ：{{c1::扫描结果未排序:`B(R)`}}
+  + `SortIndexScan(R)` ：{{c1::扫描结果排序:`B(R) or3B(R)`}}
++ 非聚簇关系—关系的元组不一定集中存放(一个块中不仅是一个关系中的元组): 
+  + 扫描结果未排序:{{c1::`T(R)`}}
+  + 扫描结果排序:{{c1::`T(R) + 2B(R)`}}
++ **一趟算法特点**：{{c1::只要有一个关系能够全部装入内存即可实施}}
+
+### 一趟扫描算法，一元操作：`Distinct`操作实现算法 [ ](DatabaseSystem_20210625113159442)
++ 算法复杂性：{{c1::`B(R)`}}
++ 应用条件：{{c1::`B(&(R))<=M`}}
++ 实现思路图：{{c1:: ![](https://gitee.com/xieyun714/nodeimage/raw/master/img/20210625214803.png) }}
+
+### 一趟扫描算法，一元操作：分组操作 [ ](DatabaseSystem_20210625113159445)
++ 算法复杂性：{{c1::`B(R)`}}
++ 应用条件：{{c1::所有分组的数量应能在内存中完整保存}}
++ 实现思路图：{{c1:: ![](https://gitee.com/xieyun714/nodeimage/raw/master/img/20210625215549.png)![](https://gitee.com/xieyun714/nodeimage/raw/master/img/20210625215724.png) }}
+
+### 一趟扫描算法，实现二元操作 [ ](DatabaseSystem_20210625113159448)
++ 算法复杂性：{{c1::`B(R)+B(S)`}}
++ 应用条件：{{c1::`min(B(R),B(S))<=M`}}
++ 实现思路图：{{c1::![](https://gitee.com/xieyun714/nodeimage/raw/master/img/20210625220027.png)}}
++ 连接操作实现算法P4的改进示例：{{c1::![](https://gitee.com/xieyun714/nodeimage/raw/master/img/20210625220200.png)}}
+
+### 基于索引的算法：索引应用分析示例 [ ](DatabaseSystem_20210625113159451)
++ 问题：考虑示例中关系**聚簇**，**非聚簇**下，是否使用**索引**各种情况下的查询代价![](https://gitee.com/xieyun714/nodeimage/raw/master/img/20210625220425.png)
++ 答：{{c1::![](https://gitee.com/xieyun714/nodeimage/raw/master/img/20210625220925.png)![](https://gitee.com/xieyun714/nodeimage/raw/master/img/20210625221032.png)}}
+
+### 基于有序索引的连接算法： Zig-Zag连接算法 [ ](DatabaseSystem_20210625113159454)
++ 图示：{{c1::![](https://gitee.com/xieyun714/nodeimage/raw/master/img/20210625221032.png)}}
