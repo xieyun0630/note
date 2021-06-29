@@ -318,6 +318,8 @@ docker pull 私有仓库服务器ip:5000/centos:7
   grant all privileges on *.* to root@'122.227.165.6' identified by '123456' with grant option;
   flush privileges;
   #}}
+  
+  
   ```
 
 ### docker实例：容器中安装jdk [ ](docker_20210623112904932)
@@ -334,5 +336,13 @@ docker pull 私有仓库服务器ip:5000/centos:7
   #}}
   ```
 ### docker实例：安装Nginx [ ](docker_20210623112904936)
+- `docker search nginx`：{{c1:: 命令获取nginx镜像列表 }}
 - 安装最新nginx：{{c1::`docker pull nginx:latest`}}
-- 创建并启动容器：{{c1::`docker run --name nginx -p 80:80 -d nginx`}}
+- `docker run -id --name mynginx -p 80:80 nginx`：创建并启动容器
+- `docker exec -it mynginx  /bin/bash`:进入容器
+- 安装成功后访问地址：http://81.69.43.171:80/
+- Nginx相关文件在容器中的位置
+  - nginx配置文件目录：`/etc/nginx`
+  - 默认首页html文件目录:`/usr/share/nginx/html`
+  - 日志文件目录:`/var/log/nginx`
+

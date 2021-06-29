@@ -999,4 +999,24 @@
 + 答：{{c1::![](https://gitee.com/xieyun714/nodeimage/raw/master/img/20210625220925.png)![](https://gitee.com/xieyun714/nodeimage/raw/master/img/20210625221032.png)}}
 
 ### 基于有序索引的连接算法： Zig-Zag连接算法 [ ](DatabaseSystem_20210625113159454)
-+ 图示：{{c1::![](https://gitee.com/xieyun714/nodeimage/raw/master/img/20210625221032.png)}}
++ 图示：{{c1::![](https://gitee.com/xieyun714/nodeimage/raw/master/img/20210629113042.png)}}
+
+### 两趟算法的基本思路
++ 为什么需要两趟算法: {{c1::理论上，任何一个元组需要与所有元组进行比较，才能确定是否重复，才能知道是否是一个新的组，才能确定位于何序位置?这些需要内存。如果需保存的待处理数据块数远远大于内存可用块数时？怎么办？}}
++ **两趟**算法的基本思路:{{c1::![](https://gitee.com/xieyun714/nodeimage/raw/master/img/20210629113515.png)}}
++ 基于散列的两趟算法核心思想：
+  + {{c1::大数据集上的操作 可否 等于 (子集上操作)的并集?}}
+  + {{c1::例如:元组在某一子集上无重复即相当于在全集上无重复}}
++ 基于排序的两趟算法核心思想：
+  + {{c1::多个已按横向处理的子集上，纵向归并结果等同于在全集上的处理结果? }}
+  + {{c1::例如:多个已排序的子集，纵向归并的结果等同于全集上的排序结果多个已排序的子集，纵向归并处理的无重复即等同于全集上的无重复}}
+
+### 两阶段多路归并排序
++ TPMMS：{{c1::两阶段多路归并排序TPMMS(Two-Phase Multiway Merge-Sort)}}
++ 基本思想：{{c1::![](https://gitee.com/xieyun714/nodeimage/raw/master/img/20210629114005.png)}}
+
+### 三个层面进行查询优化
++ 语义优化：{{c1::利用模型的语义及完整性规则，优化查询。![](https://gitee.com/xieyun714/nodeimage/raw/master/img/20210629114802.png)![](https ://gitee.com/xieyun714/nodeimage/raw/master/img/20210629114840.png)}}
++ 语法优化：{{c1::逻辑层优化,利用语法结构，优化操作执行顺序；![](https://gitee.com/xieyun714/nodeimage/raw/master/img/20210629114957.png)}}
++ 执行优化：{{c1::物理层优化,存取路径和执行算法的选择与执行次序优化；![](https://gitee.com/xieyun714/nodeimage/raw/master/img/20210629115017.png)}}
++ 在DBMS中的位置:{{c1::![](https://gitee.com/xieyun714/nodeimage/raw/master/img/20210629115130.png)![](https://gitee.com/xieyun714/nodeimage/raw/master/img/20210629115104.png)}}

@@ -139,7 +139,7 @@
   2. {{c1::修改缓存redis配置}}
   3. {{c1::修改上传附件配置}}
 1. 切换maven的Profiles为正式环境：
-   
+  
    + 图示：{{c1::![](https://gitee.com/xieyun714/nodeimage/raw/master/img/a68768ca5981c98b14654ae1a0837347_258x133.png)}}
    
 2. 服务器上启动：
@@ -155,3 +155,4 @@
    ps -ef|grep java
    kill 进程号 
    ```
+
