@@ -540,7 +540,7 @@ data() {
 
 ## 文本框
 
-```
+```html
     <el-row type="flex" justify="center">
       <el-col :span="6">
         <el-input v-model="searchForm.DeliveryOrderNumber" class="el-form-item__content" clearable placeholder="送货单号" @input="handleGetList" />
@@ -584,7 +584,7 @@ data() {
 
 ![](https://gitee.com/xieyun714/nodeimage/raw/master/img/20210510113907.png)
 
-### 前端
+前端
 
 ```html
 <!-- 创建日期 -->
@@ -597,7 +597,7 @@ data() {
 </el-col>
 ```
 
-### 后端
+后端
 
 ```c#
 if (input.boxTimeFm.HasValue)
@@ -673,7 +673,7 @@ cellStyle({ row, columnIndex }) {
 
 效果：![](https://gitee.com/xieyun714/nodeimage/raw/master/img/20210510115822.png)
 
-### 前端：
+前端：
 
 ```html
 <el-table-column align="center" label="操作" width="280" fixed="right">
@@ -683,144 +683,39 @@ cellStyle({ row, columnIndex }) {
 </el-table-column>
 ```
 
-
-
-
-
-
-
-```
-/**
- * Macro1 Macro
- * 宏由 xiexy 录制，时间: 2021/05/22
- */
-
-function Macro1()
-{
-	
-	let range = Range("A2:AF56")
-	const rowsCount = range.Rows.Count + 1
-	const colsCount = range.Columns.Count
-	for(let row = 2;row <= rowsCount;row++){
-		//当前行数组
-		let currentArray = []
-		//当前行实际出勤
-		let total = Worksheets.Item(1).Cells.Item(row, colsCount + 1).Value2
-		//读取当前行数据
-		for(let col=2;col<=colsCount;col++){
-			currentArray.push(Worksheets.Item(1).Cells.Item(row, col).Value2)
-		}
-		
-		Console.log(currentArray.toString())
-		// 当前总数
-		let sum = currentArray.reduce((previousValue, item) => item + previousValue, 0)
-		let i = 0
-		for()
-		
-	}
-}
-```
-
-![image-20210527132109099](D:\books\note\项目笔记\IMES组件.assets\image-20210527132109099.png)
-
-![image-20210527132835551](D:\books\note\项目笔记\IMES组件.assets\image-20210527132835551.png)
-
-### 报产数据与内外箱表关系
+## 报产数据与内外箱表关系
 
 ![](https://gitee.com/xieyun714/nodeimage/raw/master/img/20210527111902.png)
 
-### 根据报产查询内箱号
+### 项目路径设置别名的2种风格
 
-SELECT
-dbo.ManufactureRecord.RecordID,
-dbo.ManufactureRecord.ERPNO,
-dbo.ManufactureRecord.ProjectNo,
-dbo.ManufactureRecord.Department,
-dbo.boxInfo.boxCode,
-dbo.packageInfo.packCode,
-dbo.packageInfo.toolCavity,
-dbo.packageInfo.finalNumber,
-dbo.ManufactureRecord.Worker,
-dbo.ManufactureRecord.WorkDate
-FROM
-dbo.ManufactureRecord
-LEFT JOIN dbo.manuBatch ON dbo.manuBatch.recordID = dbo.ManufactureRecord.RecordID
-LEFT JOIN dbo.boxInfo ON dbo.boxInfo.boxCode = dbo.manuBatch.orgBatch
-LEFT JOIN dbo.boxList ON dbo.boxList.boxCode = dbo.boxInfo.boxCode
-LEFT JOIN dbo.packageInfo ON dbo.packageInfo.packCode = dbo.boxList.packCode
-WHERE
-ManufactureRecord.RecordID = '25900'
+- 单独src
 
+```js
+resolve: {
+  alias: {
+    '~': resolve(__dirname, 'src')
+  }
+}
 
-
-
-
-
-
-![image-20210529101821467](D:\books\note\项目笔记\IMES组件.assets\image-20210529101821467.png)
-
-
-
-
-
-# 标签修改
-
-![](https://gitee.com/xieyun714/nodeimage/raw/master/img/20210531131648.png)
-
-![image-20210531131733065](D:\books\note\项目笔记\IMES组件.assets\image-20210531131733065.png)
-
-```
-            var p = (from r in sectList
-                     select new LabDtoDPBUOuterBox()
-                     {
-                         customerPN = "3MOS00250A",
-                         apn = "817-06676",
-                         mcoRevision = "04",
-                         project = "Banff",
-                         description = "Housing",
-                         stage = "MP",
-                         vendor = "CYV",
-                         saa = "CFC337-12-0VT-C-RA",
-                         lotCode = LotCode.ObjToString().Trim(),                        
-                         qty = finalQty.ObjToString().Trim() + " PCS",
-                         toolCavity_1 = strTC1.ObjToString().Trim(),
-                         toolCavity_2 = strTC2.ObjToString().Trim(),
-                         toolCavity_3 = strTC3.ObjToString().Trim(),
-                         toolCavity_4 = strTC4.ObjToString().Trim(),
-                         boxNumber = boxCode.ObjToString().Trim(),
-                         mfgDate = boxMFGDate,
-                         expDate = boxEXPDate,
-                     }).ToList();
+//使用
+import stickTop from '~/components/stickTop'
 ```
 
++ 各模块独立别名
+
+```js
+alias: {
+  'src': path.resolve(__dirname, '../src'),
+  'components': path.resolve(__dirname, '../src/components'),
+  'api': path.resolve(__dirname, '../src/api'),
+  'utils': path.resolve(__dirname, '../src/utils'),
+  'store': path.resolve(__dirname, '../src/store'),
+  'router': path.resolve(__dirname, '../src/router')
+}
+
+//使用
+import stickTop from 'components/stickTop'
+import getArticle from 'api/article'
 ```
-                     select new LabDtoLGOuterBox()
-                     {                                                
-                         customerPN = "3MOS00250A",
-                         qty = finalQty.ObjToString().Trim() + " PCS",
-                         lotCode = LotCode.ObjToString().Trim(),
-                         codeInfo = r.MaterialCode.ObjToString().Trim() 
-                         + "/"+ finalQty.ObjToString().Trim()
-                         + "/" + LotCode.ObjToString().Trim(),
-                         apn = "817-06676",
-                         mcoRevision = "04",
-                         project = "Banff",
-                         description = "Housing",
-                         stage = "MP",
-                         vendor = "CYV",
-                         saa = "CFC337-12-0VT-C-RA",
-                         toolCavity_1 = strTC1.ObjToString().Trim(),
-                         toolCavity_2 = strTC2.ObjToString().Trim(),
-                         toolCavity_3 = strTC3.ObjToString().Trim(),
-                         toolCavity_4 = strTC4.ObjToString().Trim(),
-                         boxNumber = boxCode.ObjToString().Trim(),
-                         mfgDate = boxMFGDate,
-                         expDate = boxEXPDate,
-```
-
-![image-20210619105726482](D:\books\note\项目笔记\IMES组件.assets\image-20210619105726482.png)
-
-
-
-![image-20210623155250022](D:\books\note\项目笔记\IMES组件.assets\image-20210623155250022.png)
 

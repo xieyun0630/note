@@ -343,6 +343,6 @@ docker pull 私有仓库服务器ip:5000/centos:7
 - 安装成功后访问地址：http://81.69.43.171:80/
 - Nginx相关文件在容器中的位置
   - nginx配置文件目录：`/etc/nginx`
-  - 默认首页html文件目录:`/usr/share/nginx/html`
-  - 日志文件目录:`/var/log/nginx`
+  - 默认首页html文件目录：`/usr/share/nginx/html`
+  - 日志文件目录：`/var/log/nginx`
 

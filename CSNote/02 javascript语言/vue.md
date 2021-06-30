@@ -1926,3 +1926,144 @@ const Register = {
   locale.use(lang);
   //}}
   ```
+
+## Vuex
+
+### Vuex概述
++ 为什么需要Vuex: {{c1::Vuex是实现组件全局状态(数据)管理的一种机制，可以方便的实现组件之间数据的共享![](https://gitee.com/xieyun714/nodeimage/raw/master/img/20210630154730.png)}}
++ 使用Vuex统一管理好处:
+  + 集中管理共享数据:{{c1::能够在Vuex中集中管理共享的数据，易于开发和后期维护}}
+  + 响应式:{{c1::存储在Vuex中的数据都是响应式的，能够实时保持数据与页面的同步}}
+
+
+### EventBus的使用
++ 作用：{{c1::EventBus 又称为事件总线。在Vue中可以使用 EventBus 来作为沟通桥梁的概念，就像是所有组件共用相同的事件中心，可以向该中心注册发送事件或接收事件，所以组件都可以上下平行地通知其他组件，但也就是太方便所以若使用不慎，就会造成难以维护的“灾难”，因此才需要更完善的Vuex作为状态管理中心，将通知的概念上升到共享状态层次。}}
++ 初始化
+  + event-bus.js
+  ```js
+  // event-bus.js
+  import Vue from 'vue'
+  export const EventBus = new Vue()
+  ```
+  + main.js初始化全局EventBus 
+  ```js
+  // main.js
+  Vue.prototype.$EventBus = new Vue()
+  ```
++ 发送事件：
+  + 假设你有两个Vue页面需要通信： A 和 B ，A页面 在按钮上面绑定了点击事件，发送一则消息，想=通知 B页面。
+  ```vue
+  <!-- A.vue -->
+  <template>
+      <button @click="sendMsg()">-</button>
+  </template>
+
+  <script> 
+  import { EventBus } from "../event-bus.js";
+  export default {
+    methods: {
+      sendMsg() {
+        EventBus.$emit("aMsg", '来自A页面的消息');
+      }
+    }
+  }; 
+  </script>
+  ```
++ 接收事件:
+  ```vue
+  <!-- IncrementCount.vue -->
+  <template>
+    <p>{{msg}}</p>
+  </template>
+
+  <script> 
+  import { 
+    EventBus 
+  } from "../event-bus.js";
+  export default {
+    data(){
+      return {
+        msg: ''
+      }
+    },
+    mounted() {
+      EventBus.$on("aMsg", (msg) => {
+        // A发送来的消息
+        this.msg = msg;
+      });
+    }
+  };
+  </script>
+  ```
++ 移除事件的监听
+  ```js
+  import {   eventBus } from './event-bus.js'
+  EventBus.$off('aMsg', {})
+  //移除所有事件频道，不需要添加任何参数
+  //EventBus.$off()
+  ```
+### 组件间共享数据的方式概况
++ 父向子传值：{{c1::`v-bind`属性绑定}}
++ 子向父传值：{{c1::`v-on`事件绑定}}
++ 兄弟组件之间共享数据：{{c1::`EventBus`}}
+  - {{c1::`$on` 接收数据的组件}}
+  - {{c1::`$emit` 发送数据的组件}}
+
+### 状态管理的3种对象
++ **State**：{{c1::指的就是我们的状态，可以暂时理解为组件中data中的属性}}
++ **View**：{{c1::视图层，可以针对State的变化， 显示不同的信息}}
++ **Actions**：{{c1::这里的Actions主要是用户的各种操作，如点击、输入等，会导致状态发生变化}}
++ 3种对象关系图：{{c1::![](https://gitee.com/xieyun714/nodeimage/raw/master/img/20210630155831.png)}}
++ 对应多页面状态管理的解释：{{c1::多个视图View都依赖同一个状态（一个状态改了，多个界面需要进行更新），不同界面的Actions都想修改同一个状态}}
+
+### Vuex的基本使用
+
++ 安装：{{c1::`npm install vuex --save`}}
++ 导入：{{c1::`import Vuex from 'vuex'  Vue.use(Vuex)`}}
++ 创建store对象:{{c1::
+  ```js
+  const store = new Vuex.Store({
+    // state中存放的就是全局共享数据
+    state:{
+      count: 0
+    }
+  })
+  ```}}
++ 挂载store对象:{{c1::
+  ```js
+  new Vue({
+    el: '#app',
+    render: h => h(app),
+    router,
+    store
+  })
+  ```}}
+
+### Vuex的核心概念:State
++ 作用：{{c1::State是提供唯一的公共数据源，所有共享的数据都要统一放到Store的State中进行存储。}}
++ State数据访问方式
+  1. `this.$store.state.全局数据名称`:{{c1::
+    ```js
+    <h3>当前最新Count值为：{{this.$store.state.count}}</h3>
+    ```}}
+  2. 通过mapState函数:{{c1::通过mapState函数，将当前组件需要的全局数据，映射为当前组件的计算属性
+    ```vue
+    <template>
+      <div>
+        <h3>当前最新Count值为：{{ count }}</h3>
+        <button>-1</button>
+      </div>
+    </template>
+    <script>
+    import { mapState } from "vuex";
+    export default {
+      computed: {
+        ...mapState(["count"])
+      }
+    };
+    </script>
+    ```}}
+
+### Vuex的核心概念:Mutation
++ 引入原因：{{c1::用于避免对state属性的直接操作,例如`this.$store.state.count++;`。}}
++ 作用：{{c1::Mutation用于变更存储在Store中的数据，**可以集中监控所有数据的变化**，直接操作Store数据是无法进行监控的}}
