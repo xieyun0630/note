@@ -2028,7 +2028,8 @@ const Register = {
       count: 0
     }
   })
-  ```}}
+  ​```}}
+  ```
 + 挂载store对象:{{c1::
   ```js
   new Vue({
@@ -2037,7 +2038,8 @@ const Register = {
     router,
     store
   })
-  ```}}
+  ​```}}
+  ```
 
 ### Vuex的核心概念:State
 + 作用：{{c1::State是提供唯一的公共数据源，所有共享的数据都要统一放到Store的State中进行存储。}}
@@ -2045,7 +2047,8 @@ const Register = {
   1. `this.$store.state.全局数据名称`:{{c1::
     ```js
     <h3>当前最新Count值为：{{this.$store.state.count}}</h3>
-    ```}}
+    ​```}}
+    ```
   2. 通过mapState函数:{{c1::通过mapState函数，将当前组件需要的全局数据，映射为当前组件的计算属性
     ```vue
     <template>
@@ -2062,8 +2065,372 @@ const Register = {
       }
     };
     </script>
-    ```}}
+    ​```}}
+    ```
 
 ### Vuex的核心概念:Mutation
 + 引入原因：{{c1::用于避免对state属性的直接操作,例如`this.$store.state.count++;`。}}
 + 作用：{{c1::Mutation用于变更存储在Store中的数据，**可以集中监控所有数据的变化**，直接操作Store数据是无法进行监控的}}
++ 定义Mutation函数:{{c1::
+  ```js
+  //Vuex.store对象中定义
+  mutations: {
+    // 自增
+    add(state) {
+      state.count++
+    }
+  }
+  ```
+  }}
++ 调用Mutation函数:
+  1. `this.$store.commit(方法名)`:{{c1::
+    ```js
+    //组件内调用
+    export default {
+      methods: {
+        add() {
+          //   this.$store.state.count++;
+          this.$store.commit("add");
+        }
+      }
+    };
+    ```
+    }}
+  2. **mapMutations函数**:{{c1::
+    ```js
+    import { mapMutations } from 'vuex'
+    //组件内调用
+    methods:{
+      ...mapMutations('add','addN'),
+      // 当前组件设置的click方法
+      addCount(){
+        this.add()
+      }
+    }
+    ```
+    }}
++ 传递参数到mutations：
+  + 定义：{{c1::
+    ```js
+    mutations: {
+      // 自增
+      add(state) {
+        state.count++
+      },
+      // 带参数
+      addNum(state, payload) {
+        state.count += payload.number
+      }
+    }
+    ```
+    }}
+  + 调用：{{c1::
+    ```js
+    methods: {
+      add() {
+        //   this.$store.state.count++;
+        this.$store.commit("add");
+      },
+      addNum() {
+        this.$store.commit("addNum", {
+          number: 10
+        });
+      }
+    }
+    ```
+    }}
+
+### Mutation响应规则
++ 引入原因：{{c1:: Vuex的store中的State是响应式的，当State中的数据发生改变时，Vue组件也会自动更新。这就要求我们必须遵守一些Vuex对应的规则 }}
++ 响应规则:
+  + **初始化**：{{c1::提前在store中初始化好所需的属性}}
+  + **添加新属性**：{{c1::当给State中的对象添加新属性时，使用如下方式：}}
+    1. {{c1::使用Vue.set(obj,'newProp','propValue')}}
+    2. {{c1::用新对象给旧对象重新赋值}}
+    + 2种方式示例：{{c1::
+      ```js
+      updateUserInfo(state) {
+        // 方式一
+        Vue.set('user', 'address', '北京市')
+        // 方式二
+        state.user = {
+          ...state.user,
+          'address': '上海市'
+        }
+      }
+      ```
+      }}
+
+### Mutation常量类型
++ 引入原因：{{c1::当项目越来越大时，Vuex管理的状态越来越多，需要更新状态的情况也越来越多，也就意味着Mutation中的方法越来越多。当方法过多，使用者需要花费大量时间精力去记住这些方法，甚至多个文件间来回切换，查看方法名称，也存在拷贝或拼写错误的情况。}}
++  解决方案：{{c1::创建mutation-types.js文件，在其中定义常量，定义常量时, 可以使用ES2015中的风格, 使用一个常量来作为函数的名称，使用处引入文件即可}}
+  1. 新建`mutation-types.js`：{{c1::![](https://gitee.com/xieyun714/nodeimage/raw/master/img/20210701114408.png)}}
+  2. 在`store/index.js`中引入并使用：{{c1::
+    ```js
+    import Vue from 'vue'
+    import Vuex from 'vuex'
+    import * as types from './mutation-type'
+
+    Vue.use(Vuex)
+
+    export default new Vuex.Store({
+      state: {
+        count: 0,
+        user: {
+          name: '旺财',
+          age: 12
+        }
+      },
+      mutations: {
+        // 自增
+        [types.ADD_NUM](state) {
+          state.count++
+        },
+    }
+    ```
+    }}
+  3. 在组件中，引入并调用：{{c1::
+    ```js
+    <script>
+    import { ADD_NUM } from "../store/mutation-type";
+    export default {
+      methods: {
+        add() {
+          this.$store.commit(ADD_NUM);
+          //   this.addAsync();
+          //   this.$store.state.count++;
+          //   this.$store.commit("add");
+        }
+      }
+    };
+    </script>
+    ```
+    }}
+
+### Vuex的核心概念:Action
+
++ 作用：{{c1:: Action类似于Mutation，但是是用于**处理异步任务**的，比如网络请求等。如果通过异步操作变更数据，必须通过Action，而不能使用Mutation，但在Action中还是要通过**触发Mutation**的方式间接变更数据。}}
++ `context参数`解释：{{c1::context是**和store对象具有相同方法和属性**的对象，可以通过context进行commit相关操作，可以获取context.state数据，但他们**并不是同一个对象**，在Modules中会介绍到区别。}}
++ 定义：
+  ```js
+  export default new Vuex.Store({
+    state: {
+      count: 0
+    },
+    mutations: {
+      // 自增
+      add(state) {
+        state.count++
+      }
+    },
+    actions: {
+      addAsync(context) {
+        setTimeout(() => {
+          context.commit('add')
+        }, 1000);
+      }
+    }
+  })
+  ```
++ 组件中调用：
+  + `this.$store.dispatch`：{{c1::
+  ```js
+  <script>
+  export default {
+    methods: {
+      addNumSync(){
+          // dispatch用于触发Actions中的方法
+          this.$store.dispatch('addAsync')
+      }
+    }
+  };
+  </script>
+  ```
+  }}
++ `mapActions`函数：{{c1::
+  ```js
+  import { mapActions } from "vuex";
+  export default {
+    methods: {
+      ...mapActions(["addAsync"]),
+      add() {
+          this.addAsync()
+      }
+  }
+  ```
+  }}
++ Actions携带参数：
+  + 定义：{{c1::
+  ```js
+    export default new Vuex.Store({
+      state: {
+        count: 0
+      },
+      mutations: {
+        // 带参数
+        addNum(state, payload) {
+          state.count += payload.number
+        }
+      },
+      actions: {
+        addAsyncParams(context, payload) {
+          setTimeout(() => {
+            context.commit('addNum', payload)
+          }, 1000);
+        }
+      }
+    })
+  ```
+  }}
+  + 组件调用：{{c1::
+  ```js
+  methods: {
+    addNumSyncParams() {
+      this.$store.dispatch("addAsyncParams", {
+        number: 100
+      });
+    }
+  }
+  ```
+  }}
+
+### Actions与Promise结合
++ 思考点：{{c1::在方法内直接返回promise}}
++ 定义：{{c1::
+  ```js 
+    actions: {
+      loadUserInfo(context){
+        return new Promise((resolve)=>{
+          setTimeout(() => {
+            context.commit('add')
+            resolve()
+          }, 2000);
+        })
+      }
+    }
+  ```
+  }}
++ 组件调用：{{c1::
+  ```js 
+  methods: {
+    addPromise() {
+      this.$store.dispatch("loadUserInfo").then(res => {
+        console.log("done");
+      });
+    }
+  }
+  ```
+  }}
+### Vuex的核心概念:Getter
++ 作用：Getters用于对Store中的数据进行加工处理形成新的数据，类似于Vue中的计算属性。
++ 定义：
+  ```js
+  getters:{
+    showNum(state){
+      return '当前Count值为:'+state.count
+    }
+  }
+  ```
++ 使用：
+  1. $store对象：{{c1::`<h3>{{ this.$store.getters.showNum }}</h3>`}}
+  2. mapGetters函数：{{c1::
+    ```js
+    import { mapGetters } from 'vuex'
+      computed: {
+        ...mapGetters(["showNum"])
+      }
+    ```
+    }}
+
+### Vuex的核心概念:Modules
++ 作用：{{c1::Vues使用单一状态树，意味着很多状态都会交给Vuex来管理。当应用变的非常复杂时，Store对象就可能变的相当**臃肿**，为解决这个问题，Vuex允许我们将store**分割成模块**(Module)，并且每个模块拥有**自己的State、Mutation、Actions、Getters**等}}
++ 简单定义使用：{{c1::
+  ```js
+  import Vue from "vue"
+  import Vuex from "vuex"
+
+  import moduleA from './modules/moduleA'
+
+  Vue.use(Vuex)
+
+  const store = new Vuex.Store({
+      modules: {
+          a: moduleA
+      }
+  })
+
+  export default store
+  ```
+  }}
++ 模块定义示例：{{c1::
+  ```js
+    //moduleA.js
+    export default {
+      state: {
+          name: '凤凰于飞'
+      },
+      actions: {
+          aUpdateName(context) {
+              setTimeout(() => {
+                  context.commit('updateName', '旺财')
+              }, 1000);
+          }
+      },
+      mutations: {
+          updateName(state, payload) {
+              state.name = payload
+          }
+      },
+      getters: {
+          fullName(state) {
+              return state.name + '王昭君'
+          },
+          fullName2(state, getters) {
+              // 通过getters调用本组方法
+              return getters.fullName + ' 礼拜'
+          },
+          fullName3(state, getters, rootState) {
+              // state代表当前module数据状态，rootState代表根节点数据状态
+              return getters.fullName2 + rootState.counter
+          }
+      }
+  }
+  ```
+  }}
++ 分别将主模块的actions、mutations、getters独立成js文件并导出示例:{{c1::
+  ```js
+  import Vue from "vue"
+  import Vuex from "vuex"
+  import mutations from './mutations'
+  import actions from './actions'
+  import getters from './getters'
+  import moduleA from './modules/moduleA'
+
+  Vue.use(Vuex)
+
+  const state = {
+      counter: 1000,
+      students: [
+          { id: 1, name: '旺财', age: 12 },
+          { id: 2, name: '小强', age: 31 },
+          { id: 3, name: '大明', age: 45 },
+          { id: 4, name: '狗蛋', age: 78 }
+      ],
+      info: {
+          name: 'keko'
+      }
+  }
+
+  const store = new Vuex.Store({
+      state,
+      mutations,
+      getters,
+      actions,
+      modules: {
+          a: moduleA
+      }
+  })
+
+  export default store
+  ```
+  }}
