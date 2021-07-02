@@ -1927,18 +1927,18 @@ const Register = {
   //}}
   ```
 
-## Vuex
+## Vuex [ ](vue_20210702082554276)
 
-### Vuex概述
+### Vuex概述 [ ](vue_20210702082554278)
 + 为什么需要Vuex: {{c1::Vuex是实现组件全局状态(数据)管理的一种机制，可以方便的实现组件之间数据的共享![](https://gitee.com/xieyun714/nodeimage/raw/master/img/20210630154730.png)}}
 + 使用Vuex统一管理好处:
   + 集中管理共享数据:{{c1::能够在Vuex中集中管理共享的数据，易于开发和后期维护}}
   + 响应式:{{c1::存储在Vuex中的数据都是响应式的，能够实时保持数据与页面的同步}}
 
 
-### EventBus的使用
+### EventBus的使用 [ ](vue_20210702082554280)
 + 作用：{{c1::EventBus 又称为事件总线。在Vue中可以使用 EventBus 来作为沟通桥梁的概念，就像是所有组件共用相同的事件中心，可以向该中心注册发送事件或接收事件，所以组件都可以上下平行地通知其他组件，但也就是太方便所以若使用不慎，就会造成难以维护的“灾难”，因此才需要更完善的Vuex作为状态管理中心，将通知的概念上升到共享状态层次。}}
-+ 初始化
++ 初始化:{{c1::
   + event-bus.js
   ```js
   // event-bus.js
@@ -1950,7 +1950,8 @@ const Register = {
   // main.js
   Vue.prototype.$EventBus = new Vue()
   ```
-+ 发送事件：
+  }}
++ 发送事件：{{c1::
   + 假设你有两个Vue页面需要通信： A 和 B ，A页面 在按钮上面绑定了点击事件，发送一则消息，想=通知 B页面。
   ```vue
   <!-- A.vue -->
@@ -1969,7 +1970,8 @@ const Register = {
   }; 
   </script>
   ```
-+ 接收事件:
+  }}
++ 接收事件:{{c1::
   ```vue
   <!-- IncrementCount.vue -->
   <template>
@@ -1995,28 +1997,30 @@ const Register = {
   };
   </script>
   ```
-+ 移除事件的监听
+  }}
++ 移除事件的监听:{{c1::
   ```js
   import {   eventBus } from './event-bus.js'
   EventBus.$off('aMsg', {})
   //移除所有事件频道，不需要添加任何参数
   //EventBus.$off()
   ```
-### 组件间共享数据的方式概况
+  }}
+### 组件间共享数据的方式概况 [ ](vue_20210702082554282)
 + 父向子传值：{{c1::`v-bind`属性绑定}}
 + 子向父传值：{{c1::`v-on`事件绑定}}
 + 兄弟组件之间共享数据：{{c1::`EventBus`}}
   - {{c1::`$on` 接收数据的组件}}
   - {{c1::`$emit` 发送数据的组件}}
 
-### 状态管理的3种对象
+### 状态管理的3种对象 [ ](vue_20210702082554284)
 + **State**：{{c1::指的就是我们的状态，可以暂时理解为组件中data中的属性}}
 + **View**：{{c1::视图层，可以针对State的变化， 显示不同的信息}}
 + **Actions**：{{c1::这里的Actions主要是用户的各种操作，如点击、输入等，会导致状态发生变化}}
 + 3种对象关系图：{{c1::![](https://gitee.com/xieyun714/nodeimage/raw/master/img/20210630155831.png)}}
 + 对应多页面状态管理的解释：{{c1::多个视图View都依赖同一个状态（一个状态改了，多个界面需要进行更新），不同界面的Actions都想修改同一个状态}}
 
-### Vuex的基本使用
+### Vuex的基本使用 [ ](vue_20210702082554286)
 
 + 安装：{{c1::`npm install vuex --save`}}
 + 导入：{{c1::`import Vuex from 'vuex'  Vue.use(Vuex)`}}
@@ -2028,8 +2032,8 @@ const Register = {
       count: 0
     }
   })
-  ​```}}
-  ```
+  ​```
+  }}
 + 挂载store对象:{{c1::
   ```js
   new Vue({
@@ -2038,17 +2042,17 @@ const Register = {
     router,
     store
   })
-  ​```}}
-  ```
+  ​```
+  }}
 
-### Vuex的核心概念:State
+### Vuex的核心概念:State [ ](vue_20210702082554288)
 + 作用：{{c1::State是提供唯一的公共数据源，所有共享的数据都要统一放到Store的State中进行存储。}}
 + State数据访问方式
   1. `this.$store.state.全局数据名称`:{{c1::
     ```js
     <h3>当前最新Count值为：{{this.$store.state.count}}</h3>
-    ​```}}
-    ```
+    ​```
+    }}
   2. 通过mapState函数:{{c1::通过mapState函数，将当前组件需要的全局数据，映射为当前组件的计算属性
     ```vue
     <template>
@@ -2065,10 +2069,10 @@ const Register = {
       }
     };
     </script>
-    ​```}}
-    ```
+    ​```
+    }}
 
-### Vuex的核心概念:Mutation
+### Vuex的核心概念:Mutation [ ](vue_20210702082554290)
 + 引入原因：{{c1::用于避免对state属性的直接操作,例如`this.$store.state.count++;`。}}
 + 作用：{{c1::Mutation用于变更存储在Store中的数据，**可以集中监控所有数据的变化**，直接操作Store数据是无法进行监控的}}
 + 定义Mutation函数:{{c1::
@@ -2140,7 +2144,7 @@ const Register = {
     ```
     }}
 
-### Mutation响应规则
+### Mutation响应规则 [ ](vue_20210702082554292)
 + 引入原因：{{c1:: Vuex的store中的State是响应式的，当State中的数据发生改变时，Vue组件也会自动更新。这就要求我们必须遵守一些Vuex对应的规则 }}
 + 响应规则:
   + **初始化**：{{c1::提前在store中初始化好所需的属性}}
@@ -2161,7 +2165,7 @@ const Register = {
       ```
       }}
 
-### Mutation常量类型
+### Mutation常量类型 [ ](vue_20210702082554294)
 + 引入原因：{{c1::当项目越来越大时，Vuex管理的状态越来越多，需要更新状态的情况也越来越多，也就意味着Mutation中的方法越来越多。当方法过多，使用者需要花费大量时间精力去记住这些方法，甚至多个文件间来回切换，查看方法名称，也存在拷贝或拼写错误的情况。}}
 +  解决方案：{{c1::创建mutation-types.js文件，在其中定义常量，定义常量时, 可以使用ES2015中的风格, 使用一个常量来作为函数的名称，使用处引入文件即可}}
   1. 新建`mutation-types.js`：{{c1::![](https://gitee.com/xieyun714/nodeimage/raw/master/img/20210701114408.png)}}
@@ -2207,11 +2211,11 @@ const Register = {
     ```
     }}
 
-### Vuex的核心概念:Action
+### Vuex的核心概念:Action [ ](vue_20210702082554296)
 
 + 作用：{{c1:: Action类似于Mutation，但是是用于**处理异步任务**的，比如网络请求等。如果通过异步操作变更数据，必须通过Action，而不能使用Mutation，但在Action中还是要通过**触发Mutation**的方式间接变更数据。}}
 + `context参数`解释：{{c1::context是**和store对象具有相同方法和属性**的对象，可以通过context进行commit相关操作，可以获取context.state数据，但他们**并不是同一个对象**，在Modules中会介绍到区别。}}
-+ 定义：
++ 定义：{{c1::
   ```js
   export default new Vuex.Store({
     state: {
@@ -2232,6 +2236,7 @@ const Register = {
     }
   })
   ```
+  }}
 + 组件中调用：
   + `this.$store.dispatch`：{{c1::
   ```js
@@ -2294,7 +2299,7 @@ const Register = {
   ```
   }}
 
-### Actions与Promise结合
+### Actions与Promise结合 [ ](vue_20210702082554298)
 + 思考点：{{c1::在方法内直接返回promise}}
 + 定义：{{c1::
   ```js 
@@ -2321,9 +2326,9 @@ const Register = {
   }
   ```
   }}
-### Vuex的核心概念:Getter
-+ 作用：Getters用于对Store中的数据进行加工处理形成新的数据，类似于Vue中的计算属性。
-+ 定义：
+### Vuex的核心概念:Getter [ ](vue_20210702082554300)
++ 作用：{{c1::Getters用于对Store中的数据进行加工处理形成新的数据，类似于Vue中的计算属性。}}
++ 定义：{{c1::
   ```js
   getters:{
     showNum(state){
@@ -2331,6 +2336,7 @@ const Register = {
     }
   }
   ```
+  }}
 + 使用：
   1. $store对象：{{c1::`<h3>{{ this.$store.getters.showNum }}</h3>`}}
   2. mapGetters函数：{{c1::
@@ -2342,7 +2348,7 @@ const Register = {
     ```
     }}
 
-### Vuex的核心概念:Modules
+### Vuex的核心概念:Modules [ ](vue_20210702082554302)
 + 作用：{{c1::Vues使用单一状态树，意味着很多状态都会交给Vuex来管理。当应用变的非常复杂时，Store对象就可能变的相当**臃肿**，为解决这个问题，Vuex允许我们将store**分割成模块**(Module)，并且每个模块拥有**自己的State、Mutation、Actions、Getters**等}}
 + 简单定义使用：{{c1::
   ```js
