@@ -94,10 +94,10 @@
 
 ### Vue各生命周期钩子特点： [ ](vue_20200703080524562)
 
-+ `beforeCreate` `created`:{{c1:: 组件创建前后触发 }}
-+ `beforeMount` `mounted`:{{c1:: 挂载到页面上前后触发 }}
-+ `beforeUpdate` `updated`:{{c1:: 当组件内属性修改前后被触发 }}
-+ `beforeDestroy` `destroyed`:{{c1:: 组件销毁前后被触发，可以使用`vm.isCreated`测试 }}
+1. `beforeCreate` `created`:{{c1:: 组件**创建前后**触发 }}
+2. `beforeMount` `mounted`:{{c1:: **挂载**到页面上前后触发 }}
+3. `beforeUpdate` `updated`:{{c1:: 当组件内**属性或数据**修改前后被触发 }}
+4. `beforeDestroy` `destroyed`:{{c1:: 组件**销毁**前后被触发，可以使用`vm.isCreated`测试 }}
 + 绑定生命周期例：
   ```js
     new Vue({
@@ -1945,7 +1945,8 @@ const Register = {
   import Vue from 'vue'
   export const EventBus = new Vue()
   ```
-  + main.js初始化全局EventBus 
+  }}
+  + main.js初始化全局EventBus:{{c1::
   ```js
   // main.js
   Vue.prototype.$EventBus = new Vue()
@@ -2048,16 +2049,16 @@ const Register = {
 ### Vuex的核心概念:State [ ](vue_20210702082554288)
 + 作用：{{c1::State是提供唯一的公共数据源，所有共享的数据都要统一放到Store的State中进行存储。}}
 + State数据访问方式
-  1. `this.$store.state.全局数据名称`:{{c1::
-    ```js
-    <h3>当前最新Count值为：{{this.$store.state.count}}</h3>
-    ​```
+  1. 通过`this.$store`:{{c1::
+      ```js
+      <h3>当前最新Count值为：{ {this.$store.state.count} }</h3>
+      ​```
     }}
-  2. 通过mapState函数:{{c1::通过mapState函数，将当前组件需要的全局数据，映射为当前组件的计算属性
+  2. 通过`mapState`函数:{{c1::通过mapState函数，将当前组件需要的全局数据，映射为当前组件的计算属性
     ```vue
     <template>
       <div>
-        <h3>当前最新Count值为：{{ count }}</h3>
+        <h3>当前最新Count值为：{{ count } }</h3>
         <button>-1</button>
       </div>
     </template>

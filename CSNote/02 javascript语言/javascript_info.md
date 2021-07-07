@@ -736,6 +736,19 @@ alert("Midget".includes("id", 3)); // false, 位置 3 没有“id”
 | `substring(start, end)` | `{{c1:: start` 与 `end` 之间}}                     | 负值代表 `0`        |
 | `substr(start, length)` | {{c1:: 从 `start` 开始获取长为 `length` 的字符串}} | 允许 `start` 为负数 |
 
+### JavaScript字符串正则表达式使用
+```js
+  if (that.postForm.batchCode.match(/-.+-/) != null) {
+    if (that.postForm.batchCode.match(/MVI-\d{6}-\d{4}/) === null) {
+      that.$message({
+        message: '批号格式不正确',
+        type: 'warning'
+      })
+      return false
+    }
+  }
+```
+
 ## 数组 [ ](javascript_info_20191219101334483)
 
 ### 创建一个空数组有两种语法： [ ](javascript_info_20191219101334484)

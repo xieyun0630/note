@@ -317,14 +317,13 @@ getProdOptions(kewWord) {
 ​	**调用**
 
 ```vue
-<Slide v-if="slideShow" :propA="propA" @close="closeSlide" />
+<Slide v-if="slideShow" :propA="propA" @close="slideShow = false" />
 ```
 
 ​	**注册**
 
 ```vue
 import Slide from './slide'
-
 components: { Slide },
 ```
 
@@ -338,15 +337,10 @@ components: { Slide },
   },
 ```
 
-  **显示/隐藏事件**
+**显示**
 
 ```javascript
-openSlide() {
-	this.slideShow = true
-},
-closeSlide() {
-	this.slideShow = false
-}
+<el-button type="success" icon="el-icon-printer" :loading="loading" @click="slideShow = true">对话框</el-button>
 ```
 
 **新页面文件内代码**
