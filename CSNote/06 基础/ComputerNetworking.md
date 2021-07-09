@@ -1,6 +1,6 @@
-## 计算机网络基本概念
+## 计算机网络基本概念 [ ](ComputerNetworking_20210709091758151)
 
-### 计算机网络概念
+### 计算机网络概念 [ ](ComputerNetworking_20210709091758153)
 + 通信系统模型：![](https://gitee.com/xieyun714/nodeimage/raw/master/img/20210707144252.png)
 + 定义：{{c1::计算机网络就是**互连**的、**自治**的计算机集合。自治-无主从关系，互连-互联互通}}
 + **网络协议**：{{c1::(network protocol)，简称为协议，是为进行网络中的数据交换而建立的规则、标准或约定。协议规定了通信实体之间所交换的消息的**格式、意义、顺序**以及针对收到信息或发生的事件所采取的“**动作**”（**actions**）}}
@@ -19,7 +19,7 @@
     + **RFC**: {{c1::Request for Comments}}
     + **IETF**: {{c1::互联网工程任务组（ Internet Engineering Task Force）}}
 
-### 多路复用概念
+### 多路复用概念 [ ](ComputerNetworking_20210709091758155)
 + 定义：
   1. **划分**：{{c1::Multiplexing，将链路/网络资源（如带宽）划分为“资源片”}}
   2. **呼叫**：{{c1::将资源片分配给各路“呼叫”（calls）}}
@@ -32,12 +32,12 @@
   + 波分多路复用(Wavelengthdivision multiplexing-**WDM**)：{{c1::![](https://gitee.com/xieyun714/nodeimage/raw/master/img/20210707154107.png)}}
   + 码分多路复用( Code division multiplexing-**CDM** )：{{c1::![](https://gitee.com/xieyun714/nodeimage/raw/master/img/20210707154128.png)}}
 
-### 数据交换的类型
+### 数据交换的类型 [ ](ComputerNetworking_20210709091758157)
 + {{c1::电路交换}}
 + {{c1::报文交换}}
 + {{c1::分组交换}}
 
-### 电路交换
+### 电路交换 [ ](ComputerNetworking_20210709091758159)
   + 最典型电路交换网络：{{c1::电话网络}}
   + 电路交换的三个阶段：
     1. {{c1::建立连接（呼叫/电路建立）}}
@@ -46,19 +46,19 @@
   + 独占资源
   + 图示：{{c1::![](https://gitee.com/xieyun714/nodeimage/raw/master/img/20210707150756.png)}}
 
-### 报文交换与分组交换
+### 报文交换与分组交换 [ ](ComputerNetworking_20210709091758161)
 + **报文**：{{c1::![](https://gitee.com/xieyun714/nodeimage/raw/master/img/20210707155527.png)}}
 + **分组**：{{c1::![](https://gitee.com/xieyun714/nodeimage/raw/master/img/20210707155626.png)}}
 + **分组交换:统计多路复用**：{{c1::![](https://gitee.com/xieyun714/nodeimage/raw/master/img/20210707161918.png)}}
 + **store-and-forward**：{{c1::![](https://gitee.com/xieyun714/nodeimage/raw/master/img/20210707162002.png)}}
 + **分组传输延迟（时延）计算**：{{c1::![](https://gitee.com/xieyun714/nodeimage/raw/master/img/20210707162235.png)}}
 
-### 报文交换 vs 分组交换
+### 报文交换 vs 分组交换 [ ](ComputerNetworking_20210709091758163)
 + 问：![](https://gitee.com/xieyun714/nodeimage/raw/master/img/20210707162320.png)
 + 答：{{c1::![](https://gitee.com/xieyun714/nodeimage/raw/master/img/20210707162410.png)![](https://gitee.com/xieyun714/nodeimage/raw/master/img/20210707162524.png)![](https://gitee.com/xieyun714/nodeimage/raw/master/img/20210707162548.png)![](https://gitee.com/xieyun714/nodeimage/raw/master/img/20210707162608.png)}}
 
 
-### 计算机网络性能相关名词:延迟/时延
+### 计算机网络性能相关名词:延迟/时延 [ ](ComputerNetworking_20210709091758165)
 + **延迟/时延**: {{c1::(delay或latency)}}
   + 四种分组延迟:
     + **结点处理延迟**:{{c1::![](https://gitee.com/xieyun714/nodeimage/raw/master/img/20210707163830.png)}}
@@ -69,20 +69,20 @@
   + **流量强度**：{{c1::![](https://gitee.com/xieyun714/nodeimage/raw/master/img/20210707164221.png)}}
 
 
-### 计算机网络性能相关名词
+### 计算机网络性能相关名词 [ ](ComputerNetworking_20210709091758167)
 + **速率**：{{c1::速率即数据率(data rate)或称数据传输速率或比特率(bit rate)![](https://gitee.com/xieyun714/nodeimage/raw/master/img/20210707163201.png)}}
 + **带宽**：{{c1::![](https://gitee.com/xieyun714/nodeimage/raw/master/img/20210707163557.png)}}
 + **时延带宽积**：{{c1::![](https://gitee.com/xieyun714/nodeimage/raw/master/img/20210707164756.png)}}
 + **丢包率**:{{c1::![](https://gitee.com/xieyun714/nodeimage/raw/master/img/20210707164858.png)}}
 + **Throughput**:{{c1::![](https://gitee.com/xieyun714/nodeimage/raw/master/img/20210707165046.png)![](https://gitee.com/xieyun714/nodeimage/raw/master/img/20210707165103.png)![](https://gitee.com/xieyun714/nodeimage/raw/master/img/20210707165112.png)}}
 
-### 计算机网络体系结构:OSI参考模型
+### 计算机网络体系结构:OSI参考模型 [ ](ComputerNetworking_20210709091758169)
 + 名词：
   + **PDU**：{{c1::一般指协议数据单元。协议数据单元，是指在分层网络结构，例如在开放式系统互联（OSI）模型中，在传输系统的每一层都将建立协议数据单元（PDU）。}}
 + OSI参考模型解释**通信过程**示意图:![](https://gitee.com/xieyun714/nodeimage/raw/master/img/20210707165615.png)
 + OSI参考模型**数据封装与通信过程**示意图：![](https://gitee.com/xieyun714/nodeimage/raw/master/img/20210707165723.png)
 
-### OSI参考模型：物理/数据链路/网络层功能
+### OSI参考模型：物理/数据链路/网络层功能 [ ](ComputerNetworking_20210709091758171)
 + 物理层功能图示：{{c1::![](https://gitee.com/xieyun714/nodeimage/raw/master/img/20210708081415.png)}}
 + 数据链路层功能：
   1. **负责结点-结点**：{{c1::（node-to-node）数据传输}}
@@ -98,7 +98,7 @@
   + **路由**：{{c1::Routing，路由器(或网关)互连网络，并路由分组至最终目的主机，路径选择}}
   + **分组转发**：{{c1::![](https://gitee.com/xieyun714/nodeimage/raw/master/img/20210708083048.png)}}
 
-### OSI参考模型：传输/会话/表示/应用层功能
+### OSI参考模型：传输/会话/表示/应用层功能 [ ](ComputerNetworking_20210709091758173)
 + 传输层功能
   + 负责：{{c1::**源-目的（端-端） （进程间） 完整报文**传输}}
   + 主要功能：{{c1::**分段与重组，SAP寻址，连接控制，流量控制，差错控制**![](https://gitee.com/xieyun714/nodeimage/raw/master/img/20210708083502.png)}}
@@ -111,7 +111,7 @@
 + 应用层功能：
   + 图示：{{c1::![](https://gitee.com/xieyun714/nodeimage/raw/master/img/20210708084412.png)}}
 
-### TCP/IP参考模型
+### TCP/IP参考模型 [ ](ComputerNetworking_20210709091758175)
 + 体系图：![](https://gitee.com/xieyun714/nodeimage/raw/master/img/20210708084506.png)
 + 各层功能描述：
   + 应用层:{{c1:: 支持各种网络应用，FTP, SMTP, HTTP}}
@@ -122,13 +122,13 @@
 + 5层模型的数据封装过程图:{{c1::![](https://gitee.com/xieyun714/nodeimage/raw/master/img/20210708084736.png)}}
 
 
-### 网络应用的体系结构
+### 网络应用的体系结构 [ ](ComputerNetworking_20210709091758177)
 + **C/S**: {{c1::客户机/服务器结构(Client-Server, C/S)}}
 + **P2P**: {{c1::点对点结构(Peer-to-peer, P2P)}}
 + **Hybrid**: {{c1::混合结构(Hybrid)}}
 
 
-### 应用层协议的内容
+### 应用层协议的内容 [ ](ComputerNetworking_20210709091758179)
 + 消息的类型(type)
   +  {{c1::请求消息}}
   +  {{c1::响应消息}}
@@ -142,7 +142,7 @@
   +  {{c1::进程如何发送/响应消息}}
 + 示例图：{{c1::![](https://gitee.com/xieyun714/nodeimage/raw/master/img/20210708085941.png)}}
 
-### 网络应用对传输服务的需求
+### 网络应用对传输服务的需求 [ ](ComputerNetworking_20210709091758181)
 + 数据丢失(data loss)/可靠性(reliability)
   + {{c1::某些网络应用能够容忍一定的数据丢失：网络电话}}
   + {{c1::某些网络应用要求100%可靠的数据传输：文件传输，telnet}}
@@ -154,13 +154,13 @@
   + {{c1::某些应用能够适应任何带宽——弹性应用：email}}
 + TCP服务/UDP服务简介图：{{c1::![](https://gitee.com/xieyun714/nodeimage/raw/master/img/20210708090320.png)}}
 
-### Email应用
+### Email应用 [ ](ComputerNetworking_20210709091758183)
 + **SMTP**协议：{{c1::![](https://gitee.com/xieyun714/nodeimage/raw/master/img/20210708111647.png)}}
 + **SMTP**交互示例：{{c1::![](https://gitee.com/xieyun714/nodeimage/raw/master/img/20210708111847.png)}}
 + **SMTP消息格式**：{{c1::![](https://gitee.com/xieyun714/nodeimage/raw/master/img/20210708112058.png)}}
 + **邮件访问协议简介**：{{c1::![](https://gitee.com/xieyun714/nodeimage/raw/master/img/20210708112701.png)}}
 
-### DNS概述
+### DNS概述 [ ](ComputerNetworking_20210709091758185)
 + DNS:{{c1:: `Domain Name System` }}
 + **顶级域名服务器(TLD, top-level domain)**: {{c1::负责com, org, net,edu等顶级域名和国家顶级域名，例如cn, uk, fr等}}
 + **权威(Authoritative)域名服务器**：{{c1::组织的域名解析服务器，提供组织内部服务器的解析服务}}
@@ -172,7 +172,7 @@
 + 例题:![](https://gitee.com/xieyun714/nodeimage/raw/master/img/20210708133206.png)
 + 答：{{c1::**A**}}
 + 如何注册域名:{{c1::![](https://gitee.com/xieyun714/nodeimage/raw/master/img/20210708135156.png)}}
-### DNS记录和消息格式
+### DNS记录和消息格式 [ ](ComputerNetworking_20210709091758187)
 + **RR**：{{c1::资源记录(RR, resource records)}}
 + 记录格式：{{c1::`RR format: (name, value, type, ttl)`}}
 + **Type=A**
@@ -187,6 +187,6 @@
 + **Type=MX**
   + **Value**: {{c1::是与name相对应的邮件服务器}}
 
-### P2P概述
+### P2P概述 [ ](ComputerNetworking_20210709091758189)
 + 客户机/服务器 vs. P2P例子：{{c1::![](https://gitee.com/xieyun714/nodeimage/raw/master/img/20210708142111.png)}}
 + BitTorrent协议：{{c1::![](https://gitee.com/xieyun714/nodeimage/raw/master/img/20210708142216.png)![](https://gitee.com/xieyun714/nodeimage/raw/master/img/20210708142245.png)![](https://gitee.com/xieyun714/nodeimage/raw/master/img/20210708142223.png)}}

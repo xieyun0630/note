@@ -1161,24 +1161,24 @@
   + {{c1::**ABORT**：事务撤销}}
 + 图示：{{c1::![](https://gitee.com/xieyun714/nodeimage/raw/master/img/20210701170046.png)}}
 
-### DBMS缓冲区处理策略
+### DBMS缓冲区处理策略 [ ](DatabaseSystem_20210709091758194)
 + **Force**：{{c1::内存中的数据最晚在commit的时候写入磁盘。}}
 + **No force**：{{c1::内存中的数据可以一直保留，在commit之后过一段时间再写入磁盘。(此时在系统崩溃的时候可能还没写入到磁盘，需要Redo)。--灵活}}
 + **Steal**：{{c1::允许在事务commit之前把内存中的数据写入磁盘。(此时若系统在commit之前崩溃时，已经有数据写入到磁盘了，要恢复到崩溃前的状态，需要Undo）。--灵活}}
 + **No steal**：{{c1::不允许在事务commit之前把内存中的数据写入磁盘。}}
 + 图示:![](https://gitee.com/xieyun714/nodeimage/raw/master/img/20210707111744.png)
 
-### 什么是DBMS日志
+### 什么是DBMS日志 [ ](DatabaseSystem_20210709091758196)
 + 日志记录的信息示例：{{c1::![](https://gitee.com/xieyun714/nodeimage/raw/master/img/20210707111949.png)}}
 + 三种日志: {{c1::Undo型日志，Redo型日志，Undo/Redo型日志}}
 + 缓冲区处理策略与日志/恢复策略的关系：{{c1::![](https://gitee.com/xieyun714/nodeimage/raw/master/img/20210707112226.png)}}
 
-### Undo型日志
+### Undo型日志 [ ](DatabaseSystem_20210709091758198)
 + 对于任一事务T，按下列顺序向磁盘输出T的日志信息：{{c1::![](https://gitee.com/xieyun714/nodeimage/raw/master/img/20210707112713.png)}}
 + 示例：Undo型日志：{{c1::![](https://gitee.com/xieyun714/nodeimage/raw/master/img/20210707112813.png)}}
 + 利用undo型日志进行恢复:{{c1::![](https://gitee.com/xieyun714/nodeimage/raw/master/img/20210707113109.png)}}
 
-### 检查点及其使用
+### 检查点及其使用 [ ](DatabaseSystem_20210709091758200)
 + 静止检查点特点：
   + {{c1::周期性地对日志设置检查点}}
   + {{c1::停止接受新的事务, 等到所有当前活跃事务提交或终止，并在日志中写入了COMMIT或ABORT记录后}}
@@ -1189,14 +1189,14 @@
   + {{c1::继续正常的操作，直到T1,…,Tk都完成时，写入<END CKPT>}}
 + 检查点的使用图示：{{c1::![](https://gitee.com/xieyun714/nodeimage/raw/master/img/20210707114356.png)![](https://gitee.com/xieyun714/nodeimage/raw/master/img/20210707114405.png)}}
 
-### Redo型日志
+### Redo型日志 [ ](DatabaseSystem_20210709091758202)
 + Undo型日志的问题：{{c1::“将事务改变的所有数据写到磁盘前不能提交该事务”—如何解决?}}
 + 对于任一事务T，按下列顺序向磁盘输出T的日志信息：{{c1::![](https://gitee.com/xieyun714/nodeimage/raw/master/img/20210707141634.png)}}
 + 示例：Redo型日志：{{c1::![](https://gitee.com/xieyun714/nodeimage/raw/master/img/20210707141858.png)}}
 + 利用redo日志进行恢复：{{c1::![](https://gitee.com/xieyun714/nodeimage/raw/master/img/20210707142034.png)}}
   + 图示：{{c1::![](https://gitee.com/xieyun714/nodeimage/raw/master/img/20210707142133.png)![](https://gitee.com/xieyun714/nodeimage/raw/master/img/20210707142144.png)}}
 
-### Redo型日志与Undo型日志的比较
+### Redo型日志与Undo型日志的比较 [ ](DatabaseSystem_20210709091758204)
 + Undo型日志:
   + {{c1::OUTPUT必须先做。}}
   + {{c1::如果<COMMITT>可见,T确定地已将所有其数据写回磁盘，因此不必重做 –-- 但可能引起性能下降(因可能频繁地写磁盘)}}
@@ -1204,9 +1204,8 @@
   + {{c1::OUTPUT必须后做。}}
   + {{c1::如果<COMMITT>不可见,T确定地没有将其任何数据写回到磁盘，因此无需撤销 –-- 但灵活性差(数据必须在Commit后才可见)}}
 
-### Undo/Redo型日志
+### Undo/Redo型日志 [ ](DatabaseSystem_20210709091758206)
 + 对于任一事务T，按下列顺序向磁盘输出T的日志信息:![](https://gitee.com/xieyun714/nodeimage/raw/master/img/20210707142936.png)
 + 示例：Undo/Redo型日志:{{c1::![](https://gitee.com/xieyun714/nodeimage/raw/master/img/20210707142959.png)}}
 + 利用undo/Redo型日志进行恢复:{{c1::![](https://gitee.com/xieyun714/nodeimage/raw/master/img/20210707143031.png)}}
   + 恢复过程图示：{{c1::![](https://gitee.com/xieyun714/nodeimage/raw/master/img/20210707143101.png)![](https://gitee.com/xieyun714/nodeimage/raw/master/img/20210707143112.png)![](https://gitee.com/xieyun714/nodeimage/raw/master/img/20210707143302.png)}}
-

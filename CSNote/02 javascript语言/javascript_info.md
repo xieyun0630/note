@@ -736,8 +736,9 @@ alert("Midget".includes("id", 3)); // false, 位置 3 没有“id”
 | `substring(start, end)` | `{{c1:: start` 与 `end` 之间}}                     | 负值代表 `0`        |
 | `substr(start, length)` | {{c1:: 从 `start` 开始获取长为 `length` 的字符串}} | 允许 `start` 为负数 |
 
-### JavaScript字符串正则表达式使用
+### JavaScript字符串正则表达式使用 [ ](javascript_info_20210709091758105)
 ```js
+//{{c1::
   if (that.postForm.batchCode.match(/-.+-/) != null) {
     if (that.postForm.batchCode.match(/MVI-\d{6}-\d{4}/) === null) {
       that.$message({
@@ -747,6 +748,7 @@ alert("Midget".includes("id", 3)); // false, 位置 3 没有“id”
       return false
     }
   }
+//}}
 ```
 
 ## 数组 [ ](javascript_info_20191219101334483)
@@ -5629,4 +5631,3 @@ Custom elements 有两种：
   + {{c1:: `customElements.define('hello-button', HelloButton, {extends: 'button'});`}}
 + At the end, to use our custom element, insert a regular `<button>`tag, but add is="hello-button" to it:
   + {{c1:: `<button is="hello-button">...</button>`}}
-
