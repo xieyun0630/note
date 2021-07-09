@@ -82,4 +82,111 @@
 + OSI参考模型解释**通信过程**示意图:![](https://gitee.com/xieyun714/nodeimage/raw/master/img/20210707165615.png)
 + OSI参考模型**数据封装与通信过程**示意图：![](https://gitee.com/xieyun714/nodeimage/raw/master/img/20210707165723.png)
 
-### OSI参考模型：物理层功能
+### OSI参考模型：物理/数据链路/网络层功能
++ 物理层功能图示：{{c1::![](https://gitee.com/xieyun714/nodeimage/raw/master/img/20210708081415.png)}}
++ 数据链路层功能：
+  1. **负责结点-结点**：{{c1::（node-to-node）数据传输}}
+  2. **组帧**：{{c1::Framing}}
+  3. **物理寻址**：{{c1:: （Physical addressing）,在帧头中增加发送端和/或接收端的物理地址标识数据帧的发送端和/或接收端 }}
+  4. **流量控制**： {{c1::Flow control，避免淹没接收端}}
+  5. **差错控制**： {{c1::Error control，检测并重传损坏或丢失帧，并避免重复帧}}
+  6. **访问(接入)控制**：{{c1::Access control，在任一给定时刻决定哪个设备拥有链路（物理介质）控制使用权}}
+  + 图示：{{c1::![](https://gitee.com/xieyun714/nodeimage/raw/master/img/20210708082419.png)}}
++ 网络层功能：
+  + **负责**：{{c1::源主机到目的主机数据分组（packet）交付，可能穿越多个网络}}
+  + **逻辑寻址**：{{c1::Logical addressing，全局唯一逻辑地址，确保数据分组被送达目的主机，如IP地址}}
+  + **路由**：{{c1::Routing，路由器(或网关)互连网络，并路由分组至最终目的主机，路径选择}}
+  + **分组转发**：{{c1::![](https://gitee.com/xieyun714/nodeimage/raw/master/img/20210708083048.png)}}
+
+### OSI参考模型：传输/会话/表示/应用层功能
++ 传输层功能
+  + 负责：{{c1::**源-目的（端-端） （进程间） 完整报文**传输}}
+  + 主要功能：{{c1::**分段与重组，SAP寻址，连接控制，流量控制，差错控制**![](https://gitee.com/xieyun714/nodeimage/raw/master/img/20210708083502.png)}}
++ 会话层功能
+  + 主要功能：**对话控制（dialog controlling）**，**同步(synchronization)**，最“**薄**”的一层
+  + 图示：![](https://gitee.com/xieyun714/nodeimage/raw/master/img/20210708083641.png)
++ 表示层功能：
+  + 主要功能：{{c1::数据表示转化，转换为主机独立的编码。加密/解密，压缩/解压缩。}}
+  + 图示：{{c1::![](https://gitee.com/xieyun714/nodeimage/raw/master/img/20210708084310.png)}}
++ 应用层功能：
+  + 图示：{{c1::![](https://gitee.com/xieyun714/nodeimage/raw/master/img/20210708084412.png)}}
+
+### TCP/IP参考模型
++ 体系图：![](https://gitee.com/xieyun714/nodeimage/raw/master/img/20210708084506.png)
++ 各层功能描述：
+  + 应用层:{{c1:: 支持各种网络应用，FTP, SMTP, HTTP}}
+  + 传输层:{{c1:: 进程-进程的数据传输，TCP, UDP}}
+  + 网络层:{{c1:: 源主机到目的主机的数据分组路由与转发，IP协议、路由协议等}}
+  + 链路层:{{c1:: 相邻网络元素（主机、交换机、路由器等）的数据传输，以太网（Ethernet）、802.11 (WiFi)、PPP}}
+  + 物理层:{{c1:: 比特传输}}
++ 5层模型的数据封装过程图:{{c1::![](https://gitee.com/xieyun714/nodeimage/raw/master/img/20210708084736.png)}}
+
+
+### 网络应用的体系结构
++ **C/S**: {{c1::客户机/服务器结构(Client-Server, C/S)}}
++ **P2P**: {{c1::点对点结构(Peer-to-peer, P2P)}}
++ **Hybrid**: {{c1::混合结构(Hybrid)}}
+
+
+### 应用层协议的内容
++ 消息的类型(type)
+  +  {{c1::请求消息}}
+  +  {{c1::响应消息}}
++ 消息的语法(syntax)/格式
+  +  {{c1::消息中有哪些字段(field)？}}
+  +  {{c1::每个字段如何描述}}
++ 字段的语义(semantics)
+  +  {{c1::字段中信息的含义}}
++ 规则(rules)
+  +  {{c1::进程何时发送/响应消息}}
+  +  {{c1::进程如何发送/响应消息}}
++ 示例图：{{c1::![](https://gitee.com/xieyun714/nodeimage/raw/master/img/20210708085941.png)}}
+
+### 网络应用对传输服务的需求
++ 数据丢失(data loss)/可靠性(reliability)
+  + {{c1::某些网络应用能够容忍一定的数据丢失：网络电话}}
+  + {{c1::某些网络应用要求100%可靠的数据传输：文件传输，telnet}}
++ 时间(timing)/延迟(delay)
+  + {{c1::有些应用只有在延迟足够低时才“有效”}}
+  + {{c1::网络电话/网络游戏}}
++ 带宽(bandwidth)
+  + {{c1::某些应用只有在带宽达到最低要求时才“有效”：网络视频}}
+  + {{c1::某些应用能够适应任何带宽——弹性应用：email}}
++ TCP服务/UDP服务简介图：{{c1::![](https://gitee.com/xieyun714/nodeimage/raw/master/img/20210708090320.png)}}
+
+### Email应用
++ **SMTP**协议：{{c1::![](https://gitee.com/xieyun714/nodeimage/raw/master/img/20210708111647.png)}}
++ **SMTP**交互示例：{{c1::![](https://gitee.com/xieyun714/nodeimage/raw/master/img/20210708111847.png)}}
++ **SMTP消息格式**：{{c1::![](https://gitee.com/xieyun714/nodeimage/raw/master/img/20210708112058.png)}}
++ **邮件访问协议简介**：{{c1::![](https://gitee.com/xieyun714/nodeimage/raw/master/img/20210708112701.png)}}
+
+### DNS概述
++ DNS:{{c1:: `Domain Name System` }}
++ **顶级域名服务器(TLD, top-level domain)**: {{c1::负责com, org, net,edu等顶级域名和国家顶级域名，例如cn, uk, fr等}}
++ **权威(Authoritative)域名服务器**：{{c1::组织的域名解析服务器，提供组织内部服务器的解析服务}}
++ **本地域名解析服务器**：{{c1::当主机进行DNS查询时，查询被发送到本地域名服务器。作为代理(proxy)，将查询转发给（层级式）域名解析服务器系统}}
++ **DNS记录缓存和更新**：{{c1::只要域名解析服务器获得**域名—IP映射**，即缓存这一映射，一段时间过后，缓存条目失效（删除），本地域名服务器一般会缓存顶级域名服务器的映射，因此根域名服务器不经常被访问}}
++ DNS查询示例：
+  + 迭代查询：{{c1::![](https://gitee.com/xieyun714/nodeimage/raw/master/img/20210708133001.png)}}
+  + 递归查询: {{c1::![](https://gitee.com/xieyun714/nodeimage/raw/master/img/20210708133035.png)}}
++ 例题:![](https://gitee.com/xieyun714/nodeimage/raw/master/img/20210708133206.png)
++ 答：{{c1::**A**}}
++ 如何注册域名:{{c1::![](https://gitee.com/xieyun714/nodeimage/raw/master/img/20210708135156.png)}}
+### DNS记录和消息格式
++ **RR**：{{c1::资源记录(RR, resource records)}}
++ 记录格式：{{c1::`RR format: (name, value, type, ttl)`}}
++ **Type=A**
+  + **Name**: {{c1::主机域名}}
+  + **Value**: {{c1::IP地址}}
++ **Type=NS**
+  + **Name**: {{c1::域(edu.cn)}}
+  + **Value**: {{c1::该域权威域名解析服务器的主机域名}}
++ **Type=CNAME**
+  + **Name**: {{c1::某一真实域名的别名}}
+  + **Value**: {{c1::真实域名}}
++ **Type=MX**
+  + **Value**: {{c1::是与name相对应的邮件服务器}}
+
+### P2P概述
++ 客户机/服务器 vs. P2P例子：{{c1::![](https://gitee.com/xieyun714/nodeimage/raw/master/img/20210708142111.png)}}
++ BitTorrent协议：{{c1::![](https://gitee.com/xieyun714/nodeimage/raw/master/img/20210708142216.png)![](https://gitee.com/xieyun714/nodeimage/raw/master/img/20210708142245.png)![](https://gitee.com/xieyun714/nodeimage/raw/master/img/20210708142223.png)}}
