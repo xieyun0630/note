@@ -310,6 +310,46 @@ getProdOptions(kewWord) {
 }
 ```
 
+## 表格添加总数量
+
+**添加属性**：`show-summary :summary-method="getSummaries"`
+
+```html
+
+<el-table :data="postRecoreds" stripe style="width: 100%" show-summary :summary-method="getSummaries">
+    <el-table-column label="内箱号" align="center" prop="packCode" />
+    <el-table-column label="已装数" align="center" prop="productCount" />
+    <el-table-column align="center">
+        <template slot-scope="scope">
+            <el-button type="danger" size="mini" icon="el-icon-delete" @click="handleDelete(scope.$index, scope.row)" />
+        </template>
+    </el-table-column>
+</el-table>
+```
+
+**添加函数**:  `getSummaries`
+
+```js
+/** 合计 */
+getSummaries({ columns }) {
+    const sums = []
+    const propertylist = ['productCount']
+    columns.forEach((column, index) => {
+        if (index === 0) {
+            sums[index] = '合计:'
+            return
+        }
+        if (propertylist.indexOf(column.property) > -1) {
+            debugger
+            sums[index] = this.postRecoreds.map(record => record.productCount).reduce((cur, next) => cur + next, 0)
+        }
+    })
+    return sums
+}
+```
+
+
+
 ## 新页面对话框组件
 
 **父页面代码**
@@ -713,3 +753,14 @@ import stickTop from 'components/stickTop'
 import getArticle from 'api/article'
 ```
 
+
+
+
+
+
+
+# TODO
+
+### 新需求：新添加页面，添加拦截功能
+
+![](https://gitee.com/xieyun714/nodeimage/raw/master/img/20210710103219.png)

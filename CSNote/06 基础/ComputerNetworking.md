@@ -172,6 +172,8 @@
 + 例题:![](https://gitee.com/xieyun714/nodeimage/raw/master/img/20210708133206.png)
 + 答：{{c1::**A**}}
 + 如何注册域名:{{c1::![](https://gitee.com/xieyun714/nodeimage/raw/master/img/20210708135156.png)}}
+
+
 ### DNS记录和消息格式 [ ](ComputerNetworking_20210709091758187)
 + **RR**：{{c1::资源记录(RR, resource records)}}
 + 记录格式：{{c1::`RR format: (name, value, type, ttl)`}}
