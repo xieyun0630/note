@@ -291,6 +291,27 @@ var watchExampleVM = new Vue({
 - 基本语法：{{c1:: `<div v-bind:class="[activeClass, errorClass]"></div>` }}
 - 使用三元表达式:{{c1:: `<div v-bind:class="[isActive ? activeClass : '', errorClass]"></div>` }}
 - 数组中使用对象：{{c1::  `<div v-bind:class="[{ active: isActive }, errorClass]"></div>` }}
+- 使用例子：
+  ```js
+  //{{c1::
+    <el-input v-model="scope.row.batchCodeNumber" :class="batchCodeNumberClass" align="center" :readonly="isReadOnly" />
+    //....
+    computed: {
+      isEdit() { return !!this.entityId },
+      getTitle() { return '打印内箱标签' },
+      total() {
+        return this.postRecoreds.map(record => record.batchCodeNumber).reduce((previousValue, item) => previousValue + parseInt(item), 0)
+      },
+      batchCodeNumberClass() {
+        if (this.isReadOnly) {
+          return ['input-readonly']
+        } else {
+          return ['postInfo-container-item']
+        }
+      }
+    },
+  //}}
+  ```
 
 ### 绑定 HTML Class:组件上的`v-bind:class` [ ](vue_20200703080524574)
 

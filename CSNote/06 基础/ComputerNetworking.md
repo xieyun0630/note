@@ -127,7 +127,7 @@
 + **P2P**: {{c1::点对点结构(Peer-to-peer, P2P)}}
 + **Hybrid**: {{c1::混合结构(Hybrid)}}
 
-## 应用层
+## 应用层 [ ](ComputerNetworking_20210713081145914)
 
 
 ### 应用层协议的内容 [ ](ComputerNetworking_20210709091758179)
@@ -195,9 +195,9 @@
 + 客户机/服务器 vs. P2P例子：{{c1::![](https://gitee.com/xieyun714/nodeimage/raw/master/img/20210708142111.png)}}
 + BitTorrent协议：{{c1::![](https://gitee.com/xieyun714/nodeimage/raw/master/img/20210708142216.png)![](https://gitee.com/xieyun714/nodeimage/raw/master/img/20210708142245.png)![](https://gitee.com/xieyun714/nodeimage/raw/master/img/20210708142223.png)}}
 
-## Socket编程
+## Socket编程 [ ](ComputerNetworking_20210713081145917)
 
-### Socket编程-应用编程接口
+### Socket编程-应用编程接口 [ ](ComputerNetworking_20210713081145919)
 + Socket在网络体系结构中的位置：{{c1::![](https://gitee.com/xieyun714/nodeimage/raw/master/img/20210711121257.png)}}
 + 应用编程接口API：{{c1::就是应用进程的控制权和操作系统的控制权进行转换的一个系统调用接口.![](https://gitee.com/xieyun714/nodeimage/raw/master/img/20210711121532.png)}}
 + 典型的应用编程接口：
@@ -205,7 +205,7 @@
   + **WINSOCK**：{{c1::微软公司在其操作系统中采用了套接字接口 API，形成了一个稍有不同的 API，并称之为Windows Socket Interface，WINSOCK。}}
   + **TLI**：{{c1::AT&T 为其 UNIX 系统 V 定义了一种 API，简写为 TLI (Transport Layer Interface)。}}
 
-### Socket API函数总览
+### Socket API函数总览 [ ](ComputerNetworking_20210713081145921)
 + `WSAStartup`: {{c1::初始化socket库(仅对WinSock)}}
 + `WSACleanup`: {{c1::清楚/终止socket库的使用 (仅对WinSock)}}
 + `socket`: {{c1::创建套接字}}
@@ -226,13 +226,13 @@ UDP套接字）
 + `setsockopt`: {{c1::设置套接字选项参数}}
 + `getsockopt`: {{c1::获取套接字选项参数}}
 
-### Socket API
+### Socket API [ ](ComputerNetworking_20210713081145923)
 + 对外如何标识通信端点：{{c1::IP地址+端口号}}
   + `sockaddr_in`结构:![](https://gitee.com/xieyun714/nodeimage/raw/master/img/20210711124901.png)
     + 作用:{{c1::使用TCP/IP协议簇的网络应用程序声明端点地址变量时，使用结构sockaddr_in}}
 + 对内操作系统/进程如何管理套接字：{{c1::使用小整数的套接字描述符（socket descriptor）![](https://gitee.com/xieyun714/nodeimage/raw/master/img/20210711122306.png)}}
 
-### Socket API函数:WSAStartup
+### Socket API函数:WSAStartup [ ](ComputerNetworking_20210713081145925)
 + API:`int WSAStartup(WORD wVersionRequested, LPWSADATA lpWSAData);`
 + 作用：{{c1::使用Socket的应用程序在使用Socket之前必须首先调用
 WSAStartup函数}}
@@ -246,12 +246,12 @@ WSAStartup函数}}
     err=WSAStartup(wVersionRequested,&wsaData);
     //}}
   ```
-### Socket API函数:WSACleanup
+### Socket API函数:WSACleanup [ ](ComputerNetworking_20210713081145927)
 
 + API:`int WSACleanup (void);`
 + 作用：{{c1::应用程序在完成对请求的Socket库的使用，最后要调用WSACleanup函数，**解除与Socket库的绑定**，**释放Socket库所占用的系统资源**。}}
 
-### Socket API函数:socket
+### Socket API函数:socket [ ](ComputerNetworking_20210713081145929)
 + API:`sd = socket(protofamily,type,proto);`
 + 作用：{{c1::创建套接字，操作系统返回套接字描述符（sd）}}
 + `protofamily`: {{c1::协议族,protofamily = PF_INET（TCP/IP）}}
@@ -267,7 +267,7 @@ WSAStartup函数}}
   SOCKET sd=socket(PF_INET,SOCK_STREAM,p->p_proto); 
   //}}
   ```
-### Socket API函数:Closesocket
+### Socket API函数:Closesocket [ ](ComputerNetworking_20210713081145931)
 + API:`int closesocket(SOCKET sd);`
 + 作用：{{c1::关闭一个描述符为sd的套接字。如果多个进程共享一个套接字，调用closesocket将套接字引用计数减1，减至0才关闭}}
 + 返回值：
@@ -275,7 +275,7 @@ WSAStartup函数}}
   + {{c1::SOCKET_ERROR：失败}}
 + 注意：{{c1::一个进程中的多线程对一个套接字的使用无计数,如果进程中的一个线程调用closesocket将一个套接字关闭，该进程中的其他线程也将不能访问该套接字}}
 
-### Socket API函数:bind
+### Socket API函数:bind [ ](ComputerNetworking_20210713081145933)
 + API:`int bind(sd,localaddr,addrlen);`
 + 参数:
   + **sd**:{{c1:: 套接字描述符（sd）}}
@@ -283,7 +283,7 @@ WSAStartup函数}}
 + `INADDR_ANY`:{{c1:: 设置结构sockaddr_in中的IP地址为INADDR_ANY，代表绑定本地任意IP地址。![](https://gitee.com/xieyun714/nodeimage/raw/master/img/20210711141612.png) }}
 + 注意: {{c1::该函数通常只有服务器端调用，客户端一般由操作系统自动绑定好。}}
 
-### Socket API函数:listen
+### Socket API函数:listen [ ](ComputerNetworking_20210713081145935)
 + API:`int listen(sd,queuesize);`
 + 作用: {{c1::设置服务器端的流套接字处于监听状态**}}
 + 使用限制:
@@ -297,14 +297,14 @@ WSAStartup函数}}
   + {{c1::SOCKET_ERROR：失败}}
 
 
-### Socket API函数:connect
+### Socket API函数:connect [ ](ComputerNetworking_20210713081145937)
 + API:`connect(sd,saddr,saddrlen);`
 + 作用:{{c1::客户程序调用connect函数来使客户套接字（sd）与特定计算机的特定端口（saddr）的套接字（服务）进行连接![](https://gitee.com/xieyun714/nodeimage/raw/master/img/20210711145426.png)}}
 + 使用限制：
   + {{c1::仅用于客户端}}
   + {{c1::可用于TCP客户端也可以用于UDP客户端}}
 
-### Socket API函数:accept
+### Socket API函数:accept [ ](ComputerNetworking_20210713081145939)
 + API:`newsock = accept(sd,caddr,caddrlen);`
 + 作用：{{c1::服务程序调用accept函数从处于监听状态的流套接字sd的客户连接请求队列中取出排在最前的一个客户请求，并且创建一个**新的套接字**来与客户套接字创建连接通道}}
 + 使用限制
@@ -313,7 +313,7 @@ WSAStartup函数}}
 + 图示:{{c1::![](https://gitee.com/xieyun714/nodeimage/raw/master/img/20210711151425.png)}}
 
 
-### Socket API函数:send, sendto,recv, recvfrom
+### Socket API函数:send, sendto,recv, recvfrom [ ](ComputerNetworking_20210713081145941)
 + API:
   + `send(sd,*buf,len,flags);`
   + `sendto(sd,*buf,len,flags,destaddr,addrlen);`
@@ -327,7 +327,7 @@ WSAStartup函数}}
   + **recv**：{{c1::recv函数从TCP连接的**另一端**接收数据，或者从**调用了connect函数的UDP客户端**套接字接收服务器发来的数据}}
   + **recvfrom**：{{c1::recvfrom函数用于从UDP**服务器端**套接字与**未调用**connect函数的UDP**客户端**套接字接收对端数据}}
 
-### Socket API函数:setsockopt, getsockopt
+### Socket API函数:setsockopt, getsockopt [ ](ComputerNetworking_20210713081145943)
 + API:
   + `int setsockopt(int sd, int level, int optname,*optval, int optlen);`
   + `int getsockopt(int sd, int level, int optname,*optval, socklen_t *optlen);`
@@ -336,15 +336,15 @@ WSAStartup函数}}
   + `getsockopt()`:{{c1:: 用于获取任意类型、任意状态套接口的选项当前值，并把结果存入optval }}
 + 可以实现本地字节顺序与网络字节顺序间转换的函数：{{c1::![](https://gitee.com/xieyun714/nodeimage/raw/master/img/20210711161257.png)}}
 
-### 网络应用的Socket API(TCP)调用基本流程
+### 网络应用的Socket API(TCP)调用基本流程 [ ](ComputerNetworking_20210713081145945)
 + 顺序图：{{c1::![](https://gitee.com/xieyun714/nodeimage/raw/master/img/20210711155908.png)}}
 
-### Socket客户端软件设计:获取服务器相关信息函数
+### Socket客户端软件设计:获取服务器相关信息函数 [ ](ComputerNetworking_20210713081145947)
 + `inet_addr( )` `gethostbyname( ) `: {{c1:: 解析服务器IP地址 ![](https://gitee.com/xieyun714/nodeimage/raw/master/img/20210711222923.png)}}
 + `getservbyname( )`: {{c1:: 解析服务器（熟知）端口号 ![](https://gitee.com/xieyun714/nodeimage/raw/master/img/20210711223742.png)}}
 + `getprotobyname( )`:{{c1:: 解析协议号 ![](https://gitee.com/xieyun714/nodeimage/raw/master/img/20210711223812.png)}}
 
-### Socket客户端软件套接字调用流程
+### Socket客户端软件套接字调用流程 [ ](ComputerNetworking_20210713081145949)
 + TCP客户端软件流程
   1. {{c1::确定服务器**IP地址**与**端口号**}}
   2. {{c1::创建套接字}}
@@ -363,7 +363,7 @@ WSAStartup函数}}
   6. {{c1::关闭/释放套接字}}
 + 思考区别：{{c1::二者区别，只在于第四步，连接/直接发送数据报}}
 
-### Socket客户端软件的实现
+### Socket客户端软件的实现 [ ](ComputerNetworking_20210713081145951)
 + 设计一个`connectsock`过程封装底层代码：
   ```cpp
   /* consock.cpp - connectsock */
@@ -499,18 +499,18 @@ WSAStartup函数}}
       char *service = "daytime"; /* default service port */
       WSADATA wsadata;
       switch (argc) {
-      case 1:
-        host = "localhost";
-        break;
-      case 3:
-        service = argv[2];
-        /* FALL THROUGH */
-      case 2:
-        host = argv[1];
-        break;
-      default:
-        fprintf(stderr, "usage: TCPdaytime [host [port]]\n");
-        exit(1);
+        case 1:
+          host = "localhost";
+          break;
+        case 3:
+          service = argv[2];
+          /* FALL THROUGH */
+        case 2:
+          host = argv[1];
+          break;
+        default:
+          fprintf(stderr, "usage: TCPdaytime [host [port]]\n");
+          exit(1);
       }
       
       if (WSAStartup(WSVERS, &wsadata) != 0)
@@ -540,73 +540,72 @@ WSAStartup函数}}
     }
   ```
 + 例2：访问DAYTIME服务的客户端（UDP）
-  ```CPP
-    /* UDPdtc.cpp - main, UDPdaytime */
-    #include <stdlib.h>
-    #include <stdio.h>
-    #include <winsock.h>
-    void UDPdaytime(const char *, const char *);
-    void errexit(const char *, ...);
-    SOCKET connectUDP(const char *, const char *);
-    #define LINELEN 128
-    #define WSVERS MAKEWORD(2, 0)
-    #define MSG “what daytime is it?\n"
-    /*--------------------------------------------------------
-    * main - UDP client for DAYTIME service
-    *--------------------------------------------------------
-    */
-    int main(int argc, char *argv[])
-    {
-      char *host = "localhost"; /* host to use if none supplied */
-      char *service = "daytime"; /* default service port */
-      WSADATA wsadata;
-      switch (argc) {
-        case 1:
-          host = "localhost";
-          break;
-        case 3:
-          service = argv[2];
-          /* FALL THROUGH */
-        case 2:
-          host = argv[1];
-          break;
-        default:
-          fprintf(stderr, "usage: UDPdaytime [host [port]]\n");
-          exit(1);
-        }
-        if (WSAStartup(WSVERS, &wsadata) != 0)
-          errexit("WSAStartup failed\n");
-        UDPdaytime(host, service);
-        WSACleanup();
-        return 0; /* exit */
+```CPP
+  /* UDPdtc.cpp - main, UDPdaytime */
+  #include <stdlib.h>
+  #include <stdio.h>
+  #include <winsock.h>
+  void UDPdaytime(const char *, const char *);
+  void errexit(const char *, ...);
+  SOCKET connectUDP(const char *, const char *);
+  #define LINELEN 128
+  #define WSVERS MAKEWORD(2, 0)
+  #define MSG “what daytime is it?\n"
+  /*--------------------------------------------------------
+  * main - UDP client for DAYTIME service
+  *--------------------------------------------------------
+  */
+  int main(int argc, char *argv[])
+  {
+    char *host = "localhost"; /* host to use if none supplied */
+    char *service = "daytime"; /* default service port */
+    WSADATA wsadata;
+    switch (argc) {
+      case 1:
+        host = "localhost";
+        break;
+      case 3:
+        service = argv[2];
+        /* FALL THROUGH */
+      case 2:
+        host = argv[1];
+        break;
+      default:
+        fprintf(stderr, "usage: UDPdaytime [host [port]]\n");
+        exit(1);
     }
-    void UDPdaytime(const char *host, const char *service)
+    if (WSAStartup(WSVERS, &wsadata) != 0)
+      errexit("WSAStartup failed\n");
+    UDPdaytime(host, service);
+    WSACleanup();
+    return 0; /* exit */
+  }
+  void UDPdaytime(const char *host, const char *service)
+  {
+    char buf[LINELEN+1]; /* buffer for one line of text */
+    SOCKET s;            /* socket descriptor */
+    int n;               /* recv character count */
+    
+    s = connectUDP(host, service);
+    (void) send(s, MSG, strlen(MSG), 0);
+    /* Read the daytime */
+    n = recv(s, buf, LINELEN, 0);
+    if (n == SOCKET_ERROR)
+      errexit("recv failed: recv() error %d\n", GetLastError());
+    else
     {
-      char buf[LINELEN+1]; /* buffer for one line of text */
-      SOCKET s;            /* socket descriptor */
-      int n;               /* recv character count */
-      
-      s = connectUDP(host, service);
-      (void) send(s, MSG, strlen(MSG), 0);
-      /* Read the daytime */
-      n = recv(s, buf, LINELEN, 0);
-      if (n == SOCKET_ERROR)
-        errexit("recv failed: recv() error %d\n", GetLastError());
-      else
-      {
-        buf[cc] = '\0';    /* ensure null-termination */
-        (void) fputs(buf, stdout);
-      }
-      closesocket(s);
-      return 0;            /* exit */
+      buf[cc] = '\0';    /* ensure null-termination */
+      (void) fputs(buf, stdout);
     }
-  ```
+    closesocket(s);
+    return 0;            /* exit */
+  }
+```
 + 理解：{{c1::标签}}
 
 
-### Socket服务器软件设计:4种类型基本服务器
+### Socket服务器软件设计:4种类型基本服务器 [ ](ComputerNetworking_20210713081145953)
 1. {{c1::循环无连接(Iterative connectionless)服务器}}
 2. {{c1::循环面向连接(Iterative connection-oriented)服务器}}
 3. {{c1::并发无连接(Concurrent connectionless)服务器}}
 4. {{c1::并发面向连接(Concurrent connection-oriented)服务器}}
-

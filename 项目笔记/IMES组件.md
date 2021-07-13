@@ -718,8 +718,23 @@ cellStyle({ row, columnIndex }) {
 ```
 
 ## 报产数据与内外箱表关系
-
 ![](https://gitee.com/xieyun714/nodeimage/raw/master/img/20210527111902.png)
+![image-20210713114440143](D:\books\note\项目笔记\IMES组件.assets\image-20210713114440143.png)
+
+## 内箱表，外箱表，产品表的关联SQL
+
+```SQL
+SELECT *
+FROM
+boxInfo
+INNER JOIN boxList ON boxInfo.boxCode = boxList.boxCode
+INNER JOIN packageInfo ON boxList.packCode = packageInfo.packCode
+INNER JOIN productNumber ON packageInfo.packCode = productNumber.packCode
+WHERE
+boxInfo.boxCode = 'ACFC337210713032'
+```
+
+![image-20210713115356989](D:\books\note\项目笔记\IMES组件.assets\image-20210713115356989.png)
 
 ### 项目路径设置别名的2种风格
 
@@ -752,8 +767,6 @@ alias: {
 import stickTop from 'components/stickTop'
 import getArticle from 'api/article'
 ```
-
-
 
 
 
