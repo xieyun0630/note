@@ -605,7 +605,226 @@ WSAStartup函数}}
 
 
 ### Socket服务器软件设计:4种类型基本服务器 [ ](ComputerNetworking_20210713081145953)
-1. {{c1::循环无连接(Iterative connectionless)服务器}}
-2. {{c1::循环面向连接(Iterative connection-oriented)服务器}}
-3. {{c1::并发无连接(Concurrent connectionless)服务器}}
-4. {{c1::并发面向连接(Concurrent connection-oriented)服务器}}
+1. 循环无连接服务器基本流程：{{c1::**Iterative connectionless**![](https://gitee.com/xieyun714/nodeimage/raw/master/img/20210713231053.png)}}
+2. 循环面向连接服务器基本流程：{{c1::**Iterative connection-oriented**![](https://gitee.com/xieyun714/nodeimage/raw/master/img/20210713231346.png)}}
+3. 并发无连接服务器基本流程：{{c1::**Concurrent connectionless**![](https://gitee.com/xieyun714/nodeimage/raw/master/img/20210713231403.png)}}
+4. 并发面向连接服务器基本流程：{{c1::**Concurrent connection-oriented**![](https://gitee.com/xieyun714/nodeimage/raw/master/img/20210713231414.png)}}
++ 注意点:
+  + `connect()` `sendto()`:{{c1::![](https://gitee.com/xieyun714/nodeimage/raw/master/img/20210713231224.png)}}
+  + 如何获取客户端点地址：{{c1::![](https://gitee.com/xieyun714/nodeimage/raw/master/img/20210713231317.png)}}
+
+### Socket服务器的实现
++ 设计一个底层过程隐藏底层代码,`passivesock()`
++ 两个高层过程分别用于创建服务器端UDP套接字和TCP套接字,`passiveUDP()` `passiveTCP()`
++ `passivesock()`实现:
+  ```cpp
+  /* passsock.cpp - passivesock */
+  #include <stdlib.h>
+  #include <string.h>
+  #include <winsock.h>
+  void errexit(const char *, ...);
+  /*-----------------------------------------------------------------------
+  * passivesock - allocate & bind a server socket using TCP or UDP
+  *------------------------------------------------------------------------
+  */
+  SOCKET passivesock(const char *service, const char *transport, int qlen)
+  {
+    struct servent *pse; /* pointer to service information entry */
+    struct protoent *ppe; /* pointer to protocol information entry */
+    struct sockaddr_in sin;/* an Internet endpoint address */
+    SOCKET s; /* socket descriptor */
+    int type; /* socket type (SOCK_STREAM, SOCK_DGRAM)*/
+
+    memset(&sin, 0, sizeof(sin));
+    sin.sin_family = AF_INET;
+    sin.sin_addr.s_addr = INADDR_ANY;
+
+    /* Map service name to port number */
+    if ( pse = getservbyname(service, transport) )
+      sin.sin_port = (u_short)pse->s_port;
+    else if ( (sin.sin_port = htons((u_short)atoi(service))) == 0 )
+      errexit("can't get \"%s\" service entry\n", service);
+
+    /* Map protocol name to protocol number */
+    if ( (ppe = getprotobyname(transport)) == 0)
+        errexit("can't get \"%s\" protocol entry\n", transport);
+
+    /* Use protocol to choose a socket type */
+    if (strcmp(transport, "udp") == 0)
+      type = SOCK_DGRAM;
+    else
+      type = SOCK_STREAM;
+
+    /* Allocate a socket */
+    s = socket(PF_INET, type, ppe->p_proto);
+    if (s == INVALID_SOCKET)
+      errexit("can't create socket: %d\n", GetLastError());
+
+    /* Bind the socket */
+    if (bind(s, (struct sockaddr *)&sin, sizeof(sin)) == SOCKET_ERROR)
+      errexit("can't bind to %s port: %d\n", service,GetLastError());
+    if (type == SOCK_STREAM && listen(s, qlen) == SOCKET_ERROR)
+      errexit("can't listen on %s port: %d\n", service,GetLastError());
+    return s;
+  }
+  ```
++ `passiveUDP()` `passiveTCP()`:
+  ```cpp 
+  /* passUDP.cpp - passiveUDP */
+  #include <winsock.h>
+  SOCKET passivesock(const char *, const char *, int);
+  SOCKET passivesock(const char *, const char *, int);
+  /*------------------------------------------------------------
+  * passiveUDP - create a passive socket for use in a UDP server
+  *-------------------------------------------------------------
+  */
+  SOCKET passiveUDP(const char *service)
+  {
+     return passivesock(service, "udp", 0);
+  }
+  /*------------------------------------------------------------
+  * passiveTCP - create a passive socket for use in a TCP server
+  *-------------------------------------------------------------
+  */
+  SOCKET passiveTCP(const char *service, int qlen)
+  {
+    return passivesock(service, "tcp", qlen);
+  }
+  ```
++ 理解:{{c1::标签}}
+
+### socket使用案例：DAYTIME服务器
++ 例1：无连接循环DAYTIME服务器
+  ```cpp
+  /* UDPdtd.cpp - main, UDPdaytimed */
+  #include <stdlib.h>
+  #include <winsock.h>
+  #include <time.h>
+  void errexit(const char *, ...);
+  SOCKET passiveUDP(const char *);
+  #define WSVERS MAKEWORD(2, 0)
+  /*------------------------------------------------------------------------
+  * main - Iterative UDP server for DAYTIME service
+  *------------------------------------------------------------------------
+  */
+  void main(int argc, char *argv[])
+  {
+    struct sockaddr_in fsin; /* the from address of a client */
+    char *service = "daytime"; /* service name or port number */
+    SOCKET sock; /* socket */
+    int alen; /* from-address length */
+    char * pts; /* pointer to time string */
+    time_t now; /* current time */
+    WSADATA wsadata;
+
+    switch (argc)
+    {
+      case 1:
+        break;
+      case 2:
+        service = argv[1];
+        break;
+      default:
+        errexit("usage: UDPdaytimed [port]\n");
+    }
+
+    if (WSAStartup(WSVERS, &wsadata) != 0)
+      errexit("WSAStartup failed\n");
+    sock = passiveUDP(service);
+    while (1)
+    {
+      alen = sizeof(struct sockaddr);
+      if (recvfrom(sock,buf,sizeof(buf),0,(struct sockaddr *)&fsin,&alen) == SOCKET_ERROR)
+        errexit("recvfrom: error %d\n", GetLastError());
+      (void) time(&now);
+      pts = ctime(&now);
+      (void) sendto(sock,pts,strlen(pts),0,(struct sockaddr *)&fsin,sizeof(fsin));
+    }
+    return 1; /* not reached */
+  }
+  ```
+  + 程序结构图：![](https://gitee.com/xieyun714/nodeimage/raw/master/img/20210713233543.png)
++ 例2：面向连接并发DAYTIME服务器
+  ```java 
+  /* TCPdtd.cpp - main, TCPdaytimed */
+  #include <stdlib.h>
+  #include <winsock.h>
+  #include <process.h>
+  #include <time.h>
+  void errexit(const char *, ...);
+  void TCPdaytimed(SOCKET);
+  SOCKET passiveTCP(const char *, int);
+  #define QLEN 5
+  #define WSVERS MAKEWORD(2, 0)
+  /*------------------------------------------------------------------------
+  * main - Concurrent TCP server for DAYTIME service
+  *------------------------------------------------------------------------
+  */
+  void main(int argc, char *argv[])
+  {
+    struct sockaddr_in fsin; /* the from address of a client */
+    char *service = "daytime"; /* service name or port number*/
+    SOCKET msock, ssock; /* master & slave sockets */
+    int alen; /* from-address length */
+    WSADATA wsadata;
+
+    switch (argc) {
+      case1:
+      break;
+      case2:
+      service = argv[1];
+      break;
+      default:
+      errexit("usage: TCPdaytimed [port]\n");
+    }
+
+    if (WSAStartup(WSVERS, &wsadata) != 0)
+      errexit("WSAStartup failed\n");
+      msock = passiveTCP(service, QLEN);
+    while (1) {
+      alen = sizeof(struct sockaddr);
+      ssock = accept(msock, (struct sockaddr *)&fsin, &alen);
+      if (ssock == INVALID_SOCKET)
+        errexit("accept failed: error number %d\n",GetLastError());
+      if (_beginthread((void (*)(void *)) TCPdaytimed, 0,(void *)ssock) < 0) {
+        errexit("_beginthread: %s\n", strerror(errno));
+      }
+    }
+    return 1; /* not reached */
+  }
+
+  /*----------------------------------------------------------------------
+  * TCPdaytimed - do TCP DAYTIME protocol
+  *-----------------------------------------------------------------------
+  */
+  void TCPdaytimed(SOCKET fd)
+  {
+    char * pts; /* pointer to time string */
+    time_t now; /* current time */
+    (void) time(&now);
+    pts = ctime(&now);
+    (void) send(fd, pts, strlen(pts), 0);
+    (void) closesocket(fd);
+  }
+  ```
+  + 程序结构图：{{c1::![](https://gitee.com/xieyun714/nodeimage/raw/master/img/20210713233927.png)}}
+
+## 传输层
+
+### 传输层概述
++ 传输层作用：{{c1::传输层协议为运行在不同Host上的进程提供了一种**逻辑通信机制**![](https://gitee.com/xieyun714/nodeimage/raw/master/img/20210713235404.png)}}
++ 端系统运行传输层协议
+  + 发送方：{{c1::将应用递交的消息分成一个或多个的Segment，并向下传给网络层。}}
+  + 接收方：{{c1::将接收到的segment组装成消息，并向上交给应用层。}}
++ 基本机制：
+  1. {{c1::复用/分用}}
+  2. {{c1::可靠数据传输机制}}
+  3. {{c1::流量控制机制}}
+  4. {{c1::拥塞控制机制}}
++ 传输层vs.网络层: {{c1:: 网络层提供主机之间的逻辑通信机制, 传输层提供应用进程之间的逻辑通信机制 }}
+
+### Internet传输层协议特点
++ TCP特点：{{c1::可靠、按序的交付服务，拥塞控制，流量控制，连接建立}}
++ UDP特点：{{c1::基于“**尽力而为(Best-effort)**”的网络层，没有做（可靠性方面的）扩展}}
++ 两种服务均不保证：{{c1::延迟，带宽}}
+
