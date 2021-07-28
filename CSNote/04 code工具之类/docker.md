@@ -318,8 +318,6 @@ docker pull 私有仓库服务器ip:5000/centos:7
   grant all privileges on *.* to root@'122.227.165.6' identified by '123456' with grant option;
   flush privileges;
   #}}
-  
-  
   ```
 
 ### docker实例：容器中安装jdk [ ](docker_20210623112904932)
