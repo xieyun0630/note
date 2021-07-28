@@ -47,7 +47,7 @@
     ```
 }}
 
-### MyBatis手动创建session对象 [	](mybatis_20200512080327621)
+### MyBatis手动创建sqlSession对象 [	](mybatis_20200512080327621)
 ```java
     //{{c1::
     var inputStream = Resources.getResourceAsStream("mybatis-config.xml");
@@ -80,10 +80,10 @@ var newsMapper = sqlSession.getMapper(NewsMapper.class);
 
 | 核心类及组件             | 最佳作用域                | 原因                                                                                |
 | ------------------------ | ------------------------- | ----------------------------------------------------------------------------------- |
-| SqlSessionFactoryBuilder | {{c1::局部作用域}}        | {{c1::唯一作用就是创建SqlSessionFactory，只有单个Build()方法}}                      |
-| SqlSessionFactory        | {{c1::整个应用运行期间}}  | {{c1::底层封装的当前应用的数据库配置环境，每个数据库对应一个SqlSessionFactory实例}} |
-| SqlSession               | {{c1::方法或单个Request}} | {{c1::线程不安全，无法多线程访问}}                                                  |
-| Mapper组件               | {{c1::局部作用域}}        | {{c1::因为是由SqlSession创建，作用域应该不大于SqlSession。}}                        |
+| `SqlSessionFactoryBuilder` | {{c1::局部作用域}}        | {{c1::唯一作用就是创建SqlSessionFactory，只有单个Build()方法}}                      |
+| `SqlSessionFactory`        | {{c1::整个应用运行期间}}  | {{c1::底层封装的当前应用的数据库配置环境，每个数据库对应一个SqlSessionFactory实例}} |
+| `SqlSession`               | {{c1::方法或单个Request}} | {{c1::线程不安全，无法多线程访问}}                                                  |
+| `Mapper组件`               | {{c1::局部作用域}}        | {{c1::因为是由SqlSession创建，作用域应该不大于SqlSession。}}                        |
 
 ### SqlSessionFactoryBuilder主要方法 [	](mybatis_20200514071548549)
 ```java
@@ -105,13 +105,13 @@ public SqlSessionFactory build(Reader|InputStream reader, String environment, Pr
   SqlSession openSession(ExecutorType execType, Connection connection);
 ```
 **参数:**
-- autoCommit: {{c1:: 是否自动提交事务 }}
-- connection：{{c1:: 设置指定的JDBC连接对象 }}
-- level：{{c1:: 设置事务隔离级别 }}
-- execType：{{c1:: 执行语句的类型 }}
-  1. ExecutorType.SIMPLE: {{c1:: 每次执行SQL都创建新的PreparedStatement对象 }}
-  2. ExecutorType.REUSE: {{c1:: 重复使用PreparedStatement对象 }}
-  3. ExecutorType.BATCH: {{c1:: 启用批量更新，当需要批量插入，更新多条数据时，启用批量更新较好。}}
+- `autoCommit`: {{c1:: 是否自动提交事务 }}
+- `connection：`{{c1:: 设置指定的JDBC连接对象 }}
+- `level：`{{c1:: 设置事务隔离级别 }}
+- `execType：`{{c1:: 执行语句的类型 }}
+  1. `ExecutorType.SIMPLE`: {{c1:: 每次执行SQL都创建新的PreparedStatement对象 }}
+  2. `ExecutorType.REUSE`: {{c1:: 重复使用PreparedStatement对象 }}
+  3. `ExecutorType.BATCH`: {{c1:: 启用批量更新，当需要批量插入，更新多条数据时，启用批量更新较好。}}
 
 ### SqlSession执行SQL语句的主要方法 [	](mybatis_20200514071548551)
 
@@ -134,8 +134,8 @@ int delete(String statement, Object parameter);
   void rollback(boolean force);
   List<BatchResult> flushStatements();
 ```
-flushStatements():{{c1:: 执行批量更新。}}
-force:{{c1:: 是否强制提交或回滚。}}
++ `flushStatements()`:{{c1:: 执行批量更新。}}
++ `force`:{{c1:: 是否强制提交或回滚。}}
 
 ## Mybatis全局配置 [	](mybatis_20200717061050959)
 
@@ -188,14 +188,14 @@ force:{{c1:: 是否强制提交或回滚。}}
 ### 自定义Mybatis对象工厂 [	](mybatis_20200520043218584)
 
 + 首先实现{{c1::`ObjectFactory`}}接口，或者继承{{c1::`DefaultObjectFactory`}}基类,实现以下方法
-    1. `T create(Class<T> type)`
-    2. `T create​(Class<T> type,List<Class<T>> constructorArgTypes, List<Object> constructorArgs)`
-    3. `T setProperties(Properties properties)`
-    4. `<T> boolean isCollection(Class<T> type)`
-    + type：{{c1:: 要创建对象的类型。}}
-    + constructorArgTypes：{{c1:: 要创建对象的构造器参数列表}}
-    + constructorArgs：{{c1:: 多个构造器参数的值}}
-    + properties:{{c1:: 核心配置文件中对象工厂配置的属性}}
+  1. `T create(Class<T> type)`
+  2. `T create​(Class<T> type,List<Class<T>> constructorArgTypes, List<Object> constructorArgs)`
+  3. `T setProperties(Properties properties)`
+  4. `<T> boolean isCollection(Class<T> type)`
+    + `type`：{{c1:: 要创建对象的类型。}}
+    + `constructorArgTypes`：{{c1:: 要创建对象的构造器参数列表}}
+    + `constructorArgs`：{{c1:: 多个构造器参数的值}}
+    + `properties`:{{c1:: 核心配置文件中对象工厂配置的属性}}
 + 配置自定义工厂类
   {{c1::
 
@@ -205,6 +205,7 @@ force:{{c1:: 是否强制提交或回滚。}}
         </objectFactory>
     ```
   }}
+
 ### 4种加载Mapper的方式 [	](mybatis_20200520043218586)
 1. {{c1:: `<mapper resource="top/xieyun/app/dao/NewsMapper.xml">`}}
 2. {{c1:: `<mapper url="file:///G:/abc/NewsMapper.xml">`}}
@@ -255,8 +256,8 @@ force:{{c1:: 是否强制提交或回滚。}}
 + ResultSet转对象的情况
     + {{c1:: 在`<result>`元素指定typeHandler属性
         ```xml
-            <result column="record_season" property="recordSeason"
-                    typeHandler="org.apache.ibatis.type.EnumTypeHandler"/>
+        <result column="record_season" property="recordSeason"
+                typeHandler="org.apache.ibatis.type.EnumTypeHandler"/>
         ```
     + 或者`@Result`注解中指定typeHandler属性
         ```java
@@ -264,7 +265,6 @@ force:{{c1:: 是否强制提交或回滚。}}
                 typeHandler = EnumTypeHandler.class)
         ​```
     }}
-        ```
 + 对象转ResultSet的情况:
     + {{c1:: 在#{}中指定typeHandler属性:
     ```sql
@@ -284,38 +284,38 @@ force:{{c1:: 是否强制提交或回滚。}}
 ### 自定义Mybatis事务管理器 [	](mybatis_20200521095802608)
 
 1. 实现TransactionFactory接口
-```java
-void setProperties(Properties props);
-Transaction newTransaction(Connection conn);
-Transaction newTransaction(DataSource ds,TransactionIsolationLevel level, boolean autoCommit);
-```
-    + props:{{c1:: `传入<transactionManager />`中的配置属性 }}
-    + conn:{{c1:: 传入指定Connection}}
-    + ds:{{c1:: 传入指定的数据源}}
-    + level:{{c1:: 事务隔离级别}}
-    + autoCommit:{{c1:: 是否自动提交事务}}
+    ```java
+    void setProperties(Properties props);
+    Transaction newTransaction(Connection conn);
+    Transaction newTransaction(DataSource ds,TransactionIsolationLevel level, boolean autoCommit);
+    ```
+     + `props`:{{c1:: `传入<transactionManager />`中的配置属性 }}
+     + `conn`:{{c1:: 传入指定Connection}}
+     + `ds`:{{c1:: 传入指定的数据源}}
+     + `level`:{{c1:: 事务隔离级别}}
+     + `autoCommit`:{{c1:: 是否自动提交事务}}
 2. 实现Transaction接口
-```java
-Connection getConnection() throws SQLException;
-void commit() throws SQLException;
-void rollback() throws SQLException;
-void close() throws SQLException;
-Integer getTimeout() throws SQLException;
-```
-+ 注意：{{c1:: 从数据源获得connection与直接传入connection的区别 }}
+    ```java
+    Connection getConnection() throws SQLException;
+    void commit() throws SQLException;
+    void rollback() throws SQLException;
+    void close() throws SQLException;
+    Integer getTimeout() throws SQLException;
+    ```
+    + 注意：{{c1:: 从数据源获得connection与直接传入connection的区别 }}
 
 ## 数据源 [	](mybatis_20200717061050962)
 
 ### MyBatis内置了三种数据源实现 [	](mybatis_20200521095802609)
 
-1. UNPOOLED:{{c1:: 不使用连接池，每次都会重新打开连接。}}
-2. POOLED：{{c1:: 使用Mybatis内置的连接池。}}
-3. JNDI：{{c1:: 使用容器管理的连接池。}}
+1. **UNPOOLED**:{{c1:: 不使用连接池，每次都会重新打开连接。}}
+2. **POOLED**：{{c1:: 使用Mybatis内置的连接池。}}
+3. **JNDI**：{{c1:: 使用容器管理的连接池。}}
 4. 以上连接池对应的实现类为：{{c1:: `UnpooledDataSourceFactory` `PooledDataSourceFactory` `JndiDataSourceFactory`}}
 
 ### MyBatis自定义C3P0数据源 [	](mybatis_20200521095802611)
 
-1. 实现{{c1::`DataSourceFactory`}}接口或继承{{c1::`UnpooledDataSourceFactory`}}类
+1. 实现{{c1:: `DataSourceFactory` }}接口或继承{{c1:: `UnpooledDataSourceFactory` }}类
     ```java
         public class C3P0DataSourceFactory extends UnpooledDataSourceFactory
         {

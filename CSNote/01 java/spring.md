@@ -43,12 +43,7 @@
 ### BeanFactory [	](spring_20200824063336925)
 
 + 作用：{{c1:: spring最核心的接口，是`ApplicationContext`的父接口。 }}
-
 + 常用实现类：{{c1:: `DefaultListableBeanFactory` }}
-
-
-
-
 
 ### ApplicationContext [	](spring_20200713102713846)
 + 作用：工厂接口

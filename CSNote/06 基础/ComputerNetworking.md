@@ -336,7 +336,7 @@ WSAStartup函数}}
   + `getsockopt()`:{{c1:: 用于获取任意类型、任意状态套接口的选项当前值，并把结果存入optval }}
 + 可以实现本地字节顺序与网络字节顺序间转换的函数：{{c1::![](https://gitee.com/xieyun714/nodeimage/raw/master/img/20210711161257.png)}}
 
-### 网络应用的Socket API(TCP)调用基本流程 [ ](ComputerNetworking_20210713081145945)
+### Socket API(TCP)双端通信调用流程 [ ](ComputerNetworking_20210713081145945)
 + 顺序图：{{c1::![](https://gitee.com/xieyun714/nodeimage/raw/master/img/20210711155908.png)}}
 
 ### Socket客户端软件设计:获取服务器相关信息函数 [ ](ComputerNetworking_20210713081145947)
@@ -613,7 +613,7 @@ WSAStartup函数}}
   + `connect()` `sendto()`:{{c1::![](https://gitee.com/xieyun714/nodeimage/raw/master/img/20210713231224.png)}}
   + 如何获取客户端点地址：{{c1::![](https://gitee.com/xieyun714/nodeimage/raw/master/img/20210713231317.png)}}
 
-### Socket服务器的实现
+### Socket服务器的实现 [ ](ComputerNetworking_20210714094413954)
 + 设计一个底层过程隐藏底层代码,`passivesock()`
 + 两个高层过程分别用于创建服务器端UDP套接字和TCP套接字,`passiveUDP()` `passiveTCP()`
 + `passivesock()`实现:
@@ -693,7 +693,7 @@ WSAStartup函数}}
   ```
 + 理解:{{c1::标签}}
 
-### socket使用案例：DAYTIME服务器
+### socket使用案例：DAYTIME服务器 [ ](ComputerNetworking_20210714094413957)
 + 例1：无连接循环DAYTIME服务器
   ```cpp
   /* UDPdtd.cpp - main, UDPdaytimed */
@@ -808,10 +808,10 @@ WSAStartup函数}}
   }
   ```
   + 程序结构图：{{c1::![](https://gitee.com/xieyun714/nodeimage/raw/master/img/20210713233927.png)}}
++ 理解:{{c1::标签}}
+## 传输层 [ ](ComputerNetworking_20210714094413959)
 
-## 传输层
-
-### 传输层概述
+### 传输层概述 [ ](ComputerNetworking_20210714094413961)
 + 传输层作用：{{c1::传输层协议为运行在不同Host上的进程提供了一种**逻辑通信机制**![](https://gitee.com/xieyun714/nodeimage/raw/master/img/20210713235404.png)}}
 + 端系统运行传输层协议
   + 发送方：{{c1::将应用递交的消息分成一个或多个的Segment，并向下传给网络层。}}
@@ -823,8 +823,25 @@ WSAStartup函数}}
   4. {{c1::拥塞控制机制}}
 + 传输层vs.网络层: {{c1:: 网络层提供主机之间的逻辑通信机制, 传输层提供应用进程之间的逻辑通信机制 }}
 
-### Internet传输层协议特点
+### Internet传输层协议特点 [ ](ComputerNetworking_20210714094413963)
 + TCP特点：{{c1::可靠、按序的交付服务，拥塞控制，流量控制，连接建立}}
 + UDP特点：{{c1::基于“**尽力而为(Best-effort)**”的网络层，没有做（可靠性方面的）扩展}}
 + 两种服务均不保证：{{c1::延迟，带宽}}
 
+
+### 可靠数据传输原理
++ 什么是可靠: {{c1::不错、不丢、不乱}}
++ 原理:{{c1::![](https://gitee.com/xieyun714/nodeimage/raw/master/img/20210727132234.png)}}
++ 滑动窗口协议:{{c1::![](https://gitee.com/xieyun714/nodeimage/raw/master/img/20210727132507.png)}}
+
+### TCP特点概述
++ 点对点：{{c1::一个发送方，一个接收方}}
++ 可靠：{{c1::可靠的、按序的字节流}}
++ 流水线机制：TCP**拥塞控制**和**流量控制**机制设置窗口尺寸
++ 全双工：{{c1::full-duplex，同一连接中能够传输双向数据流}}
++ 面向连接：{{c1::通信双方在发送数据之前必须建立连接。连接状态只在连接的两端中维护，在沿途节点中并不维护状态。TCP连接包括：两台主机上的缓存、连接状态变量、socket等}}
+
+### TCP详细概念
++ TCP段结构：![](https://gitee.com/xieyun714/nodeimage/raw/master/img/20210727133407.png)
++ 序列号和ACK：![](https://gitee.com/xieyun714/nodeimage/raw/master/img/20210727133904.png)
++ 拥塞控制示意图：{{c1::![](https://gitee.com/xieyun714/nodeimage/raw/master/img/20210727134400.png)}}

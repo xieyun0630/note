@@ -224,8 +224,22 @@ for(var i = 0; i< elist.Count;i++){
 moldno = (dict["lotNo"] ?? "").Trim().Reverse().Take(3).Reverse().ToString(),
 ```
 
+## query查询条件的创建
 
+```C#
+Expression<Func<Manu, bool>> where = x => true;
+if (!string.IsNullOrWhiteSpace(input.batchCode))
+{
+    where = where.And(x => x.batchCode.Contains(input.batchCode));
+    var lotNo = (await _batchCodeInfoRepository.Query(where)).First().lotNo;
+    where = where.And(x => x.lotNo.Contains(lotNo));
+}
 
+if (!string.IsNullOrWhiteSpace(input.lotNo))
+{
+    where = where.And(x => x.lotNo.Contains(input.lotNo));
+}
+```
 ## C#反射获取属性
 
 ```C#
@@ -277,7 +291,7 @@ moldno = (dict["lotNo"] ?? "").Trim().Reverse().Take(3).Reverse().ToString(),
 ## 提示框
 
 ```javascript
-that.$message({
+this.$message({
     message: '最多输入4条',
     type: 'warning'
 })
