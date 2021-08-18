@@ -1,0 +1,12 @@
+{
+  "fileSortOrder": "alphabetical",
+  "showFrontmatter": true,
+  "alwaysUpdateLinks": true,
+  "showLineNumber": true,
+  "promptDelete": false,
+  "autoPairBrackets": false,
+  "autoConvertHtml": false,
+  "lineWrap": true,
+  "tabSize": 4,
+  "newFileLocation": "current"
+}

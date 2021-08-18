@@ -782,12 +782,21 @@ import stickTop from 'components/stickTop'
 import getArticle from 'api/article'
 ```
 
+# 033栈板打印功能设计
 
+## 流程
 
++ 出货扫外箱码
++ 查询当前正在出货的栈板标签。
++ 将外箱码添加到 栈板标签 与  外箱标签 关联表
++ 更新栈板标签信息
 
+## 关系设计
 
-# TODO
+- 栈板标签（标签号，打印次数，是否在打印队列中，外箱批号1）
+- 栈板标签-外箱标签
 
-### 新需求：新添加页面，添加拦截功能
+### API设计
 
-![](https://gitee.com/xieyun714/nodeimage/raw/master/img/20210710103219.png)
++ 查询当前出货栈板API
++ 添加外箱到出货栈板API

@@ -1,0 +1,102 @@
+{
+  "main": {
+    "id": "a4d83d65127a8d62",
+    "type": "split",
+    "children": [
+      {
+        "id": "603d86a60cde427c",
+        "type": "leaf",
+        "state": {
+          "type": "markdown",
+          "state": {
+            "file": "java/并发/继承 Thread 类.md",
+            "mode": "source"
+          }
+        }
+      }
+    ],
+    "direction": "vertical"
+  },
+  "left": {
+    "id": "eeb2f35f6cabb8a6",
+    "type": "split",
+    "children": [
+      {
+        "id": "64397525a157954a",
+        "type": "tabs",
+        "children": [
+          {
+            "id": "c2d8bde0e308bcf9",
+            "type": "leaf",
+            "state": {
+              "type": "file-explorer",
+              "state": {}
+            }
+          },
+          {
+            "id": "81a5538544eb8f1e",
+            "type": "leaf",
+            "state": {
+              "type": "search",
+              "state": {
+                "query": "",
+                "matchingCase": false,
+                "explainSearch": false,
+                "collapseAll": false,
+                "extraContext": false,
+                "sortOrder": "alphabetical"
+              }
+            }
+          }
+        ]
+      }
+    ],
+    "direction": "horizontal",
+    "width": 299
+  },
+  "right": {
+    "id": "4a055f1a39e0d384",
+    "type": "split",
+    "children": [
+      {
+        "id": "cae323830b39daba",
+        "type": "tabs",
+        "children": [
+          {
+            "id": "c681f4578318279d",
+            "type": "leaf",
+            "state": {
+              "type": "backlink",
+              "state": {
+                "file": "java/并发/继承 Thread 类.md",
+                "collapseAll": false,
+                "extraContext": false,
+                "sortOrder": "alphabetical",
+                "showSearch": false,
+                "searchQuery": "",
+                "backlinkCollapsed": false,
+                "unlinkedCollapsed": true
+              }
+            }
+          }
+        ]
+      }
+    ],
+    "direction": "horizontal",
+    "width": 300,
+    "collapsed": true
+  },
+  "active": "603d86a60cde427c",
+  "lastOpenFiles": [
+    "java/并发/继承 Thread 类.md",
+    "java/并发/实现 Callable 接口.md",
+    "java/并发/实现 Runnable 接口.md",
+    "java/并发/3种定义线程的方式.md",
+    "java/并发/0并发.md",
+    "java/并发/线程与进程概念.md",
+    "java/并发/Callable接口与Runnable接口区别.md",
+    "java/并发/0.并发.md",
+    "java/并发/并发.md",
+    "java/并发/三种使用线程的方法.md"
+  ]
+}
