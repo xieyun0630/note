@@ -1012,7 +1012,7 @@ public class News{
     where news_id in
     <foreach collection="news" index="index" item="item"
              separator="," open="(" close=")">
-      #{item.id}
+      #{item.id} [ ](mybatis_20210826082439369)
     </foreach>
     <!-- }} -->
   </update>

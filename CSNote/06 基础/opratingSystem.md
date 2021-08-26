@@ -3,7 +3,7 @@
 + 图示：{{c1::![](https://gitee.com/xieyun714/nodeimage/raw/master/img/20210713182148.png)![](https://gitee.com/xieyun714/nodeimage/raw/master/img/20210713185742.png)}}
 
 
-### 多进程图像
+### 多进程图像 [ ](opratingSystem_20210818044144019)
 + 多进程如何组织
   + PCB：![](https://gitee.com/xieyun714/nodeimage/raw/master/img/20210727141252.png)
   + 进程状态图：![](https://gitee.com/xieyun714/nodeimage/raw/master/img/20210727141216.png)
@@ -16,12 +16,11 @@
   5. {{c1::要有**地址映射**（L20）}}
 
 
-### 进程切换概念
+### 进程切换概念 [ ](opratingSystem_20210818044144021)
 + 进程与线程的区分：{{c1::![](https://gitee.com/xieyun714/nodeimage/raw/master/img/20210727163622.png)}}
 + 用户级线程：{{c1::![](https://gitee.com/xieyun714/nodeimage/raw/master/img/20210727163811.png)}}
 + 核心级线程：{{c1::![](https://gitee.com/xieyun714/nodeimage/raw/master/img/20210727163839.png)}}
 + 用户级线程、核心级线程的对比：{{c1::![](https://gitee.com/xieyun714/nodeimage/raw/master/img/20210727164238.png)}}
-
 
 
 

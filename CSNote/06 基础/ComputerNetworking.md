@@ -829,19 +829,19 @@ WSAStartup函数}}
 + 两种服务均不保证：{{c1::延迟，带宽}}
 
 
-### 可靠数据传输原理
+### 可靠数据传输原理 [ ](ComputerNetworking_20210818044144001)
 + 什么是可靠: {{c1::不错、不丢、不乱}}
 + 原理:{{c1::![](https://gitee.com/xieyun714/nodeimage/raw/master/img/20210727132234.png)}}
 + 滑动窗口协议:{{c1::![](https://gitee.com/xieyun714/nodeimage/raw/master/img/20210727132507.png)}}
 
-### TCP特点概述
+### TCP特点概述 [ ](ComputerNetworking_20210818044144003)
 + 点对点：{{c1::一个发送方，一个接收方}}
 + 可靠：{{c1::可靠的、按序的字节流}}
 + 流水线机制：TCP**拥塞控制**和**流量控制**机制设置窗口尺寸
 + 全双工：{{c1::full-duplex，同一连接中能够传输双向数据流}}
 + 面向连接：{{c1::通信双方在发送数据之前必须建立连接。连接状态只在连接的两端中维护，在沿途节点中并不维护状态。TCP连接包括：两台主机上的缓存、连接状态变量、socket等}}
 
-### TCP详细概念
+### TCP详细概念 [ ](ComputerNetworking_20210818044144005)
 + TCP段结构：![](https://gitee.com/xieyun714/nodeimage/raw/master/img/20210727133407.png)
 + 序列号和ACK：![](https://gitee.com/xieyun714/nodeimage/raw/master/img/20210727133904.png)
 + 拥塞控制示意图：{{c1::![](https://gitee.com/xieyun714/nodeimage/raw/master/img/20210727134400.png)}}
