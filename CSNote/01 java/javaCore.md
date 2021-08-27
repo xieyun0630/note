@@ -193,11 +193,6 @@
     */
     public class StackTraceTest
     {
-      /**
-        * Computes the factorial of a number
-        * @param n a non-negative integer
-        * @return n! = 1 * 2 * . . . * n
-        */
       public static int factorial(int n)
       {
           System.out.println("factorial(" + n + "):");
@@ -209,7 +204,6 @@
           System.out.println("return " + r);
           return r;
       }
-
       public static void main(String[] args)
       {
           try (var in = new Scanner(System.in))
@@ -220,6 +214,7 @@
           }
       }
     }
+
     //}}
     ```
   + 输出：{{c1::![](https://gitee.com/xieyun714/nodeimage/raw/master/img/20210731104302.png)![](https://gitee.com/xieyun714/nodeimage/raw/master/img/20210731104310.png)}}
@@ -1381,7 +1376,7 @@ public static void copyFile(String src, String dist) throws IOException {
   + `transient`关键字：{{c1::序列化时，被标记的成员变量会被跳过。}}
   + 实现特殊方法：{{c1::![](https://gitee.com/xieyun714/nodeimage/raw/master/img/20210814160106.png)}}
 + 不会对静态变量进行序列化：{{c1:: 因为序列化只是保存对象的状态，静态变量属于类的状态。 }}
-      + `Serializable`接口：{{c1:: 序列化的类需要实现 Serializable接口，它只是一个标准，没有任何方法需要实现，但是如果不去实现它的话而进行序列化，会抛出异常。 }}
+  + `Serializable`接口：{{c1:: 序列化的类需要实现 Serializable接口，它只是一个标准，没有任何方法需要实现，但是如果不去实现它的话而进行序列化，会抛出异常。 }}
 
 ### Path类 [ ](javaCore_20210818044143920)
 + 作用：{{c1::Path表示的是一个**目录**名**序列**，其后还可以跟着一个文件名。}}
@@ -1692,4 +1687,64 @@ public static void copyFile(String src, String dist) throws IOException {
   //}}
   ```
 + 相关API：
+  
   + `InetAddress`类 `getByName` `getALLByName` `getLocalHost` `getAddress` `getHostAddress`:{{c1::![](https://gitee.com/xieyun714/nodeimage/raw/master/img/20210826000113.png)![](https://gitee.com/xieyun714/nodeimage/raw/master/img/20210826000147.png)}}
+
+### ServerSocket
++ 使用流程：{{c1::![](https://gitee.com/xieyun714/nodeimage/raw/master/img/20210826222322.png)}}
++ 单线程服务示例：
+  ```java
+  public class EchoServer
+  {
+    public static void main(String[] args) throws IOException
+    {
+      //{{c1::
+        // establish server socket
+        try (var s = new ServerSocket(8189))
+        {
+          // wait for client connection
+          try (Socket incoming = s.accept())
+          {
+              InputStream inStream = incoming.getInputStream();
+              OutputStream outStream = incoming.getOutputStream();
+    
+              try (var in = new Scanner(inStream, StandardCharsets.UTF_8))
+              {
+                var out = new PrintWriter(
+                    new OutputStreamWriter(outStream, StandardCharsets.UTF_8),
+                    true /* autoFlush */);
+        
+                out.println("Hello! Enter BYE to exit.");
+        
+                // echo client input
+                var done = false;
+                while (!done && in.hasNextLine())
+                {
+                    String line = in.nextLine();
+                    out.println("Echo: " + line);
+                    if (line.trim().equals("BYE")) done = true;
+                }
+              }
+          }
+        }
+      //}}
+    }
+  }
+  ```
++ 多线程服务：{{c1::![](https://gitee.com/xieyun714/nodeimage/raw/master/img/20210826225105.png)}}
++ 半关闭示例：{{c1::![](https://gitee.com/xieyun714/nodeimage/raw/master/img/20210826230324.png)}}
++ 可中断套接字：{{c1::![](https://gitee.com/xieyun714/nodeimage/raw/master/img/20210826232622.png)}}
++ 相关API
+  + `ServerSocket`类 `ServerSocket(int port)` `accept` `close`:{{c1::![](https://gitee.com/xieyun714/nodeimage/raw/master/img/20210826223348.png)![](https://gitee.com/xieyun714/nodeimage/raw/master/img/20210826223403.png)}}
+  + `Socket`类 `shutdownOutput` `shutdownInput` `isOutputShutdown` `isInputShutown`:{{c1::![](https://gitee.com/xieyun714/nodeimage/raw/master/img/20210826230503.png)![](https://gitee.com/xieyun714/nodeimage/raw/master/img/20210826230515.png)}}
+  + `InetSocketAddress`类 `InetSocketAddress(hostname,port)` `isUnresolved`:![](https://gitee.com/xieyun714/nodeimage/raw/master/img/20210826231936.png)
+  + `SocketChannel`类 `open`:![image-20210826232041566](https://gitee.com/xieyun714/nodeimage/raw/master/img/image-20210826232041566.png)![image-20210826232105730](https://gitee.com/xieyun714/nodeimage/raw/master/img/image-20210826232105730.png)
+  + `Channels`类`newInputStream` `newOutputStream`:{{c1::![](https://gitee.com/xieyun714/nodeimage/raw/master/img/20210826232217.png)}}
+
+### java的URI与URL
++ 主要区别：{{c1::URI不提供**访问资源**的方法，URI类的作用是**解析标识符**并将它分解成各种不同的组成部分，以及处理**绝对**URI与**相对**URI。}}
++ **绝对**URI与**相对**URI：
+  + 绝对化：{{c1::![](https://gitee.com/xieyun714/nodeimage/raw/master/img/20210826234729.png)}}
+  + 相对化：{{c1::![](https://gitee.com/xieyun714/nodeimage/raw/master/img/20210826234805.png)}}
+
+### 使用URLConnection获取信息
