@@ -1376,6 +1376,7 @@ public static void copyFile(String src, String dist) throws IOException {
   + `transient`关键字：{{c1::序列化时，被标记的成员变量会被跳过。}}
   + 实现特殊方法：{{c1::![](https://gitee.com/xieyun714/nodeimage/raw/master/img/20210814160106.png)}}
 + 不会对静态变量进行序列化：{{c1:: 因为序列化只是保存对象的状态，静态变量属于类的状态。 }}
+  
   + `Serializable`接口：{{c1:: 序列化的类需要实现 Serializable接口，它只是一个标准，没有任何方法需要实现，但是如果不去实现它的话而进行序列化，会抛出异常。 }}
 
 ### Path类 [ ](javaCore_20210818044143920)
@@ -1747,4 +1748,81 @@ public static void copyFile(String src, String dist) throws IOException {
   + 绝对化：{{c1::![](https://gitee.com/xieyun714/nodeimage/raw/master/img/20210826234729.png)}}
   + 相对化：{{c1::![](https://gitee.com/xieyun714/nodeimage/raw/master/img/20210826234805.png)}}
 
-### 使用URLConnection获取信息
+### URLConnection
++ 作用：{{c1::如果想从某个Web资源获取更多信息，那么应该使用 Urlconnection类，通过它能够得到比基本的URL类更多的控制功能。}}
++ 基本使用示例：
+  ```java
+  //{{c1::
+  public static void main(String[] args)
+   {
+      try
+      {
+         String urlName;
+         if (args.length > 0) urlName = args[0];
+         else urlName = "http://horstmann.com";
+
+         var url = new URL(urlName);
+         URLConnection connection = url.openConnection();
+
+         // set username, password if specified on command line
+
+         if (args.length > 2)
+         {
+            String username = args[1];
+            String password = args[2];
+            String input = username + ":" + password;
+            Base64.Encoder encoder = Base64.getEncoder();
+            String encoding = encoder.encodeToString(input.getBytes(StandardCharsets.UTF_8));
+            connection.setRequestProperty("Authorization", "Basic " + encoding);
+         }
+
+         connection.connect();
+
+         // print header fields
+
+         Map<String, List<String>> headers = connection.getHeaderFields();
+         for (Map.Entry<String, List<String>> entry : headers.entrySet())
+         {
+            String key = entry.getKey();
+            for (String value : entry.getValue())
+               System.out.println(key + ": " + value);
+         }
+
+         // print convenience functions
+
+         System.out.println("----------");
+         System.out.println("getContentType: " + connection.getContentType());
+         System.out.println("getContentLength: " + connection.getContentLength());
+         System.out.println("getContentEncoding: " + connection.getContentEncoding());
+         System.out.println("getDate: " + connection.getDate());
+         System.out.println("getExpiration: " + connection.getExpiration());
+         System.out.println("getLastModifed: " + connection.getLastModified());
+         System.out.println("----------");
+
+         String encoding = connection.getContentEncoding();
+         if (encoding == null) encoding = "UTF-8";
+         try (var in = new Scanner(connection.getInputStream(), encoding))
+         {   
+            // print first ten lines of contents
+   
+            for (int n = 1; in.hasNextLine() && n <= 10; n++)
+               System.out.println(in.nextLine());
+            if (in.hasNextLine()) System.out.println(". . .");
+         }
+      }
+      catch (IOException e)
+      {
+         e.printStackTrace();
+      }
+   }
+  //}}
+  ```
++ 发送Post请求流程：{{c1::![](https://gitee.com/xieyun714/nodeimage/raw/master/img/20210907235541.png)}}
++ 相关API:
+  + `URL`类 `openStream` `openConnection`:{{c1::![](https://gitee.com/xieyun714/nodeimage/raw/master/img/20210907232728.png)}}
+  + `URLConnection`: `set/getDoInput` `set/getDoOutput` `set/getIfModifiedSince` `set/getUseCaches` `set/getAllowUserInteraction` `set/getConnectTimeout` `set/getReadTimeout` `set/getRequestProperty` `connect` `getHeaderFields`:{{c1::![](https://gitee.com/xieyun714/nodeimage/raw/master/img/20210907233255.png)![](https://gitee.com/xieyun714/nodeimage/raw/master/img/20210907233338.png)![](https://gitee.com/xieyun714/nodeimage/raw/master/img/20210907233450.png)![](https://gitee.com/xieyun714/nodeimage/raw/master/img/20210907233508.png)}}
+
+### java发送EMail简介
++ 简单使用套接字发送：{{c1::![](https://gitee.com/xieyun714/nodeimage/raw/master/img/20210908000125.png)}}
+  + 注意:{{c1::该方式并没有实现认证功能。}}
++ JavaMail方式：{{c1::![](https://gitee.com/xieyun714/nodeimage/raw/master/img/20210908000324.png)}}
