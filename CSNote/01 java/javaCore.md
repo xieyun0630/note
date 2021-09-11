@@ -1691,7 +1691,7 @@ public static void copyFile(String src, String dist) throws IOException {
   
   + `InetAddress`类 `getByName` `getALLByName` `getLocalHost` `getAddress` `getHostAddress`:{{c1::![](https://gitee.com/xieyun714/nodeimage/raw/master/img/20210826000113.png)![](https://gitee.com/xieyun714/nodeimage/raw/master/img/20210826000147.png)}}
 
-### ServerSocket
+### ServerSocket [ ](javaCore_20210911041056116)
 + 使用流程：{{c1::![](https://gitee.com/xieyun714/nodeimage/raw/master/img/20210826222322.png)}}
 + 单线程服务示例：
   ```java
@@ -1742,13 +1742,13 @@ public static void copyFile(String src, String dist) throws IOException {
   + `SocketChannel`类 `open`:![image-20210826232041566](https://gitee.com/xieyun714/nodeimage/raw/master/img/image-20210826232041566.png)![image-20210826232105730](https://gitee.com/xieyun714/nodeimage/raw/master/img/image-20210826232105730.png)
   + `Channels`类`newInputStream` `newOutputStream`:{{c1::![](https://gitee.com/xieyun714/nodeimage/raw/master/img/20210826232217.png)}}
 
-### java的URI与URL
+### java的URI与URL [ ](javaCore_20210911041056118)
 + 主要区别：{{c1::URI不提供**访问资源**的方法，URI类的作用是**解析标识符**并将它分解成各种不同的组成部分，以及处理**绝对**URI与**相对**URI。}}
 + **绝对**URI与**相对**URI：
   + 绝对化：{{c1::![](https://gitee.com/xieyun714/nodeimage/raw/master/img/20210826234729.png)}}
   + 相对化：{{c1::![](https://gitee.com/xieyun714/nodeimage/raw/master/img/20210826234805.png)}}
 
-### URLConnection
+### URLConnection [ ](javaCore_20210911041056120)
 + 作用：{{c1::如果想从某个Web资源获取更多信息，那么应该使用 Urlconnection类，通过它能够得到比基本的URL类更多的控制功能。}}
 + 基本使用示例：
   ```java
@@ -1822,7 +1822,7 @@ public static void copyFile(String src, String dist) throws IOException {
   + `URL`类 `openStream` `openConnection`:{{c1::![](https://gitee.com/xieyun714/nodeimage/raw/master/img/20210907232728.png)}}
   + `URLConnection`: `set/getDoInput` `set/getDoOutput` `set/getIfModifiedSince` `set/getUseCaches` `set/getAllowUserInteraction` `set/getConnectTimeout` `set/getReadTimeout` `set/getRequestProperty` `connect` `getHeaderFields`:{{c1::![](https://gitee.com/xieyun714/nodeimage/raw/master/img/20210907233255.png)![](https://gitee.com/xieyun714/nodeimage/raw/master/img/20210907233338.png)![](https://gitee.com/xieyun714/nodeimage/raw/master/img/20210907233450.png)![](https://gitee.com/xieyun714/nodeimage/raw/master/img/20210907233508.png)}}
 
-### java发送EMail简介
+### java发送EMail简介 [ ](javaCore_20210911041056121)
 + 简单使用套接字发送：{{c1::![](https://gitee.com/xieyun714/nodeimage/raw/master/img/20210908000125.png)}}
   + 注意:{{c1::该方式并没有实现认证功能。}}
 + JavaMail方式：{{c1::![](https://gitee.com/xieyun714/nodeimage/raw/master/img/20210908000324.png)}}
