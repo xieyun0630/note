@@ -6,7 +6,11 @@
 (\d\d:\d\d).+(\d\d:\d\d)$
 ```
 
-匹配中文字符的正则表达式：` [\u4e00-\u9fa5]`
+匹配中文字符的正则表达式：
+
+```
+[\u4e00-\u9fa5]
+```
 
 日期匹配
 
@@ -804,3 +808,54 @@ import getArticle from 'api/article'
 
 + 查询当前出货栈板API
 + 添加外箱到出货栈板API
+
+
+
+
+
+![image-20210904091154650](https://gitee.com/xieyun714/nodeimage/raw/master/img/image-20210904091154650.png)
+
+
+
+
+
+
+
+![image-20210906084947255](https://gitee.com/xieyun714/nodeimage/raw/master/img/image-20210906084947255.png)
+
+![image-20210906085211439](https://gitee.com/xieyun714/nodeimage/raw/master/img/image-20210906085211439.png)
+
+## SQLServer的group_concat
+
+```sql
+SELECT
+ta.DeliveryOrderNumber,
+ta.FName,
+STUFF((SELECT '/' +CONVERT(varchar(100), b.MaterialName, 25) 
+                         FROM DeliveryOrder b
+                         WHERE ta.DeliveryOrderNumber=b.DeliveryOrderNumber
+                         FOR XML PATH(''), TYPE).value('.', 'NVARCHAR(MAX)'), 1, 1, '') as MaterialName,
+STUFF((SELECT '/' +CONVERT(varchar(100), b.DeliveryCount, 25) 
+                         FROM DeliveryOrder b
+                         WHERE ta.DeliveryOrderNumber=b.DeliveryOrderNumber
+                         FOR XML PATH(''), TYPE).value('.', 'NVARCHAR(MAX)'), 1, 1, '') as DeliveryCount,
+ta.ExpressNo,
+ta.Creater,
+ta.CreationDate,
+FROM 
+(
+select 
+a.DeliveryOrderNumber,
+a.FName,
+a.ExpressNo,
+MAX(a.Creater) as Creater,
+MAX(a.CreationDate) as CreationDate
+from DeliveryOrder a
+GROUP BY a.DeliveryOrderNumber,
+a.FName,
+a.ExpressNo
+) ta
+
+```
+
+![image-20210910165613756](https://gitee.com/xieyun714/nodeimage/raw/master/img/image-20210910165613756.png)
