@@ -1828,5 +1828,5 @@ public static void copyFile(String src, String dist) throws IOException {
 + JavaMail方式：{{c1::![](https://gitee.com/xieyun714/nodeimage/raw/master/img/20210908000324.png)}}
 
 
-### 第八章
+### 第八章 [ ](javaCore_20210917101115656)
 + DOTO

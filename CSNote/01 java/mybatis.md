@@ -957,7 +957,7 @@ public class News{
     <!-- {{c1:: -->
     <foreach item="item" index="index" collection="ids"
         open="(" separator="," close=")">
-        #{item}
+        #{item} [ ](mybatis_20210917102309879)
     </foreach>
     <!-- }} -->
     ```
